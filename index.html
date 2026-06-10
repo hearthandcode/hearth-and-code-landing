@@ -37,9 +37,6 @@
       --font-display: 'Fraunces', Georgia, serif;
       --font-body:    'Inter', system-ui, sans-serif;
       --font-mono:    'JetBrains Mono', monospace;
-
-      --flame-x: 88px;
-      --glow-a: 0.14;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,24 +54,81 @@
       position: relative;
     }
 
-    /* Full-page firelight — position + intensity driven by JS */
+    /* Full-page ambient firelight — breathing campfire glow */
     #page-glow {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
+    }
+
+    #page-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
       background:
         radial-gradient(
-          ellipse 55% 70% at var(--flame-x) 100%,
-          rgba(232, 146, 60, var(--glow-a)) 0%,
-          rgba(194, 90, 42, calc(var(--glow-a) * 0.45)) 28%,
+          ellipse 60% 75% at 8% 100%,
+          rgba(232, 146, 60, 0.17) 0%,
+          rgba(194, 90, 42, 0.07) 30%,
           transparent 62%
         ),
         radial-gradient(
-          ellipse 80% 50% at var(--flame-x) 85%,
-          rgba(244, 184, 96, calc(var(--glow-a) * 0.35)) 0%,
-          transparent 55%
+          ellipse 85% 55% at 8% 90%,
+          rgba(244, 184, 96, 0.08) 0%,
+          transparent 58%
         );
+      animation: hearthBreathe 8s ease-in-out infinite;
+      will-change: opacity, transform;
+    }
+
+    #page-glow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 45% 60% at 9% 100%,
+        rgba(244, 200, 110, 0.14) 0%,
+        rgba(232, 146, 60, 0.04) 38%,
+        transparent 58%
+      );
+      animation: hearthFlare 13s ease-in-out infinite;
+      will-change: opacity;
+    }
+
+    @keyframes hearthBreathe {
+      0%, 100% { opacity: 0.80; transform: translateX(0); }
+      25%       { opacity: 1.10; transform: translateX(-5px); }
+      55%       { opacity: 0.85; transform: translateX(4px); }
+      80%       { opacity: 1.05; transform: translateX(-2px); }
+    }
+
+    @keyframes hearthFlare {
+      0%, 65%, 100% { opacity: 0; }
+      75%            { opacity: 0.90; }
+      88%            { opacity: 0.12; }
+    }
+
+    #hearth-embers {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 30%;
+      height: 3px;
+      background: linear-gradient(90deg,
+        rgba(194, 90, 42, 0.65) 0%,
+        rgba(232, 146, 60, 0.35) 30%,
+        rgba(244, 184, 96, 0.15) 55%,
+        transparent 75%);
+      pointer-events: none;
+      z-index: 1;
+      animation: embersGlow 5s ease-in-out infinite alternate;
+      will-change: opacity;
+    }
+
+    @keyframes embersGlow {
+      from { opacity: 0.65; }
+      to   { opacity: 1.00; }
     }
 
     body::before {
@@ -88,19 +142,6 @@
       );
       pointer-events: none;
       z-index: 0;
-    }
-
-    #flame-canvas {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 42vh;
-      min-height: 200px;
-      max-height: 480px;
-      pointer-events: none;
-      z-index: 1;
     }
 
     .wrap {
@@ -137,7 +178,7 @@
         inset 0 1px 0 rgba(255, 220, 180, 0.1),
         inset 0 -3px 8px rgba(0, 0, 0, 0.35),
         0 6px 28px rgba(0, 0, 0, 0.45),
-        0 0 40px rgba(232, 146, 60, calc(var(--glow-a) * 0.25));
+        0 0 40px rgba(232, 146, 60, 0.04);
     }
     .wood-panel__rim {
       padding: 3px;
@@ -545,7 +586,6 @@
     footer a { color: inherit; }
 
     @media (max-width: 600px) {
-      :root { --flame-x: 48px; }
       .nav-links { display: none; }
       h1 { font-size: 2.4rem; }
       .props { grid-template-columns: 1fr; }
@@ -553,12 +593,18 @@
       .subscribe-form button { border-radius: 0 0 3px 3px; }
       .founder-note { margin-left: 0; margin-right: 0; padding: 18px 16px; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      #page-glow::before { animation: none; opacity: 0.85; transform: none; }
+      #page-glow::after  { animation: none; opacity: 0; }
+      #hearth-embers     { animation: none; opacity: 0.75; }
+    }
   </style>
 </head>
 <body>
 
   <div id="page-glow" aria-hidden="true"></div>
-  <canvas id="flame-canvas" aria-hidden="true"></canvas>
+  <div id="hearth-embers" aria-hidden="true"></div>
 
   <div class="wrap">
 
@@ -588,7 +634,7 @@
       <div class="subscribe-wrap">
         <div class="wood-panel__rim">
           <div class="wood-panel subscribe-panel">
-            <h2>Pull up a chair</h2>
+            <h2>Toss a log on the fire</h2>
             <p class="subscribe-lead">Weekly notes from the build. I'll email when there's something worth opening.</p>
             <form class="subscribe-form" id="subscribe-form" action="https://hearthandcode.substack.com/subscribe" method="get" target="_blank" rel="noopener noreferrer">
               <label for="email-input" class="visually-hidden">Email address</label>
@@ -615,7 +661,7 @@
         <p>Diagnostic placement and spaced practice. Theory next to implementation, not after it. A curriculum that branches from what you actually need to learn — not a syllabus someone else already finished.</p>
       </div>
       <div class="prop">
-        <span class="prop-mark" aria-hidden="true">II — EARN</span>
+        <span class="prop-mark" aria-hidden="true">II — CRAFT</span>
         <h3>Progress that has weight</h3>
         <p>Skill trees mapped to competencies, mastery gates, artifacts you can point to. I want progress to mean you understand something — not that you cleared a checklist.</p>
       </div>
@@ -682,6 +728,8 @@
         Built by Scott
         &nbsp;&middot;&nbsp;
         <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/legal.html">Legal &amp; Privacy</a>
       </p>
     </footer>
 
@@ -698,317 +746,6 @@
     }
   </style>
 
-  <script>
-    (function () {
-      const canvas = document.getElementById('flame-canvas');
-      const ctx = canvas.getContext('2d', { alpha: true });
-      const root = document.documentElement;
-      const PROFILE = new URLSearchParams(location.search).has('profile');
-      const REDUCED = !PROFILE && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      const LIMITS = { flames: 55, embers: 22, sparks: 6 };
-      const DPR_CAP = 1.5;
-
-      let W = 0, H = 0, cx = 0, running = true;
-      let t0 = performance.now();
-      let lastFrame = t0;
-      let profileFrames = 0;
-      let profileWorkMs = 0;
-      let profileWallStart = 0;
-
-      const PARTICLES = [];
-      const EMBERS = [];
-      const SPARKS = [];
-
-      const wind = { t: 0, gust: 0, drift: 0 };
-
-      function flameX() {
-        return Math.min(Math.max(W * 0.07, 56), 120);
-      }
-
-      function resize() {
-        const rect = canvas.getBoundingClientRect();
-        const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
-        canvas.width = Math.round(rect.width * dpr);
-        canvas.height = Math.round(rect.height * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        W = rect.width;
-        H = rect.height;
-        cx = flameX();
-        root.style.setProperty('--flame-x', cx + 'px');
-      }
-      window.addEventListener('resize', resize, { passive: true });
-
-      function boot() {
-        resize();
-        if (H < 1) {
-          requestAnimationFrame(boot);
-          return;
-        }
-        init();
-        requestAnimationFrame(animate);
-      }
-
-      document.addEventListener('visibilitychange', function () {
-        running = !document.hidden && !REDUCED;
-        if (running) {
-          lastFrame = performance.now();
-          requestAnimationFrame(animate);
-        }
-      });
-
-      const COLORS = [
-        [244, 230, 185],
-        [244, 200, 110],
-        [232, 146,  60],
-        [194,  90,  42],
-      ];
-      const WEIGHTS = [0.08, 0.28, 0.42, 0.22];
-
-      function pickColor() {
-        let r = Math.random(), sum = 0;
-        for (let i = 0; i < WEIGHTS.length; i++) {
-          sum += WEIGHTS[i];
-          if (r < sum) return COLORS[i];
-        }
-        return COLORS[2];
-      }
-
-      function updateWind(dt) {
-        wind.t += dt;
-        wind.gust = Math.sin(wind.t * 0.38) * 0.55 + Math.sin(wind.t * 0.11 + 1.8) * 0.32;
-        wind.drift = Math.sin(wind.t * 0.07 + 0.5) * 0.18;
-      }
-
-      function windForce(x, y) {
-        const rise = Math.max(0, 1 - y / H);
-        return (wind.gust + wind.drift) * rise * 0.018;
-      }
-
-      function FlameParticle(originX) {
-        this.originX = originX;
-        this.spawn(originX);
-      }
-      FlameParticle.prototype.spawn = function (originX) {
-        this.originX = originX;
-        this.x  = originX + (Math.random() - 0.5) * 48;
-        this.y  = H - 6;
-        this.vy = -(0.55 + Math.random() * 1.1);
-        this.vx = (Math.random() - 0.5) * 0.35;
-        this.size   = 14 + Math.random() * 26;
-        this.life   = Math.random() * 0.35;
-        this.decay  = 0.004 + Math.random() * 0.006;
-        this.phase  = Math.random() * Math.PI * 2;
-        this.color  = pickColor();
-      };
-      FlameParticle.prototype.update = function (dt) {
-        const sway = Math.sin(wind.t * 1.6 + this.phase + this.y * 0.02) * 0.22;
-        this.vx += windForce(this.x, this.y) + sway * dt;
-        this.vx *= 0.985;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vy *= 0.992;
-        this.size *= 0.982;
-        this.life += this.decay;
-      };
-      FlameParticle.prototype.draw = function () {
-        const progress = Math.min(this.life, 1);
-        const alpha = Math.sin(progress * Math.PI) * 0.72;
-        if (alpha <= 0 || this.size < 0.6 || this.y < -20) return;
-
-        const [r, g, b] = this.color;
-        const s = this.size;
-        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, s);
-        grad.addColorStop(0,   `rgba(${r},${g},${b},${alpha})`);
-        grad.addColorStop(0.55, `rgba(${r},${g},${b},${alpha * 0.45})`);
-        grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, s, 0, Math.PI * 2);
-        ctx.fill();
-      };
-
-      function Ember(originX) {
-        this.originX = originX;
-        this.spawn();
-      }
-      Ember.prototype.spawn = function () {
-        this.x    = this.originX + (Math.random() - 0.5) * 36;
-        this.y    = H - 2 - Math.random() * 12;
-        this.vx   = wind.gust * 0.15 + (Math.random() - 0.2) * 0.25;
-        this.vy   = -(0.25 + Math.random() * 0.45);
-        this.size = 0.5 + Math.random() * 1.6;
-        this.life = Math.random() * 0.15;
-        this.decay = 0.0014 + Math.random() * 0.002;
-        this.flk  = Math.random() * Math.PI * 2;
-        this.warm = Math.random() < 0.5;
-        this.wisp = Math.random() * Math.PI * 2;
-      };
-      Ember.prototype.update = function (dt) {
-        const wisp = Math.sin(wind.t * 0.9 + this.wisp) * 0.12;
-        this.vx += windForce(this.x, this.y) * 1.4 + wisp * dt;
-        this.vy += -0.04 * dt;
-        this.vx *= 0.996;
-        this.vy *= 0.998;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life += this.decay;
-        this.flk += 0.08;
-      };
-      Ember.prototype.draw = function () {
-        if (this.life >= 1 || this.y < -8) return;
-        const flicker = 0.55 + Math.sin(this.flk) * 0.25;
-        const alpha = (1 - this.life) * flicker * 0.85;
-        ctx.fillStyle = this.warm
-          ? `rgba(244,200,110,${alpha})`
-          : `rgba(232,146,60,${alpha})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      };
-      Ember.prototype.done = function () {
-        return this.life >= 1 || this.y < -10 || this.x > W * 0.72;
-      };
-
-      function Spark(originX) {
-        this.originX = originX;
-        this.spawn();
-      }
-      Spark.prototype.spawn = function () {
-        this.x = this.originX + (Math.random() - 0.25) * 28;
-        this.y = H - 1;
-        this.vx = 0.6 + Math.random() * 1.2 + wind.gust * 0.25;
-        this.vy = -(1.2 + Math.random() * 1.8);
-        this.life = 0;
-        this.decay = 0.018 + Math.random() * 0.02;
-      };
-      Spark.prototype.update = function (dt) {
-        this.vx += windForce(this.x, this.y) * 2.2;
-        this.vy += 0.025 * dt;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life += this.decay;
-      };
-      Spark.prototype.draw = function () {
-        if (this.life >= 1) return;
-        const alpha = (1 - this.life) * 0.75;
-        ctx.strokeStyle = `rgba(255, 220, 150, ${alpha})`;
-        ctx.lineWidth = 0.8;
-        ctx.beginPath();
-        ctx.moveTo(this.x - this.vx * 1.2, this.y - this.vy * 1.2);
-        ctx.lineTo(this.x, this.y);
-        ctx.stroke();
-      };
-
-      function init() {
-        const origin = flameX();
-        for (let i = 0; i < LIMITS.flames; i++) {
-          const p = new FlameParticle(origin);
-          p.y = H - Math.random() * H * 0.55;
-          PARTICLES.push(p);
-        }
-        for (let i = 0; i < LIMITS.embers; i++) {
-          const e = new Ember(origin);
-          e.y = H - Math.random() * H * 0.25;
-          EMBERS.push(e);
-        }
-      }
-
-      function drawGlow(t, flicker) {
-        root.style.setProperty('--glow-a', (0.09 + flicker * 0.11).toFixed(3));
-        root.style.setProperty('--flame-x', cx + 'px');
-
-        const baseGrad = ctx.createRadialGradient(cx, H, 0, cx, H - H * 0.2, H * 0.65);
-        baseGrad.addColorStop(0, `rgba(232,146,60,${0.2 * flicker})`);
-        baseGrad.addColorStop(0.35, `rgba(194,90,42,${0.07 * flicker})`);
-        baseGrad.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = baseGrad;
-        ctx.fillRect(0, 0, W, H);
-      }
-
-      function animate(now) {
-        if (!running) return;
-        now = now ?? performance.now();
-
-        const dt = Math.min((now - lastFrame) / 1000, 0.05);
-        lastFrame = now;
-        const workStart = performance.now();
-
-        const t = (now - t0) * 0.001;
-        updateWind(dt);
-
-        const flicker = 0.84 + Math.sin(t * 3.2) * 0.1 + Math.sin(t * 5.7) * 0.05;
-        cx = flameX();
-
-        ctx.clearRect(0, 0, W + 2, H + 2);
-        drawGlow(t, flicker);
-
-        ctx.globalCompositeOperation = 'lighter';
-
-        for (let i = 0; i < PARTICLES.length; i++) {
-          const p = PARTICLES[i];
-          p.update(dt);
-          p.draw();
-          if (p.life >= 1 || p.size < 0.6 || p.y < -20) {
-            p.spawn(cx);
-          }
-        }
-
-        for (let i = EMBERS.length - 1; i >= 0; i--) {
-          const e = EMBERS[i];
-          e.originX = cx;
-          e.update(dt);
-          e.draw();
-          if (e.done()) {
-            e.spawn();
-          }
-        }
-
-        if (Math.random() < 0.04 && EMBERS.length < LIMITS.embers) {
-          EMBERS.push(new Ember(cx));
-        }
-
-        for (let i = SPARKS.length - 1; i >= 0; i--) {
-          SPARKS[i].update(dt);
-          SPARKS[i].draw();
-          if (SPARKS[i].life >= 1) SPARKS.splice(i, 1);
-        }
-
-        if (Math.random() < 0.018 && SPARKS.length < LIMITS.sparks) {
-          SPARKS.push(new Spark(cx));
-        }
-
-        ctx.globalCompositeOperation = 'source-over';
-
-        if (PROFILE) {
-          if (!profileWallStart) profileWallStart = performance.now();
-          profileFrames++;
-          profileWorkMs += performance.now() - workStart;
-          const elapsed = performance.now() - profileWallStart;
-          if (elapsed >= 2000) {
-            const fps = (profileFrames / elapsed) * 1000;
-            const ms = profileWorkMs / profileFrames;
-            const line = `[hearth flame] ~${fps.toFixed(0)} fps ~${ms.toFixed(2)} ms work/frame | ${PARTICLES.length} flames ${EMBERS.length} embers ${SPARKS.length} sparks | wind ${wind.gust.toFixed(2)} | canvas ${Math.round(W)}×${Math.round(H)}`;
-            console.log(line);
-            window.__hearthProfile = { fps, ms, flames: PARTICLES.length, embers: EMBERS.length, sparks: SPARKS.length, W, H };
-            profileFrames = 0;
-            profileWorkMs = 0;
-            profileWallStart = performance.now();
-          }
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      if (REDUCED) {
-        root.style.setProperty('--glow-a', '0.12');
-        root.style.setProperty('--flame-x', flameX() + 'px');
-        return;
-      }
-
-      boot();
-    })();
-  </script>
 
 </body>
 </html>
