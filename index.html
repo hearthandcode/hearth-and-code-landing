@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hearth &amp; Code — You're not coding alone.</title>
-  <meta name="description" content="A gamified, AI-powered learning platform for self-directed developers. Built in public.">
+  <meta name="description" content="Pre-launch home for Hearth &amp; Code — honest build log, waitlist, and what Scott is actually working on.">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Hearth &amp; Code">
@@ -16,28 +16,30 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@HearthAndCode">
 
-  <!-- Fonts: Fraunces (display) + Inter (body) + JetBrains Mono (code/eyebrow) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* ── Brand tokens ────────────────────────────────────────────── */
     :root {
       --bg:        #1C1714;
       --bg-raised: #2A2320;
       --wood:      #4A3528;
+      --wood-light:#5C4332;
+      --wood-dark: #2E2118;
       --amber:     #E8923C;
       --gold:      #F4B860;
       --forge:     #C25A2A;
       --teal:      #5E7E78;
-      --sage:      #8FA395;
       --cream:     #F2E7D5;
       --ash:       #B8A892;
 
       --font-display: 'Fraunces', Georgia, serif;
       --font-body:    'Inter', system-ui, sans-serif;
       --font-mono:    'JetBrains Mono', monospace;
+
+      --flame-x: 88px;
+      --glow-a: 0.14;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,60 +57,95 @@
       position: relative;
     }
 
-    /* ── Ambient glow rising from the flame ─────────────────────── */
-    body::after {
-      content: '';
+    /* Full-page firelight — position + intensity driven by JS */
+    #page-glow {
       position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      height: 65%;
-      background: radial-gradient(
-        ellipse 55% 50% at 50% 100%,
-        rgba(232, 146, 60, 0.13) 0%,
-        rgba(194, 90, 42, 0.06) 40%,
-        transparent 72%
-      );
+      inset: 0;
       pointer-events: none;
       z-index: 0;
+      background:
+        radial-gradient(
+          ellipse 55% 70% at var(--flame-x) 100%,
+          rgba(232, 146, 60, var(--glow-a)) 0%,
+          rgba(194, 90, 42, calc(var(--glow-a) * 0.45)) 28%,
+          transparent 62%
+        ),
+        radial-gradient(
+          ellipse 80% 50% at var(--flame-x) 85%,
+          rgba(244, 184, 96, calc(var(--glow-a) * 0.35)) 0%,
+          transparent 55%
+        );
     }
 
-    /* ── Vignette — shadows the edges, pulls focus to center ────── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background: radial-gradient(
-        ellipse at 50% 40%,
-        transparent 40%,
-        rgba(18, 12, 8, 0.50) 100%
+        ellipse 90% 80% at 30% 50%,
+        transparent 35%,
+        rgba(18, 12, 8, 0.55) 100%
       );
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ── Flame canvas ────────────────────────────────────────────── */
     #flame-canvas {
       position: fixed;
-      bottom: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
-      height: 220px;
+      height: 42vh;
+      min-height: 200px;
+      max-height: 480px;
       pointer-events: none;
-      z-index: 10;
+      z-index: 1;
     }
 
-    /* ── Layout ──────────────────────────────────────────────────── */
     .wrap {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       max-width: 820px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* ── Nav ─────────────────────────────────────────────────────── */
+    /* ── Wood panel texture (CSS — no image assets) ─────────────── */
+    .wood-panel {
+      --grain-a: rgba(0, 0, 0, 0.045);
+      --grain-b: rgba(255, 220, 170, 0.025);
+      background:
+        repeating-linear-gradient(
+          93deg,
+          transparent 0px,
+          transparent 3px,
+          var(--grain-a) 3px,
+          var(--grain-a) 4px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 11px,
+          var(--grain-b) 11px,
+          var(--grain-b) 12px
+        ),
+        linear-gradient(175deg, #3d2e24 0%, var(--wood) 38%, #35261c 72%, var(--wood-dark) 100%);
+      border: 2px solid var(--wood-light);
+      border-radius: 8px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 220, 180, 0.1),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.35),
+        0 6px 28px rgba(0, 0, 0, 0.45),
+        0 0 40px rgba(232, 146, 60, calc(var(--glow-a) * 0.25));
+    }
+    .wood-panel__rim {
+      padding: 3px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #6b5040, #3a2a20);
+      box-shadow: inset 0 1px 0 rgba(255, 220, 180, 0.06);
+    }
+
     nav {
       display: flex;
       align-items: center;
@@ -118,14 +155,13 @@
 
     .wordmark {
       font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
       color: var(--cream);
       text-decoration: none;
-      text-transform: uppercase;
     }
-    .wordmark .amp { color: var(--amber); }
+    .wordmark .amp { color: var(--amber); font-style: italic; }
 
     .nav-links {
       list-style: none;
@@ -140,7 +176,6 @@
     }
     .nav-links a:hover { color: var(--cream); }
 
-    /* ── Hero ────────────────────────────────────────────────────── */
     .hero {
       text-align: center;
       padding: 88px 0 72px;
@@ -184,41 +219,87 @@
     }
 
     .hero-sub {
-      font-size: clamp(1rem, 2.4vw, 1.175rem);
+      font-size: clamp(1rem, 2.4vw, 1.125rem);
       color: var(--ash);
-      font-weight: 300;
-      line-height: 1.75;
-      max-width: 520px;
-      margin: 0 auto 44px;
+      font-weight: 400;
+      line-height: 1.8;
+      max-width: 540px;
+      margin: 0 auto 20px;
+    }
+    .hero-honest {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ash);
+      opacity: 0.55;
+      margin: 0 auto 40px;
     }
 
-    /* ── Substack signup embed ─────────────────────────────────── */
-    .email-wrap {
-      max-width: 480px;
+    /* ── Subscribe (replaces broken local iframe preview) ───────── */
+    .subscribe-wrap {
+      max-width: 440px;
       margin: 0 auto;
     }
-
-    .substack-embed {
-      border-radius: 6px;
+    .subscribe-panel {
+      padding: 22px 20px 18px;
+      text-align: left;
+    }
+    .subscribe-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .subscribe-panel .subscribe-lead {
+      font-size: 0.8rem;
+      color: var(--ash);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .subscribe-form {
+      display: flex;
+      gap: 0;
+      border-radius: 4px;
       overflow: hidden;
-      margin-bottom: 12px;
-    }
-    .substack-embed iframe {
-      display: block;
-      width: 100%;
-      max-width: 480px;
-      height: 320px;
-      border: 1px solid var(--wood);
+      border: 1px solid var(--wood-dark);
       background: var(--bg);
-      border-radius: 6px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
     }
-    .email-note {
-      font-size: 0.75rem;
+    .subscribe-form input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 13px 14px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--cream);
+    }
+    .subscribe-form input::placeholder { color: var(--ash); opacity: 0.55; }
+    .subscribe-form button {
+      border: none;
+      background: var(--amber);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 13px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .subscribe-form button:hover { background: var(--gold); }
+    .subscribe-note {
+      font-size: 0.72rem;
       color: var(--ash);
       opacity: 0.6;
+      margin-top: 10px;
+      text-align: center;
     }
 
-    /* ── Divider ─────────────────────────────────────────────────── */
     .divider {
       width: 48px;
       height: 1px;
@@ -227,7 +308,52 @@
       opacity: 0.8;
     }
 
-    /* ── Value props ─────────────────────────────────────────────── */
+    .section-intro {
+      text-align: center;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+    .section-intro h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .section-intro p {
+      font-size: 0.9rem;
+      color: var(--ash);
+      line-height: 1.7;
+    }
+
+    .founder-note {
+      max-width: 540px;
+      margin: 0 auto 88px;
+      padding: 22px 24px;
+      border-left: 2px solid var(--forge);
+      background: rgba(42, 35, 32, 0.45);
+      border-radius: 0 6px 6px 0;
+    }
+    .founder-note p {
+      font-size: 0.9rem;
+      color: var(--ash);
+      line-height: 1.75;
+    }
+    .founder-note a {
+      color: var(--amber);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232, 146, 60, 0.35);
+    }
+    .founder-note a:hover { color: var(--gold); border-color: var(--gold); }
+    .founder-note .sig {
+      display: block;
+      margin-top: 12px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--cream);
+      font-style: italic;
+    }
+
     .props {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -252,11 +378,14 @@
       opacity: 0.35;
     }
 
-    .prop-icon {
+    .prop-mark {
       display: block;
-      font-size: 1.4rem;
-      margin-bottom: 14px;
-      line-height: 1;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--forge);
+      opacity: 0.85;
+      margin-bottom: 12px;
     }
     .prop h3 {
       font-family: var(--font-display);
@@ -271,30 +400,122 @@
       line-height: 1.65;
     }
 
-    /* ── Build-in-public ─────────────────────────────────────────── */
+    /* ── Build log list ─────────────────────────────────────────── */
     .bip {
       text-align: center;
       padding-bottom: 88px;
     }
-    .bip h2 {
+    .bip > h2 {
       font-family: var(--font-display);
       font-size: clamp(1.5rem, 4vw, 2.1rem);
       font-weight: 600;
       color: var(--cream);
       margin-bottom: 12px;
     }
-    .bip p {
+    .bip > p {
       color: var(--ash);
       font-size: 0.9375rem;
       line-height: 1.7;
       max-width: 460px;
       margin: 0 auto 28px;
     }
+
+    .build-log {
+      max-width: 520px;
+      margin: 0 auto 20px;
+      text-align: left;
+    }
+    .build-log-inner {
+      padding: 18px 18px 14px;
+    }
+    .build-log-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 0 rgba(255, 220, 180, 0.05);
+    }
+    .build-log-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+    .build-log-header span {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      opacity: 0.85;
+    }
+
+    .build-log-list {
+      list-style: none;
+    }
+    .build-log-list li + li {
+      margin-top: 2px;
+    }
+    .build-log-list a {
+      display: block;
+      padding: 12px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .build-log-list a:hover {
+      background: rgba(0, 0, 0, 0.18);
+      border-color: rgba(232, 146, 60, 0.25);
+      box-shadow: inset 0 0 20px rgba(232, 146, 60, 0.06);
+    }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .post-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--forge);
+      opacity: 0.9;
+    }
+    .post-date {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--ash);
+      opacity: 0.7;
+    }
+    .post-title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .post-sub {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--ash);
+      line-height: 1.45;
+      opacity: 0.85;
+    }
+
     .bip-links {
       display: flex;
       gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
+      margin-top: 8px;
     }
     .bip-link {
       display: inline-flex;
@@ -311,9 +532,8 @@
     }
     .bip-link:hover { border-color: var(--amber); color: var(--cream); }
 
-    /* ── Footer ──────────────────────────────────────────────────── */
     footer {
-      padding: 28px 0 240px;
+      padding: 28px 0 120px;
       border-top: 1px solid var(--wood);
       text-align: center;
     }
@@ -324,22 +544,26 @@
     }
     footer a { color: inherit; }
 
-    /* ── Responsive ──────────────────────────────────────────────── */
     @media (max-width: 600px) {
+      :root { --flame-x: 48px; }
       .nav-links { display: none; }
       h1 { font-size: 2.4rem; }
       .props { grid-template-columns: 1fr; }
+      .subscribe-form { flex-direction: column; }
+      .subscribe-form button { border-radius: 0 0 3px 3px; }
+      .founder-note { margin-left: 0; margin-right: 0; padding: 18px 16px; }
     }
   </style>
 </head>
 <body>
 
+  <div id="page-glow" aria-hidden="true"></div>
   <canvas id="flame-canvas" aria-hidden="true"></canvas>
 
   <div class="wrap">
 
     <nav>
-      <a class="wordmark" href="/">HEARTH <span class="amp">&amp;</span> CODE</a>
+      <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
       <ul class="nav-links">
         <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
         <li><a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
@@ -347,7 +571,7 @@
     </nav>
 
     <section class="hero">
-      <p class="eyebrow">build log live &nbsp;&middot;&nbsp; built in public</p>
+      <p class="eyebrow">post 1 out &nbsp;&middot;&nbsp; pre-launch</p>
 
       <h1>
         You're not<br>
@@ -355,58 +579,98 @@
       </h1>
 
       <p class="hero-sub">
-        A gamified, AI-powered platform for self-directed developers.
-        Personalized paths. Real projects. A warm place to get better.
+        For developers who've finished the courses and still feel stuck at the keyboard.
+        I'm building toward university-shaped depth — personal paths, real craft, a Socratic tutor —
+        and writing down what that actually takes.
       </p>
+      <p class="hero-honest">No shipped app yet &middot; docs, architecture, and honesty for now</p>
 
-      <div class="email-wrap">
-        <div class="substack-embed">
-          <iframe
-            src="https://hearthandcode.substack.com/embed"
-            title="Subscribe to the Hearth &amp; Code build log"
-            frameborder="0"
-            scrolling="no"
-          ></iframe>
+      <div class="subscribe-wrap">
+        <div class="wood-panel__rim">
+          <div class="wood-panel subscribe-panel">
+            <h2>Pull up a chair</h2>
+            <p class="subscribe-lead">Weekly notes from the build. I'll email when there's something worth opening.</p>
+            <form class="subscribe-form" id="subscribe-form" action="https://hearthandcode.substack.com/subscribe" method="get" target="_blank" rel="noopener noreferrer">
+              <label for="email-input" class="visually-hidden">Email address</label>
+              <input id="email-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
+              <button type="submit">Join the log &rarr;</button>
+            </form>
+          </div>
         </div>
-        <p class="email-note">Build log + early access. No spam. Unsubscribe anytime.</p>
+        <p class="subscribe-note">Opens Substack to confirm. Unsubscribe whenever.</p>
       </div>
     </section>
 
     <div class="divider" role="separator"></div>
 
-    <section class="props" aria-label="What Hearth &amp; Code offers">
+    <div class="section-intro">
+      <h2>What I'm building toward</h2>
+      <p>Design pillars, not a product tour. The platform is still on the drawing board — these are the bets I'm placing.</p>
+    </div>
+
+    <section class="props" aria-label="What Hearth &amp; Code is designed around">
       <div class="prop">
-        <span class="prop-icon" aria-hidden="true">🗺️</span>
-        <h3>Your path, your pace</h3>
-        <p>AI-personalized learning paths built around your goals, your knowledge gaps, and how fast you move.</p>
+        <span class="prop-mark" aria-hidden="true">I — LEARN</span>
+        <h3>Paths shaped by pedagogy</h3>
+        <p>Diagnostic placement and spaced practice. Theory next to implementation, not after it. A curriculum that branches from what you actually need to learn — not a syllabus someone else already finished.</p>
       </div>
       <div class="prop">
-        <span class="prop-icon" aria-hidden="true">⚔️</span>
-        <h3>Learn like a game</h3>
-        <p>XP, levels, skill trees, streaks. Progress that feels earned, not just checked off a list.</p>
+        <span class="prop-mark" aria-hidden="true">II — EARN</span>
+        <h3>Progress that has weight</h3>
+        <p>Skill trees mapped to competencies, mastery gates, artifacts you can point to. I want progress to mean you understand something — not that you cleared a checklist.</p>
       </div>
       <div class="prop">
-        <span class="prop-icon" aria-hidden="true">🔥</span>
-        <h3>An AI tutor that asks</h3>
-        <p>Not hints — Socratic dialogue. A tutor that helps you reason through it, not just hand you the answer.</p>
+        <span class="prop-mark" aria-hidden="true">III — ASK</span>
+        <h3>AI that teaches, not tells</h3>
+        <p>A Socratic tutor that adapts to your goals and asks the next right question. I use AI tooling to build it; I won't let it become a chatbot that hands out finished answers.</p>
       </div>
     </section>
 
-    <section class="bip">
-      <h2>Follow the build.</h2>
+    <aside class="founder-note" aria-label="About the founder">
       <p>
-        H&amp;C is being developed in public — the architecture decisions,
-        the failures, the pivots. Weekly devlog on Substack; updates on GitHub.
+        I'm Scott — RPI CS and Psychology, years in healthcare and fintech software, stepped back in 2020,
+        and trying to become more builder than dreamer. Hearth &amp; Code is that attempt, in public,
+        on a budget, with more architecture docs than revenue so far.
+        <a href="https://hearthandcode.substack.com/p/building-a-university-shaped-ed-tech">Read how it started &rarr;</a>
       </p>
+      <span class="sig">Pull up a chair.</span>
+    </aside>
+
+    <section class="bip">
+      <h2>The build log</h2>
+      <p>
+        I write about architecture, pedagogy, what shipped, and what broke.
+        One artifact a week when I have the energy — if I miss a week, I'll say why.
+      </p>
+
+      <div class="build-log wood-panel__rim">
+        <aside class="wood-panel build-log-inner" aria-label="Build log posts">
+          <div class="build-log-header">
+            <h3>Build Log</h3>
+            <span>Substack</span>
+          </div>
+          <ol class="build-log-list">
+            <!-- Add new posts at the top -->
+            <li>
+              <a href="https://hearthandcode.substack.com/p/building-a-university-shaped-ed-tech" target="_blank" rel="noopener noreferrer">
+                <span class="post-meta">
+                  <span class="post-num">Post 1</span>
+                  <span class="post-date">Jun 10, 2026</span>
+                </span>
+                <span class="post-title">Building a university-shaped ed-tech platform in public</span>
+                <span class="post-sub">What exists today and what's still on the drawing board</span>
+              </a>
+            </li>
+          </ol>
+        </aside>
+      </div>
+
       <div class="bip-links">
-        <a class="bip-link" href="https://hearthandcode.substack.com/p/building-a-university-shaped-ed-tech" target="_blank" rel="noopener noreferrer">
-          📖&nbsp; Read Post 1
-        </a>
         <a class="bip-link" href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">
-          ✉&nbsp; Devlog Newsletter
+          All posts on Substack
         </a>
         <a class="bip-link" href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">
-          ⌥&nbsp; GitHub
+          GitHub
         </a>
       </div>
     </section>
@@ -415,27 +679,83 @@
       <p>
         &copy; 2026 Hearth &amp; Code
         &nbsp;&middot;&nbsp;
+        Built by Scott
+        &nbsp;&middot;&nbsp;
         <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>
       </p>
     </footer>
 
   </div>
 
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  </style>
+
   <script>
     (function () {
       const canvas = document.getElementById('flame-canvas');
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      const root = document.documentElement;
+      const PROFILE = new URLSearchParams(location.search).has('profile');
+      const REDUCED = !PROFILE && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      let W = 0, H = 220;
+      const LIMITS = { flames: 55, embers: 22, sparks: 6 };
+      const DPR_CAP = 1.5;
+
+      let W = 0, H = 0, cx = 0, running = true;
+      let t0 = performance.now();
+      let lastFrame = t0;
+      let profileFrames = 0;
+      let profileWorkMs = 0;
+      let profileWallStart = 0;
+
       const PARTICLES = [];
       const EMBERS = [];
+      const SPARKS = [];
+
+      const wind = { t: 0, gust: 0, drift: 0 };
+
+      function flameX() {
+        return Math.min(Math.max(W * 0.07, 56), 120);
+      }
 
       function resize() {
-        W = canvas.width = window.innerWidth;
-        canvas.height = H;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+        canvas.width = Math.round(rect.width * dpr);
+        canvas.height = Math.round(rect.height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        W = rect.width;
+        H = rect.height;
+        cx = flameX();
+        root.style.setProperty('--flame-x', cx + 'px');
       }
       window.addEventListener('resize', resize, { passive: true });
-      resize();
+
+      function boot() {
+        resize();
+        if (H < 1) {
+          requestAnimationFrame(boot);
+          return;
+        }
+        init();
+        requestAnimationFrame(animate);
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        running = !document.hidden && !REDUCED;
+        if (running) {
+          lastFrame = performance.now();
+          requestAnimationFrame(animate);
+        }
+      });
 
       const COLORS = [
         [244, 230, 185],
@@ -454,74 +774,91 @@
         return COLORS[2];
       }
 
-      function FlameParticle(cx) {
-        this.spawn(cx);
+      function updateWind(dt) {
+        wind.t += dt;
+        wind.gust = Math.sin(wind.t * 0.38) * 0.55 + Math.sin(wind.t * 0.11 + 1.8) * 0.32;
+        wind.drift = Math.sin(wind.t * 0.07 + 0.5) * 0.18;
       }
-      FlameParticle.prototype.spawn = function (cx) {
-        this.cx = cx;
-        this.x  = cx + (Math.random() - 0.5) * 80;
-        this.y  = H;
-        this.vy = -(1.4 + Math.random() * 2.8);
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.size   = 10 + Math.random() * 28;
-        this.life   = Math.random() * 0.5;
-        this.decay  = 0.009 + Math.random() * 0.012;
+
+      function windForce(x, y) {
+        const rise = Math.max(0, 1 - y / H);
+        return (wind.gust + wind.drift) * rise * 0.018;
+      }
+
+      function FlameParticle(originX) {
+        this.originX = originX;
+        this.spawn(originX);
+      }
+      FlameParticle.prototype.spawn = function (originX) {
+        this.originX = originX;
+        this.x  = originX + (Math.random() - 0.5) * 48;
+        this.y  = H - 6;
+        this.vy = -(0.55 + Math.random() * 1.1);
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.size   = 14 + Math.random() * 26;
+        this.life   = Math.random() * 0.35;
+        this.decay  = 0.004 + Math.random() * 0.006;
+        this.phase  = Math.random() * Math.PI * 2;
         this.color  = pickColor();
       };
-      FlameParticle.prototype.update = function () {
-        const t   = Date.now() * 0.001;
-        const tx  = Math.sin(this.y * 0.045 + t * 2.1 + this.x * 0.01) * 0.55;
-        this.x   += this.vx + tx;
-        this.y   += this.vy;
-        this.vx  *= 0.97;
-        this.size *= 0.974;
+      FlameParticle.prototype.update = function (dt) {
+        const sway = Math.sin(wind.t * 1.6 + this.phase + this.y * 0.02) * 0.22;
+        this.vx += windForce(this.x, this.y) + sway * dt;
+        this.vx *= 0.985;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy *= 0.992;
+        this.size *= 0.982;
         this.life += this.decay;
       };
       FlameParticle.prototype.draw = function () {
-        const progress = Math.min(this.life, 1.0);
+        const progress = Math.min(this.life, 1);
         const alpha = Math.sin(progress * Math.PI) * 0.72;
-        if (alpha <= 0 || this.size < 0.5) return;
+        if (alpha <= 0 || this.size < 0.6 || this.y < -20) return;
 
         const [r, g, b] = this.color;
-        const grad = ctx.createRadialGradient(
-          this.x, this.y, 0,
-          this.x, this.y, this.size
-        );
+        const s = this.size;
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, s);
         grad.addColorStop(0,   `rgba(${r},${g},${b},${alpha})`);
-        grad.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.5})`);
+        grad.addColorStop(0.55, `rgba(${r},${g},${b},${alpha * 0.45})`);
         grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
         ctx.fillStyle = grad;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, s, 0, Math.PI * 2);
         ctx.fill();
       };
 
-      function Ember(cx) {
-        this.cx = cx;
+      function Ember(originX) {
+        this.originX = originX;
         this.spawn();
       }
       Ember.prototype.spawn = function () {
-        this.x    = this.cx + (Math.random() - 0.5) * 50;
-        this.y    = H - 5;
-        this.vx   = (Math.random() - 0.5) * 1.8;
-        this.vy   = -(1.0 + Math.random() * 2.2);
-        this.size = 0.8 + Math.random() * 2.2;
-        this.life = Math.random();
-        this.decay= 0.005 + Math.random() * 0.007;
+        this.x    = this.originX + (Math.random() - 0.5) * 36;
+        this.y    = H - 2 - Math.random() * 12;
+        this.vx   = wind.gust * 0.15 + (Math.random() - 0.2) * 0.25;
+        this.vy   = -(0.25 + Math.random() * 0.45);
+        this.size = 0.5 + Math.random() * 1.6;
+        this.life = Math.random() * 0.15;
+        this.decay = 0.0014 + Math.random() * 0.002;
         this.flk  = Math.random() * Math.PI * 2;
         this.warm = Math.random() < 0.5;
+        this.wisp = Math.random() * Math.PI * 2;
       };
-      Ember.prototype.update = function () {
-        this.x   += this.vx + (Math.random() - 0.5) * 0.25;
-        this.y   += this.vy;
-        this.vy  *= 0.993;
+      Ember.prototype.update = function (dt) {
+        const wisp = Math.sin(wind.t * 0.9 + this.wisp) * 0.12;
+        this.vx += windForce(this.x, this.y) * 1.4 + wisp * dt;
+        this.vy += -0.04 * dt;
+        this.vx *= 0.996;
+        this.vy *= 0.998;
+        this.x += this.vx;
+        this.y += this.vy;
         this.life += this.decay;
-        this.flk  += 0.18;
+        this.flk += 0.08;
       };
       Ember.prototype.draw = function () {
-        if (this.life >= 1) return;
-        const flicker = 0.65 + Math.sin(this.flk) * 0.35;
-        const alpha   = (1 - this.life) * flicker;
+        if (this.life >= 1 || this.y < -8) return;
+        const flicker = 0.55 + Math.sin(this.flk) * 0.25;
+        const alpha = (1 - this.life) * flicker * 0.85;
         ctx.fillStyle = this.warm
           ? `rgba(244,200,110,${alpha})`
           : `rgba(232,146,60,${alpha})`;
@@ -529,70 +866,147 @@
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
       };
+      Ember.prototype.done = function () {
+        return this.life >= 1 || this.y < -10 || this.x > W * 0.72;
+      };
+
+      function Spark(originX) {
+        this.originX = originX;
+        this.spawn();
+      }
+      Spark.prototype.spawn = function () {
+        this.x = this.originX + (Math.random() - 0.25) * 28;
+        this.y = H - 1;
+        this.vx = 0.6 + Math.random() * 1.2 + wind.gust * 0.25;
+        this.vy = -(1.2 + Math.random() * 1.8);
+        this.life = 0;
+        this.decay = 0.018 + Math.random() * 0.02;
+      };
+      Spark.prototype.update = function (dt) {
+        this.vx += windForce(this.x, this.y) * 2.2;
+        this.vy += 0.025 * dt;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life += this.decay;
+      };
+      Spark.prototype.draw = function () {
+        if (this.life >= 1) return;
+        const alpha = (1 - this.life) * 0.75;
+        ctx.strokeStyle = `rgba(255, 220, 150, ${alpha})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(this.x - this.vx * 1.2, this.y - this.vy * 1.2);
+        ctx.lineTo(this.x, this.y);
+        ctx.stroke();
+      };
 
       function init() {
-        const cx = W / 2;
-        for (let i = 0; i < 80; i++) {
-          const p = new FlameParticle(cx);
-          p.y    = H - Math.random() * 160;
+        const origin = flameX();
+        for (let i = 0; i < LIMITS.flames; i++) {
+          const p = new FlameParticle(origin);
+          p.y = H - Math.random() * H * 0.55;
           PARTICLES.push(p);
         }
-        for (let i = 0; i < 25; i++) {
-          const e = new Ember(cx);
-          e.y    = H - Math.random() * 180;
+        for (let i = 0; i < LIMITS.embers; i++) {
+          const e = new Ember(origin);
+          e.y = H - Math.random() * H * 0.25;
           EMBERS.push(e);
         }
       }
 
-      function animate() {
-        ctx.clearRect(0, 0, W, H);
+      function drawGlow(t, flicker) {
+        root.style.setProperty('--glow-a', (0.09 + flicker * 0.11).toFixed(3));
+        root.style.setProperty('--flame-x', cx + 'px');
 
-        const cx = W / 2;
-
-        const baseGrad = ctx.createRadialGradient(cx, H, 0, cx, H, 200);
-        baseGrad.addColorStop(0,   'rgba(232,146,60,0.30)');
-        baseGrad.addColorStop(0.35,'rgba(194,90,42,0.10)');
-        baseGrad.addColorStop(1,   'rgba(0,0,0,0)');
+        const baseGrad = ctx.createRadialGradient(cx, H, 0, cx, H - H * 0.2, H * 0.65);
+        baseGrad.addColorStop(0, `rgba(232,146,60,${0.2 * flicker})`);
+        baseGrad.addColorStop(0.35, `rgba(194,90,42,${0.07 * flicker})`);
+        baseGrad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = baseGrad;
         ctx.fillRect(0, 0, W, H);
+      }
+
+      function animate(now) {
+        if (!running) return;
+        now = now ?? performance.now();
+
+        const dt = Math.min((now - lastFrame) / 1000, 0.05);
+        lastFrame = now;
+        const workStart = performance.now();
+
+        const t = (now - t0) * 0.001;
+        updateWind(dt);
+
+        const flicker = 0.84 + Math.sin(t * 3.2) * 0.1 + Math.sin(t * 5.7) * 0.05;
+        cx = flameX();
+
+        ctx.clearRect(0, 0, W + 2, H + 2);
+        drawGlow(t, flicker);
 
         ctx.globalCompositeOperation = 'lighter';
 
-        for (let i = PARTICLES.length - 1; i >= 0; i--) {
+        for (let i = 0; i < PARTICLES.length; i++) {
           const p = PARTICLES[i];
-          p.update();
+          p.update(dt);
           p.draw();
-          if (p.life >= 1 || p.size < 0.5) {
+          if (p.life >= 1 || p.size < 0.6 || p.y < -20) {
             p.spawn(cx);
           }
         }
 
-        if (Math.random() < 0.55 && PARTICLES.length < 140) {
-          PARTICLES.push(new FlameParticle(cx));
-        }
-
         for (let i = EMBERS.length - 1; i >= 0; i--) {
           const e = EMBERS[i];
-          e.update();
+          e.originX = cx;
+          e.update(dt);
           e.draw();
-          if (e.life >= 1) {
-            e.cx = cx;
+          if (e.done()) {
             e.spawn();
           }
         }
 
-        if (Math.random() < 0.10 && EMBERS.length < 50) {
+        if (Math.random() < 0.04 && EMBERS.length < LIMITS.embers) {
           EMBERS.push(new Ember(cx));
+        }
+
+        for (let i = SPARKS.length - 1; i >= 0; i--) {
+          SPARKS[i].update(dt);
+          SPARKS[i].draw();
+          if (SPARKS[i].life >= 1) SPARKS.splice(i, 1);
+        }
+
+        if (Math.random() < 0.018 && SPARKS.length < LIMITS.sparks) {
+          SPARKS.push(new Spark(cx));
         }
 
         ctx.globalCompositeOperation = 'source-over';
 
+        if (PROFILE) {
+          if (!profileWallStart) profileWallStart = performance.now();
+          profileFrames++;
+          profileWorkMs += performance.now() - workStart;
+          const elapsed = performance.now() - profileWallStart;
+          if (elapsed >= 2000) {
+            const fps = (profileFrames / elapsed) * 1000;
+            const ms = profileWorkMs / profileFrames;
+            const line = `[hearth flame] ~${fps.toFixed(0)} fps ~${ms.toFixed(2)} ms work/frame | ${PARTICLES.length} flames ${EMBERS.length} embers ${SPARKS.length} sparks | wind ${wind.gust.toFixed(2)} | canvas ${Math.round(W)}×${Math.round(H)}`;
+            console.log(line);
+            window.__hearthProfile = { fps, ms, flames: PARTICLES.length, embers: EMBERS.length, sparks: SPARKS.length, W, H };
+            profileFrames = 0;
+            profileWorkMs = 0;
+            profileWallStart = performance.now();
+          }
+        }
+
         requestAnimationFrame(animate);
       }
 
-      init();
-      animate();
+      if (REDUCED) {
+        root.style.setProperty('--glow-a', '0.12');
+        root.style.setProperty('--flame-x', flameX() + 'px');
+        return;
+      }
 
+      boot();
     })();
   </script>
 

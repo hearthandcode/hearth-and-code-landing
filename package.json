@@ -1,0 +1,25 @@
+{
+  "name": "hearth-and-code-landing",
+  "version": "1.0.0",
+  "description": "Pre-launch landing for [Hearth & Code](https://hearthandcode.dev): waitlist via Substack embed, build-in-public links, flame animation.",
+  "main": "index.js",
+  "scripts": {
+    "profile:flame": "node scripts/profile-flame.mjs",
+    "playwright:install": "playwright install chromium"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hearthandcode/hearth-and-code-landing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hearthandcode/hearth-and-code-landing/issues"
+  },
+  "homepage": "https://github.com/hearthandcode/hearth-and-code-landing#readme",
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}
