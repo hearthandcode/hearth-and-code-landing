@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Council — Hearth &amp; Code</title>
+  <meta name="description" content="The people responsible for what Hearth &amp; Code is and what it's trying to do.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Council — Hearth &amp; Code">
+  <meta property="og:description" content="The people responsible for what Hearth &amp; Code is and what it's trying to do.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hearthandcode.dev/council.html">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@HearthAndCode">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Council-page-only styles ─────────────────────────── */
+
+    .council-grid {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      margin: 48px 0 64px;
+    }
+
+    .council-card {
+      display: flex;
+      gap: 24px;
+      padding: 32px 28px;
+      background: var(--bg-raised);
+      border: 1px solid var(--wood);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      align-items: flex-start;
+    }
+    .council-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      opacity: 0.3;
+    }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--wood);
+      border: 2px solid var(--wood-light);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--amber);
+      box-shadow: 0 0 24px rgba(232, 146, 60, 0.12);
+      letter-spacing: 0.02em;
+    }
+
+    .council-role {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--forge);
+      margin-bottom: 6px;
+    }
+
+    .council-info h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .council-info p {
+      font-size: 0.875rem;
+      color: var(--ash);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .council-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .council-links a {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--ash);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(184, 168, 146, 0.25);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .council-links a:hover { color: var(--amber); border-color: rgba(232, 146, 60, 0.5); }
+
+    @media (max-width: 600px) {
+      .council-card { flex-direction: column; gap: 16px; padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-glow" aria-hidden="true"></div>
+  <div id="hearth-embers" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <nav>
+      <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
+      <ul class="nav-links">
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/mission.html">Mission</a></li>
+        <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
+        <li><a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+    </nav>
+
+    <header class="page-header">
+      <p class="eyebrow">Council</p>
+      <h1>The Council</h1>
+      <p class="page-lead">In Hearth &amp; Code's vocabulary, the Council holds the values and guards the fire. Not a board or committee — the people who've accepted responsibility for what this is and what it's supposed to become.</p>
+    </header>
+
+    <div class="council-grid">
+      <article class="council-card">
+        <div class="avatar" aria-hidden="true">SR</div>
+        <div class="council-info">
+          <span class="council-role">Hearth-Keeper</span>
+          <h2>Scott Rallya</h2>
+          <p>RPI Computer Science &amp; Psychology, 2007. Built software across fintech, healthcare, telephony, and media — stepped back in 2020 and started designing the thing that would have helped him get back. Now building Hearth &amp; Code from the ground up.</p>
+          <div class="council-links">
+            <a href="https://github.com/cosmatrexis" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="notice-box">
+      <p>The Council grows as Hearth &amp; Code grows. There are no open applications right now. If you've been following this and you have something to give — skills, time, perspective — the fire is open. Reach out at <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>.</p>
+    </div>
+
+    <div class="bip-links" style="justify-content: flex-start; margin-top: 56px;">
+      <a class="bip-link" href="/about.html">About &rarr;</a>
+      <a class="bip-link" href="/mission.html">Mission &rarr;</a>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2026 Hearth &amp; Code
+        &nbsp;&middot;&nbsp;
+        <a href="/about.html">About</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/mission.html">Mission</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/portfolio/">Portfolio</a>
+        &nbsp;&middot;&nbsp;
+        <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/legal.html">Legal &amp; Privacy</a>
+      </p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -14,107 +14,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
 
   <style>
-    :root {
-      --bg:        #1C1714;
-      --bg-raised: #2A2320;
-      --wood:      #4A3528;
-      --wood-light:#5C4332;
-      --wood-dark: #2E2118;
-      --amber:     #E8923C;
-      --gold:      #F4B860;
-      --forge:     #C25A2A;
-      --cream:     #F2E7D5;
-      --ash:       #B8A892;
+    /* ── Legal-page-only styles ───────────────────────────── */
 
-      --font-display: 'Fraunces', Georgia, serif;
-      --font-body:    'Inter', system-ui, sans-serif;
-      --font-mono:    'JetBrains Mono', monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--cream);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Static ambient glow — no animation on a legal doc */
-    #page-glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(
-          ellipse 50% 60% at 8% 100%,
-          rgba(232, 146, 60, 0.10) 0%,
-          rgba(194, 90, 42, 0.04) 35%,
-          transparent 60%
-        );
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(
-        ellipse 90% 80% at 30% 50%,
-        transparent 35%,
-        rgba(18, 12, 8, 0.55) 100%
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .wrap {
-      position: relative;
-      z-index: 2;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ── Nav ─────────────────────────────────────────────────── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 0 0;
-    }
-
-    .wordmark {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      color: var(--cream);
-      text-decoration: none;
-    }
-    .wordmark .amp { color: var(--amber); font-style: italic; }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 24px;
-    }
-    .nav-links a {
-      color: var(--ash);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--cream); }
-
-    /* ── Legal header ─────────────────────────────────────────── */
     .legal-header {
       padding: 64px 0 40px;
       border-bottom: 1px solid var(--wood);
@@ -146,24 +50,12 @@
       line-height: 1.75;
     }
 
-    /* ── Legal content ────────────────────────────────────────── */
     article.legal {
       padding: 52px 0 96px;
     }
 
     .legal-section {
       margin-bottom: 56px;
-    }
-
-    .section-num {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      color: var(--forge);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      opacity: 0.9;
     }
 
     .legal-section h2 {
@@ -222,75 +114,13 @@
     }
     .legal-section a:hover { color: var(--gold); border-color: var(--gold); }
 
-    /* Notice callout box */
-    .notice-box {
-      padding: 16px 20px;
-      border-left: 2px solid var(--forge);
-      background: rgba(42, 35, 32, 0.5);
-      border-radius: 0 4px 4px 0;
-      margin: 20px 0 14px;
-    }
-    .notice-box p {
-      font-size: 0.875rem;
-      margin-bottom: 0;
-    }
-
-    /* Table of contents */
-    .toc {
-      margin: 28px 0 0;
-      padding: 20px 22px;
-      background: rgba(42, 35, 32, 0.35);
-      border: 1px solid var(--wood);
-      border-radius: 6px;
-      display: inline-block;
-    }
-    .toc-title {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--forge);
-      display: block;
-      margin-bottom: 10px;
-    }
-    .toc ol {
-      margin: 0 0 0 18px;
-    }
-    .toc li {
-      font-size: 0.85rem;
-      color: var(--ash);
-      margin-bottom: 4px;
-    }
-    .toc a {
-      color: var(--ash);
-      text-decoration: none;
-      border-bottom: none;
-      transition: color 0.2s;
-    }
-    .toc a:hover { color: var(--cream); }
-
-    /* ── Footer ─────────────────────────────────────────────── */
-    footer {
-      padding: 28px 0 48px;
-      border-top: 1px solid var(--wood);
-      text-align: center;
-    }
-    footer p {
-      font-size: 0.78rem;
-      color: var(--ash);
-      opacity: 0.55;
-    }
-    footer a { color: inherit; }
-
     @media (max-width: 600px) {
-      .nav-links { display: none; }
       .legal-header { padding: 48px 0 32px; }
       article.legal { padding: 36px 0 72px; }
-      .toc { display: block; }
     }
   </style>
 </head>
-<body>
+<body class="glow-static">
 
   <div id="page-glow" aria-hidden="true"></div>
 
@@ -299,6 +129,8 @@
     <nav>
       <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
       <ul class="nav-links">
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/mission.html">Mission</a></li>
         <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
         <li><a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       </ul>
@@ -625,7 +457,11 @@
       <p>
         &copy; 2026 Hearth &amp; Code
         &nbsp;&middot;&nbsp;
-        Built by Scott
+        <a href="/about.html">About</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/mission.html">Mission</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/portfolio/">Portfolio</a>
         &nbsp;&middot;&nbsp;
         <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>
         &nbsp;&middot;&nbsp;

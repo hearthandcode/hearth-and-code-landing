@@ -19,229 +19,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
 
   <style>
-    :root {
-      --bg:        #1C1714;
-      --bg-raised: #2A2320;
-      --wood:      #4A3528;
-      --wood-light:#5C4332;
-      --wood-dark: #2E2118;
-      --amber:     #E8923C;
-      --gold:      #F4B860;
-      --forge:     #C25A2A;
-      --teal:      #5E7E78;
-      --cream:     #F2E7D5;
-      --ash:       #B8A892;
-
-      --font-display: 'Fraunces', Georgia, serif;
-      --font-body:    'Inter', system-ui, sans-serif;
-      --font-mono:    'JetBrains Mono', monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--cream);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Full-page ambient firelight — breathing campfire glow */
-    #page-glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    #page-glow::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(
-          ellipse 60% 75% at 8% 100%,
-          rgba(232, 146, 60, 0.17) 0%,
-          rgba(194, 90, 42, 0.07) 30%,
-          transparent 62%
-        ),
-        radial-gradient(
-          ellipse 85% 55% at 8% 90%,
-          rgba(244, 184, 96, 0.08) 0%,
-          transparent 58%
-        );
-      animation: hearthBreathe 8s ease-in-out infinite;
-      will-change: opacity, transform;
-    }
-
-    #page-glow::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        ellipse 45% 60% at 9% 100%,
-        rgba(244, 200, 110, 0.14) 0%,
-        rgba(232, 146, 60, 0.04) 38%,
-        transparent 58%
-      );
-      animation: hearthFlare 13s ease-in-out infinite;
-      will-change: opacity;
-    }
-
-    @keyframes hearthBreathe {
-      0%, 100% { opacity: 0.80; transform: translateX(0); }
-      25%       { opacity: 1.10; transform: translateX(-5px); }
-      55%       { opacity: 0.85; transform: translateX(4px); }
-      80%       { opacity: 1.05; transform: translateX(-2px); }
-    }
-
-    @keyframes hearthFlare {
-      0%, 65%, 100% { opacity: 0; }
-      75%            { opacity: 0.90; }
-      88%            { opacity: 0.12; }
-    }
-
-    #hearth-embers {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 30%;
-      height: 3px;
-      background: linear-gradient(90deg,
-        rgba(194, 90, 42, 0.65) 0%,
-        rgba(232, 146, 60, 0.35) 30%,
-        rgba(244, 184, 96, 0.15) 55%,
-        transparent 75%);
-      pointer-events: none;
-      z-index: 1;
-      animation: embersGlow 5s ease-in-out infinite alternate;
-      will-change: opacity;
-    }
-
-    @keyframes embersGlow {
-      from { opacity: 0.65; }
-      to   { opacity: 1.00; }
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(
-        ellipse 90% 80% at 30% 50%,
-        transparent 35%,
-        rgba(18, 12, 8, 0.55) 100%
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .wrap {
-      position: relative;
-      z-index: 2;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ── Wood panel texture (CSS — no image assets) ─────────────── */
-    .wood-panel {
-      --grain-a: rgba(0, 0, 0, 0.045);
-      --grain-b: rgba(255, 220, 170, 0.025);
-      background:
-        repeating-linear-gradient(
-          93deg,
-          transparent 0px,
-          transparent 3px,
-          var(--grain-a) 3px,
-          var(--grain-a) 4px
-        ),
-        repeating-linear-gradient(
-          0deg,
-          transparent 0px,
-          transparent 11px,
-          var(--grain-b) 11px,
-          var(--grain-b) 12px
-        ),
-        linear-gradient(175deg, #3d2e24 0%, var(--wood) 38%, #35261c 72%, var(--wood-dark) 100%);
-      border: 2px solid var(--wood-light);
-      border-radius: 8px;
-      box-shadow:
-        inset 0 1px 0 rgba(255, 220, 180, 0.1),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.35),
-        0 6px 28px rgba(0, 0, 0, 0.45),
-        0 0 40px rgba(232, 146, 60, 0.04);
-    }
-    .wood-panel__rim {
-      padding: 3px;
-      border-radius: 10px;
-      background: linear-gradient(145deg, #6b5040, #3a2a20);
-      box-shadow: inset 0 1px 0 rgba(255, 220, 180, 0.06);
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 0 0;
-    }
-
-    .wordmark {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      color: var(--cream);
-      text-decoration: none;
-    }
-    .wordmark .amp { color: var(--amber); font-style: italic; }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 24px;
-    }
-    .nav-links a {
-      color: var(--ash);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--cream); }
-
-    .hero {
-      text-align: center;
-      padding: 88px 0 72px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 28px;
-    }
-    .eyebrow::before,
-    .eyebrow::after {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background: var(--forge);
-      opacity: 0.55;
-    }
+    /* ── Homepage-only styles ─────────────────────────────── */
 
     h1 {
       font-family: var(--font-display);
@@ -257,6 +38,11 @@
       text-shadow:
         0 0 40px rgba(232, 146, 60, 0.4),
         0 0 80px rgba(232, 146, 60, 0.15);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 88px 0 72px;
     }
 
     .hero-sub {
@@ -277,7 +63,7 @@
       margin: 0 auto 40px;
     }
 
-    /* ── Subscribe (replaces broken local iframe preview) ───────── */
+    /* ── Subscribe ────────────────────────────────────────── */
     .subscribe-wrap {
       max-width: 440px;
       margin: 0 auto;
@@ -341,107 +127,7 @@
       text-align: center;
     }
 
-    .divider {
-      width: 48px;
-      height: 1px;
-      background: var(--wood);
-      margin: 72px auto;
-      opacity: 0.8;
-    }
-
-    .section-intro {
-      text-align: center;
-      max-width: 520px;
-      margin: 0 auto 36px;
-    }
-    .section-intro h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.35rem, 3.5vw, 1.75rem);
-      font-weight: 600;
-      color: var(--cream);
-      margin-bottom: 10px;
-    }
-    .section-intro p {
-      font-size: 0.9rem;
-      color: var(--ash);
-      line-height: 1.7;
-    }
-
-    .founder-note {
-      max-width: 540px;
-      margin: 0 auto 88px;
-      padding: 22px 24px;
-      border-left: 2px solid var(--forge);
-      background: rgba(42, 35, 32, 0.45);
-      border-radius: 0 6px 6px 0;
-    }
-    .founder-note p {
-      font-size: 0.9rem;
-      color: var(--ash);
-      line-height: 1.75;
-    }
-    .founder-note a {
-      color: var(--amber);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(232, 146, 60, 0.35);
-    }
-    .founder-note a:hover { color: var(--gold); border-color: var(--gold); }
-    .founder-note .sig {
-      display: block;
-      margin-top: 12px;
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      color: var(--cream);
-      font-style: italic;
-    }
-
-    .props {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      margin-bottom: 88px;
-    }
-
-    .prop {
-      padding: 28px 24px;
-      background: var(--bg-raised);
-      border: 1px solid var(--wood);
-      border-radius: 6px;
-      position: relative;
-      overflow: hidden;
-    }
-    .prop::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--amber), transparent);
-      opacity: 0.35;
-    }
-
-    .prop-mark {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      color: var(--forge);
-      opacity: 0.85;
-      margin-bottom: 12px;
-    }
-    .prop h3 {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--cream);
-      margin-bottom: 8px;
-    }
-    .prop p {
-      font-size: 0.875rem;
-      color: var(--ash);
-      line-height: 1.65;
-    }
-
-    /* ── Build log list ─────────────────────────────────────────── */
+    /* ── Build log section ────────────────────────────────── */
     .bip {
       text-align: center;
       padding-bottom: 88px;
@@ -551,53 +237,11 @@
       opacity: 0.85;
     }
 
-    .bip-links {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-    .bip-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 20px;
-      border: 1px solid var(--wood);
-      border-radius: 4px;
-      background: var(--bg-raised);
-      color: var(--ash);
-      text-decoration: none;
-      font-size: 0.875rem;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .bip-link:hover { border-color: var(--amber); color: var(--cream); }
-
-    footer {
-      padding: 28px 0 120px;
-      border-top: 1px solid var(--wood);
-      text-align: center;
-    }
-    footer p {
-      font-size: 0.78rem;
-      color: var(--ash);
-      opacity: 0.55;
-    }
-    footer a { color: inherit; }
-
+    /* ── Homepage responsive ──────────────────────────────── */
     @media (max-width: 600px) {
-      .nav-links { display: none; }
       h1 { font-size: 2.4rem; }
-      .props { grid-template-columns: 1fr; }
       .subscribe-form { flex-direction: column; }
       .subscribe-form button { border-radius: 0 0 3px 3px; }
-      .founder-note { margin-left: 0; margin-right: 0; padding: 18px 16px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #page-glow::before { animation: none; opacity: 0.85; transform: none; }
-      #page-glow::after  { animation: none; opacity: 0; }
-      #hearth-embers     { animation: none; opacity: 0.75; }
     }
   </style>
 </head>
@@ -611,7 +255,8 @@
     <nav>
       <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
       <ul class="nav-links">
-        <li><a href="/portfolio/">Portfolio</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/mission.html">Mission</a></li>
         <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
         <li><a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       </ul>
@@ -680,7 +325,7 @@
         on a budget, with more architecture docs than revenue so far.
         <a href="https://hearthandcode.substack.com/p/building-a-university-shaped-ed-tech">Read how it started &rarr;</a>
         &nbsp;&middot;&nbsp;
-        <a href="/portfolio/">Technical background &rarr;</a>
+        <a href="/about.html">About me &rarr;</a>
       </p>
       <span class="sig">Pull up a chair.</span>
     </aside>
@@ -728,7 +373,11 @@
       <p>
         &copy; 2026 Hearth &amp; Code
         &nbsp;&middot;&nbsp;
-        Built by Scott
+        <a href="/about.html">About</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/mission.html">Mission</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/portfolio/">Portfolio</a>
         &nbsp;&middot;&nbsp;
         <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>
         &nbsp;&middot;&nbsp;
@@ -737,18 +386,6 @@
     </footer>
 
   </div>
-
-  <style>
-    .visually-hidden {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-  </style>
-
 
 </body>
 </html>
