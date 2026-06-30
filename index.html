@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hearth &amp; Code — You're not coding alone.</title>
-  <meta name="description" content="Pre-launch home for Hearth &amp; Code — honest build log, waitlist, and what Scott is actually working on.">
+  <title>Hearth &amp; Code — You're not building alone.</title>
+  <meta name="description" content="An AI-first learning platform for the minds the old tools left out. Learn the foundations and the real use of AI, then go build what you're curious about.">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Hearth &amp; Code">
-  <meta property="og:description" content="You're not coding alone.">
+  <meta property="og:description" content="You're not building alone.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://hearthandcode.dev">
 
@@ -42,7 +42,7 @@
 
     .hero {
       text-align: center;
-      padding: 88px 0 72px;
+      padding: 88px 0 60px;
     }
 
     .hero-sub {
@@ -50,8 +50,17 @@
       color: var(--ash);
       font-weight: 400;
       line-height: 1.8;
-      max-width: 540px;
-      margin: 0 auto 20px;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+    .hero-refrain {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--cream);
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
     }
     .hero-honest {
       font-family: var(--font-mono);
@@ -60,7 +69,7 @@
       text-transform: uppercase;
       color: var(--ash);
       opacity: 0.55;
-      margin: 0 auto 40px;
+      margin: 28px auto 0;
     }
 
     /* ── Subscribe ────────────────────────────────────────── */
@@ -125,6 +134,29 @@
       opacity: 0.6;
       margin-top: 10px;
       text-align: center;
+    }
+
+    /* ── Closing CTA ──────────────────────────────────────── */
+    .closing-cta {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 64px 0 24px;
+    }
+    .closing-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4.2vw, 2.3rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+    .closing-cta p {
+      color: var(--ash);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin: 0 auto 28px;
+      max-width: 480px;
     }
 
     /* ── Build log section ────────────────────────────────── */
@@ -242,6 +274,7 @@
       h1 { font-size: 2.4rem; }
       .subscribe-form { flex-direction: column; }
       .subscribe-form button { border-radius: 0 0 3px 3px; }
+      .cta-row .btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -255,6 +288,7 @@
     <nav>
       <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
       <ul class="nav-links">
+        <li><a href="/building.html">How it works</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="/mission.html">Mission</a></li>
         <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
@@ -263,78 +297,120 @@
     </nav>
 
     <section class="hero">
-      <p class="eyebrow">post 1 out &nbsp;&middot;&nbsp; pre-launch</p>
+      <p class="eyebrow">building in public &nbsp;&middot;&nbsp; pre-launch</p>
 
       <h1>
         You're not<br>
-        <span class="glow">coding alone.</span>
+        <span class="glow">building alone.</span>
       </h1>
 
       <p class="hero-sub">
-        For developers who've finished the courses and still feel stuck at the keyboard.
-        I'm building toward university-shaped depth — personal paths, real craft, a Socratic tutor —
-        and writing down what that actually takes.
+        Hearth &amp; Code is an AI-first learning platform for the people the old tools left out.
+        The AI sits next to you and doesn't leave. It helps you learn the foundations, and the
+        real use of AI, so you can go explore whatever you're actually curious about. The traits
+        you were taught to apologize for &mdash; the hyperfocus, the racing mind, the wiring that
+        never quite fit &mdash; turn out to be the engine of how you learn here, and everything
+        you make along the way is yours to keep.
       </p>
-      <p class="hero-honest">No shipped app yet &middot; docs, architecture, and honesty for now</p>
 
-      <div class="subscribe-wrap">
-        <div class="wood-panel__rim">
-          <div class="wood-panel subscribe-panel">
-            <h2>Toss a log on the fire</h2>
-            <p class="subscribe-lead">Weekly notes from the build. I'll email when there's something worth opening.</p>
-            <form class="subscribe-form" id="subscribe-form" action="https://hearthandcode.substack.com/subscribe" method="get" target="_blank" rel="noopener noreferrer">
-              <label for="email-input" class="visually-hidden">Email address</label>
-              <input id="email-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
-              <button type="submit">Join the log &rarr;</button>
-            </form>
-          </div>
-        </div>
-        <p class="subscribe-note">Opens Substack to confirm. Unsubscribe whenever.</p>
+      <p class="hero-refrain">If our tooling doesn't help you grow, then we need to revise it.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#subscribe">Pull up a chair &rarr;</a>
+        <a class="btn btn-secondary" href="#build-log">See what people are making</a>
       </div>
+
+      <p class="hero-honest">No shipped app yet &middot; building in public, honestly, for now</p>
+    </section>
+
+    <section class="subscribe-wrap" id="subscribe">
+      <div class="wood-panel__rim">
+        <div class="wood-panel subscribe-panel">
+          <h2>Toss a log on the fire</h2>
+          <p class="subscribe-lead">Weekly notes from the build. I'll email when there's something worth opening.</p>
+          <form class="subscribe-form" id="subscribe-form" action="https://hearthandcode.substack.com/subscribe" method="get" target="_blank" rel="noopener noreferrer">
+            <label for="email-input" class="visually-hidden">Email address</label>
+            <input id="email-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
+            <button type="submit">Join the log &rarr;</button>
+          </form>
+        </div>
+      </div>
+      <p class="subscribe-note">Opens Substack to confirm. Unsubscribe whenever.</p>
     </section>
 
     <div class="divider" role="separator"></div>
 
-    <div class="section-intro">
-      <h2>What I'm building toward</h2>
-      <p>Design pillars, not a product tour. The platform is still on the drawing board — these are the bets I'm placing.</p>
-    </div>
-
-    <section class="props" aria-label="What Hearth &amp; Code is designed around">
-      <div class="prop">
-        <span class="prop-mark" aria-hidden="true">I — LEARN</span>
-        <h3>Paths shaped by pedagogy</h3>
-        <p>Diagnostic placement and spaced practice. Theory next to implementation, not after it. A curriculum that branches from what you actually need to learn — not a syllabus someone else already finished.</p>
-      </div>
-      <div class="prop">
-        <span class="prop-mark" aria-hidden="true">II — CRAFT</span>
-        <h3>Progress that has weight</h3>
-        <p>Skill trees mapped to competencies, mastery gates, artifacts you can point to. I want progress to mean you understand something — not that you cleared a checklist.</p>
-      </div>
-      <div class="prop">
-        <span class="prop-mark" aria-hidden="true">III — ASK</span>
-        <h3>AI that teaches, not tells</h3>
-        <p>A Socratic tutor that adapts to your goals and asks the next right question. I use AI tooling to build it; I won't let it become a chatbot that hands out finished answers.</p>
-      </div>
+    <!-- §1 — Turn your traits into amplifiers -->
+    <section class="pitch">
+      <span class="pitch-label" aria-hidden="true">I — Amplify</span>
+      <h2>Your wiring was never the problem. The interface was.</h2>
+      <p>For most of your life the tools were built for a kind of mind that isn't yours. So the work that should have been yours stalled at a step that had nothing to do with the idea itself. Not the thinking. The starting.</p>
+      <p>Hearth &amp; Code is AI-first, so the way you think meshes with the way you work. Hyperfocus, multitasking, the pattern-sense that won't switch off, the things you were told to manage, those are instruments here. We don't fix you. There was never anything to fix. We amplify what you already are.</p>
+      <a class="cta-link" href="/building.html">See how it works &rarr;</a>
     </section>
 
-    <aside class="founder-note" aria-label="About the founder">
-      <p>
-        I'm Scott — RPI CS and Psychology, years in healthcare and fintech software, stepped back in 2020,
-        and trying to become more builder than dreamer. Hearth &amp; Code is that attempt, in public,
-        on a budget, with more architecture docs than revenue so far.
-        <a href="https://hearthandcode.substack.com/p/building-a-university-shaped-ed-tech">Read how it started &rarr;</a>
-        &nbsp;&middot;&nbsp;
-        <a href="/about.html">About me &rarr;</a>
-      </p>
-      <span class="sig">Pull up a chair.</span>
-    </aside>
+    <!-- §2 — Learn to bring your ideas to life -->
+    <section class="pitch">
+      <span class="pitch-label" aria-hidden="true">II — Make</span>
+      <h2>The skill gap was never supposed to be the gate to learning.</h2>
+      <p>The image in your head. The song you can already hear. The app you keep sketching on the backs of things. For too long the missing skill sat between you and the making of it, so you never even got to learn your way across.</p>
+      <p>Here you learn to use AI to make those things real, and to chase down the next thing that catches you. You bring the idea. The Code helps you learn the part you could never push through alone. What you make is yours, and it's the proof that you learned it.</p>
+      <a class="cta-link" href="/building.html">Start with one idea &rarr;</a>
+    </section>
 
-    <section class="bip">
+    <!-- §3 — Real learning paths, real outcomes -->
+    <section class="pitch">
+      <span class="pitch-label" aria-hidden="true">III — Paths</span>
+      <h2>You finish with something you actually made.</h2>
+      <p>This isn't a feed of lessons you scroll past and forget. Every path is built backward from a real outcome, a thing you can point to, run, share, or use. Theory sits next to the work it explains, not in a chapter you read first and never open again.</p>
+      <p>And the path adapts to what you actually need to learn next, not to a syllabus someone else already finished years ago and handed down without ever asking who you were.</p>
+      <a class="cta-link" href="/building.html">Browse the paths &rarr;</a>
+    </section>
+
+    <!-- §4 — Tools that meet your energy -->
+    <section class="pitch">
+      <span class="pitch-label" aria-hidden="true">IV — Energy</span>
+      <h2>A high day and a low day are not the same day.</h2>
+      <p>You don't perform readiness to be let in. On a good day the platform gets out of your way and lets you run. On a low day it offers a lighter way in, a smaller step, a gentler surface, the part of the work that still feels possible. The kindling's always here.</p>
+      <p>Least friction, always. The tool bends to where you actually are, instead of asking you to be somewhere you're not.</p>
+      <a class="cta-link" href="/building.html">Find your way in &rarr;</a>
+    </section>
+
+    <!-- §5 — We use AI, and we're not ashamed that we do -->
+    <section class="pitch">
+      <span class="pitch-label" aria-hidden="true">V — The Code</span>
+      <h2>This is the floor, not the apology.</h2>
+      <p>We're not going to hedge about it. AI is the reason the people the old tools left out can build now, so it's the foundation here, not a footnote. No hype, no overnight miracles, no "10&times; everything." Just a companion that does the heavy part honestly, so you can do the part only you can do.</p>
+      <p class="refrain">The Code is the key. The Hearth is what you build with it.</p>
+      <a class="cta-link" href="/building.html">Meet the Code &rarr;</a>
+    </section>
+
+    <!-- §6 — A global hearth -->
+    <section class="pitch">
+      <span class="pitch-label" aria-hidden="true">VI — The Circle</span>
+      <h2>No one builds alone here.</h2>
+      <p>People have always built better around a fire, with other people next to them. We kept the fire and changed the room. The circle spans the world now instead of one village. You build alongside people whose minds work the way yours does, who get why the old tools never fit, who are making things they were told they'd never make.</p>
+      <p class="refrain">Pull up a chair. The fire's already lit.</p>
+      <a class="cta-link" href="#subscribe">Join the Circle &rarr;</a>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="closing-cta">
+      <h2>Your ideas have waited long enough.</h2>
+      <p>The fire's already lit. The Code is ready to carry its part. Bring the thing you've been carrying around for years and never had the tools to make real.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#subscribe">Start building &rarr;</a>
+      </div>
+      <p class="hero-honest" style="text-align:center;">If our tooling doesn't help you grow, then we need to revise it.</p>
+    </section>
+
+    <div class="divider" role="separator"></div>
+
+    <section class="bip" id="build-log">
       <h2>The build log</h2>
       <p>
         I write about architecture, pedagogy, what shipped, and what broke.
-        One artifact a week when I have the energy — if I miss a week, I'll say why.
+        One artifact a week when I have the energy &mdash; if I miss a week, I'll say why.
       </p>
 
       <div class="build-log wood-panel__rim">
@@ -372,6 +448,8 @@
     <footer>
       <p>
         &copy; 2026 Hearth &amp; Code
+        &nbsp;&middot;&nbsp;
+        <a href="/building.html">How it works</a>
         &nbsp;&middot;&nbsp;
         <a href="/about.html">About</a>
         &nbsp;&middot;&nbsp;

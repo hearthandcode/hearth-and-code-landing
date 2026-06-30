@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — Hearth &amp; Code</title>
+  <meta name="description" content="What we're building: real learning paths that end in real things, an AI companion that stays, and tools that meet your energy. Honest about what exists and what doesn't.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="How It Works — Hearth &amp; Code">
+  <meta property="og:description" content="Real learning paths that end in real things, an AI companion that stays, and tools that meet your energy.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hearthandcode.dev/building.html">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@HearthAndCode">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css">
+
+  <style>
+    /* ── Building-page-only styles ────────────────────────── */
+    .content-section ul {
+      list-style: none;
+      margin: 4px 0 18px;
+      max-width: 680px;
+    }
+    .content-section ul li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 0.9375rem;
+      color: var(--ash);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .content-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 0.62em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 8px rgba(31, 182, 168, 0.5);
+    }
+    .content-section ul li strong { color: var(--cream); font-weight: 500; }
+
+    /* The "what's under the hood" stack callout */
+    .stack-note {
+      margin: 8px 0 18px;
+      padding: 20px 22px;
+      border-left: 2px solid var(--signal);
+      background: rgba(42, 35, 32, 0.5);
+      border-radius: 0 6px 6px 0;
+    }
+    .stack-note p {
+      font-size: 0.9rem !important;
+      color: var(--ash);
+      line-height: 1.8;
+      margin-bottom: 0 !important;
+    }
+    .stack-note strong { color: var(--cream); font-weight: 500; }
+    .stack-note .mono { font-family: var(--font-mono); color: var(--plasma); font-size: 0.86em; }
+
+    .cta-link { margin-top: 6px; }
+    .content-section { margin-bottom: 52px; }
+  </style>
+</head>
+<body>
+
+  <div id="page-glow" aria-hidden="true"></div>
+  <div id="hearth-embers" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <nav>
+      <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
+      <ul class="nav-links">
+        <li><a href="/building.html" aria-current="page">How it works</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/mission.html">Mission</a></li>
+        <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
+        <li><a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+    </nav>
+
+    <header class="page-header">
+      <p class="eyebrow">How it works</p>
+      <h1>What we're<br><span style="color:var(--amber)">building.</span></h1>
+      <p class="page-lead">Hearth &amp; Code is an AI-first learning platform for people whose minds never fit the standard ways of being taught. I built it on one bet: the skill gap was never supposed to be the gate to learning. You come here to learn the foundations and the effective use of AI, so you can go explore what you're curious about and grow. The things you make as you learn are the proof, the portfolio, the fruit of the learning. They aren't the point of the platform.</p>
+    </header>
+
+    <article class="content">
+
+      <div class="content-section">
+        <p>Here's how the pieces fit together.</p>
+      </div>
+
+      <!-- You learn by building real things -->
+      <div class="content-section">
+        <span class="section-num" aria-hidden="true">01</span>
+        <h2>You learn by building real things</h2>
+        <p>Most learning platforms hand you lessons and hope something sticks. We work backward from the outcome instead. Every path on Hearth &amp; Code starts with a real thing you'll make, an app, a track, an image, a working system, and the path is the shortest honest route to building it.</p>
+        <p>Theory shows up right where you need it, next to the work it explains, not in a chapter you read first and forget by the time it matters. You don't finish with a certificate of attendance. You finish with the thing you built.</p>
+        <a class="cta-link" href="/#subscribe">Browse the paths &rarr;</a>
+      </div>
+
+      <!-- Paths that adapt -->
+      <div class="content-section">
+        <span class="section-num" aria-hidden="true">02</span>
+        <h2>Paths that adapt to what you actually need</h2>
+        <p>No two makers arrive knowing the same things, so the path doesn't pretend you do. It branches from what you actually need to learn next, skipping what you already have, slowing down where it matters, and routing around the steps that AI can carry for you outright.</p>
+        <p>The point was never to clear a checklist. The point is that you can make the thing, and understand what you made.</p>
+        <a class="cta-link" href="/#subscribe">See a sample path &rarr;</a>
+      </div>
+
+      <!-- AI as companion -->
+      <div class="content-section" id="the-code">
+        <span class="section-num" aria-hidden="true">03</span>
+        <h2>AI as your companion, not your replacement</h2>
+        <p>The Code is the AI at the heart of the platform. Think of it less as a chatbot and more as someone sitting beside you who happens to be very good at the parts you find hard.</p>
+        <ul>
+          <li>It carries the heavy, draining steps, so your energy goes to the vision.</li>
+          <li>It teaches like a good mentor. Socratic, asking the next right question, never just handing you a finished answer to copy.</li>
+          <li>It stays. It doesn't reset every session. It works with you across the whole build.</li>
+        </ul>
+        <p>I know that part firsthand. The Code carries the exact piece of the work my own brain was never going to push through alone, and the relief of that is most of why this platform exists. The origin is always you. The Code extends what you can do. It never pretends to be the one with the idea.</p>
+        <a class="cta-link" href="/about.html">Meet the builder &rarr;</a>
+      </div>
+
+      <!-- It meets your energy -->
+      <div class="content-section">
+        <span class="section-num" aria-hidden="true">04</span>
+        <h2>It meets your energy</h2>
+        <p>A high day and a low day are not the same day, and the platform knows it. On a strong day it gets out of the way and lets you run. On a low day it offers a lighter way in: a smaller step, a gentler surface, the part of the work that still feels possible. You never have to perform readiness to be let in.</p>
+        <p>That's what "meet the maker where they are" means in practice. Least friction, on your energy, at your pace.</p>
+        <a class="cta-link" href="/mission.html">See the values behind it &rarr;</a>
+      </div>
+
+      <!-- Local-first and private -->
+      <div class="content-section">
+        <span class="section-num" aria-hidden="true">05</span>
+        <h2>Built local-first and private by design</h2>
+        <p>Your work and your learning history are yours. We build local-first wherever we can, so the platform runs close to you instead of shipping everything you do off to someone else's cloud. We prefer open formats and portable data. Nothing you make is trapped here.</p>
+        <div class="stack-note">
+          <p><strong>The tools we build with, in the open.</strong> We use AI, and we're not ashamed of it, so we'll tell you exactly what's under the hood. The AI is <strong>provider-independent and routed per task</strong>. We use <span class="mono">Claude (Anthropic)</span> for some of the work and <span class="mono">Hermes (Nous Research's open agent framework)</span> for others, alongside <span class="mono">local-first open models</span> running close to you, and <span class="mono">OpenRouter</span> when a different model is the right call. The principle behind it: the right tool for each job, with a bias toward local-first and open. Showing the stack is part of how we build, in public and honestly.</p>
+        </div>
+        <a class="cta-link" href="/legal.html#privacy">Read our approach to privacy &rarr;</a>
+      </div>
+
+      <!-- Developer-learning core -->
+      <div class="content-section">
+        <span class="section-num" aria-hidden="true">06</span>
+        <h2>The developer-learning core</h2>
+        <p>Hearth &amp; Code grew out of a place for developers to learn by building, the original "you're not coding alone." That heart is still beating at the center of the platform. A serious, hands-on path for people learning to build software, with the same AI companion at their side.</p>
+        <p>It's not the whole house anymore, the house got bigger, but it's a beloved room in it, and it's where a lot of this started.</p>
+        <a class="cta-link" href="/#subscribe">Explore the developer path &rarr;</a>
+      </div>
+
+      <!-- Roadmap -->
+      <div class="content-section">
+        <span class="section-num" aria-hidden="true">07</span>
+        <h2>Where this is going</h2>
+        <p>We're building this in the shape of a diamond, not a firehose.</p>
+        <ul>
+          <li><strong>Start narrow.</strong> A small, solid foundation done well. A focused set of paths and a companion that genuinely helps, shipped honestly, with real makers using it.</li>
+          <li><strong>Expand outward.</strong> As the foundation proves out, the platform broadens to more kinds of making and more kinds of minds. The wide middle of the diamond.</li>
+          <li><strong>Come back together.</strong> Eventually it converges into one platform where the path, the companion, the community, and the tools all work as a single thing.</li>
+        </ul>
+        <p>We're early, and I'll be honest about that. We'll tell you what exists and what's still on the drawing board, and we won't over-promise the parts that aren't built yet. Am I sure about every piece of this? No. But the center I'm sure about, and it's the whole reason to build it. If the tooling doesn't help you grow, we revise it.</p>
+        <a class="cta-link" href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Follow the build &rarr;</a>
+      </div>
+
+      <div class="pull-quote">
+        <p>"The Code is the key. The Hearth is what you build with it."</p>
+      </div>
+
+      <div class="bip-links" style="justify-content: flex-start; margin-top: 48px;">
+        <a class="bip-link" href="/mission.html">Mission &amp; Values &rarr;</a>
+        <a class="bip-link" href="/about.html">About the builder &rarr;</a>
+        <a class="bip-link" href="/#subscribe">Pull up a chair &rarr;</a>
+      </div>
+
+    </article>
+
+    <footer>
+      <p>
+        &copy; 2026 Hearth &amp; Code
+        &nbsp;&middot;&nbsp;
+        <a href="/building.html">How it works</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/about.html">About</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/mission.html">Mission</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/portfolio/">Portfolio</a>
+        &nbsp;&middot;&nbsp;
+        <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/legal.html">Legal &amp; Privacy</a>
+      </p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

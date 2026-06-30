@@ -47,8 +47,8 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--amber), transparent);
-      opacity: 0.3;
+      background: var(--signal-travel);
+      opacity: 0.4;
     }
 
     .avatar {
@@ -105,7 +105,7 @@
       border-bottom: 1px solid rgba(184, 168, 146, 0.25);
       transition: color 0.2s, border-color 0.2s;
     }
-    .council-links a:hover { color: var(--amber); border-color: rgba(232, 146, 60, 0.5); }
+    .council-links a:hover { color: var(--plasma); border-color: rgba(63, 224, 208, 0.5); }
 
     @media (max-width: 600px) {
       .council-card { flex-direction: column; gap: 16px; padding: 24px 20px; }
@@ -122,6 +122,7 @@
     <nav>
       <a class="wordmark" href="/">Hearth <span class="amp">&amp;</span> Code</a>
       <ul class="nav-links">
+        <li><a href="/building.html">How it works</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="/mission.html">Mission</a></li>
         <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
@@ -162,6 +163,8 @@
     <footer>
       <p>
         &copy; 2026 Hearth &amp; Code
+        &nbsp;&middot;&nbsp;
+        <a href="/building.html">How it works</a>
         &nbsp;&middot;&nbsp;
         <a href="/about.html">About</a>
         &nbsp;&middot;&nbsp;

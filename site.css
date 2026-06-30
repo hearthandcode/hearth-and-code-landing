@@ -6,6 +6,7 @@
 
 /* ── Variables ───────────────────────────────────────────── */
 :root {
+  /* Warm — the room (carried forward, unchanged) */
   --bg:         #1C1714;
   --bg-raised:  #2A2320;
   --wood:       #4A3528;
@@ -17,6 +18,21 @@
   --teal:       #5E7E78;
   --cream:      #F2E7D5;
   --ash:        #B8A892;
+
+  /* Cybernetic — glow colors (Rev 2). Edges / signals / focus only,
+     never large fills. Cyan reads as charge, not a color block (~2% of page). */
+  --plasma:     #3FE0D0;  /* live signal / AI presence / focus rings */
+  --signal:     #1FB6A8;  /* circuit at rest / action links / code accent */
+  --sage:       #8FA395;  /* success (carried) */
+  --violet:     #8B7FD6;  /* rare Exocore ritual / level-up — a pinch */
+
+  /* Signature gradient — ember → cyan (cyan = final ~15%, "goes digital") */
+  --signal-travel: linear-gradient(90deg, #C25A2A 0%, #E8923C 30%, #F4B860 60%, #3FE0D0 100%);
+  --firelight:     linear-gradient(180deg, #C25A2A 0%, #E8923C 45%, #F4B860 100%);
+
+  /* Glows */
+  --glow-ember:  0 0 16px rgba(232, 146, 60, 0.35);
+  --glow-plasma: 0 0 14px rgba(63, 224, 208, 0.40);
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'Inter', system-ui, sans-serif;
@@ -142,12 +158,27 @@ body.glow-static #hearth-embers {
   background: linear-gradient(90deg,
     rgba(194, 90, 42, 0.65) 0%,
     rgba(232, 146, 60, 0.35) 30%,
-    rgba(244, 184, 96, 0.15) 55%,
-    transparent 75%);
+    rgba(244, 184, 96, 0.18) 52%,
+    rgba(63, 224, 208, 0.22) 78%,
+    transparent 92%);
   pointer-events: none;
   z-index: 1;
   animation: embersGlow 5s ease-in-out infinite alternate;
   will-change: opacity;
+}
+/* The spark that "goes digital" — a faint cyan node at the leading edge
+   of the ember bar. Ember at source, cyan at reach. */
+#hearth-embers::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: 8%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--plasma);
+  box-shadow: var(--glow-plasma);
+  opacity: 0.55;
 }
 
 @keyframes embersGlow {
@@ -559,6 +590,129 @@ footer a { color: inherit; }
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+/* ── Focus: charged when active (cyan ring) ──────────────────
+   Touching an interactive element "powers it on" — the whole
+   visual language in one gesture: warm at rest, cyan when live. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--plasma);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+.subscribe-form:focus-within {
+  border-color: var(--plasma) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35), var(--glow-plasma) !important;
+}
+
+/* ── CTA buttons (hero / closing) ────────────────────────────
+   Primary carries the signature ember→cyan gradient, used sparingly
+   (one or two per page). Secondary is wood-bordered, cyan on hover. */
+.cta-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 8px 0 4px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 5px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-primary {
+  position: relative;
+  color: #1C1714;
+  background: var(--signal-travel);
+  box-shadow: var(--glow-ember);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--glow-ember), var(--glow-plasma);
+}
+.btn-secondary {
+  color: var(--ash);
+  background: var(--bg-raised);
+  border-color: var(--wood);
+}
+.btn-secondary:hover {
+  color: var(--plasma);
+  border-color: var(--signal);
+  box-shadow: var(--glow-plasma);
+}
+
+/* ── Action links (the "machine voice" CTAs) ─────────────────
+   Per-section calls-to-action. Signal Teal at rest → Plasma Cyan on
+   hover. Mono, because these are the platform's transmissions. */
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(31, 182, 168, 0.35);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s, text-shadow 0.2s;
+}
+.cta-link:hover {
+  color: var(--plasma);
+  border-color: rgba(63, 224, 208, 0.6);
+  text-shadow: 0 0 12px rgba(63, 224, 208, 0.35);
+}
+
+/* ── Pitch sections (homepage narrative blocks) ──────────────
+   Warm prose blocks; the only cool note is the action link at the end. */
+.pitch {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+.pitch + .pitch {
+  border-top: 1px solid rgba(74, 53, 40, 0.4);
+}
+.pitch .pitch-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--forge);
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+.pitch h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.4vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--cream);
+  margin-bottom: 16px;
+  letter-spacing: -0.015em;
+}
+.pitch p {
+  font-size: 0.95rem;
+  color: var(--ash);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.pitch .refrain {
+  color: var(--cream);
+  font-style: italic;
 }
 
 /* ── Responsive ──────────────────────────────────────────── */
