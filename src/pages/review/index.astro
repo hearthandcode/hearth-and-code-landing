@@ -1,42 +1,57 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
 
+const { publicSite = false } = Astro.props;
+const routePrefix = publicSite ? '' : '/review';
+
 const rooms = [
-  { label: 'Research', title: 'A question being worked on in public.', copy: 'A self-directed N=1 inquiry into cognitive scaffolds, returnability, and the shape of a tool that might help a person keep hold of complex work.', href: '/review/research/' },
-  { label: 'Exocore', title: 'The workbench taking shape.', copy: 'A proposed local-first cognitive workbench, with one small public shell and a much larger set of questions still open.', href: '/review/exocore/' },
-  { label: 'Field Journal', title: 'The public record of the build.', copy: 'Notes, design turns, and reflections for readers who want to follow the work as it changes.', href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/', external: true },
-  { label: 'AI & Ethics', title: 'A personal position, kept revisable.', copy: 'Scott’s working thoughts on authorship, judgment, collaboration, and where an AI system should stop.', href: '/review/ethics/' },
-  { label: 'Lab', title: 'Experiments with the edges still showing.', copy: 'Open projects, adjacent interests, and small proofs that are still becoming what they are.', href: '/review/lab/' },
-  { label: 'Method', title: 'How the work stays legible.', copy: 'The public/private boundary, research posture, and simple habits that keep an evolving practice inspectable.', href: '/review/method/' },
-  { label: 'Evidence Dossier', title: 'The person behind the work.', copy: 'A field-file-shaped portfolio of background, current practice, open questions, and selected public evidence.', href: '/review/dossier/' },
+  { label: 'Research', title: 'A question being worked on in public.', copy: 'A self-directed attempt to build a research practice around cognitive scaffolds, returnability, and the stubborn question of how a person keeps complicated work alive long enough to learn from it.', href: `${routePrefix}/research/` },
+  { label: 'Exocore', title: 'The workbench taking shape.', copy: 'A proposed local-first workbench, with one small public shell and a larger attempt to give difficult questions a room where they can stay open without disappearing from the map.', href: `${routePrefix}/exocore/` },
+  {
+    label: 'Field Journal',
+    title: 'The public record of the build.',
+    copy: 'Notes, design turns, and reflections for readers who want to follow the work as it changes. Read in time, or follow the connections between notes in the Field Map.',
+    href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/#recent-entries',
+    external: true,
+    secondaryLink: { label: 'Graph View ↗', href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/field/' },
+  },
+  { label: 'AI & Ethics', title: 'A personal position, kept revisable.', copy: 'Working thoughts on authorship, judgment, collaboration, and the point where an AI system needs to hand the work back.', href: `${routePrefix}/ethics/` },
+  { label: 'Lab', title: 'Experiments with the edges still showing.', copy: 'Open projects, adjacent interests, and small proofs that are still becoming what they are.', href: `${routePrefix}/lab/` },
+  { label: 'Method', title: 'How the work stays honest.', copy: 'The public/private boundary, research posture, and simple habits that make an evolving practice inspectable without pretending it is finished.', href: `${routePrefix}/method/` },
+  { label: 'Evidence Dossier', title: 'The person behind the work.', copy: 'A field-file-shaped portfolio of background, current practice, open questions, and selected public evidence.', href: `${routePrefix}/dossier/` },
 ];
 ---
 
 <ReviewShell
   title="Hearth"
-  description="A local review proof for the full Hearth and Code public site."
+  description="The Hearth and Code public site."
   current="hearth"
+  publicSite={publicSite}
 >
   <div class="review-page">
     <section class="review-hero" aria-labelledby="hearth-title">
       <div class="review-hero-copy">
         <p class="review-kicker">The Hearth / an independent studio</p>
-        <h1 id="hearth-title">A hearth for <em>unfinished</em> work.</h1>
-        <p>Hearth &amp; Code is Scott Rallya’s independent studio for research, systems work, and the strange work of finding a way back to ambitious ideas after life has pulled the thread apart.</p>
-        <p>The project follows one personal question: what might happen when a person gets an AI collaborator that helps hold the shape of the work without taking the work away from them?</p>
+        <h1 id="hearth-title">A hearth for the questions I <em>keep coming back to.</em></h1>
+        <p>Hearth &amp; Code is my independent studio for research, systems work, and the long attempt to make a real place for questions that have mattered to me for years: questions about cognition, tools, learning, music, and why an idea can feel obvious one day and unreachable the next.</p>
+        <p>I did not arrive here through a neat institutional path. I am building the research practice I needed, slowly and in public, with enough structure to take the work seriously and enough room to follow an unexpected connection when it turns out to matter.</p>
         <div class="review-actions">
-          <a class="review-button is-primary" href="/review/dossier/">Meet the person behind the work</a>
-          <a class="review-button" href="https://f7df5a21.hearthandcode-field-journal.pages.dev/" target="_blank" rel="noopener noreferrer">Read the Field Journal ↗</a>
+          <a class="review-button is-primary" href={`${routePrefix}/dossier/`}>Meet the person behind the work</a>
+          <span class="review-journal-actions" aria-label="Field Journal reading views">
+            <span>Field Journal</span>
+            <a href="https://f7df5a21.hearthandcode-field-journal.pages.dev/#recent-entries" target="_blank" rel="noopener noreferrer">Article List ↗</a>
+            <a href="https://f7df5a21.hearthandcode-field-journal.pages.dev/field/" target="_blank" rel="noopener noreferrer">Graph View ↗</a>
+          </span>
         </div>
       </div>
       <aside class="review-hero-aside" aria-label="What this site is for">
         <p class="review-label">Why this room exists</p>
-        <h2>Curiosity is allowed to be practical.</h2>
-        <p>This is a place for the ideas that keep resurfacing: how people learn, how they make, how they organize knowledge, and how tools can help without quietly becoming the author of someone else’s life.</p>
+        <h2>Curiosity deserves a room sturdy enough to work in.</h2>
+        <p>This is a place for the questions that keep resurfacing: how people learn, how they make, how they organize knowledge, and how tools can carry some of the context without quietly becoming the author of someone else’s life.</p>
         <ul class="review-mini-list">
-          <li><strong>Human story</strong>One builder learning in public, including the false starts.</li>
-          <li><strong>Research story</strong>Questions, sources, and a method still taking shape.</li>
-          <li><strong>Making story</strong>Small public artifacts, open repositories, and work with its rough edges left visible.</li>
+          <li><strong>Human story</strong>One person learning in public, including the false starts and quiet exits.</li>
+          <li><strong>Research story</strong>Questions, sources, and a practice being built from the ground up.</li>
+          <li><strong>Making story</strong>Small public artifacts, open repositories, and enough rough edge to see how the work got made.</li>
         </ul>
       </aside>
     </section>
@@ -45,17 +60,17 @@ const rooms = [
       <div class="review-section-head">
         <div>
           <p class="review-kicker">A place to begin</p>
-          <h2 id="begin-title">The point is not to perform certainty.</h2>
+          <h2 id="begin-title">Some questions refuse to stay in their assigned room.</h2>
         </div>
         <span class="review-status is-ember">building in public</span>
       </div>
       <div class="review-story-panel">
-        <p>Scott has always been pulled toward the places where systems meet: computer science and psychology, research and making, code and music, structure and the sudden thrill of noticing that two ideas belong together. The hard part was rarely having an idea. The hard part was getting from a crowded mind to a durable piece of work that could survive the next interruption.</p>
-        <p>Hearth &amp; Code grows from that lived problem. It is an attempt to make research feel more alive, to make the path back into a difficult project easier to find, and to leave a public trail for anyone who has ever wondered whether the missing piece was not motivation but a better room to think in.</p>
+        <p>I have always been drawn to connections that did not seem to belong to the same category at first: computer science and psychology, research and making, code and music, structure and the sudden eureka of noticing that two ideas have been talking to each other all along. I could often see the route from one to another, and then lose weeks trying to find a form sturdy enough to carry all of it.</p>
+        <p>That is the practical reason for Hearth &amp; Code. I want to do research carefully, with sources that can be checked and conclusions that can be challenged, and I also want the work to feel alive enough that the next surprising connection, rabbit hole, or small build can pull me back to the desk with genuine curiosity.</p>
       </div>
       <div class="review-quote">
-        <p>“I want to make research productive and legit, but also fun.”</p>
-        <small>Scott’s local review source language</small>
+        <p>“I want the research to be serious enough to matter, and alive enough that I want to keep coming back to it.”</p>
+        <small>{publicSite ? 'Shaped from Scott’s authoring material' : 'Local-review copy, shaped from Scott’s authoring material'}</small>
       </div>
     </section>
 
@@ -63,17 +78,24 @@ const rooms = [
       <div class="review-section-head">
         <div>
           <p class="review-kicker">The rooms</p>
-          <h2 id="rooms-title">Each page carries a different part of the story.</h2>
+          <h2 id="rooms-title">One hearth, several rooms, and each room gets to do its own work.</h2>
         </div>
       </div>
-      <p class="review-section-intro">The site should not make a visitor read the same explanation eight times. Each room opens one door, then points toward the next question if they want to keep going.</p>
+      <p class="review-section-intro">I do not want a visitor to read the same explanation eight times. Each room opens one door, then points toward the next question if they want to keep going.</p>
       <div class="review-card-grid">
         {rooms.map((room) => (
           <article class="review-card">
             <p class="review-label">{room.label}</p>
             <h3>{room.title}</h3>
             <p>{room.copy}</p>
-            <a href={room.href} target={room.external ? '_blank' : undefined} rel={room.external ? 'noopener noreferrer' : undefined}>Enter this room{room.external ? ' ↗' : ' →'}</a>
+            {room.secondaryLink ? (
+              <div class="review-card-links" aria-label="Field Journal reading views">
+                <a href={room.href} target="_blank" rel="noopener noreferrer">Article List ↗</a>
+                <a href={room.secondaryLink.href} target="_blank" rel="noopener noreferrer">{room.secondaryLink.label}</a>
+              </div>
+            ) : (
+              <a href={room.href} target={room.external ? '_blank' : undefined} rel={room.external ? 'noopener noreferrer' : undefined}>Enter this room{room.external ? ' ↗' : ' →'}</a>
+            )}
           </article>
         ))}
       </div>
@@ -83,8 +105,8 @@ const rooms = [
       <div class="review-split">
         <div>
           <p class="review-kicker">For the curious</p>
-          <h3 id="invitation-title">You do not need to agree with the premise to belong in the conversation.</h3>
-          <p>The work is for people who have watched their own ideas get stranded between fascination and follow-through, for builders who want to inspect the source, and for anyone interested in what an honest human and AI collaboration might look like when neither gets romanticized.</p>
+          <h3 id="invitation-title">If your questions have ever outgrown the room they were supposed to fit inside, you are welcome here.</h3>
+          <p>The work is for people who have watched their own ideas get stranded between fascination and follow-through, for builders who want to inspect the source, and for anyone interested in what a serious, unromanticized collaboration between a person and an AI might make possible.</p>
         </div>
         <div>
           <p class="review-kicker">Available now</p>

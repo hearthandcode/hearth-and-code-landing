@@ -1,6 +1,8 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
 
+const { publicSite = false } = Astro.props;
+
 const experiments = [
   { label: 'Knowledge systems', title: 'A library that can explain where things came from.', copy: 'Work on records, naming, provenance, and retrieval grows from a simple need: knowledge becomes more useful when a person can see its source, scope, and path back to context.' },
   { label: 'Small proofs', title: 'Bounded retrieval and public artifacts.', copy: 'Some work appears as runnable or inspectable proofs. The point is not to claim a finished platform, only to give an idea enough shape that someone else can look at it.' },
@@ -11,8 +13,9 @@ const experiments = [
 
 <ReviewShell
   title="Lab"
-  description="A local-review Lab page for the Hearth and Code ecosystem."
+  description="A Lab page for the Hearth and Code ecosystem."
   current="lab"
+  publicSite={publicSite}
 >
   <div class="review-page">
     <header class="room-hero">

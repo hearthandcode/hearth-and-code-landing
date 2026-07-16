@@ -1,11 +1,14 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
+
+const { publicSite = false } = Astro.props;
 ---
 
 <ReviewShell
   title="Method"
-  description="A local-review Method page for the Hearth and Code public practice."
+  description="A Method page for the Hearth and Code public practice."
   current="method"
+  publicSite={publicSite}
 >
   <div class="review-page">
     <header class="room-hero">

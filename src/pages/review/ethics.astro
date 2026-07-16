@@ -1,11 +1,14 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
+
+const { publicSite = false } = Astro.props;
 ---
 
 <ReviewShell
   title="AI and Ethics"
-  description="A local-review page for Scott Rallya’s personal AI philosophy and ethics position."
+  description="Scott Rallya’s personal AI philosophy and ethics position."
   current="ethics"
+  publicSite={publicSite}
 >
   <div class="review-page">
     <header class="room-hero">
@@ -18,7 +21,7 @@ import ReviewShell from '../../components/ReviewShell.astro';
     <section class="review-section" aria-labelledby="ethics-position-title">
       <div class="review-quote">
         <p id="ethics-position-title">“I use AI as a collaborator in research and making, but I want the person to remain responsible for the meaning of the work.”</p>
-        <small>Scott’s review-only position source</small>
+        <small>{publicSite ? 'Scott’s personal position' : 'Scott’s review-only position source'}</small>
       </div>
     </section>
 

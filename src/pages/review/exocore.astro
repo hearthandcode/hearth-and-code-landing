@@ -1,11 +1,15 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
+
+const { publicSite = false } = Astro.props;
+const routePrefix = publicSite ? '' : '/review';
 ---
 
 <ReviewShell
   title="Exocore"
-  description="A local-review Exocore page for Hearth and Code."
+  description="An Exocore page for Hearth and Code."
   current="exocore"
+  publicSite={publicSite}
 >
   <div class="review-page">
     <header class="room-hero">
@@ -62,7 +66,7 @@ import ReviewShell from '../../components/ReviewShell.astro';
           <p>The public repository contains a minimal desktop shell and a plain orientation to the project. It demonstrates a beginning and sets a boundary around what does not yet run. It is deliberately smaller than the long-term idea.</p>
           <div class="review-actions">
             <a class="review-button is-primary" href="https://github.com/hearthandcode/exocore-platform" target="_blank" rel="noopener noreferrer">Inspect Exocore on GitHub ↗</a>
-            <a class="review-button" href="/review/research/">Read the research question</a>
+            <a class="review-button" href={`${routePrefix}/research/`}>Read the research question</a>
           </div>
         </div>
         <div>

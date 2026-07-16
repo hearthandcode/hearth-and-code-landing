@@ -5,19 +5,26 @@ interface Props {
   title: string;
   description: string;
   current?: string;
+  publicSite?: boolean;
 }
 
-const { title, description, current } = Astro.props;
+const { title, description, current, publicSite = false } = Astro.props;
+const routePrefix = publicSite ? '' : '/review';
 
 const navigation = [
-  { key: 'hearth', label: 'Hearth', href: '/review/' },
-  { key: 'research', label: 'Research', href: '/review/research/' },
-  { key: 'exocore', label: 'Exocore', href: '/review/exocore/' },
-  { key: 'journal', label: 'Field Journal', href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/', external: true },
-  { key: 'ethics', label: 'AI & Ethics', href: '/review/ethics/' },
-  { key: 'lab', label: 'Lab', href: '/review/lab/' },
-  { key: 'method', label: 'Method', href: '/review/method/' },
-  { key: 'dossier', label: 'Dossier', href: '/review/dossier/' },
+  { key: 'hearth', label: 'Hearth', href: `${routePrefix}/` },
+  { key: 'research', label: 'Research', href: `${routePrefix}/research/` },
+  { key: 'exocore', label: 'Exocore', href: `${routePrefix}/exocore/` },
+  {
+    key: 'journal',
+    label: 'Field Journal',
+    articleListHref: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/#recent-entries',
+    graphViewHref: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/field/',
+  },
+  { key: 'ethics', label: 'AI & Ethics', href: `${routePrefix}/ethics/` },
+  { key: 'lab', label: 'Lab', href: `${routePrefix}/lab/` },
+  { key: 'method', label: 'Method', href: `${routePrefix}/method/` },
+  { key: 'dossier', label: 'Dossier', href: `${routePrefix}/dossier/` },
 ];
 ---
 
@@ -27,9 +34,9 @@ const navigation = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="robots" content="noindex, nofollow" />
+    {!publicSite && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#171311" />
-    <title>{title} | Hearth &amp; Code review proof</title>
+    <title>{title} | Hearth &amp; Code{publicSite ? '' : ' review proof'}</title>
   </head>
   <body class="review-body">
     <div class="review-ambient" aria-hidden="true"></div>
@@ -37,23 +44,26 @@ const navigation = [
     <div class="review-shell">
       <header class="review-header">
         <div class="review-status-rail">
-          <span>Hearth &amp; Code / local review proof</span>
-          <span><i aria-hidden="true"></i> full site composition</span>
+          <span>{publicSite ? 'Hearth & Code / independent studio' : 'Hearth & Code / local review proof'}</span>
+          <span><i aria-hidden="true"></i> {publicSite ? 'research, making, and public record' : 'full site composition'}</span>
         </div>
         <div class="review-brand-row">
-          <a class="review-wordmark" href="/review/">Hearth <em>&amp;</em> Code</a>
+          <a class="review-wordmark" href={`${routePrefix}/`}>Hearth <em>&amp;</em> Code</a>
           <p>Research, making, and a long way back into the work.</p>
         </div>
-        <nav class="review-navigation" aria-label="Review-site navigation">
+        <nav class="review-navigation" aria-label={publicSite ? 'Site navigation' : 'Review-site navigation'}>
           {navigation.map((item) => (
-            <a
-              href={item.href}
-              aria-current={item.key === current ? 'page' : undefined}
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noopener noreferrer' : undefined}
-            >
-              {item.label}{item.external ? <span aria-hidden="true"> ↗</span> : null}
-            </a>
+            item.key === 'journal' ? (
+              <div class="review-journal-nav" role="group" aria-label="Field Journal reading views">
+                <span>{item.label}</span>
+                <a href={item.articleListHref} target="_blank" rel="noopener noreferrer">Article List <span aria-hidden="true">↗</span></a>
+                <a href={item.graphViewHref} target="_blank" rel="noopener noreferrer">Graph View <span aria-hidden="true">↗</span></a>
+              </div>
+            ) : (
+              <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            )
           ))}
         </nav>
       </header>
@@ -64,12 +74,12 @@ const navigation = [
 
       <footer class="review-footer">
         <div>
-          <p class="review-kicker">Local review only</p>
-          <p>This proof tests the public story, visual hierarchy, and page shape. It is not an approval of exact public copy or a production release.</p>
+          <p class="review-kicker">{publicSite ? 'Hearth & Code' : 'Local review only'}</p>
+          <p>{publicSite ? 'An independent public surface for ongoing research, systems work, and selected creative practice. Sources, claims, and boundaries remain open to inspection and revision.' : 'This proof tests the public story, visual hierarchy, and page shape. It is not an approval of exact public copy or a production release.'}</p>
         </div>
         <div class="review-footer-links">
           <a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          <a href="/review/dossier/">Open dossier</a>
+          <a href={`${routePrefix}/dossier/`}>Open dossier →</a>
         </div>
       </footer>
     </div>

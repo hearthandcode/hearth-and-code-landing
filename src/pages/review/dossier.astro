@@ -1,13 +1,9 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
 
+const { publicSite = false } = Astro.props;
+
 const evidence = [
-  {
-    label: 'Systems work',
-    title: 'Public portfolio',
-    copy: 'Selected artifacts from knowledge governance, bounded retrieval, research methods, and early platform design.',
-    href: 'https://github.com/hearthandcode/public-portfolio',
-  },
   {
     label: 'Workbench',
     title: 'Exocore platform',
@@ -16,9 +12,11 @@ const evidence = [
   },
   {
     label: 'Research record',
-    title: 'Applied AI study',
-    copy: 'A self-directed curriculum and research structure, shared as an evolving study rather than a completed thesis.',
-    href: 'https://github.com/hearthandcode/phd-applied-ai',
+    title: 'Field Journal',
+    copy: 'Reviewed public notes on the work as it changes. Read the record in time, or use the Field Map to follow the connections between notes.',
+    href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/#recent-entries',
+    linkLabel: 'Article List ↗',
+    secondaryLink: { label: 'Graph View ↗', href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/field/' },
   },
   {
     label: 'Creative work',
@@ -31,8 +29,9 @@ const evidence = [
 
 <ReviewShell
   title="Evidence Dossier"
-  description="A local-review field file for Scott Rallya’s public portfolio, background, and selected work."
+  description="A field file for Scott Rallya’s public portfolio, background, and selected work."
   current="dossier"
+  publicSite={publicSite}
 >
   <div class="review-page">
     <header class="dossier-hero">
@@ -40,16 +39,16 @@ const evidence = [
         <p class="review-kicker">Evidence Dossier / public field file</p>
         <span class="review-stamp">File SR-01</span>
       </div>
-      <h1>Scott Rallya, <em>still in the field.</em></h1>
-      <p class="lead">Independent researcher and systems builder, working across cognitive architecture, AI, knowledge systems, creative practice, and the difficult art of beginning again.</p>
+      <h1>Scott Rallya, <em>still learning how to do the work.</em></h1>
+      <p class="lead">Independent researcher and systems builder, working across cognitive architecture, AI, knowledge systems, creative practice, and a self-directed research life serious enough to earn scrutiny and alive enough to sustain curiosity.</p>
       <div class="file-facts" aria-label="Dossier summary">
         <div><span>Foundation</span><strong>B.S. Computer Science + Psychology, RPI, 2007</strong></div>
-        <div><span>Practice</span><strong>Systems work, AI-assisted research, and building in public</strong></div>
-        <div><span>Current status</span><strong>Independent study and early product exploration</strong></div>
+        <div><span>Practice</span><strong>Self-directed research, systems building, and public work</strong></div>
+        <div><span>Current status</span><strong>Growing a research practice and early product exploration</strong></div>
       </div>
       <div class="dossier-story">
-        <p>This is not the cleanest version of a professional story. It starts with a person who loved the way systems fit together, took the long route through formal education and unfinished programs, then spent years trying to understand why a mind full of connections could still have trouble turning those connections into a finished thing.</p>
-        <p>The work now is a way of returning. AI did not supply a new identity or a shortcut around the hard parts. It made room for Scott to externalize more of the middle, inspect it, argue with it, and keep moving long enough to see what the ideas can become.</p>
+        <p>The degree says Computer Science and Psychology, and it is true that those subjects have been tangled together for me for a long time, but the more important part of the record is what came after: graduate attempts in Game Design and Data Science &amp; Machine Learning, quiet exits, a long search for a way of learning that could keep research, systems, play, and the slow work of making something in contact with one another.</p>
+        <p>I learned from formal programs, and I also learned that the usual containers did not give me a durable home for the work I wanted to do. This site is part of the response. Working with AI lets me set more of the middle down, inspect it, argue with it, and keep moving long enough to see whether an idea can become something real.</p>
       </div>
     </header>
 
@@ -57,7 +56,7 @@ const evidence = [
       <div class="review-section-head">
         <div>
           <p class="review-kicker">The throughline</p>
-          <h2 id="throughline-title">A builder who keeps following the connection between mind and machine.</h2>
+          <h2 id="throughline-title">Following the connection between mind and machine, even when the route is not tidy.</h2>
         </div>
         <span class="review-status is-ember">personal record</span>
       </div>
@@ -65,12 +64,12 @@ const evidence = [
         <div>
           <p class="review-label">What carries forward</p>
           <h3>Cross-domain thinking.</h3>
-          <p>Computer science and psychology were never separate interests. They became a way of asking how people reason, what systems make possible, and why an interface can be the difference between knowing something and being able to do anything with it.</p>
+          <p>Computer science and psychology were never separate interests. Together they became a way of asking how people reason, what systems make possible, and why an interface can be the difference between knowing something and being able to do anything with it.</p>
         </div>
         <div>
           <p class="review-label">What remains visible</p>
           <h3>The rough edges.</h3>
-          <p>The route here includes stalled work, interrupted plans, too many simultaneous threads, and the recurring need to build a smaller piece of infrastructure before returning to the thing that mattered in the first place. That is context, not a performance of hardship.</p>
+          <p>I can get absorbed by a question, see four more questions inside it, and then discover that I have built a useful piece of infrastructure before I have returned to the thing that started the whole detour. The route here includes stalled work and interrupted plans. They are part of the context for why returnability matters so much in the design.</p>
         </div>
       </div>
     </section>
@@ -83,10 +82,10 @@ const evidence = [
         </div>
       </div>
       <ul class="review-list">
-        <li><span>01 / Notice</span><div><strong>Follow the threads that keep returning.</strong> Research questions, technical problems, sound, learning design, and philosophical questions often arrive together here. The job is to see the connection before forcing them into separate boxes.</div></li>
-        <li><span>02 / Build</span><div><strong>Turn a question into something inspectable.</strong> A small shell, a public artifact, a working note, or a method record is more useful than a polished claim with nothing behind it.</div></li>
-        <li><span>03 / Return</span><div><strong>Leave enough of a trail to come back.</strong> The practice keeps asking how a person can recover the state of a difficult project after time, friction, or a change in capacity has broken the flow.</div></li>
-        <li><span>04 / Correct</span><div><strong>Keep the human hand on the work.</strong> AI can help shape, retrieve, question, and draft. The person keeps the responsibility to accept, reject, and revise.</div></li>
+        <li><span>01 / Notice</span><div><strong>Keep the questions that have heat.</strong> Research questions, technical problems, sound, learning design, and philosophical questions often arrive together here. I try to see the connection before forcing them into separate boxes.</div></li>
+        <li><span>02 / Build</span><div><strong>Make something real before defending it.</strong> A small shell, a public artifact, a working note, or a method record gives a question somewhere to stand while it is still being tested.</div></li>
+        <li><span>03 / Return</span><div><strong>Leave a trail for the future version of me.</strong> The practice keeps asking how a person can recover the state of a difficult project after time, friction, or a change in capacity has broken the flow.</div></li>
+        <li><span>04 / Correct</span><div><strong>Let the work push back.</strong> AI can help shape, retrieve, question, and draft. I keep the responsibility to accept, reject, and revise, especially when an easy answer feels too neat.</div></li>
       </ul>
     </section>
 
@@ -104,7 +103,14 @@ const evidence = [
             <p class="review-label">{item.label}</p>
             <h3>{item.title}</h3>
             <p>{item.copy}</p>
-            <a href={item.href} target="_blank" rel="noopener noreferrer">Inspect the public record ↗</a>
+            {item.secondaryLink ? (
+              <div class="dossier-evidence-links" aria-label="Field Journal reading views">
+                <a href={item.href} target="_blank" rel="noopener noreferrer">{item.linkLabel}</a>
+                <a href={item.secondaryLink.href} target="_blank" rel="noopener noreferrer">{item.secondaryLink.label}</a>
+              </div>
+            ) : (
+              <a href={item.href} target="_blank" rel="noopener noreferrer">Inspect the public record ↗</a>
+            )}
           </article>
         ))}
       </div>
@@ -112,11 +118,11 @@ const evidence = [
 
     <section class="review-section" aria-labelledby="dossier-question-title">
       <div class="review-quote">
-        <p id="dossier-question-title">“I have always wanted to be recognized as someone capable of doing high-level research in the areas that I am personally interested in.”</p>
-        <small>Local review source language, adapted for this proof</small>
+        <p id="dossier-question-title">“I want to grow into the kind of researcher who can follow a question all the way down, make something from what I learn, and leave enough of the trail for someone else to inspect.”</p>
+        <small>{publicSite ? 'Shaped from Scott’s authoring material' : 'Local-review copy, shaped from Scott’s authoring material'}</small>
       </div>
       <div class="review-story-panel" style="margin-top: 1px;">
-        <p>The point of this dossier is not to claim that recognition in advance. It is to give a thoughtful reader enough context to see the ambition, the work ethic, the gaps, and the evidence that exists today, then decide for themselves whether the path is worth following.</p>
+        <p>Recognition, if it comes, has to come after a thoughtful reader can see the ambition, the work ethic, the gaps, and the evidence that exists today. This file gives the work somewhere to be met on its own terms.</p>
       </div>
     </section>
   </div>
