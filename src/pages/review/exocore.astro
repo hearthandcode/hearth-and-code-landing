@@ -1,0 +1,79 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+---
+
+<ReviewShell
+  title="Exocore"
+  description="A local-review Exocore page for Hearth and Code."
+  current="exocore"
+>
+  <div class="review-page">
+    <header class="room-hero">
+      <p class="review-kicker">Exocore / proposed cognitive workbench</p>
+      <h1>A place to keep the thread when life <em>breaks the flow.</em></h1>
+      <p class="lead">Exocore is the name for the workbench taking shape inside Hearth &amp; Code. It is meant to be a person-owned place for projects, questions, sources, choices, and bounded AI help. The public shell exists. The larger system is still a design problem.</p>
+      <div class="room-meta"><span>Pre-alpha shell</span><span>proposed architecture</span><span>open source</span></div>
+    </header>
+
+    <section class="review-section" aria-labelledby="exocore-purpose-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The purpose</p>
+          <h2 id="exocore-purpose-title">A workbench should make the work easier to find again.</h2>
+        </div>
+      </div>
+      <div class="review-story-panel">
+        <p>Exocore begins with a simple frustration: important work can disappear into a pile of tabs, notes, half-made plans, and the private effort of remembering where the thought was going. The proposed workbench tries to keep enough context visible that a person can return without rebuilding the whole mental scene from scratch.</p>
+        <p>It does not aim to become an autonomous authority. The person decides what matters, what gets acted on, what remains private, and when an answer is good enough to keep.</p>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="exocore-shape-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The shape of the first version</p>
+          <h2 id="exocore-shape-title">Three useful promises, held lightly.</h2>
+        </div>
+      </div>
+      <div class="review-card-grid">
+        <article class="review-card">
+          <p class="review-label">Keep the thread</p>
+          <h3>Records that remember the state of the work.</h3>
+          <p>Projects, decisions, sources, and unfinished questions should stay legible enough that a person can recover a complicated line of thought after a break.</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">Make the source visible</p>
+          <h3>Help that can be checked.</h3>
+          <p>Useful AI assistance should leave a trail: what it used, what it suggested, and where a person can challenge, correct, or discard it.</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">Keep authority human</p>
+          <h3>Support without a quiet handoff of judgment.</h3>
+          <p>The workbench may sort, retrieve, draft, or propose. It should stop before consequential decisions, outward-facing claims, and final interpretation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="exocore-now-title">
+      <div class="review-split">
+        <div>
+          <p class="review-kicker">What exists today</p>
+          <h3 id="exocore-now-title">A small public orientation shell.</h3>
+          <p>The public repository contains a minimal desktop shell and a plain orientation to the project. It demonstrates a beginning and sets a boundary around what does not yet run. It is deliberately smaller than the long-term idea.</p>
+          <div class="review-actions">
+            <a class="review-button is-primary" href="https://github.com/hearthandcode/exocore-platform" target="_blank" rel="noopener noreferrer">Inspect Exocore on GitHub ↗</a>
+            <a class="review-button" href="/review/research/">Read the research question</a>
+          </div>
+        </div>
+        <div>
+          <p class="review-kicker">What remains open</p>
+          <ul class="review-mini-list">
+            <li><strong>Can it stay simple?</strong>A workbench that adds too much cognitive overhead has missed the point.</li>
+            <li><strong>Can it stay honest?</strong>Every helpful action needs a boundary a person can see and revise.</li>
+            <li><strong>Can it become useful?</strong>Only lived use can answer that, and one person’s answer is still only one person’s answer.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ReviewShell>

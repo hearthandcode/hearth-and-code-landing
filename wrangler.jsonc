@@ -2,6 +2,6 @@
   "name": "hearth-and-code-landing",
   "compatibility_date": "2026-06-10",
   "assets": {
-    "directory": "."
+    "directory": "./dist"
   }
 }

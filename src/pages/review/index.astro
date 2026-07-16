@@ -1,0 +1,100 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+
+const rooms = [
+  { label: 'Research', title: 'A question being worked on in public.', copy: 'A self-directed N=1 inquiry into cognitive scaffolds, returnability, and the shape of a tool that might help a person keep hold of complex work.', href: '/review/research/' },
+  { label: 'Exocore', title: 'The workbench taking shape.', copy: 'A proposed local-first cognitive workbench, with one small public shell and a much larger set of questions still open.', href: '/review/exocore/' },
+  { label: 'Field Journal', title: 'The public record of the build.', copy: 'Notes, design turns, and reflections for readers who want to follow the work as it changes.', href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/', external: true },
+  { label: 'AI & Ethics', title: 'A personal position, kept revisable.', copy: 'Scott’s working thoughts on authorship, judgment, collaboration, and where an AI system should stop.', href: '/review/ethics/' },
+  { label: 'Lab', title: 'Experiments with the edges still showing.', copy: 'Open projects, adjacent interests, and small proofs that are still becoming what they are.', href: '/review/lab/' },
+  { label: 'Method', title: 'How the work stays legible.', copy: 'The public/private boundary, research posture, and simple habits that keep an evolving practice inspectable.', href: '/review/method/' },
+  { label: 'Evidence Dossier', title: 'The person behind the work.', copy: 'A field-file-shaped portfolio of background, current practice, open questions, and selected public evidence.', href: '/review/dossier/' },
+];
+---
+
+<ReviewShell
+  title="Hearth"
+  description="A local review proof for the full Hearth and Code public site."
+  current="hearth"
+>
+  <div class="review-page">
+    <section class="review-hero" aria-labelledby="hearth-title">
+      <div class="review-hero-copy">
+        <p class="review-kicker">The Hearth / an independent studio</p>
+        <h1 id="hearth-title">A hearth for <em>unfinished</em> work.</h1>
+        <p>Hearth &amp; Code is Scott Rallya’s independent studio for research, systems work, and the strange work of finding a way back to ambitious ideas after life has pulled the thread apart.</p>
+        <p>The project follows one personal question: what might happen when a person gets an AI collaborator that helps hold the shape of the work without taking the work away from them?</p>
+        <div class="review-actions">
+          <a class="review-button is-primary" href="/review/dossier/">Meet the person behind the work</a>
+          <a class="review-button" href="https://f7df5a21.hearthandcode-field-journal.pages.dev/" target="_blank" rel="noopener noreferrer">Read the Field Journal ↗</a>
+        </div>
+      </div>
+      <aside class="review-hero-aside" aria-label="What this site is for">
+        <p class="review-label">Why this room exists</p>
+        <h2>Curiosity is allowed to be practical.</h2>
+        <p>This is a place for the ideas that keep resurfacing: how people learn, how they make, how they organize knowledge, and how tools can help without quietly becoming the author of someone else’s life.</p>
+        <ul class="review-mini-list">
+          <li><strong>Human story</strong>One builder learning in public, including the false starts.</li>
+          <li><strong>Research story</strong>Questions, sources, and a method still taking shape.</li>
+          <li><strong>Making story</strong>Small public artifacts, open repositories, and work with its rough edges left visible.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="review-section" aria-labelledby="begin-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">A place to begin</p>
+          <h2 id="begin-title">The point is not to perform certainty.</h2>
+        </div>
+        <span class="review-status is-ember">building in public</span>
+      </div>
+      <div class="review-story-panel">
+        <p>Scott has always been pulled toward the places where systems meet: computer science and psychology, research and making, code and music, structure and the sudden thrill of noticing that two ideas belong together. The hard part was rarely having an idea. The hard part was getting from a crowded mind to a durable piece of work that could survive the next interruption.</p>
+        <p>Hearth &amp; Code grows from that lived problem. It is an attempt to make research feel more alive, to make the path back into a difficult project easier to find, and to leave a public trail for anyone who has ever wondered whether the missing piece was not motivation but a better room to think in.</p>
+      </div>
+      <div class="review-quote">
+        <p>“I want to make research productive and legit, but also fun.”</p>
+        <small>Scott’s local review source language</small>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="rooms-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The rooms</p>
+          <h2 id="rooms-title">Each page carries a different part of the story.</h2>
+        </div>
+      </div>
+      <p class="review-section-intro">The site should not make a visitor read the same explanation eight times. Each room opens one door, then points toward the next question if they want to keep going.</p>
+      <div class="review-card-grid">
+        {rooms.map((room) => (
+          <article class="review-card">
+            <p class="review-label">{room.label}</p>
+            <h3>{room.title}</h3>
+            <p>{room.copy}</p>
+            <a href={room.href} target={room.external ? '_blank' : undefined} rel={room.external ? 'noopener noreferrer' : undefined}>Enter this room{room.external ? ' ↗' : ' →'}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="invitation-title">
+      <div class="review-split">
+        <div>
+          <p class="review-kicker">For the curious</p>
+          <h3 id="invitation-title">You do not need to agree with the premise to belong in the conversation.</h3>
+          <p>The work is for people who have watched their own ideas get stranded between fascination and follow-through, for builders who want to inspect the source, and for anyone interested in what an honest human and AI collaboration might look like when neither gets romanticized.</p>
+        </div>
+        <div>
+          <p class="review-kicker">Available now</p>
+          <ul class="review-mini-list">
+            <li><strong>Read the journal</strong>Follow the notes as the practice changes.</li>
+            <li><strong>Inspect the source</strong>See the public repositories and small working proofs.</li>
+            <li><strong>Keep a question</strong>Take the research question into your own work, with or without these tools.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ReviewShell>

@@ -1,0 +1,58 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+
+const experiments = [
+  { label: 'Knowledge systems', title: 'A library that can explain where things came from.', copy: 'Work on records, naming, provenance, and retrieval grows from a simple need: knowledge becomes more useful when a person can see its source, scope, and path back to context.' },
+  { label: 'Small proofs', title: 'Bounded retrieval and public artifacts.', copy: 'Some work appears as runnable or inspectable proofs. The point is not to claim a finished platform, only to give an idea enough shape that someone else can look at it.' },
+  { label: 'Creative systems', title: 'Music, images, and narrative as research material.', copy: 'Creative experiments are part of the practice too. They explore what changes when technical systems become places for voice, story, and play rather than only productivity.' },
+  { label: 'Agent workflows', title: 'Ways of working with AI that remain corrigible.', copy: 'The Lab keeps testing how agents can retrieve, compare, draft, and organize while still leaving a person with clear intervention points and a readable record.' },
+];
+---
+
+<ReviewShell
+  title="Lab"
+  description="A local-review Lab page for the Hearth and Code ecosystem."
+  current="lab"
+>
+  <div class="review-page">
+    <header class="room-hero">
+      <p class="review-kicker">The Lab / experiments and adjacent worlds</p>
+      <h1>The things that are <em>not ready</em> are often the most interesting.</h1>
+      <p class="lead">The Lab is where Hearth &amp; Code keeps the experiments, side paths, and supporting structures that do not yet deserve a product page but still tell the truth about what Scott is learning to build.</p>
+      <div class="room-meta"><span>Experiments</span><span>early artifacts</span><span>interest-led</span></div>
+    </header>
+
+    <section class="review-section" aria-labelledby="lab-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">What lives here</p>
+          <h2 id="lab-title">A wider ecosystem around one central question.</h2>
+        </div>
+      </div>
+      <p class="review-section-intro">Some projects will become evidence for Research or Exocore. Some will stay as small, useful experiments. The Lab keeps both possibilities open without pretending every interesting thread is a finished offering.</p>
+      <div class="review-card-grid">
+        {experiments.map((experiment) => (
+          <article class="review-card">
+            <p class="review-label">{experiment.label}</p>
+            <h3>{experiment.title}</h3>
+            <p>{experiment.copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="lab-stance-title">
+      <div class="review-split">
+        <div>
+          <p class="review-kicker">The Lab stance</p>
+          <h3 id="lab-stance-title">A prototype can be worth showing before it is impressive.</h3>
+          <p>Early work can teach something important about shape, fit, or failure. The public version of an experiment should be small enough to inspect and honest enough to leave the unanswered parts visible.</p>
+        </div>
+        <div>
+          <p class="review-kicker">A boundary</p>
+          <p>The Lab is not an export of the private workspace. It is a selected window into the practice, with private notes, raw sessions, credentials, configuration, and unreviewed material kept out of view.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</ReviewShell>

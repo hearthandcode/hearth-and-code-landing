@@ -1,0 +1,81 @@
+/*
+ * Consumer copy of the Hub-owned public visual tokens.
+ * Canonical source: the private Hearth & Code Hub brand-token record.
+ *
+ * Copy this file from the Hub when the canonical source changes. Do not add
+ * landing-only values here; add component-specific values in global.css.
+ */
+
+:root {
+  /* Surface and text */
+  --color-surface-primary: #1C1714;
+  --color-surface-raised: #2A2320;
+  --color-surface-recessed: #2E2118;
+  --color-surface-rule: #4A3528;
+  --color-surface-rule-strong: #5C4332;
+  --color-text-primary: #F2E7D5;
+  --color-text-secondary: #B8A892;
+  --color-text-display: #F2E7D5;
+
+  /* Hearth and signal accents */
+  --color-accent-ember: #E8923C;
+  --color-accent-forge: #C25A2A;
+  --color-accent-gold: #F4B860;
+  --color-accent-plasma: #3FE0D0;
+  --color-accent-signal: #1FB6A8;
+  --color-state-success: #8FA395;
+  --color-state-caution: #E8923C;
+  --color-state-error: #C25A2A;
+  --color-state-info: #3FE0D0;
+  --color-focus-ring: #3FE0D0;
+
+  /* Gradients and shadows */
+  --gradient-signal-travel: linear-gradient(90deg, #C25A2A 0%, #E8923C 30%, #F4B860 60%, #3FE0D0 100%);
+  --gradient-firelight: linear-gradient(180deg, #C25A2A 0%, #E8923C 45%, #F4B860 100%);
+  --shadow-glow-ember: 0 0 16px rgba(232, 146, 60, 0.35);
+  --shadow-glow-plasma: 0 0 14px rgba(63, 224, 208, 0.40);
+
+  /* Typography */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-size-body: 1rem;
+  --font-size-small: 0.875rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height-body: 1.6;
+  --line-height-reading: 1.75;
+  --line-height-heading: 1.2;
+
+  /* Space and layout */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --size-content-max: 51.25rem;
+  --size-reading-max: 65ch;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Motion. Non-essential motion is disabled below. */
+  --motion-duration-fast: 200ms;
+  --motion-duration-normal: 300ms;
+  --motion-duration-atmospheric: 8s;
+  --motion-easing-default: ease-out;
+  --motion-easing-atmospheric: ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-fast: 0ms;
+    --motion-duration-normal: 0ms;
+    --motion-duration-atmospheric: 0ms;
+  }
+}

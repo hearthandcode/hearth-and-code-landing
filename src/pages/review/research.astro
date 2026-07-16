@@ -1,0 +1,76 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+---
+
+<ReviewShell
+  title="Research"
+  description="A local-review Research page for Hearth and Code."
+  current="research"
+>
+  <div class="review-page">
+    <header class="room-hero">
+      <p class="review-kicker">Research / a self-directed inquiry</p>
+      <h1>Can a tool help someone <em>come back</em> to their own work?</h1>
+      <p class="lead">This is the question at the centre of Hearth &amp; Code. The research follows one person, one evolving practice, and one proposed cognitive workbench. It is deliberately narrow, personal, and still unresolved.</p>
+      <div class="room-meta"><span>Working proof</span><span>N=1 inquiry</span><span>under investigation</span></div>
+    </header>
+
+    <section class="review-section" aria-labelledby="question-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The live question</p>
+          <h2 id="question-title">What would a cognitive scaffold need to hold without taking over?</h2>
+        </div>
+      </div>
+      <div class="review-story-panel">
+        <p>Scott is exploring whether an AI-supported workbench can help one person return to complex research and making. The question is not whether AI can produce more output. It is whether a person can use an external system to hold context, surface the next useful question, and reduce some of the friction between an idea and the work required to carry it forward.</p>
+        <p>The person remains the subject, the reviewer, and the one who decides what the record means. That creates a real methodological tension because the tool being studied can help organize the work used to study it. The tension belongs in the open, alongside the useful parts.</p>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="research-shape-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">What the research holds</p>
+          <h2 id="research-shape-title">A method shaped around lived work, not a verdict about everyone else.</h2>
+        </div>
+      </div>
+      <div class="review-card-grid">
+        <article class="review-card">
+          <p class="review-label">Personal scope</p>
+          <h3>One practice, closely observed.</h3>
+          <p>The work begins with Scott’s own research, systems building, learning patterns, and attempts to return after interruption. It does not pretend to speak for every person who thinks or works differently.</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">Public trail</p>
+          <h3>Questions can leave receipts.</h3>
+          <p>Selected code, public notes, source links, and build records give a visitor a way to see what happened without turning the private workspace inside out.</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">Open outcome</p>
+          <h3>The hypothesis may change shape.</h3>
+          <p>The workbench may help, may become too heavy, or may lead somewhere unexpected. A useful public record needs room for all three outcomes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="research-anchors-title">
+      <div class="review-split">
+        <div>
+          <p class="review-kicker">Where to look</p>
+          <h3 id="research-anchors-title">The study has a public spine.</h3>
+          <p>The applied-AI repository carries the self-directed curriculum and research structure. The public portfolio contains a public-safe thesis scope and selected method artifacts. The Field Journal provides the reading surface for the living record.</p>
+          <div class="review-actions">
+            <a class="review-button is-primary" href="https://github.com/hearthandcode/phd-applied-ai" target="_blank" rel="noopener noreferrer">Inspect the study structure ↗</a>
+            <a class="review-button" href="/review/method/">Read the method</a>
+          </div>
+        </div>
+        <div>
+          <p class="review-kicker">A question to carry</p>
+          <p>Have you ever wanted a tool that could understand enough of your working situation to offset some of the cognitive struggle without quietly deciding what your work should become?</p>
+          <p>That is the shape of this inquiry. The answer is still being built.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</ReviewShell>

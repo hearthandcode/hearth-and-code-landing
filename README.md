@@ -1,19 +1,40 @@
 # hearthandcode.dev — landing page
 
-Pre-launch landing for [Hearth & Code](https://hearthandcode.dev): waitlist via Substack embed, build-in-public links, flame animation.
+Branch-local Astro redesign proof for [Hearth & Code](https://hearthandcode.dev). It is a local review surface, not a deployment or publication release.
 
-**Live site:** [hearthandcode.dev](https://hearthandcode.dev)  
-**Build log:** [hearthandcode.substack.com](https://hearthandcode.substack.com)
+**Redesign branch:** `feat/public-web-ecosystem-redesign`
+**Production boundary:** the deployed site remains unchanged until a separate reviewed release decision.
 
 ## Stack
 
-Static HTML/CSS/JS — no build step. Deploy anywhere; [Cloudflare Pages](https://pages.cloudflare.com) recommended.
+Static-output [Astro](https://astro.build) with CSS-only interaction and no data, analytics, or external capability layer.
 
 ## Local preview
 
 ```bash
-python3 -m http.server 8765
-# open http://localhost:8765
+npm install --include=dev
+npm run dev
+# Astro prints the local URL, normally http://localhost:4321
+```
+
+### Full local review site
+
+With the dev server running, open `/review/` on the local URL, normally:
+
+```
+http://localhost:4321/review/
+```
+
+This is the complete, review-only Hearth & Code site composition. It includes the Hearth, Research, Exocore, Field Journal doorway, AI & Ethics, Lab, Method, and Evidence Dossier routes. The Dossier uses a person-led field-file treatment with selected public artifacts, while retaining the separate source, privacy, and exact-copy review gates.
+
+The review site is not an approved production route or release authorization and must not be deployed until those gates are released.
+
+For a production-shaped local check:
+
+```bash
+npm run check
+npm run build
+npm run preview
 ```
 
 ## Cloudflare Pages
@@ -21,20 +42,22 @@ python3 -m http.server 8765
 | Setting | Value |
 |---------|-------|
 | Repository | `hearthandcode/hearth-and-code-landing` |
-| Framework | None |
-| Build command | *(blank)* |
-| Output directory | `/` |
+| Framework | Astro static output |
+| Build command | `npm run build` |
+| Output directory | `dist` |
 | Custom domain | `hearthandcode.dev` |
 
 ## Structure
 
 ```
-index.html          # entire site
-legal/              # privacy + terms (add before paid products)
-og.png              # 1200×630 social preview (optional)
+src/pages/index.astro       # local redesign proof
+src/styles/tokens.css       # copied from the Hub-owned token source
+src/styles/global.css       # landing-specific composition and grid treatment
+astro.config.mjs            # static output configuration
+wrangler.jsonc              # future static asset directory: dist/
 ```
 
-## Flame performance check
+## Legacy flame performance check
 
 ### In browser (no Playwright)
 
@@ -60,8 +83,9 @@ Add the `export` line to `~/.zshrc` so installs keep working. Official support i
 
 **Alternative (no Playwright):** `sudo apt install chromium` and use `?profile=1` in Firefox/Chromium manually.
 
-## Adding build log posts
+## Content and source boundary
 
-In `index.html`, duplicate a `<li>` inside `.build-log-list` (newest at top). The subscribe form links to Substack directly — no iframe (iframes often appear empty in local preview).
-
-Source of truth for copy and brand tokens: `xanastros-hub` (`business/landing-page-spec.md`, `brand/`).
+- The canonical visual token source is maintained in the private Hearth & Code Hub. This consumer copy has visual meaning only.
+- Field Journal drafts remain in their separate repository and do not become public through this branch until their own publication gate is released.
+- AI Philosophy and Ethics, Lab, and Dossier copy must come from reviewed public-evidence records. The local proof uses explicit availability states rather than unpublished claims.
+- Do not add analytics, a newsletter funnel, a contact form, private Hub paths, runtime state, secrets, or raw session material to this repository.

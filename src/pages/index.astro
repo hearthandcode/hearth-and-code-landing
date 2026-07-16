@@ -1,0 +1,245 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+const rooms = [
+  { index: '01', name: 'Hearth', href: '#hearth', current: true },
+  { index: '02', name: 'Research', href: '#research' },
+  { index: '03', name: 'Exocore', href: '#exocore' },
+  { index: '04', name: 'Field Journal', href: '#journal' },
+  { index: '05', name: 'AI & Ethics', href: '#ai-ethics' },
+  { index: '06', name: 'Lab', href: '#lab' },
+];
+
+const fieldJournal = {
+  articleListUrl: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/',
+  fieldMapUrl: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/field/',
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Hearth & Code is a self-directed research and development practice exploring cognitive scaffolds for research, reflection, knowledge discovery, and synthesis." />
+    <meta name="theme-color" content="#1C1714" />
+    <title>Hearth & Code | Research and making in public</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="signal-rail" aria-label="Site status">
+          <span>Hearth & Code / public research surface</span>
+          <span class="signal-status"><i class="signal-node" aria-hidden="true"></i> evolving in public</span>
+        </div>
+        <div class="brand-row">
+          <a class="wordmark" href="#hearth" aria-label="Hearth and Code, return to the Hearth">Hearth &amp; Code</a>
+          <p class="brand-meta">A self-directed<br />research and making practice</p>
+        </div>
+        <nav class="room-nav" aria-label="Research rooms">
+          {rooms.map((room) => (
+            <a class="room-door" href={room.href} aria-current={room.current ? 'page' : undefined}>
+              <span class="door-index">{room.index}</span>
+              <span class="door-title">{room.name}</span>
+            </a>
+          ))}
+        </nav>
+      </header>
+
+      <main class="page-main" id="main-content">
+        <section class="hero" id="hearth" aria-labelledby="hearth-title">
+          <div class="hero-copy">
+            <p class="eyebrow">01 / The Hearth</p>
+            <h1 id="hearth-title">A place to make <em>the work visible.</em></h1>
+            <p>Hearth &amp; Code is a self-directed research and development practice exploring cognitive scaffolds: tools that make research, reflection, knowledge discovery, and synthesis more legible, engaging, and easier to return to. Learning can keep the thrill of discovery alongside the ordinary work of gathering, testing, and revising.</p>
+            <p>The practice asks whether an AI-supported cognitive workbench can carry bounded organizational and reflective work while the person keeps authorship, judgment, and final review. It is early and iterative. The Hearth is a place to gather around questions, share what can be inspected, and learn alongside one another.</p>
+            <p class="hero-question">What happens when research becomes a place you want to return to, where discovery, evidence, and reflection can hold together?</p>
+          </div>
+          <aside class="surface-map" aria-label="Initial public surface map">
+            <div class="map-head">
+              <p class="map-title">Surface map</p>
+              <span class="status-chip is-warm">local proof</span>
+            </div>
+            <div class="map-grid">
+              <div class="map-cell is-hearth"><span>01 / orientation</span><strong>Hearth</strong></div>
+              <div class="map-cell"><span>02 / working proof</span><strong>Research</strong></div>
+              <div class="map-cell is-signal"><span>03 / proposal</span><strong>Exocore</strong></div>
+              <div class="map-cell"><span>04 / Journal preview</span><strong>Field Journal</strong></div>
+              <div class="map-cell"><span>05 / personal position</span><strong>AI &amp; Ethics</strong></div>
+              <div class="map-cell"><span>06 / artifact lane</span><strong>Lab</strong></div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section-frame" id="research" aria-labelledby="research-title">
+          <aside class="section-aside"><span class="section-number">02</span><p>N=1 working proof</p></aside>
+          <div class="section-content">
+            <div class="section-head">
+              <h2 id="research-title">Research held in the form of a question.</h2>
+              <span class="status-chip is-warm">working proof</span>
+            </div>
+            <p class="section-intro">I am exploring whether an AI-supported cognitive workbench can help one person return to complex research and making while keeping authorship, judgment, and responsibility visible.</p>
+            <div class="evidence-grid">
+              <article class="evidence-card">
+                <p class="card-kicker">Open question</p>
+                <h3>A cognitive workbench under N=1 scrutiny</h3>
+                <p>What would a cognitive tool need to make a person's work more returnable without taking over the judgment required to evaluate it?</p>
+                <div class="card-meta"><span class="meta-label">N=1 working proof</span><span class="meta-label">no general claim</span></div>
+              </article>
+              <article class="evidence-card">
+                <p class="card-kicker">Method boundary</p>
+                <h3>The tool is inside the question</h3>
+                <p>The system can help organize and document the work used to evaluate it. That makes correction, source visibility, and explicit limits part of the method rather than optional polish.</p>
+                <div class="card-meta"><span class="meta-label is-public">under investigation</span><span class="meta-label">source selection pending</span></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-frame" id="exocore" aria-labelledby="exocore-title">
+          <aside class="section-aside"><span class="section-number">03</span><p>Workbench direction</p></aside>
+          <div class="section-content">
+            <div class="section-head">
+              <h2 id="exocore-title">Exocore is a workbench, not an autonomous authority.</h2>
+              <span class="status-chip is-warm">proposal</span>
+            </div>
+            <p class="section-intro">Exocore is an experiment in a person-owned cognitive workbench. Tools can carry bounded work, but meaning, policy, consequential action, and final review remain human responsibilities.</p>
+            <div class="process-note">
+              <span class="card-kicker">Current state</span>
+              <p><strong>Public implementation link not yet available.</strong> The source is being consolidated and extracted into a project intended for future open-source release. This page will point to it only when there is an inspectable, reviewed public surface.</p>
+            </div>
+            <div class="process-steps" aria-label="Exocore workbench principles">
+              <div class="process-step"><span class="section-number">A</span><strong>Records stay legible</strong><p>Decisions, sources, and unfinished work can be revisited instead of reconstructed from memory.</p></div>
+              <div class="process-step"><span class="section-number">B</span><strong>Tools carry bounded work</strong><p>Automation is useful when its inputs, outputs, and limits are available for human inspection.</p></div>
+              <div class="process-step"><span class="section-number">C</span><strong>Authority remains human</strong><p>Outward-facing claims, irreversible changes, and final review stop at a visible human gate.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-frame" id="journal" aria-labelledby="journal-title">
+          <aside class="section-aside"><span class="section-number">04</span><p>Selected public record</p></aside>
+          <div class="section-content">
+            <div class="section-head">
+              <h2 id="journal-title">A Field Journal you can enter two ways.</h2>
+              <span class="status-chip is-warm">Pages preview</span>
+            </div>
+            <p class="section-intro">The Field Journal is a separate, selected public record. You can begin with the articles and read them in time, or step into the Field Map to follow the questions and working ideas each note carries. Both views lead to the same reviewed material.</p>
+            <nav class="journal-views" aria-label="Field Journal views">
+              <a class="journal-view" href={fieldJournal.articleListUrl}>
+                <span class="card-kicker">Journal / Article List</span>
+                <strong>Read the notes</strong>
+                <small>Start with the published entries in chronological order.</small>
+              </a>
+              <a class="journal-view is-field" href={fieldJournal.fieldMapUrl}>
+                <span class="card-kicker">Journal / Field Map</span>
+                <strong>Follow the work</strong>
+                <small>See the notes, their working ideas, and their declared sources together.</small>
+              </a>
+            </nav>
+            <div class="journal-grid">
+              <article class="journal-card">
+                <p class="card-kicker">Field brief / 01</p>
+                <h3>A Public Journal Begins With a Boundary</h3>
+                <p>A note about keeping a public record honest: sharing methods, questions, and corrections without turning private work or one person's experiment into a general claim.</p>
+                <div class="card-meta"><span class="meta-label is-review">reviewed public projection</span><span class="meta-label">6 min read</span></div>
+              </article>
+              <article class="journal-card">
+                <p class="card-kicker">Design record / 02</p>
+                <h3>What I Mean by a Cognitive Workbench</h3>
+                <p>A working account of a cognitive workbench: a person-owned place where records, decisions, and carefully bounded tools help someone find their way back to the work.</p>
+                <div class="card-meta"><span class="meta-label is-review">reviewed public projection</span><span class="meta-label">6 min read</span></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-frame" id="ai-ethics" aria-labelledby="ai-ethics-title">
+          <aside class="section-aside"><span class="section-number">05</span><p>Personal position</p></aside>
+          <div class="section-content">
+            <div class="section-head">
+              <h2 id="ai-ethics-title">Agency is the condition of collaboration.</h2>
+              <span class="status-chip is-warm">personal position</span>
+            </div>
+            <p class="section-intro">I use AI as a collaborator in research and making, but I want the person to remain responsible for the meaning of the work. A useful system can help hold context, surface options, and make revision easier. Authorship, judgment, and final review stay with the person using it.</p>
+            <div class="evidence-grid">
+              <article class="evidence-card">
+                <p class="card-kicker">Personal position</p>
+                <h3>Human review stays present</h3>
+                <p>I am exploring an agency-first approach in which AI can support cognitive work while authorship, judgment, and final review remain with the person.</p>
+                <div class="card-meta"><span class="meta-label is-review">working interpretation</span><span class="meta-label">no universal claim</span></div>
+              </article>
+              <article class="evidence-card">
+                <p class="card-kicker">Question</p>
+                <h3>Support without a quiet transfer of judgment</h3>
+                <p>What makes an AI collaboration genuinely supportive rather than a quiet transfer of judgment away from the person doing the work?</p>
+                <div class="card-meta"><span class="meta-label">review-only derivative</span><span class="meta-label">exact copy pending</span></div>
+              </article>
+            </div>
+            <div class="process-note">
+              <span class="card-kicker">Local proof status</span>
+              <p>This is a dated personal position prepared for review. It does not demonstrate that AI improves thinking, is safe or appropriate for everyone, or can replace human responsibility.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-frame" id="lab" aria-labelledby="lab-title">
+          <aside class="section-aside"><span class="section-number">06</span><p>Experiments and artifact lanes</p></aside>
+          <div class="section-content">
+            <div class="section-head">
+              <h2 id="lab-title">The Lab is a place for bounded experiments.</h2>
+              <span class="status-chip is-muted">availability tracked</span>
+            </div>
+            <p class="section-intro">The Lab shows the shape of ongoing work without claiming that every private experiment is public, reproducible, or complete. Each eventual artifact must carry a clear source, maturity state, and public/private boundary.</p>
+            <div class="lab-grid">
+              <article class="lab-card">
+                <p class="card-kicker">Artifact lane / 01</p>
+                <h3>Knowledge Archive</h3>
+                <p>A governed artifact lane for taxonomy, provenance, retrieval boundaries, and the record of how knowledge is organized. It is not a standalone product, public corpus, or separate navigation room.</p>
+                <div class="card-meta"><span class="meta-label">Lab artifact lane</span><span class="meta-label">public selection pending</span></div>
+              </article>
+              <article class="lab-card">
+                <p class="card-kicker">Artifact lane / 02</p>
+                <h3>Open-source extraction</h3>
+                <p>Some tools and experiments are being consolidated into future inspectable projects. Until a public repository is ready, this page names the work honestly instead of using a dead link or implying availability.</p>
+                <div class="card-meta"><span class="meta-label">consolidating</span><span class="meta-label">link forthcoming</span></div>
+              </article>
+            </div>
+            <div class="process-steps" aria-label="Public artifact process">
+              <div class="process-step"><span class="section-number">01</span><strong>Choose a bounded source</strong><p>One artifact is selected because it can be understood without importing the private workspace around it.</p></div>
+              <div class="process-step"><span class="section-number">02</span><strong>Screen the claim and boundary</strong><p>Its source treatment, non-claim, maturity state, and privacy exclusions are made explicit.</p></div>
+              <div class="process-step"><span class="section-number">03</span><strong>Review the public projection</strong><p>Only an exact, reviewed projection can become an inspectable public artifact or source link.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-frame" id="method" aria-labelledby="method-title">
+          <aside class="section-aside"><span class="section-number">Method</span><p>Boundaries make the work inspectable.</p></aside>
+          <div class="section-content">
+            <div class="section-head">
+              <h2 id="method-title">A public surface can be honest about what it does not contain.</h2>
+              <span class="status-chip">method</span>
+            </div>
+            <div class="method-grid">
+              <article class="method-cell"><p class="card-kicker">Evidence</p><h3>Inspectable record</h3><p>A source-backed observation that a reader can examine directly.</p></article>
+              <article class="method-cell"><p class="card-kicker">Inference</p><h3>Working interpretation</h3><p>A reasoned view of the available record, open to correction as the record changes.</p></article>
+              <article class="method-cell"><p class="card-kicker">Proposal</p><h3>Future direction</h3><p>A design choice or experiment that has not yet earned the status of a completed result.</p></article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div>
+          <p class="footer-label">Hearth &amp; Code / local redesign proof</p>
+          <p>This is an informational design proof. It does not claim a complete product, a finished public corpus, or a validated outcome. A public contact path and external source links will appear only after their separate review gates are complete.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a class="footer-link" href="#method">Method &amp; boundaries</a>
+          <a class="footer-link" href="#hearth">Return to Hearth</a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

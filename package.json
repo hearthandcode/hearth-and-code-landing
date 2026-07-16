@@ -1,9 +1,13 @@
 {
   "name": "hearth-and-code-landing",
   "version": "1.0.0",
-  "description": "Pre-launch landing for [Hearth & Code](https://hearthandcode.dev): waitlist via Substack embed, build-in-public links, flame animation.",
+  "description": "Static Astro public-surface proof for Hearth & Code.",
   "main": "index.js",
   "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
     "profile:flame": "node scripts/profile-flame.mjs",
     "playwright:install": "playwright install chromium"
   },
@@ -14,12 +18,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/hearthandcode/hearth-and-code-landing/issues"
   },
   "homepage": "https://github.com/hearthandcode/hearth-and-code-landing#readme",
   "devDependencies": {
-    "playwright": "^1.60.0"
+    "@astrojs/check": "^0.9.9",
+    "astro": "^7.0.9",
+    "playwright": "^1.60.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

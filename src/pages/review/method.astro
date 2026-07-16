@@ -1,0 +1,65 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+---
+
+<ReviewShell
+  title="Method"
+  description="A local-review Method page for the Hearth and Code public practice."
+  current="method"
+>
+  <div class="review-page">
+    <header class="room-hero">
+      <p class="review-kicker">Method / how the work is held</p>
+      <h1>Make the path visible enough to <em>question.</em></h1>
+      <p class="lead">Hearth &amp; Code is trying to make a public record without turning every private thought into content. Method is the set of small choices that keeps the work open to inspection, correction, and return.</p>
+      <div class="room-meta"><span>Source-aware</span><span>human-reviewed</span><span>still evolving</span></div>
+    </header>
+
+    <section class="review-section" aria-labelledby="method-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The working grammar</p>
+          <h2 id="method-title">Three ways of saying what a piece of work is.</h2>
+        </div>
+      </div>
+      <div class="review-card-grid">
+        <article class="review-card">
+          <p class="review-label">Evidence</p>
+          <h3>Something a reader can inspect.</h3>
+          <p>A public artifact, a source, a reproducible record, or a fact that can be traced. Evidence is allowed to be small. It does not need to carry the entire argument alone.</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">Working interpretation</p>
+          <h3>A reasoned view that remains revisable.</h3>
+          <p>Patterns matter, but a pattern is not the same thing as a settled result. This label keeps a reader able to distinguish a current understanding from a stronger claim.</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">Proposal</p>
+          <h3>A direction that has not earned proof yet.</h3>
+          <p>Plans, product ideas, and design choices belong here. Naming them clearly lets the work stay imaginative without smuggling future capability into the present tense.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="boundaries-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The boundaries that matter</p>
+          <h2 id="boundaries-title">A public record should preserve both openness and a private life.</h2>
+        </div>
+      </div>
+      <ul class="review-list">
+        <li><span>Source</span><div><strong>Public claims should point somewhere.</strong> The more consequential the statement, the more important it is that a visitor can find the source, the artifact, or the reason it is still only a question.</div></li>
+        <li><span>Selection</span><div><strong>Nothing private becomes public by accident.</strong> The public site is a deliberate projection of a much larger working practice. Raw notes, personal records, and implementation detail do not become content simply because they exist.</div></li>
+        <li><span>Authority</span><div><strong>The person keeps the final say.</strong> AI can make a draft, suggest a route, or surface a gap. It cannot decide what Scott means, what he publishes, or which correction matters most.</div></li>
+        <li><span>Revision</span><div><strong>Corrections are part of the record.</strong> An honest practice needs room to amend a claim, replace a source, change direction, or say that the current approach did not hold up.</div></li>
+      </ul>
+    </section>
+
+    <section class="review-section" aria-labelledby="method-close-title">
+      <div class="review-quote">
+        <p id="method-close-title">The goal is not to look finished. The goal is to leave enough of a trail that the next honest step can be found.</p>
+      </div>
+    </section>
+  </div>
+</ReviewShell>

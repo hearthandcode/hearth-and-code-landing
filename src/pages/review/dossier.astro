@@ -1,0 +1,123 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+
+const evidence = [
+  {
+    label: 'Systems work',
+    title: 'Public portfolio',
+    copy: 'Selected artifacts from knowledge governance, bounded retrieval, research methods, and early platform design.',
+    href: 'https://github.com/hearthandcode/public-portfolio',
+  },
+  {
+    label: 'Workbench',
+    title: 'Exocore platform',
+    copy: 'A public pre-alpha orientation shell and the beginning of a local-first cognitive workbench.',
+    href: 'https://github.com/hearthandcode/exocore-platform',
+  },
+  {
+    label: 'Research record',
+    title: 'Applied AI study',
+    copy: 'A self-directed curriculum and research structure, shared as an evolving study rather than a completed thesis.',
+    href: 'https://github.com/hearthandcode/phd-applied-ai',
+  },
+  {
+    label: 'Creative work',
+    title: 'Exocore music',
+    copy: 'A separate creative thread where AI collaboration, sound design, and the larger storyworld meet.',
+    href: 'https://suno.com/@cosmatrexis',
+  },
+];
+---
+
+<ReviewShell
+  title="Evidence Dossier"
+  description="A local-review field file for Scott Rallya’s public portfolio, background, and selected work."
+  current="dossier"
+>
+  <div class="review-page">
+    <header class="dossier-hero">
+      <div class="file-banner">
+        <p class="review-kicker">Evidence Dossier / public field file</p>
+        <span class="review-stamp">File SR-01</span>
+      </div>
+      <h1>Scott Rallya, <em>still in the field.</em></h1>
+      <p class="lead">Independent researcher and systems builder, working across cognitive architecture, AI, knowledge systems, creative practice, and the difficult art of beginning again.</p>
+      <div class="file-facts" aria-label="Dossier summary">
+        <div><span>Foundation</span><strong>B.S. Computer Science + Psychology, RPI, 2007</strong></div>
+        <div><span>Practice</span><strong>Systems work, AI-assisted research, and building in public</strong></div>
+        <div><span>Current status</span><strong>Independent study and early product exploration</strong></div>
+      </div>
+      <div class="dossier-story">
+        <p>This is not the cleanest version of a professional story. It starts with a person who loved the way systems fit together, took the long route through formal education and unfinished programs, then spent years trying to understand why a mind full of connections could still have trouble turning those connections into a finished thing.</p>
+        <p>The work now is a way of returning. AI did not supply a new identity or a shortcut around the hard parts. It made room for Scott to externalize more of the middle, inspect it, argue with it, and keep moving long enough to see what the ideas can become.</p>
+      </div>
+    </header>
+
+    <section class="review-section" aria-labelledby="throughline-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">The throughline</p>
+          <h2 id="throughline-title">A builder who keeps following the connection between mind and machine.</h2>
+        </div>
+        <span class="review-status is-ember">personal record</span>
+      </div>
+      <div class="review-split">
+        <div>
+          <p class="review-label">What carries forward</p>
+          <h3>Cross-domain thinking.</h3>
+          <p>Computer science and psychology were never separate interests. They became a way of asking how people reason, what systems make possible, and why an interface can be the difference between knowing something and being able to do anything with it.</p>
+        </div>
+        <div>
+          <p class="review-label">What remains visible</p>
+          <h3>The rough edges.</h3>
+          <p>The route here includes stalled work, interrupted plans, too many simultaneous threads, and the recurring need to build a smaller piece of infrastructure before returning to the thing that mattered in the first place. That is context, not a performance of hardship.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="practice-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">Current practice</p>
+          <h2 id="practice-title">What the work looks like from the inside.</h2>
+        </div>
+      </div>
+      <ul class="review-list">
+        <li><span>01 / Notice</span><div><strong>Follow the threads that keep returning.</strong> Research questions, technical problems, sound, learning design, and philosophical questions often arrive together here. The job is to see the connection before forcing them into separate boxes.</div></li>
+        <li><span>02 / Build</span><div><strong>Turn a question into something inspectable.</strong> A small shell, a public artifact, a working note, or a method record is more useful than a polished claim with nothing behind it.</div></li>
+        <li><span>03 / Return</span><div><strong>Leave enough of a trail to come back.</strong> The practice keeps asking how a person can recover the state of a difficult project after time, friction, or a change in capacity has broken the flow.</div></li>
+        <li><span>04 / Correct</span><div><strong>Keep the human hand on the work.</strong> AI can help shape, retrieve, question, and draft. The person keeps the responsibility to accept, reject, and revise.</div></li>
+      </ul>
+    </section>
+
+    <section class="review-section" aria-labelledby="evidence-title">
+      <div class="review-section-head">
+        <div>
+          <p class="review-kicker">Selected evidence</p>
+          <h2 id="evidence-title">A few places to inspect the work directly.</h2>
+        </div>
+        <span class="review-stamp is-amber">Source-linked</span>
+      </div>
+      <div class="dossier-evidence">
+        {evidence.map((item) => (
+          <article>
+            <p class="review-label">{item.label}</p>
+            <h3>{item.title}</h3>
+            <p>{item.copy}</p>
+            <a href={item.href} target="_blank" rel="noopener noreferrer">Inspect the public record ↗</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="review-section" aria-labelledby="dossier-question-title">
+      <div class="review-quote">
+        <p id="dossier-question-title">“I have always wanted to be recognized as someone capable of doing high-level research in the areas that I am personally interested in.”</p>
+        <small>Local review source language, adapted for this proof</small>
+      </div>
+      <div class="review-story-panel" style="margin-top: 1px;">
+        <p>The point of this dossier is not to claim that recognition in advance. It is to give a thoughtful reader enough context to see the ambition, the work ethic, the gaps, and the evidence that exists today, then decide for themselves whether the path is worth following.</p>
+      </div>
+    </section>
+  </div>
+</ReviewShell>

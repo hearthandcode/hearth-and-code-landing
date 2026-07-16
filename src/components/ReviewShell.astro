@@ -1,0 +1,77 @@
+---
+import '../styles/review-site.css';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: string;
+}
+
+const { title, description, current } = Astro.props;
+
+const navigation = [
+  { key: 'hearth', label: 'Hearth', href: '/review/' },
+  { key: 'research', label: 'Research', href: '/review/research/' },
+  { key: 'exocore', label: 'Exocore', href: '/review/exocore/' },
+  { key: 'journal', label: 'Field Journal', href: 'https://f7df5a21.hearthandcode-field-journal.pages.dev/', external: true },
+  { key: 'ethics', label: 'AI & Ethics', href: '/review/ethics/' },
+  { key: 'lab', label: 'Lab', href: '/review/lab/' },
+  { key: 'method', label: 'Method', href: '/review/method/' },
+  { key: 'dossier', label: 'Dossier', href: '/review/dossier/' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#171311" />
+    <title>{title} | Hearth &amp; Code review proof</title>
+  </head>
+  <body class="review-body">
+    <div class="review-ambient" aria-hidden="true"></div>
+    <a class="review-skip" href="#main-content">Skip to content</a>
+    <div class="review-shell">
+      <header class="review-header">
+        <div class="review-status-rail">
+          <span>Hearth &amp; Code / local review proof</span>
+          <span><i aria-hidden="true"></i> full site composition</span>
+        </div>
+        <div class="review-brand-row">
+          <a class="review-wordmark" href="/review/">Hearth <em>&amp;</em> Code</a>
+          <p>Research, making, and a long way back into the work.</p>
+        </div>
+        <nav class="review-navigation" aria-label="Review-site navigation">
+          {navigation.map((item) => (
+            <a
+              href={item.href}
+              aria-current={item.key === current ? 'page' : undefined}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener noreferrer' : undefined}
+            >
+              {item.label}{item.external ? <span aria-hidden="true"> ↗</span> : null}
+            </a>
+          ))}
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <slot />
+      </main>
+
+      <footer class="review-footer">
+        <div>
+          <p class="review-kicker">Local review only</p>
+          <p>This proof tests the public story, visual hierarchy, and page shape. It is not an approval of exact public copy or a production release.</p>
+        </div>
+        <div class="review-footer-links">
+          <a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href="/review/dossier/">Open dossier</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
