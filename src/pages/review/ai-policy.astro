@@ -1,0 +1,392 @@
+---
+import ReviewShell from '../../components/ReviewShell.astro';
+
+const policies = [
+  {
+    number: '01',
+    id: 'purpose-agency',
+    title: 'Purpose and human agency.',
+    summary: 'AI can extend attention, memory, and practical capacity. It cannot become the source of my consent, values, or responsibility.',
+    supports: [
+      {
+        number: '1.1',
+        title: 'I use AI as a scaffold for judgment, not a substitute for it.',
+        paragraphs: [
+          'I bring the purpose, relevant experience, source material, and decision about what matters. AI can retrieve, organize, criticize, explain, or propose.',
+          'I will revise until I can recognize the work as mine, clearer. If I cannot recognize its meaning or defend its emphasis, it remains a draft.',
+        ],
+      },
+      {
+        number: '1.2',
+        title: 'Consequential work must remain interruptible.',
+        paragraphs: [
+          'I am interested in tools that carry context and help people return to difficult work. “Deeper cognitive scaffold” remains the language I prefer for that direction.',
+          'Public claims, provider-boundary decisions, publication, and external action should have a clear human route for review, redirection, pause, or refusal.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '02',
+    id: 'truthfulness',
+    title: 'Truthfulness and epistemic care.',
+    summary: 'A fluent answer is not proof. Important claims need sources, visible limits, and a correction path that does not erase the earlier record.',
+    supports: [
+      {
+        number: '2.1',
+        title: 'Fluency is not proof.',
+        paragraphs: [
+          'I will distinguish observation, interpretation, proposal, and uncertainty when those differences change what a reader should infer.',
+          'I will not pass a model’s answer through my name as though authorship made it evidence. Important claims need sources, limits, and an account of how far the available evidence reaches.',
+        ],
+      },
+      {
+        number: '2.2',
+        title: 'Correction is part of credibility.',
+        paragraphs: [
+          'When a public error matters, I will correct it with a dated note in the affected artifact and a changelog entry.',
+          'I will try to respond to good-faith correction and preserve a proportionate record of the review and resolution.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '03',
+    id: 'communication',
+    title: 'Communication and reader care.',
+    summary: 'AI can make a story more legible. It cannot invent the life beneath it, and it cannot excuse unnecessary noise in another person’s reading life.',
+    supports: [
+      {
+        number: '3.1',
+        title: 'AI may shape a narrative. It may not counterfeit a life.',
+        paragraphs: [
+          'A personal account must begin in something I experienced, noticed, made, studied, or chose. AI may help clarify sequence, test language, or make an idea readable.',
+          'It may not manufacture first-person experience, synthetic intimacy, or an implied relationship that does not exist.',
+        ],
+      },
+      {
+        number: '3.2',
+        title: 'Reader attention is a trust.',
+        paragraphs: [
+          'I use AI to reduce friction on my side, not to transfer the cost of more noise to the people reading. A long form needs a real question, a clear route through the material, honest limits, useful headings, and a reason for its length.',
+          'I will not publish merely because a model makes another post easy to generate. Short work is preferable when it is the truer form.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '04',
+    id: 'consent-privacy',
+    title: 'Consent, privacy, and data stewardship.',
+    summary: 'Local notes, provider processing, and public release are separate decisions with different risks, rights, and responsibilities.',
+    supports: [
+      {
+        number: '4.1',
+        title: 'People and source material deserve more than a prompt window.',
+        paragraphs: [
+          'Personal material, directly identifying information, other people’s words, sensitive records, and material with unclear rights require stronger care before provider processing or public release.',
+          'I will prefer small, bounded inputs to indiscriminate context dumps. Movement from local notes, to provider processing, to public publication is a sequence of separate permissions.',
+        ],
+      },
+      {
+        number: '4.2',
+        title: 'Local-first is a direction, not a false claim about the present.',
+        paragraphs: [
+          'I prefer systems that keep protection, ownership, and provenance close to the person whose work they represent. I also use hosted services when the task or current hardware makes them practical.',
+          'Any broader data sharing should have a documented purpose, meaningful consent, safeguards, a retention boundary, and a credible return to the people or communities affected.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '05',
+    id: 'provenance-creative-work',
+    title: 'Provenance, disclosure, and creative respect.',
+    summary: 'Material collaboration should be legible. Creative use also needs direction, attribution, and restraint.',
+    supports: [
+      {
+        number: '5.1',
+        title: 'Material collaboration should be legible.',
+        paragraphs: [
+          'This policy describes my standing practice. A particular artifact should also disclose AI assistance when it materially shapes prose, research synthesis, code, images, music, voice, video, translation, or agentic work.',
+          'The disclosure should say what the tool did and what I supplied, selected, changed, or rejected. It should clarify collaboration without turning every page into a compliance exercise.',
+        ],
+      },
+      {
+        number: '5.2',
+        title: 'Creative work requires direction, attribution, and restraint.',
+        paragraphs: [
+          'I use AI in music generation, visual assets, information displays, and publication imagery. I remain responsible for creative direction, supplied material, selection, editing, arrangement, and the decision to publish.',
+          'I will not use uncredited imitation of living artists as a shortcut to a public style. Unresolved questions about attribution, consent, provenance, commercial use, or platform terms require a separate review before release.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '06',
+    id: 'bounded-agents',
+    title: 'Bounded delegation and accountable automation.',
+    summary: 'An agent can collect, organize, test, and propose. It cannot infer consent, speak for my values, or decide that a consequential action is ready to take.',
+    supports: [
+      {
+        number: '6.1',
+        title: 'An agent has a task, not a borrowed identity.',
+        paragraphs: [
+          'An agent may collect, organize, test, and propose within a stated scope. It should have a relevant source basis, permission boundary, stop condition, and record of what it did.',
+          'Sounding like me does not make an agent me. It cannot infer consent, speak for my values, or declare its own summary settled truth.',
+        ],
+      },
+      {
+        number: '6.2',
+        title: 'External outreach defaults to restraint.',
+        paragraphs: [
+          'Agents may prepare a draft, research an audience, or surface an opportunity. They will not send messages, file issues, publish posts, or conduct outreach on my behalf without a documented purpose, named audience, clear guardrails, stop condition, and my explicit approval for the specific action.',
+          'Automation is worthwhile only while its authority remains visible and reversible.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '07',
+    id: 'access-participation',
+    title: 'Access, pluralism, and public participation.',
+    summary: 'No one should need AI to meet the work. Literacy should expand the capacity to question systems, their limits, and the power behind them.',
+    supports: [
+      {
+        number: '7.1',
+        title: 'No one should need AI in order to meet the work.',
+        paragraphs: [
+          'A reader, collaborator, contributor, or community member should be able to understand the work, work with me, or raise a concern without adopting my tools.',
+          'I will preserve human-readable public materials, source paths where appropriate, clear structure, and a contact route. A fuller non-AI or lower-AI participation path remains a design responsibility, not a solved promise.',
+        ],
+      },
+      {
+        number: '7.2',
+        title: 'Literacy should expand the capacity to question power.',
+        paragraphs: [
+          'My first audience for AI literacy includes neurodivergent and disabled people whose cognitive, learning, memory, or access needs may be better served by carefully designed tools.',
+          'Literacy should also help people see how systems fail, who owns them, what they cost, whose labor and data they depend on, and where they concentrate power. The purpose is informed participation and refusal, not compulsory enthusiasm.',
+        ],
+      },
+    ],
+  },
+  {
+    number: '08',
+    id: 'material-revision',
+    title: 'Material responsibility and continuing revision.',
+    summary: 'Technical possibility does not erase material consequence. This policy is a dated practice, not an ethical clearance.',
+    supports: [
+      {
+        number: '8.1',
+        title: 'Technical possibility does not erase material consequence.',
+        paragraphs: [
+          'AI systems can increase energy and water demand, affect work and creative livelihoods, and centralize power in a small number of providers and infrastructures.',
+          'I will prefer local tools when they are sufficient, choose smaller or more efficient systems when they can do the work, and use hosted frontier systems deliberately when the depth of a task warrants them.',
+        ],
+      },
+      {
+        number: '8.2',
+        title: 'A policy is a dated practice, not an ethical clearance.',
+        paragraphs: [
+          'I will revise this policy when my practice changes, a boundary fails, a new form of AI work appears, or someone identifies a cost I missed. Meaningful changes will be dated.',
+          'This policy invites inspection and disagreement. It does not settle the ethical, creative, environmental, labor, or political questions around AI for everyone else.',
+        ],
+      },
+    ],
+  },
+];
+---
+
+<ReviewShell
+  title="A Policy for Working With AI"
+  description="A review-only visual proof of Scott Rallya’s personal policy for AI-assisted work."
+  current="ethics"
+>
+  <article class="policy-proof">
+    <header class="policy-hero" aria-labelledby="policy-title">
+      <div class="policy-hero-copy">
+        <p class="review-kicker">AI philosophy and ethics / review-only policy proof</p>
+        <h1 id="policy-title">A policy for <em>working with AI.</em></h1>
+        <p class="policy-deck">A personal account of how I use AI in research, technical work, creative work, and public communication. It sets conditions for a collaboration that expands capacity while preserving truth, consent, access, and human agency.</p>
+        <div class="policy-facts" aria-label="Policy metadata">
+          <span><b>Version</b>0.5 review draft</span>
+          <span><b>Reading time</b>9 minutes</span>
+          <span><b>Status</b>not approved for publication</span>
+        </div>
+      </div>
+      <aside class="policy-hero-aside" aria-labelledby="policy-aside-title">
+        <p class="review-label">The position</p>
+        <h2 id="policy-aside-title">AI may assist the work. It does not inherit my authority, experience, consent, or final judgment.</h2>
+        <p>The hearth is the record I can return to. The forge is where a draft is tested. I am the firetender.</p>
+      </aside>
+    </header>
+
+    <details class="policy-disclosure">
+      <summary>
+        <span class="policy-disclosure-mark" aria-hidden="true">AI</span>
+        <span><strong>AI collaboration notice</strong><small>What shaped this policy, and what remained human work.</small></span>
+        <span class="policy-disclosure-control" aria-hidden="true">Open</span>
+      </summary>
+      <div class="policy-disclosure-body">
+        <p>AI helped retrieve relevant past conversations and existing work, surface questions, compare themes, propose language, and run consistency checks. I directed the subject, supplied the concerns and examples, answered review questions, selected what to keep, changed the direction of the draft, and remain responsible for the position expressed here.</p>
+        <p>This notice is a review-prototype of a compact disclosure badge with expandable detail. It is not a claim that this pattern is live on the public site.</p>
+      </div>
+    </details>
+
+    <div class="policy-reader-route">
+      <div>
+        <p class="review-label">Reader route</p>
+        <p>Read in order, or enter where the question matters to you. The policy is designed to be returned to, not consumed all at once.</p>
+      </div>
+      <nav class="policy-contents" aria-label="Policy contents">
+        <ol>
+          {policies.map((policy) => (
+            <li><a href={`#${policy.id}`}><span>{policy.number}</span>{policy.title.replace('.', '')}</a></li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+
+    <div class="policy-body">
+      {policies.map((policy) => (
+        <section id={policy.id} class="policy-section" aria-labelledby={`${policy.id}-title`}>
+          <aside class="policy-section-number" aria-hidden="true">
+            <span>{policy.number}</span>
+            <i></i>
+          </aside>
+          <div class="policy-section-copy">
+            <header>
+              <p class="review-kicker">Policy {policy.number}</p>
+              <h2 id={`${policy.id}-title`}>{policy.title}</h2>
+              <p class="policy-summary">{policy.summary}</p>
+            </header>
+            <div class="policy-supports">
+              {policy.supports.map((support) => (
+                <section class="policy-support" aria-labelledby={`${policy.id}-${support.number.replace('.', '-')}`}>
+                  <h3 id={`${policy.id}-${support.number.replace('.', '-')}`}><span>{support.number}</span>{support.title}</h3>
+                  {support.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                </section>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <section class="policy-close" aria-labelledby="policy-close-title">
+      <div>
+        <p class="review-kicker">A dated record of practice</p>
+        <h2 id="policy-close-title">This policy is intended to be revised in public, not perfected in advance.</h2>
+        <p>When a boundary fails, a new form of AI work appears, or someone identifies a cost I missed, the policy should change with a dated explanation. Questions, criticism, and suggested corrections can be sent to <a href="mailto:hello@hearthandcode.dev">hello@hearthandcode.dev</a>.</p>
+      </div>
+      <div class="policy-close-note">
+        <p class="review-label">Review status</p>
+        <p>This local page is a visual proof of the v0.5 candidate. It is not linked from public navigation, deployed, or approved as final copy.</p>
+      </div>
+    </section>
+  </article>
+</ReviewShell>
+
+<style>
+  .policy-proof {
+    padding: clamp(2rem, 5vw, 5rem) clamp(1.2rem, 4vw, 3.5rem) clamp(4rem, 8vw, 7rem);
+  }
+
+  .policy-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
+    overflow: hidden;
+    border: 1px solid var(--review-rule);
+    background: var(--review-rule);
+    box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.28);
+  }
+
+  .policy-hero::before {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    content: '';
+    background: linear-gradient(90deg, var(--review-ember), var(--review-gold) 48%, var(--review-cyan));
+  }
+
+  .policy-hero-copy,
+  .policy-hero-aside { min-width: 0; background: rgba(33, 25, 21, 0.98); }
+  .policy-hero-copy { padding: clamp(2rem, 5vw, 5rem); }
+  .policy-hero h1 { max-width: 11ch; margin: 0; color: var(--review-cream); font-family: var(--review-display); font-size: clamp(3.2rem, 7vw, 6.4rem); font-weight: 600; letter-spacing: -0.072em; line-height: 0.91; }
+  .policy-hero h1 em { color: var(--review-gold); font-style: normal; }
+  .policy-deck { max-width: 42rem; margin: 1.65rem 0 0; color: var(--review-ash); font-size: clamp(1rem, 1.8vw, 1.16rem); line-height: 1.82; }
+
+  .policy-facts { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .policy-facts span { display: grid; gap: 0.15rem; padding: 0.52rem 0.65rem; border: 1px solid var(--review-rule); color: var(--review-ash); font-size: 0.73rem; line-height: 1.35; }
+  .policy-facts b { color: var(--review-cyan); font-family: var(--review-mono); font-size: 0.57rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .policy-hero-aside { display: grid; align-content: end; gap: 1.25rem; padding: clamp(1.5rem, 3vw, 2.5rem); border-left: 1px solid var(--review-rule); background: linear-gradient(155deg, rgba(63, 224, 208, 0.1), rgba(33, 25, 21, 0.98) 55%); }
+  .policy-hero-aside h2 { margin: 0; color: var(--review-cream); font-family: var(--review-display); font-size: clamp(1.45rem, 2.5vw, 2rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; }
+  .policy-hero-aside p:last-child { max-width: 28ch; margin: 0; color: var(--review-ash); font-size: 0.88rem; line-height: 1.65; }
+
+  .policy-disclosure { margin-top: 1px; border: 1px solid var(--review-rule); background: rgba(33, 25, 21, 0.96); }
+  .policy-disclosure summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.9rem; padding: 1rem 1.2rem; cursor: pointer; list-style: none; }
+  .policy-disclosure summary::-webkit-details-marker { display: none; }
+  .policy-disclosure-mark { display: grid; width: 2rem; height: 2rem; place-items: center; border: 1px solid var(--review-cyan); color: var(--review-cyan); font-family: var(--review-mono); font-size: 0.68rem; letter-spacing: -0.05em; }
+  .policy-disclosure strong { display: block; color: var(--review-cream); font-family: var(--review-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; }
+  .policy-disclosure small { display: block; margin-top: 0.15rem; color: var(--review-muted); font-size: 0.76rem; }
+  .policy-disclosure-control { color: var(--review-ember); font-family: var(--review-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .policy-disclosure[open] .policy-disclosure-control { font-size: 0; }
+  .policy-disclosure[open] .policy-disclosure-control::after { content: 'Close'; font-size: 0.62rem; }
+  .policy-disclosure-body { max-width: 70ch; padding: 1.2rem 1.2rem 1.4rem 4.1rem; border-top: 1px solid var(--review-rule-soft); }
+  .policy-disclosure-body p { margin: 0; color: var(--review-ash); font-size: 0.88rem; line-height: 1.72; }
+  .policy-disclosure-body p + p { margin-top: 0.85rem; }
+
+  .policy-reader-route { display: grid; grid-template-columns: minmax(14rem, 0.55fr) minmax(0, 1.45fr); gap: 1px; margin-top: clamp(2.5rem, 6vw, 5rem); border: 1px solid var(--review-rule); background: var(--review-rule); }
+  .policy-reader-route > div,
+  .policy-contents { padding: 1.25rem; background: rgba(33, 25, 21, 0.98); }
+  .policy-reader-route > div p:last-child { max-width: 30ch; margin: 0; color: var(--review-ash); font-size: 0.85rem; line-height: 1.65; }
+  .policy-contents { background: rgba(43, 32, 26, 0.98); }
+  .policy-contents ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; }
+  .policy-contents li { border-bottom: 1px solid var(--review-rule-soft); }
+  .policy-contents li:nth-last-child(-n + 2) { border-bottom: 0; }
+  .policy-contents a { display: grid; grid-template-columns: 2.3rem 1fr; gap: 0.4rem; padding: 0.7rem 0.55rem; color: var(--review-ash); font-size: 0.74rem; line-height: 1.45; text-decoration: none; }
+  .policy-contents a:hover { color: var(--review-cream); background: rgba(63, 224, 208, 0.08); }
+  .policy-contents span { color: var(--review-ember); font-family: var(--review-mono); font-size: 0.62rem; letter-spacing: 0.07em; }
+
+  .policy-body { position: relative; margin-top: clamp(3rem, 8vw, 7rem); }
+  .policy-body::before { position: absolute; top: 0; bottom: 0; left: clamp(2rem, 7vw, 6rem); width: 1px; content: ''; background: linear-gradient(var(--review-ember), var(--review-rule) 14%, var(--review-rule) 86%, var(--review-cyan)); }
+  .policy-section { position: relative; display: grid; grid-template-columns: clamp(3.5rem, 10vw, 8.5rem) minmax(0, 1fr); gap: clamp(1rem, 4vw, 3rem); padding-bottom: clamp(3.5rem, 8vw, 6.5rem); }
+  .policy-section-number { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; color: var(--review-ember); font-family: var(--review-mono); font-size: clamp(0.8rem, 1.3vw, 1rem); letter-spacing: 0.08em; }
+  .policy-section-number span { display: grid; width: 2.4rem; height: 2.4rem; place-items: center; border: 1px solid currentColor; background: var(--review-ink); }
+  .policy-section-number i { width: 0.4rem; height: 0.4rem; border: 1px solid var(--review-cyan); border-radius: 50%; background: var(--review-ink); }
+  .policy-section-copy { min-width: 0; max-width: 47rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--review-rule); }
+  .policy-section-copy header { padding-bottom: 1.7rem; }
+  .policy-section-copy h2 { max-width: 15ch; margin: 0; color: var(--review-cream); font-family: var(--review-display); font-size: clamp(2rem, 4vw, 3.55rem); font-weight: 600; letter-spacing: -0.055em; line-height: 1; }
+  .policy-summary { max-width: 56ch; margin: 1.1rem 0 0; color: var(--review-ash); font-family: var(--review-display); font-size: 1.1rem; font-style: italic; line-height: 1.6; }
+  .policy-supports { display: grid; gap: 0; }
+  .policy-support { padding: 1.55rem 0; border-top: 1px solid var(--review-rule-soft); }
+  .policy-support h3 { display: grid; grid-template-columns: 3rem 1fr; gap: 0.85rem; margin: 0 0 0.8rem; color: var(--review-cream); font-family: var(--review-display); font-size: clamp(1.25rem, 2.2vw, 1.55rem); font-weight: 500; letter-spacing: -0.025em; line-height: 1.2; }
+  .policy-support h3 span { padding-top: 0.25rem; color: var(--review-ember); font-family: var(--review-mono); font-size: 0.63rem; font-weight: 400; letter-spacing: 0.06em; }
+  .policy-support p { max-width: 68ch; margin: 0; color: var(--review-ash); font-size: 0.95rem; line-height: 1.78; }
+  .policy-support p + p { margin-top: 0.9rem; }
+
+  .policy-close { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(15rem, 0.85fr); gap: 1px; border: 1px solid var(--review-rule); background: var(--review-rule); }
+  .policy-close > div { padding: clamp(1.5rem, 4vw, 2.75rem); background: rgba(33, 25, 21, 0.98); }
+  .policy-close h2 { max-width: 20ch; margin: 0; color: var(--review-cream); font-family: var(--review-display); font-size: clamp(1.7rem, 3vw, 2.55rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1.05; }
+  .policy-close p { max-width: 58ch; margin: 1rem 0 0; color: var(--review-ash); font-size: 0.9rem; line-height: 1.72; }
+  .policy-close a { color: var(--review-cyan); }
+  .policy-close-note { background: rgba(43, 32, 26, 0.98) !important; }
+  .policy-close-note p:last-child { max-width: 31ch; margin-top: 0.55rem; font-family: var(--review-mono); font-size: 0.68rem; letter-spacing: 0.035em; line-height: 1.75; text-transform: uppercase; }
+
+  @media (max-width: 780px) {
+    .policy-hero,
+    .policy-reader-route,
+    .policy-close { grid-template-columns: 1fr; }
+    .policy-hero-aside { border-top: 1px solid var(--review-rule); border-left: 0; }
+    .policy-contents ol { grid-template-columns: 1fr; }
+    .policy-contents li:nth-last-child(-n + 2) { border-bottom: 1px solid var(--review-rule-soft); }
+    .policy-contents li:last-child { border-bottom: 0; }
+    .policy-body::before { left: 1.2rem; }
+    .policy-section { grid-template-columns: 2.5rem minmax(0, 1fr); gap: 0.85rem; }
+    .policy-section-number span { width: 2rem; height: 2rem; font-size: 0.72rem; }
+    .policy-section-copy h2 { font-size: clamp(2rem, 10vw, 3rem); }
+    .policy-disclosure-body { padding-left: 1.2rem; }
+  }
+</style>
