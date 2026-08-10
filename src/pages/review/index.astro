@@ -1,5 +1,7 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
+import EcosystemProcessRail from '../../components/EcosystemProcessRail.astro';
+import { ecosystemStages } from '../../data/public-ecosystem';
 
 const { publicSite = false } = Astro.props;
 const routePrefix = publicSite ? '' : '/review';
@@ -73,6 +75,16 @@ const rooms = [
         <small>{publicSite ? 'Shaped from Scott’s authoring material' : 'Local-review copy, shaped from Scott’s authoring material'}</small>
       </div>
     </section>
+
+    <div class="review-section">
+      <EcosystemProcessRail
+        id="hearth-process"
+        eyebrow="A public practice, made legible"
+        title="Follow one question from first spark to a public record."
+        description="This is not a workflow engine or a claim that every question follows a tidy sequence. It is a reader-controlled orientation to how public artifacts connect without exposing a private workspace."
+        stages={ecosystemStages}
+      />
+    </div>
 
     <section class="review-section" aria-labelledby="rooms-title">
       <div class="review-section-head">

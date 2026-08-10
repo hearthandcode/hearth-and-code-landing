@@ -1,0 +1,173 @@
+---
+import ClaimStateBadge from './ClaimStateBadge.astro';
+import type { BoundaryLayer } from '../data/public-ecosystem';
+
+interface Props {
+  title: string;
+  description: string;
+  layers: BoundaryLayer[];
+}
+
+const { title, description, layers } = Astro.props;
+---
+
+<section class="boundary-map" aria-labelledby="boundary-map-title">
+  <header class="boundary-map__header">
+    <div>
+      <p>System boundary</p>
+      <h2 id="boundary-map-title">{title}</h2>
+    </div>
+    <p>{description}</p>
+  </header>
+
+  <ol class="boundary-map__layers">
+    {layers.map((layer, index) => (
+      <li class="boundary-map__layer">
+        <div class="boundary-map__meta">
+          <span aria-hidden="true">0{index + 1}</span>
+          <ClaimStateBadge state={layer.state} compact />
+        </div>
+        <p class="boundary-map__label">{layer.label}</p>
+        <h3>{layer.title}</h3>
+        <p class="boundary-map__summary">{layer.summary}</p>
+        <ul>
+          {layer.items.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="boundary-map__boundary"><strong>Boundary:</strong> {layer.boundary}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .boundary-map {
+    border: 1px solid var(--review-rule);
+    background: rgba(33, 25, 21, 0.98);
+  }
+
+  .boundary-map__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.8fr);
+    gap: clamp(1.25rem, 4vw, 3rem);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--review-rule);
+  }
+
+  .boundary-map__header > div > p,
+  .boundary-map__label {
+    margin: 0 0 0.8rem;
+    color: var(--review-ember);
+    font-family: var(--review-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .boundary-map__header h2 {
+    max-width: 18ch;
+    margin: 0;
+    color: var(--review-cream);
+    font-family: var(--review-display);
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .boundary-map__header > p {
+    align-self: end;
+    max-width: 34rem;
+    margin: 0;
+    color: var(--review-ash);
+    font-size: 0.94rem;
+    line-height: 1.7;
+  }
+
+  .boundary-map__layers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--review-rule);
+    gap: 1px;
+  }
+
+  .boundary-map__layer {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 23rem;
+    padding: 1.5rem;
+    background: rgba(33, 25, 21, 0.98);
+  }
+
+  .boundary-map__layer:nth-child(2) { background: rgba(43, 32, 26, 0.98); }
+  .boundary-map__layer:nth-child(3) { background: linear-gradient(155deg, rgba(164, 149, 239, 0.1), rgba(33, 25, 21, 0.98) 52%); }
+
+  .boundary-map__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .boundary-map__meta > span {
+    color: var(--review-muted);
+    font-family: var(--review-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .boundary-map__label { margin-top: 1.4rem; }
+
+  .boundary-map__layer h3 {
+    margin: 0;
+    color: var(--review-cream);
+    font-family: var(--review-display);
+    font-size: 1.45rem;
+    font-weight: 500;
+    line-height: 1.12;
+  }
+
+  .boundary-map__summary {
+    margin: 0.9rem 0 0;
+    color: var(--review-ash);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .boundary-map__layer ul {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1.2rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .boundary-map__layer li li {
+    padding-top: 0.45rem;
+    border-top: 1px solid var(--review-rule-soft);
+    color: var(--review-muted);
+    font-family: var(--review-mono);
+    font-size: 0.67rem;
+    line-height: 1.5;
+  }
+
+  .boundary-map__boundary {
+    margin: auto 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--review-rule);
+    color: var(--review-muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .boundary-map__boundary strong { color: var(--review-cream); }
+
+  @media (max-width: 780px) {
+    .boundary-map__header,
+    .boundary-map__layers { grid-template-columns: 1fr; }
+    .boundary-map__layer { min-height: auto; }
+  }
+</style>

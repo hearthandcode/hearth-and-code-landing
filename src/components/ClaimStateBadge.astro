@@ -1,0 +1,57 @@
+---
+import type { ClaimState } from '../data/public-ecosystem';
+
+interface Props {
+  state: ClaimState;
+  label?: string;
+  compact?: boolean;
+}
+
+const { state, label, compact = false } = Astro.props;
+
+const defaultLabels: Record<ClaimState, string> = {
+  evidence: 'Evidence',
+  inference: 'Inference',
+  proposal: 'Proposal',
+  'open-question': 'Open question',
+};
+---
+
+<span class:list={['claim-state', `claim-state--${state}`, { 'claim-state--compact': compact }]}>
+  <span class="claim-state__mark" aria-hidden="true"></span>
+  <span>{label ?? defaultLabels[state]}</span>
+</span>
+
+<style>
+  .claim-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: fit-content;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid currentColor;
+    color: var(--review-cyan);
+    font-family: var(--review-mono);
+    font-size: 0.61rem;
+    letter-spacing: 0.09em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .claim-state__mark {
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0.7rem currentColor;
+  }
+
+  .claim-state--inference { color: var(--review-violet); }
+  .claim-state--proposal { color: var(--review-gold); }
+  .claim-state--open-question { color: var(--review-ember); }
+
+  .claim-state--compact {
+    padding: 0.26rem 0.38rem;
+    font-size: 0.56rem;
+  }
+</style>

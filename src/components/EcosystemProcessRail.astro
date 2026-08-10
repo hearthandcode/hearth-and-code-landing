@@ -1,0 +1,294 @@
+---
+import ClaimStateBadge from './ClaimStateBadge.astro';
+import type { EcosystemStage } from '../data/public-ecosystem';
+
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  stages: EcosystemStage[];
+}
+
+const { id, eyebrow, title, description, stages } = Astro.props;
+---
+
+<section class="process-rail" data-process-rail data-rail-id={id} aria-labelledby={`${id}-title`}>
+  <header class="process-rail__header">
+    <div>
+      <p class="process-rail__eyebrow">{eyebrow}</p>
+      <h2 id={`${id}-title`}>{title}</h2>
+    </div>
+    <p>{description}</p>
+  </header>
+
+  <nav class="process-rail__tabs" data-process-tabs aria-label={`${title} stages`}>
+    {stages.map((stage) => (
+      <a class="process-rail__tab" data-process-tab={stage.id} href={`#${id}-${stage.id}`}>
+        <span class="process-rail__index" aria-hidden="true">{stage.index}</span>
+        <span>{stage.label}</span>
+      </a>
+    ))}
+  </nav>
+
+  <div class="process-rail__panels">
+    {stages.map((stage) => (
+      <article class="process-rail__panel" data-process-panel={stage.id} id={`${id}-${stage.id}`}>
+        <div class="process-rail__panel-meta">
+          <p>{stage.eyebrow}</p>
+          <ClaimStateBadge state={stage.state} compact />
+        </div>
+        <h3>{stage.title}</h3>
+        <p class="process-rail__summary">{stage.summary}</p>
+        <p class="process-rail__non-claim"><strong>Boundary:</strong> {stage.nonClaim}</p>
+        <div class="process-rail__routes" aria-label={`${stage.label} routes`}>
+          {stage.routes.map((route) => (
+            <a href={route.href} target={route.external ? '_blank' : undefined} rel={route.external ? 'noopener noreferrer' : undefined}>
+              {route.label}{route.external ? ' ↗' : ' →'}
+            </a>
+          ))}
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <p class="process-rail__fallback">Every stage remains visible without JavaScript. With JavaScript available, use the stage links or arrow keys to focus one stage at a time.</p>
+</section>
+
+<script>
+  const rails = document.querySelectorAll<HTMLElement>('[data-process-rail]');
+
+  for (const rail of rails) {
+    const tabs = Array.from(rail.querySelectorAll<HTMLAnchorElement>('[data-process-tab]'));
+    const panels = Array.from(rail.querySelectorAll<HTMLElement>('[data-process-panel]'));
+    const tabList = rail.querySelector<HTMLElement>('[data-process-tabs]');
+    const railId = rail.dataset.railId;
+
+    if (!tabs.length || !panels.length || !tabList || !railId) continue;
+
+    tabList.setAttribute('role', 'tablist');
+
+    const select = (nextTab: HTMLAnchorElement, moveFocus = false) => {
+      const stageId = nextTab.dataset.processTab;
+
+      tabs.forEach((tab) => {
+        const isSelected = tab === nextTab;
+        tab.setAttribute('aria-selected', String(isSelected));
+        tab.tabIndex = isSelected ? 0 : -1;
+      });
+
+      panels.forEach((panel) => {
+        const isSelected = panel.dataset.processPanel === stageId;
+        panel.hidden = !isSelected;
+        panel.classList.toggle('is-selected', isSelected);
+      });
+
+      if (moveFocus) nextTab.focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      const stageId = tab.dataset.processTab;
+      const panel = panels.find((candidate) => candidate.dataset.processPanel === stageId);
+      if (!stageId || !panel) return;
+
+      tab.id = `${railId}-tab-${stageId}`;
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', panel.id);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', tab.id);
+
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        select(tab);
+      });
+
+      tab.addEventListener('keydown', (event) => {
+        const currentIndex = tabs.indexOf(tab);
+        let nextIndex = currentIndex;
+
+        if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = tabs.length - 1;
+
+        if (nextIndex !== currentIndex) {
+          event.preventDefault();
+          select(tabs[nextIndex], true);
+        }
+      });
+
+      if (index === 0) select(tab);
+    });
+
+    rail.dataset.enhanced = 'true';
+  }
+</script>
+
+<style>
+  .process-rail {
+    border: 1px solid var(--review-rule);
+    background: rgba(33, 25, 21, 0.98);
+  }
+
+  .process-rail__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.8fr);
+    gap: clamp(1.25rem, 4vw, 3rem);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--review-rule);
+  }
+
+  .process-rail__eyebrow,
+  .process-rail__panel-meta > p {
+    margin: 0 0 0.8rem;
+    color: var(--review-ember);
+    font-family: var(--review-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .process-rail__header h2 {
+    max-width: 18ch;
+    margin: 0;
+    color: var(--review-cream);
+    font-family: var(--review-display);
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .process-rail__header > p {
+    align-self: end;
+    max-width: 34rem;
+    margin: 0;
+    color: var(--review-ash);
+    font-size: 0.94rem;
+    line-height: 1.7;
+  }
+
+  .process-rail__tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-bottom: 1px solid var(--review-rule);
+    background: var(--review-rule);
+  }
+
+  .process-rail__tab {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    min-height: 4rem;
+    padding: 0.85rem 1rem;
+    border-right: 1px solid var(--review-rule);
+    background: rgba(23, 19, 17, 0.98);
+    color: var(--review-ash);
+    font-family: var(--review-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .process-rail__tab:last-child { border-right: 0; }
+  .process-rail__tab:hover { color: var(--review-cream); background: rgba(43, 32, 26, 0.98); }
+  .process-rail__tab[aria-selected="true"] { box-shadow: inset 0 -3px 0 var(--review-cyan); color: var(--review-cream); }
+
+  .process-rail__index {
+    color: var(--review-ember);
+    font-size: 0.61rem;
+  }
+
+  .process-rail__panels { display: grid; }
+
+  .process-rail__panel {
+    min-width: 0;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: linear-gradient(130deg, rgba(63, 224, 208, 0.06), transparent 48%), rgba(33, 25, 21, 0.98);
+  }
+
+  .process-rail__panel:not(:first-child) { border-top: 1px solid var(--review-rule); }
+  .process-rail[data-enhanced="true"] .process-rail__panel:not(.is-selected) { display: none; }
+
+  .process-rail__panel-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .process-rail__panel-meta > p { margin: 0; }
+
+  .process-rail__panel h3 {
+    max-width: 24ch;
+    margin: 1rem 0;
+    color: var(--review-cream);
+    font-family: var(--review-display);
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+  }
+
+  .process-rail__summary,
+  .process-rail__non-claim {
+    max-width: 48rem;
+    margin: 0;
+    color: var(--review-ash);
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+
+  .process-rail__non-claim {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--review-rule);
+    color: var(--review-muted);
+    font-size: 0.84rem;
+  }
+
+  .process-rail__non-claim strong { color: var(--review-cream); }
+
+  .process-rail__routes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .process-rail__routes a {
+    padding: 0.62rem 0.78rem;
+    border: 1px solid var(--review-rule);
+    color: var(--review-cyan);
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  .process-rail__routes a:hover { border-color: var(--review-cyan); color: var(--review-cream); }
+
+  .process-rail__fallback {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--review-rule);
+    color: var(--review-muted);
+    font-family: var(--review-mono);
+    font-size: 0.61rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  .process-rail[data-enhanced="true"] .process-rail__fallback { display: none; }
+
+  @media (max-width: 720px) {
+    .process-rail__header { grid-template-columns: 1fr; }
+    .process-rail__tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .process-rail__tab:nth-child(2) { border-right: 0; }
+    .process-rail__tab:nth-child(-n + 2) { border-bottom: 1px solid var(--review-rule); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-rail__tab { transition: none; }
+  }
+</style>

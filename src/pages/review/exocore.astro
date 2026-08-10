@@ -1,5 +1,8 @@
 ---
 import ReviewShell from '../../components/ReviewShell.astro';
+import EcosystemProcessRail from '../../components/EcosystemProcessRail.astro';
+import SystemBoundaryMap from '../../components/SystemBoundaryMap.astro';
+import { ecosystemStages, systemBoundaryLayers } from '../../data/public-ecosystem';
 
 const { publicSite = false } = Astro.props;
 const routePrefix = publicSite ? '' : '/review';
@@ -31,6 +34,24 @@ const routePrefix = publicSite ? '' : '/review';
         <p>It does not aim to become an autonomous authority. The person decides what matters, what gets acted on, what remains private, and when an answer is good enough to keep.</p>
       </div>
     </section>
+
+    <div class="review-section">
+      <SystemBoundaryMap
+        title="The public page can explain the work without becoming the workbench."
+        description="The same visual language can help people orient across public and local contexts. Authority, private records, and capability remain on the proposed local side of the boundary."
+        layers={systemBoundaryLayers}
+      />
+    </div>
+
+    <div class="review-section">
+      <EcosystemProcessRail
+        id="exocore-process"
+        eyebrow="From a public question to a bounded proof"
+        title="A public route should make its boundary as visible as its invitation."
+        description="These stages explain the public practice around Exocore. They do not expose local data, invoke agents, or represent a runtime execution path."
+        stages={ecosystemStages}
+      />
+    </div>
 
     <section class="review-section" aria-labelledby="exocore-shape-title">
       <div class="review-section-head">
