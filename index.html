@@ -120,7 +120,8 @@
       color: var(--cream);
     }
     .subscribe-form input::placeholder { color: var(--ash); opacity: 0.55; }
-    .subscribe-form button {
+    .subscribe-form button,
+    .subscribe-form a {
       border: none;
       background: var(--amber);
       color: var(--bg);
@@ -130,9 +131,12 @@
       padding: 13px 16px;
       cursor: pointer;
       white-space: nowrap;
+      text-align: center;
+      text-decoration: none;
       transition: background 0.2s;
     }
-    .subscribe-form button:hover { background: var(--gold); }
+    .subscribe-form button:hover,
+    .subscribe-form a:hover { background: var(--gold); }
     .subscribe-note {
       font-size: 0.72rem;
       color: var(--ash);
@@ -278,7 +282,8 @@
     @media (max-width: 600px) {
       h1 { font-size: 2.4rem; }
       .subscribe-form { flex-direction: column; }
-      .subscribe-form button { border-radius: 0 0 3px 3px; }
+      .subscribe-form button,
+      .subscribe-form a { border-radius: 0 0 3px 3px; }
       .cta-row .btn { width: 100%; justify-content: center; }
     }
   </style>
@@ -296,7 +301,7 @@
         <li><a href="/building.html">How it works</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="/mission.html">Mission</a></li>
-        <li><a href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">Build Log</a></li>
+        <li><a href="https://blog.hearthandcode.dev" target="_blank" rel="noopener noreferrer">Field Journal</a></li>
         <li><a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       </ul>
     </nav>
@@ -321,26 +326,24 @@
       <p class="hero-refrain">If our tooling doesn't help you grow, then we need to revise it.</p>
 
       <div class="cta-row">
-        <a class="btn btn-primary" href="#subscribe">Pull up a chair &rarr;</a>
-        <a class="btn btn-secondary" href="#build-log">See what people are making</a>
+        <a class="btn btn-primary" href="#field-journal">Read the Field Journal &rarr;</a>
+        <a class="btn btn-secondary" href="#field-journal">See the field notes</a>
       </div>
 
       <p class="hero-honest">No shipped app yet &middot; building in public, honestly, for now</p>
     </section>
 
-    <section class="subscribe-wrap" id="subscribe">
+    <section class="subscribe-wrap">
       <div class="wood-panel__rim">
         <div class="wood-panel subscribe-panel">
-          <h2>Toss a log on the fire</h2>
-          <p class="subscribe-lead">Weekly notes from the build. I'll email when there's something worth opening.</p>
-          <form class="subscribe-form" id="subscribe-form" action="https://hearthandcode.substack.com/subscribe" method="get" target="_blank" rel="noopener noreferrer">
-            <label for="email-input" class="visually-hidden">Email address</label>
-            <input id="email-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
-            <button type="submit">Join the log &rarr;</button>
-          </form>
+          <h2>Read by the fire</h2>
+          <p class="subscribe-lead">Notes from the build, the research, and the work of making a room that fits.</p>
+          <div class="subscribe-form">
+            <a href="https://blog.hearthandcode.dev" target="_blank" rel="noopener noreferrer">Visit the Field Journal &rarr;</a>
+          </div>
         </div>
       </div>
-      <p class="subscribe-note">Opens Substack to confirm. Unsubscribe whenever.</p>
+      <p class="subscribe-note">The Field Journal opens in a new tab.</p>
     </section>
 
     <div class="divider" role="separator"></div>
@@ -351,7 +354,7 @@
       <h2>None of this is built yet. Here's what we're building toward.</h2>
       <p>Right now Hearth &amp; Code is a build log and a set of convictions, not a product you can log into. I'm not going to pretend otherwise. What follows is the thing I'm building in the open &mdash; the shape of it, honestly, before any of it ships.</p>
       <p>A learning platform where the AI sits beside you and learns how <em>you</em> think. Where a path is built backward from something real you'll make. Where a high day and a low day get met differently. The sections below are the pillars of that vision &mdash; when each one becomes something you can actually use, the build log is where you'll hear it first.</p>
-      <a class="cta-link" href="#subscribe">Follow the build &rarr;</a>
+      <a class="cta-link" href="#field-journal">Read the Field Journal &rarr;</a>
     </section>
 
     <!-- §1 — Turn your traits into amplifiers -->
@@ -405,7 +408,7 @@
       <h2>No one builds alone here.</h2>
       <p>People have always built better around a fire, with other people next to them. We kept the fire and changed the room. The circle spans the world now instead of one village. You build alongside people whose minds work the way yours does, who get why the old tools never fit, who are making things they were told they'd never make.</p>
       <p class="refrain">Pull up a chair. The fire's already lit.</p>
-      <a class="cta-link" href="#subscribe">Join the Circle &rarr;</a>
+      <a class="cta-link" href="#field-journal">Read the Field Journal &rarr;</a>
     </section>
 
     <!-- Closing CTA -->
@@ -413,36 +416,35 @@
       <h2>Your ideas have waited long enough.</h2>
       <p>The fire's already lit. The Code is ready to carry its part. Bring the thing you've been carrying around for years and never had the tools to make real.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#subscribe">Start building &rarr;</a>
+        <a class="btn btn-primary" href="#field-journal">Read the Field Journal &rarr;</a>
       </div>
       <p class="hero-honest" style="text-align:center;">If our tooling doesn't help you grow, then we need to revise it.</p>
     </section>
 
     <div class="divider" role="separator"></div>
 
-    <section class="bip" id="build-log">
-      <h2>The build log</h2>
+    <section class="bip" id="field-journal">
+      <h2>The Field Journal</h2>
       <p>
         I write about architecture, pedagogy, what shipped, and what broke.
         One artifact a week when I have the energy &mdash; if I miss a week, I'll say why.
       </p>
 
       <div class="build-log wood-panel__rim">
-        <aside class="wood-panel build-log-inner" aria-label="Build log posts">
+        <aside class="wood-panel build-log-inner" aria-label="Field Journal posts">
           <div class="build-log-header">
-            <h3>Build Log</h3>
-            <span>Substack</span>
+            <h3>Field Journal</h3>
+            <span>blog.hearthandcode.dev</span>
           </div>
           <ol class="build-log-list">
-            <!-- Add new posts at the top -->
             <li>
-              <a href="https://hearthandcode.substack.com/p/building-a-university-shaped-ed-tech" target="_blank" rel="noopener noreferrer">
+              <a href="https://blog.hearthandcode.dev" target="_blank" rel="noopener noreferrer">
                 <span class="post-meta">
-                  <span class="post-num">Post 1</span>
-                  <span class="post-date">Jun 10, 2026</span>
+                  <span class="post-num">Current notebook</span>
+                  <span class="post-date">Public record</span>
                 </span>
-                <span class="post-title">Building a university-shaped ed-tech platform in public</span>
-                <span class="post-sub">What exists today and what's still on the drawing board</span>
+                <span class="post-title">Visit the Field Journal</span>
+                <span class="post-sub">Notes from the work, published on our own surface</span>
               </a>
             </li>
           </ol>
@@ -450,8 +452,8 @@
       </div>
 
       <div class="bip-links">
-        <a class="bip-link" href="https://hearthandcode.substack.com" target="_blank" rel="noopener noreferrer">
-          All posts on Substack
+        <a class="bip-link" href="https://blog.hearthandcode.dev" target="_blank" rel="noopener noreferrer">
+          All Field Journal entries
         </a>
         <a class="bip-link" href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">
           GitHub
