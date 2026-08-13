@@ -1,0 +1,26 @@
+---
+import { getPublicRecord, moduleFragments, recordFragment, relationFragment, relationRecords } from '../../data/meet-builder';
+---
+
+<section class="meet-module meet-atlas" data-ec-module="06" data-ec-movement="connect" data-ec-intensity="3" aria-labelledby={moduleFragments.atlas}>
+  <p class="meet-kicker">Knowledge atlas</p>
+  <h2 id={moduleFragments.atlas}>Literal relationships among the same Library records.</h2>
+  <span class="meet-circuit-rail" data-circuit-label="atlas" aria-hidden="true"></span>
+  <p>The Atlas is a navigation projection, not another source. Its circuitry may disappear without removing any relationship or route.</p>
+  <ol class="meet-relation-list">
+    {relationRecords.map((relation) => {
+      const from = getPublicRecord(relation.from);
+      const to = getPublicRecord(relation.to);
+      return (
+        <li data-relation-id={relation.id} data-relation-from={relation.from} data-relation-to={relation.to}>
+          <article>
+            <h3 id={relationFragment(relation)}>{from.title} {relation.verb} {to.title}</h3>
+            <p>{relation.literalDescription}</p>
+            <p><a href={`#${recordFragment(from)}`}>Open {from.title}</a> · <a href={`#${recordFragment(to)}`}>Open {to.title}</a></p>
+            <a href={`#${moduleFragments.atlas}`}>Return to Knowledge Atlas</a>
+          </article>
+        </li>
+      );
+    })}
+  </ol>
+</section>

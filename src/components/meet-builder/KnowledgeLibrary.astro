@@ -1,0 +1,42 @@
+---
+import { actionStateLabels, maturityLabels, moduleFragments, prefixedRoute, publicRecords, recordFragment } from '../../data/meet-builder';
+
+const { publicSite = false } = Astro.props;
+const groups = [
+  { title: 'Practice orientation', ids: ['practice-orientation'] },
+  { title: 'Software and workflow proofs', ids: ['workbench-pre-alpha', 'context-forge-proof', 'bounded-retrieval-proof'] },
+  { title: 'Knowledge and method artifacts', ids: ['knowledge-governance-pilot', 'procedure-design-field-note'] },
+  { title: 'Publishing and web source', ids: ['field-journal-system', 'landing-source-proof'] },
+].map((group) => ({ ...group, records: publicRecords.filter((record) => group.ids.includes(record.id)) }));
+---
+
+<section class="meet-module meet-library" data-ec-module="05" data-ec-movement="connect" data-ec-intensity="2" aria-labelledby={moduleFragments.library}>
+  <p class="meet-kicker">Knowledge library</p>
+  <h2 id={moduleFragments.library}>One rendered collection, derived from bound Hub sources.</h2>
+  <span class="meet-circuit-rail" data-circuit-label="library" aria-hidden="true"></span>
+  <p>The Library is the page's single rendered record source. Canonical authority remains in the bound Hub sources, and no candidate action below is an enabled public link.</p>
+  <div class="meet-library-list">
+    {groups.map((group) => (
+      <section data-ec-shelf={group.title.toLowerCase().replaceAll(' ', '-')} aria-labelledby={`library-group-${group.title.toLowerCase().replaceAll(' ', '-')}`}>
+        <h3 id={`library-group-${group.title.toLowerCase().replaceAll(' ', '-')}`}>{group.title}</h3>
+        {group.records.map((record) => (
+          <article class="meet-record" data-signal-node={record.id} data-signal-state={record.maturity}>
+        <p>{record.artifactType} · <span class={`meet-state is-${record.maturity}`}>{maturityLabels[record.maturity]}</span></p>
+        <h3 id={recordFragment(record)}>{record.title}</h3>
+        <p>{record.summary}</p>
+        <dl>
+          <div><dt>Evidence</dt><dd>{record.evidenceLabel}</dd></div>
+          <div><dt>Limitation</dt><dd>{record.limitation}</dd></div>
+          <div><dt>Does not establish</dt><dd>{record.nonClaim}</dd></div>
+          <div><dt>Contribution</dt><dd>{record.contribution}</dd></div>
+          <div><dt>Observed or updated</dt><dd>{record.observedOrUpdated}</dd></div>
+          <div><dt>Action state</dt><dd>{actionStateLabels[record.actionState]}{record.actionNote ? ` — ${record.actionNote}` : ''}</dd></div>
+          <div><dt>Candidate correction route</dt><dd><code>{prefixedRoute(record.correctionRoute, publicSite)}</code></dd></div>
+        </dl>
+        <a href={`#${moduleFragments.library}`}>Return to Knowledge Library</a>
+          </article>
+        ))}
+      </section>
+    ))}
+  </div>
+</section>

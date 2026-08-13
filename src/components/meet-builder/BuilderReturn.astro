@@ -1,0 +1,36 @@
+---
+import { getPublicRecord, moduleFragments, prefixedRoute, recordFragment, recordsForModule } from '../../data/meet-builder';
+
+const { publicSite = false } = Astro.props;
+const returnRecords = recordsForModule(8);
+const landingRecord = getPublicRecord('landing-source-proof');
+---
+
+<section class="meet-module meet-return" data-ec-module="08" data-ec-movement="return" data-ec-intensity="2" aria-labelledby={moduleFragments.return}>
+  <p class="meet-kicker">Field Journal / builder / return</p>
+  <h2 id={moduleFragments.return}>Follow the record, inspect responsibility, or return to a question.</h2>
+  <span class="meet-circuit-rail" data-circuit-label="return" aria-hidden="true"></span>
+  <div class="meet-return-grid">
+    <section data-return-terminal="field-journal" aria-labelledby="field-journal-region">
+      <h3 id="field-journal-region">Field Journal</h3>
+      <p>Candidate source records and field notes remain visible at their observed maturity; deployed availability and exact article wording remain separately gated.</p>
+      <ul>{returnRecords.filter((record) => record.id.includes('journal') || record.id.includes('field-note')).map((record) => <li><a href={`#${recordFragment(record)}`}>{record.title}</a></li>)}</ul>
+    </section>
+    <section data-return-terminal="builder-responsibility" aria-labelledby="builder-region">
+      <h3 id="builder-region">Builder responsibility</h3>
+      <p>Hearth &amp; Code is one-person and person-led. Scott retains responsibility for direction, judgment, review, and release; assistance and collaboration stay artifact-specific.</p>
+    </section>
+    <section data-return-terminal="orientation" aria-labelledby="return-region">
+      <h3 id="return-region">Return</h3>
+      <ul>
+        <li><a href={`#${moduleFragments.orientation}`}>Return to orientation</a></li>
+        <li><a href={`#${moduleFragments.investigations}`}>Review current investigations</a></li>
+        <li><a href={`#${moduleFragments.library}`}>Browse the Knowledge Library</a></li>
+        <li><a href={`#${moduleFragments.method}`}>Read methods and evidence</a></li>
+        <li><a href={prefixedRoute('/dossier/', publicSite)}>Open the Dossier</a></li>
+        <li><a href={`#${recordFragment(landingRecord)}`}>Inspect the landing-source record</a></li>
+      </ul>
+      <p><strong>Candidate correction route:</strong> <code>{prefixedRoute('/method/#corrections', publicSite)}</code></p>
+    </section>
+  </div>
+</section>

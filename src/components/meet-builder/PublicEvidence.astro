@@ -1,0 +1,28 @@
+---
+import { actionStateLabels, maturityLabels, moduleFragments, prefixedRoute, recordFragment, recordsForModule } from '../../data/meet-builder';
+
+const { publicSite = false } = Astro.props;
+const tools = recordsForModule(4);
+---
+
+<section class="meet-module meet-tools" data-ec-module="04" data-ec-movement="inspect" data-ec-intensity="2" aria-labelledby={moduleFragments.tools}>
+  <p class="meet-kicker">Tools / prototypes</p>
+  <h2 id={moduleFragments.tools}>Inspectable candidates at their recorded maturity.</h2>
+  <span class="meet-circuit-rail" data-circuit-label="prototypes" aria-hidden="true"></span>
+  <div class="meet-card-grid">
+    {tools.map((record) => (
+      <article data-signal-node={record.id} data-signal-state={record.maturity}>
+        <p>{record.artifactType} · <span class={`meet-state is-${record.maturity}`}>{maturityLabels[record.maturity]}</span></p>
+        <h3><a href={`#${recordFragment(record)}`}>{record.title}</a></h3>
+        <p>{record.summary}</p>
+        <p><strong>Evidence:</strong> {record.evidenceLabel}</p>
+        <p><strong>Limitation:</strong> {record.limitation}</p>
+        <p><strong>Does not establish:</strong> {record.nonClaim}</p>
+        <p><strong>Contribution:</strong> {record.contribution}</p>
+        <p><strong>Observed:</strong> {record.observedOrUpdated}</p>
+        <p><strong>Status:</strong> {actionStateLabels[record.actionState]}{record.actionNote ? ` — ${record.actionNote}` : ''}</p>
+        <p><strong>Candidate correction route:</strong> <code>{prefixedRoute(record.correctionRoute, publicSite)}</code></p>
+      </article>
+    ))}
+  </div>
+</section>

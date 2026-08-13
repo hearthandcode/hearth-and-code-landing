@@ -1,0 +1,24 @@
+---
+import { moduleFragments, publicRecords } from '../../data/meet-builder';
+
+const releasedCount = publicRecords.filter((record) => record.releaseState === 'released').length;
+---
+
+<section class="meet-module meet-threshold" data-ec-module="01" data-ec-movement="orient" data-ec-intensity="3" aria-labelledby={moduleFragments.orientation}>
+  <p class="meet-kicker">Hearth &amp; Code / local candidate</p>
+  <h1>Exploring a candidate one-person research-lab and creative-hub posture for tools, evidence, and connected work.</h1>
+  <span class="meet-circuit-rail" data-circuit-label="orientation" aria-hidden="true"></span>
+  <p class="meet-lead">Hearth &amp; Code is testing this candidate posture through small proofs, explicit limits, and a public record that stays separate from the private working practice.</p>
+  <p class="meet-boundary">The posture does not imply a staff, accredited institution, dedicated facility, commissioned program, mature platform, or validated outcome.</p>
+  <nav class="meet-primary-actions" aria-label="Primary reading paths">
+    <a href={`#${moduleFragments.investigations}`}>Explore current research</a>
+    <a href={`#${moduleFragments.library}`}>Browse the knowledge library</a>
+  </nav>
+  <h2 id={moduleFragments.orientation}>Orientation signal</h2>
+  <dl class="meet-signal-list">
+    <div><dt>Current inquiry</dt><dd>How can source-aware tools make complex work easier to inspect, return to, and correct?</dd></div>
+    <div><dt>Released public records</dt><dd>{releasedCount} records are released for direct public action.</dd></div>
+    <div><dt>Candidate inventory</dt><dd>No candidate count is presented as a current public signal.</dd></div>
+    <div><dt>Next gate</dt><dd>Review the evidence, limits, relations, and page composition before any public release.</dd></div>
+  </dl>
+</section>

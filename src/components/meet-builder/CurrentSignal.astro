@@ -1,0 +1,38 @@
+---
+import { actionStateLabels, maturityLabels, moduleFragments, prefixedRoute, recordFragment, recordsForModule } from '../../data/meet-builder';
+
+const { publicSite = false } = Astro.props;
+const investigations = recordsForModule(3);
+const investigationDetails: Record<string, { question: string; proof: string }> = {
+  'workbench-pre-alpha': { question: 'What can a bounded local-first workroom make inspectable?', proof: 'A pre-alpha profile-evaluation slice with deterministic mock and receipt paths.' },
+  'context-forge-proof': { question: 'How can agent-assisted procedures remain source-governed and reviewable?', proof: 'Workflow schemas, deterministic simulation, synthetic fixtures, and explicit review gates.' },
+  'bounded-retrieval-proof': { question: 'Can a ContextPack remain small, cited, and drift-aware?', proof: 'A lexical-hash retrieval proof with source allowlists and a dated five-test receipt.' },
+  'knowledge-governance-pilot': { question: 'Which vocabulary and provenance constraints make knowledge work inspectable?', proof: 'Public pilot taxonomy and design artifacts; no installed service is claimed.' },
+  'procedure-design-field-note': { question: 'What does one evolving agent-assisted procedure look like in practice?', proof: 'A dated, self-reported N-of-one field note with assistance disclosed.' },
+};
+---
+
+<section class="meet-module meet-investigations" data-ec-module="03" data-ec-movement="inspect" data-ec-intensity="3" aria-labelledby={moduleFragments.investigations}>
+  <p class="meet-kicker">Current investigations</p>
+  <h2 id={moduleFragments.investigations}>Questions and proofs, with the edges still visible.</h2>
+  <span class="meet-circuit-rail" data-circuit-label="investigations" aria-hidden="true"></span>
+  <p>Each item below is a qualified summary of a candidate record in the single rendered Library. Canonical authority remains in the bound Hub sources; the complete evidence label, limit, non-claim, and contribution boundary stay with that record.</p>
+  <ul class="meet-summary-list">
+    {investigations.map((record) => (
+      <li data-signal-node={record.id} data-signal-state={record.maturity}>
+        <p><span class={`meet-state is-${record.maturity}`}>{maturityLabels[record.maturity]}</span> · {record.artifactType}</p>
+        <h3><a href={`#${recordFragment(record)}`}>{record.title}</a></h3>
+        <dl>
+          <div><dt>Question</dt><dd>{investigationDetails[record.id].question}</dd></div>
+          <div><dt>Small proof or method</dt><dd>{investigationDetails[record.id].proof}</dd></div>
+          <div><dt>Evidence</dt><dd>{record.evidenceLabel}</dd></div>
+          <div><dt>Limitation</dt><dd>{record.limitation}</dd></div>
+          <div><dt>Does not establish</dt><dd>{record.nonClaim}</dd></div>
+          <div><dt>Observed</dt><dd>{record.observedOrUpdated}</dd></div>
+          <div><dt>Action state</dt><dd>{actionStateLabels[record.actionState]}{record.actionNote ? ` — ${record.actionNote}` : ''}</dd></div>
+          <div><dt>Candidate correction route</dt><dd><code>{prefixedRoute(record.correctionRoute, publicSite)}</code></dd></div>
+        </dl>
+      </li>
+    ))}
+  </ul>
+</section>

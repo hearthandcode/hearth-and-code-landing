@@ -1,0 +1,28 @@
+---
+import { maturityLabels, moduleFragments, prefixedRoute, publicRecords, recordFragment } from '../../data/meet-builder';
+
+const { publicSite = false } = Astro.props;
+---
+
+<section class="meet-module meet-method" data-ec-module="07" data-ec-movement="return" data-ec-intensity="2" aria-labelledby={moduleFragments.method}>
+  <p class="meet-kicker">Methods / evidence / maturity</p>
+  <h2 id={moduleFragments.method}>A return loop for claims that need to stay revisable.</h2>
+  <span class="meet-circuit-rail" data-circuit-label="return-loop" aria-hidden="true"></span>
+  <ol class="meet-method-loop">
+    <li data-return-stage="ask"><strong>Ask.</strong> Name a focused question and the boundary of the inquiry.</li>
+    <li data-return-stage="build"><strong>Build or test.</strong> Use the smallest proof that can expose useful evidence.</li>
+    <li data-return-stage="record"><strong>Record.</strong> Keep the evidence, assistance, uncertainty, limitation, and date visible.</li>
+    <li data-return-stage="return"><strong>Return.</strong> Review the result, correct the claim, and preserve what changed.</li>
+  </ol>
+  <h3>Maturity belongs to each record, not to the whole practice.</h3>
+  <ul class="meet-maturity-index">
+    {publicRecords.map((record) => (
+      <li><a href={`#${recordFragment(record)}`}>{record.title}</a>: {maturityLabels[record.maturity]}</li>
+    ))}
+  </ul>
+  <h3>Evidence and limitation travel together.</h3>
+  <p>Each record states an evidence label, a limitation, what it does not establish, its observation or update date, and a literal candidate correction route: <code>{prefixedRoute('/method/#corrections', publicSite)}</code>.</p>
+  <h3>Human and tool contribution stays inspectable.</h3>
+  <p>Direction, selection, judgment, verification, and release remain human responsibilities. Material AI assistance, collaborators, and tool contributions are disclosed at the artifact level.</p>
+  <p>This operating commitment does not establish scientific validity, universal compliance, reproducibility, efficacy, accreditation, or accessibility conformance.</p>
+</section>
