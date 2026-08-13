@@ -1,0 +1,181 @@
+{
+  "runId": "aa6217b9",
+  "agent": "reviewer",
+  "task": "Read-only consolidation audit for hearth-and-code-landing main and four dirty detached Ember Circuit worktrees ec-p15-w1,w2,w3,p16-w4. Inspect all changed files, compare overlaps/content, identify canonical consolidated file set and safe ordered integration onto main, tests/build commands, logical commits, and residual conflicts. User chose integrate to main. Do not edit/stage/commit/push or create branches; no delegation/workflows/Lens/broad diagnostics.",
+  "exitCode": 0,
+  "processSignal": "SIGTERM",
+  "usage": {
+    "input": 93452,
+    "output": 9570,
+    "cacheRead": 579072,
+    "cacheWrite": 0,
+    "cost": 1.0438960000000002,
+    "turns": 14
+  },
+  "model": "openai-codex/gpt-5.6-sol:high",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-sol:high"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-sol:high",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 93452,
+        "output": 9570,
+        "cacheRead": 579072,
+        "cacheWrite": 0,
+        "cost": 1.0438960000000002,
+        "turns": 14
+      }
+    }
+  ],
+  "durationMs": 247689,
+  "toolCount": 34,
+  "launchContractDigest": "4dfa23f163b40c5af11f36d98669d63aed02f7a5861f066457a847f4af239774",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:2a3c05bbe6627434"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:2a3c05bbe6627434"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "acceptance": {
+    "status": "attested",
+    "evidenceStatus": "attested",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "read-only/reviewer-style agent"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return concrete findings with file paths and severity when applicable",
+          "evidence": [
+            "review-findings",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "review-findings",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "read-only/reviewer-style agent"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return concrete findings with file paths and severity when applicable",
+        "evidence": [
+          "review-findings",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [],
+    "verifyRuns": [],
+    "childReport": {
+      "criteriaSatisfied": [
+        {
+          "id": "criterion-1",
+          "status": "satisfied",
+          "evidence": "Audited main and all four detached worktrees; identified the 15-file canonical set, overlap relationships, ordered integration, and path-specific findings including src/pages/review/ember-circuit.astro:62 and scripts/verify-meet-builder.mjs:89-93."
+        }
+      ],
+      "changedFiles": [
+        "scripts/verify-meet-builder.mjs",
+        "src/components/meet-builder/BuilderReturn.astro",
+        "src/components/meet-builder/CurrentSignal.astro",
+        "src/components/meet-builder/KnowledgeAtlas.astro",
+        "src/components/meet-builder/KnowledgeLibrary.astro",
+        "src/components/meet-builder/PublicEvidence.astro",
+        "src/components/meet-builder/ResearchLab.astro",
+        "src/components/meet-builder/ResearchLoop.astro",
+        "src/components/meet-builder/ThresholdHero.astro",
+        "src/data/meet-builder.ts",
+        "src/pages/review/ember-circuit.astro",
+        "src/pages/review/index.astro",
+        "src/styles/ember-circuit-review.css",
+        "src/styles/meet-builder.css",
+        "src/styles/review-site.css"
+      ],
+      "testsAddedOrUpdated": [
+        "scripts/verify-meet-builder.mjs"
+      ],
+      "commandsRun": [
+        {
+          "command": "npm run build",
+          "result": "passed",
+          "summary": "Main candidate: Astro check reported zero diagnostics and built 17 static pages."
+        },
+        {
+          "command": "Node source-digest audit against ec-p16-w4 scripts/verify-meet-builder.mjs",
+          "result": "passed",
+          "summary": "All 15 pinned source digests matched."
+        },
+        {
+          "command": "git diff --check across main and all four detached worktrees",
+          "result": "passed",
+          "summary": "No whitespace errors in tracked diffs."
+        },
+        {
+          "command": "Isolated Astro checks/builds in detached worktrees",
+          "result": "failed",
+          "summary": "Detached worktrees have no installed node_modules; final assembled-main validation remains required."
+        }
+      ],
+      "validationOutput": [
+        "Main: 19 Astro files checked, 0 errors, 0 warnings, 0 hints.",
+        "Main: 17 static pages built successfully, including /review/ember-circuit/.",
+        "ec-p16-w4 source manifest: 15 assertions, 0 digest mismatches.",
+        "w1 is contained by w2; w2 and w3 are contained and superseded by w4."
+      ],
+      "residualRisks": [
+        "medium: src/pages/review/ember-circuit.astro:62 reports 7.03:1, while the declared Signal/primary colors calculate to 10.82:1.",
+        "low: scripts/verify-meet-builder.mjs:89-93 omits /review/ember-circuit/ from route validation.",
+        "low: shared review-site.css browser regressions outside / and /review/ are not exercised by the verifier.",
+        "low: the source-hash manifest must be updated after legitimate governed-file changes.",
+        "Detached worktrees are dirty and uncommitted; retain ec-p16-w4 until assembled main passes full validation."
+      ],
+      "noStagedFiles": true,
+      "diffSummary": "Canonical consolidation is main's two-file Ember Circuit study plus the 13 changed files from ec-p16-w4; w1, w2, and w3 are superseded subsets.",
+      "reviewFindings": [
+        "no blocker: worktree overlap consolidates cleanly through ec-p16-w4.",
+        "medium: src/pages/review/ember-circuit.astro:62 - displayed contrast ratio does not match declared colors.",
+        "low: scripts/verify-meet-builder.mjs:89-93 - standalone Ember Circuit route is omitted from verifier coverage.",
+        "low: scripts/verify-meet-builder.mjs:28-44 - exact shared-file hashes create ongoing maintenance coupling."
+      ],
+      "manualNotes": "Read-only audit only: no files were edited, staged, committed, pushed, or branched. Build-generated ignored output was produced by validation."
+    }
+  },
+  "effects": {
+    "fileMutation": {
+      "status": "not-applicable",
+      "expected": false,
+      "attempted": true
+    }
+  },
+  "transcriptPath": "/home/cosmatrexis/devel/hearthandcode/open-source/hearth-and-code-landing/.pi-subagents/artifacts/aa6217b9_reviewer_0_transcript.jsonl",
+  "timestamp": 1786658710921
+}
