@@ -1,0 +1,25 @@
+---
+interface Props { index: number; artifact: string; }
+const { index, artifact } = Astro.props;
+const lines = artifact.split('\n').filter(Boolean);
+const atoms = lines.length > 1 ? lines : artifact.split(/\s*→\s*|\s*·\s*/).filter(Boolean);
+---
+<div class:list={['pattern-visual', `pattern-visual--${index + 1}`]} aria-label="Pattern structure">
+  <p class="pattern-specimen-label">{index === 5 ? 'Agent exchange schema' : 'Reusable specimen'}</p>
+  {index === 0 && <div class="pv-packet">{lines.map((line, i) => <div><span>{i === 0 ? 'PACK' : String(i).padStart(2,'0')}</span><code>{line}</code></div>)}</div>}
+  {index === 1 && <div class="pv-charter"><header>Goal Charter</header>{lines.map(line => <p><b>§</b><code>{line}</code></p>)}</div>}
+  {index === 2 && <div class="pv-rules">{lines.map((line,i) => <div><span>{['IF','WHEN','THEN'][i] ?? 'RULE'}</span><code>{line}</code></div>)}</div>}
+  {index === 3 && <div class="pv-powers"><div>2</div><div>4</div><div>8</div><p>{lines.map(line => <code>{line}</code>)}</p></div>}
+  {index === 4 && <div class="pv-flow">{atoms.map((atom,i) => <span><code>{atom}</code>{i < atoms.length-1 && <b>→</b>}</span>)}</div>}
+  {index === 5 && <dl class="pv-schema">{lines.map(line => { const [key,...rest]=line.trim().split(':'); return <div><dt><code>{key}</code></dt><dd><code>{rest.join(':').trim() || 'record'}</code></dd></div>})}</dl>}
+  {index === 6 && <div class="pv-grammar"><span>production</span><code>{artifact}</code><small>valid composition boundary</small></div>}
+  {index === 7 && <div class="pv-config"><div class="pv-dots"><i></i><i></i><i></i></div><pre><code>{artifact}</code></pre></div>}
+  {index === 8 && <ol class="pv-ladder">{lines.map((line,i) => <li style={`--step:${i}`}><code>{line}</code></li>)}</ol>}
+  {index === 9 && <div class="pv-boundary"><div class="pv-claim"><span>CLAIM</span><code>{lines[0]}</code></div><div class="pv-limit">{lines.slice(1).map(line => <code>{line}</code>)}</div></div>}
+  {index === 10 && <div class="pv-receipt"><span>VERIFICATION RECEIPT</span>{lines.map(line => <code>✓ {line}</code>)}<small>bounded evidence · not release authority</small></div>}
+  {index === 11 && <div class="pv-return"><span>current state</span><b>→</b><span>next action</span><b>→</b><span>owner</span><b>↺</b><code>{lines.at(-1)}</code></div>}
+  {index === 12 && <div class="pv-recursion">{atoms.map((atom,i) => <div><span>{i+1}</span><code>{atom}</code><i aria-hidden="true">↓</i></div>)}</div>}
+  {index === 13 && <div class="pv-envelope"><header>DELEGATION ENVELOPE</header><div class="pv-allowed">{lines.slice(0,2).map(line => <code>{line}</code>)}</div><div class="pv-no-touch">{lines.slice(2).map(line => <code>{line}</code>)}</div></div>}
+  {index === 14 && <div class="pv-redteam"><div><span>proposal</span><b>?</b></div><ul><li>alternative</li><li>missing evidence</li><li>abuse case</li><li>falsifier</li></ul><code>{artifact}</code></div>}
+  {index === 15 && <div class="pv-chain">{lines.slice(1).map((line,i) => <div><span>{i+1}</span><code>{line}</code><b aria-hidden="true">→</b></div>)}</div>}
+</div>

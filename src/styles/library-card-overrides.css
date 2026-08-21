@@ -1,0 +1,11 @@
+.pattern-thumbnails{grid-auto-rows:1fr;align-items:stretch}
+.pattern-thumbnails li{display:flex;block-size:100%}
+.pattern-thumbnails a{inline-size:100%;block-size:100%;grid-template-rows:auto auto minmax(2.2em,auto) 1fr auto;aspect-ratio:4/5}
+.pattern-thumbnails h3{align-self:start}
+.pattern-thumbnails p{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:5}
+.pattern-sheet-content .pv-schema>div{grid-template-columns:1fr}
+.pattern-sheet-content .pv-schema dt{word-break:normal;overflow-wrap:anywhere}
+.pattern-sheet-content .pv-schema dd{word-break:break-word;overflow-wrap:anywhere}
+
+@media(max-width:41.99rem){.pattern-thumbnails a{aspect-ratio:auto;min-block-size:15rem}
+}

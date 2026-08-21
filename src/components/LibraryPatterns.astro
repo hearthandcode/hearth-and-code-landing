@@ -1,0 +1,235 @@
+---
+import '../styles/orientation-landing.css';
+import '../styles/library-patterns.css';
+import '../styles/library-sheets.css';
+import '../styles/library-card-overrides.css';
+import PatternVisual from './PatternVisual.astro';
+const patterns = [
+['ContextPack','purpose · sources · constraints · output','A bounded context packet selects the sources and rules needed for one task. It does not grant broader access.','Create a ContextPack for reviewing a payment-service change. Include only the architecture note, API contract, owned paths, no-touch paths, and test command.','context_pack:\n  purpose: review payment-service change\n  sources: [architecture-note, api-contract]\n  no_touch: [billing-ledger]\n  verify: [unit-tests, contract-tests]'],
+['Goal Charter','purpose · sources · scope · destination · proof · handoff','A goal charter is the legislative layer for a body of work. It establishes durable orientation, precedence, boundaries, review gates, and the route from an objective to governed execution.','Public projection adapted from the Hub charter: orient before durable action, inspect named sources directly, preserve one active thread, and stop when a missing fact changes route or effect.','ARTICLE II — ORIENTATION\n1. Read focus, work item, direct source, local charter.\n2. Keep one active thread.\n3. Inspect named sources before relying on recall.\n4. Name purpose, scope, destination, proof, stop, handoff.'],
+['RFC Rules','MUST · MUST NOT · SHOULD · MAY · ALWAYS · IF/THEN','RFC-style terms give individual requirements a precise force inside a charter, specification, or prompt. They are the rule vocabulary; the Goal Charter is the larger constitutional structure that contains them.','Draft requirements for an agent exchange: MUST preserve message identity; MUST NOT widen tool authority; SHOULD include a return path; MAY request clarification; ALWAYS fail closed on unknown effect.','MUST = required\nMUST NOT = prohibited\nSHOULD = expected unless reason recorded\nMAY = permitted, not required\nIF guard fails THEN STOP'],
+['Power-of-Two Rhythm','4 families · 4 rules · 8 dimensions · 2 metrics','Power-of-two structure sizes reviewable batches and comparison surfaces. It controls attention and coverage, not the truth of the domain.','Draft a bounded architecture spec as four groups of four rules. Define eight feature dimensions, each with two measurable requirements, producing sixteen metrics without padding the content.','4 rule families × 4 rules = 16 rules\n8 dimensions × 2 metrics = 16 metrics\nD1 correctness: [valid-output, error-rate]\nD2 latency: [p50, p95]\nD3 safety: [blocked-effects, escape-rate]\nD4 provenance: [source-coverage, trace-completeness]\nD5 recovery: [resume-time, context-loss]\nD6 usability: [task-success, correction-time]\nD7 portability: [adapter-count, semantic-loss]\nD8 cost: [tokens, tool-calls]'],
+['IR Primitives','Meta-IR · Cell IR · Ontology IR · Workflow IR','IR primitives distinguish canonical meaning from model-visible projections, executable control, and evidence. They make cross-agent composition explicit instead of relying on prompt prose alone.','Compose a TaskEnvelope in Meta-IR, select model-facing CellSpecs into a CellPack, bind one primary ontology kind plus visibility facets, then project a candidate Workflow IR with a loss receipt.','MetaIR := typed_object + identity + state + constraints + operators + composition + projection + evidence\nCellIR := CellSpec | CellRef | CellSet | CellGraph | CellPack | CellTrace | CellReceipt\nOntologyIR := primary_kind + secondary_facets\nWorkflowIR := executable_control + task_state'],
+['Agent Exchange Schema','identity · message · authority · lineage · handoff','A schema for two agents on the same harness but separate instances makes message identity, authority, evidence, and reply obligations machine-checkable.','Draft an exchange where Agent A requests a read-only architecture comparison and Agent B returns a candidate analysis without gaining write authority.','exchange_id: ex-042\nharness: codex\nservice_boundary: architecture-review\nfrom: {instance: agent-a, role: coordinator}\nto: {instance: agent-b, role: reviewer}\nmessage: {kind: task, objective: compare-boundaries}\nauthority: {effects: [read], denied: [write, deploy]}\nevidence: {sources: [adr-01, api-contract]}\nhandoff: {output: comparison, reply_to: ex-042}'],
+['Composition Grammar','production rules · operators · valid transitions','A grammar defines legal compositions and transitions. Unlike a schema, which validates shape, a grammar validates how meaningful units may combine and what transformation is allowed.','Define an agentic exchange grammar in which a request may compile to a task envelope, a task may emit an artifact and receipt, and only a human decision may release a consequential action.','exchange := request → task_envelope\ntask_envelope := context + authority + objective + verification\nexecution := task_envelope → artifact + receipt\nrelease := artifact + receipt + human_decision\nUNKNOWN_TRANSITION → STOP'],
+['ReAct Operational Loop','reason · act · observe · update · stop','ReAct interleaves a bounded reasoning step with tool action and observation. Hearth & Code adds source, authority, and stop checks around each action so the loop cannot treat tool availability as permission.','Investigate a failing API test: reason from current evidence, choose one read-only diagnostic, observe the result, update the hypothesis, and stop before changing code unless the task envelope permits it.','loop:\n  reason: choose next evidence gap\n  act: one authorized tool call\n  observe: preserve direct result\n  update: revise hypothesis and state\n  guard: authority + scope + attempt\n  stop: decision-ready | blocked | boundary-hit'],
+['Evidence Ladder','source · observation · inference · hypothesis · proposal','The ladder prevents a useful interpretation from masquerading as an observed fact.','A user test reports that three readers could find the next task. The inference is that the new handoff shape may reduce re-entry cost.','source: usability-session\nobservation: 3 readers found next task\ninference: handoff may reduce re-entry cost\nproposal: repeat with next cohort'],
+['Claim Boundary','claim · limit · maturity · correction','A boundary sits next to the claim it qualifies, so polish cannot imply readiness or certainty.','“This prototype exports a report” is different from “the product is ready for reporting.”','claim: exports a bounded report\nlimit: tested only with fixture data\nmaturity: experimental\ncorrection: report an issue'],
+['Receipt','inputs · check · result · limits','A receipt records what was checked and what that check does not establish. It is evidence of a process, not a release.','After a build, preserve the input revision, commands, result, timestamp, and untested conditions.','receipt:\n  inputs: [commit, content-revision]\n  checks: [typecheck, build]\n  result: pass\n  does_not_prove: [public-approval]'],
+['Return Path','state · next step · owner · route','A return path prevents a handoff from becoming a dead end.','End a research brief with the open question, closest source, next demonstrable action, and person who must choose.','return:\n  state: comparison complete\n  next: test option-b\n  owner: human-review\n  route: workbench'],
+['Recursive Prompting','draft · critique · narrow · delegate','Recursive prompting externalizes decomposition: one pass drafts downstream prompts, another checks them, and only the necessary prompts are delegated. It differs from hidden chain-of-thought because the reviewable artifact is the task structure, not private reasoning.','Ask for four sub-prompts for an architecture review; use a critic to detect overlap and missing evidence; consolidate to two executable prompts; run them; then ask a synthesizer to return disagreements and next tests.','1. Generator: draft 4 bounded prompts\n2. Critic: find overlap, gaps, unsafe authority\n3. Editor: consolidate to necessary prompts\n4. Workers: execute disjoint scopes\n5. Synthesizer: compare evidence, not confidence\nSTOP when the decision has sufficient evidence'],
+['Delegation Envelope','coordinator · worker · critic · judge · authority','A delegation envelope assigns a role, owned substrate, capability boundary, evidence contract, and return format. A mixture of agents is useful only when the roles create independent information or checks.','Use one coordinator to decompose, two workers for independent approaches, one critic for counterexamples, and a human judge for the consequential choice. Parallel writers receive disjoint paths.','coordinator: {effect: plan, owns: task-map}\nworkers: {count: 2, effect: candidate, paths: disjoint}\ncritic: {effect: review, may_write: false}\njudge: {kind: human, effect: decide}\nshared_stop: ownership-overlap | new-authority'],
+['Counterevidence & Red Team','alternative · falsifier · adversary · missing source','Counterevidence combines structured critique, adversarial review, and falsification. It asks what would make the preferred answer wrong, unsafe, or unnecessary.','Before adopting an autonomous repair agent, run four reviews: strongest non-agent alternative, abuse and prompt-injection path, evidence missing from the proposal, and a benchmark result that would falsify the expected benefit.','Return four packets:\nA. strongest alternative and switching cost\nB. adversarial misuse and boundary escape\nC. missing evidence and source conflict\nD. falsifier, counterexample, stop recommendation'],
+['Chain of Verification','reasoning check · tool check · artifact check · human gate','Chain of Verification separates reasoning quality, tool observations, artifact validity, and release judgment. Each verifier is scoped; no green check inherits another gate’s authority.','For a generated migration: verify assumptions against sources, execute tests, inspect the diff and browser behavior, ask an independent critic for failure cases, then return public meaning and release to a human.','V1 source fidelity: claims ↔ sources\nV2 execution: tests + tool receipts\nV3 artifact: diff + schema + browser\nV4 adversarial: counterexample + boundary escape\nV5 human: meaning + acceptance + release']
+] as const;
+const lessons = [
+  ['Controls retrieval and attention by giving the model a deliberately small evidence surface.', 'Reduces irrelevant associations, unsupported interpolation, and accidental use of out-of-scope material. The agent can cite the packet rather than guessing which context matters.'],
+  ['Establishes a durable legislative frame: purpose, precedence, ownership, permitted effects, review gates, and stop conditions.', 'The model interprets later task prompts inside a stable constitution. Local instructions may narrow the charter but cannot silently weaken its authority or safety boundaries.'],
+  ['Assigns precise requirement strength to individual rules inside a charter or technical specification.', 'The agent can distinguish hard constraints from recommendations and permissions, producing deterministic stop or escalation behavior when a guard fails.'],
+  ['Provides a bounded search, batching, and measurement rhythm aligned to human review capacity.', 'The model generates 4 rule families, 8 dimensions, and 16 metrics as explicit coverage surfaces, while the prompt prohibits padding when the material does not support the count.'],
+  ['Provides a typed intermediate language across canonical meaning, model-facing context, workflow execution, and evidence.', 'The agent can project the same source semantics to different harnesses, record loss, and distinguish canonical CellSpecs from compiled CellPacks and runtime traces.'],
+  ['Defines the contract a generated or transformed record must satisfy.', 'Structured generation becomes validatable. Missing fields and invalid relations can fail explicitly instead of disappearing inside fluent text.'],
+  ['Constrains which combinations and transitions are valid inside a domain language.', 'The model receives a compositional rule, making outputs more consistent while still allowing novel expressions that obey the same syntax.'],
+  ['Couples reasoning to authorized action and direct observation in a guarded loop.', 'The agent must revise its state from tool evidence after every action. Authority and stop guards prevent the loop from turning tool capability into permission or continuing after the decision is ready.'],
+  ['Preserves epistemic distance between what was read, observed, inferred, and proposed.', 'The model must label its reasoning products. Downstream agents can rely on sources and observations without silently inheriting hypotheses as facts.'],
+  ['Couples a statement to its evidence ceiling, maturity, limitation, and correction route.', 'The model learns not to generalize beyond the bounded claim. Subsequent summaries carry the caveat with the result instead of dropping it.'],
+  ['Captures a time-bounded account of inputs, checks, results, and untested conditions.', 'A later agent can distinguish “a check passed” from “the work was approved,” preventing process evidence from becoming false release authority.'],
+  ['Serializes the current state and the smallest valid continuation.', 'The next model invocation starts from an explicit checkpoint instead of reconstructing intent from conversation history or stale summaries.'],
+  ['Uses generator, critic, editor, worker, and synthesizer passes to improve the task representation before and after execution.', 'The system externalizes decomposition and disagreement. Each recursion reduces ambiguity, preserves evidence differences, and stops when the decision has sufficient support.'],
+  ['Defines role, capability, ownership, path, evidence, and effect boundaries across a mixture of agents.', 'Workers can explore independently, the critic cannot mutate their artifacts, and the human judge retains consequential selection. Ownership overlap fails closed.'],
+  ['Requests evidence and adversarial cases that would weaken, falsify, or make the preferred intervention unnecessary.', 'The model searches beyond confirmation and returns alternatives, boundary escapes, missing sources, and a stop recommendation before a decision hardens.'],
+  ['Sequences source, execution, artifact, adversarial, and human verification as separate proof layers.', 'A successful test cannot imply usability, semantic correctness, safety, or release. The artifact advances only through the next named gate.']
+] as const;
+const practice = [
+  {
+    problem: 'A large repository, long conversation, or broad retrieval result gives the model more material than it can weigh reliably for one decision.',
+    mechanism: 'A compiler or coordinator selects a task-specific packet before inference. The model sees a smaller evidence surface, explicit exclusions, and a named output contract.',
+    useWhen: 'Reviewing a bounded change, resuming work after interruption, or handing one task to another agent instance.',
+    failure: 'A ContextPack becomes dangerous when selection hides a decisive source or when its contents are mistaken for permission to act.',
+    walkthrough: 'A coordinator prepares a payment-service review packet containing the ADR, changed API contract, five owned files, two no-touch paths, and exact test commands. The reviewer compares only those sources, reports an out-of-scope ledger dependency, and returns instead of opening unrelated billing code.'
+  },
+  {
+    problem: 'Individual prompts drift because purpose, precedence, ownership, and consequential gates are repeatedly paraphrased.',
+    mechanism: 'A charter supplies a stable instruction layer above task prompts. Later instructions are interpreted within its scope and cannot silently weaken its higher-order constraints.',
+    useWhen: 'A program spans multiple sessions, contributors, repositories, or classes of agent work.',
+    failure: 'A charter should not become ceremonial prose. If no rule changes a decision, stop, or handoff, it probably does not belong.',
+    walkthrough: 'A team charter requires direct source inspection, one active work thread, explicit owned paths, and human release before deployment. A later prompt says “finish the feature”; the coding agent may edit and test the scoped files, but returns a preview rather than deploying because the charter keeps that effect gated.'
+  },
+  {
+    problem: 'Natural-language requirements blur obligations, recommendations, permissions, and exception paths.',
+    mechanism: 'Normative keywords create a small rule vocabulary that both the model and validators can map to required, prohibited, recommended, and optional behavior.',
+    useWhen: 'Writing agent contracts, architecture constraints, acceptance criteria, or safety boundaries.',
+    failure: 'Overusing MUST makes every preference a hard failure and leaves the agent unable to make safe local judgments.',
+    walkthrough: 'An exchange contract says messages MUST preserve correlation IDs, workers MUST NOT deploy, reviewers SHOULD cite direct files, and agents MAY ask one decision-changing question. The harness can reject a handoff without an ID while still accepting a justified deviation from the citation recommendation.'
+  },
+  {
+    problem: 'Open-ended decomposition produces arbitrary lists that are difficult to compare, review, or know when to stop expanding.',
+    mechanism: 'A bounded cardinality gives generation an explicit search budget and gives reviewers symmetric comparison surfaces. The count is a scaffold, not a claim about reality.',
+    useWhen: 'Designing option sets, architecture dimensions, evaluation matrices, prompt batches, or review waves.',
+    failure: 'Never pad weak material to hit a number. The correct response to insufficient evidence is a smaller set with the gap named.',
+    walkthrough: 'An architecture review uses four families of four rules, then evaluates eight dimensions with two metrics each. The agent can show that reliability lacks its second metric instead of producing an unbounded essay or inventing a decorative measure.'
+  },
+  {
+    problem: 'Meaning, model context, executable workflow, and runtime evidence collapse into one prompt-shaped blob.',
+    mechanism: 'Typed intermediate representations separate canonical semantics from compiled context and execution state. Explicit projection edges expose transformation and possible information loss.',
+    useWhen: 'Moving work across harnesses, generating workflows from specifications, or preserving provenance through transformations.',
+    failure: 'An IR adds cost without value when it merely renames prose and has no validator, operator, or projection boundary.',
+    walkthrough: 'A Meta-IR TaskEnvelope records identity and constraints. A compiler selects CellSpecs into a model-facing CellPack, attaches ontology facets, and emits Workflow IR for execution. A receipt records which source fields were omitted so a second harness does not mistake the projection for the canonical object.'
+  },
+  {
+    problem: 'Two agents can exchange fluent messages while disagreeing about identity, authority, expected output, or reply obligations.',
+    mechanism: 'A typed exchange record turns implicit assumptions into required fields. The sending harness validates the envelope before dispatch; the receiver parses scope and produces a correlated handoff.',
+    useWhen: 'Coordinating separate agent instances, queues, tools, or human-agent review boundaries.',
+    failure: 'A schema validates shape, not truth or authorization. A syntactically valid `deploy: true` field cannot create deployment authority.',
+    walkthrough: 'Agent A sends `ex-042` to Agent B on the same Codex harness with read-only authority, two named sources, and a comparison output. Agent B returns findings against `ex-042`; if asked to edit, it reports an authority mismatch instead of inferring that reviewer access includes write access.'
+  },
+  {
+    problem: 'Valid records still combine in nonsensical orders or pass through undefined workflow states.',
+    mechanism: 'Production rules describe legal composition and transition. The orchestrator matches the current symbol and input to a permitted next form; unknown transitions stop.',
+    useWhen: 'Building prompt DSLs, lifecycle engines, agent protocols, or composable content systems.',
+    failure: 'A grammar that encodes every exception becomes unreadable. Keep semantic rules small and move variable policy into configuration.',
+    walkthrough: 'The grammar permits `request → task_envelope → artifact + receipt`. It does not permit `artifact → release`; release additionally requires a human decision. A model may propose the artifact, but the state machine refuses to compile that proposal directly into a public action.'
+  },
+  {
+    problem: 'A model that plans once can continue from stale assumptions after tools reveal different facts.',
+    mechanism: 'ReAct alternates a concise decision rationale, one authorized action, and direct observation. Each observation updates explicit state before the next action is selected.',
+    useWhen: 'Debugging, repository investigation, web research, or any task where tool results determine the next step.',
+    failure: 'Unbounded ReAct loops waste tools and can turn capability into assumed permission. Add attempt ceilings and terminal states.',
+    walkthrough: 'The agent hypothesizes that an API test fails because a fixture is stale, reads the fixture, observes a schema mismatch, and updates the hypothesis. It runs the scoped test next, then stops at “fix identified” because code mutation was not authorized.'
+  },
+  {
+    problem: 'Models readily compress observations, interpretations, and recommendations into one confident paragraph.',
+    mechanism: 'The output contract requires every statement to occupy an epistemic rung. Downstream synthesis may transform a rung only when it names the evidence and inference step.',
+    useWhen: 'Research synthesis, incident analysis, usability studies, architecture decisions, or public claims.',
+    failure: 'Labels do not make weak evidence strong. The ladder must retain source quality, uncertainty, and missing-data conditions.',
+    walkthrough: 'A usability transcript is the source; “three readers found the next task” is the observation; “the handoff may reduce re-entry cost” is the inference; another cohort is the proposed test. A summarizer cannot rewrite the inference as a proven product benefit.'
+  },
+  {
+    problem: 'A true statement in one fixture or maturity stage is generalized into a product-wide promise.',
+    mechanism: 'The claim travels with its evidence ceiling, tested population, maturity, exclusions, and correction route as one inseparable packet.',
+    useWhen: 'Writing documentation, product pages, benchmark reports, demos, or architecture claims.',
+    failure: 'A caveat hidden elsewhere does not bound a claim. The limit must remain adjacent through summaries and projections.',
+    walkthrough: 'Instead of “the product supports reporting,” the card says “this prototype exports one CSV report from fixture data; production datasets and accessibility remain untested.” Any downstream marketing draft receives the full claim packet, not the headline alone.'
+  },
+  {
+    problem: 'A later agent sees “tests passed” and assumes the artifact was semantically reviewed, accepted, or released.',
+    mechanism: 'A receipt serializes inputs, commands, results, time, environment, and non-implications. It is append-only evidence tied to a specific state.',
+    useWhen: 'After builds, evaluations, migrations, tool calls, reviews, or provider observations.',
+    failure: 'A receipt expires when inputs drift and never substitutes for approval, authorship, or publication authority.',
+    walkthrough: 'The build receipt binds commit `abc123`, Node 24, typecheck and browser checks, plus “does not prove public approval.” After copy changes, the old receipt remains historical and the release flow requires a new check against the new digest.'
+  },
+  {
+    problem: 'Session boundaries erase why work stopped, what remains uncertain, and who can validly continue it.',
+    mechanism: 'A return record captures current state, nearest evidence, unresolved question, next bounded action, owner, and exact route.',
+    useWhen: 'Ending sessions, handing work across agents, pausing research, or returning a human decision.',
+    failure: '“Continue later” is not a return path. The next actor needs a resolvable source and a decision-sized action.',
+    walkthrough: 'A reviewer returns: comparison complete, option B has one unresolved privacy question, inspect `ADR-07`, human owner decides whether telemetry is acceptable, then route accepted wording to the implementation task. The next session resumes without reconstructing the entire conversation.'
+  },
+  {
+    problem: 'A coordinator delegates from intuition, producing overlapping tasks, missing evidence, and prompts that encode its first answer.',
+    mechanism: 'Generator, critic, editor, worker, and synthesizer passes externalize the task representation. Each pass operates on inspectable prompts and returned evidence rather than private reasoning traces.',
+    useWhen: 'A complex question benefits from independent workstreams or the best decomposition is itself uncertain.',
+    failure: 'Recursion is not automatically rigor. Stop when another pass no longer changes task coverage or decision evidence.',
+    walkthrough: 'A generator drafts four prompts for a storage redesign. A critic finds two overlap and none examines migration recovery. An editor emits three disjoint envelopes; workers return evidence; a synthesizer reports where their conclusions disagree and proposes one benchmark rather than averaging confidence.'
+  },
+  {
+    problem: 'Parallel agents share an objective but lack explicit ownership, capability, and return contracts.',
+    mechanism: 'Each worker receives a role, owned paths or evidence domain, allowed effects, exclusions, deliverable schema, verification, and shared stop conditions.',
+    useWhen: 'Running mixtures of agents, parallel code review, research comparisons, or coordinator-worker systems.',
+    failure: 'More agents can amplify correlated errors. Independence must come from distinct evidence, methods, or adversarial roles.',
+    walkthrough: 'One worker benchmarks two caches, another inspects failure recovery, and a critic attacks both assumptions. Paths are disjoint and none may deploy. The coordinator integrates only their receipts; a human chooses the operational tradeoff.'
+  },
+  {
+    problem: 'A promising design receives only supportive examples, so hidden assumptions harden into architecture.',
+    mechanism: 'The prompt allocates explicit search effort to alternatives, falsifiers, missing sources, adversarial inputs, and reasons to stop.',
+    useWhen: 'Before adopting autonomy, changing architecture, making public claims, or accepting high-confidence model output.',
+    failure: 'Generic negativity is not counterevidence. Every objection should name a mechanism, test, source, or switching condition.',
+    walkthrough: 'Before adopting an autonomous repair agent, reviewers compare a deterministic script, test prompt-injection paths, identify missing incident data, and define a benchmark threshold below which the agent should not ship. The proposal returns with a measurable stop recommendation.'
+  },
+  {
+    problem: 'One green test is treated as proof of source fidelity, correctness, safety, usefulness, and release readiness.',
+    mechanism: 'Independent verification layers test different claims: source alignment, executable behavior, artifact inspection, adversarial failure, and human meaning.',
+    useWhen: 'Generated code, migrations, agent evaluations, public projections, or any consequential artifact.',
+    failure: 'Repeated checks of the same property are not independent verification. Each layer needs its own claim and evidence.',
+    walkthrough: 'For a generated database migration, one verifier checks assumptions against the schema, CI executes migration tests, a reviewer inspects the diff and rollback, a critic probes data-loss cases, and the owner decides whether the operational risk is acceptable. No layer inherits another layer’s authority.'
+  }
+] as const;
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width"/>
+<meta name="theme-color" content="#1c1714"/>
+<title>Library | Hearth &amp; Code</title>
+</head>
+<body class="orientation-body">
+<div class="orientation-atmosphere" aria-hidden="true">
+</div>
+<header class="orientation-header">
+<a class="orientation-wordmark" href="/">Hearth <em>&amp;</em> Code</a>
+<p>Library</p>
+<a class="orientation-journal" href="/atlas/">Atlas →</a>
+</header>
+<main>
+<section class="builder-hero">
+<p class="orientation-kicker">16 expandable patterns / 4 × 4 catalogue</p>
+<h1>The Library is a practical method book.</h1>
+<p class="orientation-lede">Open any pattern as a practitioner’s field guide: the problem it solves, the intervention it makes in an agent system, the behavior it tends to change, a worked software example, and a reusable public-safe specimen. These techniques steer context and orchestration; they do not guarantee a model’s internal reasoning or correctness.</p>
+</section>
+<section class="pattern-catalog" id="catalog" aria-labelledby="catalog-title">
+<div class="orientation-section-heading"><p class="orientation-kicker">Pattern index</p><h2 id="catalog-title">Choose a technique to open its field guide.</h2></div>
+<ol class="pattern-thumbnails">{patterns.map(([title, shape, definition], index) => <li><a href={`#pattern-${index + 1}`}><span>{String(index + 1).padStart(2,'0')}</span><small>{shape}</small><h3>{title}</h3><p>{definition}</p><b>Open field guide →</b></a></li>)}</ol>
+</section>
+{patterns.map(([title, shape, definition, demo, artifact], index) => {
+const previous = index === 0 ? patterns.length : index;
+const next = index === patterns.length - 1 ? 1 : index + 2;
+return <article class="pattern-sheet" id={`pattern-${index + 1}`} role="dialog" aria-modal="true" aria-labelledby={`pattern-title-${index + 1}`} tabindex="-1">
+<a class="pattern-sheet-backdrop" href="#catalog" aria-label="Close pattern guide"></a>
+<div class="pattern-sheet-panel">
+<header><div><p class="orientation-kicker">Pattern {String(index + 1).padStart(2,'0')} / 16</p><h2 id={`pattern-title-${index + 1}`}>{title}</h2><p>{shape}</p></div><a class="pattern-close" href="#catalog" aria-label="Close pattern guide">×</a></header>
+<div class="pattern-sheet-content">
+<section class="pattern-explanation">
+<p class="pattern-definition">{definition}</p>
+<h3>The engineering problem</h3><p>{practice[index].problem}</p>
+<h3>What the pattern accomplishes</h3><p>{lessons[index][0]}</p>
+<h3>Mechanism in an LLM or agent system</h3><p>{practice[index].mechanism}</p>
+<h3>Influence on downstream behavior</h3><p>{lessons[index][1]}</p>
+</section>
+<section class="pattern-practice">
+<div><h3>Use it when</h3><p>{practice[index].useWhen}</p></div>
+<div><h3>Failure boundary</h3><p>{practice[index].failure}</p></div>
+</section>
+<section class="pattern-example"><p class="pattern-example-label">Worked example</p><h3>Software and agentic engineering</h3><p>{practice[index].walkthrough}</p><p class="pattern-prompt"><b>Prompt move:</b> {demo}</p></section>
+<PatternVisual index={index} artifact={artifact} />
+</div>
+<nav aria-label="Pattern guide navigation"><a href={`#pattern-${previous}`}>← Previous</a><a href="#catalog">All patterns</a><a href={`#pattern-${next}`}>Next →</a></nav>
+</div>
+</article>})}
+<section class="builder-principle">
+<div>
+<p class="orientation-kicker">How the pieces compose</p>
+<h2>Start with a charter, select context, delegate inside a boundary, then leave a receipt and return path.</h2>
+</div>
+<p>That small chain is the recurring unit across research, software work, creative production, and agent collaboration. It makes the process inspectable without requiring a reader to share every private source or internal procedure.</p>
+</section>
+</main>
+<footer class="orientation-footer">
+<p>Hearth &amp; Code</p>
+<a href="/atlas/">Continue to Atlas →</a>
+</footer>
+<script>
+  const openPattern = () => {
+    const active = document.querySelector<HTMLElement>('.pattern-sheet:target');
+    if (active) active.focus({ preventScroll: true });
+  };
+  window.addEventListener('hashchange', openPattern);
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.querySelector('.pattern-sheet:target')) {
+      window.location.hash = 'catalog';
+    }
+  });
+  openPattern();
+</script>
+</body>
+</html>

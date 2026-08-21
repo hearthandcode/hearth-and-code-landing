@@ -1,0 +1,99 @@
+---
+import '../styles/orientation-landing.css';
+
+const dimensions = [
+  ['01', 'Orientation', 'Make the work findable again.', 'Scott is drawn to systems that preserve context: what has happened, what matters now, and what a useful next step could be.'],
+  ['02', 'Responsibility', 'Keep the consequential choices human.', 'AI can help research, draft, compare, and implement. Direction, public language, research boundaries, and working rules remain Scott’s responsibility.'],
+  ['03', 'Working Method', 'Leave the next person a way in.', 'The aim is not only to finish a task. It is to leave behind a concrete handoff: a legible state, clear constraints, and a path forward.'],
+  ['04', 'Systems Craft', 'Build from parts that can be understood.', 'Primitives, schemas, grammars, and modular components make a system easier to inspect, adapt, and grow without losing its shape.'],
+  ['05', 'Research Practice', 'Turn curiosity into a bounded question.', 'Questions become workable when their sources, assumptions, evidence, and alternatives are made visible alongside the answer.'],
+  ['06', 'Agent Collaboration', 'Use intelligence as an instrument.', 'Agents are useful partners for bounded work and constructive challenge. Their contribution should be visible, limited, and answerable to human judgment.'],
+  ['07', 'Project Horizon', 'Build in public without pretending arrival.', 'Hearth & Code connects software, creative work, research, and applied AI through experiments that show their current stage rather than promising a finished platform.'],
+  ['08', 'Return & Correction', 'Keep a trail back to the work.', 'A public artifact should be open to correction, linked to its evidence where possible, and designed so a reader can continue the thread.'],
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Meet Scott Rallya, known online as cosmatrexis, the builder behind Hearth & Code." />
+    <meta name="theme-color" content="#1c1714" />
+    <title>Meet the Builder | Hearth &amp; Code</title>
+  </head>
+  <body class="orientation-body builder-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+
+    <header class="orientation-header">
+      <a class="orientation-wordmark" href="/">Hearth <em>&amp;</em> Code</a>
+      <p>Meet the Builder</p>
+      <a class="orientation-journal" href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">Field Journal <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main-content">
+      <section class="builder-hero" aria-labelledby="builder-title">
+        <p class="orientation-kicker">Meet the Builder</p>
+        <div class="builder-hero-grid">
+          <div>
+            <h1 id="builder-title">Scott Rallya builds systems for keeping thought, craft, and momentum together.</h1>
+            <p class="orientation-lede">Known online as <strong>cosmatrexis</strong>, Scott is the independent builder behind Hearth &amp; Code. His work brings a background in software engineering and DevOps to questions of applied AI, knowledge practice, and the creative life of technical work.</p>
+          </div>
+          <aside class="builder-identity">
+            <p>Working orientation</p>
+            <strong>Hearthside<br />Meta-Architect</strong>
+            <span>A name for shaping the structures around work: its tools, language, evidence, and route back. It is a craft posture, not a credential.</span>
+          </aside>
+        </div>
+      </section>
+
+      <section class="builder-introduction" aria-labelledby="introduction-title">
+        <div>
+          <p class="orientation-kicker">A person at the bench</p>
+          <h2 id="introduction-title">A builder with a long view of the work.</h2>
+        </div>
+        <div class="builder-reading">
+          <p>Hearth &amp; Code grew from a simple conviction: our tools should help us keep hold of the ideas we care about while we make them real. Scott is especially interested in the meeting point of serious inquiry, software craft, and creative expression, where a good system can make room for both rigor and discovery.</p>
+          <p>This is a one-person practice, not an institution or a promise of finished expertise. It is a place to build carefully in public, test ideas in concrete form, and let the work show what it can actually do.</p>
+        </div>
+      </section>
+
+      <section class="builder-charter" aria-labelledby="charter-title">
+        <div class="orientation-section-heading">
+          <p class="orientation-kicker">An eight-dimensional practice charter</p>
+          <h2 id="charter-title">The habits that shape the work.</h2>
+          <p>This is an archetype of practice, not a personality assessment. Each dimension names a practical commitment that can be seen in the work itself.</p>
+        </div>
+        <ol class="builder-dimension-grid">
+          {dimensions.map(([number, label, principle, description]) => (
+            <li>
+              <span>{number}</span>
+              <h3>{label}</h3>
+              <strong>{principle}</strong>
+              <p>{description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="builder-principle" aria-labelledby="principle-title">
+        <div>
+          <p class="orientation-kicker">How intelligence is used</p>
+          <h2 id="principle-title">The machine can extend the workshop. It does not replace the builder.</h2>
+        </div>
+        <p>Hearth &amp; Code uses AI to help with research, synthesis, design, and implementation. The point is not to hide the tool or hand it the wheel. It is to make the work more capable while preserving judgment, authorship, and a clear account of how something came to be.</p>
+      </section>
+
+      <nav class="builder-next" aria-label="Continue through Hearth and Code">
+        <a href="/">← Back to Orientation</a>
+        <a href="/review/exocore/">Continue to Exocore →</a>
+      </nav>
+    </main>
+
+    <footer class="orientation-footer">
+      <p>Hearth &amp; Code · Scott Rallya / cosmatrexis</p>
+      <a href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">Read the Field Journal ↗</a>
+    </footer>
+  </body>
+</html>
