@@ -1,15 +1,16 @@
 ---
 import '../styles/orientation-landing.css';
+import HearthNavigation from './HearthNavigation.astro';
 
 const dimensions = [
-  ['01', 'Orientation', 'Make the work findable again.', 'Scott is drawn to systems that preserve context: what has happened, what matters now, and what a useful next step could be.'],
+  ['01', 'Orientation', 'Bank a returnthread.', 'Scott is drawn to systems that preserve context: what has happened, what matters now, and what a useful next step could be.'],
   ['02', 'Responsibility', 'Keep the consequential choices human.', 'AI can help research, draft, compare, and implement. Direction, public language, research boundaries, and working rules remain Scott’s responsibility.'],
-  ['03', 'Working Method', 'Leave the next person a way in.', 'The aim is not only to finish a task. It is to leave behind a concrete handoff: a legible state, clear constraints, and a path forward.'],
-  ['04', 'Systems Craft', 'Build from parts that can be understood.', 'Primitives, schemas, grammars, and modular components make a system easier to inspect, adapt, and grow without losing its shape.'],
-  ['05', 'Research Practice', 'Turn curiosity into a bounded question.', 'Questions become workable when their sources, assumptions, evidence, and alternatives are made visible alongside the answer.'],
+  ['03', 'Working Method', 'Make the work return-bearing.', 'The aim is not only to finish a task. It is to leave a workshop-clear state, explicit constraints, and a reliable way forward.'],
+  ['04', 'Systems Craft', 'Forge from parts that can be understood.', 'Primitives, schemas, grammars, and modular components make a system easier to inspect, adapt, and grow without losing its shape.'],
+  ['05', 'Research Practice', 'Kindle curiosity into a bounded question.', 'Questions become workable when their sourcechain, assumptions, evidence, and alternatives remain visible beside the answer.'],
   ['06', 'Agent Collaboration', 'Use intelligence as an instrument.', 'Agents are useful partners for bounded work and constructive challenge. Their contribution should be visible, limited, and answerable to human judgment.'],
-  ['07', 'Project Horizon', 'Build in public without pretending arrival.', 'Hearth & Code connects software, creative work, research, and applied AI through experiments that show their current stage rather than promising a finished platform.'],
-  ['08', 'Return & Correction', 'Keep a trail back to the work.', 'A public artifact should be open to correction, linked to its evidence where possible, and designed so a reader can continue the thread.'],
+  ['07', 'Project Horizon', 'Keep ember-stage work honest.', 'Hearth & Code connects software, creative work, research, and applied AI through experiments that show their current maturity rather than promising a finished platform.'],
+  ['08', 'Return & Correction', 'Keep a sourcechain and a way home.', 'A public artifact should be open to correction, linked to its evidence where possible, and designed with a returnthread a reader can continue.'],
 ] as const;
 ---
 
@@ -26,11 +27,7 @@ const dimensions = [
     <div class="orientation-atmosphere" aria-hidden="true"></div>
     <a class="orientation-skip" href="#main-content">Skip to content</a>
 
-    <header class="orientation-header">
-      <a class="orientation-wordmark" href="/">Hearth <em>&amp;</em> Code</a>
-      <p>Meet the Builder</p>
-      <a class="orientation-journal" href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">Field Journal <span aria-hidden="true">↗</span></a>
-    </header>
+    <HearthNavigation current="builder" context="Meet the Builder / Scott Rallya · cosmatrexis" />
 
     <main id="main-content">
       <section class="builder-hero" aria-labelledby="builder-title">
@@ -38,7 +35,7 @@ const dimensions = [
         <div class="builder-hero-grid">
           <div>
             <h1 id="builder-title">Scott Rallya builds systems for keeping thought, craft, and momentum together.</h1>
-            <p class="orientation-lede">Known online as <strong>cosmatrexis</strong>, Scott is the independent builder behind Hearth &amp; Code. His work brings a background in software engineering and DevOps to questions of applied AI, knowledge practice, and the creative life of technical work.</p>
+            <p class="orientation-lede">Known online as <strong>cosmatrexis</strong>, Scott is the independent builder behind Hearth &amp; Code. His work brings a background in software engineering and DevOps to the human-held craft of applied AI, knowledge practice, and creative technical work.</p>
           </div>
           <aside class="builder-identity">
             <p>Working orientation</p>
@@ -54,7 +51,7 @@ const dimensions = [
           <h2 id="introduction-title">A builder with a long view of the work.</h2>
         </div>
         <div class="builder-reading">
-          <p>Hearth &amp; Code grew from a simple conviction: our tools should help us keep hold of the ideas we care about while we make them real. Scott is especially interested in the meeting point of serious inquiry, software craft, and creative expression, where a good system can make room for both rigor and discovery.</p>
+          <p>Hearth &amp; Code grew from a simple conviction: our tools should help us keep hold of the ideas we care about while we make them real. Scott is especially interested in the meeting point of serious inquiry, software craft, and creative expression, where a good system can be both proof-bearing and open to discovery.</p>
           <p>This is a one-person practice, not an institution or a promise of finished expertise. It is a place to build carefully in public, test ideas in concrete form, and let the work show what it can actually do.</p>
         </div>
       </section>
@@ -87,13 +84,13 @@ const dimensions = [
 
       <nav class="builder-next" aria-label="Continue through Hearth and Code">
         <a href="/">← Back to Orientation</a>
-        <a href="/review/exocore/">Continue to Exocore →</a>
+        <a href="/exocore/">Continue to Exocore →</a>
       </nav>
     </main>
 
     <footer class="orientation-footer">
       <p>Hearth &amp; Code · Scott Rallya / cosmatrexis</p>
-      <a href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">Read the Field Journal ↗</a>
+      <a href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">Read the Field Journal <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
     </footer>
   </body>
 </html>

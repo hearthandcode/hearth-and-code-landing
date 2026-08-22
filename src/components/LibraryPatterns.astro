@@ -4,6 +4,7 @@ import '../styles/library-patterns.css';
 import '../styles/library-sheets.css';
 import '../styles/library-card-overrides.css';
 import PatternVisual from './PatternVisual.astro';
+import HearthNavigation from './HearthNavigation.astro';
 const patterns = [
 ['ContextPack','purpose · sources · constraints · output','A bounded context packet selects the sources and rules needed for one task. It does not grant broader access.','Create a ContextPack for reviewing a payment-service change. Include only the architecture note, API contract, owned paths, no-touch paths, and test command.','context_pack:\n  purpose: review payment-service change\n  sources: [architecture-note, api-contract]\n  no_touch: [billing-ledger]\n  verify: [unit-tests, contract-tests]'],
 ['Goal Charter','purpose · sources · scope · destination · proof · handoff','A goal charter is the legislative layer for a body of work. It establishes durable orientation, precedence, boundaries, review gates, and the route from an objective to governed execution.','Public projection adapted from the Hub charter: orient before durable action, inspect named sources directly, preserve one active thread, and stop when a missing fact changes route or effect.','ARTICLE II — ORIENTATION\n1. Read focus, work item, direct source, local charter.\n2. Keep one active thread.\n3. Inspect named sources before relying on recall.\n4. Name purpose, scope, destination, proof, stop, handoff.'],
@@ -166,16 +167,13 @@ const practice = [
 <body class="orientation-body">
 <div class="orientation-atmosphere" aria-hidden="true">
 </div>
-<header class="orientation-header">
-<a class="orientation-wordmark" href="/">Hearth <em>&amp;</em> Code</a>
-<p>Library</p>
-<a class="orientation-journal" href="/atlas/">Atlas →</a>
-</header>
-<main>
+<a class="orientation-skip" href="#main-content">Skip to content</a>
+<HearthNavigation current="library" context="Library / prompt-weaver’s field guide" />
+<main id="main-content">
 <section class="builder-hero">
 <p class="orientation-kicker">16 expandable patterns / 4 × 4 catalogue</p>
-<h1>The Library is a practical method book.</h1>
-<p class="orientation-lede">Open any pattern as a practitioner’s field guide: the problem it solves, the intervention it makes in an agent system, the behavior it tends to change, a worked software example, and a reusable public-safe specimen. These techniques steer context and orchestration; they do not guarantee a model’s internal reasoning or correctness.</p>
+<h1>The Library is a method book for weaving accountable work.</h1>
+<p class="orientation-lede">Open any pattern as a prompt-weaver’s field guide: the problem it solves, the intervention it makes in an agent system, the behavior it tends to change, a worked software example, and a reusable public-safe specimen. These techniques shape context and orchestration; they do not guarantee a model’s internal reasoning or correctness.</p>
 </section>
 <section class="pattern-catalog" id="catalog" aria-labelledby="catalog-title">
 <div class="orientation-section-heading"><p class="orientation-kicker">Pattern index</p><h2 id="catalog-title">Choose a technique to open its field guide.</h2></div>
@@ -209,9 +207,9 @@ return <article class="pattern-sheet" id={`pattern-${index + 1}`} role="dialog" 
 <section class="builder-principle">
 <div>
 <p class="orientation-kicker">How the pieces compose</p>
-<h2>Start with a charter, select context, delegate inside a boundary, then leave a receipt and return path.</h2>
+<h2>Bind the charter, weave the context, orchestrate inside the claimbound, then bank a workreceipt and returnthread.</h2>
 </div>
-<p>That small chain is the recurring unit across research, software work, creative production, and agent collaboration. It makes the process inspectable without requiring a reader to share every private source or internal procedure.</p>
+<p>That small chain is the recurring unit across research, software work, creative production, and agent collaboration. The Hearthside language makes each move memorable; the underlying sources, authority, evidence, and limits remain literal and inspectable.</p>
 </section>
 </main>
 <footer class="orientation-footer">

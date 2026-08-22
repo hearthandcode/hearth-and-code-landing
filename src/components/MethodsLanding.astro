@@ -1,0 +1,159 @@
+---
+import '../styles/methods-return.css';
+import HearthNavigation from './HearthNavigation.astro';
+
+const stations = [
+  {
+    number: '01', name: 'Orient', hearthside: 'Kindle and bind the work.',
+    copy: 'Begin with the decision that matters and the closest sources capable of informing it.',
+    steps: [['Question', 'Name the decision the work should support.'], ['Sources', 'Bind the records, code, observations, and people that can answer it.']],
+  },
+  {
+    number: '02', name: 'Shape', hearthside: 'Set the claimbound and prepare the bench.',
+    copy: 'Give the work a deliberate boundary and only the context it needs to remain intelligible.',
+    steps: [['Boundary', 'State what may change, what must not, and where human judgment stays final.'], ['Context', 'Assemble the smallest ContextPack that can support the task.']],
+  },
+  {
+    number: '03', name: 'Prove', hearthside: 'Forge the artifact, then temper it.',
+    copy: 'Make something inspectable and expose it to tests, counterevidence, and practical use.',
+    steps: [['Make', 'Produce one useful artifact inside the declared workbrief.'], ['Test', 'Check behavior, seek counterexamples, and separate observation from interpretation.']],
+  },
+  {
+    number: '04', name: 'Return', hearthside: 'Bank the work while the fire is still visible.',
+    copy: 'Preserve what happened, what remains unproven, and the next responsible way back in.',
+    steps: [['Receipt', 'Record inputs, actions, checks, results, and limits in a workreceipt.'], ['Return', 'Leave a returnthread with current state, open questions, owner, and next action.']],
+  },
+];
+
+const standards = [
+  ['MUST', 'Begin with a decision', 'A broad interest becomes work only when the decision or question it serves is named.'],
+  ['MUST', 'Bind direct sources', 'Claims and rules stay source-bound; summaries and model output do not quietly become authority.'],
+  ['MUST', 'Declare the boundary', 'Scope, ownership, no-touch areas, and human gates are visible before consequential work begins.'],
+  ['SHOULD', 'Use the smallest sufficient context', 'A ContextPack selects what this task needs and names important exclusions instead of flooding the bench.'],
+  ['MUST', 'Return an inspectable artifact', 'The useful output is code, a comparison, a design, a record, or another proofpiece that can be checked.'],
+  ['MUST', 'Invite counterevidence', 'Tests include failure cases, alternatives, conflicting sources, and evidence that would change the recommendation.'],
+  ['MUST', 'Keep checks inside their claimbound', 'A passing build proves that the build passed. It does not imply usability, truth, approval, or release.'],
+  ['MUST', 'Leave a returnthread', 'The work ends with current state, remaining uncertainty, owner, and one reliable next action.'],
+];
+
+const agentRoles = [
+  ['01', 'Prompt-weaver', 'Frames the workbrief', 'Composes purpose, sources, constraints, outputs, and stop conditions into an instruction another actor can follow.'],
+  ['02', 'Contextwright', 'Compiles the ContextPack', 'Selects the smallest source-bound packet and keeps absences, loss, and disclosure boundaries visible.'],
+  ['03', 'Agentic Orchestrator', 'Coordinates bounded action', 'Assigns roles, tools, ownership, evidence contracts, and human gates without turning capability into permission.'],
+  ['04', 'Proofsmith', 'Challenges and returns the result', 'Shapes claims into checks, counterexamples, receipts, and a handoff. The role does not imply formal proof or final authority.'],
+];
+
+const vocabulary = [
+  ['Workbrief', 'Purpose, sources, scope, ownership, verification, and handoff in one bounded instruction.'],
+  ['ContextPack', 'A task-sized bundle of sources, rules, vocabulary, and known exclusions.'],
+  ['Claimbound', 'The limit placed beside a claim so presentation cannot widen what its evidence supports.'],
+  ['Proofpiece', 'A concrete artifact used to test one part of a larger proposition.'],
+  ['Workreceipt', 'A record of inputs, actions, checks, results, and what remains unproven.'],
+  ['Returnthread', 'The preserved state and next action that lets a person resume the work.'],
+  ['Return-bearing', 'Designed for correction, resumption, and the next responsible action.'],
+  ['Human-held', 'Keeping authorship, interpretation, and consequential release with a person.'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The return-bearing workshop method Hearth & Code uses to orient, shape, prove, and return accountable work." />
+    <meta name="theme-color" content="#1c1714" />
+    <title>Methods · Hearth &amp; Code</title>
+  </head>
+  <body class="orientation-body method-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+
+    <HearthNavigation current="method" context="Methods / the return-bearing workshop" />
+
+    <main id="main-content">
+      <section class="method-hero" aria-labelledby="method-title">
+        <p class="orientation-kicker">07 / Methods</p>
+        <div class="method-hero-grid">
+          <div>
+            <h1 id="method-title">Build the work so it can find its way home.</h1>
+            <p class="orientation-lede">Hearth &amp; Code treats method as part of the craft. A piece of work should carry its purpose, sources, boundaries, evidence, and enough of a returnthread for someone to question it, correct it, or take the next honest step.</p>
+          </div>
+          <aside class="method-compact" aria-label="Return-bearing workshop in one line">
+            <span>Return-bearing workshop</span>
+            <strong>Orient → shape → prove → return</strong>
+            <p>Warm enough for discovery. Structured enough to remain answerable.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="method-philosophy" aria-labelledby="philosophy-title">
+        <div><p class="orientation-kicker">01 / The Return-Bearing Workshop</p><h2 id="philosophy-title">Finishing is not the same as leaving the work whole.</h2></div>
+        <div><p>A result can be technically correct and still leave no path back to its question, evidence, tradeoffs, or next decision. Return-bearing work keeps those connections close enough to recover.</p><p>The phrase names an evolving design philosophy, not a guarantee. A return path can reduce the cost of resuming or correcting work; whether it succeeds still has to be observed in use.</p></div>
+      </section>
+
+      <section class="method-stations" aria-labelledby="stations-title">
+        <div class="method-section-heading"><p class="orientation-kicker">02 / Four Stations of the Forge</p><h2 id="stations-title">A memorable map over an eight-step working cycle.</h2><p>Each station holds two practical steps. The Hearthside phrase makes the action easier to remember; the plain-language contract says exactly what happens there.</p></div>
+        <ol>
+          {stations.map((station) => (
+            <li>
+              <header><span>{station.number}</span><div><p>{station.hearthside}</p><h3>{station.name}</h3></div></header>
+              <p>{station.copy}</p>
+              <dl>{station.steps.map(([term, definition]) => <div><dt>{term}</dt><dd>{definition}</dd></div>)}</dl>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="method-standard" aria-labelledby="standard-title">
+        <div class="method-section-heading"><p class="orientation-kicker">03 / The Builder’s Standard</p><h2 id="standard-title">Eight public commitments behind the work.</h2><p>Normative words are used literally here: MUST is required by this public method; SHOULD is the expected practice unless the work names why another route is better.</p></div>
+        <ol>{standards.map(([force, title, copy], index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><small>{force}</small><h3>{title}</h3><p>{copy}</p></div></li>)}</ol>
+      </section>
+
+      <section class="method-agents" aria-labelledby="agents-title">
+        <div class="method-section-heading"><p class="orientation-kicker">04 / Field Guide for Accountable Agents</p><h2 id="agents-title">Four working roles, one human-held decision.</h2><p>These are modes of work, not credentials or fixed personalities. One person or agent may fill more than one role, but the responsibilities remain distinct enough to inspect.</p></div>
+        <ol>{agentRoles.map(([number, role, move, copy]) => <li><span>{number}</span><h3>{role}</h3><strong>{move}</strong><p>{copy}</p></li>)}</ol>
+        <div class="method-agent-boundary"><strong>Agent contribution</strong><span>retrieve · compare · draft · implement · test · challenge</span><strong>Human gate</strong><span>meaning · authorship · consequential choice · public claim · release</span></div>
+      </section>
+
+      <section class="method-worked" aria-labelledby="worked-title">
+        <div class="method-section-heading"><p class="orientation-kicker">The method at the bench / software architecture</p><h2 id="worked-title">Changing a service boundary without hiding the tradeoff.</h2></div>
+        <div class="method-case-grid">
+          <article class="method-brief">
+            <p class="method-label">Workbrief / question</p>
+            <h3>Should document indexing become its own module?</h3>
+            <p>The decision is not “can we extract it?” It is whether extraction makes ownership, failure, and testing clearer without creating premature distribution.</p>
+            <dl>
+              <div><dt>Sourcechain</dt><dd>Current imports, data ownership, failure traces, architecture decisions, and user-visible jobs.</dd></div>
+              <div><dt>Claimbound</dt><dd>Change module interfaces and tests. Do not change storage authority, deploy a service, or promise a migration.</dd></div>
+              <div><dt>Counterevidence</dt><dd>Look for shared transactions, latency sensitivity, or operating cost that makes separation worse.</dd></div>
+            </dl>
+          </article>
+          <div class="method-proof-stack">
+            <article><span>01 / Proofpiece</span><strong>A typed port and dependency graph</strong><p>The proposal becomes inspectable as contracts and forbidden imports, not only explanatory prose.</p></article>
+            <article><span>02 / Temper</span><strong>Boundary, fixture, and failure tests</strong><p>Tests ask whether the module can be isolated, disabled, and reasoned about without hidden access.</p></article>
+            <article><span>03 / Workreceipt</span><strong>Passed locally; distribution unproven</strong><p>The evidence supports a module boundary. It does not establish that a network service would be faster, safer, or worth operating.</p></article>
+            <article><span>04 / Returnthread</span><strong>Revisit after measured workload evidence</strong><p>The next decision has a trigger, an owner, and evidence that could reverse the recommendation.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="method-vocabulary" aria-labelledby="vocabulary-title">
+        <div class="method-section-heading"><p class="orientation-kicker">A small Hearthside lexicon</p><h2 id="vocabulary-title">Eight terms that earn their place through use.</h2><p>Plain language carries the method. These terms name recurring mechanisms and are glossed here so the workshop voice remains legible.</p></div>
+        <dl>{vocabulary.map(([term, definition]) => <div><dt>{term}</dt><dd>{definition}</dd></div>)}</dl>
+      </section>
+
+      <section class="method-roles" aria-labelledby="roles-title">
+        <div><p class="orientation-kicker">The responsibility boundary</p><h2 id="roles-title">The machine can extend the bench. It does not become the builder.</h2></div>
+        <div><p>Agents can widen the search, hold more working context, produce proofpieces, run checks, and challenge a preferred design. Their output remains candidate work until its sources, behavior, and consequences are reviewed.</p><p>Authorship, lived meaning, public claims, consequential decisions, and release remain human-held. When evidence is thin or authority is missing, the method stops instead of filling the gap with confidence.</p></div>
+      </section>
+
+      <nav class="method-next" aria-label="Continue through Hearth and Code">
+        <a href="/library/"><span>Pattern catalog</span><strong>Explore the Library ←</strong></a>
+        <a href="/atlas/"><span>Connected vocabulary</span><strong>Open the Atlas</strong></a>
+        <a href="/return/"><span>Bank the returnthread</span><strong>Continue to Return →</strong></a>
+      </nav>
+    </main>
+
+    <footer class="orientation-footer"><p>Hearth &amp; Code · Methods</p><a href="/">Back to the workshop ↑</a></footer>
+  </body>
+</html>

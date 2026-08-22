@@ -1,0 +1,41 @@
+---
+interface Props {
+  current: 'orientation' | 'builder' | 'exocore' | 'workbench' | 'library' | 'atlas' | 'method' | 'return';
+  context: string;
+}
+
+const { current, context } = Astro.props;
+
+const routes = [
+  ['01', 'orientation', 'Orientation', '/'],
+  ['02', 'builder', 'Builder', '/builder/'],
+  ['03', 'exocore', 'Exocore', '/exocore/'],
+  ['04', 'workbench', 'Workbench', '/workbench/'],
+  ['05', 'library', 'Library', '/library/'],
+  ['06', 'atlas', 'Atlas', '/atlas/'],
+  ['07', 'method', 'Methods', '/method/'],
+  ['08', 'return', 'Return', '/return/'],
+] as const;
+---
+
+<header class="orientation-header">
+  <div class="orientation-brand-row">
+    <a class="orientation-wordmark" href="/" aria-label="Hearth and Code, return to Orientation">Hearth <em>&amp;</em> Code</a>
+    <p>{context}</p>
+    <a class="orientation-journal" href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">
+      Field Journal <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span>
+    </a>
+  </div>
+  <nav class="hearth-navigation" aria-label="Hearth and Code rooms">
+    <ol>
+      {routes.map(([number, key, label, href]) => (
+        <li>
+          <a href={href} aria-current={current === key ? 'page' : undefined}>
+            <span aria-hidden="true">{number}</span>
+            <strong>{label}</strong>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+</header>

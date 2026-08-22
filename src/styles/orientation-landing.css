@@ -12,11 +12,22 @@ body { margin: 0; }
 :where(.orientation-body a):focus-visible { outline: .2rem solid var(--color-accent-plasma); outline-offset: .25rem; }
 
 .orientation-header, .orientation-footer, main { inline-size: min(100% - 2rem, 76rem); margin-inline: auto; }
-.orientation-header { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .5rem 2rem; padding-block: 1.25rem; border-block-end: 1px solid var(--color-surface-rule-strong); }
+.orientation-header { padding-block: 1.25rem 0; border-block-end: 1px solid var(--color-surface-rule-strong); }
+.orientation-brand-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .5rem 2rem; padding-block-end: 1rem; }
 .orientation-wordmark { color: var(--color-text-primary); font: 600 clamp(1.3rem, 1.1rem + 1vw, 1.75rem)/1 var(--font-display); letter-spacing: -.03em; text-decoration: none; }
 .orientation-wordmark em { color: var(--color-accent-ember); font-style: normal; }
-.orientation-header p { grid-column: 1; margin: 0; color: var(--color-text-secondary); font-size: .875rem; }
+.orientation-brand-row p { grid-column: 1; margin: 0; color: var(--color-text-secondary); font-size: .875rem; }
 .orientation-journal { grid-column: 2; grid-row: 1 / span 2; color: var(--color-accent-plasma); font: .85rem var(--font-mono); text-underline-offset: .25em; }
+.visually-hidden { position: absolute; inline-size: 1px; block-size: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hearth-navigation { border-block-start: 1px solid var(--color-surface-rule); }
+.hearth-navigation ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+.hearth-navigation li { min-inline-size: 0; }
+.hearth-navigation a { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .5rem; min-block-size: 3rem; align-items: center; padding: .65rem .55rem; border-inline-end: 1px solid var(--color-surface-rule); border-block-end: 1px solid var(--color-surface-rule); color: var(--color-text-secondary); font: .68rem/1.2 var(--font-mono); letter-spacing: .025em; text-decoration: none; text-transform: uppercase; transition: background var(--motion-duration-fast), color var(--motion-duration-fast); }
+.hearth-navigation li:nth-child(2n) a { border-inline-end: 0; }
+.hearth-navigation a > span { color: var(--color-accent-ember); font-weight: 400; }
+.hearth-navigation a > strong { min-inline-size: 0; overflow-wrap: anywhere; font-weight: 500; }
+.hearth-navigation a:hover { background: rgb(63 224 208 / .07); color: var(--color-text-primary); }
+.hearth-navigation a[aria-current="page"] { background: linear-gradient(115deg, rgb(194 90 42 / .2), rgb(42 35 32 / .68)); color: var(--color-text-primary); box-shadow: inset 0 -.2rem 0 var(--color-accent-ember); }
 
 .orientation-hero { padding-block: clamp(4rem, 10vw, 8rem); }
 .orientation-kicker, .orientation-principles p, .orientation-route-number { color: var(--color-accent-ember); font: .78rem/1.4 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
@@ -60,9 +71,11 @@ h2 { font-size: clamp(2rem, 1.6rem + 2vw, 3.7rem); }
 .orientation-footer p { margin: 0; }
 .orientation-footer a { color: var(--color-accent-plasma); text-underline-offset: .25em; }
 
+@media (min-width: 40rem) { .hearth-navigation ol { grid-template-columns: repeat(4, minmax(0, 1fr)); } .hearth-navigation li:nth-child(2n) a { border-inline-end: 1px solid var(--color-surface-rule); } .hearth-navigation li:nth-child(4n) a { border-inline-end: 0; } }
 @media (min-width: 48rem) { .orientation-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(16rem, .55fr); } .orientation-principles { grid-template-columns: repeat(3, 1fr); } .orientation-principles article { border-block-end: 0; border-inline-end: 1px solid var(--color-surface-rule-strong); } .orientation-principles article:last-child { border-inline-end: 0; } .orientation-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .orientation-note { grid-template-columns: minmax(0, 1fr) minmax(16rem, .65fr); } }
+@media (min-width: 72rem) { .hearth-navigation ol { grid-template-columns: repeat(8, minmax(0, 1fr)); } .hearth-navigation li:nth-child(4n) a { border-inline-end: 1px solid var(--color-surface-rule); } .hearth-navigation li:last-child a { border-inline-end: 0; } .hearth-navigation a { padding-inline: .65rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .orientation-route-grid a { transition: none; } .orientation-route-grid a:hover { transform: none; } }
-@media (forced-colors: active) { .orientation-atmosphere { display: none; } .orientation-body, .orientation-signal, .orientation-route-grid a, .orientation-note { background: Canvas; color: CanvasText; } .orientation-route-grid a, .orientation-signal, .orientation-note, .orientation-principles, .orientation-principles article, .orientation-header, .orientation-footer { border-color: CanvasText; } .orientation-lede, .orientation-header p, .orientation-signal span, .orientation-principles span, .orientation-section-heading p, .orientation-route-description, .orientation-note p:last-child, .orientation-footer { color: CanvasText; } :where(.orientation-body a) { color: LinkText; } }
+@media (forced-colors: active) { .orientation-atmosphere { display: none; } .orientation-body, .orientation-signal, .orientation-route-grid a, .orientation-note, .hearth-navigation a[aria-current="page"] { background: Canvas; color: CanvasText; } .orientation-route-grid a, .orientation-signal, .orientation-note, .orientation-principles, .orientation-principles article, .orientation-header, .orientation-footer, .hearth-navigation, .hearth-navigation a { border-color: CanvasText; } .orientation-lede, .orientation-brand-row p, .orientation-signal span, .orientation-principles span, .orientation-section-heading p, .orientation-route-description, .orientation-note p:last-child, .orientation-footer { color: CanvasText; } .hearth-navigation a[aria-current="page"] { box-shadow: inset 0 -.2rem 0 Highlight; } :where(.orientation-body a) { color: LinkText; } }
 
 .builder-hero { padding-block: clamp(4rem, 9vw, 7rem); }
 .builder-hero-grid, .builder-introduction, .builder-principle { display: grid; gap: 2rem; align-items: end; }

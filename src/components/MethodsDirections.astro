@@ -1,0 +1,79 @@
+---
+import '../styles/methods-directions.css';
+import { hearthsideLexicon, languageRules, methodDirections } from '../data/methods-directions';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#1c1714" />
+    <title>Methods Directions · Hearth &amp; Code Review</title>
+  </head>
+  <body class="orientation-body methods-review-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+    <header class="orientation-header">
+      <a class="orientation-wordmark" href="/review/">Hearth <em>&amp;</em> Code</a>
+      <p>Methods directions / private comparison</p>
+      <a class="orientation-journal" href="/method/">Current Methods →</a>
+    </header>
+
+    <main id="main-content">
+      <section class="methods-review-hero" aria-labelledby="methods-review-title">
+        <p class="orientation-kicker">Eight ways to hold the method</p>
+        <h1 id="methods-review-title">The page can teach a practice without losing the warmth of the workshop.</h1>
+        <p class="orientation-lede">These are different information architectures, not alternate headlines. Each changes what the page helps a reader do: understand Scott’s practice, check a claim, borrow a method, work with agents, or imagine the method becoming an Exocore surface.</p>
+      </section>
+
+      <section class="methods-recommendation" aria-labelledby="recommendation-title">
+        <div><p class="orientation-kicker">Implemented candidate / directions 01 + 02 + 03 + 04</p><h2 id="recommendation-title">Return-Bearing Workshop as the story. Four Stations as the map. Builder’s Standard as the promise. Accountable Agents as the practice.</h2></div>
+        <div>
+          <p>The public Methods page now keeps the eight-step cycle as the detailed working grammar beneath four paired stations: Orient, Shape, Prove, Return. It adds eight public commitments, a four-role Accountable Agents field guide, the software example, and Hearthside terms only where they make a mechanism easier to remember.</p>
+          <p>This gives the page a clear hierarchy: <strong>human philosophy → memorable map → operational cycle → concrete example → public responsibility.</strong></p>
+        </div>
+      </section>
+
+      <section class="methods-alternatives" aria-labelledby="alternatives-title">
+        <div class="orientation-section-heading"><p class="orientation-kicker">Direction catalog</p><h2 id="alternatives-title">Adopt, layer, replace, or reserve.</h2><p>Open each direction to compare its purpose, proposed structure, best use, and cost.</p></div>
+        <div class="methods-direction-grid">
+          {methodDirections.map((direction) => (
+            <details class="methods-direction-card" open={direction.number === '01'}>
+              <summary><span>{direction.number}</span><div><small>{direction.disposition}</small><h3>{direction.title}</h3><p>{direction.thesis}</p></div><b aria-hidden="true">+</b></summary>
+              <div class="methods-direction-detail">
+                <div><h4>Page structure</h4><ol>{direction.structure.map((step) => <li>{step}</li>)}</ol></div>
+                <div><h4>Where it earns its place</h4><p>{direction.use}</p><h4>Tradeoff</h4><p>{direction.tradeoff}</p></div>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="methods-language" aria-labelledby="language-title">
+        <div class="orientation-section-heading"><p class="orientation-kicker">Hearthside language layer / 4 × 8</p><h2 id="language-title">Thirty-two terms, each tied to a real working mechanism.</h2><p>This is a candidate vocabulary, not a mandate to rename everything. The ordinary language remains visible beside every coined term.</p></div>
+        <div class="hearthside-family-grid">
+          {hearthsideLexicon.map((family) => (
+            <article><header><h3>{family.family}</h3><span>08 terms</span></header><dl>{family.terms.map(([term, definition]) => <div><dt>{term}</dt><dd>{definition}</dd></div>)}</dl></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="methods-grammar" aria-labelledby="grammar-title">
+        <div class="orientation-section-heading"><p class="orientation-kicker">Language grammar / eight rules</p><h2 id="grammar-title">Keep the fire in the voice, not in the fog.</h2></div>
+        <ol>{languageRules.map(([rule, explanation], index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{rule}</h3><p>{explanation}</p></div></li>)}</ol>
+      </section>
+
+      <section class="methods-samples" aria-labelledby="samples-title">
+        <div><p class="orientation-kicker">Tone samples</p><h2 id="samples-title">A light Hearthside pass, with the mechanism still visible.</h2></div>
+        <div>
+          <article><span>Plain</span><p>Name the question, select the sources, define the boundary, and leave a next action.</p></article>
+          <article><span>Hearthside</span><p>Kindle one clear question. Bind it to the sources and the claimbound. When the work pauses, bank a returnthread with the next responsible action.</p></article>
+          <article><span>Too far</span><p class="is-rejected">Enter the sacred forge and summon the memorysmiths to divine the truth.</p><small>Rejected: theatrical, mechanism-free, and falsely authoritative.</small></article>
+        </div>
+      </section>
+    </main>
+    <footer class="orientation-footer"><p>Private Methods direction review</p><a href="/review/">Return to launch review ↑</a></footer>
+  </body>
+</html>

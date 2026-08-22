@@ -1,0 +1,89 @@
+---
+import '../styles/methods-return.css';
+import HearthNavigation from './HearthNavigation.astro';
+
+const routes = [
+  ['01', 'Orientation', '/', 'See the whole practice and choose a route.'],
+  ['02', 'Meet the Builder', '/builder/', 'Meet Scott Rallya and the values behind the work.'],
+  ['03', 'Exocore', '/exocore/', 'Explore the evolving workroom ecosystem.'],
+  ['04', 'Workbench', '/workbench/', 'Inspect ember-stage projects, proofpieces, and working software.'],
+  ['05', 'Library', '/library/', 'Open the catalog of agentic engineering patterns.'],
+  ['06', 'Atlas', '/atlas/', 'Navigate the connected technical vocabulary.'],
+  ['07', 'Methods', '/method/', 'Enter the return-bearing workshop and follow its four stations.'],
+  ['08', 'Return', '#return-title', 'Rekindle from this map whenever the thread gets lost.'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Return to the Hearth & Code studio, follow the Field Journal, or choose the next useful thread." />
+    <meta name="theme-color" content="#1c1714" />
+    <title>Return · Hearth &amp; Code</title>
+  </head>
+  <body class="orientation-body return-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+
+    <HearthNavigation current="return" context="Return / a reliable path back into the work" />
+
+    <main id="main-content">
+      <section class="return-hero" aria-labelledby="return-title">
+        <p class="orientation-kicker">08 / Return</p>
+        <div class="return-hero-grid">
+          <div>
+            <h1 id="return-title">Every path should lead somewhere useful.</h1>
+            <p class="orientation-lede">Follow the work as it develops, rekindle a project you were reading, or begin again from the front door. Hearth &amp; Code banks a returnthread so the practice can change without losing the way back.</p>
+          </div>
+          <aside class="return-signal">
+            <span>Current signal</span>
+            <strong>Forging Exocore. Documenting the method. Publishing fieldnotes from the bench.</strong>
+          </aside>
+        </div>
+      </section>
+
+      <section class="return-portals" aria-labelledby="portals-title">
+        <div class="method-section-heading">
+          <p class="orientation-kicker">Choose your next step</p>
+          <h2 id="portals-title">Three doors, each with a different pace.</h2>
+        </div>
+        <div class="return-portal-grid">
+          <a class="return-portal return-portal--journal" href="https://blog.hearthandcode.dev/" target="_blank" rel="noopener noreferrer">
+            <span>Field Journal / ongoing</span><h3>Read fieldnotes from the bench.</h3><p>Observations on experiments, research, systems, and the unfinished work of learning in public.</p><strong>Open the journal <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></strong>
+          </a>
+          <a class="return-portal" href="/workbench/">
+            <span>Workbench / concrete</span><h3>See what is being built.</h3><p>Projects and prototypes shown with their purpose, present state, and next meaningful test.</p><strong>Visit the workbench →</strong>
+          </a>
+          <a class="return-portal" href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">
+            <span>GitHub / inspectable</span><h3>Inspect the public code.</h3><p>Repositories, source history, and implementation work released through Hearth &amp; Code.</p><strong>Browse GitHub <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></strong>
+          </a>
+        </div>
+      </section>
+
+      <section class="return-map" aria-labelledby="map-title">
+        <div class="method-section-heading">
+          <p class="orientation-kicker">The complete studio map</p>
+          <h2 id="map-title">Eight routes. One connected practice.</h2>
+          <p>Each page answers a different question. Together they show the builder, the work, the systems, and the discipline that holds them together.</p>
+        </div>
+        <ol>
+          {routes.map(([number, label, href, description]) => (
+            <li><a href={href}><span>{number}</span><strong>{label}</strong><p>{description}</p><i aria-hidden="true">→</i></a></li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="return-closing" aria-labelledby="closing-title">
+        <div>
+          <p class="orientation-kicker">A standing invitation</p>
+          <h2 id="closing-title">Take what helps. Question what does not. Rekindle when the next thread appears.</h2>
+        </div>
+        <p>The work here is allowed to mature in public: claims can narrow, designs can change, and better evidence can redraw the map. What matters is keeping the sourcechain and returnthread clear enough for the change to remain understandable.</p>
+      </section>
+    </main>
+
+    <footer class="orientation-footer"><p>Hearth &amp; Code · Return</p><a href="/">Begin again ↑</a></footer>
+  </body>
+</html>

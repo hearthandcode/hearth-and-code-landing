@@ -1,0 +1,84 @@
+---
+import '../styles/launch-review.css';
+
+const routes = [
+  ['01', 'Orientation', '/', 'The Hearth & Code front door and complete route map.'],
+  ['02', 'Meet the Builder', '/builder/', 'A warm introduction to Scott Rallya and the Hearthside Meta-Architect archetype.'],
+  ['03', 'Exocore', '/exocore/', 'The ecosystem vision, eight workrooms, and interface study.'],
+  ['04', 'Workbench', '/workbench/', 'The practical loop, active work, and inspectable artifacts.'],
+  ['05', 'Library', '/library/', 'Sixteen detailed agentic engineering pattern cards.'],
+  ['06', 'Atlas', '/atlas/', 'Sixteen connected terms for building dependable agent systems.'],
+  ['07', 'Methods', '/method/', 'A return-bearing workshop: four stations, eight commitments, four agent roles, and one worked case.'],
+  ['08', 'Return', '/return/', 'Field Journal, public code, studio map, and reliable re-entry.'],
+];
+
+const gates = [
+  ['Pass / Navigability', 'One workshop rail connects every public page to all eight rooms, marks the current room, and completes Atlas → Library → Exocore transitions at desktop and mobile widths.'],
+  ['Pass / Accessibility', 'Every route has a skip link, one main landmark, one H1, 48-pixel navigation targets, keyboard access, safe external-link cues, reduced-motion support, and a usable forced-colors state.'],
+  ['Pass / Voice & Brand', 'Scott Rallya, cosmatrexis, the Hearthside Meta-Architect posture, practical systems craft, public learning, and human responsibility remain legible without borrowed corporate language or invented biography.'],
+  ['Pass / Hearthside Coherence', 'The Ember Circuit palette, workshop grid, typography, coined vocabulary, plain-language glosses, and literal evidence and authority boundaries remain coherent across all eight routes.'],
+  ['Pass / Build', 'Astro reported zero diagnostics and produced all static routes.'],
+  ['Pass / Interaction', 'The Library keyboard path opens a guide, moves focus into it, and returns with Escape.'],
+  ['Pass / Privacy', 'The scoped surface contains no private intake text, invented contact details, availability promises, or detected secret patterns.'],
+  ['Partial / Performance', 'The Exocore study is reduced from 1.7 MB to 121 KB; Core Web Vitals still require the unavailable DevTools bridge.'],
+  ['Ready / Promotion', 'Scott approved the overall direction on 21 August 2026. Git incorporation, remote push, and production deployment still require an exact release action and post-deploy check.'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#1c1714" />
+    <title>Local Launch Review · Hearth &amp; Code</title>
+  </head>
+  <body class="orientation-body launch-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+    <header class="orientation-header">
+      <a class="orientation-wordmark" href="/">Hearth <em>&amp;</em> Code</a>
+      <p>Final pre-promotion review / no external release yet</p>
+      <a class="orientation-journal" href="/">Open the site <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main id="main-content">
+      <section class="launch-hero" aria-labelledby="launch-title">
+        <p class="orientation-kicker">Approved local projection</p>
+        <h1 id="launch-title">The whole house, assembled.</h1>
+        <p class="orientation-lede">This private console opens every intended Hearth &amp; Code route as a visitor will encounter it and preserves the four final audits behind the promotion recommendation.</p>
+        <div class="orientation-actions"><a class="orientation-action orientation-action--primary" href="/review/methods-directions/">Compare eight Methods directions →</a></div>
+        <div class="launch-summary" aria-label="Projection summary">
+          <div><strong>08</strong><span>visitor routes</span></div>
+          <div><strong>01</strong><span>connected visual system</span></div>
+          <div><strong>04</strong><span>final audit lenses</span></div>
+        </div>
+      </section>
+
+      <section class="launch-routes" aria-labelledby="launch-routes-title">
+        <div class="launch-heading"><p class="orientation-kicker">Review route</p><h2 id="launch-routes-title">Walk the site in sequence.</h2></div>
+        <ol>
+          {routes.map(([number, label, href, description]) => (
+            <li><a href={href}><span>{number}</span><h3>{label}</h3><p>{description}</p><i aria-hidden="true">Open →</i></a></li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="launch-gates" aria-labelledby="launch-gates-title">
+        <div class="launch-heading"><p class="orientation-kicker">Final audit / 21 August 2026</p><h2 id="launch-gates-title">What passed and what the promotion action must still prove.</h2></div>
+        <ul>
+          {gates.map(([label, description]) => (
+            <li><span aria-hidden="true">◇</span><div><strong>{label}</strong><p>{description}</p></div></li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="launch-release" aria-labelledby="launch-release-title">
+        <div><p class="orientation-kicker">Scott’s direction / approved to promote</p><h2 id="launch-release-title">Carry the reviewed surface intact into release.</h2></div>
+        <p>The remaining work is operational: preserve the exact reviewed paths in Git, publish through the established production route, and inspect the deployed pages directly. The approval does not add analytics, forms, new claims, or capabilities beyond this reviewed surface.</p>
+      </section>
+    </main>
+    <footer class="orientation-footer"><p>Hearth &amp; Code · Local Launch Review</p><a href="/">Begin the review ↑</a></footer>
+  </body>
+</html>

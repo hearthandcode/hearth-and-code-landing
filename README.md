@@ -1,9 +1,9 @@
 # hearthandcode.dev — landing page
 
-Branch-local Astro redesign proof for [Hearth & Code](https://hearthandcode.dev). It is a local review surface, not a deployment or publication release.
+Static Astro site for [Hearth & Code](https://hearthandcode.dev), Scott Rallya's independent practice in software, AI, and knowledge systems.
 
-**Redesign branch:** `feat/public-web-ecosystem-redesign`
-**Production boundary:** the deployed site remains unchanged until a separate reviewed release decision.
+**Launch candidate branch:** `codex/hearth-code-orientation-layer`
+**Public route set:** Orientation, Builder, Exocore, Workbench, Library, Atlas, Methods, and Return.
 
 ## Stack
 
@@ -25,9 +25,7 @@ With the dev server running, open `/review/` on the local URL, normally:
 http://localhost:4321/review/
 ```
 
-This is the complete, review-only Hearth & Code site composition. It includes the Hearth, Research, Exocore, Field Journal doorway, AI & Ethics, Lab, Method, and Evidence Dossier routes. The Dossier uses a person-led field-file treatment with selected public artifacts, while retaining the separate source, privacy, and exact-copy review gates.
-
-The review site is not an approved production route or release authorization and must not be deployed until those gates are released.
+This is the complete, no-index review console over the eight visitor routes. Additional `/review/*` pages preserve historical design proofs and comparison surfaces; they are not part of public navigation.
 
 For a production-shaped local check:
 
@@ -47,14 +45,17 @@ npm run preview
 | Output directory | `dist` |
 | Custom domain | `hearthandcode.dev` |
 
+The established production project uses Git integration. A reviewed change reaches production through the configured production branch; do not mix that project with a new Direct Upload workflow.
+
 ## Structure
 
 ```
-src/pages/index.astro       # local redesign proof
+src/pages/index.astro       # public orientation route
+src/components/HearthNavigation.astro # shared eight-room navigation
 src/styles/tokens.css       # copied from the Hub-owned token source
-src/styles/global.css       # landing-specific composition and grid treatment
+src/styles/orientation-landing.css # shared Ember Circuit composition
 astro.config.mjs            # static output configuration
-wrangler.jsonc              # future static asset directory: dist/
+wrangler.jsonc              # local Cloudflare asset configuration
 ```
 
 ## Legacy flame performance check
@@ -87,5 +88,5 @@ Add the `export` line to `~/.zshrc` so installs keep working. Official support i
 
 - The canonical visual token source is maintained in the private Hearth & Code Hub. This consumer copy has visual meaning only.
 - Field Journal drafts remain in their separate repository and do not become public through this branch until their own publication gate is released.
-- AI Philosophy and Ethics, Lab, and Dossier copy must come from reviewed public-evidence records. The local proof uses explicit availability states rather than unpublished claims.
+- Historical Research, AI and Ethics, Lab, and Dossier proofs remain no-index under `/review/*`; their retired top-level routes are not part of the public route set.
 - Do not add analytics, a newsletter funnel, a contact form, private Hub paths, runtime state, secrets, or raw session material to this repository.

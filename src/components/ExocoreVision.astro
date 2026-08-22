@@ -1,0 +1,233 @@
+---
+import '../styles/orientation-landing.css';
+import '../styles/exocore-vision.css';
+import HearthNavigation from './HearthNavigation.astro';
+
+const layers = [
+  {
+    number: '01',
+    label: 'Human work',
+    title: 'Purpose stays outside the machine.',
+    copy: 'Questions, interpretation, authorship, consequential choices, and the right to stop remain human responsibilities.',
+    tokens: ['question', 'judgment', 'meaning', 'release'],
+  },
+  {
+    number: '02',
+    label: 'TCCP research',
+    title: 'Interaction becomes a typed research object.',
+    copy: 'Primitive languages, intermediate representations, compilation stages, and falsification plans make coordination inspectable before it becomes runtime behavior.',
+    tokens: ['primitive', 'IR fabric', 'compiler', 'evaluation'],
+  },
+  {
+    number: '03',
+    label: 'Exocore architecture',
+    title: 'Contracts turn an idea into a bounded capability.',
+    copy: 'Identity, state, policy, provenance, module ports, and receipts define what a workroom may do and how its effects can be checked.',
+    tokens: ['contract', 'policy', 'adapter', 'receipt'],
+  },
+  {
+    number: '04',
+    label: 'Workbench surfaces',
+    title: 'The system returns as a place a person can use.',
+    copy: 'Research, architecture, agent, artifact, and return views expose the work without asking someone to understand the whole kernel at once.',
+    tokens: ['workroom', 'atlas', 'inspector', 'return'],
+  },
+];
+
+const compilation = [
+  ['01', 'Question', 'Name the purpose and the decision that still belongs to a person.'],
+  ['02', 'Source set', 'Bind direct evidence, rights, maturity, and known absences.'],
+  ['03', 'ContextPack', 'Compile only the material and constraints needed for this run.'],
+  ['04', 'Task IR', 'Represent objective, authority, ownership, outputs, and stop states.'],
+  ['05', 'Agent run', 'Execute through allowed tools and revise state from observations.'],
+  ['06', 'Artifact', 'Return code, analysis, design, or another inspectable object.'],
+  ['07', 'Receipt', 'Record inputs, checks, result, lineage, and non-implications.'],
+  ['08', 'Human return', 'Accept, reject, revise, publish, or route another bounded question.'],
+];
+
+const workrooms = [
+  ['Research Workroom', 'Questions, papers, claims, counterevidence, and working-paper projections.'],
+  ['Knowledge Atlas', 'Connected sources, concepts, contradictions, and routes through a growing body of work.'],
+  ['Context Compiler', 'Task-specific ContextPacks assembled from typed sources and visible exclusions.'],
+  ['Agent Studio', 'Roles, delegation envelopes, tool boundaries, runs, and comparisons between agents.'],
+  ['Architecture Lab', 'Contracts, modules, dependencies, decisions, fixtures, and conformance evidence.'],
+  ['Artifact Forge', 'Code, documents, diagrams, media, and publication candidates with lineage intact.'],
+  ['Evidence Ledger', 'Claims, evaluations, receipts, corrections, and the limits of what each check establishes.'],
+  ['Return Surface', 'Current state, unresolved questions, next actions, owners, and reliable re-entry after interruption.'],
+];
+
+const maturity = [
+  {
+    label: 'Runs now',
+    tone: 'actual',
+    title: 'One local, deterministic proof.',
+    copy: 'The public repository contains a Tauri desktop pre-alpha that runs a synthetic profile-evaluation fixture through TypeScript presentation and Rust-owned policy, scoring, persistence, hashing, and receipt verification.',
+    items: ['No live model or provider', 'No private Hub access', 'Append-only application receipts', 'Typed module and persistence foundations'],
+  },
+  {
+    label: 'Research bridge',
+    tone: 'research',
+    title: 'TCCP asks how interaction can compile safely.',
+    copy: 'The active research program studies primitive languages, IR fabrics, capability envelopes, provenance, evaluation, and human gates. These are candidate research structures, not accepted product capabilities or published findings.',
+    items: ['Primitive and composition grammar', 'Cell, context, workflow, and ontology IR', 'Interaction-compilation stages', 'Evaluation and falsification plans'],
+  },
+  {
+    label: 'Horizon',
+    tone: 'horizon',
+    title: 'A family of interoperable workrooms.',
+    copy: 'The longer direction is a local-first environment where research, software, agents, knowledge, and creative work share inspectable primitives without collapsing into one opaque all-purpose application.',
+    items: ['Enableable modules', 'Portable source and artifact formats', 'Governed adapters and projections', 'Human-controlled evolution'],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Exocore is the evolving architecture connecting Hearth & Code research, software, agent workflows, and inspectable knowledge systems." />
+    <meta name="theme-color" content="#171311" />
+    <title>Exocore | Hearth &amp; Code</title>
+  </head>
+  <body class="orientation-body exocore-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+
+    <HearthNavigation current="exocore" context="Exocore / architecture and research integration" />
+
+    <main id="main-content">
+      <section class="exocore-hero" aria-labelledby="exocore-title">
+        <div class="exocore-hero-copy">
+          <p class="orientation-kicker">Architecture for work that can explain itself</p>
+          <h1 id="exocore-title">Exocore is where the research learns how to become a system.</h1>
+          <p class="orientation-lede">It is the evolving architecture beneath a family of Hearth &amp; Code workrooms: a way to connect source-bound knowledge, software, agents, and creative artifacts without losing the claimbounds that make them trustworthy or the returnthreads that make them usable.</p>
+          <div class="orientation-actions">
+            <a class="orientation-action orientation-action--primary" href="#interface-study">See the interface study <span aria-hidden="true">↓</span></a>
+            <a class="orientation-action" href="https://github.com/hearthandcode/exocore-platform" target="_blank" rel="noopener noreferrer">Inspect the public proof <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+          </div>
+        </div>
+        <aside class="exocore-definition" aria-label="Exocore product and architecture distinction">
+          <p>Role boundary</p>
+          <dl>
+            <div><dt>Hearth &amp; Code</dt><dd>The public practice and umbrella.</dd></div>
+            <div><dt>Workbench</dt><dd>The provisional product experience.</dd></div>
+            <div><dt>Exocore</dt><dd>The architecture, compatibility spine, and research-to-runtime integration layer.</dd></div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="exocore-manifesto" aria-label="Exocore orientation">
+        <p>Not an autonomous mind.</p>
+        <p>Not an all-in-one knowledge vault.</p>
+        <strong>A composable, return-bearing environment that keeps source, authority, evidence, and human meaning visible.</strong>
+      </section>
+
+      <section class="exocore-section" aria-labelledby="layers-title">
+        <div class="orientation-section-heading">
+          <p class="orientation-kicker">The integration stack</p>
+          <h2 id="layers-title">Four layers, each preserving a different responsibility.</h2>
+          <p>TCCP supplies a research language for representing and compiling interaction. Exocore supplies the contracts and runtime boundaries. Workrooms return those mechanisms as legible tools. Human purpose remains the outer frame.</p>
+        </div>
+        <ol class="exocore-layer-grid">
+          {layers.map((layer) => (
+            <li>
+              <header><span>{layer.number}</span><p>{layer.label}</p></header>
+              <h3>{layer.title}</h3>
+              <p>{layer.copy}</p>
+              <div>{layer.tokens.map((token) => <code>{token}</code>)}</div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="exocore-section exocore-interface" id="interface-study" aria-labelledby="interface-title">
+        <div class="exocore-interface-head">
+          <div>
+            <p class="orientation-kicker">Interface study 01</p>
+          <h2 id="interface-title">A workshop-clear path from sourcechain to workreceipt.</h2>
+          </div>
+          <p>This speculative UI study imagines how research, architecture, agent work, and verification could meet in one inspectable surface. It is a design direction, not a screenshot of the current pre-alpha.</p>
+        </div>
+        <figure class="exocore-concept-frame">
+          <img src="/images/exocore-workroom-concept.webp" width="1568" height="1003" loading="lazy" decoding="async" alt="Speculative Exocore Workroom interface showing a source, ContextPack, agent run, artifact, receipt, TCCP working-paper projection, architecture graph, claim boundary, human gate, and return path." />
+          <figcaption>
+            <span>Generated interface concept / public-safe projection</span>
+            <span>Readable objects: source · context · action · artifact · evidence · decision · return</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="exocore-section exocore-compilation" aria-labelledby="compilation-title">
+        <div class="orientation-section-heading">
+          <p class="orientation-kicker">TCCP → Exocore</p>
+          <h2 id="compilation-title">A research idea should cross explicit boundaries before it becomes an effect.</h2>
+          <p>This eight-stage path is the page’s central model: compile interaction into a reviewable plan, execute only inside its capability envelope, then bring evidence and responsibility back to a person.</p>
+        </div>
+        <ol class="exocore-compilation-flow">
+          {compilation.map(([number, title, copy]) => (
+            <li>
+              <span>{number}</span>
+              <div><h3>{title}</h3><p>{copy}</p></div>
+              <b aria-hidden="true">→</b>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="exocore-section" aria-labelledby="maturity-title">
+        <div class="orientation-section-heading">
+          <p class="orientation-kicker">Evidence before ambition</p>
+          <h2 id="maturity-title">What runs, what is being researched, and what remains a horizon.</h2>
+        </div>
+        <div class="exocore-maturity-grid">
+          {maturity.map((band) => (
+            <article class={`is-${band.tone}`}>
+              <p class="exocore-band-label">{band.label}</p>
+              <h3>{band.title}</h3>
+              <p>{band.copy}</p>
+              <ul>{band.items.map((item) => <li>{item}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="exocore-section" aria-labelledby="workrooms-title">
+        <div class="orientation-section-heading">
+          <p class="orientation-kicker">Eight possible workrooms</p>
+          <h2 id="workrooms-title">One architecture, several bounded places to work.</h2>
+          <p>The ecosystem becomes useful through focused surfaces, not by showing the kernel everywhere. Each workroom owns one human job while sharing the same source, identity, provenance, policy, and receipt primitives underneath.</p>
+        </div>
+        <div class="exocore-workroom-grid">
+          {workrooms.map(([title, copy], index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="exocore-principle">
+        <div>
+          <p class="orientation-kicker">The proposition</p>
+          <h2>A system earns trust by becoming source-bound, proof-bearing, and easy to return to.</h2>
+        </div>
+        <div>
+          <p>Exocore’s ambition is not to remove the person from complex work. It is to give that work a durable, human-held shape: sourcechains stay connected to claims, agents remain inside named boundaries, artifacts carry their lineage, and unfinished thought leaves a returnthread home.</p>
+          <nav aria-label="Continue through Hearth and Code">
+            <a href="/workbench/">See what is on the Workbench →</a>
+            <a href="/atlas/">Open the agentic engineering Atlas →</a>
+            <a href="/method/">See how the method holds together →</a>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <footer class="orientation-footer">
+      <p>Hearth &amp; Code / Exocore</p>
+      <a href="/">Return to orientation ↑</a>
+    </footer>
+  </body>
+</html>
