@@ -1,0 +1,33 @@
+---
+import HearthNavigation from '../components/HearthNavigation.astro';
+import '../styles/orientation-landing.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The requested Hearth & Code route could not be found." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#1c1714" />
+    <title>Route Not Found | Hearth &amp; Code</title>
+  </head>
+  <body class="orientation-body">
+    <div class="orientation-atmosphere" aria-hidden="true"></div>
+    <a class="orientation-skip" href="#main-content">Skip to content</a>
+    <HearthNavigation context="Route not found / choose another thread" />
+    <main id="main-content">
+      <section class="orientation-hero" aria-labelledby="not-found-title">
+        <p class="orientation-kicker">404 / The thread ends here</p>
+        <h1 id="not-found-title">This route has gone cold.</h1>
+        <p class="orientation-lede">The room may have moved, the address may be incomplete, or the work may no longer belong on the public map. Choose a room above or return to the front door.</p>
+        <div class="orientation-actions">
+          <a class="orientation-action orientation-action--primary" href="/">Return to Orientation <span aria-hidden="true">→</span></a>
+          <a class="orientation-action" href="/return/">Open the Return map <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+    </main>
+    <footer class="orientation-footer"><p>Hearth &amp; Code · Route not found</p><a href="/">Find the way back ↑</a></footer>
+  </body>
+</html>
