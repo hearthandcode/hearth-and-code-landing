@@ -8,19 +8,21 @@
 
 :root {
   /* Surface and text */
-  --color-surface-primary: #1C1714;
-  --color-surface-raised: #2A2320;
-  --color-surface-recessed: #2E2118;
-  --color-surface-rule: #4A3528;
-  --color-surface-rule-strong: #5C4332;
-  --color-text-primary: #F2E7D5;
-  --color-text-secondary: #B8A892;
-  --color-text-display: #F2E7D5;
+  --color-surface-primary: #15121B;
+  --color-surface-raised: #1C1724;
+  --color-surface-recessed: #0C0A10;
+  --color-surface-rule: #403747;
+  --color-surface-rule-strong: #5B4871;
+  --color-text-primary: #F5D6A7;
+  --color-text-secondary: #C5B2C7;
+  --color-text-display: #F5D6A7;
 
   /* Hearth and signal accents */
-  --color-accent-ember: #E8923C;
-  --color-accent-forge: #C25A2A;
+  --color-accent-ember: #E85B4E;
+  --color-accent-forge: #C25A3A;
   --color-accent-gold: #F4B860;
+  --color-accent-violet: #9B5DE5;
+  --color-accent-amethyst: #C67BEA;
   --color-accent-plasma: #3FE0D0;
   --color-accent-signal: #1FB6A8;
   --color-state-success: #8FA395;
@@ -30,9 +32,9 @@
   --color-focus-ring: #3FE0D0;
 
   /* Gradients and shadows */
-  --gradient-signal-travel: linear-gradient(90deg, #C25A2A 0%, #E8923C 30%, #F4B860 60%, #3FE0D0 100%);
-  --gradient-firelight: linear-gradient(180deg, #C25A2A 0%, #E8923C 45%, #F4B860 100%);
-  --shadow-glow-ember: 0 0 16px rgba(232, 146, 60, 0.35);
+  --gradient-signal-travel: linear-gradient(90deg, #E85B4E 0%, #E8923C 28%, #F4B860 54%, #9B5DE5 76%, #3FE0D0 100%);
+  --gradient-firelight: linear-gradient(180deg, #E85B4E 0%, #E8923C 45%, #F4B860 100%);
+  --shadow-glow-ember: 0 0 16px rgba(232, 91, 78, 0.35);
   --shadow-glow-plasma: 0 0 14px rgba(63, 224, 208, 0.40);
 
   /* Typography */
