@@ -1,16 +1,64 @@
 ---
+import '../styles/builder-dossier.css';
 import '../styles/orientation-landing.css';
 import HearthNavigation from './HearthNavigation.astro';
 
-const dimensions = [
-  ['01', 'Orientation', 'Bank a returnthread.', 'Scott is drawn to systems that preserve context: what has happened, what matters now, and what a useful next step could be.'],
-  ['02', 'Responsibility', 'Keep the consequential choices human.', 'AI can help research, draft, compare, and implement. Direction, public language, research boundaries, and working rules remain Scott’s responsibility.'],
-  ['03', 'Working Method', 'Make the work return-bearing.', 'The aim is not only to finish a task. It is to leave a workshop-clear state, explicit constraints, and a reliable way forward.'],
-  ['04', 'Systems Craft', 'Forge from parts that can be understood.', 'Primitives, schemas, grammars, and modular components make a system easier to inspect, adapt, and grow without losing its shape.'],
-  ['05', 'Research Practice', 'Kindle curiosity into a bounded question.', 'Questions become workable when their sourcechain, assumptions, evidence, and alternatives remain visible beside the answer.'],
-  ['06', 'Agent Collaboration', 'Use intelligence as an instrument.', 'Agents are useful partners for bounded work and constructive challenge. Their contribution should be visible, limited, and answerable to human judgment.'],
-  ['07', 'Project Horizon', 'Keep ember-stage work honest.', 'Hearth & Code connects software, creative work, research, and applied AI through experiments that show their current maturity rather than promising a finished platform.'],
-  ['08', 'Return & Correction', 'Keep a sourcechain and a way home.', 'A public artifact should be open to correction, linked to its evidence where possible, and designed with a returnthread a reader can continue.'],
+const evidenceCards = [
+  {
+    label: 'Healthify / WellSky · 2019–2020',
+    title: 'Secure data exchange and integration',
+    body: 'Led technical epics, built client-facing Ruby REST APIs with Swagger contracts, and designed a PGP data-exchange pipeline for HIPAA-aware integrations.',
+  },
+  {
+    label: 'IBM Watson Health · 2017–2018',
+    title: 'Reliability at scale',
+    body: 'Automated configuration management across more than 2,000 servers, worked on ELK authentication and authorization, and diagnosed a Docker networking problem blocking an early client deployment.',
+  },
+  {
+    label: 'DialogTech / Invoca · 2014–2017',
+    title: 'ML and search systems',
+    body: 'Developed TensorFlow and audio-signal work for dead-air spam-call detection and carried out a zero-downtime Elasticsearch upgrade while continuous ingestion remained in service.',
+  },
+] as const;
+
+const careerRecords = [
+  {
+    date: 'Current · active development', title: 'Independent Developer & Technical Researcher', organization: 'Hearth & Code', current: true,
+    body: 'Developing source-aware agentic and knowledge-system architecture around bounded retrieval, structured tool use, workflow state, provenance, evaluation, and human review. The work is active development and proof work, not a released platform or autonomous operating system.',
+  },
+  {
+    date: '2019–2020', title: 'Backend Software Engineer', organization: 'Healthify / WellSky', current: false,
+    body: 'Technical epic leadership, Ruby REST APIs with Swagger contracts, and a PGP data-exchange pipeline for HIPAA-aware integrations.',
+  },
+  {
+    date: '2018–2019', title: 'Founder and DevOps / Software Consultant', organization: 'Cryptional LLC', current: false,
+    body: 'Delivered Azure data-pipeline infrastructure and monitoring for a financial-services client and a C# web system from requirements through deployment for a performing-arts organization.',
+  },
+  {
+    date: '2017–2018', title: 'Site Reliability Engineer', organization: 'IBM Watson Health', current: false,
+    body: 'Configuration-management automation across more than 2,000 servers, ELK access-control work, Docker-networking investigation, and greenfield server-management prototyping.',
+  },
+  {
+    date: '2014–2017', title: 'Senior Backend Software Engineer', organization: 'DialogTech / Invoca', current: false,
+    body: 'TensorFlow and audio-signal work for dead-air spam-call detection, production Elasticsearch operations, and highly available telephony applications.',
+  },
+  {
+    date: '2007–2013', title: 'Software and Web Engineering', organization: 'FactSet Research Systems and American Greetings', current: false,
+    body: 'Distributed real-time market-data services, C# APIs, Python/Django web-platform work, and PCI DSS improvements.',
+  },
+] as const;
+
+const practiceLenses = [
+  ['Clear interfaces', 'Tools, APIs, and workflows should make their boundaries and responsibilities legible.'],
+  ['Evidence proportionate to the claim', 'A useful system says what it can show, what remains a hypothesis, and where a correction can begin.'],
+  ['Bounded experiments', 'The first version should be small enough to inspect, evaluate, and change without pretending it is already finished.'],
+  ['Human-held decisions', 'AI can accelerate research and implementation. Consequential direction and release remain accountable to people.'],
+] as const;
+
+const skillGroups = [
+  ['Applied AI and knowledge systems', 'Retrieval, RAG, MCP and structured tools, context engineering, provenance, evaluation, model routing, workflow state, and human review.'],
+  ['Software and platform engineering', 'Python, TypeScript, C#, Ruby, Elixir, Rust, REST APIs, FastAPI, Flask, Docker, Kubernetes, testing, and debugging.'],
+  ['Infrastructure and operations', 'Linux, Azure, Ansible, Puppet, Helm, ELK, Prometheus, Grafana, security-sensitive integrations, and reliability work.'],
 ] as const;
 ---
 
@@ -19,73 +67,126 @@ const dimensions = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Meet Scott Rallya, known online as cosmatrexis, the builder behind Hearth & Code." />
+    <meta name="description" content="Meet Scott Rallya, a software systems engineer focused on applied AI, agentic systems, and knowledge engineering." />
     <meta name="theme-color" content="#1c1714" />
     <title>Meet the Builder | Hearth &amp; Code</title>
   </head>
-  <body class="orientation-body builder-body">
+  <body class="orientation-body builder-dossier-body">
     <div class="orientation-atmosphere" aria-hidden="true"></div>
     <a class="orientation-skip" href="#main-content">Skip to content</a>
 
-    <HearthNavigation current="builder" context="Meet the Builder / Scott Rallya · cosmatrexis" />
+    <HearthNavigation current="builder" context="Meet the Builder / Scott Rallya" />
 
-    <main id="main-content">
-      <section class="builder-hero" aria-labelledby="builder-title">
-        <p class="orientation-kicker">Meet the Builder</p>
-        <div class="builder-hero-grid">
-          <div>
-            <h1 id="builder-title">Scott Rallya builds systems for keeping thought, craft, and momentum together.</h1>
-            <p class="orientation-lede">Known online as <strong>cosmatrexis</strong>, Scott is the independent builder behind Hearth &amp; Code. His work brings a background in software engineering and DevOps to the human-held craft of applied AI, knowledge practice, and creative technical work.</p>
-          </div>
-          <aside class="builder-identity">
-            <p>Working orientation</p>
-            <strong>Hearthside<br />Meta-Architect</strong>
-            <span>A name for shaping the structures around work: its tools, language, evidence, and route back. It is a craft posture, not a credential.</span>
+    <main id="main-content" class="builder-dossier">
+      <section class="builder-dossier__hero" aria-labelledby="builder-title">
+        <div>
+          <p class="builder-dossier__kicker">Meet the Builder · Applied AI and systems engineering</p>
+          <h1 id="builder-title">Scott Rallya builds applied AI and knowledge systems on a foundation of durable software engineering.</h1>
+          <p class="builder-dossier__lede">With more than thirteen years across backend services, infrastructure, APIs, security-sensitive integrations, and early machine learning, Scott now focuses on the systems around useful AI: retrieval, structured tools, workflow state, provenance, evaluation, and human review.</p>
+        </div>
+        <aside class="builder-dossier__signal" aria-label="Current professional direction">
+          <p>Current signal</p>
+          <strong>Exploring U.S. remote opportunities</strong>
+          <span>Applied AI, agentic systems, knowledge engineering, developer tooling, and selected technical-delivery roles.</span>
+        </aside>
+      </section>
+
+      <nav class="builder-dossier__contents" aria-label="On this page">
+        <span>Workshop dossier</span>
+        <a href="#foundation">Production foundation</a>
+        <a href="#career-ledger">Career ledger</a>
+        <a href="#practice">Current practice</a>
+        <a href="#methods">Methods codex</a>
+        <a href="#direction">Working direction</a>
+      </nav>
+
+      <section id="foundation" class="builder-dossier__section" aria-labelledby="foundation-title">
+        <p class="builder-dossier__kicker">01 / Production foundation</p>
+        <h2 id="foundation-title">Systems built where the constraints were real.</h2>
+        <p class="builder-dossier__summary">Scott has worked on systems where an elegant idea was not enough: data had to keep flowing, access had to be controlled, integrations had to meet real constraints, and an upgrade could not interrupt the service. That foundation informs the kind of AI work he wants to do now.</p>
+        <div class="builder-dossier__evidence-grid">
+          {evidenceCards.map((card) => (
+            <article class="builder-dossier__card">
+              <p>{card.label}</p>
+              <h3>{card.title}</h3>
+              <span>{card.body}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="career-ledger" class="builder-dossier__section" aria-labelledby="career-ledger-title">
+        <p class="builder-dossier__kicker">02 / Career ledger</p>
+        <h2 id="career-ledger-title">A technical career across software, data, reliability, and delivery.</h2>
+        <p class="builder-dossier__summary">The throughline is not one tool or industry. It is the work of making complex systems understandable, maintainable, and useful under real operating constraints.</p>
+        <div class="builder-dossier__record-list">
+          {careerRecords.map((record) => (
+            <article class="builder-dossier__record" data-current={record.current ? 'true' : undefined}>
+              <p class="builder-dossier__record-meta">{record.date} · {record.organization}</p>
+              <h3>{record.title}</h3>
+              <p>{record.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="practice" class="builder-dossier__section" aria-labelledby="practice-title">
+        <p class="builder-dossier__kicker">03 / Current practice</p>
+        <h2 id="practice-title">Making AI systems more inspectable, not merely more impressive.</h2>
+        <div class="builder-dossier__practice-grid">
+          <article>
+            <p class="builder-dossier__card-label">Active development · Hearth &amp; Code</p>
+            <h3>Source-aware agentic and knowledge-system architecture</h3>
+            <p>Hearth &amp; Code is Scott’s independent research and engineering practice. Its current work explores bounded retrieval, structured tool use, workflow state, provenance, evaluation, and review-gated integration. The aim is to make the mechanisms and their limits legible.</p>
+          </article>
+          <aside>
+            <p class="builder-dossier__card-label">Maturity boundary</p>
+            <p>Active development and proof work. Not a released platform, an enterprise deployment, or an autonomous operating system.</p>
           </aside>
         </div>
       </section>
 
-      <section class="builder-introduction" aria-labelledby="introduction-title">
-        <div>
-          <p class="orientation-kicker">A person at the bench</p>
-          <h2 id="introduction-title">A builder with a long view of the work.</h2>
+      <section id="methods" class="builder-dossier__section" aria-labelledby="methods-title">
+        <p class="builder-dossier__kicker">04 / Methods codex</p>
+        <h2 id="methods-title">Useful AI needs clear interfaces, evidence, and a human who remains accountable.</h2>
+        <div class="builder-dossier__method-grid">
+          {practiceLenses.map(([title, body]) => (
+            <article>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
         </div>
-        <div class="builder-reading">
-          <p>Hearth &amp; Code grew from a simple conviction: our tools should help us keep hold of the ideas we care about while we make them real. Scott is especially interested in the meeting point of serious inquiry, software craft, and creative expression, where a good system can be both proof-bearing and open to discovery.</p>
-          <p>This is a one-person practice, not an institution or a promise of finished expertise. It is a place to build carefully in public, test ideas in concrete form, and let the work show what it can actually do.</p>
-        </div>
+        <p class="builder-dossier__archetype"><strong>Hearthside Meta-Architect</strong> is a personal practice cue for this approach to work: shaping the tools, language, evidence, and route back around a difficult problem. It is not a professional title or credential.</p>
       </section>
 
-      <section class="builder-charter" aria-labelledby="charter-title">
-        <div class="orientation-section-heading">
-          <p class="orientation-kicker">An eight-dimensional practice charter</p>
-          <h2 id="charter-title">The habits that shape the work.</h2>
-          <p>This is an archetype of practice, not a personality assessment. Each dimension names a practical commitment that can be seen in the work itself.</p>
-        </div>
-        <ol class="builder-dimension-grid">
-          {dimensions.map(([number, label, principle, description]) => (
-            <li>
-              <span>{number}</span>
-              <h3>{label}</h3>
-              <strong>{principle}</strong>
-              <p>{description}</p>
+      <section class="builder-dossier__section" aria-labelledby="technical-codex-title">
+        <p class="builder-dossier__kicker">05 / Technical codex</p>
+        <h2 id="technical-codex-title">A working vocabulary, grounded in systems work.</h2>
+        <ul class="builder-dossier__skills">
+          {skillGroups.map(([title, body]) => (
+            <li class="builder-dossier__skill-group">
+              <h3>{title}</h3>
+              <p>{body}</p>
             </li>
           ))}
-        </ol>
+        </ul>
       </section>
 
-      <section class="builder-principle" aria-labelledby="principle-title">
+      <section id="direction" class="builder-dossier__section builder-dossier__direction" aria-labelledby="direction-title">
         <div>
-          <p class="orientation-kicker">How intelligence is used</p>
-          <h2 id="principle-title">The machine can extend the workshop. It does not replace the builder.</h2>
+          <p class="builder-dossier__kicker">06 / Working direction</p>
+          <h2 id="direction-title">Practical AI, knowledge systems, and developer-facing platforms.</h2>
         </div>
-        <p>Hearth &amp; Code uses AI to help with research, synthesis, design, and implementation. The point is not to hide the tool or hand it the wheel. It is to make the work more capable while preserving judgment, authorship, and a clear account of how something came to be.</p>
+        <div>
+          <p>Scott is most interested in teams building practical AI products, knowledge systems, research tooling, or developer-facing platforms. He wants to stay close to the technical work while taking on meaningful systems ownership, collaborating with peers, and helping make emerging capabilities more reliable and legible.</p>
+          <p>Explore the rest of Hearth &amp; Code for the current practice and its evidence boundaries. For an application, Scott uses a separate, conventional résumé tailored to the role and its reader.</p>
+          <div class="builder-dossier__actions">
+            <a href="/">Explore Hearth &amp; Code</a>
+            <a href="/exocore/">See the Exocore direction</a>
+          </div>
+        </div>
       </section>
-
-      <nav class="builder-next" aria-label="Continue through Hearth and Code">
-        <a href="/">← Back to Orientation</a>
-        <a href="/exocore/">Continue to Exocore →</a>
-      </nav>
     </main>
 
     <footer class="orientation-footer">

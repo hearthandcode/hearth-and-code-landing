@@ -1,0 +1,73 @@
+.builder-dossier {
+  --builder-ink: var(--color-text-primary, #f2e7d5);
+  --builder-muted: var(--color-text-secondary, #b8a892);
+  --builder-panel: #25201d;
+  --builder-edge: #715642;
+  --builder-ember: var(--color-accent-ember, #e8923c);
+  --builder-signal: var(--color-accent-plasma, #3fe0d0);
+  color: var(--builder-ink);
+  display: grid;
+  gap: clamp(4rem, 8vw, 7rem);
+  margin-inline: auto;
+  max-width: 82rem;
+  padding: clamp(1.5rem, 5vw, 5rem) clamp(1rem, 4vw, 3rem) 7rem;
+}
+
+.builder-dossier *, .builder-dossier *::before, .builder-dossier *::after { box-sizing: border-box; }
+.builder-dossier h1, .builder-dossier h2, .builder-dossier h3, .builder-dossier p, .builder-dossier ul { margin-block: 0; }
+.builder-dossier h1, .builder-dossier h2, .builder-dossier h3 { font-family: "Fraunces", Georgia, serif; }
+.builder-dossier h1 { font-size: clamp(3rem, 6.6vw, 6.25rem); font-weight: 430; letter-spacing: -0.052em; line-height: 0.98; max-width: 14ch; text-wrap: balance; }
+.builder-dossier h2 { font-size: clamp(2.1rem, 4.6vw, 4.25rem); font-weight: 440; letter-spacing: -0.042em; line-height: 1.01; max-width: 18ch; text-wrap: balance; }
+.builder-dossier h3 { font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.14; }
+.builder-dossier p, .builder-dossier li, .builder-dossier span { line-height: 1.65; overflow-wrap: anywhere; }
+
+.builder-dossier__hero { border-bottom: 1px solid var(--builder-edge); display: grid; gap: clamp(2rem, 6vw, 6rem); grid-template-columns: minmax(0, 1.7fr) minmax(15rem, 0.7fr); padding-bottom: clamp(3rem, 7vw, 6rem); }
+.builder-dossier__kicker, .builder-dossier__card-label, .builder-dossier__card > p, .builder-dossier__record-meta { color: var(--builder-ember); font-family: "JetBrains Mono", monospace; font-size: 0.8125rem; font-weight: 650; letter-spacing: 0.11em; text-transform: uppercase; }
+.builder-dossier__lede { font-size: clamp(1.15rem, 2.1vw, 1.5rem); margin-top: 1.5rem !important; max-width: 57ch; }
+.builder-dossier__signal { align-self: end; border-inline-start: 2px solid var(--builder-signal); display: grid; gap: 0.55rem; padding: 1.2rem 0 1.2rem 1.2rem; }
+.builder-dossier__signal > p { color: var(--builder-signal); font-family: "JetBrains Mono", monospace; font-size: 0.8125rem; letter-spacing: 0.11em; text-transform: uppercase; }
+.builder-dossier__signal > span { color: var(--builder-muted); }
+
+.builder-dossier__contents { align-items: center; border-block: 1px solid var(--builder-edge); display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; min-height: 3.5rem; padding-block: 0.6rem; }
+.builder-dossier__contents span { color: var(--builder-ember); font-family: "JetBrains Mono", monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.builder-dossier a { color: var(--builder-signal); min-height: 2.75rem; text-underline-offset: 0.22em; }
+.builder-dossier a:hover { color: #a8ffff; }
+.builder-dossier a:focus-visible { border-radius: 0.2rem; outline: 0.18rem solid var(--builder-signal); outline-offset: 0.22rem; }
+
+.builder-dossier__section { display: grid; gap: 1.35rem; scroll-margin-top: 2rem; }
+.builder-dossier__summary, .builder-dossier__record-summary { color: var(--builder-muted); font-size: 1.08rem; max-width: 65ch; }
+.builder-dossier__evidence-grid, .builder-dossier__practice-grid, .builder-dossier__method-grid, .builder-dossier__record-list, .builder-dossier__skills { display: grid; gap: 1rem; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.builder-dossier__card, .builder-dossier__practice-grid > article, .builder-dossier__practice-grid > aside, .builder-dossier__method-grid > article, .builder-dossier__record, .builder-dossier__skill-group { background: linear-gradient(145deg, #29221f, var(--builder-panel)); border: 1px solid var(--builder-edge); min-width: 0; padding: clamp(1.15rem, 3vw, 1.8rem); position: relative; }
+.builder-dossier__card::before, .builder-dossier__practice-grid > article::before, .builder-dossier__method-grid > article::before, .builder-dossier__record::before, .builder-dossier__skill-group::before { background: var(--builder-ember); content: ""; height: 2px; inset-inline-start: 0; position: absolute; top: -1px; width: 2.5rem; }
+.builder-dossier__card { display: grid; gap: 0.7rem; grid-column: span 4; }
+.builder-dossier__card > span, .builder-dossier__record > p:last-child, .builder-dossier__practice-grid > article > p:last-child, .builder-dossier__practice-grid > aside > p:last-child, .builder-dossier__method-grid > article > p, .builder-dossier__skill-group > p { color: var(--builder-muted); }
+.builder-dossier__practice-grid > article { display: grid; gap: 0.8rem; grid-column: span 7; }
+.builder-dossier__practice-grid > aside { align-self: stretch; background: #211c19; border-inline-start: 2px solid var(--builder-ember); grid-column: span 5; }
+.builder-dossier__practice-grid > aside .builder-dossier__card-label { color: var(--builder-signal); }
+.builder-dossier__method-grid > article { grid-column: span 3; }
+.builder-dossier__method-grid > article h3 { font-size: 1.25rem; margin-bottom: 0.65rem; }
+
+.builder-dossier__record { display: grid; gap: 0.7rem; grid-column: span 6; }
+.builder-dossier__record[data-current="true"] { border-color: #497d78; grid-column: span 12; }
+.builder-dossier__record[data-current="true"] .builder-dossier__record-meta { color: var(--builder-signal); }
+.builder-dossier__record h3 { font-size: 1.45rem; }
+.builder-dossier__skills { list-style: none; padding: 0; }
+.builder-dossier__skill-group { grid-column: span 4; }
+.builder-dossier__skill-group h3 { font-size: 1.2rem; margin-bottom: 0.55rem; }
+
+.builder-dossier__archetype { border-inline-start: 2px solid var(--builder-signal); color: var(--builder-muted); margin-top: 0.5rem !important; max-width: 68ch; padding-inline-start: 1rem; }
+.builder-dossier__archetype strong { color: var(--builder-ink); }
+.builder-dossier__direction { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.builder-dossier__direction > div:last-child { color: var(--builder-muted); display: grid; gap: 1rem; max-width: 60ch; }
+.builder-dossier__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+.builder-dossier__actions a { align-items: center; border: 1px solid var(--builder-signal); display: inline-flex; padding: 0.55rem 0.95rem; text-decoration: none; }
+
+@media (max-width: 720px) {
+  .builder-dossier { gap: 3.5rem; }
+  .builder-dossier__hero, .builder-dossier__direction { grid-template-columns: 1fr; }
+  .builder-dossier__card, .builder-dossier__practice-grid > article, .builder-dossier__practice-grid > aside, .builder-dossier__method-grid > article, .builder-dossier__record, .builder-dossier__record[data-current="true"], .builder-dossier__skill-group { grid-column: span 12; }
+  .builder-dossier h1 { max-width: 15ch; }
+  .builder-dossier__contents { align-items: flex-start; flex-direction: column; gap: 0.15rem; padding-block: 0.85rem; }
+}
+
+@media (prefers-reduced-motion: reduce) { .builder-dossier *, .builder-dossier *::before, .builder-dossier *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
