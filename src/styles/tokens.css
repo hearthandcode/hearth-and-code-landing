@@ -8,14 +8,14 @@
 
 :root {
   /* Surface and text */
-  --color-surface-primary: #15121B;
-  --color-surface-raised: #1C1724;
-  --color-surface-recessed: #0C0A10;
-  --color-surface-rule: #403747;
-  --color-surface-rule-strong: #5B4871;
-  --color-text-primary: #F5D6A7;
-  --color-text-secondary: #C5B2C7;
-  --color-text-display: #F5D6A7;
+  --color-surface-primary: #161411;
+  --color-surface-raised: #211d18;
+  --color-surface-recessed: #0e1114;
+  --color-surface-rule: #4b4237;
+  --color-surface-rule-strong: #6e5d4b;
+  --color-text-primary: #f1e7d2;
+  --color-text-secondary: #cfc1ab;
+  --color-text-display: #f1e7d2;
 
   /* Hearth and signal accents */
   --color-accent-ember: #E85B4E;
@@ -32,7 +32,7 @@
   --color-focus-ring: #3FE0D0;
 
   /* Gradients and shadows */
-  --gradient-signal-travel: linear-gradient(90deg, #E85B4E 0%, #E8923C 28%, #F4B860 54%, #9B5DE5 76%, #3FE0D0 100%);
+  --gradient-signal-travel: linear-gradient(90deg, #e85b4e 0%, #e8923c 42%, #f4b860 70%, #3fe0d0 100%);
   --gradient-firelight: linear-gradient(180deg, #E85B4E 0%, #E8923C 45%, #F4B860 100%);
   --shadow-glow-ember: 0 0 16px rgba(232, 91, 78, 0.35);
   --shadow-glow-plasma: 0 0 14px rgba(63, 224, 208, 0.40);
