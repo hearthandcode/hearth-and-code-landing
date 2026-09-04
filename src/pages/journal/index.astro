@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ResearchLabSurface from '../../components/ResearchLabSurface.astro';
+
+const entries: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
+entries.sort((a: CollectionEntry<'journal'>, b: CollectionEntry<'journal'>) => {
+  const aDate = new Date(a.data.published_date ?? a.data.date).getTime();
+  const bDate = new Date(b.data.published_date ?? b.data.date).getTime();
+  if (aDate !== bDate) return bDate - aDate;
+  return (b.data.published_order ?? 0) - (a.data.published_order ?? 0);
+});
+
+function displayDate(value: string) {
+  return new Date(`${value}T00:00:00`).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<ResearchLabSurface route="notes" journal>
+  <section class="journal-index" id="journal-index" aria-labelledby="journal-index-title">
+    <header>
+      <div><p class="research-eyebrow">Field Journal / ported public archive</p><h2 id="journal-index-title">The public record, held inside the studio.</h2></div>
+      <p>Published Field Journal entries are now read in the Hearth &amp; Code research environment. The archive preserves article-level source context and claim labels; it does not expose private work or draft records.</p>
+    </header>
+    <ol>{entries.map((entry: CollectionEntry<'journal'>, index: number) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><p><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time>{entry.data.reading_time_minutes && <em>{entry.data.reading_time_minutes} min read</em>}</p><h3><a href={`/journal/${entry.id}/`}>{entry.data.title}</a></h3><p>{entry.data.description}</p><ul>{(entry.data.tags ?? []).map((tag: string) => <li>{tag}</li>)}</ul></div><a href={`/journal/${entry.id}/`}>Read <span aria-hidden="true">→</span></a></li>)}</ol>
+  </section>
+</ResearchLabSurface>

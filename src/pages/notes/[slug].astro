@@ -1,0 +1,9 @@
+---
+import HearthsideArticle from '../../components/HearthsideArticle.astro';
+import { hearthsideArticles } from '../../content/hearthside-articles';
+export function getStaticPaths() {
+  return hearthsideArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+const { article } = Astro.props;
+---
+<HearthsideArticle article={article} />

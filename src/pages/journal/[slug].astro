@@ -1,0 +1,29 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import JournalArticleLayout from '../../components/JournalArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const entries: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
+  return entries.map((entry: CollectionEntry<'journal'>) => ({ params: { slug: entry.id }, props: { id: entry.id } }));
+}
+
+const { id } = Astro.props;
+const entry = (await getEntry('journal', id)) as CollectionEntry<'journal'> | undefined;
+if (!entry || entry.data.status !== 'published') return new Response('Not found', { status: 404 });
+const { Content, headings } = await render(entry);
+---
+
+<JournalArticleLayout
+  title={entry.data.title}
+  date={entry.data.published_date ?? entry.data.date}
+  description={entry.data.description}
+  tags={entry.data.tags ?? []}
+  sources={entry.data.sources}
+  headings={headings}
+  labels={entry.data.labels}
+  claims={entry.data.claim_map ?? []}
+  featuredImage={entry.data.featured_image}
+  featuredImageAlt={entry.data.featured_image_alt}
+  readingTimeMinutes={entry.data.reading_time_minutes}
+><Content /></JournalArticleLayout>

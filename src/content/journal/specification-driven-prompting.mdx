@@ -1,0 +1,105 @@
+---
+title: "When a Prompt Becomes a Small Charter"
+date: "2026-08-28"
+labels: [evidence, inference, proposal, open-question]
+sources:
+  - "DSPy official repository: https://github.com/stanfordnlp/dspy"
+  - "LMQL documentation: https://lmql.ai/docs/"
+  - "OpenAI Structured Outputs: https://developers.openai.com/api/docs/guides/structured-outputs"
+  - "Wu, Yang, and Murali (2026), Imprompt: A Language Framework for Prompt Programming: https://arxiv.org/abs/2607.22683"
+status: published
+pilot: false
+reviewGate: true
+slug: "specification-driven-prompting"
+description: "A first-person proposal for contract-driven prompting: clearer inputs, boundaries, and return paths for consequential AI-assisted work."
+author: "Scott Rallya"
+tags: [field-journal, prompting, prompt-architecture, structured-outputs, human-review, agent-workflows]
+published_date: "2026-08-28"
+published_order: 6
+reading_time_minutes: 8
+claim_map:
+  - claim: "Contract-driven prompting is a first-person operational observation and proposed comparison, not an established standard or general performance result."
+    label: proposal
+    source: "This Field Journal article; its public method claim remains a proposal."
+  - claim: "Structured Outputs supports adherence to a supplied JSON Schema and explicit refusals."
+    label: evidence
+    source: "OpenAI Structured Outputs guide."
+  - claim: "A concise contract may improve the inspectability or re-entry of defined agentic tasks."
+    label: proposal
+    source: "Proposed comparison in this Field Journal article."
+  - claim: "Whether a contract improves outcomes beyond richer context and task decomposition remains open."
+    label: open-question
+    source: "Proposed comparative study."
+---
+
+For the past several months, I have been building agentic harnesses around a profile fleet and a set of contractual task instructions. The work started from a practical frustration. A goal and a loop could get an agent moving, but they rarely said which source was current, what had to remain untouched, what a completed handoff looked like, or when the agent should stop and return a decision to me.
+
+I began adding that missing structure deliberately. The result is a working practice I call **contract-driven prompting**: shaping an LLM task as an agreement about inputs, boundaries, and return conditions, rather than treating it as a single well-worded request.
+
+This is not a claim that I have discovered a validated method. It is an operational observation from my own system, and a hypothesis worth testing. The question is whether a clear contract can improve a defined kind of downstream work, or whether a simpler prompt reaches the same result with less friction.
+
+## The problem is re-entry
+
+Language models are fluent at carrying a conversation forward. That fluency becomes less useful when the work has to survive a handoff, a source change, a review boundary, or a return weeks later. In those conditions, the real problem is often re-entry: can a person reconstruct what was asked, what was used, what changed, and what still requires judgment?
+
+I noticed this while moving between research passes, implementation tasks, public drafts, and governed reviews. The task could be plausible and still be hard to trust. A source might be missing. A good-looking answer might collapse evidence and inference. A model might continue past a decision that should belong to a person. The repair cost appeared later, when I had to rediscover the context.
+
+Contract-driven prompting is my attempt to make that middle layer visible. It gives a task an intermediate representation between an initial intention and a finished response. I want to see the workbench before I ask the agent to use it.
+
+## A compact contract
+
+The smallest form I have found useful has five parts:
+
+```text
+INTENT
+  Produce a reviewable article candidate for agentic engineers.
+
+INPUTS
+  Use supplied author notes and named public sources.
+
+INVARIANTS
+  Keep first-person meaning with the author.
+  Separate evidence, observation, inference, and proposal.
+  Do not disclose private material or claim unmeasured performance.
+
+BOUNDS
+  Do not publish, alter sources, or invent citations.
+  Stop when source support or authorial intent is missing.
+
+RETURN
+  Provide the draft, source ledger, uncertainty note, and one next decision.
+```
+
+The parts are deliberately ordinary. Intent says what the work is for. Inputs name what may be relied on. Invariants protect conditions that should remain true. Bounds describe where the task ends. Return makes the outcome usable by someone who did not witness the original exchange.
+
+Structured output is useful here, but its role is limited. OpenAI's Structured Outputs guide describes adherence to a supplied JSON Schema, including explicit refusals. [evidence] [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) A schema can make a result easier to parse and inspect; it cannot make a claim true, choose an appropriate source, or give an agent permission to cross an authorship or publication boundary. Shape is not truth, and a task contract is not authority.
+
+I use terms such as atoms, primitives, components, and intermediate representation because they help me distinguish levels of work. An atom is something I should not silently change: a source, date, claim, path, or constraint. A primitive is a small operation, such as comparing sources or flagging missing evidence. A component is a repeatable arrangement of those operations. The intermediate representation is the visible plan that allows the work to be inspected between request and result.
+
+## Why use bounded structure?
+
+Powers of two have become a practical organizing convention in my work. A 16- or 32-part frame offers enough room to separate concerns. A larger charter can establish a reviewable limit around a complex workflow. The numbers do not have special cognitive force. They are a way to name capacity, surface omissions, and make a review workload easier to partition.
+
+That convention has helped me generate more alternatives and trace more downstream work than an unstructured goal loop often did. This is a personal observation from one operating context. It may be explained by richer context, better task decomposition, or the fact that the act of writing a contract forces a clearer decision. I do not yet know which explanation carries the most weight.
+
+The convention should lose when it adds ceremony without improving the task. If six elements are enough, a sixteen-part template is an unnecessary burden. If a 1,024-line charter hides a simple choice, the charter has failed its own purpose.
+
+## A workshop with visible limits
+
+The image that helps me is a workshop bench. The tools are named, the materials are visible, and the sharp edges are marked before the work begins. The contract does not prevent filler, hallucination, or an invented connection. It does give the operator more places to inspect when those failures appear.
+
+There are useful precedents for parts of this approach. [DSPy](https://github.com/stanfordnlp/dspy) presents a framework for programming language-model systems. [LMQL](https://lmql.ai/docs/) provides a language for constraints and control flow in LLM interaction. The paper [*Imprompt: A Language Framework for Prompt Programming*](https://arxiv.org/abs/2607.22683) studies a typed prompt-language approach. [evidence] None of those precedents settles the broader question I am pursuing: how should an agentic task represent sources, scope, review gates, and a return path when its output will matter to a human system?
+
+That question also has a simple objection. A sufficiently capable operator may get the same result from one concise natural-language instruction. If that happens, the concise instruction is the better design. Formality should make a task easier to direct or review, not simply make it feel more sophisticated.
+
+## From preference to a testable technique
+
+The next step is a comparison, not a declaration. Take a small set of representative agentic tasks. Keep the model, available context, and success criteria constant. Run one condition with a concise natural-language request and another with a contract that names inputs, invariants, bounds, and return requirements.
+
+Before running it, agree on what will be measured: task completion, unsupported claims, human repair effort, time to re-enter the work, and whether a later operator can understand the handoff. Record the source quality and task decomposition too, because either could explain an apparent gain. If the contract adds cost without reducing repair or increasing legibility, that is evidence against using it. If it surfaces failure earlier or makes a later review materially easier, that is evidence worth examining.
+
+I want to develop contract-driven prompting as a method that can be shared, challenged, and made smaller where smaller is better. My current system is designed around the way I work: a digital hearth and hub for sources, boundaries, and return paths. Whether that structure is accessible to other people remains an open question.
+
+The practical starting point is modest. For the next consequential task, name the intent, one or two hard boundaries, the sources that matter, a finite scope, and the return you need. Then ask what changed. Did the contract prevent a mistake? Did it add friction? Did it make the next session easier to enter? Or did it hide a decision that should have stayed visible and human?
+
+*AI assistance disclosure: AI assisted with source comparison, outline development, structural critique, and candidate editing. Scott supplied the operating context, method framing, observations, boundaries, and release decisions for this article.*

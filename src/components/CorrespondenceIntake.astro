@@ -1,0 +1,47 @@
+---
+const routes = [
+  ['Reading trail', 'I am following an idea and want a useful next object.'],
+  ['Project conversation', 'I have a real situation, constraint, or research question.'],
+  ['Collaboration or work', 'I want to discuss a possible way of working together.'],
+  ['Correction', 'I want to point to a claim, source, route, or access barrier.'],
+] as const;
+---
+
+<section id="intake" class="correspondence-intake" aria-labelledby="intake-title">
+  <header>
+    <div>
+      <p class="research-eyebrow">Correspondence intake / public-safe Tally form</p>
+      <h2 id="intake-title">Bring the situation, not a performance.</h2>
+    </div>
+    <div>
+      <p>A short intake gives a future conversation enough structure to begin well: its purpose, the constraint already in view, and the next useful question.</p>
+      <button class="correspondence-intake__open" type="button" data-intake-open>Open the intake <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+  <ol>
+    {routes.map(([title, description], index) => <li><span>{String(index + 1).padStart(2, '0')}</span><strong>{title}</strong><p>{description}</p></li>)}
+  </ol>
+  <p class="correspondence-intake__boundary"><strong>Provider boundary:</strong> Tally receives submissions through this public-safe form; the Hearth &amp; Code landing site does not store them. Do not submit confidential, client, health, credential, or other sensitive material.</p>
+</section>
+
+<dialog id="correspondence-intake-dialog" class="correspondence-intake-dialog" aria-labelledby="intake-dialog-title">
+  <form method="dialog" class="correspondence-intake-dialog__close-form"><button type="submit" aria-label="Close correspondence intake">×</button></form>
+  <div class="correspondence-intake-dialog__sheet">
+    <header>
+      <p class="research-eyebrow">Hearth &amp; Code / correspondence intake</p>
+      <h2 id="intake-dialog-title">What is the situation you are carrying?</h2>
+      <p>Use the smallest amount of context that makes the next conversation useful. Tally receives the submission; this landing site does not store it.</p>
+    </header>
+    <div class="correspondence-intake-dialog__embed">
+      <iframe src="https://tally.so/embed/zx9Xb8?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1&amp;dynamicHeight=1" title="Hearth &amp; Code correspondence intake" loading="lazy" allowtransparency="true"></iframe>
+    </div>
+    <aside><strong>Direct form link</strong><p>If the embedded form does not load, <a href="https://tally.so/r/zx9Xb8" target="_blank" rel="noreferrer">open the correspondence intake in Tally <span aria-hidden="true">↗</span></a>. Tally, not this landing site, receives submissions.</p></aside>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#correspondence-intake-dialog');
+  document.querySelectorAll<HTMLButtonElement>('[data-intake-open]').forEach((button) => button.addEventListener('click', () => {
+    if (dialog && !dialog.open) dialog.showModal();
+  }));
+</script>

@@ -1,0 +1,42 @@
+---
+import { hearthsideArticles } from '../content/hearthside-articles';
+
+const collections = [
+  { id: 'hearthside-essays', label: 'Hearthside essays', description: 'Public practice essays on meaning, uncertainty, provenance, and humane tool boundaries.', articles: hearthsideArticles.filter((article) => article.format !== 'Technical article') },
+  { id: 'technical-articles', label: 'Technical articles', description: 'Accessible technical orientations for TCCP, EKRP, Operational Intelligence, and prompt practice.', articles: hearthsideArticles.filter((article) => article.format === 'Technical article') },
+];
+---
+
+<section class="notes-article-ledger" id="article-ledger" aria-labelledby="article-ledger-title">
+  <header class="notes-article-ledger__header">
+    <div><p class="research-eyebrow">Reading ledger / authored articles</p><h2 id="article-ledger-title">The studio article shelf.</h2></div>
+    <p>Eight authored articles, organized by reading mode. Each opens in place so the Notes context remains available while you read.</p>
+  </header>
+
+  <div class="notes-article-ledger__collections">
+    {collections.map((collection, collectionIndex) => <section class="notes-article-ledger__collection" id={collection.id} aria-labelledby={`${collection.id}-title`}>
+      <header><p class="research-eyebrow">Collection {String(collectionIndex + 1).padStart(2, '0')} / {collection.articles.length} articles</p><h3 id={`${collection.id}-title`}>{collection.label}</h3><p>{collection.description}</p></header>
+      <ol>{collection.articles.map((article, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><p>{article.code} · {article.readTime}</p><h4><button type="button" data-studio-article-open={article.slug} aria-haspopup="dialog">{article.title}</button></h4><p>{article.dek}</p></div><button type="button" data-studio-article-open={article.slug} aria-haspopup="dialog" aria-label={`Read ${article.title}`}>Read <span aria-hidden="true">→</span></button></li>)}</ol>
+    </section>)}
+  </div>
+</section>
+
+{hearthsideArticles.map((article) => <dialog class="notes-article-dialog" id={`studio-article-${article.slug}`} aria-labelledby={`studio-article-title-${article.slug}`}>
+  <form method="dialog" class="notes-article-dialog__close-form"><button class="notes-article-dialog__close" aria-label={`Close ${article.title}`}>×</button></form>
+  <article class="notes-article-dialog__sheet">
+    <header><p class="research-eyebrow">{article.code} / {article.format ?? 'Hearthside essay'} / public research article</p><h2 id={`studio-article-title-${article.slug}`}>{article.title}</h2><p>{article.dek}</p><div>{article.themes.map((theme) => <span>{theme}</span>)}<span>{article.readTime}</span></div></header>
+    <aside><strong>Reading boundary</strong><p>This article is a public explanation of a method orientation. It does not disclose private working material or claim universal efficacy, operational authority, or publication as proof.</p></aside>
+    <div class="notes-article-dialog__body">{article.sections.map((section) => <section><h3>{section.heading}</h3>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}</div>
+    <a class="notes-article-dialog__permalink" href={`/notes/${article.slug}/`}>Open this article as a standalone page <span aria-hidden="true">↗</span></a>
+  </article>
+</dialog>)}
+
+<script>
+  const openStudioArticle = (identifier: string | null) => {
+    const dialog = identifier ? document.querySelector(`#studio-article-${identifier}`) : null;
+    if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+  };
+  document.querySelectorAll<HTMLElement>('[data-studio-article-open]').forEach((trigger) => {
+    trigger.addEventListener('click', () => openStudioArticle(trigger.dataset.studioArticleOpen ?? null));
+  });
+</script>

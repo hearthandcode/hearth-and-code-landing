@@ -1,0 +1,108 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import '../styles/journal-reading.css';
+
+interface Heading { depth: number; slug: string; text: string; }
+interface Claim { claim: string; label: string; source: string; }
+
+const entries: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
+entries.sort((a: CollectionEntry<'journal'>, b: CollectionEntry<'journal'>) => {
+  const aDate = new Date(a.data.published_date ?? a.data.date).getTime();
+  const bDate = new Date(b.data.published_date ?? b.data.date).getTime();
+  if (aDate !== bDate) return bDate - aDate;
+  return (b.data.published_order ?? 0) - (a.data.published_order ?? 0);
+});
+
+const latest = entries.slice(0, 4);
+const archive = entries.slice(4);
+const dialogs = await Promise.all(entries.map(async (entry: CollectionEntry<'journal'>) => ({ entry, ...(await render(entry)) })));
+
+function displayDate(value: string) {
+  return new Date(`${value}T00:00:00`).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric',
+  });
+}
+---
+
+<section class="field-journal-latest" id="field-journal" aria-labelledby="field-journal-title">
+  <header class="field-journal-latest__header">
+    <div>
+      <p class="research-eyebrow">Field Journal / published reading</p>
+      <h2 id="field-journal-title">The current public record.</h2>
+    </div>
+    <div>
+      <p>
+        The Field Journal is part of this Notes surface: long-form public research, short studio notes,
+        and technical essays now share one visual system while keeping their editorial forms distinct.
+      </p>
+      <div class="field-journal-latest__actions">
+        <button type="button" data-journal-open={latest[0]?.id} aria-haspopup="dialog">Open the latest article <span aria-hidden="true">→</span></button>
+        <a href="#journal-archive">Browse the publication trail <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </header>
+
+  <ol class="field-journal-latest__list" aria-label="Four most recent Field Journal articles">
+    {latest.map((entry: CollectionEntry<'journal'>, index: number) => (
+      <li>
+        <span class="field-journal-latest__index">{String(index + 1).padStart(2, '0')}</span>
+        <div>
+          <p class="field-journal-latest__meta">
+            <time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time>
+            {entry.data.reading_time_minutes && <span>{entry.data.reading_time_minutes} min read</span>}
+          </p>
+          <h3><button type="button" data-journal-open={entry.id} aria-haspopup="dialog">{entry.data.title}</button></h3>
+          <p>{entry.data.description}</p>
+          {(entry.data.tags ?? []).length > 0 && <ul aria-label={`${entry.data.title} tags`}>{(entry.data.tags ?? []).slice(0, 3).map((tag: string) => <li>{tag}</li>)}</ul>}
+        </div>
+        <button class="field-journal-latest__read" type="button" data-journal-open={entry.id} aria-haspopup="dialog" aria-label={`Read ${entry.data.title}`}>Read <span aria-hidden="true">→</span></button>
+      </li>
+    ))}
+  </ol>
+
+  {archive.length > 0 && <section class="field-journal-archive" id="journal-archive" aria-labelledby="journal-archive-title">
+    <header><p class="research-eyebrow">Publication trail</p><h3 id="journal-archive-title">Earlier field entries</h3><p>Scroll the published trail without leaving the Notes reading surface.</p></header>
+    <div class="field-journal-archive__scroll" tabindex="0" aria-label="Earlier published Field Journal entries">
+      <ol>{archive.map((entry: CollectionEntry<'journal'>, index: number) => <li><span>{String(index + 5).padStart(2, '0')}</span><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time><button type="button" data-journal-open={entry.id} aria-haspopup="dialog">{entry.data.title}</button><small>{entry.data.reading_time_minutes ? `${entry.data.reading_time_minutes} min` : 'Published record'}</small></li>)}</ol>
+    </div>
+  </section>}
+</section>
+
+{dialogs.map(({ entry, Content, headings }) => (
+  <dialog class="field-journal-dialog" id={`journal-reader-${entry.id}`} aria-labelledby={`journal-reader-title-${entry.id}`}>
+    <form method="dialog" class="field-journal-dialog__close-form"><button class="field-journal-dialog__close" aria-label={`Close ${entry.data.title}`}>×</button></form>
+    <article class="field-journal-dialog__sheet journal-article">
+      <header class="journal-article__header">
+        <p class="research-eyebrow">Field Journal / published record</p>
+        <h2 id={`journal-reader-title-${entry.id}`}>{entry.data.title}</h2>
+        <p class="journal-article__deck">{entry.data.description}</p>
+        <dl class="journal-article__meta">
+          <div><dt>Published</dt><dd><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time></dd></div>
+          {entry.data.reading_time_minutes && <div><dt>Reading time</dt><dd>{entry.data.reading_time_minutes} minutes</dd></div>}
+          <div><dt>Review posture</dt><dd>Published public record</dd></div>
+        </dl>
+      </header>
+      {entry.data.featured_image && <figure class="journal-article__hero"><img src={entry.data.featured_image} alt={entry.data.featured_image_alt ?? ''} width="1024" height="576" loading="lazy" /></figure>}
+      {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this article page"><p>On this page</p><ol>{headings.filter((heading: Heading) => heading.depth === 2).map((heading: Heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
+      <div class="journal-article__body"><Content /></div>
+      <footer class="journal-article__evidence">
+        <section><p class="research-eyebrow">Claim labels</p><ul class="journal-article__labels">{entry.data.labels.map((label: string) => <li>{label.replace('-', ' ')}</li>)}</ul>{(entry.data.tags ?? []).length > 0 && <ul class="journal-article__labels journal-article__labels--tags">{(entry.data.tags ?? []).map((tag: string) => <li>{tag}</li>)}</ul>}</section>
+        {(entry.data.claim_map ?? []).length > 0 && <section class="journal-article__claims"><p class="research-eyebrow">Claim map</p><ol>{(entry.data.claim_map ?? []).map((claim: Claim) => <li><strong>{claim.label.replace('-', ' ')}</strong><span>{claim.claim}</span><small>{claim.source}</small></li>)}</ol></section>}
+        <section class="journal-article__sources"><p class="research-eyebrow">Named source context</p><ul>{entry.data.sources.map((source: string) => <li>{source}</li>)}</ul></section>
+      </footer>
+      <a class="field-journal-dialog__permalink" href={`/journal/${entry.id}/`}>Open this article as a standalone page <span aria-hidden="true">↗</span></a>
+    </article>
+  </dialog>
+))}
+
+<script>
+  const openJournalReader = (id: string | null) => {
+    const dialog = id ? document.querySelector(`#journal-reader-${id}`) : null;
+    if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-journal-open]').forEach((trigger) => {
+    trigger.addEventListener('click', () => openJournalReader(trigger.dataset.journalOpen ?? null));
+  });
+</script>

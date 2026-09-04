@@ -1,0 +1,97 @@
+---
+type Route = 'lab' | 'questions' | 'programs' | 'methods' | 'notes' | 'evidence' | 'dossier' | 'correspondence';
+interface Props { route: Route; }
+const { route } = Astro.props;
+
+const fieldIndex: Record<Route, Array<[string, string]>> = {
+  lab: [['research-contract', 'Research contract'], ['inquiry-field', 'Inquiry field'], ['reading-doors', 'Reading doors']],
+  questions: [['question-anatomy', 'Question anatomy'], ['crossings', 'Inquiry crossings'], ['open-edge', 'Open edge']],
+  programs: [['prototype-cabinet', 'Prototype cabinet'], ['program-path', 'Program path'], ['release-boundary', 'Release boundary']],
+  methods: [['instrument-notes', 'Instrument notes'], ['practice-walkthrough', 'Practice walkthrough'], ['adaptation-guardrails', 'Adaptation guardrails']],
+  notes: [['editorial-loop', 'Editorial loop'], ['reading-modes', 'Reading modes'], ['note-boundary', 'Note boundary']],
+  evidence: [['claim-grammar', 'Claim grammar'], ['review-board', 'Review board'], ['correction-loop', 'Correction loop']],
+  dossier: [['dossier-constellation', 'Attribute constellation'], ['dossier-quarters', 'Four reading quarters'], ['dossier-use', 'How to read it']],
+  correspondence: [['starting-point', 'Starting point'], ['conversation-modes', 'Conversation modes'], ['return-bundle', 'Return bundle']],
+};
+
+const index = fieldIndex[route];
+const fieldHeading: Record<Route, string> = {
+  lab: 'The conditions that make a research practice hospitable.',
+  questions: 'The anatomy of an inquiry that can remain open and useful.',
+  programs: 'How a question becomes a bounded program without losing its limits.',
+  methods: 'The practical detail beneath the learning loop.',
+  notes: 'The editorial boundaries that shape the public reading room.',
+  evidence: 'The distinctions that keep a public claim answerable.',
+  dossier: 'The reading frame beneath the case file.',
+  correspondence: 'The information that makes a return path useful.',
+};
+---
+
+<section class="research-fieldbook" aria-labelledby={`${route}-fieldbook-title`}>
+  <header class="research-fieldbook__header">
+    <div>
+      <p class="research-eyebrow">Close reading guide / route-specific detail</p>
+      <h2 id={`${route}-fieldbook-title`}>{fieldHeading[route]}</h2>
+    </div>
+    <nav class="research-field-index" aria-label={`${route} field index`}>
+      {index.map(([href, label], position) => <a href={`#${href}`}><span>{String(position + 1).padStart(2, '0')}</span>{label}</a>)}
+    </nav>
+  </header>
+
+  {route === 'lab' && <div class="research-deep-grid research-deep-grid--lab">
+    <article id="research-contract" class="research-deep-card research-deep-card--paper">
+      <p class="research-eyebrow">Research contract</p><h3>Make the work legible before asking it to scale.</h3>
+      <dl class="research-contract-list"><div><dt>Concern</dt><dd>Complex systems can hide their conditions of use.</dd></div><div><dt>Practice</dt><dd>Bind sources, limits, and decisions to the thing being made.</dd></div><div><dt>Reader right</dt><dd>See what is known, proposed, fictional, or still unresolved.</dd></div></dl>
+    </article>
+    <article id="inquiry-field" class="research-deep-card">
+      <p class="research-eyebrow">Inquiry field</p><h3>Four pressure points, held in relation.</h3>
+      <ol class="research-numbered-notes"><li><strong>Systems</strong><span>What structure preserves what matters?</span></li><li><strong>Provenance</strong><span>What must travel with a claim?</span></li><li><strong>Knowledge</strong><span>How does uncertainty remain visible?</span></li><li><strong>Creative practice</strong><span>When does a world become a useful prototype?</span></li></ol>
+    </article>
+    <article id="reading-doors" class="research-deep-card research-deep-card--wide">
+      <p class="research-eyebrow">Reading doors</p><h3>Choose the next object, not a generic funnel.</h3>
+      <div class="research-door-grid"><a href="/questions/"><span>Question</span><strong>Start with a tension.</strong><small>For readers locating a problem.</small></a><a href="/methods/"><span>Instrument</span><strong>Try a bounded practice.</strong><small>For builders adapting a method.</small></a><a href="/evidence/"><span>Boundary</span><strong>Inspect the confidence.</strong><small>For reviewers checking a claim.</small></a></div>
+    </article>
+  </div>}
+
+  {route === 'questions' && <div class="research-deep-grid research-deep-grid--questions">
+    <article id="question-anatomy" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Question anatomy</p><h3>A question becomes useful when its pressure is named.</h3><table class="research-mini-table"><thead><tr><th>Element</th><th>Public-safe framing</th></tr></thead><tbody><tr><td>Pressure</td><td>What becomes difficult to inspect or revise?</td></tr><tr><td>Boundary</td><td>What may this inquiry not claim yet?</td></tr><tr><td>Method</td><td>Which small check could change the next decision?</td></tr><tr><td>Return</td><td>Where should a correction or disagreement go?</td></tr></tbody></table></article>
+    <article id="crossings" class="research-deep-card"><p class="research-eyebrow">Inquiry crossings</p><h3>Questions inform one another without becoming one giant thesis.</h3><div class="research-relation-map"><span>Source identity</span><i></i><span>Claim boundary</span><i></i><span>Creative prototype</span><i></i><span>Human decision</span></div><p class="research-quiet-copy">The map is a reading aid: it shows relations to investigate, not a claim that the relation is settled.</p></article>
+    <article id="open-edge" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">Open edge</p><h3>What remains intentionally unresolved.</h3><div class="research-tension-records"><div><strong>Representation</strong><span>Can an interface reveal uncertainty without becoming unreadable?</span></div><div><strong>Assistance</strong><span>How can tools help without becoming a substitute for accountable judgment?</span></div><div><strong>Continuity</strong><span>What needs to remain inspectable when a practice changes hands or time?</span></div></div></article>
+  </div>}
+
+  {route === 'programs' && <div class="research-deep-grid research-deep-grid--programs">
+    <article id="prototype-cabinet" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Prototype cabinet</p><h3>Different kinds of work need different public labels.</h3><div class="research-status-rows"><div><span>Candidate frame</span><strong>Exocore</strong><p>A way to study roles, memory, governance, and return.</p></div><div><span>Research frame</span><strong>Minimum viable institutions</strong><p>Small structures that can remember and correct.</p></div><div><span>Conceptual study</span><strong>Worlds as prototypes</strong><p>Imagined systems that surface tradeoffs through experience.</p></div></div></article>
+    <article id="program-path" class="research-deep-card"><p class="research-eyebrow">Program path</p><h3>From inquiry to public artifact, with decision points visible.</h3><ol class="research-path-sequence"><li><span>01</span><strong>Question</strong><p>Name the uncertainty and scope.</p></li><li><span>02</span><strong>Bounded experiment</strong><p>Choose an inspectable form.</p></li><li><span>03</span><strong>Review candidate</strong><p>Separate source from projection.</p></li><li><span>04</span><strong>Public artifact</strong><p>Only after exact release.</p></li></ol></article>
+    <article id="release-boundary" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">Release boundary</p><h3>A prototype is not a product merely because it renders.</h3><p class="research-quiet-copy">The cabinet makes candidate status explicit so a reader can distinguish a question, a teaching illustration, a public artifact, and a withheld item without reading promotional language into the work.</p></article>
+  </div>}
+
+  {route === 'methods' && <div class="research-deep-grid research-deep-grid--methods">
+    <article id="instrument-notes" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Instrument notes</p><h3>Four compact records for work that needs a way back.</h3><div class="research-instrument-specs"><div><strong>Source ledger</strong><span>Inputs: material, locator, freshness, omission.</span></div><div><strong>Claim card</strong><span>Inputs: wording, class, evidence, limit.</span></div><div><strong>Check receipt</strong><span>Inputs: predicate, scope, observation, non-proof.</span></div><div><strong>Return record</strong><span>Inputs: state, owner, uncertainty, next gate.</span></div></div></article>
+    <article id="practice-walkthrough" class="research-deep-card"><p class="research-eyebrow">Practice walkthrough</p><h3>Adapt one loop without importing a whole operating system.</h3><ol class="research-walkthrough"><li><strong>Start local.</strong><span>Choose one decision, one source, one question.</span></li><li><strong>Keep classes separate.</strong><span>Do not promote a proposal into a result by tone.</span></li><li><strong>Run one check.</strong><span>State the predicate and the limit of the result.</span></li><li><strong>Return the choice.</strong><span>Leave an accountable next action for a person.</span></li></ol></article>
+    <article id="adaptation-guardrails" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">Adaptation guardrails</p><h3>The method does not offer an oracle.</h3><div class="research-guardrail-grid"><div><span>Keep</span><strong>Meaning before machinery.</strong></div><div><span>Represent</span><strong>Uncertainty as state.</strong></div><div><span>Preserve</span><strong>Continuity and provenance.</strong></div><div><span>Reserve</span><strong>Consequential judgment for people.</strong></div></div></article>
+  </div>}
+
+  {route === 'notes' && <div class="research-deep-grid research-deep-grid--notes">
+    <article id="editorial-loop" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Editorial loop</p><h3>Public notes have a lifecycle, not just a publish button.</h3><ol class="research-editorial-loop"><li>Locate a source or explicitly record its absence.</li><li>Draft the smallest useful public object.</li><li>Check provenance, privacy, and route ownership.</li><li>Review exact language, then publish or withhold by explicit release.</li><li>Preserve correction or retirement as a visible option.</li></ol></article>
+    <article id="reading-modes" class="research-deep-card"><p class="research-eyebrow">Reading modes</p><h3>Three ways into the same body of work.</h3><div class="research-reading-modes"><div><strong>Builder</strong><span>Pattern → method → worked teaching case.</span></div><div><strong>Researcher</strong><span>Question → note → evidence relation.</span></div><div><strong>Collaborator</strong><span>Lab → dossier → correspondence.</span></div></div></article>
+    <article id="note-boundary" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">Note boundary</p><h3>A field note is not a private work log.</h3><p class="research-quiet-copy">The public reading room contains selected patterns, concepts, and pointers. Raw sessions, personal memory, client materials, and operating prompts remain outside the public projection.</p></article>
+  </div>}
+
+  {route === 'evidence' && <div class="research-deep-grid research-deep-grid--evidence">
+    <article id="claim-grammar" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Claim grammar</p><h3>Different sentences deserve different confidence.</h3><div class="research-claim-grammar"><div><span>Observation</span><strong>What was directly seen or measured?</strong></div><div><span>Interpretation</span><strong>What does that observation plausibly mean?</strong></div><div><span>Hypothesis</span><strong>What future observation could falsify it?</strong></div><div><span>Proposal</span><strong>What candidate action is being offered?</strong></div></div></article>
+    <article id="review-board" class="research-deep-card"><p class="research-eyebrow">Review board</p><h3>A check has a scope; it does not borrow authority from the rest of the system.</h3><table class="research-mini-table"><thead><tr><th>Object</th><th>What a reader can ask</th></tr></thead><tbody><tr><td>Source</td><td>Where did this originate?</td></tr><tr><td>Claim</td><td>What exactly is being said?</td></tr><tr><td>Check</td><td>Which predicate was tested?</td></tr><tr><td>Decision</td><td>Who held the disposition?</td></tr></tbody></table></article>
+    <article id="correction-loop" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">Correction loop</p><h3>Correction is a design feature, not an embarrassment protocol.</h3><div class="research-correction-steps"><span>Report a route, section, source, or barrier.</span><i></i><span>Preserve it as review intake.</span><i></i><span>Correct, annotate, withhold, or retire by human decision.</span></div></article>
+  </div>}
+
+  {route === 'dossier' && <div class="research-deep-grid research-deep-grid--dossier">
+    <article id="dossier-constellation" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Attribute constellation</p><h3>The dossier is a map of working posture, not a score.</h3><div class="research-constellation"><span>Orientation</span><span>Inquiry</span><span>Craft</span><span>Stewardship</span><span>Correction</span><span>Return</span></div><p class="research-quiet-copy">Each label is a revisable semantic handle for a public practice, not a stable trait assigned to a person.</p></article>
+    <article id="dossier-quarters" class="research-deep-card"><p class="research-eyebrow">Four reading quarters</p><h3>Sixteen entries, grouped for a first pass.</h3><div class="research-quarter-grid"><a href="#d-01"><span>I / Orientation</span><strong>D-01–D-04</strong></a><a href="#d-05"><span>II / Practice</span><strong>D-05–D-08</strong></a><a href="#d-09"><span>III / Relation</span><strong>D-09–D-12</strong></a><a href="#d-13"><span>IV / Continuity</span><strong>D-13–D-16</strong></a></div></article>
+    <article id="dossier-use" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">How to read it</p><h3>Use the metaphor to make a public working posture memorable—and keep its limits visible.</h3><p class="research-quiet-copy">The Studio Dossier is approved as a visual direction. Its entries remain source-linked candidate self-representation until their exact public wording receives separate author review.</p></article>
+  </div>}
+
+  {route === 'correspondence' && <div class="research-deep-grid research-deep-grid--correspondence">
+    <article id="starting-point" class="research-deep-card research-deep-card--paper"><p class="research-eyebrow">Starting point</p><h3>A useful first message gives the situation enough shape.</h3><ol class="research-editorial-loop"><li>Name what you are trying to understand, make, or correct.</li><li>Name the constraint, source, or operating context already in view.</li><li>Name the smallest next decision, artifact, or conversation that would be useful.</li></ol></article>
+    <article id="conversation-modes" class="research-deep-card"><p class="research-eyebrow">Conversation modes</p><h3>Different invitations carry different boundaries.</h3><div class="research-conversation-modes"><div><strong>Reading</strong><span>Follow a public trail; no response expectation is implied.</span></div><div><strong>Project discussion</strong><span>Bring a real constraint before prescribing a system.</span></div><div><strong>Work opportunity</strong><span>Use a conventional role-specific channel for formal applications.</span></div><div><strong>Correction</strong><span>Point to the route and reason; intake is not auto-change.</span></div></div></article>
+    <article id="return-bundle" class="research-deep-card research-deep-card--wide"><p class="research-eyebrow">Return bundle</p><h3>Every public object should leave a reliable way back in.</h3><div class="research-door-grid"><a href="/notes/"><span>Read</span><strong>Follow a note into a method.</strong></a><a href="/evidence/#correction"><span>Correct</span><strong>Make a bounded review request.</strong></a><a href="/dossier/"><span>Orient</span><strong>Read the studio’s working posture.</strong></a></div></article>
+  </div>}
+</section>

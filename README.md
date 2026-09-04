@@ -7,7 +7,7 @@ Static Astro site for [Hearth & Code](https://hearthandcode.dev), Scott Rallya's
 
 ## Stack
 
-Static-output [Astro](https://astro.build) with CSS-only interaction and no data, analytics, or external capability layer.
+Static-output [Astro](https://astro.build) with no first-party data, analytics, secrets, or external runtime layer. The only narrow exception is the public-safe Correspondence intake: a third-party Tally form embedded in the existing modal. Tally receives those submissions; the landing site does not store them. It has no attachments, payment, newsletter opt-in, hidden tracking fields, automatic external follow-up, or private Hub access.
 
 ## Local preview
 
@@ -89,4 +89,4 @@ Add the `export` line to `~/.zshrc` so installs keep working. Official support i
 - The canonical visual token source is maintained in the private Hearth & Code Hub. This consumer copy has visual meaning only.
 - Field Journal drafts remain in their separate repository and do not become public through this branch until their own publication gate is released.
 - Historical Research, AI and Ethics, Lab, and Dossier proofs remain no-index under `/review/*`; their retired top-level routes are not part of the public route set.
-- Do not add analytics, a newsletter funnel, a contact form, private Hub paths, runtime state, secrets, or raw session material to this repository.
+- Do not add analytics, a newsletter funnel, a first-party contact form, private Hub paths, runtime state, secrets, or raw session material to this repository. The sole exception is the public-safe, third-party Tally Correspondence intake described above; it does not add a first-party runtime, secrets, analytics, attachments, or private Hub access.

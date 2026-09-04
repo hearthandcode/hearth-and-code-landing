@@ -1,0 +1,77 @@
+---
+const chapters = [
+  { id: 'dossier-orientation', code: 'I', title: 'Orientation', note: 'How the Hearthside Meta-Architect meets a question.', entries: [
+    ['D-01', 'Builder of structures behind structures', 'Looks beneath visible artifacts for the protocols, permissions, and contexts that shaped them.', 'Ask what conditions made this object possible.'],
+    ['D-02', 'Hearthside orientation', 'Makes complicated machinery inhabitable through names, routes, and human-scale surfaces.', 'Make the difficult thing findable.'],
+    ['D-03', 'Divergence and convergence', 'Lets a field widen before reducing it to the smallest structure that can carry a decision.', 'Explore without losing the decision.'],
+    ['D-04', 'Meaning needs an interface', 'Treats representation as an engineering concern and a human concern at once.', 'Give the idea a form that can be challenged.'],
+  ] },
+  { id: 'dossier-practice', code: 'II', title: 'Practice', note: 'The working moves, instruments, and pressure checks.', entries: [
+    ['D-05', 'Uncertainty as structured state', 'Keeps unknowns and contradictions present rather than smoothing them into confidence.', 'Name what remains unresolved.'],
+    ['D-06', 'Intuition with a precision filter', 'Lets intuition propose; asks sources, checks, and review to qualify the proposal.', 'Separate discovery from decision.'],
+    ['D-07', 'Relational systems sight', 'Notices interfaces, dependencies, and feedback before treating a part as isolated.', 'Draw the relation, not just the inventory.'],
+    ['D-08', 'Minimum viable institutions', 'Builds enough governance to preserve meaning without building a theatre of process.', 'Fit the structure to the pressure.'],
+  ] },
+  { id: 'dossier-relations', code: 'III', title: 'Relations', note: 'How collaboration, metaphor, and permission remain legible.', entries: [
+    ['D-09', 'Plural minds, singular accountability', 'Uses collaboration and tools while keeping consequential judgment human-held.', 'Keep responsibility legible.'],
+    ['D-10', 'Archetypes as semantic handles', 'Uses memorable roles to compress recurring practices without making them authority.', 'Name a pattern without mythologizing it.'],
+    ['D-11', 'World-building as systems prototyping', 'Uses imaginative worlds to test coherence, experience, and relation.', 'Let a world reveal a system.'],
+    ['D-12', 'Constitutional autonomy', 'Prefers bounded permission, explicit release, and visible stop conditions.', 'Freedom inside a legible envelope.'],
+  ] },
+  { id: 'dossier-continuity', code: 'IV', title: 'Continuity', note: 'How the work remains revisable, finite, and hospitable to a future reader.', entries: [
+    ['D-13', 'Continuity through time', 'Designs records and handoffs for a future reader as well as the current one.', 'Leave a path back.'],
+    ['D-14', 'Revision-bearing theory', 'Builds systems that expose the conditions for their own correction.', 'Make revision part of the design.'],
+    ['D-15', 'Watch condition: infinite architecture', 'Recognizes recursive design as a strength that must eventually discharge into experience.', 'Stop when the work is ready to be lived with.'],
+    ['D-16', 'Integrated archetype', 'Holds forge and hearth together: rigor around imagination without extinguishing it.', 'Make imagination answerable, not smaller.'],
+  ] },
+] as const;
+---
+
+<section id="dossier-file" class="dossier-sheet" aria-labelledby="dossier-title">
+  <header class="dossier-sheet__masthead">
+    <div>
+      <p class="research-eyebrow">Hearth &amp; Code / case file HMA-16</p>
+      <h2 id="dossier-title">Hearthside Meta-Architect</h2>
+      <p>A public working archetype for the person behind the studio: a creative orientation, not a diagnosis, credential, or autonomous persona.</p>
+    </div>
+    <aside>
+      <span>Classification</span><strong>Self-authored working profile</strong>
+      <span>Reading mode</span><strong>Character sheet / public practice</strong>
+      <span>Release posture</span><strong>Public-facing practice</strong>
+    </aside>
+  </header>
+
+  <section class="dossier-sheet__profile" aria-label="Character profile">
+    <div class="dossier-identity"><p class="research-eyebrow">Role</p><strong>Creative systems steward</strong><span>Forge + hearth / field research + working craft</span></div>
+    <dl>
+      <div><dt>Central question</dt><dd>What is the smallest structure that preserves what matters?</dd></div>
+      <div><dt>Core loop</dt><dd>Orient · bound · compose · check · decide · return</dd></div>
+      <div><dt>Instruments</dt><dd>Ledger · atlas · protocol · notebook · correction path</dd></div>
+      <div><dt>Party role</dt><dd>Turns complexity into a shared, reviewable working surface.</dd></div>
+    </dl>
+  </section>
+
+  <nav id="dossier-index" class="dossier-sheet__index" aria-label="Dossier chapters">
+    {chapters.map(chapter => <a href={`#${chapter.id}`}><span>{chapter.code}</span><strong>{chapter.title}</strong><small>{chapter.entries[0][0]}–{chapter.entries[3][0]}</small></a>)}
+  </nav>
+
+  <section id="dossier-guide" class="dossier-sheet__guide" aria-labelledby="dossier-guide-title">
+    <p class="research-eyebrow">How to use this file</p>
+    <h3 id="dossier-guide-title">Read it as a field guide to working posture.</h3>
+    <p>Each entry has a tendency to notice and a practical move to test. Follow a chapter for a particular kind of question, or use the case-file codes to move directly to a card. The sheet names habits of practice; it does not diagnose a person or confer professional authority.</p>
+  </section>
+
+  <div class="dossier-sheet__chapters">
+    {chapters.map(chapter => <section id={chapter.id} class="dossier-chapter" aria-labelledby={`${chapter.id}-title`}>
+      <header><p class="research-eyebrow">Chapter {chapter.code} / {chapter.entries[0][0]}–{chapter.entries[3][0]}</p><h3 id={`${chapter.id}-title`}>{chapter.title}</h3><p>{chapter.note}</p></header>
+      <ol>
+        {chapter.entries.map(([id, title, reading, move]) => <li id={id.toLowerCase()}>
+          <span>{id}</span><h4>{title}</h4><p>{reading}</p><strong><b>At the table</b>{move}</strong>
+        </li>)}
+      </ol>
+      <a class="dossier-chapter__return" href="#dossier-index">Return to case-file index ↑</a>
+    </section>)}
+  </div>
+
+  <footer class="dossier-sheet__footer"><p>This is a creative public projection. It does not make claims about private biography, health, credentials, or a system possessing its own authority.</p><a href="/notes/#essays">Read the Hearthside essays →</a></footer>
+</section>

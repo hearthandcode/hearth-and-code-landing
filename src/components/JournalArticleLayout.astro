@@ -1,0 +1,84 @@
+---
+import '../styles/journal-reading.css';
+import HearthNavigation from './HearthNavigation.astro';
+
+interface Heading { depth: number; slug: string; text: string; }
+interface Claim { claim: string; label: string; source: string; }
+interface Props {
+  title: string;
+  date: string;
+  description: string;
+  tags: string[];
+  sources: string[];
+  headings: Heading[];
+  labels: string[];
+  claims: Claim[];
+  featuredImage?: string;
+  featuredImageAlt?: string;
+  readingTimeMinutes?: number;
+}
+
+const {
+  title,
+  date,
+  description,
+  tags,
+  sources,
+  headings,
+  labels,
+  claims,
+  featuredImage,
+  featuredImageAlt,
+  readingTimeMinutes,
+} = Astro.props;
+
+const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#161411" />
+    <title>{title} · Field Journal · Hearth &amp; Code</title>
+  </head>
+  <body class="research-body research-body--notes">
+    <a class="research-skip" href="#journal-article">Skip to article</a>
+    <HearthNavigation current="library" context="Field Journal / public research record" />
+    <main id="journal-article" class="journal-article-shell">
+      <article class="journal-article">
+        <header class="journal-article__header">
+          <p class="research-eyebrow">Field Journal / published record</p>
+          <h1>{title}</h1>
+          <p class="journal-article__deck">{description}</p>
+          <dl class="journal-article__meta">
+            <div><dt>Published</dt><dd><time datetime={date}>{displayDate}</time></dd></div>
+            {readingTimeMinutes && <div><dt>Reading time</dt><dd>{readingTimeMinutes} minutes</dd></div>}
+            <div><dt>Review posture</dt><dd>Published public record</dd></div>
+          </dl>
+        </header>
+
+        {featuredImage && <figure class="journal-article__hero"><img src={featuredImage} alt={featuredImageAlt ?? ''} width="1024" height="576" loading="eager" /></figure>}
+
+        {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this page"><p>On this page</p><ol>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
+
+        <div class="journal-article__body"><slot /></div>
+
+        <footer class="journal-article__evidence">
+          <section>
+            <p class="research-eyebrow">Claim labels</p>
+            <ul class="journal-article__labels">{labels.map((label) => <li>{label.replace('-', ' ')}</li>)}</ul>
+            {tags.length > 0 && <ul class="journal-article__labels journal-article__labels--tags">{tags.map((tag) => <li>{tag}</li>)}</ul>}
+          </section>
+          {claims.length > 0 && <section class="journal-article__claims"><p class="research-eyebrow">Claim map</p><ol>{claims.map((claim) => <li><strong>{claim.label.replace('-', ' ')}</strong><span>{claim.claim}</span><small>{claim.source}</small></li>)}</ol></section>}
+          <section class="journal-article__sources"><p class="research-eyebrow">Named source context</p><ul>{sources.map((source) => <li>{source}</li>)}</ul></section>
+        </footer>
+      </article>
+      <nav class="journal-article__return" aria-label="Field Journal return paths"><a href="/journal/">← All Field Journal entries</a><a href="/notes/">Return to Notes</a><a href="/evidence/">Read the evidence posture</a></nav>
+    </main>
+  </body>
+</html>

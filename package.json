@@ -8,6 +8,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "journal:import": "node scripts/import-field-journal.mjs",
     "profile:flame": "node scripts/profile-flame.mjs",
     "playwright:install": "playwright install chromium"
   },
@@ -31,5 +32,11 @@
   },
   "engines": {
     "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/react": "^6.0.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

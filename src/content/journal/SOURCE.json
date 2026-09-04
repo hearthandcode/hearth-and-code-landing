@@ -1,0 +1,16 @@
+{
+  "source_repository": "hearthandcode-field-journal",
+  "source_revision": "1def2b8a6af73671c6de80912f8e43d1a3de5cbf",
+  "import_policy": "published posts only; no review or draft records",
+  "imported_paths": [
+    "a-hub-that-can-explain-itself.mdx",
+    "a-public-journal-begins-with-a-boundary.mdx",
+    "an-extended-mind-needs-a-grammar.mdx",
+    "designing-a-genre-as-a-system.mdx",
+    "every-claim-needs-a-return-route.mdx",
+    "prompting-became-procedure-design.mdx",
+    "specification-driven-prompting.mdx",
+    "the-hearthside-meta-architect.mdx",
+    "what-i-mean-by-a-cognitive-workbench.mdx"
+  ]
+}
