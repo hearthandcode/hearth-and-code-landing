@@ -593,4 +593,28 @@ Rehearse the pipeline with a fictional Bounded Review Questions card. Include a 
 
 Return the pipeline table, the fictional run, the preserved evidence, the rejected transition, and the final human review question. Do not fabricate a deployment, provider result, or effectiveness claim.`,
   },
+  'M-35': {
+    structure: 'Two-four-eight ideation tree',
+    influence: 'Power-of-Two capacity bounds · TCCP branch typing · EKRP evidence tethers · MINC information-gain test · Sigil branch clauses',
+    prompt: `Build a Power-of-Two bounded ideation tree with me. The numbers are capacity ceilings for thought and review, not a promise that every tier must be filled.
+
+IDEATION QUESTION
+What small, publicly useful digital products could extend the Hearth & Code Methods page for people designing source-aware prompts and agent workflows?
+
+BOUNDARY
+Stay at the level of reversible concepts and fictional examples. Do not build, publish, spend money, claim demand, or expose private implementation detail. Never invent or duplicate an idea merely to complete a power of two.
+
+THE DOUBLING TREE
+1. Name exactly two productive framing tensions that expose different sides of the question.
+2. From them, derive at most four genuinely distinct idea territories.
+3. Develop at most eight candidate products. For each candidate give a name, intended reader, job-to-be-done, smallest useful proof, evidence still needed, principal risk, and next human decision.
+4. Expand toward sixteen only if every added candidate contributes a new mechanism or audience need and the review budget can hold it. Otherwise stop at eight or earlier and state why.
+
+At each tier run a stop test: Does doubling add decision-relevant information, or only volume? Remove aliases, decorative variants, and scale-only duplicates. Then shortlist exactly two candidates from the surviving set and compare them without declaring a winner.
+
+TCCP types Goal, Tension, Territory, Candidate, Constraint, Check, Human Gate, and Effect so a branch cannot authorize its own execution. EKRP gives every candidate an evidence tether—observation, inference, unknown, or proposed test—without fabricating validation. MINC performs the information-gain and representation-cost test at each doubling. Use Sigil as structured symbolic language to compile the tier, branch lineage, bound, stop state, and human gate into condensed model-readable prose; then provide a human-readable gloss.
+
+RETURN TO ME
+Return the two tensions, up to four territories, the candidate table, the stop ledger for 2 → 4 → 8 → 16, the two-candidate comparison, one compact Sigil expression with its plain-language gloss, and the exact decision that remains mine. Keep the complete response between 500 and 850 words.`,
+  },
 };

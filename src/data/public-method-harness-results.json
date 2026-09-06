@@ -1,14 +1,14 @@
 {
   "schema_version": "hearth.public-method-harness.v1",
-  "generated_at": "2026-09-06T22:56:10.914Z",
+  "generated_at": "2026-09-06T23:15:56.119Z",
   "runner": "Codex method-example harness",
   "execution_boundary": "Generation records retain per-result worker provenance; new executions use ephemeral Codex passes with a read-only tool policy and no persisted sessions.",
   "evaluation_method": "Separate Codex evaluator plus deterministic local admission checks.",
   "evaluation_limit": "Harness evaluation supports example quality only; it is not human acceptance or evidence of method efficacy.",
-  "method_count": 34,
-  "passed_count": 34,
+  "method_count": 35,
+  "passed_count": 35,
   "partial_admission": [
-    "M-33"
+    "M-35"
   ],
   "results": [
     {
@@ -1053,6 +1053,37 @@
         "hard_flags": [],
         "verdict": "pass",
         "summary": "The response provides the complete bounded pipeline, traceable fictional rehearsal, deliberate failed transition, safe revision loop, and retained human authority without implying deployment or efficacy."
+      },
+      "local_checks": {
+        "promptDigest": true,
+        "responseLength": true,
+        "noUnresolvedPlaceholders": true,
+        "noSensitiveMaterial": true,
+        "completeRubric": true,
+        "passingScore": true,
+        "noHardFlags": true,
+        "passingVerdict": true
+      }
+    },
+    {
+      "id": "M-35",
+      "title": "Power-of-Two Ideation Tree for Hearth & Code Methods",
+      "prompt_sha256": "6de4487ded2078768a5712b8d51d2f50f3d2aa1739bc916c3ef49fdfb847ca81",
+      "response": "## Two framing tensions\n\n1. **Rigor ↔ approachability:** source-aware methods need explicit evidence handling, yet newcomers need an inviting entry point rather than a wall of protocol.\n2. **Reusable structure ↔ situated judgment:** templates can accelerate work, but responsible workflows must preserve context and human discretion.\n\n**Tier-2 stop test:** Both tensions change what could be designed and reviewed; neither is a decorative restatement. Continue.\n\n## Four idea territories\n\n- **T1 — Evidence literacy** (from rigor): help readers distinguish sourced statements, inferences, and unknowns.\n- **T2 — Lightweight entry points** (from approachability): make the first useful method exercise small and legible.\n- **T3 — Reusable workflow components** (from structure): provide bounded patterns that can be adapted.\n- **T4 — Human judgment aids** (from situated judgment): expose decisions automation must not make.\n\n**Tier-4 stop test:** Each territory represents a distinct user need and mechanism. Representation cost remains manageable. Continue.\n\n## Candidate products\n\n| Candidate | Intended reader | Job-to-be-done | Smallest useful proof | Evidence tether / still needed | Principal risk | Next human decision |\n|---|---|---|---|---|---|---|\n| **Evidence Tether Cards** (T1) | Prompt authors | Label claims as observation, inference, unknown, or test | Fictional six-card example | Proposed test: can readers classify one sample consistently? | Labels may imply false certainty | Choose classification depth |\n| **Source-Aware Prompt Annotator** (T1) | Workflow reviewers | Mark where a prompt requests, transforms, or exceeds evidence | Static annotated prompt | Unknown: which annotations improve review | Visual clutter | Approve annotation vocabulary |\n| **Five-Minute Method Walkthrough** (T2) | First-time visitors | Experience one bounded source-aware exercise | One fictional before/after sequence | Inference: shorter scope may reduce entry friction; unvalidated | Oversimplification | Select the teaching example |\n| **Constraint Composer** (T2) | Nontechnical practitioners | Assemble reversible boundaries in plain language | Paper-style selector producing sample text | Proposed test: compare output with manual constraints | Boilerplate may conceal nuance | Decide permitted constraint categories |\n| **Workflow Clause Library** (T3) | Agent designers | Reuse typed Goal, Constraint, Check, and Human Gate clauses | Eight fictional clauses with cautions | Observation: the Methods question values typed branches; demand unknown | Copying without adaptation | Set reuse and attribution guidance |\n| **Evidence Handoff Canvas** (T3) | Human-agent teams | Record what is known before work changes hands | One-page fictional handoff | Proposed test: identify missing provenance in a sample | Process overhead | Define minimum required fields |\n| **Human-Gate Decision Deck** (T4) | Review leads | Identify decisions requiring explicit human authority | Ten scenario cards, used only as examples | Unknown: whether scenarios cover common gates | Could become a compliance checklist | Choose gate taxonomy |\n| **Branch-Pruning Worksheet** (T4) | Facilitators | Remove aliases and low-information branches | Completed fictional 2→4→8 worksheet | Proposed test: independent reviewers explain the same removals | Premature convergence | Define acceptable pruning reasons |\n\n## Stop ledger\n\n| Transition | MINC information gain | Representation cost | State |\n|---|---|---|---|\n| 2 → 4 | High: tensions become actionable territories | Low | Continue |\n| 4 → 8 | High: each branch gains a distinct product mechanism | Moderate | Continue |\n| 8 → 16 | Low: likely variants, audience relabeling, or scale duplicates | High for review | Stop at eight |\n\nSixteen is not warranted: no eight additional mechanisms are presently evidenced, and reviewing them would dilute comparison quality.\n\n## Two-candidate shortlist\n\n**Evidence Tether Cards** offer a narrow, teachable vocabulary and a very small proof, but classification agreement and the danger of false certainty require examination. **Evidence Handoff Canvas** addresses collaboration across workflow stages and may reveal provenance gaps, but it asks more of users and could add ceremony. The former emphasizes evidence literacy at statement level; the latter emphasizes continuity at workflow level. This comparison does not establish superiority.\n\n## Compact Sigil\n\n`⟦Goal:extend(MethodPage,public-use,source-aware) | Tension:{rigor↔access, reuse↔judgment} | Bound:{2,≤4,≤8,16?} | Lineage:{T1→C1,C2; T2→C3,C4; T3→C5,C6; T4→C7,C8} | Constraint:reversible∧fictional∧no-execution | Check:MINC(Δinfo>reprCost) | Stop:16=no | HumanGate:select(C1|C6) | Effect:concept-review-only⟧`\n\n**Gloss:** Explore a public, source-aware Methods extension through two tensions, four territories, and eight bounded candidates. Stop before sixteen because added volume would exceed useful information. Nothing proceeds beyond conceptual review unless a human chooses between the two shortlisted proofs.\n\n**The exact decision that remains yours:** choose whether the next fictional proof exercise should develop **Evidence Tether Cards** or the **Evidence Handoff Canvas**, or authorize neither.",
+      "generation_worker": "codex-ephemeral-generator",
+      "evaluation": {
+        "evaluator": "codex-ephemeral-evaluator",
+        "scores": {
+          "method_fidelity": 2,
+          "scenario_fidelity": 2,
+          "boundary_fidelity": 2,
+          "public_safety": 2,
+          "reader_utility": 2
+        },
+        "total_score": 10,
+        "hard_flags": [],
+        "verdict": "pass",
+        "summary": "The response faithfully applies the bounded doubling tree, evidence tethers, stop tests, typed Sigil summary, and human gate while remaining fictional, reversible, and useful."
       },
       "local_checks": {
         "promptDigest": true,

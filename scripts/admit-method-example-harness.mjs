@@ -56,7 +56,11 @@ const validatedResults = validationIds.map((id) => {
   const totalScore = scores.reduce((sum, score) => sum + score, 0);
   const checks = {
     promptDigest: generation.prompt_sha256 === sha256(publicMethodPrompts[id].prompt),
-    responseLength: id === 'M-33' ? words >= 750 && words <= 3000 : words >= 180 && words <= 550,
+    responseLength: id === 'M-33'
+      ? words >= 750 && words <= 3000
+      : id === 'M-35'
+        ? words >= 500 && words <= 850
+        : words >= 180 && words <= 550,
     noUnresolvedPlaceholders: !unresolvedPlaceholder.test(response),
     noSensitiveMaterial: !forbidden.test(response),
     completeRubric: scores.every((score) => Number.isInteger(score) && score >= 0 && score <= 2),

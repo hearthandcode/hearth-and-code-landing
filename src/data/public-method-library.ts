@@ -84,6 +84,7 @@ const seeds: MethodSeed[] = [
   ['M-32','Method receipt','Learning artifact','Leave enough trace for another person to understand the attempt, its checks, and its non-claims.','A receipt is process history, not proof of value.','A visitor wants to adapt one Hearth & Code method in another workspace.','a portable receipt describing inputs, transformation, check, limits, and adaptation notes','whether transfer limits are as visible as the method'],
   ['M-33','Bounded review question deck','Decision interface','Turn one consequential decision into a source-bound docket with sixteen materially distinct response lenses and tailored mutators.','A bounded question can structure a decision, but it cannot manufacture consent, convert validation into approval, or choose on the decision owner’s behalf.','A public method candidate needs one legible decision, sixteen distinct response orientations, and a small set of composable adjustments.','a question contract, sixteen-lens option palette, eight tailored mutators, composition rules, and a human-held return gate','whether every lens answers the same decision through a distinct mechanism and every mutator changes the proposal without changing its authority'],
   ['M-34','Evidence-bearing agent workflow','Data workflow','Move structured records through guarded agent stages whose inputs, transformations, checks, failures, and returns remain inspectable.','A data pipeline can preserve evidence and still be wrong; no successful stage implies human acceptance or permission for an external effect.','A worked method example must be generated, evaluated, revised when necessary, and returned for author review without automatic publication.','a six-stage record pipeline with power-of-two capacity bounds, typed checks, failure holds, and lineage receipts','whether every derived output retains its input identity, check result, effect boundary, and responsible next gate'],
+  ['M-35','Power-of-Two bounded structure','Ideation scaffold','Grow an idea space through reviewable 2, 4, 8, and optional 16-item tiers, stopping when another doubling adds volume rather than information.','Powers of two are capacity ceilings, not completeness targets; the method must never pad, duplicate, or imply that a fuller tree is a better one.','A research studio wants a diverse but reviewable set of small digital-product ideas without opening an unbounded brainstorm.','a two-four-eight ideation tree, a conditional sixteen-item expansion decision, a stop ledger, and a two-candidate shortlist','whether each doubling adds a distinct mechanism or audience need and remains within the human review budget'],
 ];
 
 const harnessResults = new Map(methodHarness.results.map((result) => [result.id, result]));
@@ -126,7 +127,7 @@ const buildMethod = (seed: MethodSeed, family: Family): PublicMethodCard => {
 const familySeeds: MethodSeed[][] = [
   seeds.slice(0, 8),
   seeds.slice(8, 16),
-  [...seeds.slice(16, 24), seeds[33]],
+  [...seeds.slice(16, 24), seeds[33], seeds[34]],
   [...seeds.slice(24, 32), seeds[32]],
 ];
 

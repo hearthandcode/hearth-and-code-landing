@@ -179,11 +179,11 @@ test('both article families continue the Studio threshold and paper reading fiel
   assert.match(articleStyles, /Article surfaces continue the same dark threshold/);
 });
 
-test('the 34 method prompts are individually authored and use a public-safe four-part weave', () => {
+test('the 35 method prompts are individually authored and use a public-safe four-part weave', () => {
   const prompts = Object.values(publicMethodPrompts);
-  assert.equal(prompts.length, 34);
-  assert.equal(new Set(prompts.map((entry) => entry.structure)).size, 34);
-  assert.equal(new Set(prompts.map((entry) => entry.prompt)).size, 34);
+  assert.equal(prompts.length, 35);
+  assert.equal(new Set(prompts.map((entry) => entry.structure)).size, 35);
+  assert.equal(new Set(prompts.map((entry) => entry.prompt)).size, 35);
 
   for (const [id, entry] of Object.entries(publicMethodPrompts)) {
     for (const framework of ['TCCP', 'EKRP', 'MINC', 'Sigil']) {
@@ -240,15 +240,16 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.equal(emberCircuitComponents.find((item) => item.name === 'FieldCard')?.sourceName, 'PracticeCard');
   assert.equal(emberCircuitTokens.color.field950, '#0e1114');
   assert.equal(emberCircuitTokens.color.paper100, '#f1e7d2');
-  assert.equal(publicMethods.length, 34);
+  assert.equal(publicMethods.length, 35);
   assert.equal(publicMethodCollections.length, 4);
   assert.ok(publicMethods.every((method) => method.prompt && method.exampleOutput && method.purpose && method.pros.length && method.cons.length && method.whenToUse.length));
-  assert.equal(new Set(publicMethods.map((method) => method.exampleOutput)).size, 34);
+  assert.equal(new Set(publicMethods.map((method) => method.exampleOutput)).size, 35);
   assert.ok(publicMethods.filter((method) => method.exampleRun.currentEvaluation).every((method) => method.exampleRun.verdict === 'pass' && method.exampleRun.score >= 8));
   assert.ok(publicMethods.every((method) => /Codex method-example harness/.test(method.exampleRun.runner)));
   assert.ok(publicMethods.every((method) => !/Hermes/i.test(method.exampleRun.runner)));
   const boundedReview = publicMethods.find((method) => method.id === 'M-33');
   const evidenceWorkflow = publicMethods.find((method) => method.id === 'M-34');
+  const powerOfTwo = publicMethods.find((method) => method.id === 'M-35');
   assert.match(boundedReview?.prompt ?? '', /SIXTEEN CORE RESPONSE LENSES/i);
   for (const lens of ['D Default', 'I Innovative', 'C Creative', 'P Practical', 'M Extensible and Modular', 'N Novel', 'U Unique', 'X Strange', 'G Pragmatic', 'V Useful', 'E Evidence-first', 'H Human-centered', 'R Risk-bounded', 'Y Systemic', 'F Experimental', 'S Synthesis']) {
     assert.match(boundedReview?.prompt ?? '', new RegExp(lens.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
@@ -264,6 +265,13 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.equal(evidenceWorkflow?.exampleRun.currentEvaluation, false);
   assert.match(evidenceWorkflow?.exampleRun.verdict ?? '', /reevaluation pending/i);
   assert.match(evidenceWorkflow?.exampleOutput ?? '', /Sigil transition clauses.*Human gloss/is);
+  assert.match(powerOfTwo?.prompt ?? '', /2 → 4 → 8 → 16/);
+  assert.match(powerOfTwo?.prompt ?? '', /Never invent or duplicate an idea merely to complete a power of two/i);
+  assert.match(powerOfTwo?.prompt ?? '', /information-gain/i);
+  assert.match(powerOfTwo?.exampleOutput ?? '', /stop ledger/i);
+  assert.equal(powerOfTwo?.exampleRun.currentEvaluation, true);
+  assert.equal(powerOfTwo?.exampleRun.verdict, 'pass');
+  assert.ok((powerOfTwo?.exampleRun.score ?? 0) >= 8);
 
   assert.match(page, /LibraryWorkbench client:load/);
   assert.match(page, /articles=\{articles\}/);

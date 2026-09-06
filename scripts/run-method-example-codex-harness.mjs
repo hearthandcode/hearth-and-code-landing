@@ -61,7 +61,11 @@ try {
   await writeFile(generationSchemaPath, JSON.stringify(generationSchema), 'utf8');
   await writeFile(evaluationSchemaPath, JSON.stringify(evaluationSchema), 'utf8');
   const selected = selectedIds.map((id) => ({ id, ...publicMethodPrompts[id] }));
-  const responseBudget = selectedIds.length === 1 && selectedIds[0] === 'M-33' ? '1,000-1,800' : '180-280';
+  const responseBudget = selectedIds.length === 1 && selectedIds[0] === 'M-33'
+    ? '1,000-1,800'
+    : selectedIds.length === 1 && selectedIds[0] === 'M-35'
+      ? '500-650'
+      : '180-280';
   runCodex(`You are the generation pass in a public method-example harness. Do not use tools or make external claims. Follow each supplied example prompt as a fictional, concrete worked exercise. Replace its placeholders with the Hearth & Code scenario already specified in the prompt. Produce ${responseBudget} words per response. Respect every stated boundary, include every requested artifact, and do not claim publication, deployment, acceptance, efficacy, or real-world execution. Express each requested Sigil element as structured symbolic language, then provide its human-readable gloss. Return exactly one result for each supplied ID.\n\n${JSON.stringify(selected, null, 2)}`, generationSchemaPath, generationOutputPath);
   const generated = JSON.parse(await readFile(generationOutputPath, 'utf8'));
   if (new Set(generated.results.map((item) => item.id)).size !== selectedIds.length) throw new Error('Generation pass returned duplicate or missing IDs.');

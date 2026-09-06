@@ -13,7 +13,7 @@ journal.sort((a, b) => new Date(`${b.data.published_date ?? b.data.date}T00:00:0
 const latest = journal.slice(0, 3);
 
 const rooms = [
-  { number: '01', signal: 'green', eyebrow: 'Practice library', title: 'Methods', description: 'I keep thirty-four field cards for orientation, context, evaluation, and responsible return.', href: '/methods/', action: 'Open my methods lab' },
+  { number: '01', signal: 'green', eyebrow: 'Practice library', title: 'Methods', description: 'I keep thirty-five field cards for orientation, context, evaluation, and responsible return.', href: '/methods/', action: 'Open my methods lab' },
   { number: '02', signal: 'violet', eyebrow: 'Public record', title: 'Research Library', description: 'I gather Field Journal entries, essays, technical articles, Methods instruments, and evidence maps into one searchable workbench.', href: '/library/', action: 'Enter my research library' },
   { number: '03', signal: 'cyan', eyebrow: 'Technique atlas', title: 'Prompt engineering', description: 'I treat prompts as inspectable task contracts with bounded context, tool permissions, evaluation, and return.', href: '/methods/#methods-collections-title', action: 'Browse my prompt practice' },
   { number: '04', signal: 'ember', eyebrow: 'Research programs', title: 'Technical reports', description: 'I connect TCCP, EKRP, Exocore, and system design through bounded dossiers and public-safe report orientations.', href: '/programs/', action: 'Read my program dossiers' },
@@ -69,7 +69,7 @@ function displayDate(value: string) {
           <aside class="studio-orientation" aria-label="Research studio orientation">
             <div class="studio-orientation__head"><span>My studio index</span><strong>Which thread would you like to pick up?</strong></div>
             <ol>
-              <li><a href="/methods/"><span>01</span><strong>Use a method</strong><small>34 field cards</small></a></li>
+              <li><a href="/methods/"><span>01</span><strong>Use a method</strong><small>35 field cards</small></a></li>
               <li><a href="/library/"><span>02</span><strong>Search the library</strong><small>articles + methods + maps</small></a></li>
               <li><a href="/programs/"><span>03</span><strong>Study a program</strong><small>reports + dossiers</small></a></li>
               <li><a href="/dossier/"><span>04</span><strong>Meet my working archetype</strong><small>practice dossier</small></a></li>
@@ -103,7 +103,7 @@ function displayDate(value: string) {
             <p>I keep this library practical rather than doctrinal: take a field card, adapt it to your sources and constraints, and preserve what the attempt cannot prove.</p>
           </header>
           <ol>{methods.map(([number, title, description]) => <li><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
-          <div class="studio-methods__actions"><a href="/methods/">Open all 34 field cards →</a></div>
+          <div class="studio-methods__actions"><a href="/methods/">Open all 35 field cards →</a></div>
         </section>
 
         <section class="studio-publications" aria-labelledby="studio-publications-title">

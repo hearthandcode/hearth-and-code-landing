@@ -178,7 +178,7 @@ test('all deep collections are visible in document order', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
     const expected = new Map([
-      ['/methods/', 34],
+      ['/methods/', 35],
       ['/programs/', 32],
       ['/notes/', 12],
       ['/evidence/', 16],
@@ -233,7 +233,7 @@ test('both long-form article families use the Ember Circuit reading surface', as
 test('representative React method summaries open distinct full method sheets', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
-    const examples = ['m-01', 'm-10', 'm-19', 'm-28', 'm-33', 'm-34'];
+    const examples = ['m-01', 'm-10', 'm-19', 'm-28', 'm-33', 'm-34', 'm-35'];
     const promptBodies = [];
     for (const id of examples) {
       const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
@@ -297,7 +297,7 @@ test('the Research Library stays focused on articles, essays, and Methods', asyn
       assert.doesNotMatch(await page.locator('main').innerText(), /React primitives|diagram engines|design system|Atlas \/ Typed relations|Evidence \/ Claim grammar|Systems \/ Workflow/i);
 
       await page.getByRole('tab', { name: /Methods/ }).click();
-      assert.equal(await page.locator('.ec-library-panel:not([hidden]) .ec-method-summary').count(), 34);
+      assert.equal(await page.locator('.ec-library-panel:not([hidden]) .ec-method-summary').count(), 35);
       await page.getByRole('searchbox').fill('literal');
       assert.equal(await page.locator('.ec-library-panel:not([hidden]) .ec-method-summary').count() >= 1, true);
       await page.getByRole('searchbox').fill('');
