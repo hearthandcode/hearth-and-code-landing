@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import { studioBoundary, studioCatalog } from '../src/data/studio-catalog.mjs';
-import { publicMethodPrompts } from '../src/data/public-method-prompts.ts';
+import { publicMethodPrompts, publicSigilClarification } from '../src/data/public-method-prompts.ts';
 import { publicMethodCollections, publicMethods } from '../src/data/public-method-library.ts';
 import { hearthsideArticles } from '../src/content/hearthside-articles.ts';
 import { fieldJournalExpansions } from '../src/content/field-journal-expansions.ts';
@@ -179,11 +179,11 @@ test('both article families continue the Studio threshold and paper reading fiel
   assert.match(articleStyles, /Article surfaces continue the same dark threshold/);
 });
 
-test('the 32 method prompts are individually authored and use a public-safe four-part weave', () => {
+test('the 34 method prompts are individually authored and use a public-safe four-part weave', () => {
   const prompts = Object.values(publicMethodPrompts);
-  assert.equal(prompts.length, 32);
-  assert.equal(new Set(prompts.map((entry) => entry.structure)).size, 32);
-  assert.equal(new Set(prompts.map((entry) => entry.prompt)).size, 32);
+  assert.equal(prompts.length, 34);
+  assert.equal(new Set(prompts.map((entry) => entry.structure)).size, 34);
+  assert.equal(new Set(prompts.map((entry) => entry.prompt)).size, 34);
 
   for (const [id, entry] of Object.entries(publicMethodPrompts)) {
     for (const framework of ['TCCP', 'EKRP', 'MINC', 'Sigil']) {
@@ -191,7 +191,11 @@ test('the 32 method prompts are individually authored and use a public-safe four
     }
     assert.match(entry.prompt, /\b(I|me|my)\b/i, `${id} uses a personal workbench voice`);
     assert.doesNotMatch(entry.prompt, /SIGIL-001|I,D,G,C,M,L,V,H|source-package path|operator bank/i, `${id} avoids internal program detail`);
+    assert.match(entry.prompt, /structured|compile|encode|symbolic prose|semantic/i, `${id} treats Sigil as structured language`);
   }
+  assert.match(publicSigilClarification.summary, /structured symbolic language/i);
+  assert.match(publicSigilClarification.summary, /LLM/i);
+  assert.match(publicSigilClarification.boundary, /human-readable gloss/i);
 });
 
 test('the Hearthside article families carry substantial personalized review layers', () => {
@@ -236,13 +240,30 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.equal(emberCircuitComponents.find((item) => item.name === 'FieldCard')?.sourceName, 'PracticeCard');
   assert.equal(emberCircuitTokens.color.field950, '#0e1114');
   assert.equal(emberCircuitTokens.color.paper100, '#f1e7d2');
-  assert.equal(publicMethods.length, 32);
+  assert.equal(publicMethods.length, 34);
   assert.equal(publicMethodCollections.length, 4);
   assert.ok(publicMethods.every((method) => method.prompt && method.exampleOutput && method.purpose && method.pros.length && method.cons.length && method.whenToUse.length));
-  assert.equal(new Set(publicMethods.map((method) => method.exampleOutput)).size, 32);
-  assert.ok(publicMethods.every((method) => method.exampleRun.verdict === 'pass' && method.exampleRun.score >= 8));
-  assert.ok(publicMethods.every((method) => /Codex isolated task workers/.test(method.exampleRun.runner)));
+  assert.equal(new Set(publicMethods.map((method) => method.exampleOutput)).size, 34);
+  assert.ok(publicMethods.filter((method) => method.exampleRun.currentEvaluation).every((method) => method.exampleRun.verdict === 'pass' && method.exampleRun.score >= 8));
+  assert.ok(publicMethods.every((method) => /Codex method-example harness/.test(method.exampleRun.runner)));
   assert.ok(publicMethods.every((method) => !/Hermes/i.test(method.exampleRun.runner)));
+  const boundedReview = publicMethods.find((method) => method.id === 'M-33');
+  const evidenceWorkflow = publicMethods.find((method) => method.id === 'M-34');
+  assert.match(boundedReview?.prompt ?? '', /SIXTEEN CORE RESPONSE LENSES/i);
+  for (const lens of ['D Default', 'I Innovative', 'C Creative', 'P Practical', 'M Extensible and Modular', 'N Novel', 'U Unique', 'X Strange', 'G Pragmatic', 'V Useful', 'E Evidence-first', 'H Human-centered', 'R Risk-bounded', 'Y Systemic', 'F Experimental', 'S Synthesis']) {
+    assert.match(boundedReview?.prompt ?? '', new RegExp(lens.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+  assert.match(boundedReview?.prompt ?? '', /QUESTION-SPECIFIC MUTATORS/i);
+  assert.match(boundedReview?.exampleOutput ?? '', /## Question contract[\s\S]*## Sixteen response lenses[\s\S]*## Eight mutators[\s\S]*## Selection, recommendation, and return/i);
+  assert.equal(boundedReview?.exampleRun.currentEvaluation, true);
+  assert.equal(boundedReview?.exampleRun.verdict, 'pass');
+  assert.equal(boundedReview?.exampleRun.score, 10);
+  assert.match(boundedReview?.exampleOutput ?? '', /\*\*Sigil:\*\*[\s\S]*\*\*Human-readable gloss:\*\*/i);
+  assert.match(evidenceWorkflow?.prompt ?? '', /six-stage pipeline/i);
+  assert.match(evidenceWorkflow?.exampleOutput ?? '', /Rejected transition/i);
+  assert.equal(evidenceWorkflow?.exampleRun.currentEvaluation, false);
+  assert.match(evidenceWorkflow?.exampleRun.verdict ?? '', /reevaluation pending/i);
+  assert.match(evidenceWorkflow?.exampleOutput ?? '', /Sigil transition clauses.*Human gloss/is);
 
   assert.match(page, /LibraryWorkbench client:load/);
   assert.match(page, /articles=\{articles\}/);
@@ -259,6 +280,8 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.match(methodLibrary, /Costs and cautions/);
   assert.doesNotMatch(workbench, /BoundaryMap|EvidenceMatrix|SystemContext|Mermaid|React grammar/);
   assert.match(methods, /<MethodFieldLibrary client:load/);
+  assert.match(methods, /research-sigil-clarification/);
+  assert.match(methods, /publicSigilClarification/);
   assert.match(navigation, /'Library', '\/library\/'/);
   assert.match(theme, /--ec-bg-parchment:var\(--ec-field-800\)/);
   assert.match(theme, /--room-paper:var\(--ec-field-800\)/);

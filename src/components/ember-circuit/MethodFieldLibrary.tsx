@@ -51,7 +51,7 @@ export default function MethodFieldLibrary({ methods, labelledBy }: Props) {
         <aside className="ec-method-sheet__boundary"><strong>Boundary</strong><p>{selected.boundary}</p></aside>
         <div className="ec-method-sheet__example-pair">
           <section className="ec-method-sheet__prompt"><header><div><span>Example prompt</span><h3>{selected.title} at the workbench</h3></div><small>{selected.influence}</small></header><pre>{selected.prompt}</pre></section>
-          <section className="ec-method-sheet__output"><header><div><span>Harness output</span><h3>A worked model response</h3></div><small>{selected.exampleRun.runner}</small></header><pre>{selected.exampleOutput}</pre><aside className="ec-method-sheet__run-receipt" aria-label="Harness evaluation"><div><span>{selected.exampleRun.verdict}</span><strong>{selected.exampleRun.score}/10</strong></div><p>{selected.exampleRun.summary}</p><small>{selected.exampleRun.evaluationLimit}</small></aside></section>
+          <section className="ec-method-sheet__output"><header><div><span>Harness output</span><h3>A worked model response</h3></div><small>{selected.exampleRun.runner}</small></header><pre>{selected.exampleOutput}</pre><aside className="ec-method-sheet__run-receipt" aria-label="Harness evaluation"><div><span>{selected.exampleRun.verdict}</span><strong>{selected.exampleRun.currentEvaluation ? `${selected.exampleRun.score}/10` : 'pending'}</strong></div><p>{selected.exampleRun.summary}</p><small>{selected.exampleRun.evaluationLimit}</small></aside></section>
         </div>
       </article>}
     </dialog>

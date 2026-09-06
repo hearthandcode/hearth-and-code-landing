@@ -178,7 +178,7 @@ test('all deep collections are visible in document order', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
     const expected = new Map([
-      ['/methods/', 32],
+      ['/methods/', 34],
       ['/programs/', 32],
       ['/notes/', 12],
       ['/evidence/', 16],
@@ -233,7 +233,7 @@ test('both long-form article families use the Ember Circuit reading surface', as
 test('representative React method summaries open distinct full method sheets', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
-    const examples = ['m-01', 'm-10', 'm-19', 'm-28'];
+    const examples = ['m-01', 'm-10', 'm-19', 'm-28', 'm-33', 'm-34'];
     const promptBodies = [];
     for (const id of examples) {
       const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
@@ -257,7 +257,12 @@ test('representative React method summaries open distinct full method sheets', a
       assert.equal(await sheet.getByRole('heading', { name: /A worked model response/i }).count(), 1);
       assert.equal((await sheet.locator('.ec-method-sheet__output pre').innerText()).trim().length > 180, true);
       assert.equal(await sheet.getByLabel('Harness evaluation').count(), 1);
-      assert.match(await sheet.getByLabel('Harness evaluation').innerText(), /pass[\s\S]*(8|9|10)\/10/i);
+      const evaluationText = await sheet.getByLabel('Harness evaluation').innerText();
+      if (id === 'm-34') {
+        assert.match(evaluationText, /clarified[\s\S]*reevaluation pending[\s\S]*pending/i);
+      } else {
+        assert.match(evaluationText, /pass[\s\S]*(8|9|10)\/10/i);
+      }
       const prompt = await sheet.locator('.ec-method-sheet__prompt pre').innerText();
       promptBodies.push(prompt);
       for (const framework of ['TCCP', 'EKRP', 'MINC', 'Sigil']) {
@@ -292,7 +297,7 @@ test('the Research Library stays focused on articles, essays, and Methods', asyn
       assert.doesNotMatch(await page.locator('main').innerText(), /React primitives|diagram engines|design system|Atlas \/ Typed relations|Evidence \/ Claim grammar|Systems \/ Workflow/i);
 
       await page.getByRole('tab', { name: /Methods/ }).click();
-      assert.equal(await page.locator('.ec-library-panel:not([hidden]) .ec-method-summary').count(), 32);
+      assert.equal(await page.locator('.ec-library-panel:not([hidden]) .ec-method-summary').count(), 34);
       await page.getByRole('searchbox').fill('literal');
       assert.equal(await page.locator('.ec-library-panel:not([hidden]) .ec-method-summary').count() >= 1, true);
       await page.getByRole('searchbox').fill('');

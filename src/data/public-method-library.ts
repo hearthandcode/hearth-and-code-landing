@@ -1,4 +1,5 @@
 import { publicMethodPrompts } from './public-method-prompts.ts';
+import { publicMethodEditorialOverrides } from './public-method-editorial-overrides.ts';
 import methodHarness from './public-method-harness-results.json' with { type: 'json' };
 
 interface PublicMethodExampleRun {
@@ -10,6 +11,7 @@ interface PublicMethodExampleRun {
   generatedAt: string;
   evaluationMethod: string;
   evaluationLimit: string;
+  currentEvaluation: boolean;
 }
 
 export interface PublicMethodCard {
@@ -80,6 +82,8 @@ const seeds: MethodSeed[] = [
   ['M-30','Revision delta','Change record','Describe what changed, why, and which evidence or feedback caused the revision.','A delta does not prove the new version is better.','A field note is revised after a reader identifies an overstated sentence.','a revision delta showing wording, reason, evidence, and remaining uncertainty','whether correction remains legible without rewriting history'],
   ['M-31','Human disposition','Decision gate','Return the candidate with clear options: accept, revise, withhold, or retire.','The system does not choose its own disposition.','A generated candidate has several viable human-held dispositions.','a disposition packet showing each option and its consequence','whether the agent refrains from selecting the outcome'],
   ['M-32','Method receipt','Learning artifact','Leave enough trace for another person to understand the attempt, its checks, and its non-claims.','A receipt is process history, not proof of value.','A visitor wants to adapt one Hearth & Code method in another workspace.','a portable receipt describing inputs, transformation, check, limits, and adaptation notes','whether transfer limits are as visible as the method'],
+  ['M-33','Bounded review question deck','Decision interface','Turn one consequential decision into a source-bound docket with sixteen materially distinct response lenses and tailored mutators.','A bounded question can structure a decision, but it cannot manufacture consent, convert validation into approval, or choose on the decision owner’s behalf.','A public method candidate needs one legible decision, sixteen distinct response orientations, and a small set of composable adjustments.','a question contract, sixteen-lens option palette, eight tailored mutators, composition rules, and a human-held return gate','whether every lens answers the same decision through a distinct mechanism and every mutator changes the proposal without changing its authority'],
+  ['M-34','Evidence-bearing agent workflow','Data workflow','Move structured records through guarded agent stages whose inputs, transformations, checks, failures, and returns remain inspectable.','A data pipeline can preserve evidence and still be wrong; no successful stage implies human acceptance or permission for an external effect.','A worked method example must be generated, evaluated, revised when necessary, and returned for author review without automatic publication.','a six-stage record pipeline with power-of-two capacity bounds, typed checks, failure holds, and lineage receipts','whether every derived output retains its input identity, check result, effect boundary, and responsible next gate'],
 ];
 
 const harnessResults = new Map(methodHarness.results.map((result) => [result.id, result]));
@@ -88,22 +92,29 @@ const buildMethod = (seed: MethodSeed, family: Family): PublicMethodCard => {
   const [id, title, form, summary, boundary, scenario, artifact, check] = seed;
   const authored = publicMethodPrompts[id];
   const harnessResult = harnessResults.get(id);
+  const editorialOverride = publicMethodEditorialOverrides[id];
   if (!harnessResult) throw new Error(`Missing admitted harness result for ${id}.`);
+  if (editorialOverride && !harnessResult.response.includes(editorialOverride.replace)) {
+    throw new Error(`Editorial override no longer matches the preserved harness response for ${id}.`);
+  }
   return {
     id, title, form, summary, boundary,
     purpose: `${family.aim} This card focuses that purpose on ${title.toLowerCase()}.`,
     influence: authored.influence,
     prompt: authored.prompt,
-    exampleOutput: harnessResult.response,
+    exampleOutput: editorialOverride
+      ? harnessResult.response.replace(editorialOverride.replace, editorialOverride.with)
+      : harnessResult.response,
     exampleRun: {
-      runner: methodHarness.runner,
-      evaluator: harnessResult.evaluation.evaluator,
+      runner: editorialOverride ? `${methodHarness.runner} · editorial clarification` : methodHarness.runner,
+      evaluator: editorialOverride ? 'Fresh harness reevaluation pending' : harnessResult.evaluation.evaluator,
       score: harnessResult.evaluation.total_score,
-      verdict: harnessResult.evaluation.verdict,
-      summary: harnessResult.evaluation.summary,
+      verdict: editorialOverride ? 'clarified · reevaluation pending' : harnessResult.evaluation.verdict,
+      summary: editorialOverride ? editorialOverride.note : harnessResult.evaluation.summary,
       generatedAt: methodHarness.generated_at,
-      evaluationMethod: methodHarness.evaluation_method,
+      evaluationMethod: editorialOverride ? 'Preserved generated response with a source-controlled editorial semantic correction.' : methodHarness.evaluation_method,
       evaluationLimit: methodHarness.evaluation_limit,
+      currentEvaluation: !editorialOverride,
     },
     whenToUse: [scenario, family.useWhen],
     steps: [`Frame the situation: ${scenario}`, `Make ${artifact}.`, `Check ${check}.`],
@@ -112,12 +123,19 @@ const buildMethod = (seed: MethodSeed, family: Family): PublicMethodCard => {
   };
 };
 
+const familySeeds: MethodSeed[][] = [
+  seeds.slice(0, 8),
+  seeds.slice(8, 16),
+  [...seeds.slice(16, 24), seeds[33]],
+  [...seeds.slice(24, 32), seeds[32]],
+];
+
 export const publicMethodCollections: PublicMethodCollection[] = families.map((family, familyIndex) => ({
   id: family.id,
   title: family.title,
   source: family.source,
   framing: family.framing,
-  entries: seeds.slice(familyIndex * 8, familyIndex * 8 + 8).map((seed) => buildMethod(seed, family)),
+  entries: familySeeds[familyIndex].map((seed) => buildMethod(seed, family)),
 }));
 
 export const publicMethods = publicMethodCollections.flatMap((collection) => collection.entries);
