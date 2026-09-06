@@ -1,0 +1,70 @@
+export const studioBoundary = Object.freeze({
+  firstPartyDataCollection: false,
+  accountRequired: false,
+  checkoutEnabled: false,
+  publicApiEnabled: false,
+  inquiryProvider: 'Tally receives correspondence; this static site stores nothing.',
+});
+
+export const studioCatalog = Object.freeze([
+  {
+    id: 'starter-context-charter',
+    number: '01',
+    family: 'Template',
+    title: 'Context Charter Starter',
+    summary: 'A compact Markdown scaffold for giving a difficult task a purpose, source boundary, proof, stop condition, and useful return.',
+    readiness: 'review-candidate',
+    readinessLabel: 'Free review edition',
+    boundary: 'A starting structure, not a guarantee that a task is safe, complete, or correctly governed.',
+    action: {
+      kind: 'download',
+      label: 'Download the Markdown template',
+      href: '/downloads/context-charter-starter-v0.1.md',
+    },
+  },
+  {
+    id: 'architecture-walkthrough',
+    number: '02',
+    family: 'Session',
+    title: 'Architecture Walkthrough',
+    summary: 'A focused conversation through one system boundary, one failure case, and the evidence needed for the next decision.',
+    readiness: 'inquiry-candidate',
+    readinessLabel: 'Conversation first',
+    boundary: 'Scope, availability, format, and any commercial terms are defined together before a commitment.',
+    action: {
+      kind: 'inquire',
+      label: 'Start with the situation',
+      href: '/correspondence/',
+    },
+  },
+  {
+    id: 'governed-workflow-review',
+    number: '03',
+    family: 'Service',
+    title: 'Governed Workflow Review',
+    summary: 'A bounded review of sources, role boundaries, permissions, checks, recovery, and the handoff between people and agents.',
+    readiness: 'inquiry-candidate',
+    readinessLabel: 'Scoping candidate',
+    boundary: 'The review identifies decisions and risks; it does not certify security, compliance, or organizational outcomes.',
+    action: {
+      kind: 'inquire',
+      label: 'Discuss a bounded review',
+      href: '/correspondence/',
+    },
+  },
+  {
+    id: 'workbench-preview',
+    number: '04',
+    family: 'Application',
+    title: 'Hearth & Code Workbench',
+    summary: 'A local-first application direction for inspectable artifacts, typed workflows, bounded agent runs, and durable return paths.',
+    readiness: 'preview-only',
+    readinessLabel: 'Pre-alpha preview',
+    boundary: 'The current evidence is local and provider-free; subscriptions, hosted accounts, and production service are not available.',
+    action: {
+      kind: 'read',
+      label: 'Read the Workbench boundary',
+      href: '/workbench/',
+    },
+  },
+]);

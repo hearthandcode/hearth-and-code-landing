@@ -1,0 +1,12 @@
+---
+import { routeVoice, type ResearchRoute } from '../data/research-studio-content';
+interface Props { route: ResearchRoute; }
+const { route } = Astro.props;
+const voice = routeVoice[route];
+---
+
+<aside class="hearthside-voice" aria-labelledby={`hearthside-voice-${route}`}>
+  <div><p>From the hearthside workbench</p><span>{voice.posture}</span></div>
+  <blockquote><strong id={`hearthside-voice-${route}`}>{voice.title}</strong><p>{voice.note}</p></blockquote>
+  <a href="/dossier/">Read the working archetype <span aria-hidden="true">→</span></a>
+</aside>

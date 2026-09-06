@@ -1,15 +1,17 @@
 ---
-import '../styles/research-lab.css';
+import '../styles/research-studio-landing.css';
 import '../styles/reading-articles.css';
+import '../styles/studio-room-surfaces.css';
+import '../styles/ember-circuit-library.css';
 import HearthNavigation from './HearthNavigation.astro';
 import type { HearthsideArticle } from '../content/hearthside-articles';
 interface Props { article: HearthsideArticle; }
 const { article } = Astro.props;
 ---
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={article.dek}/><meta name="theme-color" content="#161411"/><title>{article.title} · Hearth &amp; Code</title></head>
-<body class="research-body reading-article-body"><a class="research-skip" href="#article-content">Skip to article</a><HearthNavigation current="library" context="Field Notes & Reading Room / public articles"/>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={article.dek}/><meta name="theme-color" content="#0e1114"/><title>{article.title} · Hearth &amp; Code</title></head>
+<body class="studio-room-body studio-room-body--notes studio-article-body"><a class="research-skip" href="#article-content">Skip to article</a><HearthNavigation current="library" context="Field Notes & Reading Room / public articles"/>
 <main id="article-content" class="reading-article"><header class="reading-article__hero"><p class="research-eyebrow">{article.code} / {article.format ?? 'Hearthside essay'} / public research article</p><h1>{article.title}</h1><p>{article.dek}</p><div><span>{article.readTime}</span>{article.themes.map(theme => <span>{theme}</span>)}</div></header>
-<aside class="reading-article__boundary"><strong>Reading boundary</strong><p>This article uses the Hearthside voice to explain a method orientation. It does not disclose private working material or claim publication as proof, universal efficacy, or operational authority.</p></aside>
+<section class="studio-article-reading-field"><aside class="reading-article__boundary"><strong>Reading boundary</strong><p>This article uses the Hearthside voice to explain a method orientation. It does not disclose private working material or claim publication as proof, universal efficacy, or operational authority.</p></aside>
 <article class="reading-article__body">{article.sections.map(section => <section><h2>{section.heading}</h2>{section.paragraphs.map(paragraph => <p>{paragraph}</p>)}</section>)}</article>
-<footer class="reading-article__footer"><a href="/notes/#articles">← Return to the technical articles</a><a href="/methods/">Open the method cards →</a></footer></main></body></html>
+<footer class="reading-article__footer"><a href="/library/">← Back to the Research Library</a></footer></section></main></body></html>

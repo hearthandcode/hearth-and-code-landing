@@ -1,53 +1,14 @@
 ---
-import PanelTabs from './PanelTabs';
+import { publicMethodCollections } from '../data/public-method-library';
+import type { PublicMethodCard } from '../data/public-method-library';
+import MethodFieldLibrary from './ember-circuit/MethodFieldLibrary';
 type Route = 'programs' | 'methods' | 'notes' | 'evidence';
 interface Props { route: Route | 'lab' | 'questions' | 'dossier' | 'correspondence'; }
 interface Entry { id: string; title: string; form: string; note: string; boundary: string; }
 interface Set { id: string; title: string; source: string; framing: string; entries: Entry[]; }
 const { route } = Astro.props;
 
-const methods: Set[] = [
-  { id: 'semantic-orientation', title: 'Semantic orientation', source: 'Candidate semantic-orientation catalog', framing: 'How a practice selects vocabulary, scope, and relations without treating a vocabulary as an authority grant.', entries: [
-    { id: 'M-01', title: 'Literal before normalized', form: 'Reading discipline', note: 'Keep an exact source phrase distinct from the public wording that makes it easier to discuss.', boundary: 'Normalization remains candidate language until author review.' },
-    { id: 'M-02', title: 'The bounded neighborhood', form: 'Selection pattern', note: 'Return the few concepts needed for a question, plus the nearest boundary, rather than an entire lexicon.', boundary: 'Selection is a reading aid, not a personality assessment.' },
-    { id: 'M-03', title: 'Orientation is not a score', form: 'Interpretation check', note: 'Describe a way of attending to a problem without inferring ability, diagnosis, or a stable trait.', boundary: 'No public profile should turn an orientation into a ranking.' },
-    { id: 'M-04', title: 'Relationship, named', form: 'Relation card', note: 'State whether one idea supports, constrains, contrasts with, or merely resembles another.', boundary: 'A visible relation is still open to review.' },
-    { id: 'M-05', title: 'The analogy boundary', form: 'Transfer note', note: 'Borrow a mechanism from another field while leaving that field’s authority and context in place.', boundary: 'Analogy cannot prove a claim by association.' },
-    { id: 'M-06', title: 'Unknowns stay addressable', form: 'Ambiguity ledger', note: 'Give contradiction, absence, and uncertainty their own place in the representation.', boundary: 'A gap is not filled merely to complete a pattern.' },
-    { id: 'M-07', title: 'Trigger without expansion', form: 'Prompt cue', note: 'Use a cue to retrieve a bounded source set rather than silently widening the task.', boundary: 'A trigger does not permit new access or action.' },
-    { id: 'M-08', title: 'Projection keeps a tether', form: 'Publication rule', note: 'A public explanation should retain the identity and limits of the source it derives from.', boundary: 'The projection never replaces its source record.' },
-  ] },
-  { id: 'operational-intelligence', title: 'Operational intelligence', source: 'Operational Intelligence Exocore Meta-Framework', framing: 'A coordination grammar for comparing forms and transitions without centralizing authority, identity, or permission.', entries: [
-    { id: 'M-09', title: 'Source-owner boundary', form: 'Coordination rule', note: 'Name who owns the source before composing it into a new working view.', boundary: 'Composition does not transfer ownership.' },
-    { id: 'M-10', title: 'Form before function', form: 'Comparison lens', note: 'Compare the structure of two practices before declaring that one can replace the other.', boundary: 'Similarity is not interoperability.' },
-    { id: 'M-11', title: 'Transition as an object', form: 'State map', note: 'Make the move from source to candidate, check, review, and release visible as a sequence.', boundary: 'A planned transition does not execute itself.' },
-    { id: 'M-12', title: 'Role, capability, permission', form: 'Separation test', note: 'Distinguish who is involved, what a system can do, and what it has been allowed to do.', boundary: 'Capability never implies permission.' },
-    { id: 'M-13', title: 'Loss register', form: 'Projection receipt', note: 'Record what a transformation preserves, omits, simplifies, or makes less certain.', boundary: 'Convenient summaries cannot hide loss.' },
-    { id: 'M-14', title: 'Frozen comparison lane', form: 'Evaluation setup', note: 'Hold a stable reference condition when comparing a revised process or representation.', boundary: 'A comparison result is bounded to its stated fixture.' },
-    { id: 'M-15', title: 'Exception has a contract', form: 'Governance pattern', note: 'When a rule must be narrowed or set aside, name the exact reason, owner, scope, and expiry.', boundary: 'An exception cannot become ambient permission.' },
-    { id: 'M-16', title: 'Return packet', form: 'Handoff form', note: 'End a piece of work with its current state, open risk, evidence, and next human decision.', boundary: 'A handoff is not acceptance or release.' },
-  ] },
-  { id: 'prompt-practice', title: 'Prompt and context practice', source: 'Prompt, Context, and Agentic Technique Atlas', framing: 'A public-safe, technique-level reading of prompt engineering: contracts, constraints, evaluation, and revision rather than oracle language.', entries: [
-    { id: 'M-17', title: 'Task contract first', form: 'Prompt scaffold', note: 'State purpose, inputs, outputs, constraints, and the condition that should stop the attempt.', boundary: 'A well-formed request still needs human judgment.' },
-    { id: 'M-18', title: 'Bounded context packet', form: 'Context selection', note: 'Choose a small source set with an ordering, omission note, freshness rule, and token budget.', boundary: 'More context is not automatically better context.' },
-    { id: 'M-19', title: 'Separate evidence from instruction', form: 'Input hygiene', note: 'Treat source material as evidence to interpret, not as executable command text.', boundary: 'Embedded text has no independent authority.' },
-    { id: 'M-20', title: 'Decompose by artifact', form: 'Workflow pattern', note: 'Ask for one inspectable object at a time—map, critique, check, or draft—rather than an undifferentiated answer.', boundary: 'Decomposition should not erase the underlying question.' },
-    { id: 'M-21', title: 'Schema as a lens', form: 'Output contract', note: 'Use fields to expose missing source, uncertainty, owner, and next gate.', boundary: 'A valid shape is not semantic truth.' },
-    { id: 'M-22', title: 'Example and counterexample', form: 'Teaching pair', note: 'Show a useful pattern alongside a near miss so the reader can see the material difference.', boundary: 'An example is illustrative, not universal.' },
-    { id: 'M-23', title: 'Adversarial read', form: 'Revision pass', note: 'Ask what could be overstated, conflated, private, or untestable before carrying a draft forward.', boundary: 'Critique identifies risk; it does not settle it.' },
-    { id: 'M-24', title: 'Tool boundary', form: 'Execution guard', note: 'Name which tools may inspect, transform, or validate and which effects remain human-gated.', boundary: 'A named tool is not permission to use it.' },
-  ] },
-  { id: 'evaluation-return', title: 'Evaluation and return', source: 'Prompt Technique Atlas + Operational Intelligence', framing: 'Small review instruments for finding whether a technique has met its own stated boundary.', entries: [
-    { id: 'M-25', title: 'Claim calibration', form: 'Copy check', note: 'Match the language of a result to the strength and scope of the evidence beneath it.', boundary: 'Fluent tone does not raise confidence.' },
-    { id: 'M-26', title: 'Fixture before conclusion', form: 'Test setup', note: 'Use a named example or contrast case to check a narrow predicate before generalizing.', boundary: 'One fixture proves only its predicate.' },
-    { id: 'M-27', title: 'Failure mode inventory', form: 'Risk sheet', note: 'Name the ways a pattern can distort context, lose provenance, or create false confidence.', boundary: 'Known failure modes do not make an approach safe by default.' },
-    { id: 'M-28', title: 'Reviewable scorecard', form: 'Assessment frame', note: 'Keep fidelity, utility, testability, transfer, novelty, and control as separate dimensions.', boundary: 'No aggregate score is implied.' },
-    { id: 'M-29', title: 'Constraint rehearsal', form: 'Preflight', note: 'Test the intended method against privacy, source, time, and authority constraints before the main attempt.', boundary: 'Passing preflight does not release a consequential action.' },
-    { id: 'M-30', title: 'Revision delta', form: 'Change record', note: 'Describe what changed, why it changed, and which evidence or feedback caused the revision.', boundary: 'A delta does not prove the new version is better.' },
-    { id: 'M-31', title: 'Human disposition', form: 'Decision gate', note: 'Return the candidate with clear options: accept, revise, withhold, or retire.', boundary: 'The system does not choose its own disposition.' },
-    { id: 'M-32', title: 'Method receipt', form: 'Learning artifact', note: 'Leave enough trace for another person to understand the attempt, its checks, and its non-claims.', boundary: 'A receipt is process history, not proof of value.' },
-  ] },
-];
+const methods: Set[] = publicMethodCollections.map((collection) => ({ ...collection, entries: collection.entries.map((entry) => ({ ...entry, note: entry.summary })) }));
 
 const programs: Set[] = [
   { id: 'tccp', title: 'TCCP research program', source: 'TCCP Research Program coordination home', framing: 'A public learning view of research into typed representations, interaction compilation, and evaluation—without collapsing their separate owners.', entries: [
@@ -140,57 +101,6 @@ const evidence: Set[] = [
   ] },
 ];
 
-const methodFrames: Record<string, { aim: string; useWhen: string; steps: string[] }> = {
-  'semantic-orientation': { aim: 'Select language and relations without converting a vocabulary into a verdict about a person or system.', useWhen: 'A task has several near-neighbor concepts and the wording will shape the decision.', steps: ['Locate the exact phrase or source object.', 'Name the smallest relevant neighborhood and one boundary.', 'Keep literal wording separate from public normalization.', 'Return the selection with an uncertainty or omission note.'] },
-  'operational-intelligence': { aim: 'Compare forms and transitions while leaving authority with their actual owners.', useWhen: 'Two workflows, records, or systems appear related and need a disciplined comparison.', steps: ['Name the source owner and the object being compared.', 'Describe the transition rather than declaring replacement.', 'Record what is preserved, omitted, or still unknown.', 'Return a candidate next decision to a person.'] },
-  'prompt-practice': { aim: 'Turn a request into an inspectable agent task with inputs, boundaries, and a useful return.', useWhen: 'An agent can assist with a bounded transformation, synthesis, or check.', steps: ['State the task, source set, and exclusion boundary.', 'Request one named artifact rather than a general answer.', 'Require claim classes, limits, and counterevidence.', 'Stop before any unapproved external or consequential effect.'] },
-  'evaluation-return': { aim: 'Test one narrow predicate, preserve what it does not prove, and leave a legible next move.', useWhen: 'A candidate needs review before its language or handling becomes more consequential.', steps: ['Name the smallest predicate worth checking.', 'Choose an input, fixture, or contrast case.', 'Record observation separately from interpretation.', 'Offer accept, revise, withhold, or retire as human-held dispositions.'] },
-};
-interface TechniqueBrief { scenario: string; artifact: string; check: string; }
-const techniqueBriefs: Record<string, TechniqueBrief> = {
-  'M-01': { scenario: 'A Dossier section uses a memorable phrase whose public wording has drifted from its source note.', artifact: 'a two-column literal-to-public wording card with the semantic change marked', check: 'whether the public wording adds a trait, authority, or claim not present in the literal phrase' },
-  'M-02': { scenario: 'A visitor asks what “return” means across the Lab, Methods, Evidence, and Correspondence surfaces.', artifact: 'a five-term semantic neighborhood with one near miss and one exclusion', check: 'whether every selected term changes how the visitor could act or read' },
-  'M-03': { scenario: 'A profile card risks describing an orientation as an ability score or diagnosis.', artifact: 'a language audit with safer alternatives for each ranking-like phrase', check: 'whether the revised language describes a practice rather than a person’s fixed capacity' },
-  'M-04': { scenario: 'A public claim, its source, and its correction route need to be made legible together.', artifact: 'a compact relation map using supports, constrains, and returns-to edges', check: 'whether every edge names its direction and leaves room for review' },
-  'M-05': { scenario: 'The Dossier borrows a character-sheet form to explain a systems practice.', artifact: 'a transfer note separating what the RPG form lends from what it cannot establish', check: 'whether the metaphor is carrying mechanism rather than borrowed authority' },
-  'M-06': { scenario: 'A program page contains a missing source, an unresolved term, and a contested design direction.', artifact: 'an ambiguity ledger with distinct states for absent, conflicting, and provisional', check: 'whether every unknown has a named reason and a possible next evidence route' },
-  'M-07': { scenario: 'A reader’s request for “all the methods” would overload the page and blur its question.', artifact: 'a trigger rule that returns four relevant cards and names what was excluded', check: 'whether the selection stays bounded to the stated question' },
-  'M-08': { scenario: 'A private research note is being translated into a public teaching card.', artifact: 'a projection contract listing source identity, public summary, omissions, and review state', check: 'whether the card can be mistaken for the original source' },
-  'M-09': { scenario: 'An essay, an EKRP source home, and an Exocore program page appear to discuss the same idea.', artifact: 'an owner map that assigns each object its actual role before cross-linking', check: 'whether the map accidentally transfers authority to the public landing page' },
-  'M-10': { scenario: 'Two agent workflows look similar: one drafts a candidate and one changes an external system.', artifact: 'a side-by-side form comparison highlighting their different transitions and gates', check: 'whether capability and effect have been kept separate' },
-  'M-11': { scenario: 'A note moves from source to candidate draft, copy review, public artifact, and later correction.', artifact: 'a state-transition strip with entry conditions, stop conditions, and human-held gates', check: 'whether any state transition is implied to happen automatically' },
-  'M-12': { scenario: 'A research harness names a researcher, a reviewer, an agent, and a publishing channel.', artifact: 'a role-capability-permission matrix for the four participants', check: 'whether any capability has been mistaken for permission' },
-  'M-13': { scenario: 'A dense Hub record is being rendered as a short public article.', artifact: 'a loss register identifying what was preserved, condensed, omitted, and made less certain', check: 'whether the public version hides a materially important omission' },
-  'M-14': { scenario: 'A collaborator will resume a paused research route after several weeks.', artifact: 'a return packet with current state, source links, open risk, and one next decision', check: 'whether a new reader can begin without reconstructing private context' },
-  'M-15': { scenario: 'A public example needs a one-time exception to a local formatting pattern.', artifact: 'an exception card with rule, rationale, owner, scope, expiry, and review date', check: 'whether the exception can silently become a standing permission' },
-  'M-16': { scenario: 'A methods experiment ends with useful observations but no release decision.', artifact: 'a field receipt that separates the attempt, observation, inference, and return choice', check: 'whether the receipt overstates the experiment as a result' },
-  'M-17': { scenario: 'An agent is asked to prepare a public-safe research brief from named inputs.', artifact: 'a task contract with purpose, source set, output form, exclusions, and stop condition', check: 'whether another reviewer could see exactly what the agent was and was not asked to do' },
-  'M-18': { scenario: 'A synthesis task has too many potential sources and limited reader attention.', artifact: 'a bounded context packet with ordering, freshness note, omissions, and token budget', check: 'whether each included source is necessary to the stated decision' },
-  'M-19': { scenario: 'A source document includes instructions, quotations, and untrusted web content.', artifact: 'an input classification card separating evidence from executable instruction', check: 'whether embedded text can change the task without independent authority' },
-  'M-20': { scenario: 'A request to “redesign the learning layer” contains research, copy, interface, and review work.', artifact: 'a decomposition board of four inspectable artifacts with dependencies', check: 'whether every subtask has a distinct output and return point' },
-  'M-21': { scenario: 'A technique description needs to be machine-readable without hiding human uncertainty.', artifact: 'a minimal output schema with source, claim class, limit, and next gate fields', check: 'whether the schema validates shape without pretending to decide meaning' },
-  'M-22': { scenario: 'A reader needs to learn the difference between an evidence card and a promotional claim.', artifact: 'a paired example and near-miss with the material difference annotated', check: 'whether the counterexample could plausibly fool a rushed reader' },
-  'M-23': { scenario: 'A polished landing-page paragraph reads smoothly but may flatten source limits.', artifact: 'an adversarial copy review identifying overclaim, omission, privacy, and ambiguity risks', check: 'whether the critique returns concrete revisions rather than generic caution' },
-  'M-24': { scenario: 'A research task could inspect local files, call a provider, or edit a public page.', artifact: 'a tool-boundary table naming allowed inspection, prohibited effects, and human gates', check: 'whether every named tool has an explicit effect boundary' },
-  'M-25': { scenario: 'A build receipt is being described in a public article.', artifact: 'three calibrated versions of the statement: observation, interpretation, and prohibited overclaim', check: 'whether the final language says no more than the build actually checked' },
-  'M-26': { scenario: 'A new prompt pattern claims to improve source-grounded summarization.', artifact: 'a small fixture plan with a positive case, contrast case, and pass predicate', check: 'whether a passing fixture is being mistaken for general effectiveness' },
-  'M-27': { scenario: 'A public agent workflow may lose context, overstate confidence, or cross a privacy boundary.', artifact: 'a failure-mode inventory with signal, consequence, containment, and recovery', check: 'whether the plan names a safe stop for each consequential failure' },
-  'M-28': { scenario: 'Several method candidates need comparison without collapsing into a single quality score.', artifact: 'a multidimensional scorecard for fidelity, utility, testability, transfer, novelty, and control', check: 'whether any blank dimension has been honestly left unevaluated' },
-  'M-29': { scenario: 'A new public module is ready for design review but not yet for publication.', artifact: 'a preflight sheet covering source, privacy, audience, authority, cost, and rollback', check: 'whether a failed boundary prevents the dependent release step' },
-  'M-30': { scenario: 'A field note is revised after a reader points out an overstated sentence.', artifact: 'a revision delta showing wording changed, reason, supporting evidence, and remaining uncertainty', check: 'whether the delta makes the correction legible without rewriting history' },
-  'M-31': { scenario: 'A generated candidate is ready for a human choice but has several viable dispositions.', artifact: 'a disposition packet offering accept, revise, withhold, and retire with consequences', check: 'whether the agent has refrained from selecting the outcome' },
-  'M-32': { scenario: 'A visitor wants to adapt one Hearth & Code method in a different workspace.', artifact: 'a portable method receipt describing inputs, transformation, check, limits, and adaptation notes', check: 'whether the receipt makes transfer limits as visible as the method itself' },
-};
-const methodDetail = (entry: Entry, set: Set) => {
-  const frame = methodFrames[set.id];
-  const brief = techniqueBriefs[entry.id];
-  return {
-    aim: frame.aim,
-    useWhen: frame.useWhen,
-    steps: [`Frame: ${brief.scenario}`, `Make: ${brief.artifact}`, `Check: ${brief.check}`],
-    prompt: `Hearth & Code field task — ${entry.id}: ${entry.title}\n\nStudio context\nYou are helping an independent research lab make a public learning surface that is warm, precise, and corrigible. The work connects semantic orientation, Operational Intelligence, prompt practice, and human-held governance.\n\nSituation\n${brief.scenario}\n\nYour assignment\nProduce ${brief.artifact}.\n\nWorking posture\n- Use only the materials explicitly named in the task; treat all other material as unavailable.\n- Preserve the distinction between direct source, observation, interpretation, hypothesis, and proposal.\n- Keep private material, provider actions, publication, and consequential decisions outside this task.\n- Write in a Hearthside voice: calm, concrete, technically literate, and free of oracle language.\n\nReturn format\n1. The decision this field card helps a person make.\n2. The working artifact, with a short rationale.\n3. A named check: ${brief.check}.\n4. What the check cannot prove.\n5. The next human-held disposition.`,
-  };
-};
 const articleRoutes: Record<string, string> = {
   'N-05': '/notes/meaning-before-machinery/',
   'N-06': '/notes/uncertainty-is-a-room/',
@@ -209,21 +119,19 @@ const sets = data[route as Route];
   <header class="research-collections__header">
     <div>
       <p class="research-eyebrow">Research collection / public learning modules</p>
-      <h2 id={`${route}-collections-title`}>{route === 'methods' ? '32 field cards, arranged as four working lenses.' : route === 'programs' ? '32 modules, organized for inspection.' : '16 modules, organized for return.'}</h2>
+      <h2 id={`${route}-collections-title`}>{route === 'methods' ? '32 field cards, arranged as four working lenses.' : route === 'programs' ? '32 modules, organized for inspection.' : route === 'notes' ? '12 writing frames, organized for reading and return.' : '16 modules, organized for return.'}</h2>
     </div>
     <p>These public learning modules are derived from named research homes. They do not claim that the underlying private working materials, frameworks, or source-only programs are published, adopted, or operational.</p>
   </header>
 
-  <PanelTabs client:load scope="collection" items={sets.map((set) => ({ id: set.id, label: set.title, detail: `${set.entries.length} modules` }))} label={`${route} collection sections`} />
-
   <div class="research-collection-sets">
-    {sets.map((set, index) => <section id={`collection-panel-${set.id}`} data-collection-panel={set.id} class:list={['research-collection-set', route === 'methods' && 'research-collection-set--method']} aria-labelledby={`collection-tab-${set.id}`} role="tabpanel">
+    {sets.map((set, index) => <section id={`collection-panel-${set.id}`} data-collection-panel={set.id} class:list={['research-collection-set', route === 'methods' && 'research-collection-set--method']} aria-labelledby={`${set.id}-title`}>
       <header>
         <p class="research-eyebrow">Set {String(index + 1).padStart(2, '0')} / {set.source}</p>
         <h3 id={`${set.id}-title`}>{set.title}</h3>
         <p>{set.framing}</p>
       </header>
-      <ol class:list={['research-collection-grid', route === 'methods' && 'research-collection-grid--methods']}>
+      {route === 'methods' ? <MethodFieldLibrary client:load methods={set.entries as unknown as PublicMethodCard[]} labelledBy={`${set.id}-title`} /> : <ol class="research-collection-grid">
         {set.entries.map((entry) => <li id={entry.id.toLowerCase()}>
           <span class="research-collection-grid__id">{entry.id}</span>
           <p class="research-collection-grid__form">{entry.form}</p>
@@ -231,34 +139,8 @@ const sets = data[route as Route];
           <p>{entry.note}</p>
           {route === 'notes' && articleRoutes[entry.id] && <a class="research-essay-link" href={articleRoutes[entry.id]}>Read the article →</a>}
           <small><b>Limit</b> {entry.boundary}</small>
-          {route === 'methods' && <>
-            <button class="research-technique-open" type="button" data-technique-open={entry.id.toLowerCase()} aria-haspopup="dialog">Open technique field card <span aria-hidden="true">↗</span></button>
-            <dialog id={`technique-${entry.id.toLowerCase()}`} class="research-technique-dialog" aria-labelledby={`technique-title-${entry.id.toLowerCase()}`}>
-              <form method="dialog"><button class="research-technique-close" aria-label={`Close ${entry.title} field card`}>×</button></form>
-              <p class="research-eyebrow">{entry.id} / {set.title} / practical field card</p>
-              <h3 id={`technique-title-${entry.id.toLowerCase()}`}>{entry.title}</h3>
-              <p class="research-technique-dialog__lede">{entry.note}</p>
-              <dl class="research-technique-spec"><div><dt>Purpose</dt><dd>{methodDetail(entry, set).aim}</dd></div><div><dt>Use when</dt><dd>{methodDetail(entry, set).useWhen}</dd></div><div><dt>Boundary</dt><dd>{entry.boundary}</dd></div></dl>
-              <section><p class="research-eyebrow">Field procedure</p><ol>{methodDetail(entry, set).steps.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>)}</ol></section>
-              <section><p class="research-eyebrow">Practical agent prompt / candidate</p><pre><code>{methodDetail(entry, set).prompt}</code></pre></section>
-              <p class="research-technique-dialog__note">Adapt the prompt to your own source, authority, privacy, and tool boundaries. It is a teaching example, not a command to take action.</p>
-            </dialog>
-          </>}
         </li>)}
-      </ol>
+      </ol>}
     </section>)}
   </div>
 </section>}
-
-<script>
-  const openTechnique = (identifier: string | null) => {
-    const dialog = identifier ? document.querySelector(`#technique-${identifier}`) : null;
-    if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
-  };
-  document.querySelectorAll('[data-technique-open]').forEach((control) => {
-    control.addEventListener('click', () => {
-      openTechnique(control.getAttribute('data-technique-open'));
-    });
-  });
-  if (window.location.hash.startsWith('#technique-')) openTechnique(window.location.hash.replace('#technique-', ''));
-</script>

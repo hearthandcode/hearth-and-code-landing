@@ -1,5 +1,9 @@
 ---
 import '../styles/review-site.css';
+import '../styles/research-lab.css';
+import '../styles/ember-research-system.css';
+import '../styles/ember-surface-framework.css';
+import HearthNavigation from './HearthNavigation.astro';
 
 interface Props {
   title: string;
@@ -10,6 +14,7 @@ interface Props {
 
 const { title, description, current, publicSite = false } = Astro.props;
 const routePrefix = publicSite ? '' : '/review';
+const publicCurrent = ({ research: 'builder', exocore: 'exocore', lab: 'orientation', method: 'workbench', dossier: 'method', ethics: 'atlas' } as const)[current as 'research' | 'exocore' | 'lab' | 'method' | 'dossier' | 'ethics'];
 
 const navigation = [
   { key: 'hearth', label: 'Hearth', href: `${routePrefix}/` },
@@ -38,18 +43,14 @@ const navigation = [
     <meta name="theme-color" content="#171311" />
     <title>{title} | Hearth &amp; Code{publicSite ? '' : ' review proof'}</title>
   </head>
-  <body class="review-body">
-    <div class="review-ambient" aria-hidden="true"></div>
-    <a class="review-skip" href="#main-content">Skip to content</a>
+  <body class="research-body research-body--review review-body ember-surface">
+    <a class="research-skip" href="#main-content">Skip to content</a>
+    <HearthNavigation current={publicCurrent} context={publicSite ? 'Hearth & Code / independent research studio' : `${title} / local review candidate`} />
     <div class="review-shell">
-      <header class="review-header">
+      <header class="review-context-header">
         <div class="review-status-rail">
           <span>{publicSite ? 'Hearth & Code / independent studio' : 'Hearth & Code / local review proof'}</span>
           <span><i aria-hidden="true"></i> {publicSite ? 'research, making, and public record' : 'full site composition'}</span>
-        </div>
-        <div class="review-brand-row">
-          <a class="review-wordmark" href={`${routePrefix}/`}>Hearth <em>&amp;</em> Code</a>
-          <p>Research, making, and a long way back into the work.</p>
         </div>
         <nav class="review-navigation" aria-label={publicSite ? 'Site navigation' : 'Review-site navigation'}>
           {navigation.map((item) => (
@@ -68,11 +69,11 @@ const navigation = [
         </nav>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" class="research-main review-main">
         <slot />
       </main>
 
-      <footer class="review-footer">
+      <footer class="research-footer review-footer">
         <div>
           <p class="review-kicker">{publicSite ? 'Hearth & Code' : 'Local review only'}</p>
           <p>{publicSite ? 'An independent public surface for ongoing research, systems work, and selected creative practice. Sources, claims, and boundaries remain open to inspection and revision.' : 'This proof tests the public story, visual hierarchy, and page shape. It is not an approval of exact public copy or a production release.'}</p>

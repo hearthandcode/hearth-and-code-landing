@@ -2,6 +2,8 @@
 import { getCollection, getEntry, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import JournalArticleLayout from '../../components/JournalArticleLayout.astro';
+import ArticleContentHeading from '../../components/ArticleContentHeading.astro';
+import { fieldJournalReadingMinutes } from '../../content/field-journal-expansions';
 
 export async function getStaticPaths() {
   const entries: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
@@ -25,5 +27,6 @@ const { Content, headings } = await render(entry);
   claims={entry.data.claim_map ?? []}
   featuredImage={entry.data.featured_image}
   featuredImageAlt={entry.data.featured_image_alt}
-  readingTimeMinutes={entry.data.reading_time_minutes}
-><Content /></JournalArticleLayout>
+  readingTimeMinutes={fieldJournalReadingMinutes(entry.id, entry.data.reading_time_minutes)}
+  slug={entry.id}
+><Content components={{ h1: ArticleContentHeading }} /></JournalArticleLayout>

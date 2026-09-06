@@ -1,6 +1,8 @@
 ---
 import HearthNavigation from '../components/HearthNavigation.astro';
-import '../styles/orientation-landing.css';
+import '../styles/research-lab.css';
+import '../styles/ember-research-system.css';
+import '../styles/ember-surface-framework.css';
 ---
 
 <!doctype html>
@@ -10,24 +12,36 @@ import '../styles/orientation-landing.css';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="The requested Hearth & Code route could not be found." />
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#1c1714" />
-    <title>Route Not Found | Hearth &amp; Code</title>
+    <meta name="theme-color" content="#161411" />
+    <title>Route Not Found · Hearth &amp; Code</title>
   </head>
-  <body class="orientation-body">
-    <div class="orientation-atmosphere" aria-hidden="true"></div>
-    <a class="orientation-skip" href="#main-content">Skip to content</a>
-    <HearthNavigation context="Route not found / choose another thread" />
-    <main id="main-content">
-      <section class="orientation-hero" aria-labelledby="not-found-title">
-        <p class="orientation-kicker">404 / The thread ends here</p>
-        <h1 id="not-found-title">This route has gone cold.</h1>
-        <p class="orientation-lede">The room may have moved, the address may be incomplete, or the work may no longer belong on the public map. Choose a room above or return to the front door.</p>
-        <div class="orientation-actions">
-          <a class="orientation-action orientation-action--primary" href="/">Return to Orientation <span aria-hidden="true">→</span></a>
-          <a class="orientation-action" href="/return/">Open the Return map <span aria-hidden="true">→</span></a>
+  <body class="research-body research-body--not-found ember-surface">
+    <a class="research-skip" href="#main-content">Skip to content</a>
+    <HearthNavigation context="Route not found / choose another room" />
+    <main id="main-content" class="research-main">
+      <section class="research-threshold" aria-labelledby="not-found-title">
+        <div class="research-threshold__copy">
+          <p class="research-eyebrow">404 / The thread ends here</p>
+          <h1 id="not-found-title">This route has gone cold.</h1>
+          <p>The room may have moved, the address may be incomplete, or the work may no longer belong on the public map. Return to the Studio or choose a nearby reading path.</p>
+          <a class="research-primary-action" href="/">Return to the Studio <span aria-hidden="true">→</span></a>
+        </div>
+        <aside class="research-status" aria-label="Route status">
+          <p>Route status</p>
+          <strong>Not found</strong>
+          <span>No data was submitted or retained.</span>
+        </aside>
+      </section>
+      <section class="research-spread" aria-labelledby="nearby-title">
+        <header><p class="research-eyebrow">Nearby rooms</p><h2 id="nearby-title">Pick up a public thread.</h2></header>
+        <div class="research-paths">
+          <a href="/questions/"><span>01</span><strong>Questions</strong><p>Begin with the studio's open inquiry.</p></a>
+          <a href="/portfolio/"><span>02</span><strong>Portfolio</strong><p>Inspect selected research and systems work.</p></a>
+          <a href="/methods/"><span>03</span><strong>Methods</strong><p>Browse practical instruments and field cards.</p></a>
+          <a href="/correspondence/"><span>04</span><strong>Correspondence</strong><p>Report a broken link or continue a conversation.</p></a>
         </div>
       </section>
     </main>
-    <footer class="orientation-footer"><p>Hearth &amp; Code · Route not found</p><a href="/">Find the way back ↑</a></footer>
+    <footer class="research-footer"><span>Hearth &amp; Code · route not found</span><span>Public research · source-aware · correction-friendly</span><a href="/">Return to the Studio ↑</a></footer>
   </body>
 </html>

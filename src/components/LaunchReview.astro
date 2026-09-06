@@ -1,15 +1,21 @@
 ---
 import '../styles/launch-review.css';
+import '../styles/research-lab.css';
+import '../styles/ember-research-system.css';
+import '../styles/ember-surface-framework.css';
+import HearthNavigation from './HearthNavigation.astro';
 
 const routes = [
-  ['01', 'Orientation', '/', 'The Hearth & Code front door and complete route map.'],
-  ['02', 'Meet the Builder', '/builder/', 'A warm introduction to Scott Rallya and the Hearthside Meta-Architect archetype.'],
-  ['03', 'Exocore', '/exocore/', 'The ecosystem vision, eight workrooms, and interface study.'],
-  ['04', 'Workbench', '/workbench/', 'The practical loop, active work, and inspectable artifacts.'],
-  ['05', 'Library', '/library/', 'Sixteen detailed agentic engineering pattern cards.'],
-  ['06', 'Atlas', '/atlas/', 'Sixteen connected terms for building dependable agent systems.'],
-  ['07', 'Methods', '/method/', 'A return-bearing workshop: four stations, eight commitments, four agent roles, and one worked case.'],
-  ['08', 'Return', '/return/', 'Field Journal, public code, studio map, and reliable re-entry.'],
+  ['01', 'Studio', '/', 'The Research Studio front door and complete public reading map.'],
+  ['02', 'Questions', '/questions/', 'Open questions, working tensions, and a bounded inquiry guide.'],
+  ['03', 'Portfolio', '/portfolio/', 'Selected research and systems work with explicit posture.'],
+  ['04', 'Programs', '/programs/', 'Program dossiers and technical report orientations.'],
+  ['05', 'Methods', '/methods/', 'The method loop, instruments, and thirty-two field cards.'],
+  ['06', 'Published', '/notes/', 'Field Journal entries, essays, and technical articles.'],
+  ['07', 'Artifacts', '/evidence/', 'Claim grammar, evidence records, and correction paths.'],
+  ['08', 'Dossier', '/dossier/', 'The working archetype and sixteen-part practice dossier.'],
+  ['09', 'Workbench', '/workbench/', 'The public/private and Rust/TypeScript technical boundary.'],
+  ['10', 'Contact', '/correspondence/', 'A bounded route for discussion and correction.'],
 ];
 
 const gates = [
@@ -34,23 +40,18 @@ const gates = [
     <meta name="theme-color" content="#1c1714" />
     <title>Local Launch Review · Hearth &amp; Code</title>
   </head>
-  <body class="orientation-body launch-body">
-    <div class="orientation-atmosphere" aria-hidden="true"></div>
-    <a class="orientation-skip" href="#main-content">Skip to content</a>
-    <header class="orientation-header">
-      <a class="orientation-wordmark" href="/">Hearth <em>&amp;</em> Code</a>
-      <p>Final pre-promotion review / no external release yet</p>
-      <a class="orientation-journal" href="/">Open the site <span aria-hidden="true">→</span></a>
-    </header>
+  <body class="research-body research-body--review orientation-body launch-body ember-surface">
+    <a class="research-skip" href="#main-content">Skip to content</a>
+    <HearthNavigation context="Launch review / local candidate" />
 
-    <main id="main-content">
+    <main id="main-content" class="research-main">
       <section class="launch-hero" aria-labelledby="launch-title">
         <p class="orientation-kicker">Approved local projection</p>
         <h1 id="launch-title">The whole house, assembled.</h1>
         <p class="orientation-lede">This private console opens every intended Hearth &amp; Code route as a visitor will encounter it and preserves the four final audits behind the promotion recommendation.</p>
         <div class="orientation-actions"><a class="orientation-action orientation-action--primary" href="/review/methods-directions/">Compare eight Methods directions →</a></div>
         <div class="launch-summary" aria-label="Projection summary">
-          <div><strong>08</strong><span>visitor routes</span></div>
+          <div><strong>10</strong><span>visitor routes</span></div>
           <div><strong>01</strong><span>connected visual system</span></div>
           <div><strong>04</strong><span>final audit lenses</span></div>
         </div>
@@ -79,6 +80,6 @@ const gates = [
         <p>The remaining work is operational: preserve the exact reviewed paths in Git, publish through the established production route, and inspect the deployed pages directly. The approval does not add analytics, forms, new claims, or capabilities beyond this reviewed surface.</p>
       </section>
     </main>
-    <footer class="orientation-footer"><p>Hearth &amp; Code · Local Launch Review</p><a href="/">Begin the review ↑</a></footer>
+    <footer class="research-footer"><span>Hearth &amp; Code · local launch review</span><span>No external release yet</span><a href="/">Begin the review ↑</a></footer>
   </body>
 </html>

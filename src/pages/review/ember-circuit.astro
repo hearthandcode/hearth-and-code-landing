@@ -1,5 +1,9 @@
 ---
 import '../../styles/ember-circuit-review.css';
+import '../../styles/research-lab.css';
+import '../../styles/ember-research-system.css';
+import '../../styles/ember-surface-framework.css';
+import HearthNavigation from '../../components/HearthNavigation.astro';
 
 type Mark = [string, string, string, string, string[], number[][]];
 
@@ -24,16 +28,10 @@ const marks: Mark[] = [
   <link rel="icon" href="data:," />
   <title>Hearth & Code — Ember Circuit theme study (candidate)</title>
 </head>
-<body class="ec-body">
-  <a class="ec-skip" href="#main-content">Skip to the review proof</a>
-  <div class="ec-atmosphere" aria-hidden="true"></div>
-  <header class="ec-site-head">
-    <a class="ec-brand" href="/review/" aria-label="Hearth & Code review home">
-      <strong>Hearth &amp; Code</strong><span>candidate posture: one-person research lab + creative hub</span>
-    </a>
-    <span class="ec-candidate">Local candidate proof · not released</span>
-  </header>
-  <main id="main-content" class="ec-review">
+<body class="research-body research-body--review ec-body ember-surface">
+  <a class="research-skip" href="#main-content">Skip to the review proof</a>
+  <HearthNavigation context="Ember Circuit / local theme review" />
+  <main id="main-content" class="research-main ec-review">
     <article>
       <header class="ec-intro">
         <p class="ec-kicker">Candidate visualization grammar · version 0.1</p>
@@ -126,6 +124,6 @@ const marks: Mark[] = [
       </section>
     </article>
   </main>
-  <footer class="ec-footer"><p>Hearth &amp; Code · local design review · candidate, unselected, and not released</p><a href="#main-content">Return to the beginning</a></footer>
+  <footer class="research-footer ec-footer"><span>Hearth &amp; Code · local design review</span><span>Candidate · unselected · not released</span><a href="#main-content">Return to the beginning ↑</a></footer>
 </body>
 </html>

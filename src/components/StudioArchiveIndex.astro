@@ -1,0 +1,17 @@
+---
+import { studioArchiveFamilies } from '../data/research-studio-content';
+---
+
+<section class="studio-archive" aria-labelledby="studio-archive-title">
+  <header class="studio-section-head">
+    <div><p class="studio-kicker">03 / Field Archive</p><h2 id="studio-archive-title">A broad index of the work already on the table.</h2></div>
+    <p>The counts describe distinct reading families and sometimes overlap: prompt techniques belong to the method fieldbook, and technical articles belong to Published Works. The index is a route map, not an inflated total.</p>
+  </header>
+  <ol>{studioArchiveFamilies.map((family) => <li class={`studio-archive__item studio-archive__item--${family.signal}`}>
+    <div><span>{family.code}</span><strong>{family.count}</strong><small>{family.posture}</small></div>
+    <h3>{family.title}</h3>
+    <p>{family.description}</p>
+    <p><b>Representative entries</b>{family.examples}</p>
+    <a href={family.href}>{family.action} <span aria-hidden="true">→</span></a>
+  </li>)}</ol>
+</section>

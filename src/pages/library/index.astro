@@ -1,4 +1,32 @@
 ---
-import ResearchLabSurface from '../../components/ResearchLabSurface.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import HearthNavigation from '../../components/HearthNavigation.astro';
+import LibraryWorkbench from '../../components/ember-circuit/LibraryWorkbench';
+import { hearthsideArticles } from '../../content/hearthside-articles';
+import { publicMethods } from '../../data/public-method-library';
+import '../../styles/research-studio-landing.css';
+import '../../styles/studio-room-surfaces.css';
+import '../../styles/ember-circuit-library.css';
+
+const journal = (await getCollection('journal')) as CollectionEntry<'journal'>[];
+const articles = [
+  ...hearthsideArticles.map((article) => ({ code: article.code, format: article.format ?? 'Hearthside essay', title: article.title, dek: article.dek, readTime: article.readTime, themes: article.themes, href: `/notes/${article.slug}/` })),
+  ...journal.map((entry, index) => ({ code: `FJ-${String(index + 1).padStart(2, '0')}`, format: 'Field Journal', title: entry.data.title, dek: entry.data.description, readTime: `${entry.data.reading_time_minutes ?? 8} min read`, themes: entry.data.tags ?? entry.data.labels, href: `/journal/${entry.id}/` })),
+];
 ---
-<ResearchLabSurface route="notes" />
+<!doctype html>
+<html lang="en">
+  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content="The Hearth & Code Research Library: articles, essays, Field Journal entries, and practical methods." /><meta name="theme-color" content="#0e1114" /><title>Research Library · Hearth &amp; Code</title></head>
+  <body class="studio-room-body ec-library-page">
+    <a class="studio-skip" href="#library-top">Skip to the Research Library</a>
+    <HearthNavigation current="library" context="Research Library / articles, essays, and methods" />
+    <main id="library-top">
+      <section class="ec-library-threshold" aria-labelledby="library-title">
+        <div><p class="ec-label">H+C / Research Library</p><h1 id="library-title">A clear reading room for the work I want to share.</h1><p>Browse my essays, technical articles, Field Journal entries, and practical Methods cards. Search by concern or switch between reading and practice without passing through the machinery behind the site.</p><a href="#library-workbench">Open the library <span aria-hidden="true">↓</span></a></div>
+      </section>
+      <section id="library-workbench" class="ec-library-field"><LibraryWorkbench client:load articles={articles} methods={publicMethods} /></section>
+    </main>
+    <footer class="studio-room-footer"><span>Hearth &amp; Code · Research Library</span><span>Articles · essays · methods</span></footer>
+  </body>
+</html>

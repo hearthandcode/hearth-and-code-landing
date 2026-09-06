@@ -1,0 +1,12 @@
+---
+import { archetypePractices } from '../data/research-studio-content';
+---
+
+<section class="studio-archetype" aria-labelledby="studio-archetype-title">
+  <header>
+    <div><p class="studio-kicker">01 / Working Archetype</p><h2 id="studio-archetype-title">Forge enough structure.<br /><em>Keep the hearth lit.</em></h2></div>
+    <div><p>I use <strong>Hearthside Meta-Architect</strong> as a working name for the practice behind this studio. It sits between systems architecture, knowledge engineering, research cartography, specification, toolmaking, and keeping a workshop fit for human use.</p><p>The name is a semantic handle—not a credential, diagnosis, or claim that every method here works for everyone.</p><a href="/dossier/">Read the full working dossier →</a></div>
+  </header>
+  <ol>{archetypePractices.map((practice) => <li><span>{practice.number}</span><h3>{practice.title}</h3><p>{practice.detail}</p></li>)}</ol>
+  <aside><strong>Personal review note</strong><p>This local candidate intentionally carries more first-person working context. Review it for language that should be softened, removed, or kept within a private surface before any publication decision.</p></aside>
+</section>

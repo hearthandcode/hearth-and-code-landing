@@ -1,0 +1,8 @@
+---
+import { productHorizon } from '../data/research-studio-content';
+---
+
+<section id="product-horizon" class="product-horizon" aria-labelledby="product-horizon-title">
+  <header><div><p class="research-eyebrow">Research horizon / eight product candidates</p><h2 id="product-horizon-title">Distinct experiences. One governed substrate.</h2></div><p>These are review-required product candidates collected from the Hub portfolio. They are directions under study—not released applications, subscriptions, or proof of efficacy.</p></header>
+  <ol>{productHorizon.map((product) => <li><div><span>{product.id}</span><small>{product.role}</small></div><h3>{product.title}</h3><p>{product.summary}</p><strong>{product.form}</strong><em>Review required · not active</em></li>)}</ol>
+</section>

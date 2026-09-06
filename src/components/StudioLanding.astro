@@ -1,0 +1,141 @@
+---
+import HearthNavigation from './HearthNavigation.astro';
+import { studioCatalog } from '../data/studio-catalog.mjs';
+import '../styles/studio-landing.css';
+
+const featured = studioCatalog[0];
+const offers = studioCatalog.slice(1);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Hearth & Code is an independent systems studio making careful tools, methods, and software for complex knowledge work." />
+    <meta name="theme-color" content="#101714" />
+    <title>Hearth &amp; Code · Systems made answerable</title>
+  </head>
+  <body class="studio-landing">
+    <a class="studio-skip" href="#main-content">Skip to content</a>
+    <div class="studio-shell">
+      <HearthNavigation current="orientation" context="Independent systems studio / public threshold" />
+
+      <main id="main-content">
+        <section class="studio-hero" aria-labelledby="studio-title">
+          <div class="studio-hero__copy">
+            <p class="studio-kicker"><span>H+C / 2026</span> Systems, knowledge, and human agency</p>
+            <h1 id="studio-title">Build systems that can <em>answer for themselves.</em></h1>
+            <p class="studio-lede">Hearth &amp; Code designs practical software, methods, and research artifacts for people working inside complexity—without hiding authority, evidence, or the route back.</p>
+            <div class="studio-actions">
+              <a class="studio-action studio-action--primary" href="#studio-offers">Enter the studio <span aria-hidden="true">↘</span></a>
+              <a class="studio-action" href="/correspondence/">Bring us a question <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <aside class="studio-signal" aria-label="Studio operating signal">
+            <div class="studio-signal__orb" aria-hidden="true"><span></span></div>
+            <p>Current signal</p>
+            <strong>Public studio · active inquiry</strong>
+            <ul>
+              <li><span>01</span> Source-aware</li>
+              <li><span>02</span> Human-released</li>
+              <li><span>03</span> Returnable</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="studio-manifesto" aria-label="Studio premise">
+          <p>Most systems optimize the visible output.</p>
+          <p>We work on what must remain visible <em>behind it.</em></p>
+        </section>
+
+        <section id="studio-offers" class="studio-offers" aria-labelledby="offers-title">
+          <header class="studio-section-head">
+            <p>01 / Ways into the work</p>
+            <h2 id="offers-title">Start with something bounded.</h2>
+            <span>Each offer names its present state and limit. Nothing here implies a result we have not earned.</span>
+          </header>
+
+          <article class="studio-feature">
+            <div>
+              <p>{featured.number} · {featured.family}</p>
+              <h3>{featured.title}</h3>
+              <span class="studio-status">{featured.readinessLabel}</span>
+            </div>
+            <div>
+              <p>{featured.summary}</p>
+              <small>{featured.boundary}</small>
+              <a href={featured.action.href}>{featured.action.label} <span aria-hidden="true">↓</span></a>
+            </div>
+          </article>
+
+          <div class="studio-offer-grid">
+            {offers.map((offer) => (
+              <article>
+                <div class="studio-offer-grid__top"><span>{offer.number}</span><span>{offer.family}</span></div>
+                <h3>{offer.title}</h3>
+                <p>{offer.summary}</p>
+                <small>{offer.readinessLabel}</small>
+                <a href={offer.action.href}>{offer.action.label} <span aria-hidden="true">↗</span></a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="studio-method" aria-labelledby="method-title">
+          <header class="studio-section-head studio-section-head--light">
+            <p>02 / The operating method</p>
+            <h2 id="method-title">Make the reasoning part of the thing.</h2>
+          </header>
+          <ol>
+            <li><span>01</span><div><strong>Orient</strong><p>Name the real decision, closest sources, owner, and no-touch boundary.</p></div></li>
+            <li><span>02</span><div><strong>Compose</strong><p>Build the smallest structure that keeps meaning, authority, and uncertainty legible.</p></div></li>
+            <li><span>03</span><div><strong>Prove</strong><p>Test the named predicate and preserve what the check does—and does not—establish.</p></div></li>
+            <li><span>04</span><div><strong>Return</strong><p>Leave state, evidence, recovery, and the next human decision easy to find.</p></div></li>
+          </ol>
+        </section>
+
+        <section class="studio-trust" aria-labelledby="trust-title">
+          <div>
+            <p class="studio-kicker">03 / A different service posture</p>
+            <h2 id="trust-title">Privacy is an architecture, not a promise in the footer.</h2>
+          </div>
+          <div class="studio-trust__grid">
+            <article><span>Data</span><strong>Collect less.</strong><p>The public surface needs no account, analytics profile, or first-party visitor record.</p></article>
+            <article><span>Claims</span><strong>Qualify everything.</strong><p>A candidate stays a candidate. A passing check proves only the scope it names.</p></article>
+            <article><span>Authority</span><strong>Keep release human.</strong><p>Automation can prepare, inspect, and return. Consequential decisions remain explicit.</p></article>
+            <article><span>Recovery</span><strong>Design the way back.</strong><p>State, provenance, rollback, and correction travel with the work.</p></article>
+          </div>
+        </section>
+
+        <section class="studio-workbench" aria-labelledby="workbench-title">
+          <div class="studio-workbench__frame" aria-hidden="true">
+            <div class="studio-workbench__bar"><i></i><i></i><i></i><span>EXOCORE / WORKBENCH</span></div>
+            <div class="studio-workbench__body">
+              <nav><span class="active">Overview</span><span>Sources</span><span>Artifacts</span><span>Checks</span></nav>
+              <div><small>WORK ITEM / 0042</small><strong>Architecture boundary review</strong><p>Three sources · one open decision · no released effects</p><div class="studio-workbench__line"></div><div class="studio-workbench__line short"></div></div>
+            </div>
+          </div>
+          <div class="studio-workbench__copy">
+            <p class="studio-kicker">04 / Application direction</p>
+            <h2 id="workbench-title">A workbench for inspectable work.</h2>
+            <p>Exocore is the studio’s local-first software direction: typed workflows, bounded agent runs, visible evidence, and durable return paths. The hosted catalog is being built now; accounts and subscriptions are not yet available.</p>
+            <a href="/workbench/">Read the current boundary <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <section class="studio-invitation" aria-labelledby="invitation-title">
+          <p>05 / Correspondence</p>
+          <h2 id="invitation-title">Bring the knot.<br /><em>We’ll find the seam.</em></h2>
+          <a href="/correspondence/">Begin a bounded conversation <span aria-hidden="true">↗</span></a>
+        </section>
+      </main>
+
+      <footer class="studio-footer">
+        <span>Hearth &amp; Code · independent systems studio</span>
+        <span>No tracking · no account required · correction welcome</span>
+        <a href="#main-content">Return to threshold ↑</a>
+      </footer>
+    </div>
+  </body>
+</html>

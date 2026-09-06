@@ -2,6 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import '../styles/journal-reading.css';
+import ArticleContentHeading from './ArticleContentHeading.astro';
+import HearthsideFieldExpansion from './HearthsideFieldExpansion.astro';
+import { fieldJournalReadingMinutes } from '../content/field-journal-expansions';
 
 interface Heading { depth: number; slug: string; text: string; }
 interface Claim { claim: string; label: string; source: string; }
@@ -23,6 +26,8 @@ function displayDate(value: string) {
     year: 'numeric', month: 'short', day: 'numeric',
   });
 }
+
+const readingMinutes = (entry: CollectionEntry<'journal'>) => fieldJournalReadingMinutes(entry.id, entry.data.reading_time_minutes);
 ---
 
 <section class="field-journal-latest" id="field-journal" aria-labelledby="field-journal-title">
@@ -50,7 +55,7 @@ function displayDate(value: string) {
         <div>
           <p class="field-journal-latest__meta">
             <time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time>
-            {entry.data.reading_time_minutes && <span>{entry.data.reading_time_minutes} min read</span>}
+            <span>{readingMinutes(entry)} min read</span>
           </p>
           <h3><button type="button" data-journal-open={entry.id} aria-haspopup="dialog">{entry.data.title}</button></h3>
           <p>{entry.data.description}</p>
@@ -64,7 +69,7 @@ function displayDate(value: string) {
   {archive.length > 0 && <section class="field-journal-archive" id="journal-archive" aria-labelledby="journal-archive-title">
     <header><p class="research-eyebrow">Publication trail</p><h3 id="journal-archive-title">Earlier field entries</h3><p>Scroll the published trail without leaving the Notes reading surface.</p></header>
     <div class="field-journal-archive__scroll" tabindex="0" aria-label="Earlier published Field Journal entries">
-      <ol>{archive.map((entry: CollectionEntry<'journal'>, index: number) => <li><span>{String(index + 5).padStart(2, '0')}</span><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time><button type="button" data-journal-open={entry.id} aria-haspopup="dialog">{entry.data.title}</button><small>{entry.data.reading_time_minutes ? `${entry.data.reading_time_minutes} min` : 'Published record'}</small></li>)}</ol>
+      <ol>{archive.map((entry: CollectionEntry<'journal'>, index: number) => <li><span>{String(index + 5).padStart(2, '0')}</span><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time><button type="button" data-journal-open={entry.id} aria-haspopup="dialog">{entry.data.title}</button><small>{readingMinutes(entry)} min</small></li>)}</ol>
     </div>
   </section>}
 </section>
@@ -79,13 +84,13 @@ function displayDate(value: string) {
         <p class="journal-article__deck">{entry.data.description}</p>
         <dl class="journal-article__meta">
           <div><dt>Published</dt><dd><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time></dd></div>
-          {entry.data.reading_time_minutes && <div><dt>Reading time</dt><dd>{entry.data.reading_time_minutes} minutes</dd></div>}
+          <div><dt>Reading time</dt><dd>{readingMinutes(entry)} minutes</dd></div>
           <div><dt>Review posture</dt><dd>Published public record</dd></div>
         </dl>
       </header>
       {entry.data.featured_image && <figure class="journal-article__hero"><img src={entry.data.featured_image} alt={entry.data.featured_image_alt ?? ''} width="1024" height="576" loading="lazy" /></figure>}
       {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this article page"><p>On this page</p><ol>{headings.filter((heading: Heading) => heading.depth === 2).map((heading: Heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
-      <div class="journal-article__body"><Content /></div>
+      <div class="journal-article__body"><Content components={{ h1: ArticleContentHeading }} /><HearthsideFieldExpansion slug={entry.id} /></div>
       <footer class="journal-article__evidence">
         <section><p class="research-eyebrow">Claim labels</p><ul class="journal-article__labels">{entry.data.labels.map((label: string) => <li>{label.replace('-', ' ')}</li>)}</ul>{(entry.data.tags ?? []).length > 0 && <ul class="journal-article__labels journal-article__labels--tags">{(entry.data.tags ?? []).map((tag: string) => <li>{tag}</li>)}</ul>}</section>
         {(entry.data.claim_map ?? []).length > 0 && <section class="journal-article__claims"><p class="research-eyebrow">Claim map</p><ol>{(entry.data.claim_map ?? []).map((claim: Claim) => <li><strong>{claim.label.replace('-', ' ')}</strong><span>{claim.claim}</span><small>{claim.source}</small></li>)}</ol></section>}

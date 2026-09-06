@@ -1,3 +1,5 @@
+import { hearthsideArticleExpansions } from './hearthside-article-expansions.ts';
+
 export interface HearthsideArticle {
   slug: string;
   code: string;
@@ -9,7 +11,7 @@ export interface HearthsideArticle {
   sections: Array<{ heading: string; paragraphs: string[] }>;
 }
 
-export const hearthsideArticles: HearthsideArticle[] = [
+const hearthsideArticleBase: HearthsideArticle[] = [
   {
     slug: 'meaning-before-machinery', code: 'N-05', title: 'Meaning Before Machinery', readTime: '6 min read', themes: ['semantic orientation', 'public practice', 'systems design'],
     dek: 'Before a system is allowed to become clever, it should be able to say what it is for, whose situation it touches, and what it cannot decide.',
@@ -203,3 +205,15 @@ export const hearthsideArticles: HearthsideArticle[] = [
     ],
   },
 ];
+
+const articleWordCount = (article: HearthsideArticle) => [
+  article.title,
+  article.dek,
+  ...article.sections.flatMap((section) => [section.heading, ...section.paragraphs]),
+].join(' ').trim().split(/\s+/).length;
+
+export const hearthsideArticles: HearthsideArticle[] = hearthsideArticleBase.map((article) => {
+  const sections = [...article.sections, ...(hearthsideArticleExpansions[article.slug] ?? [])];
+  const expanded = { ...article, sections };
+  return { ...expanded, readTime: `${Math.max(1, Math.ceil(articleWordCount(expanded) / 210))} min read` };
+});

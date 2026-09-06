@@ -1,6 +1,10 @@
 ---
+import '../styles/research-studio-landing.css';
 import '../styles/journal-reading.css';
+import '../styles/studio-room-surfaces.css';
+import '../styles/ember-circuit-library.css';
 import HearthNavigation from './HearthNavigation.astro';
+import HearthsideFieldExpansion from './HearthsideFieldExpansion.astro';
 
 interface Heading { depth: number; slug: string; text: string; }
 interface Claim { claim: string; label: string; source: string; }
@@ -16,6 +20,7 @@ interface Props {
   featuredImage?: string;
   featuredImageAlt?: string;
   readingTimeMinutes?: number;
+  slug: string;
 }
 
 const {
@@ -30,6 +35,7 @@ const {
   featuredImage,
   featuredImageAlt,
   readingTimeMinutes,
+  slug,
 } = Astro.props;
 
 const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
@@ -43,12 +49,12 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#161411" />
+    <meta name="theme-color" content="#0e1114" />
     <title>{title} · Field Journal · Hearth &amp; Code</title>
   </head>
-  <body class="research-body research-body--notes">
+  <body class="studio-room-body studio-room-body--notes studio-article-body">
     <a class="research-skip" href="#journal-article">Skip to article</a>
-    <HearthNavigation current="library" context="Field Journal / public research record" />
+    <HearthNavigation current="library" context="Field Journal / published research record" />
     <main id="journal-article" class="journal-article-shell">
       <article class="journal-article">
         <header class="journal-article__header">
@@ -64,11 +70,12 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
 
         {featuredImage && <figure class="journal-article__hero"><img src={featuredImage} alt={featuredImageAlt ?? ''} width="1024" height="576" loading="eager" /></figure>}
 
-        {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this page"><p>On this page</p><ol>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
+        <section class="studio-article-reading-field">
+          {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this page"><p>On this page</p><ol>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
 
-        <div class="journal-article__body"><slot /></div>
+          <div class="journal-article__body"><slot /><HearthsideFieldExpansion slug={slug} /></div>
 
-        <footer class="journal-article__evidence">
+          <footer class="journal-article__evidence">
           <section>
             <p class="research-eyebrow">Claim labels</p>
             <ul class="journal-article__labels">{labels.map((label) => <li>{label.replace('-', ' ')}</li>)}</ul>
@@ -76,9 +83,10 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
           </section>
           {claims.length > 0 && <section class="journal-article__claims"><p class="research-eyebrow">Claim map</p><ol>{claims.map((claim) => <li><strong>{claim.label.replace('-', ' ')}</strong><span>{claim.claim}</span><small>{claim.source}</small></li>)}</ol></section>}
           <section class="journal-article__sources"><p class="research-eyebrow">Named source context</p><ul>{sources.map((source) => <li>{source}</li>)}</ul></section>
-        </footer>
+          </footer>
+        </section>
       </article>
-      <nav class="journal-article__return" aria-label="Field Journal return paths"><a href="/journal/">← All Field Journal entries</a><a href="/notes/">Return to Notes</a><a href="/evidence/">Read the evidence posture</a></nav>
+      <nav class="journal-article__return" aria-label="Field Journal return path"><a href="/journal/">← All Field Journal entries</a></nav>
     </main>
   </body>
 </html>

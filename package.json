@@ -8,6 +8,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test:studio": "node --test scripts/studio-contract.test.mjs",
+    "test:studio:browser": "node --test scripts/studio-browser.test.mjs",
     "journal:import": "node scripts/import-field-journal.mjs",
     "profile:flame": "node scripts/profile-flame.mjs",
     "playwright:install": "playwright install chromium"
@@ -36,6 +38,9 @@
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",
     "@astrojs/react": "^6.0.5",
+    "@types/d3": "^7.4.3",
+    "d3": "^7.9.0",
+    "mermaid": "^11.17.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }

@@ -6,36 +6,13 @@ import ExocoreDossier from './ExocoreDossier.astro';
 ---
 
 <section class="program-dossier" id="program-dossiers" aria-labelledby="program-dossier-title">
-  <header><div><p class="research-eyebrow">Program dossiers / page within a page</p><h2 id="program-dossier-title">Three research programs, each with its own working surface.</h2></div><p>Select a dossier to inspect its question, technical objects, public boundary, and study sequence. The tabs organize the view; they do not imply program activation or release.</p></header>
-  <div class="program-dossier__tabs" role="tablist" aria-label="Research program dossiers">
-    <button id="program-tab-tccp" type="button" role="tab" aria-selected="true" aria-controls="program-panel-tccp" data-program-tab="tccp"><span>01</span>TCCP<small>typed context</small></button>
-    <button id="program-tab-ekrp" type="button" role="tab" aria-selected="false" aria-controls="program-panel-ekrp" data-program-tab="ekrp" tabindex="-1"><span>02</span>EKRP<small>knowledge representation</small></button>
-    <button id="program-tab-exocore" type="button" role="tab" aria-selected="false" aria-controls="program-panel-exocore" data-program-tab="exocore" tabindex="-1"><span>03</span>Exocore<small>system ecology</small></button>
-  </div>
+  <header><div><p class="research-eyebrow">Program dossiers / three complete studies</p><h2 id="program-dossier-title">Three research programs, each with its own working surface.</h2></div><p>Follow the index or read straight through each program's question, technical objects, public boundary, and study sequence. Nothing is concealed behind interface state.</p></header>
+  <nav class="program-dossier__tabs" aria-label="Research program dossiers">
+    <a href="#program-panel-tccp"><span>01</span><strong>TCCP</strong><small>typed context</small></a>
+    <a href="#program-panel-ekrp"><span>02</span><strong>EKRP</strong><small>knowledge representation</small></a>
+    <a href="#program-panel-exocore"><span>03</span><strong>Exocore</strong><small>system ecology</small></a>
+  </nav>
   <TccpDossier />
   <EkrpDossier />
   <ExocoreDossier />
 </section>
-
-<script>
-  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-program-tab]'));
-  const selectProgram = (key: string) => {
-    tabs.forEach((tab) => {
-      const active = tab.dataset.programTab === key;
-      tab.setAttribute('aria-selected', String(active));
-      tab.tabIndex = active ? 0 : -1;
-      const panel = document.querySelector<HTMLElement>(`#program-panel-${tab.dataset.programTab}`);
-      if (panel) panel.hidden = !active;
-    });
-  };
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => selectProgram(tab.dataset.programTab ?? 'tccp'));
-    tab.addEventListener('keydown', (event) => {
-      if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-      tabs[next].focus();
-      selectProgram(tabs[next].dataset.programTab ?? 'tccp');
-    });
-  });
-</script>

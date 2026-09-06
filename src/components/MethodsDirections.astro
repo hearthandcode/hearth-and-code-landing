@@ -1,6 +1,10 @@
 ---
 import '../styles/methods-directions.css';
+import '../styles/research-lab.css';
+import '../styles/ember-research-system.css';
+import '../styles/ember-surface-framework.css';
 import { hearthsideLexicon, languageRules, methodDirections } from '../data/methods-directions';
+import HearthNavigation from './HearthNavigation.astro';
 ---
 
 <!doctype html>
@@ -12,16 +16,11 @@ import { hearthsideLexicon, languageRules, methodDirections } from '../data/meth
     <meta name="theme-color" content="#1c1714" />
     <title>Methods Directions · Hearth &amp; Code Review</title>
   </head>
-  <body class="orientation-body methods-review-body">
-    <div class="orientation-atmosphere" aria-hidden="true"></div>
-    <a class="orientation-skip" href="#main-content">Skip to content</a>
-    <header class="orientation-header">
-      <a class="orientation-wordmark" href="/review/">Hearth <em>&amp;</em> Code</a>
-      <p>Methods directions / private comparison</p>
-      <a class="orientation-journal" href="/method/">Current Methods →</a>
-    </header>
+  <body class="research-body research-body--review orientation-body methods-review-body ember-surface">
+    <a class="research-skip" href="#main-content">Skip to content</a>
+    <HearthNavigation current="workbench" context="Methods directions / private comparison" />
 
-    <main id="main-content">
+    <main id="main-content" class="research-main">
       <section class="methods-review-hero" aria-labelledby="methods-review-title">
         <p class="orientation-kicker">Eight ways to hold the method</p>
         <h1 id="methods-review-title">The page can teach a practice without losing the warmth of the workshop.</h1>
@@ -74,6 +73,6 @@ import { hearthsideLexicon, languageRules, methodDirections } from '../data/meth
         </div>
       </section>
     </main>
-    <footer class="orientation-footer"><p>Private Methods direction review</p><a href="/review/">Return to launch review ↑</a></footer>
+    <footer class="research-footer"><span>Private Methods direction review</span><span>Candidate comparison · noindex</span><a href="/review/">Return to launch review ↑</a></footer>
   </body>
 </html>

@@ -1,92 +1,234 @@
 ---
-import '../styles/research-lab.css';
+import '../styles/research-studio-landing.css';
 import '../styles/research-collections.css';
 import '../styles/notes-journal.css';
 import '../styles/dossier-sheet.css';
+import '../styles/research-portfolio.css';
+import '../styles/notes-article-ledger.css';
+import '../styles/correspondence-intake.css';
+import '../styles/studio-room-surfaces.css';
+import '../styles/ember-circuit-library.css';
 import HearthNavigation from './HearthNavigation.astro';
-import ResearchLabDeepening from './ResearchLabDeepening.astro';
 import ResearchCollections from './ResearchCollections.astro';
 import FieldJournalLatest from './FieldJournalLatest.astro';
 import NotesArticleLedger from './NotesArticleLedger.astro';
-import '../styles/notes-article-ledger.css';
 import DossierSheet from './DossierSheet.astro';
 import ProgramDossier from './ProgramDossier.astro';
-import PanelTabs from './PanelTabs';
 import CorrespondenceIntake from './CorrespondenceIntake.astro';
-import '../styles/panel-tabs.css';
-import '../styles/correspondence-intake.css';
+import ProductHorizon from './ProductHorizon.astro';
+import TechnicalReportShelf from './TechnicalReportShelf.astro';
+import { routeContexts, routeVoice } from '../data/research-studio-content';
 
-type Route = 'lab' | 'questions' | 'programs' | 'methods' | 'notes' | 'evidence' | 'dossier' | 'correspondence';
+type Route = 'lab' | 'questions' | 'portfolio' | 'programs' | 'methods' | 'notes' | 'evidence' | 'dossier' | 'correspondence' | 'workbench';
 interface Props { route: Route; journal?: boolean; }
 const { route, journal = false } = Astro.props;
+
 const routeMeta = {
-  lab: { key: 'orientation', index: '01', context: 'The Lab / independent research practice', title: 'A research studio for making complex systems legible.', deck: 'Hearth & Code studies the structures that shape how knowledge, software, agents, and creative work come into being—and makes those structures available for inspection.', action: ['Choose a research question', '/questions/'] },
-  questions: { key: 'builder', index: '02', context: 'Research Questions / open inquiry portfolio', title: 'Questions before claims.', deck: 'The research agenda is a field of live questions: what must remain visible when a system changes, who can revise it, and how its reasoning can be returned to.', action: ['Read the methods', '/methods/'] },
-  programs: { key: 'exocore', index: '03', context: 'Programs & Prototypes / system field guide', title: 'Where questions become working systems.', deck: 'Programs are bounded places for turning an inquiry into a map, a protocol, a prototype, or a public artifact—without pretending that every experiment is a product.', action: ['Inspect the program dossiers', '#program-dossiers'] },
-  methods: { key: 'workbench', index: '04', context: 'Methods & Instruments / educational practice', title: 'A practical method for building work that can return.', deck: 'The studio’s methods are public learning patterns: small enough to try, explicit enough to challenge, and structured enough to leave an honest path back.', action: ['Open the instrument shelf', '#instruments'] },
-  notes: { key: 'library', index: '05', context: 'Field Notes & Reading Room / editorial shelf', title: 'A reading room for research in motion.', deck: 'Field notes, published Journal articles, and technical essays collect the durable vocabulary of the studio without confusing a working note for a finished conclusion.', action: ['Read the Field Journal', '#field-journal'] },
-  evidence: { key: 'atlas', index: '06', context: 'Evidence Desk / provenance and correction', title: 'Claims should carry their way back.', deck: 'Evidence Desk makes the relationship between source, claim, check, decision, and correction visible. A check earns only the confidence its scope can support.', action: ['See the correction path', '#correction'] },
-  dossier: { key: 'method', index: '07', context: 'Studio Dossier / Hearthside Meta-Architect', title: 'The Hearthside Meta-Architect.', deck: 'A self-authored field character sheet for the person behind the studio: a creative working archetype, not a diagnosis, credential, or autonomous persona.', action: ['Open the case file', '#dossier-index'] },
-  correspondence: { key: 'return', index: '08', context: 'Correspondence / return path', title: 'Continue the conversation carefully.', deck: 'The work remains revisable. This is the route for reading onward, proposing a project, discussing work, or offering a correction with enough context to be useful.', action: ['Open correspondence intake', '#intake'] },
+  lab: { key: 'orientation', index: '01', context: 'The Lab / independent research practice', lead: 'I build the room around', accent: 'the question.', tail: '', deck: 'Hearth & Code is my public research workbench for making the structures behind knowledge, software, agents, and creative practice available for inspection.', action: ['Choose a research question', '/questions/'] },
+  questions: { key: 'builder', index: '02', context: 'Research Questions / open inquiry portfolio', lead: 'I begin with', accent: 'questions', tail: 'before claims.', deck: 'I keep a field of live questions around what must remain visible when a system changes, who can revise it, and how its reasoning can be returned to.', action: ['Read my methods', '/methods/'] },
+  portfolio: { key: 'exocore', index: '03', context: 'Portfolio / selected research and systems work', lead: 'I use the portfolio as', accent: 'a trail,', tail: 'not a trophy case.', deck: 'This is where research programs, knowledge architecture, software, publication, and design meet without hiding the posture or limits of each body of work.', action: ['Browse selected work', '#selected-work'] },
+  programs: { key: 'exocore', index: '04', context: 'Programs & Prototypes / system field guide', lead: 'I give questions somewhere to become', accent: 'working systems.', tail: '', deck: 'A program is a bounded place for turning an inquiry into a map, protocol, prototype, report, or public artifact without pretending that every experiment is already a product.', action: ['Inspect the report shelf', '#technical-reports'] },
+  methods: { key: 'workbench', index: '05', context: 'Methods & Instruments / educational practice', lead: 'I build methods that leave', accent: 'a way back.', tail: '', deck: 'I keep these learning patterns small enough to try, explicit enough to challenge, and structured enough to return an honest account of what happened.', action: ['Open the field cards', '#methods-collections-title'] },
+  notes: { key: 'library', index: '06', context: 'Published Works / Field Journal and essays', lead: 'I write to leave', accent: 'a thread', tail: 'I can return to.', deck: 'Field Journal entries, essays, and technical articles collect research in motion without turning a working observation into a finished conclusion.', action: ['Read the Field Journal', '#field-journal'] },
+  evidence: { key: 'atlas', index: '07', context: 'Artifacts / evidence and correction', lead: 'I want every claim to carry', accent: 'its way back.', tail: '', deck: 'The Evidence Desk keeps source, claim, check, decision, omission, and correction visible. A check earns only the confidence its named scope can support.', action: ['Inspect the evidence ledger', '#evidence-collections-title'] },
+  dossier: { key: 'method', index: '08', context: 'Dossier / Hearthside Meta-Architect', lead: 'I call this working archetype the', accent: 'Hearthside Meta-Architect.', tail: '', deck: 'This self-authored field character sheet describes how I try to join forge and hearth in my work. It is a creative working archetype, not a diagnosis or credential.', action: ['Open the case file', '#dossier-index'] },
+  correspondence: { key: 'return', index: '09', context: 'Correspondence / public return path', lead: 'I want the conversation to remain', accent: 'revisable.', tail: '', deck: 'This is my route for reading onward, discussing a real project, or offering a correction with enough context to be useful and enough boundary to remain humane.', action: ['Open correspondence intake', '#intake'] },
+  workbench: { key: 'workbench', index: '10', context: 'Workbench / technical system orientation', lead: 'I build technical surfaces for', accent: 'inspectable work.', tail: '', deck: 'The Workbench is the software-facing edge of my studio: a bounded web tier, Rust service authority, PostgreSQL catalog, and source-only Kubernetes delivery candidate.', action: ['Inspect the runtime map', '#runtime-map'] },
 } as const;
+
 const meta = routeMeta[route];
-const surfacePanels = {
-  lab: [{ id: 'overview', label: 'Orientation', detail: 'the threshold' }, { id: 'field-guide', label: 'Field guide', detail: 'research conditions' }],
-  questions: [{ id: 'overview', label: 'Inquiry field', detail: 'open questions' }, { id: 'field-guide', label: 'Question guide', detail: 'how to inspect' }],
-  programs: [{ id: 'overview', label: 'Program map', detail: 'questions and boundaries' }, { id: 'dossiers', label: 'Technical dossiers', detail: 'TCCP · EKRP · Exocore' }],
-  methods: [{ id: 'overview', label: 'Method loop', detail: 'eight moves' }, { id: 'field-guide', label: 'Practice guide', detail: 'portable instruments' }, { id: 'field-cards', label: 'Field cards', detail: '32 techniques' }],
-  notes: [{ id: 'field-journal', label: 'Field Journal', detail: 'published writing' }, { id: 'studio-articles', label: 'Studio articles', detail: 'essays and technical work' }],
-  evidence: [{ id: 'overview', label: 'Evidence desk', detail: 'claim and correction' }, { id: 'claim-guide', label: 'Claim guide', detail: 'reading distinctions' }, { id: 'evidence-ledger', label: 'Evidence ledger', detail: '16 public records' }],
-  dossier: [{ id: 'case-file', label: 'Case file', detail: 'HMA-16' }],
-  correspondence: [{ id: 'overview', label: 'Return paths', detail: 'ways to continue' }, { id: 'field-guide', label: 'Conversation guide', detail: 'bounded intake' }],
-} as const;
-const guidePanel = route === 'evidence' ? 'claim-guide' : 'field-guide';
+const roomIndex = routeContexts[route].items;
+const voice = routeVoice[route];
+
+const questions = [
+  ['Q-01', 'Systems', 'What is the smallest structure that preserves what matters?', 'Methods · minimum viable institutions · program boundaries'],
+  ['Q-02', 'Provenance', 'What must travel with a claim so a later reader can challenge it?', 'Source identity · transformation · omission · correction'],
+  ['Q-03', 'Knowledge', 'How can uncertainty remain represented instead of silently becoming absence?', 'Evidence desk · field notes · decision records'],
+  ['Q-04', 'Creative practice', 'When does world-building become a useful systems prototype?', 'Programs · design · public learning artifacts'],
+  ['Q-05', 'Agents', 'What makes delegated work inspectable without pretending the agent owns the decision?', 'Roles · permissions · receipts · human release'],
+  ['Q-06', 'Interfaces', 'How can an interface expose the conditions that shaped its answer?', 'Context · provenance · state · return'],
+  ['Q-07', 'Institutions', 'How much governance is enough to preserve meaning without producing theatre?', 'Authority · review · reversibility · scale'],
+  ['Q-08', 'Continuity', 'What should a future reader inherit when the present work is interrupted?', 'Current state · sources · open risk · next action'],
+] as const;
+
+const tensions = [
+  ['Exploration', 'Convergence', 'Open the field, then choose the smallest structure that can carry the decision.'],
+  ['Autonomy', 'Accountability', 'Allow bounded initiative while leaving authority and release with people.'],
+  ['Imagination', 'Evidence', 'Let metaphor discover relationships; let checks qualify the claim.'],
+  ['Depth', 'Completion', 'Preserve the larger architecture while finishing a public-sized piece.'],
+] as const;
+
+const questionGuide = [
+  ['01', 'Situation', 'Where is this question living?', 'Name the people, setting, present condition, and source boundary before reaching for a universal problem.'],
+  ['02', 'Tension', 'What must remain visible together?', 'Place the values, constraints, or competing needs side by side without forcing an early resolution.'],
+  ['03', 'Inquiry', 'What relationship is genuinely unknown?', 'Ask about a condition, difference, mechanism, or consequence that evidence could clarify without deciding the answer in advance.'],
+  ['04', 'Return', 'What would make the inquiry useful?', 'Name the smallest map, comparison, prototype, or record that could sharpen the next human decision.'],
+] as const;
+
+const selectedWork = [
+  ['01', 'Research program', 'Typed Context & Control Protocol', 'Typed representations, context conditions, interaction compilation, and explicit proof obligations.', 'Research architecture · public guide · evaluation instruments', '/programs/'],
+  ['02', 'Knowledge architecture', 'EKRP', 'A source-governed application profile for human-readable knowledge representation, provenance, and review.', 'Semantic documents · evidence packets · standards crosswalks', '/programs/'],
+  ['03', 'Software system', 'Exocore', 'A local-first systems direction connecting agents, knowledge, governance, observability, and human return.', 'Rust services · TypeScript interfaces · operational boundaries', '/workbench/'],
+  ['04', 'Methods practice', 'Prompt & Context Atlas', 'Technique-level practice for prompts, context selection, tool boundaries, evaluation, and revision.', '32 field cards · prompt scaffolds · failure-mode checks', '/methods/'],
+  ['05', 'Publication', 'Field Journal', 'Long-form research notes, essays, and technical writing with visible claim and source context.', 'Research essays · technical articles · correction path', '/notes/'],
+  ['06', 'Research communication', 'Ember Circuit', 'A warm technical visual language for making complex system boundaries and evidence states legible.', 'Visual grammar · research figures · interface foundations', '/evidence/'],
+] as const;
+
+const programs = [
+  ['01', 'TCCP', 'How can context and control become typed, inspectable parts of a workflow?', 'Protocol research'],
+  ['02', 'EKRP', 'How can knowledge remain human-readable while retaining source and revision identity?', 'Architecture research'],
+  ['03', 'Exocore', 'How might agents, knowledge, governance, tools, and return paths remain legible together?', 'Platform direction'],
+  ['04', 'Core32', 'How can method and role performance be compared without collapsing into one score?', 'Evaluation research'],
+] as const;
+
+const methodLoop = [
+  ['01', 'Orient', 'Name the decision and closest sources.'], ['02', 'Bound', 'Set scope, authority, and no-touch edges.'],
+  ['03', 'Classify', 'Separate source, evidence, inference, and proposal.'], ['04', 'Compose', 'Build the smallest useful context and artifact.'],
+  ['05', 'Build', 'Make the candidate inspectable.'], ['06', 'Check', 'Test one named predicate and seek counterevidence.'],
+  ['07', 'Decide', 'Keep consequential meaning and release human-held.'], ['08', 'Return', 'Record state, limits, and next responsible action.'],
+] as const;
+
+const instruments = [
+  ['01', 'Source ledger', 'What was consulted, in what role, with what omission or freshness limit.'],
+  ['02', 'Claim card', 'What is being said, which evidence supports it, and what it does not establish.'],
+  ['03', 'Check receipt', 'What was tested, on which input, with which outcome, and what remains unproven.'],
+  ['04', 'Return record', 'Current state, owner, uncertainty, and one reliable way back in.'],
+] as const;
+
+const relation = [
+  ['01', 'Source', 'Named material, currentness, and disclosure boundary.'],
+  ['02', 'Claim', 'Observation, interpretation, hypothesis, or proposal.'],
+  ['03', 'Check', 'One named predicate with a visible scope.'],
+  ['04', 'Decision', 'Human-owned disposition, never automatic promotion.'],
+  ['05', 'Return', 'Correction, revision, and next responsible action.'],
+] as const;
+
+const claims = [
+  ['Candidate pattern', 'A source ledger can make a task’s information boundary easier to inspect.', 'Method candidate · not an efficacy claim'],
+  ['Named check', 'The local build completed for the stated source revision.', 'Build success · not usability, approval, or release'],
+  ['Fictional example', 'A worked case illustrates a possible route through the method.', 'Teaching example · not a client or production result'],
+] as const;
+
+const correspondence = [
+  ['01', 'Reading trail', 'I am following an idea and want a useful next object.', '/notes/'],
+  ['02', 'Project conversation', 'I have a real situation, constraint, or research question.', '/questions/'],
+  ['03', 'Collaboration or work', 'I want to discuss a possible way of working together.', '/dossier/'],
+  ['04', 'Correction', 'I want to point to a claim, source, route, or access barrier.', '/evidence/#correction'],
+] as const;
+
+const runtime = [
+  ['01 / WEB', 'TypeScript projection', 'Responsive catalog, explicit loading and unavailable states, one same-origin request.', 'Two-replica candidate'],
+  ['02 / API', 'Rust authority', 'Health, readiness, typed catalog, narrow routing, and internal metrics.', 'Two-replica candidate'],
+  ['03 / DATA', 'PostgreSQL catalog', 'One bounded catalog table with idempotent migration and seed.', 'Single-instance candidate'],
+  ['04 / OPS', 'Kubernetes delivery', 'Network policy, probes, resources, disruption budgets, alerts, and backup source.', 'Source only · not active'],
+] as const;
 ---
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content={meta.deck} /><meta name="theme-color" content="#161411" /><title>{meta.context.split(' / ')[0]} · Hearth &amp; Code</title></head>
-  <body class={`research-body research-body--${route}`}>
-    <a class="research-skip" href="#main-content">Skip to content</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={meta.deck} />
+    <meta name="theme-color" content="#0e1114" />
+    <title>{meta.context.split(' / ')[0]} · Hearth &amp; Code</title>
+  </head>
+  <body class={`studio-room-body studio-room-body--${route}`}>
+    <a class="studio-skip" href="#main-content">Skip to content</a>
     <HearthNavigation current={meta.key} context={meta.context} />
-    <main id="main-content" class="research-main">
-      <section class="research-threshold" aria-labelledby="page-title"><div class="research-threshold__copy"><p class="research-eyebrow">{meta.index} / {meta.context.split(' / ')[0]}</p><h1 id="page-title">{meta.title}</h1><p>{meta.deck}</p><a class="research-primary-action" href={meta.action[1]}>{meta.action[0]} <span aria-hidden="true">→</span></a></div><aside class="research-status" aria-label="Public reading posture"><p>Public reading posture</p><strong>Independent research studio</strong><span>Source-aware · reviewable · correction-friendly</span></aside></section>
-      {!journal && surfacePanels[route].length > 1 && <PanelTabs client:load scope="surface" items={[...surfacePanels[route]]} label={`${meta.context.split(' / ')[0]} reading panels`} />}
-      {route === 'lab' && <div id="surface-panel-overview" data-surface-panel="overview" role="tabpanel" aria-labelledby="surface-tab-overview">
-        <section class="research-spread" aria-labelledby="lab-field"><header><p class="research-eyebrow">Research threshold</p><h2 id="lab-field">Choose the kind of question you are carrying.</h2></header><div class="research-paths"><a href="/questions/"><span>01</span><strong>Follow a question</strong><p>Start with an open inquiry and its tensions.</p></a><a href="/programs/"><span>02</span><strong>Inspect a program</strong><p>See where an inquiry becomes a bounded system.</p></a><a href="/methods/"><span>03</span><strong>Adapt a method</strong><p>Take one instrument into your own environment.</p></a><a href="/dossier/"><span>04</span><strong>Meet the steward</strong><p>Read the working archetype behind the studio.</p></a></div></section>
-        <section class="research-seam" aria-labelledby="lab-seam"><div><p class="research-eyebrow">Evidence seam</p><h2 id="lab-seam">What this place is—and is not.</h2></div><div><p>Hearth &amp; Code is an independent creative-technology research studio. It shares public learning material, working methods, and selected artifacts; it does not claim an institutional mandate, universal method efficacy, or access to private working context.</p><a href="/evidence/">Read the evidence posture →</a></div></section>
-      </div>}
-      {route === 'questions' && <div id="surface-panel-overview" data-surface-panel="overview" role="tabpanel" aria-labelledby="surface-tab-overview">
-        <section class="research-ledger" aria-labelledby="question-ledger"><header><p class="research-eyebrow">Inquiry ledger</p><h2 id="question-ledger">Current questions are held open on purpose.</h2></header><ol><li><span>Systems</span><strong>What is the smallest structure that preserves what matters?</strong><p>Related: methods, minimum viable institutions, program boundaries.</p></li><li><span>Provenance</span><strong>What must travel with a claim so a later reader can challenge it?</strong><p>Related: source identity, transformation, omission, correction.</p></li><li><span>Knowledge</span><strong>How can uncertainty remain represented instead of silently becoming absence?</strong><p>Related: evidence desk, field notes, decision records.</p></li><li><span>Creative practice</span><strong>When does world-building become a useful systems prototype?</strong><p>Related: programs, design, public learning artifacts.</p></li></ol></section>
-        <section class="research-tensions" aria-labelledby="tension-title"><div><p class="research-eyebrow">Working tensions</p><h2 id="tension-title">The studio does not resolve these by slogan.</h2></div><dl><div><dt>Exploration</dt><dd>Convergence</dd><p>Open the field, then choose the smallest structure that can carry the decision.</p></div><div><dt>Autonomy</dt><dd>Accountability</dd><p>Allow bounded initiative while leaving authority and release with people.</p></div><div><dt>Imagination</dt><dd>Evidence</dd><p>Let metaphor discover relationships; let checks qualify the claim.</p></div></dl></section>
-      </div>}
-      {route === 'programs' && <div id="surface-panel-overview" data-surface-panel="overview" role="tabpanel" aria-labelledby="surface-tab-overview">
-        <section class="research-program-ledger" aria-labelledby="program-ledger"><header><p class="research-eyebrow">Program ledger</p><h2 id="program-ledger">A program is a question with a boundary.</h2></header><div class="research-program-table"><div><span>Program</span><span>Question</span><span>Public posture</span></div><article><strong>Exocore</strong><p>How might systems, knowledge, governance, and return paths remain legible together?</p><span>Research program frame</span></article><article><strong>Minimum viable institutions</strong><p>What is enough governance to preserve meaning without erecting a theatre of process?</p><span>Research frame</span></article><article><strong>Worlds as prototypes</strong><p>How can a designed world expose the texture of an operating system?</p><span>Conceptual study</span></article></div></section>
-        <section class="research-ecology" aria-labelledby="ecology-title"><header><p class="research-eyebrow">System ecology</p><h2 id="ecology-title">A public map of relation, not a product architecture diagram.</h2></header><div class="research-ecology__map"><span>Question</span><i></i><span>Source</span><i></i><span>Method</span><i></i><span>Artifact</span><i></i><span>Return</span></div><p>Each relation is a prompt to inspect the boundary: what informs what, what was checked, and where a reader can return with correction.</p></section>
-      </div>}
-      {route === 'programs' && <div id="surface-panel-dossiers" data-surface-panel="dossiers" role="tabpanel" aria-labelledby="surface-tab-dossiers"><ProgramDossier /></div>}
-      {route === 'methods' && <div id="surface-panel-overview" data-surface-panel="overview" role="tabpanel" aria-labelledby="surface-tab-overview">
-        <section class="research-loop" aria-labelledby="loop-title"><header><p class="research-eyebrow">The learning loop</p><h2 id="loop-title">Eight moves for work that remains answerable.</h2></header><ol><li><strong>01 / Orient</strong><span>Name the decision and closest sources.</span></li><li><strong>02 / Bound</strong><span>Set scope, authority, and no-touch edges.</span></li><li><strong>03 / Classify</strong><span>Separate source, evidence, inference, and proposal.</span></li><li><strong>04 / Compose</strong><span>Build the smallest useful context and artifact.</span></li><li><strong>05 / Build</strong><span>Make the candidate inspectable.</span></li><li><strong>06 / Check</strong><span>Test one named predicate and seek counterevidence.</span></li><li><strong>07 / Decide</strong><span>Keep consequential meaning and release human-held.</span></li><li><strong>08 / Return</strong><span>Record state, limits, and next responsible action.</span></li></ol></section>
-        <section id="instruments" class="research-instruments" aria-labelledby="instrument-title"><header><p class="research-eyebrow">Instrument shelf</p><h2 id="instrument-title">Small tools that clarify before they scale.</h2></header><div><article><span>Source ledger</span><p>What was consulted, in what role, with what omission or freshness limit.</p></article><article><span>Claim card</span><p>What is being said, which evidence supports it, and what it does not establish.</p></article><article><span>Check receipt</span><p>What was tested, on which input, with which outcome, and what remains unproven.</p></article><article><span>Return record</span><p>Current state, owner, uncertainty, and one reliable way back in.</p></article></div></section>
-        <section class="research-fiction" aria-labelledby="fiction-title"><p class="research-eyebrow">Fictional teaching case</p><h2 id="fiction-title">A small system boundary under review.</h2><p><strong>Question:</strong> should a document-indexing concern become its own module? Bind the current imports and failures, define the no-touch storage boundary, draft a port, check isolation, and return the decision for a human review. This illustrates a method; it is not a client result or a released system.</p></section>
-      </div>}
-      {route === 'notes' && !journal && <div id="surface-panel-field-journal" data-surface-panel="field-journal" role="tabpanel" aria-labelledby="surface-tab-field-journal"><FieldJournalLatest /></div>}
-      {route === 'notes' && !journal && <div id="surface-panel-studio-articles" data-surface-panel="studio-articles" role="tabpanel" aria-labelledby="surface-tab-studio-articles"><NotesArticleLedger /></div>}
-      {route === 'notes' && journal && <slot />}
-      {route === 'evidence' && <div id="surface-panel-overview" data-surface-panel="overview" role="tabpanel" aria-labelledby="surface-tab-overview">
-        <section class="research-relation" aria-labelledby="relation-title"><header><p class="research-eyebrow">Relation grammar</p><h2 id="relation-title">A public claim needs a route through the work.</h2></header><ol><li><strong>Source</strong><span>Named material, currentness, and disclosure boundary.</span></li><li><strong>Claim</strong><span>Observation, interpretation, hypothesis, or proposal.</span></li><li><strong>Check</strong><span>One named predicate with a visible scope.</span></li><li><strong>Decision</strong><span>Human-owned disposition, not an automatic promotion.</span></li><li><strong>Return</strong><span>Correction, revision, and next action.</span></li></ol></section>
-        <section class="research-claim-samples" aria-labelledby="claim-title"><header><p class="research-eyebrow">Claim cards</p><h2 id="claim-title">Examples of calibrated language.</h2></header><div><article><span>Candidate pattern</span><p>“A source ledger can make a task’s information boundary easier to inspect.”</p><small>Limit: this is a method candidate, not an efficacy claim.</small></article><article><span>Named check</span><p>“The local build completed for the stated source revision.”</p><small>Limit: build success does not prove usability, approval, or release readiness.</small></article><article><span>Fictional example</span><p>“A worked case illustrates a possible route through the method.”</p><small>Limit: it does not represent a client, production deployment, or real-world result.</small></article></div></section>
-        <section id="correction" class="research-correction" aria-labelledby="correction-title"><div><p class="research-eyebrow">Correction desk</p><h2 id="correction-title">Public work should be able to receive a better reading.</h2></div><div><p>If a source is missing, a claim is too broad, a term is unclear, or an accessibility barrier appears, bring the route, section, and reason to Correspondence. A correction is intake for review; it is not an automatic change.</p><a href="/correspondence/">Open correspondence →</a></div></section>
-      </div>}
-      {route === 'dossier' && <DossierSheet />}
-      {route === 'correspondence' && <div id="surface-panel-overview" data-surface-panel="overview" role="tabpanel" aria-labelledby="surface-tab-overview">
-        <section id="return-paths" class="research-letters" aria-labelledby="letter-title"><header><p class="research-eyebrow">Return paths</p><h2 id="letter-title">Choose the conversation that gives the work enough context.</h2></header><div><a href="/notes/"><span>01 / Reading</span><strong>Follow a trail through the notes.</strong><p>Start with a question, pattern, or field note.</p></a><a href="/questions/"><span>02 / Project discussion</span><strong>Bring a real question and its constraints.</strong><p>Define the problem before prescribing a system.</p></a><a href="/dossier/"><span>03 / Work opportunities</span><strong>Read the studio posture and working direction.</strong><p>Use a conventional role-specific channel for formal applications.</p></a><a href="/evidence/#correction"><span>04 / Correction</span><strong>Point to a claim, route, source, or barrier.</strong><p>Corrections enter review; they do not auto-publish.</p></a></div></section>
-        <section class="research-correspondence-note" aria-labelledby="correspondence-title"><div><p class="research-eyebrow">A small protocol</p><h2 id="correspondence-title">A useful first message names its situation.</h2></div><ol><li>What are you trying to understand, make, or correct?</li><li>What constraints or source material already shape the work?</li><li>What decision, artifact, or conversation would make the next step useful?</li></ol></section>
-        <CorrespondenceIntake />
-      </div>}
-  {!journal && !['dossier', 'programs', 'notes'].includes(route) && <div id={`surface-panel-${guidePanel}`} data-surface-panel={guidePanel} role="tabpanel" aria-labelledby={`surface-tab-${guidePanel}`}><ResearchLabDeepening route={route} /></div>}
-  {!journal && route === 'methods' && <div id="surface-panel-field-cards" data-surface-panel="field-cards" role="tabpanel" aria-labelledby="surface-tab-field-cards"><ResearchCollections route={route} /></div>}
-  {!journal && route === 'evidence' && <div id="surface-panel-evidence-ledger" data-surface-panel="evidence-ledger" role="tabpanel" aria-labelledby="surface-tab-evidence-ledger"><ResearchCollections route={route} /></div>}
-</main>
-    <footer class="research-footer"><span>Hearth &amp; Code · independent research studio</span><span>Public research · source-aware · correction-friendly</span><a href="/">Return to The Lab ↑</a></footer>
+    <main id="main-content" class="studio-room-main">
+      <section class="studio-room-threshold" aria-labelledby="page-title">
+        <div class="studio-room-threshold__copy">
+          <p class="studio-room-kicker"><span>H+C / {meta.index}</span><span>{meta.context.split(' / ')[0]}</span></p>
+          <h1 id="page-title">{meta.lead} <em>{meta.accent}</em>{meta.tail && <> {meta.tail}</>}</h1>
+          <p>{meta.deck}</p>
+          <a class="studio-room-action" href={meta.action[1]}>{meta.action[0]} <span aria-hidden="true">→</span></a>
+        </div>
+        <aside class="studio-room-locator" aria-label="Page index">
+          <header><span>Room index</span><strong>What is on this surface?</strong></header>
+          <ol>{roomIndex.map((item, index) => <li><a href={item.href}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.title}</strong><small>{item.detail}</small></a></li>)}</ol>
+          <p><i></i> Public research surface · reviewable</p>
+        </aside>
+      </section>
+
+      <section class="studio-room-thought" aria-labelledby="studio-thought-title">
+        <div><p>From my workbench</p><span>{voice.posture}</span></div>
+        <blockquote><strong id="studio-thought-title">{voice.title}</strong><p>{voice.note}</p></blockquote>
+        <a href="/dossier/">Read the working archetype →</a>
+      </section>
+
+      {route === 'lab' && <section class="studio-room-field studio-room-field--paper studio-room-entry" aria-labelledby="lab-entry-title"><header><p class="studio-room-kicker">01 / Ways into the work</p><h2 id="lab-entry-title">Choose the kind of question you are carrying.</h2></header><div class="studio-room-card-grid studio-room-card-grid--four"><a href="/questions/"><span>01</span><h3>Follow a question</h3><p>Start with an open inquiry and its tensions.</p></a><a href="/programs/"><span>02</span><h3>Inspect a program</h3><p>See where an inquiry becomes a bounded system.</p></a><a href="/methods/"><span>03</span><h3>Adapt a method</h3><p>Take one instrument into your own environment.</p></a><a href="/dossier/"><span>04</span><h3>Meet the steward</h3><p>Read the working archetype behind the studio.</p></a></div></section>}
+
+      {route === 'questions' && <>
+        <section class="studio-room-field studio-room-field--paper" aria-labelledby="question-ledger"><header><p class="studio-room-kicker">01 / Inquiry ledger</p><h2 id="question-ledger">Eight questions I am holding open on purpose.</h2><p>I use this field to orient research, not to manufacture certainty. Each question points toward methods and artifacts that can make it more inspectable.</p></header><ol class="studio-room-ledger">{questions.map(([id, area, question, related]) => <li><span>{id} / {area}</span><h3>{question}</h3><p>{related}</p></li>)}</ol></section>
+        <section class="studio-room-field studio-room-field--dark" aria-labelledby="tension-title"><header><p class="studio-room-kicker">02 / Working tensions</p><h2 id="tension-title">I do not resolve these by slogan.</h2></header><dl class="studio-room-tensions">{tensions.map(([left, right, note]) => <div><dt>{left}</dt><dd>{right}</dd><p>{note}</p></div>)}</dl></section>
+        <section class="studio-room-field studio-room-field--fog" aria-labelledby="question-anatomy">
+          <header>
+            <p class="studio-room-kicker">03 / Question guide</p>
+            <h2 id="question-anatomy">I shape a question until it can guide work without deciding the answer.</h2>
+            <p>This is the small anatomy I use when an interesting thought needs to become a bounded inquiry. It keeps the field open while giving the work somewhere concrete to return.</p>
+          </header>
+          <ol class="studio-room-question-guide">
+            {questionGuide.map(([id, title, prompt, note]) => <li><span>{id}</span><h3>{title}</h3><strong>{prompt}</strong><p>{note}</p></li>)}
+          </ol>
+          <aside class="studio-room-question-example" aria-label="Worked question frame">
+            <div><p class="studio-room-kicker">Worked frame</p><strong>From a broad concern to an inspectable return</strong></div>
+            <blockquote>What must travel with an AI-assisted claim so another reader can understand, challenge, and revise it?</blockquote>
+            <dl>
+              <div><dt>Keeps open</dt><dd>The useful form may differ across writing, software, research, and collaboration.</dd></div>
+              <div><dt>Could return</dt><dd>A source list, transformation note, uncertainty label, and correction path tested against one public artifact.</dd></div>
+            </dl>
+          </aside>
+        </section>
+      </>}
+
+      {route === 'portfolio' && <>
+        <section id="selected-work" class="studio-room-field studio-room-field--paper" aria-labelledby="selected-work-title"><header><p class="studio-room-kicker">01 / Selected work</p><h2 id="selected-work-title">Six bodies of work, presented with their boundaries intact.</h2><p>I use this portfolio to show how inquiry becomes a program, artifact, software surface, method, or public record—not to manufacture case-study outcomes.</p></header><div class="studio-room-work-grid">{selectedWork.map(([id, form, title, summary, objects, href]) => <article><p><span>{id}</span>{form}</p><h3><a href={href}>{title}</a></h3><p>{summary}</p><small>{objects}</small></article>)}</div></section>
+        <section class="studio-room-field studio-room-field--dark"><ProductHorizon /></section>
+        <section class="studio-room-field studio-room-field--fog studio-room-return"><p class="studio-room-kicker">03 / Practice behind the portfolio</p><h2>The work is connected by a way of seeing.</h2><p>The Hearthside Meta-Architect dossier describes the practice without turning private context into a public claim.</p><a href="/dossier/">Open my working dossier →</a></section>
+      </>}
+
+      {route === 'programs' && <>
+        <section class="studio-room-field studio-room-field--paper" aria-labelledby="program-ledger"><header><p class="studio-room-kicker">01 / Program map</p><h2 id="program-ledger">A program is a question with a boundary.</h2><p>These program homes coordinate different research objects while preserving their own source, maturity, and release posture.</p></header><div class="studio-room-card-grid studio-room-card-grid--four">{programs.map(([id, title, question, posture]) => <article><span>{id}</span><h3>{title}</h3><p>{question}</p><small>{posture}</small></article>)}</div><div class="studio-room-sequence" aria-label="Program research sequence"><span>Question</span><i></i><span>Source</span><i></i><span>Method</span><i></i><span>Artifact</span><i></i><span>Return</span></div></section>
+        <section class="studio-room-field studio-room-field--dark"><TechnicalReportShelf /></section>
+        <section class="studio-room-field studio-room-field--fog"><ProgramDossier /></section>
+        <section class="studio-room-field studio-room-field--paper"><ResearchCollections route={route} /></section>
+      </>}
+
+      {route === 'methods' && <>
+        <section class="studio-room-field studio-room-field--paper" aria-labelledby="loop-title"><header><p class="studio-room-kicker">01 / Method loop</p><h2 id="loop-title">Eight moves for work that remains answerable.</h2><p>The loop is deliberately finite. It begins by orienting and ends by returning enough state for another person to inspect or resume the work.</p></header><ol class="studio-room-loop">{methodLoop.map(([id, title, note]) => <li><span>{id}</span><h3>{title}</h3><p>{note}</p></li>)}</ol></section>
+        <section id="instruments" class="studio-room-field studio-room-field--dark" aria-labelledby="instrument-title"><header><p class="studio-room-kicker">02 / Instrument shelf</p><h2 id="instrument-title">Small tools that clarify before they scale.</h2></header><div class="studio-room-card-grid studio-room-card-grid--four">{instruments.map(([id, title, note]) => <article><span>{id}</span><h3>{title}</h3><p>{note}</p></article>)}</div></section>
+        <section class="studio-room-field studio-room-field--paper"><ResearchCollections route={route} /></section>
+        <section class="studio-room-field studio-room-field--ember studio-room-return"><p class="studio-room-kicker">04 / Fictional teaching case</p><h2>A small system boundary under review.</h2><p>Should a document-indexing concern become its own module? Bind its imports and failures, define the no-touch storage boundary, draft a port, check isolation, and return the decision for human review. This illustrates a method; it is not a client result or released system.</p></section>
+      </>}
+
+      {route === 'notes' && !journal && <>
+        <section class="studio-room-field studio-room-field--paper"><FieldJournalLatest /></section>
+        <section class="studio-room-field studio-room-field--dark"><NotesArticleLedger /></section>
+        <section class="studio-room-field studio-room-field--fog"><ResearchCollections route={route} /></section>
+      </>}
+      {route === 'notes' && journal && <section class="studio-room-field studio-room-field--paper studio-room-journal-index"><slot /></section>}
+
+      {route === 'evidence' && <>
+        <section class="studio-room-field studio-room-field--paper" aria-labelledby="relation-title"><header><p class="studio-room-kicker">01 / Relation grammar</p><h2 id="relation-title">A public claim needs a route through the work.</h2><p>I treat evidence as a relation, not a decorative citation added after the interesting work is finished.</p></header><ol class="studio-room-relation">{relation.map(([id, title, note]) => <li><span>{id}</span><h3>{title}</h3><p>{note}</p></li>)}</ol></section>
+        <section class="studio-room-field studio-room-field--dark" aria-labelledby="claim-title"><header><p class="studio-room-kicker">02 / Claim cards</p><h2 id="claim-title">Three examples of calibrated language.</h2></header><div class="studio-room-claim-grid">{claims.map(([label, claim, limit]) => <article><span>{label}</span><blockquote>{claim}</blockquote><small>{limit}</small></article>)}</div></section>
+        <section class="studio-room-field studio-room-field--paper"><ResearchCollections route={route} /></section>
+        <section id="correction" class="studio-room-field studio-room-field--ember studio-room-return"><p class="studio-room-kicker">04 / Correction desk</p><h2>Public work should be able to receive a better reading.</h2><p>If a source is missing, a claim is too broad, a term is unclear, or an accessibility barrier appears, bring the route, section, and reason to Correspondence. A correction enters review; it is not an automatic change.</p><a href="/correspondence/">Open correspondence →</a></section>
+      </>}
+
+      {route === 'dossier' && <section class="studio-room-field studio-room-field--paper studio-room-dossier"><DossierSheet /></section>}
+
+      {route === 'correspondence' && <>
+        <section id="return-paths" class="studio-room-field studio-room-field--paper" aria-labelledby="return-paths-title"><header><p class="studio-room-kicker">01 / Return paths</p><h2 id="return-paths-title">Choose the conversation that gives the work enough context.</h2></header><div class="studio-room-card-grid studio-room-card-grid--four">{correspondence.map(([id, title, note, href]) => <a href={href}><span>{id}</span><h3>{title}</h3><p>{note}</p></a>)}</div></section>
+        <section class="studio-room-field studio-room-field--dark studio-room-message-guide" aria-labelledby="correspondence-title"><div><p class="studio-room-kicker">02 / A small protocol</p><h2 id="correspondence-title">A useful first message names its situation.</h2></div><ol><li>What are you trying to understand, make, or correct?</li><li>What constraints or source material already shape the work?</li><li>What decision, artifact, or conversation would make the next step useful?</li></ol></section>
+        <section class="studio-room-field studio-room-field--paper"><CorrespondenceIntake /></section>
+      </>}
+
+      {route === 'workbench' && <>
+        <section id="technical-surface" class="studio-room-field studio-room-field--paper" aria-labelledby="technical-surface-title"><header><p class="studio-room-kicker">01 / Public technical boundary</p><h2 id="technical-surface-title">A narrow service edge. A private operating interior.</h2><p>The public tier reads a small catalog projection. It does not receive private Hub content, retain visitor profiles, expose cluster-internal services, or treat a payment identifier as personal identity.</p></header><dl class="studio-room-boundaries"><div><dt>Public</dt><dd>Static research pages and a TypeScript catalog projection.</dd></div><div><dt>Service</dt><dd>Rust owns validation, readiness, policy, and catalog responses.</dd></div><div><dt>Data</dt><dd>PostgreSQL holds catalog records only in the current candidate.</dd></div><div><dt>Private</dt><dd>Operations, source systems, agents, and dashboards remain network-bounded.</dd></div></dl></section>
+        <section id="runtime-map" class="studio-room-field studio-room-field--dark" aria-labelledby="runtime-map-title"><header><p class="studio-room-kicker">02 / Runtime map</p><h2 id="runtime-map-title">Four layers, four responsibilities.</h2><p>The implementation is deliberately small: presentation cannot own native effects, the service cannot infer identity, and the database cannot become a shadow profile store.</p></header><ol class="studio-room-runtime">{runtime.map(([id, title, note, posture]) => <li><span>{id}</span><h3>{title}</h3><p>{note}</p><strong>{posture}</strong></li>)}</ol></section>
+        <section id="delivery-posture" class="studio-room-field studio-room-field--fog studio-room-return"><p class="studio-room-kicker">03 / Delivery posture</p><h2>Built for review before release.</h2><p>The application and deployment sources have local test evidence, but no immutable images have been published and no Argo application, DNS record, or live cluster release has been created. This surface explains the architecture; it is not a production-status claim.</p><nav><a href="/evidence/">Read the evidence posture →</a><a href="/correspondence/">Discuss the system →</a></nav></section>
+      </>}
+    </main>
+    <footer class="studio-room-footer"><span>Hearth &amp; Code · Hearthside Meta-Architect</span><span>Public research · source-aware · correction-friendly</span></footer>
   </body>
 </html>

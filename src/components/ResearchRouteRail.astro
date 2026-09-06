@@ -1,0 +1,11 @@
+---
+import { routeContexts, type ResearchRoute } from '../data/research-studio-content';
+interface Props { route: ResearchRoute; }
+const { route } = Astro.props;
+const context = routeContexts[route];
+---
+
+<nav class="research-route-rail" aria-label={context.label}>
+  <p>{context.label}</p>
+  <ol>{context.items.map((item, index) => <li><a href={item.href}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.title}</strong><small>{item.detail}</small></a></li>)}</ol>
+</nav>

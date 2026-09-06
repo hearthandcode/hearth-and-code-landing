@@ -1,0 +1,8 @@
+---
+import { technicalReports } from '../data/research-studio-content';
+---
+
+<section id="technical-reports" class="technical-report-shelf" aria-labelledby="technical-reports-title">
+  <header><div><p class="research-eyebrow">Technical report shelf / selected work</p><h2 id="technical-reports-title">Six systems under active study.</h2></div><p>Each record is a public reading orientation assembled from a named Hub program. The label describes its present form; it does not imply peer review, institutional publication, or deployment.</p></header>
+  <ol>{technicalReports.map((report) => <li><span>{report.code}</span><div><p>{report.form}</p><h3>{report.title}</h3><p>{report.summary}</p></div><small>{report.posture}</small></li>)}</ol>
+</section>

@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import HearthNavigation from './HearthNavigation.astro';
+import StudioArchetype from './StudioArchetype.astro';
+import StudioArchiveIndex from './StudioArchiveIndex.astro';
+import '../styles/research-studio-landing.css';
+import '../styles/ember-surface-framework.css';
+import '../styles/ember-circuit-library.css';
+
+const journal: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
+journal.sort((a, b) => new Date(`${b.data.published_date ?? b.data.date}T00:00:00`).getTime() - new Date(`${a.data.published_date ?? a.data.date}T00:00:00`).getTime());
+const latest = journal.slice(0, 3);
+
+const rooms = [
+  { number: '01', signal: 'green', eyebrow: 'Practice library', title: 'Methods', description: 'I keep thirty-two field cards for orientation, context, evaluation, and responsible return.', href: '/methods/', action: 'Open my methods lab' },
+  { number: '02', signal: 'violet', eyebrow: 'Public record', title: 'Research Library', description: 'I gather Field Journal entries, essays, technical articles, Methods instruments, and evidence maps into one searchable workbench.', href: '/library/', action: 'Enter my research library' },
+  { number: '03', signal: 'cyan', eyebrow: 'Technique atlas', title: 'Prompt engineering', description: 'I treat prompts as inspectable task contracts with bounded context, tool permissions, evaluation, and return.', href: '/methods/#methods-collections-title', action: 'Browse my prompt practice' },
+  { number: '04', signal: 'ember', eyebrow: 'Research programs', title: 'Technical reports', description: 'I connect TCCP, EKRP, Exocore, and system design through bounded dossiers and public-safe report orientations.', href: '/programs/', action: 'Read my program dossiers' },
+  { number: '05', signal: 'violet', eyebrow: 'Evidence desk', title: 'Artifacts', description: 'I use claim cards, evidence records, diagrams, templates, and correction routes to make the work inspectable.', href: '/evidence/', action: 'Inspect my artifact trail' },
+  { number: '06', signal: 'green', eyebrow: 'Selected practice', title: 'Portfolio', description: 'I collect selected research programs, software systems, publications, and current directions without hiding their posture.', href: '/portfolio/', action: 'View my selected work' },
+] as const;
+
+const methods = [
+  ['01', 'Semantic orientation', 'Keep literal evidence, interpreted meaning, and normalized language distinguishable.'],
+  ['02', 'Operational intelligence', 'Compare forms, transitions, ownership, and loss without centralizing authority.'],
+  ['03', 'Prompt & context practice', 'Design prompts as inspectable task contracts with bounded inputs and effects.'],
+  ['04', 'Evaluation & return', 'Check one named predicate, calibrate the claim, and leave a reliable way back.'],
+] as const;
+
+const portfolio = [
+  { code: 'TCCP', title: 'Typed Context & Control Protocol', kind: 'Research program', note: 'Representations, context, interaction, and proof obligations.' },
+  { code: 'EKRP', title: 'Knowledge Representation Profile', kind: 'Applied research', note: 'Human-readable knowledge architecture with explicit provenance.' },
+  { code: 'EXO', title: 'Exocore', kind: 'Software system', note: 'A local-first workbench for agents, knowledge, governance, and return.' },
+  { code: 'H+C', title: 'Field Journal', kind: 'Published practice', note: 'Essays and technical writing from the workbench of the studio.' },
+] as const;
+
+function displayDate(value: string) {
+  return new Date(`${value}T00:00:00`).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Hearth & Code is an independent research studio publishing methods, technical work, artifacts, essays, and software for answerable systems." />
+    <meta name="theme-color" content="#1a1410" />
+    <title>Hearth &amp; Code · Independent Research Studio</title>
+  </head>
+  <body class="research-studio-landing ember-surface">
+    <a class="studio-skip" href="#main-content">Skip to the studio index</a>
+    <div class="studio-shell">
+      <HearthNavigation current="orientation" context="Hearthside Meta-Architect / public research studio" />
+
+      <main id="main-content">
+        <section class="studio-threshold" aria-labelledby="studio-title">
+          <div class="studio-threshold__intro">
+            <p class="studio-kicker"><span>H+C / Research Studio</span><span>Public orientation · 2026</span></p>
+            <h1 id="studio-title">I build systems that can <em>explain themselves</em>—and leave a way back.</h1>
+            <p class="studio-deck">Hearth &amp; Code is my public workbench for research, software, knowledge architecture, prompt practice, and creative systems. I use the Hearthside Meta-Architect as a working name for the craft: forge enough structure to make complexity inspectable, then keep it warm enough to inhabit, question, and revise.</p>
+            <div class="studio-actions">
+              <a class="studio-action studio-action--primary" href="#studio-index">Explore the studio <span aria-hidden="true">↓</span></a>
+              <a class="studio-action" href="/portfolio/">View selected work <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+
+          <aside class="studio-orientation" aria-label="Research studio orientation">
+            <div class="studio-orientation__head"><span>My studio index</span><strong>Which thread would you like to pick up?</strong></div>
+            <ol>
+              <li><a href="/methods/"><span>01</span><strong>Use a method</strong><small>32 field cards</small></a></li>
+              <li><a href="/library/"><span>02</span><strong>Search the library</strong><small>articles + methods + maps</small></a></li>
+              <li><a href="/programs/"><span>03</span><strong>Study a program</strong><small>reports + dossiers</small></a></li>
+              <li><a href="/dossier/"><span>04</span><strong>Meet my working archetype</strong><small>practice dossier</small></a></li>
+            </ol>
+            <p><i aria-hidden="true"></i> Public research surface · correction-friendly</p>
+          </aside>
+        </section>
+
+        <StudioArchetype />
+
+        <section id="studio-index" class="studio-index" aria-labelledby="studio-index-title">
+          <header class="studio-section-head">
+            <div><p class="studio-kicker">02 / Research Studio Index</p><h2 id="studio-index-title">Six ways into my work.</h2></div>
+            <p>I give each room its own publication form and evidence boundary. Begin with the kind of material you want to read, use, or inspect.</p>
+          </header>
+          <div class="studio-room-grid">
+            {rooms.map((room) => (
+              <a class={`studio-room studio-room--${room.signal}`} href={room.href}>
+                <div><span>{room.number}</span><i aria-hidden="true"></i><small>{room.eyebrow}</small></div>
+                <h3>{room.title}</h3><p>{room.description}</p><strong>{room.action} <span aria-hidden="true">↗</span></strong>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <StudioArchiveIndex />
+
+        <section class="studio-methods" aria-labelledby="studio-methods-title">
+          <header class="studio-section-head studio-section-head--dark">
+            <div><p class="studio-kicker">04 / Method Architecture</p><h2 id="studio-methods-title">I use methods as routes through uncertainty.</h2></div>
+            <p>I keep this library practical rather than doctrinal: take a field card, adapt it to your sources and constraints, and preserve what the attempt cannot prove.</p>
+          </header>
+          <ol>{methods.map(([number, title, description]) => <li><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
+          <div class="studio-methods__actions"><a href="/methods/">Open all 32 field cards →</a></div>
+        </section>
+
+        <section class="studio-publications" aria-labelledby="studio-publications-title">
+          <header class="studio-section-head">
+            <div><p class="studio-kicker">05 / Publication Desk</p><h2 id="studio-publications-title">Recent from my Field Journal.</h2></div>
+            <p>I use long-form entries to preserve publication date, source context, and claim labels. Technical articles and shorter essays live beside them in the reading room.</p>
+          </header>
+          <ol>{latest.map((entry, index) => <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div><p><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time> · Field Journal</p><h3><a href={`/journal/${entry.id}/`}>{entry.data.title}</a></h3><p>{entry.data.description}</p></div>
+            <a href={`/journal/${entry.id}/`} aria-label={`Read ${entry.data.title}`}>Read <span aria-hidden="true">→</span></a>
+          </li>)}</ol>
+          <div class="studio-publications__footer"><a href="/journal/">Browse the journal</a><a href="/library/">Open the Research Library</a></div>
+        </section>
+
+        <section class="studio-portfolio" aria-labelledby="studio-portfolio-title">
+          <div class="studio-portfolio__intro"><p class="studio-kicker">06 / Selected Portfolio</p><h2 id="studio-portfolio-title">I make research useful through its artifacts.</h2><p>This is my selected view across research programs, knowledge systems, software, and public writing. I keep each item’s current posture visible.</p><a href="/portfolio/">Open the full portfolio <span aria-hidden="true">→</span></a></div>
+          <ol>{portfolio.map((item) => <li><span>{item.code}</span><div><small>{item.kind}</small><h3>{item.title}</h3><p>{item.note}</p></div></li>)}</ol>
+        </section>
+
+        <section class="studio-principles" aria-labelledby="studio-principles-title">
+          <div><p class="studio-kicker">07 / Publication Posture</p><h2 id="studio-principles-title">I want the work legible and the claims honest.</h2></div>
+          <dl><div><dt>Source-aware</dt><dd>Published material names the sources and limits that shape its reading.</dd></div><div><dt>Human-released</dt><dd>Automation may prepare and check; publication remains a deliberate human act.</dd></div><div><dt>Privacy-preserving</dt><dd>The public studio collects no visitor profile and exposes no private working context.</dd></div><div><dt>Corrigible</dt><dd>Evidence, uncertainty, revision, and a route for correction remain visible.</dd></div></dl>
+        </section>
+
+        <section class="studio-invitation" aria-labelledby="invitation-title">
+          <p class="studio-kicker">08 / Continue the inquiry</p><h2 id="invitation-title">Follow one of my questions.<br /><em>Bring back a better one.</em></h2>
+          <div><a href="/questions/">Browse open questions <span aria-hidden="true">→</span></a><a href="/correspondence/">Begin a correspondence <span aria-hidden="true">↗</span></a></div>
+        </section>
+      </main>
+
+      <footer class="studio-footer"><span>Hearth &amp; Code · Hearthside Meta-Architect</span><span>My public workbench · no tracking · correction welcome</span><a href="#main-content">Return to index ↑</a></footer>
+    </div>
+  </body>
+</html>

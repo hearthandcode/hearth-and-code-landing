@@ -1,0 +1,298 @@
+:root {
+  --surface-hearth: #0e1114;
+  --surface-ember: #2a1810;
+  --surface-parchment: #211d18;
+  --surface-fog: #302a25;
+  --surface-paper: #171512;
+  --surface-ink: #f1e7d2;
+  --surface-light: #f8f0e7;
+  --surface-muted: #baaca0;
+  --surface-line: rgba(255, 239, 224, .16);
+  --surface-cyan: #4fc5cf;
+  --surface-violet: #a88ae8;
+  --surface-green: #83b98a;
+  --surface-orange: #e76f3d;
+  --surface-amber: #d7a044;
+  --surface-display: Iowan Old Style, Charter, Source Serif Pro, Georgia, serif;
+  --surface-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --surface-mono: ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Code", Consolas, monospace;
+}
+
+.ember-surface {
+  --color-surface-primary: var(--surface-hearth);
+  --color-surface-raised: #211d18;
+  --color-surface-recessed: #14110f;
+  --color-surface-rule: rgba(255, 239, 224, .1);
+  --color-surface-rule-strong: var(--surface-line);
+  --color-text-primary: var(--surface-light);
+  --color-text-secondary: var(--surface-muted);
+  --color-text-display: var(--surface-light);
+  --color-accent-ember: var(--surface-orange);
+  --color-accent-forge: #b75032;
+  --color-accent-gold: var(--surface-amber);
+  --color-accent-violet: var(--surface-violet);
+  --color-accent-amethyst: var(--surface-violet);
+  --color-accent-plasma: var(--surface-cyan);
+  --color-accent-signal: var(--surface-cyan);
+  --font-display: var(--surface-display);
+  --font-body: var(--surface-sans);
+  --font-mono: var(--surface-mono);
+
+  --review-ink: var(--surface-hearth);
+  --review-panel: #211d18;
+  --review-panel-raised: var(--surface-ember);
+  --review-rule: rgba(255, 239, 224, .22);
+  --review-rule-soft: var(--surface-line);
+  --review-cream: var(--surface-light);
+  --review-ash: #d3c5b9;
+  --review-muted: var(--surface-muted);
+  --review-ember: var(--surface-orange);
+  --review-gold: var(--surface-amber);
+  --review-cyan: var(--surface-cyan);
+  --review-violet: var(--surface-violet);
+  --review-display: var(--surface-display);
+  --review-body: var(--surface-sans);
+  --review-mono: var(--surface-mono);
+
+  --studio-ink: var(--surface-light);
+  --studio-muted: var(--surface-muted);
+  --studio-paper: var(--surface-hearth);
+  --studio-panel: rgba(42, 24, 16, .72);
+  --studio-line: var(--surface-line);
+  --studio-ember: var(--surface-orange);
+  --studio-gold: var(--surface-amber);
+  --studio-green: var(--surface-green);
+
+  --ink: var(--surface-hearth);
+  --raised: #211d18;
+  --cream: var(--surface-light);
+  --ash: var(--surface-muted);
+  --ember: var(--surface-orange);
+  --gold: var(--surface-amber);
+  --signal: var(--surface-cyan);
+  --forge: #b75032;
+  --rule: rgba(255, 239, 224, .22);
+  --display: var(--surface-display);
+  --body: var(--surface-sans);
+  --mono: var(--surface-mono);
+
+  min-width: 20rem;
+  background: var(--surface-hearth);
+  color: var(--surface-light);
+  font: 400 1rem/1.65 var(--surface-sans);
+}
+
+.ember-surface::before {
+  background:
+    radial-gradient(46rem 26rem at 90% -8%, rgba(231, 111, 61, .13), transparent 65%),
+    radial-gradient(38rem 24rem at 5% 38%, rgba(79, 197, 207, .06), transparent 68%),
+    linear-gradient(90deg, transparent 0 72%, rgba(79, 197, 207, .045) 72% 72.08%, transparent 72.08%),
+    linear-gradient(0deg, transparent 0 34%, rgba(231, 111, 61, .05) 34% 34.08%, transparent 34.08%),
+    linear-gradient(130deg, #211812, #0e1114 62%, #15110f);
+}
+
+.ember-surface :where(h1, h2, h3) {
+  font-family: var(--surface-display);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.ember-surface :where(.review-kicker, .review-label, .orientation-kicker, .studio-eyebrow, .ec-kicker, .ec-index, .ec-label) {
+  color: var(--surface-cyan);
+  font-family: var(--surface-mono);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.ember-surface :where(a, button, summary):focus-visible {
+  outline: .2rem solid var(--surface-cyan);
+  outline-offset: .24rem;
+}
+
+/* Shared review shell */
+.ember-surface .review-shell {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+
+.review-context-header {
+  width: min(100% - 2rem, 86rem);
+  margin: 1rem auto 0;
+  border: 1px solid var(--surface-line);
+  background: rgba(42, 24, 16, .45);
+}
+
+.review-context-header .review-status-rail {
+  padding: .72rem 1rem;
+  border-bottom: 1px solid var(--surface-line);
+  font-size: .72rem;
+}
+
+.ember-surface .review-navigation {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 0;
+}
+
+.ember-surface .review-navigation > a,
+.ember-surface .review-journal-nav {
+  min-width: 0;
+  border: 0;
+  border-right: 1px solid var(--surface-line);
+}
+
+.ember-surface .review-navigation a {
+  min-height: 3.25rem;
+  padding: .72rem;
+  color: var(--surface-muted);
+  font: 500 .7rem var(--surface-mono);
+}
+
+.ember-surface .review-navigation a:hover,
+.ember-surface .review-navigation a[aria-current="page"] {
+  color: var(--surface-light);
+  background: rgba(79, 197, 207, .06);
+}
+
+.ember-surface .review-journal-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.ember-surface .review-journal-nav > span { display: none; }
+.ember-surface .review-main { width: min(100% - 2rem, 86rem); margin: 0 auto; padding-top: 0; }
+.ember-surface .review-page { padding: 0; }
+
+.ember-surface :where(.room-hero, .policy-hero, .dossier-hero) {
+  margin: 0;
+  padding: clamp(3.5rem, 8vw, 7rem) 0 clamp(2.5rem, 6vw, 4rem);
+  border-bottom: 1px solid var(--surface-line);
+}
+
+.ember-surface :where(.room-hero, .policy-hero-copy, .dossier-hero) h1 {
+  max-width: 14ch;
+  font-size: clamp(3.15rem, 7vw, 7rem);
+  line-height: .93;
+  letter-spacing: -.055em;
+}
+
+.ember-surface :where(.lead, .policy-deck) {
+  max-width: 68ch;
+  color: #d3c5b9;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.ember-surface :where(.review-section, .policy-section, .dossier-evidence) {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+  border-color: var(--surface-line);
+}
+
+.ember-surface :where(.review-card, .review-story-panel, .review-split > div, .policy-hero-copy, .policy-hero-aside, .policy-support, .dossier-story, .dossier-banner-figure, .dossier-evidence article) {
+  border-color: var(--surface-line);
+  border-radius: .4rem;
+  background: #211d18;
+  box-shadow: none;
+}
+
+.ember-surface :where(.review-button, .policy-close) {
+  border-radius: .25rem;
+  font-family: var(--surface-mono);
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.ember-surface :where(.review-button.is-primary, .orientation-action--primary, .studio-button--primary) {
+  border-color: var(--surface-orange);
+  background: var(--surface-orange);
+  color: var(--surface-hearth);
+}
+
+/* Standalone review surfaces */
+.ember-surface main.research-main { width: min(100% - 2rem, 86rem); }
+
+.ember-surface :where(.launch-hero, .methods-review-hero, .ec-intro, .studio-hero) {
+  min-height: 0;
+  padding-block: clamp(3.5rem, 8vw, 7rem) clamp(2.5rem, 6vw, 4rem);
+  border-bottom: 1px solid var(--surface-line);
+}
+
+.ember-surface :where(.launch-hero, .methods-review-hero, .ec-intro, .studio-hero) h1 {
+  max-width: 14ch;
+  font-size: clamp(3.15rem, 7vw, 7rem);
+  line-height: .93;
+  letter-spacing: -.055em;
+}
+
+.ember-surface :where(.launch-summary div, .launch-routes a, .methods-direction-card, .hearthside-family-grid article, .methods-samples article, .ec-card, .studio-offer) {
+  border-color: var(--surface-line);
+  border-radius: .4rem;
+  background: #211d18;
+  box-shadow: none;
+}
+
+.ember-surface :where(.launch-routes a, .methods-direction-card, .ec-card, .studio-offer):hover {
+  border-color: var(--surface-cyan);
+}
+
+.ember-surface :where(.launch-release, .methods-recommendation, .methods-samples, .studio-trust) {
+  border-color: var(--surface-orange);
+  border-radius: .4rem;
+  background: linear-gradient(125deg, rgba(231, 111, 61, .14), rgba(42, 24, 16, .92) 60%, rgba(79, 197, 207, .05));
+}
+
+.ember-surface .ec-review { width: min(100% - 2rem, 86rem); }
+.ember-surface .ec-family { border-color: var(--surface-line); }
+.ember-surface .ec-light { background: var(--surface-parchment); color: var(--surface-ink); }
+.ember-surface .ec-mark-sample { background: var(--surface-parchment); color: var(--surface-ink); }
+.ember-surface .ec-light :where(.ec-label, .ec-note) { color: var(--surface-orange); }
+.ember-surface .studio-body .orientation-header,
+.ember-surface.studio-body main,
+.ember-surface .studio-footer { width: min(100% - 2rem, 86rem); }
+.ember-surface .studio-hero { grid-template-columns: 4rem minmax(0, 1fr) minmax(16rem, 21rem); }
+.ember-surface .studio-catalog,
+.ember-surface .studio-trust,
+.ember-surface .studio-principles,
+.ember-surface .studio-return { border-color: var(--surface-line); }
+
+.ember-surface .research-footer,
+.ember-surface.review-body .review-footer,
+.ember-surface .studio-footer {
+  width: min(100% - 2rem, 86rem);
+  margin-inline: auto;
+  border-color: var(--surface-line);
+  background: transparent;
+  color: var(--surface-muted);
+  font: 600 .7rem var(--surface-mono);
+  text-transform: uppercase;
+}
+
+@media (max-width: 980px) {
+  .ember-surface .review-navigation { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ember-surface .studio-hero { grid-template-columns: 3rem 1fr; }
+  .ember-surface .studio-hero__note { grid-column: 2; }
+}
+
+@media (max-width: 640px) {
+  .review-context-header,
+  .ember-surface .review-main,
+  .ember-surface main.research-main,
+  .ember-surface .ec-review,
+  .ember-surface .research-footer,
+  .ember-surface.review-body .review-footer,
+  .ember-surface .studio-footer { width: min(100% - 1rem, 86rem); }
+  .ember-surface .review-navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ember-surface .studio-hero { grid-template-columns: 1fr; }
+  .ember-surface .studio-hero__marker { display: none; }
+  .ember-surface .studio-hero__note { grid-column: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember-surface *, .ember-surface *::before, .ember-surface *::after { transition-duration: .01ms !important; }
+}

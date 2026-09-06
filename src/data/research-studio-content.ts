@@ -1,0 +1,69 @@
+export type ResearchRoute = 'lab' | 'questions' | 'portfolio' | 'programs' | 'methods' | 'notes' | 'evidence' | 'dossier' | 'correspondence' | 'workbench';
+
+export const routeContexts: Record<ResearchRoute, { label: string; items: Array<{ href: string; title: string; detail: string }> }> = {
+  lab: { label: 'Research orientation', items: [{ href: '/questions/', title: 'Questions', detail: 'Open inquiry' }, { href: '/methods/', title: 'Methods', detail: 'Practical instruments' }, { href: '/notes/', title: 'Published', detail: 'Essays and journal' }] },
+  questions: { label: 'On this surface', items: [{ href: '#question-ledger', title: 'Inquiry ledger', detail: 'Current questions' }, { href: '#tension-title', title: 'Working tensions', detail: 'What remains open' }, { href: '#question-anatomy', title: 'Question guide', detail: 'How to frame inquiry' }] },
+  portfolio: { label: 'Portfolio index', items: [{ href: '#selected-work', title: 'Selected work', detail: 'Six active bodies' }, { href: '#product-horizon', title: 'Product horizon', detail: 'Eight candidates' }, { href: '/dossier/', title: 'Studio dossier', detail: 'Practice and steward' }] },
+  programs: { label: 'Program index', items: [{ href: '#program-ledger', title: 'Program map', detail: 'Questions and posture' }, { href: '#technical-reports', title: 'Technical reports', detail: 'Public reading shelf' }, { href: '#program-dossiers', title: 'Dossiers', detail: 'TCCP, EKRP, Exocore' }] },
+  methods: { label: 'Method index', items: [{ href: '#loop-title', title: 'Method loop', detail: 'Eight moves' }, { href: '#instruments', title: 'Instruments', detail: 'Four working records' }, { href: '#methods-collections-title', title: 'Field cards', detail: '32 techniques' }] },
+  notes: { label: 'Publication index', items: [{ href: '#field-journal', title: 'Field Journal', detail: 'Published record' }, { href: '#article-ledger', title: 'Studio articles', detail: 'Essays and technical work' }, { href: '/journal/', title: 'Journal archive', detail: 'Standalone index' }] },
+  evidence: { label: 'Artifact index', items: [{ href: '#relation-title', title: 'Relation grammar', detail: 'Source to return' }, { href: '#claim-title', title: 'Claim cards', detail: 'Calibrated language' }, { href: '#evidence-collections-title', title: 'Evidence ledger', detail: 'Public records' }] },
+  dossier: { label: 'Dossier index', items: [{ href: '#dossier-file', title: 'Case file', detail: 'Working profile' }, { href: '#dossier-index', title: 'Four chapters', detail: 'Sixteen entries' }, { href: '/portfolio/', title: 'Portfolio', detail: 'Work in public' }] },
+  correspondence: { label: 'Correspondence index', items: [{ href: '#return-paths', title: 'Return paths', detail: 'Choose a conversation' }, { href: '#correspondence-title', title: 'Message guide', detail: 'Useful first context' }, { href: '#intake', title: 'Intake', detail: 'Provider boundary' }] },
+  workbench: { label: 'Technical index', items: [{ href: '#technical-surface', title: 'System boundary', detail: 'Public and private tiers' }, { href: '#runtime-map', title: 'Runtime map', detail: 'Rust, TypeScript, Postgres' }, { href: '#delivery-posture', title: 'Delivery posture', detail: 'Kubernetes candidate' }] },
+};
+
+export const routeVoice: Record<ResearchRoute, { title: string; note: string; posture: string }> = {
+  lab: { title: 'I build the room around the question.', note: 'The work begins by making enough space for sources, constraints, imagination, and a real human decision to remain visible together.', posture: 'Hearthside thought projection · review requested' },
+  questions: { title: 'I try to keep the hard question alive.', note: 'A strong question can widen the field without turning every branch into a commitment. The craft is preserving depth while still choosing a path that can be walked.', posture: 'Hearthside thought projection · review requested' },
+  portfolio: { title: 'I use the portfolio as a trail, not a trophy case.', note: 'The useful story is how research becomes an artifact, how the artifact is checked, and where the work remains provisional or unfinished.', posture: 'Hearthside thought projection · review requested' },
+  programs: { title: 'I look for the architecture behind the visible object.', note: 'A program becomes legible when its question, source families, working forms, limits, and route back to human judgment can be inspected together.', posture: 'Hearthside thought projection · review requested' },
+  methods: { title: 'I use architecture as a precision filter for intuition.', note: 'Curiosity may discover the relation. A method gives it a form, a boundary, and a test without pretending that the first elegant pattern is already true.', posture: 'Hearthside thought projection · review requested' },
+  notes: { title: 'I write to leave a thread I can return to.', note: 'A field note does not need to finish the theory. It needs to preserve the question, the source, the useful distinction, and enough uncertainty for a later revision.', posture: 'Hearthside thought projection · review requested' },
+  evidence: { title: 'I want every confident sentence to carry a way back.', note: 'Sources, checks, omissions, and corrections are part of the public object—not backstage paperwork added after the interesting work is over.', posture: 'Hearthside thought projection · review requested' },
+  dossier: { title: 'Hearthside Meta-Architect is a working name, not a credential.', note: 'It helps me coordinate forge and hearth: structural rigor with welcome, imaginative reach with concrete seams, and autonomy with visible boundaries.', posture: 'Personal candidate · review before publication' },
+  correspondence: { title: 'I treat a return path as part of the interface.', note: 'Useful correspondence names the situation, the constraint, and the decision it could help clarify. It leaves both people room to revise or decline.', posture: 'Hearthside thought projection · review requested' },
+  workbench: { title: 'I want agents to behave like good workshop roles.', note: 'A comparer, critic, tester, or bounded implementer should return what it used, what it changed, what it could not decide, and where judgment still belongs.', posture: 'Hearthside thought projection · review requested' },
+};
+
+export const archetypePractices = [
+  { number: '01', title: 'Build the return before the goal', detail: 'Leave enough state, source, and next-action context that interruption is survivable.' },
+  { number: '02', title: 'Name what kind of thing this is', detail: 'Keep source, observation, inference, hypothesis, proposal, and decision from borrowing one another’s authority.' },
+  { number: '03', title: 'Keep one protected build lane', detail: 'Give exploration room without allowing it to consume every route to completion.' },
+  { number: '04', title: 'Require a concrete seam', detail: 'Let a new architecture earn attention by improving one handoff, transition, retrieval task, or test.' },
+  { number: '05', title: 'Give ideas a waiting room', detail: 'Preserve a branch without automatically promoting it into a commitment.' },
+  { number: '06', title: 'Use agents as roles, not mystique', detail: 'Delegate bounded work while keeping consequential interpretation and release human-held.' },
+  { number: '07', title: 'Let creative work test the system', detail: 'A structure should support curiosity, meaning, and play as well as control and precision.' },
+  { number: '08', title: 'Finish in public-sized pieces', detail: 'Prefer a small honest artifact with visible limits to an invisible total system.' },
+] as const;
+
+export const studioArchiveFamilies = [
+  { code: 'IDX-01', count: '32', title: 'Method field cards', description: 'Semantic orientation, Operational Intelligence, prompt and context practice, evaluation, and return.', examples: 'Literal before normalized · loss register · claim calibration', href: '/methods/', action: 'Open the method fieldbook', posture: 'Public learning modules', signal: 'green' },
+  { code: 'IDX-02', count: '08', title: 'Prompt engineering techniques', description: 'Task contracts, context packets, input hygiene, artifact decomposition, schemas, examples, adversarial reading, and tool boundaries.', examples: 'M-17 through M-24 · each includes a reusable candidate prompt', href: '/methods/#prompt-practice-title', action: 'Open prompt practice', posture: 'Technique-level public projection', signal: 'cyan' },
+  { code: 'IDX-03', count: '32', title: 'Program modules', description: 'Public inspection records across TCCP, EKRP, Exocore, and the cross-program workbench.', examples: 'Typed representation · evidence packet · agent harness · release packet', href: '/programs/#programs-collections-title', action: 'Browse program modules', posture: 'Source-bound program projection', signal: 'ember' },
+  { code: 'IDX-04', count: '17', title: 'Published works', description: 'Nine Field Journal entries and eight Hearthside essays or technical articles.', examples: 'The Hearthside Meta-Architect · Typed Context for Real Work · Prompting as Interface Design', href: '/notes/', action: 'Enter the reading room', posture: 'Published and authored records', signal: 'violet' },
+  { code: 'IDX-05', count: '16', title: 'Evidence and artifact modules', description: 'Source forms, claim classes, checks, correction records, and public artifact patterns.', examples: 'Direct source · derived projection · check receipt · correction route', href: '/evidence/', action: 'Inspect the evidence desk', posture: 'Public learning modules', signal: 'violet' },
+  { code: 'IDX-06', count: '06', title: 'Technical report orientations', description: 'TCCP, EKRP, Exocore, the technique atlas, product portfolio, and Core32 evaluation research.', examples: 'Program dossier · architecture dossier · evaluation research', href: '/programs/#technical-reports', action: 'Open the report shelf', posture: 'Mixed-maturity public orientation', signal: 'ember' },
+  { code: 'IDX-07', count: '16', title: 'Archetype dossier entries', description: 'Orientation, practice, relations, and continuity for the Hearthside Meta-Architect working profile.', examples: 'Minimum viable institutions · constitutional autonomy · integrated archetype', href: '/dossier/', action: 'Open the dossier', posture: 'Personal candidate · review requested', signal: 'green' },
+  { code: 'IDX-08', count: '08', title: 'Product directions', description: 'Distinct application candidates over one source-aware, typed, human-gated substrate.', examples: 'Protocol Forge · Evidence Loom · Living Atlas · Symbolic Studio', href: '/portfolio/#product-horizon', action: 'Review the product horizon', posture: 'Review required · not active', signal: 'amber' },
+] as const;
+
+export const productHorizon = [
+  { id: 'P-01', title: 'TCCP Protocol Forge', form: 'Desktop + web workbench', role: 'Internal keystone candidate', summary: 'Compile bounded goals, sources, constraints, and effect policy into inspectable typed workflows.' },
+  { id: 'P-02', title: 'Ember Evidence Loom', form: 'Web service + desktop reader', role: 'Recommended public proof', summary: 'Build question-bounded claim and evidence maps across source revisions and disputes.' },
+  { id: 'P-03', title: 'Exocore Living Atlas', form: 'Local-first desktop', role: 'Individual-tool candidate', summary: 'Observe one bounded project or system through source-linked snapshots and change.' },
+  { id: 'P-04', title: 'Hearth Commons Chamber', form: 'Civic web service', role: 'Partnered research', summary: 'Help groups examine proposals, evidence, objections, and accountable decisions.' },
+  { id: 'P-05', title: 'Learning Foundry', form: 'Web + desktop studio', role: 'First vertical candidate', summary: 'Turn explicit learning goals into inspectable practice, evidence, feedback, and revision.' },
+  { id: 'P-06', title: 'Care Relay Lab', form: 'Desktop simulation lab', role: 'Synthetic-only research', summary: 'Study fictional coordination handoffs and information loss without clinical operation.' },
+  { id: 'P-07', title: 'Resilience Maproom', form: 'Geospatial web service', role: 'Partnered research', summary: 'Map observations, dependencies, scenarios, and community knowledge with visible uncertainty.' },
+  { id: 'P-08', title: 'Ember Symbolic Studio', form: 'Creative desktop application', role: 'Expression-layer candidate', summary: 'Compose source-linked prose, diagrams, notation, and bilingual symbolic editions.' },
+] as const;
+
+export const technicalReports = [
+  { code: 'TR-01', title: 'Typed Context & Control Protocol', form: 'Program dossier', posture: 'Public research projection', summary: 'Typed representations, context conditions, interaction compilation, and proof obligations.' },
+  { code: 'TR-02', title: 'Knowledge Representation Profile', form: 'Architecture dossier', posture: 'Source-only research', summary: 'Human-readable semantic document architecture, provenance, and review-gated identity.' },
+  { code: 'TR-03', title: 'Exocore System Ecology', form: 'Platform orientation', posture: 'Implementation-separated', summary: 'Agents, memory, governance, tools, observability, and the human return boundary.' },
+  { code: 'TR-04', title: 'Prompt, Context & Agentic Technique Atlas', form: 'Method catalog', posture: 'Public-safe projection', summary: 'Technique-level prompting patterns with selection, failure modes, and evaluation limits.' },
+  { code: 'TR-05', title: 'Agentic Product Portfolio', form: 'Research index', posture: 'Review-required candidate', summary: 'Eight distinct product experiences over one source-aware, typed, human-gated substrate.' },
+  { code: 'TR-06', title: 'Core32 Fleet Evaluation Framework', form: 'Evaluation research', posture: 'Provider-free foundation', summary: 'Framework-neutral fixtures for comparing methods, roles, and state transitions.' },
+] as const;

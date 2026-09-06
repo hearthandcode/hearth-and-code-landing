@@ -1,0 +1,18 @@
+.research-portfolio { padding: clamp(2rem, 5vw, 4rem) 0 6rem; }
+.research-portfolio > header { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: end; padding-bottom: 2rem; border-bottom: 1px solid rgba(216, 189, 145, .28); }
+.research-portfolio > header h2 { margin: 0; color: #f1e7d2; font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 400; line-height: .95; letter-spacing: -.04em; }
+.research-portfolio > header > p { max-width: 58ch; margin: 0; color: #b8aa94; line-height: 1.7; }
+.research-portfolio__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 2rem; padding: 1px; background: rgba(216, 189, 145, .22); }
+.research-portfolio__grid article { min-height: 25rem; padding: clamp(1.4rem, 3vw, 2.2rem); background: #211d18; display: flex; flex-direction: column; }
+.research-portfolio__grid article > p:first-child { margin: 0; color: #9dc8c1; font: 500 .7rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.research-portfolio__grid article > p:first-child span { color: #e85b4e; margin-right: .65rem; }
+.research-portfolio__grid h3 { margin: 3rem 0 1rem; color: #f1e7d2; font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 400; line-height: 1; }
+.research-portfolio__grid article > p:nth-of-type(2) { max-width: 54ch; margin: 0; color: #b8aa94; line-height: 1.65; }
+.research-portfolio__grid ul { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+.research-portfolio__grid li { padding: .35rem .5rem; border: 1px solid rgba(216, 189, 145, .24); border-radius: .25rem; color: #c9bba5; font: 500 .67rem var(--font-mono); text-transform: uppercase; }
+.research-portfolio__grid a { margin-top: auto; padding-top: 2rem; color: #9dc8c1; font: 600 .75rem var(--font-mono); text-transform: uppercase; }
+.research-portfolio > aside { margin-top: 3rem; padding: clamp(1.5rem, 4vw, 3rem); border-left: .3rem solid #e85b4e; background: rgba(232, 91, 78, .07); }
+.research-portfolio > aside h3 { margin: .4rem 0 1rem; color: #f1e7d2; font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 400; }
+.research-portfolio > aside p:not(.research-eyebrow) { max-width: 68ch; color: #b8aa94; line-height: 1.7; }
+.research-portfolio > aside a { color: #9dc8c1; font-weight: 700; }
+@media (max-width: 760px) { .research-portfolio > header, .research-portfolio__grid { grid-template-columns: 1fr; } .research-portfolio__grid article { min-height: 21rem; } }

@@ -1,0 +1,18 @@
+---
+import { fieldJournalExpansions } from '../content/field-journal-expansions';
+
+interface Props { slug: string; }
+const { slug } = Astro.props;
+const sections = fieldJournalExpansions[slug] ?? [];
+---
+
+{sections.length > 0 && <section class="hearthside-field-expansion" aria-label="Hearthside expansion candidate">
+  <header class="hearthside-field-expansion__header">
+    <p class="research-eyebrow">Hearthside expansion / author review candidate</p>
+    <p>This added reflection is a private-to-public projection prepared in my requested voice. It remains subject to my factual, privacy, and authorship review.</p>
+  </header>
+  {sections.map((section, index) => <section id={`${slug}-hearthside-${index + 1}`}>
+    <h2>{section.heading}</h2>
+    {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </section>)}
+</section>}

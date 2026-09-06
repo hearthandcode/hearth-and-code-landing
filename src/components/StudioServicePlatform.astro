@@ -1,0 +1,113 @@
+---
+import HearthNavigation from './HearthNavigation.astro';
+import { studioBoundary, studioCatalog } from '../data/studio-catalog.mjs';
+import '../styles/studio-service-platform.css';
+import '../styles/research-lab.css';
+import '../styles/ember-research-system.css';
+import '../styles/ember-surface-framework.css';
+
+const readinessClass = (readiness: string) => `studio-offer__state studio-offer__state--${readiness}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#120e0c" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A review-only Hearth & Code Studio catalog candidate for templates, technical sessions, workflow review, and the Workbench application." />
+    <title>Studio review | Hearth &amp; Code</title>
+  </head>
+  <body class="research-body research-body--review studio-body ember-surface">
+    <a class="research-skip" href="#studio-content">Skip to studio offers</a>
+
+    <HearthNavigation context="studio / review candidate" />
+
+    <main id="studio-content" class="research-main">
+      <section class="studio-hero" aria-labelledby="studio-title">
+        <div class="studio-hero__marker" aria-hidden="true"><span>H</span><i></i><span>C</span></div>
+        <div class="studio-hero__copy">
+          <p class="studio-eyebrow">Hearth &amp; Code Studio / local review surface</p>
+          <h1 id="studio-title">Useful structure for work that needs to remain human-readable.</h1>
+          <p class="studio-hero__lede">Templates, technical conversations, and local-first tools for preserving the sources, decisions, boundaries, and return paths around complex knowledge-and-agent work.</p>
+          <div class="studio-hero__actions">
+            <a class="studio-button studio-button--primary" href="#offers">Explore the first offers</a>
+            <a class="studio-button" href="/correspondence/">Bring a real situation</a>
+          </div>
+        </div>
+        <aside class="studio-hero__note" aria-label="Current release boundary">
+          <span>Review state / 00</span>
+          <strong>This is not a storefront yet.</strong>
+          <p>No account, checkout, subscription, or first-party intake is active. The page is a no-index local candidate.</p>
+        </aside>
+      </section>
+
+      <section class="studio-principles" aria-labelledby="principles-title">
+        <header>
+          <p class="studio-eyebrow">The working promise</p>
+          <h2 id="principles-title">Begin with something inspectable.</h2>
+        </header>
+        <ol>
+          <li><span>01</span><strong>Trace the source.</strong><p>Keep evidence and interpretation distinguishable.</p></li>
+          <li><span>02</span><strong>Name the decision.</strong><p>Make authority and uncertainty visible before action.</p></li>
+          <li><span>03</span><strong>Test one boundary.</strong><p>Prefer a narrow proof over a broad promise.</p></li>
+          <li><span>04</span><strong>Leave a return path.</strong><p>Give the next person a safe place to resume.</p></li>
+        </ol>
+      </section>
+
+      <section id="offers" class="studio-catalog" aria-labelledby="offers-title">
+        <header class="studio-section-heading">
+          <div>
+            <p class="studio-eyebrow">Initial catalog / four forms</p>
+            <h2 id="offers-title">Choose the smallest useful entry point.</h2>
+          </div>
+          <p>Each offer carries its present readiness and limitation. A polished card does not turn a candidate into an available product.</p>
+        </header>
+
+        <div class="studio-catalog__grid">
+          {studioCatalog.map((offer) => (
+            <article class="studio-offer" id={offer.id}>
+              <div class="studio-offer__meta">
+                <span>{offer.number} / {offer.family}</span>
+                <span class={readinessClass(offer.readiness)}>{offer.readinessLabel}</span>
+              </div>
+              <h3>{offer.title}</h3>
+              <p class="studio-offer__summary">{offer.summary}</p>
+              <p class="studio-offer__boundary"><strong>Boundary</strong>{offer.boundary}</p>
+              <a href={offer.action.href} download={offer.action.kind === 'download' ? true : undefined}>
+                {offer.action.label} <span aria-hidden="true">↗</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="studio-trust" aria-labelledby="trust-title">
+        <div>
+          <p class="studio-eyebrow">Privacy before transaction</p>
+          <h2 id="trust-title">The quietest data system is the one we have not asked you to fill.</h2>
+        </div>
+        <div class="studio-trust__facts">
+          <p><span>First-party collection</span><strong>{studioBoundary.firstPartyDataCollection ? 'Active' : 'None'}</strong></p>
+          <p><span>Account required</span><strong>{studioBoundary.accountRequired ? 'Yes' : 'No'}</strong></p>
+          <p><span>Checkout</span><strong>{studioBoundary.checkoutEnabled ? 'Active' : 'Not enabled'}</strong></p>
+          <p><span>Public API</span><strong>{studioBoundary.publicApiEnabled ? 'Active' : 'Not enabled'}</strong></p>
+        </div>
+        <p class="studio-trust__provider"><strong>Inquiry boundary:</strong> {studioBoundary.inquiryProvider} Do not submit confidential, credential, health, client, or other sensitive material.</p>
+      </section>
+
+      <section class="studio-return" aria-labelledby="return-title">
+        <p class="studio-eyebrow">A human next step</p>
+        <h2 id="return-title">Bring one concrete situation.</h2>
+        <p>What are you trying to make easier to inspect, test, hand off, or resume? A useful first conversation can stay small.</p>
+        <a class="studio-button studio-button--primary" href="/correspondence/">Open correspondence</a>
+      </section>
+    </main>
+
+    <footer class="research-footer studio-footer">
+      <p>Hearth &amp; Code Studio <span>/ review candidate</span></p>
+      <nav aria-label="Studio footer"><a href="/review/">Review index</a><a href="/">The Lab</a></nav>
+    </footer>
+  </body>
+</html>
