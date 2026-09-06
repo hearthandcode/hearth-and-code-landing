@@ -240,6 +240,9 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.equal(publicMethodCollections.length, 4);
   assert.ok(publicMethods.every((method) => method.prompt && method.exampleOutput && method.purpose && method.pros.length && method.cons.length && method.whenToUse.length));
   assert.equal(new Set(publicMethods.map((method) => method.exampleOutput)).size, 32);
+  assert.ok(publicMethods.every((method) => method.exampleRun.verdict === 'pass' && method.exampleRun.score >= 8));
+  assert.ok(publicMethods.every((method) => /Codex isolated task workers/.test(method.exampleRun.runner)));
+  assert.ok(publicMethods.every((method) => !/Hermes/i.test(method.exampleRun.runner)));
 
   assert.match(page, /LibraryWorkbench client:load/);
   assert.match(page, /articles=\{articles\}/);
@@ -251,6 +254,7 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.match(methodLibrary, /ec-method-sheet__prompt/);
   assert.match(methodLibrary, /ec-method-sheet__output/);
   assert.match(methodLibrary, /A worked model response/);
+  assert.match(methodLibrary, /Harness evaluation/);
   assert.match(methodLibrary, /What it makes possible/);
   assert.match(methodLibrary, /Costs and cautions/);
   assert.doesNotMatch(workbench, /BoundaryMap|EvidenceMatrix|SystemContext|Mermaid|React grammar/);

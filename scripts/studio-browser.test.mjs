@@ -256,6 +256,8 @@ test('representative React method summaries open distinct full method sheets', a
       assert.equal(await sheet.getByRole('heading', { name: /Costs and cautions/i }).count(), 1);
       assert.equal(await sheet.getByRole('heading', { name: /A worked model response/i }).count(), 1);
       assert.equal((await sheet.locator('.ec-method-sheet__output pre').innerText()).trim().length > 180, true);
+      assert.equal(await sheet.getByLabel('Harness evaluation').count(), 1);
+      assert.match(await sheet.getByLabel('Harness evaluation').innerText(), /pass[\s\S]*(8|9|10)\/10/i);
       const prompt = await sheet.locator('.ec-method-sheet__prompt pre').innerText();
       promptBodies.push(prompt);
       for (const framework of ['TCCP', 'EKRP', 'MINC', 'Sigil']) {

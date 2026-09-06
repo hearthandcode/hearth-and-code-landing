@@ -1,5 +1,16 @@
 import { publicMethodPrompts } from './public-method-prompts.ts';
-import { publicMethodOutputs } from './public-method-outputs.ts';
+import methodHarness from './public-method-harness-results.json' with { type: 'json' };
+
+interface PublicMethodExampleRun {
+  runner: string;
+  evaluator: string;
+  score: number;
+  verdict: string;
+  summary: string;
+  generatedAt: string;
+  evaluationMethod: string;
+  evaluationLimit: string;
+}
 
 export interface PublicMethodCard {
   id: string;
@@ -11,6 +22,7 @@ export interface PublicMethodCard {
   influence: string;
   prompt: string;
   exampleOutput: string;
+  exampleRun: PublicMethodExampleRun;
   whenToUse: string[];
   steps: string[];
   pros: string[];
@@ -70,15 +82,29 @@ const seeds: MethodSeed[] = [
   ['M-32','Method receipt','Learning artifact','Leave enough trace for another person to understand the attempt, its checks, and its non-claims.','A receipt is process history, not proof of value.','A visitor wants to adapt one Hearth & Code method in another workspace.','a portable receipt describing inputs, transformation, check, limits, and adaptation notes','whether transfer limits are as visible as the method'],
 ];
 
+const harnessResults = new Map(methodHarness.results.map((result) => [result.id, result]));
+
 const buildMethod = (seed: MethodSeed, family: Family): PublicMethodCard => {
   const [id, title, form, summary, boundary, scenario, artifact, check] = seed;
   const authored = publicMethodPrompts[id];
+  const harnessResult = harnessResults.get(id);
+  if (!harnessResult) throw new Error(`Missing admitted harness result for ${id}.`);
   return {
     id, title, form, summary, boundary,
     purpose: `${family.aim} This card focuses that purpose on ${title.toLowerCase()}.`,
     influence: authored.influence,
     prompt: authored.prompt,
-    exampleOutput: publicMethodOutputs[id],
+    exampleOutput: harnessResult.response,
+    exampleRun: {
+      runner: methodHarness.runner,
+      evaluator: harnessResult.evaluation.evaluator,
+      score: harnessResult.evaluation.total_score,
+      verdict: harnessResult.evaluation.verdict,
+      summary: harnessResult.evaluation.summary,
+      generatedAt: methodHarness.generated_at,
+      evaluationMethod: methodHarness.evaluation_method,
+      evaluationLimit: methodHarness.evaluation_limit,
+    },
     whenToUse: [scenario, family.useWhen],
     steps: [`Frame the situation: ${scenario}`, `Make ${artifact}.`, `Check ${check}.`],
     pros: [`Produces ${artifact} instead of an unbounded answer.`, `Builds in an explicit check for ${check}.`],
