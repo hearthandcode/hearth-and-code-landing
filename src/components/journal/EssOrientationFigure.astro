@@ -1,0 +1,160 @@
+---
+import '../../styles/ess-orientation.css';
+
+interface Props {
+  kind: 'vocabulary' | 'research' | 'gate' | 'sigil' | 'evaluation';
+}
+
+const { kind } = Astro.props;
+---
+
+{kind === 'vocabulary' && (
+  <figure class="ess-figure ess-figure--vocabulary" aria-labelledby="ess-vocabulary-title">
+    <header class="ess-figure__header">
+      <p>ESS orientation map · proposal</p>
+      <h3 id="ess-vocabulary-title">Four questions, eleven working terms</h3>
+    </header>
+    <div class="ess-vocabulary-map">
+      <section data-tone="ember">
+        <p>What entered?</p>
+        <dl>
+          <div><dt>Source</dt><dd>The originating material.</dd></div>
+          <div><dt>Artifact</dt><dd>A bounded object made from or beside it.</dd></div>
+          <div><dt>Projection</dt><dd>A purpose-specific view that does not replace its source.</dd></div>
+        </dl>
+      </section>
+      <section data-tone="plasma">
+        <p>What crossed?</p>
+        <dl>
+          <div><dt>Envelope</dt><dd>The identity, provenance, status, policy, and loss carried with an object.</dd></div>
+          <div><dt>Crossing</dt><dd>A move between contexts, representations, tools, or audiences.</dd></div>
+          <div><dt>Loss record</dt><dd>An explicit account of what was omitted, flattened, or could not travel.</dd></div>
+        </dl>
+      </section>
+      <section data-tone="ember">
+        <p>What may happen?</p>
+        <dl>
+          <div><dt>Capability</dt><dd>What a system is technically able to do.</dd></div>
+          <div><dt>Gate</dt><dd>A named human decision, with scope, needed before an effect.</dd></div>
+          <div><dt>Receipt</dt><dd>Evidence of a bounded attempt, denial, or execution.</dd></div>
+        </dl>
+      </section>
+      <section data-tone="plasma">
+        <p>How is it expressed?</p>
+        <dl>
+          <div><dt>Sigil</dt><dd>A compact symbolic form for a defined relation.</dd></div>
+          <div><dt>Expansion</dt><dd>The readable human expression paired with it.</dd></div>
+        </dl>
+      </section>
+    </div>
+    <figcaption>
+      These are public working definitions, not a complete schema. ESS asks the four questions together so that provenance, transfer, authority, and expression cannot silently substitute for one another.
+    </figcaption>
+  </figure>
+)}
+
+{kind === 'research' && (
+  <figure class="ess-figure" aria-labelledby="ess-research-title">
+    <header class="ess-figure__header">
+      <p>Worked crossing 01 · synthetic</p>
+      <h3 id="ess-research-title">From a small source set to a reviewable research note</h3>
+    </header>
+    <ol class="ess-flow" aria-label="Synthetic research crossing">
+      <li><span>01</span><strong>Source set</strong><small>Three papers and one lab note, each separately identified</small></li>
+      <li><span>02</span><strong>Task context</strong><small>Only passages relevant to one bounded question</small></li>
+      <li><span>03</span><strong>Candidate synthesis</strong><small>Claims, interpretation, disagreements, and gaps kept distinct</small></li>
+      <li><span>04</span><strong>Human review</strong><small>Accept, revise, reject, or request another source</small></li>
+    </ol>
+    <div class="ess-envelope-card">
+      <div>
+        <span>Envelope carries</span>
+        <p>source identities · question · candidate status · reviewer · revision</p>
+      </div>
+      <div>
+        <span>Loss record declares</span>
+        <p>methods detail omitted · one source unavailable · no causal claim established</p>
+      </div>
+    </div>
+    <figcaption>
+      The example is intentionally fictional. The point is the inspectable crossing: the synthesis may become useful without becoming the sources, and review remains an explicit next state.
+    </figcaption>
+  </figure>
+)}
+
+{kind === 'gate' && (
+  <figure class="ess-figure" aria-labelledby="ess-gate-title">
+    <header class="ess-figure__header">
+      <p>Worked crossing 02 · synthetic</p>
+      <h3 id="ess-gate-title">The same capability, two different outcomes</h3>
+    </header>
+    <div class="ess-gate-map">
+      <div class="ess-gate-map__origin">
+        <span>Capability</span>
+        <strong>Publish a prepared page</strong>
+        <small>The tool exists and the build passes.</small>
+      </div>
+      <div class="ess-gate-map__lanes">
+        <section data-state="hold">
+          <p><span>A</span> Release absent</p>
+          <strong>Effect held</strong>
+          <small>Denial receipt: page was not published; named release is still needed.</small>
+        </section>
+        <section data-state="go">
+          <p><span>B</span> Scoped release present</p>
+          <strong>Effect may proceed</strong>
+          <small>Execution receipt records the exact page, revision, time, and result.</small>
+        </section>
+      </div>
+    </div>
+    <figcaption>
+      Capability is unchanged across both lanes. Authority changes. A receipt reports the result of the transition; it does not make the underlying decision wise or accepted.
+    </figcaption>
+  </figure>
+)}
+
+{kind === 'sigil' && (
+  <figure class="ess-figure" aria-labelledby="ess-sigil-title">
+    <header class="ess-figure__header">
+      <p>Worked crossing 03 · illustrative notation</p>
+      <h3 id="ess-sigil-title">A compact form must retain a human return path</h3>
+    </header>
+    <div class="ess-sigil-pair">
+      <section>
+        <span>Illustrative sigil</span>
+        <code>cross(source: note, to: public-summary, carry: [identity, provenance, status], declare: [omissions])</code>
+      </section>
+      <div aria-hidden="true">⇄</div>
+      <section>
+        <span>Human expansion</span>
+        <p>Create a public summary from this note. Preserve its identity, provenance, and candidate status. State what the summary leaves out.</p>
+      </section>
+    </div>
+    <figcaption>
+      This is a public-safe demonstration, not normative ESS syntax. The test is bidirectional: if the compact form cannot be expanded faithfully—or the expansion cannot be traced back to a defined entry—the compression should not be trusted.
+    </figcaption>
+  </figure>
+)}
+
+{kind === 'evaluation' && (
+  <figure class="ess-figure" aria-labelledby="ess-evaluation-title">
+    <header class="ess-figure__header">
+      <p>Evaluation graph · no results yet</p>
+      <h3 id="ess-evaluation-title">Six questions travel through the same evidence runway</h3>
+    </header>
+    <div class="ess-evaluation-graph" role="list" aria-label="Proposed ESS evaluation dimensions">
+      {['Usefulness', 'Fidelity', 'Transfer', 'Cost', 'Accessibility', 'Governance'].map((dimension, index) => (
+        <div role="listitem" style={`--row: ${index}`}>
+          <strong>{dimension}</strong>
+          <span data-step="instrument">Instrument</span>
+          <span data-step="baseline">Baseline</span>
+          <span data-step="run">Run</span>
+          <span data-step="report">Report</span>
+          <em>not run</em>
+        </div>
+      ))}
+    </div>
+    <figcaption>
+      This is a protocol graph, not a performance chart. Each row needs an independently reviewable instrument, baseline, sample, stopping condition, and report before ESS earns a result in that dimension.
+    </figcaption>
+  </figure>
+)}
