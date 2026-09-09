@@ -1,19 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { promptCatalogEntries, promptTemplateFile } from '../../data/vendored-data';
 import type { CatalogEntry, TemplateTech, TemplateDomain } from '../../data/vendored-data';
+import { PromptCardTile, PromptCardSheet, typeLabel } from './PromptCard';
 
 const entries = promptCatalogEntries;
 const tpl = promptTemplateFile;
 const techBySlug = new Map((tpl.techniques || []).map((t) => [t.slug, t]));
 const domains = (tpl.domains || []) as TemplateDomain[];
-
-const TYPE_LABELS: Record<string, string> = {
-  core: 'Core', contrastive: 'Contrastive', staged: 'Staged', receipt: 'Receipt',
-  boundary: 'Boundary', schema: 'Schema', position: 'Position', query: 'Query',
-  falsifier: 'Falsifier', adaptive: 'Adaptive',
-};
-
-function typeLabel(t: string) { return TYPE_LABELS[t] || t.charAt(0).toUpperCase() + t.slice(1); }
 
 function fillTemplate(template: string | undefined, fields: { key: string; label: string; sample?: string }[], values: Record<string, string>): string {
   if (!template) return '';
@@ -60,31 +53,19 @@ export default function PromptCatalogWorkbench() {
       <span className="ec-catalog-count">{visible.length} / {entries.length} techniques</span>
     </div>
 
-    <div className="ec-catalog-grid">
+    <div className="ec-prompt-card-grid">
       {visible.map((entry) => (
-        <button key={entry.slug} className="ec-catalog-card" type="button" onClick={() => setSelected(entry)}>
-          <span className="ec-catalog-card__type">{typeLabel(entry.type)}</span>
-          <strong>{entry.title}</strong>
-          <small>#{entry.number} · open card</small>
-        </button>
+        <PromptCardTile key={entry.slug} entry={entry} onOpen={() => setSelected(entry)} />
       ))}
     </div>
 
-    {selected && <dialog className="ec-method-sheet ec-catalog-dialog" open onClose={() => setSelected(null)} onCancel={() => setSelected(null)}>
-      <article>
-        <header className="ec-method-sheet__masthead">
-          <div><p><span>{typeLabel(selected.type)}</span>#{selected.number}</p><h2>{selected.title}</h2></div>
-          <div className="ec-method-sheet__masthead-actions">
-            <button type="button" onClick={() => { const e = selected; setSelected(null); setOpenLab(e); }}>Open in Prompt Lab ↗</button>
-            <button type="button" onClick={() => setSelected(null)} aria-label="Close">×</button>
-          </div>
-        </header>
-        <div className="ec-catalog-dialog__sections">
-          {selected.sections.map((s) => (
-            <section key={s.title}><h3>{s.title}</h3>{s.body_html ? <div dangerouslySetInnerHTML={{ __html: s.body_html }} /> : <p>{s.body}</p>}</section>
-          ))}
-        </div>
-      </article>
+    {selected && <dialog className="ec-method-sheet ec-prompt-sheet-dialog" open onClose={() => setSelected(null)} onCancel={() => setSelected(null)}>
+      <PromptCardSheet
+        entry={selected}
+        tech={techBySlug.get(selected.slug)}
+        onClose={() => setSelected(null)}
+        onOpenLab={() => { const e = selected; setSelected(null); setOpenLab(e); }}
+      />
     </dialog>}
 
     {openLab && tech && <dialog className="ec-method-sheet ec-catalog-lab-dialog" open onClose={() => setOpenLab(null)} onCancel={() => setOpenLab(null)}>

@@ -1,26 +1,22 @@
 import { useMemo, useState } from 'react';
-import type { PublicMethodCard } from '../../data/public-method-library';
-import MethodFieldLibrary from './MethodFieldLibrary';
 import { ArticleCard, CollectionView } from './presentation';
 import { AnchorBar } from './wayfinding';
 
 export interface LibraryArticle { code: string; format: string; title: string; dek: string; readTime: string; themes: string[]; href: string; }
-interface Props { articles: LibraryArticle[]; methods: PublicMethodCard[]; fieldcraft?: LibraryArticle[]; }
+interface Props { articles: LibraryArticle[]; fieldcraft?: LibraryArticle[]; }
 
 const tabs = [
   { id: 'reading', label: 'Articles & essays' },
   { id: 'fieldcraft', label: 'Fieldcraft' },
-  { id: 'methods', label: 'Methods' },
 ] as const;
 
-export default function LibraryWorkbench({ articles, methods, fieldcraft = [] }: Props) {
+export default function LibraryWorkbench({ articles, fieldcraft = [] }: Props) {
   const [active, setActive] = useState<(typeof tabs)[number]['id']>('reading');
   const [query, setQuery] = useState('');
   const [density, setDensity] = useState<'comfortable' | 'compact'>('compact');
   const normalized = query.trim().toLowerCase();
   const visibleArticles = useMemo(() => articles.filter((item) => !normalized || [item.title, item.dek, item.format, ...item.themes].join(' ').toLowerCase().includes(normalized)), [articles, normalized]);
   const visibleFieldcraft = useMemo(() => fieldcraft.filter((item) => !normalized || [item.title, item.dek, item.format, ...item.themes].join(' ').toLowerCase().includes(normalized)), [fieldcraft, normalized]);
-  const visibleMethods = useMemo(() => methods.filter((item) => !normalized || [item.id, item.title, item.form, item.summary, item.purpose, item.influence].join(' ').toLowerCase().includes(normalized)), [methods, normalized]);
 
   return <div className={`ec-library-workbench ec-density--${density}`}>
     <div className="ec-library-tools">
@@ -38,12 +34,6 @@ export default function LibraryWorkbench({ articles, methods, fieldcraft = [] }:
     {active === 'fieldcraft' && <div className="ec-library-panel" role="tabpanel">
       <CollectionView eyebrow="Fieldcraft" title="32 runnable field notes" description="Practical techniques with working examples, counterexamples, and source references. Each note is testable rather than merely described.">
         <div className="ec-article-grid">{visibleFieldcraft.map((article) => <ArticleCard key={article.href} {...article} />)}</div>
-      </CollectionView>
-    </div>}
-
-    {active === 'methods' && <div className="ec-library-panel" role="tabpanel">
-      <CollectionView eyebrow="Methods / Field Cards" title="Instruments for bounded research practice" description="Each card offers a distinctive prompt structure, an influence seam, and a limit to preserve when you adapt it.">
-        <MethodFieldLibrary methods={visibleMethods} />
       </CollectionView>
     </div>}
   </div>;
