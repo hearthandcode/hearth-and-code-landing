@@ -1,5 +1,10 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["src/**/*.astro", "src/**/*.ts", "src/**/*.d.ts"],
-  "exclude": ["dist", "node_modules", "portfolio", "scripts"]
+  "include": ["src/**/*.astro", "src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
+  "exclude": ["dist", "node_modules", "portfolio", "scripts"],
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx"
+  }
 }

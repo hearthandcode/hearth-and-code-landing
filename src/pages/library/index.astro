@@ -5,6 +5,7 @@ import HearthNavigation from '../../components/HearthNavigation.astro';
 import LibraryWorkbench from '../../components/ember-circuit/LibraryWorkbench';
 import { hearthsideArticles } from '../../content/hearthside-articles';
 import { publicMethods } from '../../data/public-method-library';
+import { fieldcraftLibrary } from '../../data/fieldcraft';
 import '../../styles/research-studio-landing.css';
 import '../../styles/studio-room-surfaces.css';
 import '../../styles/ember-circuit-library.css';
@@ -25,7 +26,7 @@ const articles = [
       <section class="ec-library-threshold" aria-labelledby="library-title">
         <div><p class="ec-label">H+C / Research Library</p><h1 id="library-title">A clear reading room for the work I want to share.</h1><p>Browse my essays, technical articles, Field Journal entries, and practical Methods cards. Search by concern or switch between reading and practice without passing through the machinery behind the site.</p><a href="#library-workbench">Open the library <span aria-hidden="true">↓</span></a></div>
       </section>
-      <section id="library-workbench" class="ec-library-field"><LibraryWorkbench client:load articles={articles} methods={publicMethods} /></section>
+      <section id="library-workbench" class="ec-library-field"><LibraryWorkbench client:load articles={articles} methods={publicMethods} fieldcraft={fieldcraftLibrary} /></section>
     </main>
     <footer class="studio-room-footer"><span>Hearth &amp; Code · Research Library</span><span>Articles · essays · methods</span></footer>
   </body>
