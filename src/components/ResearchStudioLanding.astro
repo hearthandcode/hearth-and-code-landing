@@ -12,10 +12,20 @@ const journal: CollectionEntry<'journal'>[] = (await getCollection('journal')) a
 journal.sort((a, b) => new Date(`${b.data.published_date ?? b.data.date}T00:00:00`).getTime() - new Date(`${a.data.published_date ?? a.data.date}T00:00:00`).getTime());
 const latest = journal.slice(0, 3);
 
+// Studio stats — projected from the live catalog, journal, hearthside, and fieldcraft sources.
+const studioStats = [
+  { count: '35',  label: 'Method field cards',  href: '/methods/' },
+  { count: '128', label: 'Prompt techniques',   href: '/methods/#prompt-catalog-title' },
+  { count: '32',  label: 'Fieldcraft field notes', href: '/library/' },
+  { count: '10',  label: 'Field Journal entries', href: '/journal/' },
+  { count: '8',   label: 'Hearthside essays',   href: '/notes/' },
+  { count: '16',  label: 'Dossier entries',     href: '/dossier/' },
+] as const;
+
 const rooms = [
-  { number: '01', signal: 'green', eyebrow: 'Practice library', title: 'Methods', description: 'I keep thirty-five field cards for orientation, context, evaluation, and responsible return.', href: '/methods/', action: 'Open my methods lab' },
-  { number: '02', signal: 'violet', eyebrow: 'Public record', title: 'Research Library', description: 'I gather Field Journal entries, essays, technical articles, Methods instruments, and evidence maps into one searchable workbench.', href: '/library/', action: 'Enter my research library' },
-  { number: '03', signal: 'cyan', eyebrow: 'Technique atlas', title: 'Prompt engineering', description: 'I treat prompts as inspectable task contracts with bounded context, tool permissions, evaluation, and return.', href: '/methods/#methods-collections-title', action: 'Browse my prompt practice' },
+  { number: '01', signal: 'green', eyebrow: 'Practice library', title: 'Methods', description: 'I keep thirty-five field cards for orientation, context, evaluation, and responsible return — the 4-lens method family, distinct from the 128-technique prompt catalog.', href: '/methods/', action: 'Open my methods lab' },
+  { number: '02', signal: 'violet', eyebrow: 'Public record', title: 'Research Library', description: 'I gather fifty published works — Field Journal entries, Hearthside essays, Fieldcraft field notes, and method cards — into one searchable workbench.', href: '/library/', action: 'Enter my research library' },
+  { number: '03', signal: 'cyan', eyebrow: 'Technique atlas', title: 'Prompt engineering', description: 'I project 128 prompt techniques from a 512-record atlas. Each opens into an 8-section field file with a form-driven Prompt Lab template generator.', href: '/methods/#prompt-catalog-title', action: 'Browse my prompt catalog' },
   { number: '04', signal: 'ember', eyebrow: 'Research programs', title: 'Technical reports', description: 'I connect TCCP, EKRP, Exocore, and system design through bounded dossiers and public-safe report orientations.', href: '/programs/', action: 'Read my program dossiers' },
   { number: '05', signal: 'violet', eyebrow: 'Evidence desk', title: 'Artifacts', description: 'I use claim cards, evidence records, diagrams, templates, and correction routes to make the work inspectable.', href: '/evidence/', action: 'Inspect my artifact trail' },
   { number: '06', signal: 'green', eyebrow: 'Selected practice', title: 'Portfolio', description: 'I collect selected research programs, software systems, publications, and current directions without hiding their posture.', href: '/portfolio/', action: 'View my selected work' },
@@ -69,13 +79,20 @@ function displayDate(value: string) {
           <aside class="studio-orientation" aria-label="Research studio orientation">
             <div class="studio-orientation__head"><span>My studio index</span><strong>Which thread would you like to pick up?</strong></div>
             <ol>
-              <li><a href="/methods/"><span>01</span><strong>Use a method</strong><small>35 field cards</small></a></li>
-              <li><a href="/library/"><span>02</span><strong>Search the library</strong><small>articles + methods + maps</small></a></li>
-              <li><a href="/programs/"><span>03</span><strong>Study a program</strong><small>reports + dossiers</small></a></li>
-              <li><a href="/dossier/"><span>04</span><strong>Meet my working archetype</strong><small>practice dossier</small></a></li>
+              <li><a href="/methods/"><span>01</span><strong>Use a method</strong><small>35 field cards · 128 prompts</small></a></li>
+              <li><a href="/library/"><span>02</span><strong>Search the library</strong><small>50 published works</small></a></li>
+              <li><a href="/journal/"><span>03</span><strong>Read the journal</strong><small>10 field journal entries</small></a></li>
+              <li><a href="/dossier/"><span>04</span><strong>Meet my working archetype</strong><small>16 dossier entries</small></a></li>
             </ol>
             <p><i aria-hidden="true"></i> Public research surface · correction-friendly</p>
           </aside>
+        </section>
+
+        <section class="studio-stats" aria-label="Studio publication counts">
+          <p class="studio-kicker">Public by the count</p>
+          <ol>
+            {studioStats.map((stat) => <li><a href={stat.href}><strong>{stat.count}</strong><span>{stat.label}</span></a></li>)}
+          </ol>
         </section>
 
         <StudioArchetype />
@@ -103,7 +120,7 @@ function displayDate(value: string) {
             <p>I keep this library practical rather than doctrinal: take a field card, adapt it to your sources and constraints, and preserve what the attempt cannot prove.</p>
           </header>
           <ol>{methods.map(([number, title, description]) => <li><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
-          <div class="studio-methods__actions"><a href="/methods/">Open all 35 field cards →</a></div>
+          <div class="studio-methods__actions"><a href="/methods/">Open 35 field cards and 128 prompt techniques →</a></div>
         </section>
 
         <section class="studio-publications" aria-labelledby="studio-publications-title">

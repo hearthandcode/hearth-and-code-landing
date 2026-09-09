@@ -63,6 +63,21 @@ a { color: inherit; }
 .studio-orientation li small { color: var(--ec-muted-dark); font-size: .62rem; }
 .studio-orientation > p { display: flex; align-items: center; gap: .6rem; margin: 0; padding: 1rem 1.35rem; color: var(--ec-muted-dark); font: 500 .65rem var(--ec-mono); text-transform: uppercase; }
 .studio-orientation > p i { width: 8px; height: 8px; border-radius: 50%; background: var(--ec-signal-green); box-shadow: 0 0 12px rgba(131,185,138,.7); }
+
+/* Studio stats — compact counts strip between threshold and archetype */
+.studio-stats {
+  padding: clamp(2.2rem, 5vw, 3.5rem) clamp(1rem, 6vw, 7rem);
+  background: var(--ec-bg-paper, var(--ec-bg-soft));
+  border-bottom: 1px solid var(--ec-line-dark, rgba(0,0,0,.08));
+}
+.studio-stats .studio-kicker { margin: 0 0 1.1rem; color: var(--ec-signal-ember, currentColor); font: 600 .7rem var(--ec-mono); text-transform: uppercase; letter-spacing: .04em; }
+.studio-stats ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--ec-line-dark, rgba(0,0,0,.08)); border: 1px solid var(--ec-line-dark, rgba(0,0,0,.08)); border-radius: 4px; overflow: hidden; }
+.studio-stats li a { display: grid; gap: .35rem; padding: 1.1rem 1.25rem; background: var(--ec-bg-paper, #f7f1e8); color: var(--ec-ink-inverse, inherit); text-decoration: none; transition: background 120ms ease; }
+.studio-stats li a:hover { background: rgba(79,197,207,.08); }
+.studio-stats li strong { font: 500 clamp(1.6rem, 2.6vw, 2.2rem) / 1 var(--ec-display); letter-spacing: -.02em; color: var(--ec-signal-ember, currentColor); }
+.studio-stats li span { color: var(--ec-muted-dark, rgba(0,0,0,.65)); font: 500 .68rem var(--ec-mono); text-transform: uppercase; letter-spacing: .04em; }
+@media (max-width: 900px) { .studio-stats ol { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 540px) { .studio-stats ol { grid-template-columns: repeat(2, 1fr); } }
 .studio-index, .studio-publications { padding: clamp(5rem, 8vw, 8rem) clamp(1rem, 6vw, 7rem); background: var(--ec-bg-parchment); color: var(--ec-ink); }
 .studio-archetype { padding: clamp(5rem, 8vw, 8rem) clamp(1rem, 6vw, 7rem); background: var(--ec-bg-fog); color: var(--ec-ink); }
 .studio-archetype > header { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 8vw, 9rem); align-items: end; }
