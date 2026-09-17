@@ -20,7 +20,6 @@ export function PortfolioApp() {
         fontSize: '1rem',
         lineHeight: 1.6,
         minHeight: '100vh',
-        overflowX: 'hidden',
       }}
     >
       {/* Hero */}
@@ -28,8 +27,6 @@ export function PortfolioApp() {
         className="portfolio-hero"
         style={{
           padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) clamp(2rem, 5vw, 3rem)',
-          maxWidth: '82rem',
-          margin: '0 auto',
         }}
       >
         <p
@@ -76,8 +73,6 @@ export function PortfolioApp() {
       <section
         className="portfolio-surfaces"
         style={{
-          maxWidth: '82rem',
-          margin: '0 auto',
           padding: '0 clamp(1rem, 4vw, 3rem) 3rem',
         }}
       >
@@ -98,8 +93,6 @@ export function PortfolioApp() {
       <section
         className="portfolio-processes"
         style={{
-          maxWidth: '82rem',
-          margin: '0 auto',
           padding: '0 clamp(1rem, 4vw, 3rem) 3rem',
         }}
       >
@@ -133,8 +126,6 @@ export function PortfolioApp() {
       <section
         className="portfolio-vocab"
         style={{
-          maxWidth: '82rem',
-          margin: '0 auto',
           padding: '0 clamp(1rem, 4vw, 3rem) 3rem',
         }}
       >
@@ -202,8 +193,6 @@ export function PortfolioApp() {
       <section
         className="portfolio-references"
         style={{
-          maxWidth: '82rem',
-          margin: '0 auto',
           padding: '0 clamp(1rem, 4vw, 3rem) 4rem',
         }}
       >
@@ -248,8 +237,6 @@ export function PortfolioApp() {
       {/* Footer */}
       <footer
         style={{
-          maxWidth: '82rem',
-          margin: '0 auto',
           padding: '2rem clamp(1rem, 4vw, 3rem) 4rem',
           borderTop: '1px solid var(--color-surface-rule)',
         }}
