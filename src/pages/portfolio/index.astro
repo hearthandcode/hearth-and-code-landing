@@ -20,13 +20,11 @@ import '../../styles/research-studio-landing.css';
     />
     <title>Portfolio — Hearth & Code</title>
   </head>
-  <body class="research-studio-landing ember-surface">
+  <body class="studio-room-body studio-room-body--portfolio">
     <a class="studio-skip" href="#main-content">Skip to the portfolio</a>
-    <div class="studio-shell">
-      <HearthNavigation current="exocore" context="Working surface" />
-      <main id="main-content">
-        <PortfolioApp client:load />
-      </main>
-    </div>
+    <HearthNavigation current="exocore" context="Working surface" />
+    <main id="main-content" class="studio-room-main">
+      <PortfolioApp client:load />
+    </main>
   </body>
 </html>
