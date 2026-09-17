@@ -1,0 +1,46 @@
+---
+title: "HCAN: A Condensed Symbolic Language for Human-Agent Communication"
+date: "2026-09-16"
+labels: [evidence, inference, proposal, open-question]
+sources:
+  - "Hearth & Code Hub: 14-projects-and-program-ledger/01-program-portfolio/0047-hcan-communication-medium-project-home/09-field-journal/0001-hcan-field-journal-article.md (canonical)."
+  - "Hub canonical: hcan.tmLanguage.json (project 0047, 08-skill-projection/0007-hcan-syntax-highlighting/) — projection copy at src/data/hcan.tmLanguage.json."
+  - "Hub canonical: hcan-highlight.js (same path) — projection copy at src/data/hcan-highlight.ts."
+  - "Hub canonical: evaluation summary (analytical + generative panels); the four canonical benchmarks (analytical 14/16, generative 13/13 within capability; harder-creative D/F for both panels — model ceiling confirmed)."
+status: published
+pilot: true
+reviewGate: true
+slug: "hcan-condensed-symbolic-language"
+description: "A field-journal projection of the canonical HCAN article: condensed symbolic language for human-agent communication. 8 worked examples, 7 data matrices, two protocol benchmarks (analytical 16 dims + generative 13 dims), and the model-agnostic portable envelope."
+author: "Scott Rallya"
+tags: [field-journal, hcan, condensed-symbolic-language, agent-grammar, reproducible-evaluation]
+published_date: "2026-09-16"
+published_order: 1
+reading_time_minutes: 18
+claim_map:
+  - claim: "HCAN compresses recurring natural-language requests into a single reviewable line."
+    label: proposal
+    source: "Hub canonical §‘How to talk to an AI agent the way you talk to a compiler’."
+  - claim: "Every HCAN line requests a specific return shape and binds to an epistemic label."
+    label: evidence
+    source: "Hub canonical §‘The grammar’."
+  - claim: "Analytical panel: HCAN wins 14 of 16 dimensions blind-A/B against equivalent prose requests (boundary discipline 5.0 vs 3.2; verifiability 4.4 vs 3.8; calibrated confidence 4.8 vs 3.4)."
+    label: evidence
+    source: "Hub canonical, analytical-scores matrix."
+  - claim: "Generative panel: HCAN wins 13 of 13 dimensions on tasks within model capability, 3-judge consensus (8-to-1 preference, 3 S-tier rows)."
+    label: evidence
+    source: "Hub canonical, generative-scores matrix."
+  - claim: "On harder creative tasks outside capability, both HCAN and prose score D/F tier; the notation cannot elevate what the model cannot generate."
+    label: evidence
+    source: "Hub canonical, generative-scores hard-fixture entries + canonical summary text."
+  - claim: "Easier-fixture controls confirmed generative flipped to 13/13 — the ceiling is the model, not the notation."
+    label: inference
+    source: "Hub canonical, generative-scores easier entries."
+  - claim: "The portable envelope (TITLE → LEGEND → SHAPES → RULES → lines) is the model-agnostic, skill-agnostic distribution format."
+    label: evidence
+    source: "Hub canonical §‘The portable envelope’."
+---
+
+import HcanPageIsland from '../../components/hcan-astro/HcanPageIsland.astro';
+
+<HcanPageIsland />

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "HCAN",
+  "scopeName": "source.hcan",
+  "patterns": [
+    {
+      "name": "entity.name.function.definition.hcan",
+      "match": "^(\\s*)([A-Za-z][A-Za-z0-9_-]*)(\\s*=)(?=\\s)",
+      "captures": {
+        "2": {
+          "name": "entity.name.function.definition.hcan"
+        },
+        "3": {
+          "name": "keyword.operator.definition.hcan"
+        }
+      }
+    },
+    {
+      "name": "keyword.control.verb.hcan",
+      "match": "\\b(orient|inspect|locate|compare|trace|synth|transfer|design|draft|review|test|plan|repair|return|learn|ask|recover|declare)\\b"
+    },
+    {
+      "name": "keyword.control.hold.hcan",
+      "match": "\\bhold\\s+until\\b"
+    },
+    {
+      "name": "storage.type.label.hcan",
+      "match": "%(source|evidence|inference|hypothesis|proposal|projection|receipt|unknown)\\b"
+    },
+    {
+      "name": "variable.parameter.binding.hcan",
+      "match": "@[A-Za-z0-9_./#+\\-\\[\\]~&|]+"
+    },
+    {
+      "name": "constant.character.shape.hcan",
+      "match": ":(?:[A-Za-z][A-Za-z0-9_|&<>,.\\[\\]-]*)(?:\\s+where\\s(?:(?!\\s->\\s).)*)?"
+    },
+    {
+      "name": "keyword.operator.flow.hcan",
+      "match": "\\s->\\s"
+    },
+    {
+      "name": "keyword.operator.join.hcan",
+      "match": "&"
+    },
+    {
+      "name": "keyword.operator.fork.hcan",
+      "match": "\\|"
+    },
+    {
+      "name": "entity.name.tag.probe.hcan",
+      "match": "\\?[A-Za-z][A-Za-z0-9_-]*"
+    },
+    {
+      "name": "keyword.control.guard.hcan",
+      "match": "![A-Za-z][A-Za-z0-9_-]*"
+    },
+    {
+      "name": "entity.name.function.operation.hcan",
+      "match": "\\b[A-Za-z][A-Za-z0-9_-]*(?=\\()"
+    },
+    {
+      "name": "support.type.shape-base.hcan",
+      "match": "\\b(Brief|Map|Table|Schema|Spec|Plan|Patch|Receipt|Question|Lesson|Card|Gate|Projection|Proposal|EvidenceMap|SafeReturn|Return|Counterexample|Unknowns|Source|Evidence|Claim|Type|Kind)\\b"
+    },
+    {
+      "name": "support.type.constructor.hcan",
+      "match": "\\b(Option|Result|List|Set|Pair|Vec|Array|MapOf|declare)\\b"
+    },
+    {
+      "name": "constant.numeric.hcan",
+      "match": "\\b\\d+\\b"
+    }
+  ]
+}

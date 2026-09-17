@@ -1,12 +1,14 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import JournalArticleLayout from '../../components/JournalArticleLayout.astro';
 import ArticleContentHeading from '../../components/ArticleContentHeading.astro';
 import { fieldJournalReadingMinutes } from '../../content/field-journal-expansions';
+import { mdxComponents } from '../../mdx-components';
+
+import type { CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  const entries: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
+  const entries = (await getCollection('journal')) as Array<CollectionEntry<'journal'>>;
   return entries.map((entry: CollectionEntry<'journal'>) => ({ params: { slug: entry.id }, props: { id: entry.id } }));
 }
 
@@ -14,6 +16,9 @@ const { id } = Astro.props;
 const entry = (await getEntry('journal', id)) as CollectionEntry<'journal'> | undefined;
 if (!entry || entry.data.status !== 'published') return new Response('Not found', { status: 404 });
 const { Content, headings } = await render(entry);
+// Merge journal-specific overrides (h1) with HCAN-specific components so both
+// rendering surfaces (Ember-Circuit components + article chrome) compose.
+const components = { h1: ArticleContentHeading, ...mdxComponents };
 ---
 
 <JournalArticleLayout
@@ -29,4 +34,4 @@ const { Content, headings } = await render(entry);
   featuredImageAlt={entry.data.featured_image_alt}
   readingTimeMinutes={fieldJournalReadingMinutes(entry.id, entry.data.reading_time_minutes)}
   slug={entry.id}
-><Content components={{ h1: ArticleContentHeading }} /></JournalArticleLayout>
+><Content components={components} /></JournalArticleLayout>

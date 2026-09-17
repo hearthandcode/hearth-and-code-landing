@@ -54,6 +54,7 @@ export const emberCircuitComponents: readonly ComponentRecord[] = [
   { id: 'S06', name: 'ChangeSet', sourceName: 'ChangeSet', band: 'systems', role: 'Before/after delta with reason and recovery.' },
   { id: 'S07', name: 'TestRun', sourceName: 'TestRun', band: 'systems', role: 'Predicate, method, outcome, and limitation.' },
   { id: 'S08', name: 'BuildPlan', sourceName: 'BuildPlan', band: 'systems', role: 'Ordered phases, gates, checks, and held effects.' },
+  { id: 'K17', name: 'HcanGrammarLibrary', sourceName: 'HcanGrammarLibrary', band: 'knowledge', role: 'Condensed symbolic notation library: eight primitives, two protocols, eight worked examples, portable envelope.' },
 ] as const;
 
 export const componentBands = ['presentation', 'wayfinding', 'knowledge', 'systems'] as const;
