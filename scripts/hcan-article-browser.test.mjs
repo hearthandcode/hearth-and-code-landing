@@ -11,6 +11,9 @@ test('HCAN journal uses one heading, a styled island, and mobile-contained examp
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
       await page.goto(`${origin}/journal/hcan-condensed-symbolic-language/`, { waitUntil: 'networkidle' });
       assert.equal(await page.locator('h1').count(), 1);
+      for (const selector of ['.journal-article__header', '.studio-article-reading-field', '.hcanp', '.hcan-program__frame']) {
+        assert.equal(await page.locator(selector).first().evaluate((node) => getComputedStyle(node).backgroundColor), 'rgb(33, 29, 24)', `${selector} uses the ash-brown field`);
+      }
       assert.equal(await page.locator('.hcan-reading-body').count(), 1);
       assert.equal(await page.locator('.journal-article__body .hcanp').count(), 0, 'component atlas must not inherit prose rules');
       assert.equal(await page.locator('.hcanp-section__title').first().evaluate((node) => getComputedStyle(node).marginTop), '0px');

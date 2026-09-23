@@ -392,3 +392,19 @@
   .journal-article--hcan .hcanx-probes,
   .journal-article--hcan .hcanx-unknowns { min-width: 25rem; }
 }
+
+/* HCAN journal: one ash-brown field, rather than a navy inset page.
+ * Keep this palette local; other journal articles and /hcan are unchanged. */
+.journal-article--hcan { background: var(--room-paper, #211d18); }
+.journal-article--hcan .hcanp {
+  --hp-field: var(--room-paper, #211d18);
+  --hp-surface: var(--room-paper, #211d18);
+  --hp-raised: #29231e;
+}
+body.studio-article-body .journal-article--hcan .journal-article__header,
+body.studio-article-body .journal-article--hcan .studio-article-reading-field,
+.journal-article--hcan .hcan-program__frame,
+.journal-article--hcan .hcanx-gcard__example {
+  background: var(--room-paper, #211d18);
+}
+.journal-article--hcan .hcan-program__copy { background: #29231e; }
