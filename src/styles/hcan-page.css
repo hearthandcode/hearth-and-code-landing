@@ -124,6 +124,8 @@
 }
 .hcanx-gcard__discipline em { color: var(--hp-gold); font-style: normal; font-weight: 600; }
 
+.hcanx-table-scroll { max-width: 100%; min-width: 0; overflow-x: auto; }
+.hcanx-table-scroll:focus-visible { outline: 2px solid var(--hp-ember); outline-offset: -2px; }
 .hcanx-probes, .hcanx-unknowns { width: 100%; border-collapse: collapse; font-size: .85rem; }
 .hcanx-probes th, .hcanx-unknowns th {
   text-align: left; padding: .4rem .6rem; color: var(--hp-ash);
@@ -318,21 +320,47 @@
   .hcanx-bar-row__svg { grid-column: 1 / -1; }
 }
 
-/* Field Journal integration: the grammar and benchmark panels need a wider
- * canvas than prose, without widening the source/claim reading measure. */
-.journal-article.journal-article--hcan { max-width: 78rem; }
-.journal-article--hcan .journal-article__header,
-.journal-article--hcan .journal-article__guide,
-.journal-article--hcan .journal-article__evidence { max-width: 48rem; margin-left: auto; margin-right: auto; }
-.journal-article--hcan .journal-article__body { min-width: 0; }
-.journal-article--hcan .hcanp { max-width: none; padding: clamp(1.25rem, 3vw, 2.5rem) 0 2rem; }
+/* This journal entry is an illustrated atlas, not a 48rem prose essay.
+ * The generic studio article's 12vw gutters and 48rem body limit collapse
+ * its example rail, charts, and matrices into a narrow dark stripe. */
+.journal-article--hcan .journal-article__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, .85fr);
+  column-gap: clamp(2rem, 5vw, 5rem);
+  align-content: center;
+  min-height: 24rem;
+  max-width: none;
+  padding: clamp(2rem, 5vw, 4rem) max(1.25rem, calc((100vw - 76rem) / 2));
+}
+.journal-article--hcan .journal-article__header .research-eyebrow,
+.journal-article--hcan .journal-article__header h1 { grid-column: 1; }
+.journal-article--hcan .journal-article__header .journal-article__deck { grid-column: 2; grid-row: 1 / 3; align-self: end; margin-bottom: 1.25rem; }
+.journal-article--hcan .journal-article__header .journal-article__meta { grid-column: 2; grid-row: 3; align-self: start; margin: 0; }
+.journal-article--hcan .studio-article-reading-field {
+  padding: clamp(2rem, 4vw, 4rem) max(1.25rem, calc((100vw - 76rem) / 2));
+  background: #0e1114;
+}
+.journal-article--hcan .studio-article-reading-field .journal-article__body {
+  width: 100%; max-width: 76rem; min-width: 0; margin: 0 auto;
+}
+.journal-article--hcan .studio-article-reading-field .journal-article__guide,
+.journal-article--hcan .studio-article-reading-field .journal-article__evidence {
+  width: 100%; max-width: 76rem; margin-left: auto; margin-right: auto;
+}
+.journal-article--hcan .hcanp { max-width: none; padding: 0 0 2rem; }
 .journal-article--hcan .hcanp-hero { margin-bottom: 3rem; }
-.journal-article--hcan .hcanp-hero__dek { color: var(--hp-paper-dim); }
+.journal-article--hcan .studio-article-reading-field .hcanp :is(p, li, h2, h3) { color: var(--hp-paper-dim); }
+.journal-article--hcan .studio-article-reading-field .hcanp .hcanp-section__title { color: var(--hp-paper); }
 .journal-article--hcan .hcanp-section { padding-top: 1.5rem; border-top: 1px solid var(--hp-line); }
 .journal-article--hcan .hcanp-section__body { min-width: 0; }
 .journal-article--hcan .hcanp-section__body > p { max-width: 68ch; }
 .hcan-program__copy:focus-visible { opacity: 1; color: var(--hp-ember); outline: 2px solid var(--hp-ember); outline-offset: 2px; }
 @media (hover: none) { .hcan-program__copy { opacity: 1; } }
+@media (max-width: 780px) {
+  .journal-article--hcan .journal-article__header { display: block; min-height: 0; }
+  .journal-article--hcan .journal-article__header .journal-article__deck { margin: 1rem 0; }
+  .journal-article--hcan .journal-article__header .journal-article__meta { margin-top: 1.5rem; }
+}
 @media (max-width: 600px) {
   .journal-article--hcan .hcanp { padding: 1.25rem 0; }
   .journal-article--hcan .hcanp-section { margin-bottom: 2.5rem; }
@@ -349,12 +377,16 @@
   line-height: 1.04;
   letter-spacing: -.045em;
 }
-.journal-article--hcan .studio-article-reading-field .journal-article__body { width: 100%; }
 @media (max-width: 600px) {
   .journal-article--hcan .hcanx-example,
   .journal-article--hcan .hcanx-example__program,
   .journal-article--hcan .hcanx-example__output { min-width: 0; }
-  .journal-article--hcan .hcanx-example__output { overflow-x: auto; }
+  .journal-article--hcan .hcanx-example__output { grid-template-columns: minmax(0, 1fr); overflow: visible; }
+  .journal-article--hcan .hcanx-example__output > *,
+  .journal-article--hcan .hcanx-example__findings,
+  .journal-article--hcan .hcanx-example__findings .hcan-program,
+  .journal-article--hcan .hcanx-next .hcan-program { min-width: 0; max-width: 100%; }
+  .journal-article--hcan .hcanx-finding__text { flex: 1 1 10rem; }
   .journal-article--hcan .hcanx-finding__text,
   .journal-article--hcan .hcanx-finding__locator { overflow-wrap: anywhere; min-width: 0; }
   .journal-article--hcan .hcanx-probes,

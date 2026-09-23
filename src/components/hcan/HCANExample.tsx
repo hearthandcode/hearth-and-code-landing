@@ -166,6 +166,7 @@ export default function HCANExample({ example }: { example: HCANExampleData }) {
         )}
 
         {output.probe_answers && output.probe_answers.length > 0 && (
+          <div className="hcanx-table-scroll" role="region" aria-label="Probe results" tabIndex={0}>
           <table className="hcanx-probes">
             <thead>
               <tr><th>Probe</th><th>Verdict</th><th>Reason</th></tr>
@@ -180,9 +181,11 @@ export default function HCANExample({ example }: { example: HCANExampleData }) {
               ))}
             </tbody>
           </table>
+          </div>
         )}
 
         {output.unknown_table && output.unknown_table.length > 0 && (
+          <div className="hcanx-table-scroll" role="region" aria-label="Unknowns" tabIndex={0}>
           <table className="hcanx-unknowns">
             <thead>
               <tr><th>What</th><th>Why</th><th>Resolver</th>{(output.unknown_table.some(r => r.cost)) && <th>Cost</th>}</tr>
@@ -198,6 +201,7 @@ export default function HCANExample({ example }: { example: HCANExampleData }) {
               ))}
             </tbody>
           </table>
+          </div>
         )}
 
         {output.not_checked && <p className="hcanx-notchecked">⊘ not checked: {output.not_checked}</p>}

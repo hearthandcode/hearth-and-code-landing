@@ -14,6 +14,16 @@ test('HCAN journal uses one heading, a styled island, and mobile-contained examp
       assert.match(await page.locator('.hcanp').evaluate((node) => getComputedStyle(node).fontFamily), /Inter/);
       assert.equal(await page.locator('.hcanp-examples__rail-btn').count(), 8);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      const bodyWidth = await page.locator('.journal-article__body').evaluate((node) => node.getBoundingClientRect().width);
+      if (width === 1440) assert.ok(bodyWidth >= 1100, 'atlas keeps a wide example-and-chart canvas');
+      else {
+        const bounds = await page.locator('.hcanx-finding__text').first().evaluate((node) => ({
+          right: node.getBoundingClientRect().right,
+          containerRight: node.closest('.hcanx-example').getBoundingClientRect().right,
+        }));
+        assert.ok(bounds.right <= bounds.containerRight, 'finding text stays inside its card');
+        assert.equal(await page.locator('.hcanx-table-scroll[tabindex="0"]').count() >= 1, true);
+      }
       await page.locator('.hcanp-examples__rail-btn').nth(1).click();
       assert.equal(await page.locator('.hcanp-examples__rail-btn').nth(1).getAttribute('aria-pressed'), 'true');
       assert.equal(await page.locator('.hcanx-example').count(), 1);
