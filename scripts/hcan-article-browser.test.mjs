@@ -11,10 +11,18 @@ test('HCAN journal uses one heading, a styled island, and mobile-contained examp
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
       await page.goto(`${origin}/journal/hcan-condensed-symbolic-language/`, { waitUntil: 'networkidle' });
       assert.equal(await page.locator('h1').count(), 1);
+      assert.equal(await page.locator('.hcan-reading-body').count(), 1);
+      assert.equal(await page.locator('.journal-article__body .hcanp').count(), 0, 'component atlas must not inherit prose rules');
+      assert.equal(await page.locator('.hcanp-section__title').first().evaluate((node) => getComputedStyle(node).marginTop), '0px');
+      assert.equal(await page.locator('.hcanx-table').first().evaluate((node) => getComputedStyle(node).display), 'table');
+      if (width === 1440) {
+        const fill = await page.locator('.hcanx-table').first().evaluate((node) => node.querySelector('tbody tr').getBoundingClientRect().width / node.getBoundingClientRect().width);
+        assert.ok(fill > .95, 'table rows fill the panel, not half its width');
+      }
       assert.match(await page.locator('.hcanp').evaluate((node) => getComputedStyle(node).fontFamily), /Inter/);
       assert.equal(await page.locator('.hcanp-examples__rail-btn').count(), 8);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
-      const bodyWidth = await page.locator('.journal-article__body').evaluate((node) => node.getBoundingClientRect().width);
+      const bodyWidth = await page.locator('.hcan-reading-body').evaluate((node) => node.getBoundingClientRect().width);
       if (width === 1440) assert.ok(bodyWidth >= 1100, 'atlas keeps a wide example-and-chart canvas');
       else {
         const bounds = await page.locator('.hcanx-finding__text').first().evaluate((node) => ({

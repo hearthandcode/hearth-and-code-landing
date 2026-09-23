@@ -73,7 +73,7 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
         <section class="studio-article-reading-field">
           {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this page"><p>On this page</p><ol>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
 
-          <div class="journal-article__body"><slot /><HearthsideFieldExpansion slug={slug} /></div>
+          <div class={slug === 'hcan-condensed-symbolic-language' ? 'hcan-reading-body' : 'journal-article__body'}><slot /><HearthsideFieldExpansion slug={slug} /></div>
 
           <footer class="journal-article__evidence">
           <section>

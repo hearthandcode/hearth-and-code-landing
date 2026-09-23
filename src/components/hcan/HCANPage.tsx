@@ -52,7 +52,7 @@ export default function HCANPage({ embedded = false }: { embedded?: boolean }) {
   return (
     <div className={`hcanp${embedded ? ' hcanp--embedded' : ''}`}>
       <header className="hcanp-hero">
-        <p className="hcanp-hero__eyebrow">field journal \u00b7 communication type</p>
+        <p className="hcanp-hero__eyebrow">Field journal · communication type</p>
         {!embedded && <h1 className="hcanp-hero__title">HCAN</h1>}
         {!embedded && <p className="hcanp-hero__sub">A Condensed Symbolic Language for Human-Agent Communication</p>}
         <HCANProgram code={'orient @~/any-folder :Brief ?gaps !no-write'} />

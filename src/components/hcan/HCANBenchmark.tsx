@@ -124,6 +124,7 @@ export default function HCANBenchmark({ panel, title, tierScale, rows, summary }
         })}
       </div>
 
+      <div className="hcanx-table-scroll" role="region" aria-label={`${panel} benchmark data`} tabIndex={0}>
       <table className="hcanx-table">
         <thead>
           <tr>
@@ -148,6 +149,7 @@ export default function HCANBenchmark({ panel, title, tierScale, rows, summary }
           ))}
         </tbody>
       </table>
+      </div>
     </section>
   );
 }

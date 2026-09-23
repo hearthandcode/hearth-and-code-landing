@@ -340,7 +340,7 @@
   padding: clamp(2rem, 4vw, 4rem) max(1.25rem, calc((100vw - 76rem) / 2));
   background: #0e1114;
 }
-.journal-article--hcan .studio-article-reading-field .journal-article__body {
+.journal-article--hcan .studio-article-reading-field .hcan-reading-body {
   width: 100%; max-width: 76rem; min-width: 0; margin: 0 auto;
 }
 .journal-article--hcan .studio-article-reading-field .journal-article__guide,
