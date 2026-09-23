@@ -1,4 +1,8 @@
 ---
 import HCANPage from '../hcan/HCANPage';
+import '../../styles/hcan-page.css';
+
+interface Props { embedded?: boolean; }
+const { embedded = false } = Astro.props;
 ---
-<HCANPage client:load />
+<HCANPage client:load embedded={embedded} />

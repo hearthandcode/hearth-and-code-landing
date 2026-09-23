@@ -30,6 +30,7 @@
     "@astrojs/check": "^0.9.9",
     "astro": "^7.0.9",
     "playwright": "^1.60.0",
+    "shiki": "^4.3.1",
     "typescript": "^5.9.3"
   },
   "engines": {

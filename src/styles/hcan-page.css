@@ -317,3 +317,46 @@
   .hcanx-bar-row__label { text-align: left; grid-column: 1 / -1; }
   .hcanx-bar-row__svg { grid-column: 1 / -1; }
 }
+
+/* Field Journal integration: the grammar and benchmark panels need a wider
+ * canvas than prose, without widening the source/claim reading measure. */
+.journal-article.journal-article--hcan { max-width: 78rem; }
+.journal-article--hcan .journal-article__header,
+.journal-article--hcan .journal-article__guide,
+.journal-article--hcan .journal-article__evidence { max-width: 48rem; margin-left: auto; margin-right: auto; }
+.journal-article--hcan .journal-article__body { min-width: 0; }
+.journal-article--hcan .hcanp { max-width: none; padding: clamp(1.25rem, 3vw, 2.5rem) 0 2rem; }
+.journal-article--hcan .hcanp-hero { margin-bottom: 3rem; }
+.journal-article--hcan .hcanp-hero__dek { color: var(--hp-paper-dim); }
+.journal-article--hcan .hcanp-section { padding-top: 1.5rem; border-top: 1px solid var(--hp-line); }
+.journal-article--hcan .hcanp-section__body { min-width: 0; }
+.journal-article--hcan .hcanp-section__body > p { max-width: 68ch; }
+.hcan-program__copy:focus-visible { opacity: 1; color: var(--hp-ember); outline: 2px solid var(--hp-ember); outline-offset: 2px; }
+@media (hover: none) { .hcan-program__copy { opacity: 1; } }
+@media (max-width: 600px) {
+  .journal-article--hcan .hcanp { padding: 1.25rem 0; }
+  .journal-article--hcan .hcanp-section { margin-bottom: 2.5rem; }
+  .journal-article--hcan .hcanp-props,
+  .journal-article--hcan .hcanp-protocols,
+  .journal-article--hcan .hcanp-tooling-notes { grid-template-columns: minmax(0, 1fr); }
+  .journal-article--hcan .hcanx-benchmark__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journal-article--hcan .hcanx-table { min-width: 40rem; }
+  .journal-article--hcan .hcan-program__frame { gap: .5rem; padding: .75rem; }
+}
+.journal-article--hcan .journal-article__header h1 {
+  max-width: 27ch;
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -.045em;
+}
+.journal-article--hcan .studio-article-reading-field .journal-article__body { width: 100%; }
+@media (max-width: 600px) {
+  .journal-article--hcan .hcanx-example,
+  .journal-article--hcan .hcanx-example__program,
+  .journal-article--hcan .hcanx-example__output { min-width: 0; }
+  .journal-article--hcan .hcanx-example__output { overflow-x: auto; }
+  .journal-article--hcan .hcanx-finding__text,
+  .journal-article--hcan .hcanx-finding__locator { overflow-wrap: anywhere; min-width: 0; }
+  .journal-article--hcan .hcanx-probes,
+  .journal-article--hcan .hcanx-unknowns { min-width: 25rem; }
+}

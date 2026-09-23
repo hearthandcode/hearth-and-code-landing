@@ -1,0 +1,194 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "sigil",
+  "scopeName": "source.exocore-sigil",
+  "patterns": [
+    {
+      "include": "#main"
+    }
+  ],
+  "repository": {
+    "main": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#invalid-unicode-identifier"
+        },
+        {
+          "include": "#declaration"
+        },
+        {
+          "include": "#builtin-type"
+        },
+        {
+          "include": "#kind"
+        },
+        {
+          "include": "#type-form"
+        },
+        {
+          "include": "#term-form"
+        },
+        {
+          "include": "#type-binder"
+        },
+        {
+          "include": "#option"
+        },
+        {
+          "include": "#constructor"
+        },
+        {
+          "include": "#record-field"
+        },
+        {
+          "include": "#invalid-integer"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#boolean"
+        },
+        {
+          "include": "#keyword"
+        },
+        {
+          "include": "#delimiter"
+        },
+        {
+          "include": "#atom"
+        }
+      ]
+    },
+    "comment": {
+      "name": "comment.line.semicolon.exocore-sigil",
+      "match": ";[^\\n\\r]*"
+    },
+    "string": {
+      "name": "string.quoted.double.exocore-sigil",
+      "begin": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.exocore-sigil"
+        }
+      },
+      "end": "\"|(?=\\r?$)",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.exocore-sigil"
+        }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.exocore-sigil",
+          "match": "\\\\[nrt\\\"\\\\]"
+        },
+        {
+          "name": "invalid.illegal.escape.exocore-sigil",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "invalid-unicode-identifier": {
+      "name": "invalid.illegal.identifier.exocore-sigil",
+      "match": "(?<!\")[^\\x00-\\x7F]+"
+    },
+    "declaration": {
+      "match": "(?<![A-Za-z0-9_\\-/>?])(deftype|defrecord|defdata)(\\s+)([A-Za-z_][A-Za-z0-9_\\-/>?]*)",
+      "captures": {
+        "1": {
+          "name": "keyword.declaration.exocore-sigil"
+        },
+        "3": {
+          "name": "entity.name.type.declaration.exocore-sigil"
+        }
+      }
+    },
+    "builtin-type": {
+      "name": "support.type.builtin.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])(Text|Int|Bool|Unit|Option|Result|List|Set|Pair|Vec|Array|MapOf)(?![A-Za-z0-9_\\-/>?])"
+    },
+    "kind": {
+      "name": "support.type.kind.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])(Type|Row)(?![A-Za-z0-9_\\-/>?])"
+    },
+    "type-form": {
+      "name": "keyword.type-form.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])(forall|refine|->)(?![A-Za-z0-9_\\-/>?])"
+    },
+    "type-binder": {
+      "name": "variable.parameter.type.exocore-sigil",
+      "match": "(?<=\\()[A-Za-z_][A-Za-z0-9_\\-/>?]*(?=\\s+(?:Type|Row)\\))"
+    },
+    "option": {
+      "name": "keyword.option.exocore-sigil",
+      "match": ":[A-Za-z_][A-Za-z0-9_\\-/>?]*"
+    },
+    "constructor": {
+      "name": "entity.name.constructor.exocore-sigil",
+      "match": "(?<=\\()[A-Z][A-Za-z0-9_\\-/>?]*(?=\\s|\\))"
+    },
+    "record-field": {
+      "name": "variable.other.property.declaration.exocore-sigil",
+      "match": "(?<=\\()[a-z_][A-Za-z0-9_\\-/>?]*(?=\\s+[A-Za-z_][A-Za-z0-9_\\-/>?]*\\))"
+    },
+    "invalid-integer": {
+      "name": "constant.numeric.integer.exocore-sigil invalid.illegal.numeric.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])(?:9223372036854775808|-[9][2-9][0-9]{17,})(?![A-Za-z0-9_\\-/>?])"
+    },
+    "number": {
+      "name": "constant.numeric.integer.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?![A-Za-z0-9_\\-/>?])"
+    },
+    "boolean": {
+      "name": "constant.language.boolean.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])(true|false)(?![A-Za-z0-9_\\-/>?])"
+    },
+    "keyword": {
+      "name": "variable.other.keyword.exocore-sigil",
+      "match": ":[A-Za-z_][A-Za-z0-9_\\-/>?]*"
+    },
+    "delimiter": {
+      "patterns": [
+        {
+          "name": "punctuation.section.parens.begin.exocore-sigil",
+          "match": "\\("
+        },
+        {
+          "name": "punctuation.section.parens.end.exocore-sigil",
+          "match": "\\)"
+        },
+        {
+          "name": "punctuation.section.brackets.begin.exocore-sigil",
+          "match": "\\["
+        },
+        {
+          "name": "punctuation.section.brackets.end.exocore-sigil",
+          "match": "\\]"
+        },
+        {
+          "name": "punctuation.section.braces.begin.exocore-sigil",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.section.braces.end.exocore-sigil",
+          "match": "\\}"
+        }
+      ]
+    },
+    "atom": {
+      "name": "variable.other.identifier.exocore-sigil",
+      "match": "[A-Za-z_][A-Za-z0-9_\\-/>?]*"
+    },
+    "term-form": {
+      "name": "keyword.term.exocore-sigil",
+      "match": "(?<![A-Za-z0-9_\\-/>?])(defun|let|record|if|match|unit|_)(?![A-Za-z0-9_\\-/>?])"
+    }
+  }
+}

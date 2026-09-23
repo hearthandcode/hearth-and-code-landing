@@ -21,6 +21,13 @@ export default defineConfig({
           path: './src/data/hcan.tmLanguage.json',
           scopeName: 'source.hcan',
         },
+        // Projection of exocore-sigil/tooling/vscode/lexical/syntaxes/sigil.tmLanguage.json
+        // (source SHA-256 d5d211d3bb57cae5391a89df90eb12d5a3b54fce2215cc5886a3aecab9e29132).
+        // Only its display name is changed to "sigil" for fenced-code resolution.
+        {
+          path: './src/data/sigil.tmLanguage.json',
+          scopeName: 'source.exocore-sigil',
+        },
         'yaml',
         'json',
         'bash',

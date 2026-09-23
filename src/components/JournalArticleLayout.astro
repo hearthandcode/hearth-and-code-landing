@@ -56,7 +56,7 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
     <a class="research-skip" href="#journal-article">Skip to article</a>
     <HearthNavigation current="library" context="Field Journal / published research record" />
     <main id="journal-article" class="journal-article-shell">
-      <article class="journal-article">
+      <article class:list={['journal-article', { 'journal-article--hcan': slug === 'hcan-condensed-symbolic-language' }]}>
         <header class="journal-article__header">
           <p class="research-eyebrow">Field Journal / published record</p>
           <h1>{title}</h1>

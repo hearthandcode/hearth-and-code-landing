@@ -1,0 +1,19 @@
+---
+import { createHighlighter, type LanguageRegistration } from 'shiki';
+import hcan from '../data/hcan.tmLanguage.json';
+import sigil from '../data/sigil.tmLanguage.json';
+
+interface Props { language: 'hcan' | 'sigil'; code: string; }
+const { language, code } = Astro.props;
+// Static, build-time highlighting. The editor grammars are projected by name;
+// these snippets never run and no browser highlighter or provider is loaded.
+const highlighter = await createHighlighter({
+  themes: ['github-dark'],
+  langs: [{ ...hcan, name: 'hcan' } as unknown as LanguageRegistration, sigil as unknown as LanguageRegistration],
+});
+const html = highlighter.codeToHtml(code.trimEnd(), { lang: language, theme: 'github-dark' });
+---
+<figure class="journal-program" data-program-language={language}>
+  <figcaption>{language === 'hcan' ? 'HCAN · notation example' : 'Sigil · source example'}</figcaption>
+  <Fragment set:html={html} />
+</figure>

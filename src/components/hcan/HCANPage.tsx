@@ -45,16 +45,16 @@ const NOT_LIST = [
 
 const ENVELOPE_LAYERS = ['TITLE', 'LEGEND', 'SHAPES', 'RULES', 'lines'];
 
-export default function HCANPage() {
+export default function HCANPage({ embedded = false }: { embedded?: boolean }) {
   const [activeExample, setActiveExample] = useState(hcanExamples[0]?.id ?? '');
   const example = hcanExamples.find((e) => e.id === activeExample) ?? hcanExamples[0];
 
   return (
-    <div className="hcanp">
+    <div className={`hcanp${embedded ? ' hcanp--embedded' : ''}`}>
       <header className="hcanp-hero">
         <p className="hcanp-hero__eyebrow">field journal \u00b7 communication type</p>
-        <h1 className="hcanp-hero__title">HCAN</h1>
-        <p className="hcanp-hero__sub">A Condensed Symbolic Language for Human-Agent Communication</p>
+        {!embedded && <h1 className="hcanp-hero__title">HCAN</h1>}
+        {!embedded && <p className="hcanp-hero__sub">A Condensed Symbolic Language for Human-Agent Communication</p>}
         <HCANProgram code={'orient @~/any-folder :Brief ?gaps !no-write'} />
         <p className="hcanp-hero__dek">Not natural language (verbose, ambiguous). Not a programming language (toolchains, execution). A middle layer: a condensed symbolic notation that compresses intent, scope, uncertainty, and boundaries into a single reviewable line that any LLM agent can read, any human can audit, and any system can validate before running.</p>
       </header>

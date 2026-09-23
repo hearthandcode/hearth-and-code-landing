@@ -37,6 +37,8 @@ claim_map:
     source: "Exocore Sigil design and work ledger."
 ---
 
+import ProgramCode from '../../components/ProgramCode.astro';
+
 I shared a [public account of HCAN](/journal/hcan-condensed-symbolic-language/) as a condensed language for human–agent communication. Its grammar helps a person name an intent, a source, a return shape, and a guard without hiding the boundary in a paragraph. Alongside it I have been building Sigil, a different language: a constrained S-expression system for writing the computation an agentic workflow actually performs. HCAN is not Sigil syntax, and Sigil does not replace human conversation.
 
 The new development is concrete. A Sigil program has now made an admitted call to a local language model, received a typed answer, checked it, and recorded a receipt. I want to explain the seam, because the interesting question is not whether code can call a model. Of course it can. The question is what the code must say before that call is allowed, and what the reader can know afterward.
@@ -47,9 +49,7 @@ HCAN's recent work sharpened how a message refers to its world. An `@` reference
 
 For example, this validated read-only comparison keeps a named idea, a deliberately approximate neighbor, and its actual source locator separate:
 
-```hcan
-compare $rag-retrieval ~vector-search-hybrid @research/notes :Brief ?tradeoffs !no-write
-```
+<ProgramCode language="hcan" code={"compare $rag-retrieval ~vector-search-hybrid @research/notes :Brief ?tradeoffs !no-write"} />
 
 The same insistence on distinctions has reached effects. Network and execute joined read, compute, and write as named effect classes. When tags combine, a closed rule table can record interactions: write × network becomes data-egress; read × network becomes data-ingress; execute × network becomes remote-execute. More recent structured bindings and scoped guards refine what those effects touch. These are descriptions and checks, not a self-issued permission slip. A tool's ability to send data is different from the authority to send *this* data on *this* task.
 
@@ -59,33 +59,19 @@ The medium has also grown an opt-in vocabulary loader and a collection of multil
 
 Here is a Set-B creative constraint program from the latest example family. `:Constraint` and `?exhaustive` require the opt-in `hcan-creative-constraint` vocabulary. The existing `design` and `synth` verbs do the work of describing a request; the vocabulary adds a shape and probe, not permission to write:
 
-```hcan
-#[design-ideas] begin bounded-ideation
-  design @problem :Constraint -> map(must-have,must-avoid,freedom) ?exhaustive !no-write
-  synth @ideas :Vec<Card> -> map(approach,risk,falsifier) ?novelty !no-write
-end
-```
+<ProgramCode language="hcan" code={"#[design-ideas] begin bounded-ideation\n  design @problem :Constraint -> map(must-have,must-avoid,freedom) ?exhaustive !no-write\n  synth @ideas :Vec<Card> -> map(approach,risk,falsifier) ?novelty !no-write\nend"} />
 
 This program passed canonical HCAN compilation with that vocabulary enabled. Other Tier-1 Set-B additions include `:Mechanic` with `?balance` for a game design and `:Vibe` with `?calibration` for a tonal review. They are opt-in vocabulary surfaces, not new universal base verbs. The larger Set-B grammar proposals are not all delivered; do not read a roadmap example as an implemented `branch` or `counterfactual` command.
 
 HCAN-Effect makes a more consequential distinction. The following line is deliberately **rejected by the guard check**. The two intent tags derive an interaction class, `remote-execute`; the guard forbids it. Its validation succeeds, but `guard_compliance=false` and the compiler records a violation:
 
-```hcan
-#[test-x][transfer-y] begin guarded-work
-  orient @d :Brief ?gaps !no-remote-execute
-end
-```
+<ProgramCode language="hcan" code={"#[test-x][transfer-y] begin guarded-work\n  orient @d :Brief ?gaps !no-remote-execute\nend"} />
 
 Structured effects add path-level evidence to the flat effect set. For example, `transfer @sources/hub :Brief ?gaps !no-write(path:/sources)` yields a `write(sources/hub)` binding that matches the scoped guard; a guard scoped to `/tmp` does not match that target. Neither a passing parse nor an effect record authorizes an external transfer.
 
 HCAN-Stream uses `~>` to connect a producer line to the next consumer *within the block*. With the base shapes below, canonical compilation passes and records one edge (producer line 2 → consumer line 3), plus `produce(stream-2)` and `consume(stream-2)` effect bindings:
 
-```hcan
-begin pipeline
-  trace @logs :Brief -> filter(level=warn) ~>
-  inspect @filtered :Table -> aggregate(count-by-service) ?gaps !no-write
-end
-```
+<ProgramCode language="hcan" code={"begin pipeline\n  trace @logs :Brief -> filter(level=warn) ~>\n  inspect @filtered :Table -> aggregate(count-by-service) ?gaps !no-write\nend"} />
 
 This is a dataflow description and compiler record, not a live log subscription or executed filtering job. HCAN's `trace`, `inspect`, `compare`, `synth`, `design`, `test`, `transfer`, and `return` are different verbs with different implied effects and return purposes; treating all of them as a generic “ask the agent” would lose the point.
 
@@ -95,16 +81,7 @@ Sigil makes the next step executable under a separate set of conditions. A progr
 
 In schematic Sigil, the crossing looks like this:
 
-```text
-(defrecord BonsaiRequest ((goal Text)))
-(defdata BonsaiResponse (Ok Text) (Refused Text))
-(delegation-schema BonsaiRequest BonsaiResponse)
-
-; inside a function declaring (:effects (llm/BonsaiRequest)):
-(match (delegate (record BonsaiRequest ((goal "Reply briefly"))))
-  ((Ok answer) answer)
-  ((Refused reason) reason))
-```
+<ProgramCode language="sigil" code={"(defrecord BonsaiRequest ((goal Text)))\n(defdata BonsaiResponse (Ok Text) (Refused Text))\n(delegation-schema BonsaiRequest BonsaiResponse)\n\n; inside a function declaring (:effects (llm/BonsaiRequest)):\n(match (delegate (record BonsaiRequest ((goal \"Reply briefly\"))))\n  ((Ok answer) answer)\n  ((Refused reason) reason))"} />
 
 The abbreviated function body above illustrates the type and refusal shape; it is not a copy-paste standalone program or the exact live prompt. In the owner-authorized canary, a local Bonsai 27B served through `obsidian-sglang` returned `(Ok "bonsai is live")`. Sigil checked the response against the declared sum and recorded `outcome=provider-executed` and `deviation=none`. That is evidence of *one successful call*, not proof that all prompts, routes, or providers behave well.
 
@@ -114,25 +91,11 @@ Refusal has its own ordinary branch. Backend failure is a different lane, with a
 
 Model delegation is only one Sigil effect. A pure program can destructure records and match a closed sum without a provider. This small case comes from the evaluator's executable tests: it returns `"hello"` and needs no network route.
 
-```text
-(defrecord Greeting ((message Text) (count Int)))
-(defun read-message ((g Greeting)) (:returns Text)
-  (match g ((Greeting msg n) msg)))
-(defun main () (:returns Text)
-  (read-message (record Greeting ((message "hello") (count 2)))))
-```
+<ProgramCode language="sigil" code={"(defrecord Greeting ((message Text) (count Int)))\n(defun read-message ((g Greeting)) (:returns Text)\n  (match g ((Greeting msg n) msg)))\n(defun main () (:returns Text)\n  (read-message (record Greeting ((message \"hello\") (count 2)))))"} />
 
 Extension packs make checked structures reusable. The graph pack's test assembles an integer graph, list and DFS function via namespaced `use` forms, then checks a fuel-bounded search. The following is a complete tested program *when the graph-utils pack is supplied*; it returns `true` on the reachability fixture and neither calls a model nor grants an effect:
 
-```text
-(use graph-utils/int-list IntList)
-(use graph-utils/int-graph IntGraph)
-(use graph-utils/int-member int-member IntList)
-(use graph-utils/graph-neighbors neighbors IntGraph IntList)
-(use graph-utils/graph-dfs dfs IntGraph IntList int-member neighbors)
-(defun main () (:returns Bool)
-  (dfs (GEdge 1 2 (GNil)) 2 (LCons 1 (LNil)) (LNil) 4))
-```
+<ProgramCode language="sigil" code={"(use graph-utils/int-list IntList)\n(use graph-utils/int-graph IntGraph)\n(use graph-utils/int-member int-member IntList)\n(use graph-utils/graph-neighbors neighbors IntGraph IntList)\n(use graph-utils/graph-dfs dfs IntGraph IntList int-member neighbors)\n(defun main () (:returns Bool)\n  (dfs (GEdge 1 2 (GNil)) 2 (LCons 1 (LNil)) (LNil) 4))"} />
 
 HCAN also now has an A07 emitter that maps its compiled IR into **Sigil-shaped S-expression source**, including intent and guard annotations and comments for stream edges. That is a reviewable bridge candidate, **not** an executable conversion: its generated `hcan::` calls are not yet bound to a checked Sigil implementation. The HCAN stream above therefore does not become a running Sigil task graph just because codegen prints it.
 
