@@ -1,0 +1,210 @@
+---
+/**
+ * HearthCodeToggle.astro
+ *
+ * Three-segment toggle: Hearth | Both | Code
+ * Transforms the entire page palette, density, and content emphasis.
+ *
+ * Persists via URL ?view= and localStorage 'hearth-code-view'.
+ */
+
+interface Props {
+  current?: 'hearth' | 'code' | 'balanced';
+}
+
+const { current = 'balanced' } = Astro.props;
+
+const segments = [
+  { id: 'hearth',   label: 'Hearth',   description: 'Personal · philosophical' },
+  { id: 'balanced', label: 'Both',     description: 'Full spectrum' },
+  { id: 'code',     label: 'Code',     description: 'Technical · methods' },
+] as const;
+---
+
+<div class="hearth-code-toggle" data-toggle-root data-current={current}>
+  <span class="hearth-code-toggle__label">View as</span>
+  <div class="hearth-code-toggle__container" role="tablist" aria-label="Hearth-Code orientation">
+    {segments.map((segment) => (
+      <button
+        type="button"
+        role="tab"
+        class:list={[
+          'hearth-code-toggle__segment',
+          { 'is-active': segment.id === current },
+        ]}
+        data-segment={segment.id}
+        aria-selected={segment.id === current ? 'true' : 'false'}
+      >
+        <span class="hearth-code-toggle__segment-label">{segment.label}</span>
+        <span class="hearth-code-toggle__segment-desc">{segment.description}</span>
+      </button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .hearth-code-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-md, 0.75rem);
+    padding: var(--spacing-sm, 0.5rem) 0;
+  }
+
+  .hearth-code-toggle__label {
+    color: var(--text_secondary, #cfc1ab);
+    font-size: var(--font-size-caption, 0.8125rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hearth-code-toggle__container {
+    display: inline-flex;
+    background: var(--surface-primary, #161411);
+    border: 1px solid var(--color-surface-rule, #4b4237);
+    border-radius: 9999px;
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .hearth-code-toggle__segment {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 9999px;
+    color: var(--text-secondary, #b89e7e);
+    cursor: pointer;
+    transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+    font-family: inherit;
+  }
+
+  .hearth-code-toggle__segment:hover {
+    color: var(--text-primary, #f1e7d2);
+  }
+
+  .hearth-code-toggle__segment.is-active {
+    background: var(--surface-raised, #211d18);
+    color: var(--text-display, #f1e7d2);
+    font-weight: 600;
+  }
+
+  /* Active accent by orientation */
+  [data-toggle-root][data-current="hearth"] .hearth-code-toggle__segment[data-segment="hearth"] {
+    box-shadow: inset 0 0 0 1px var(--color-accent-ember, #E85B4E), 0 0 12px rgba(232, 91, 78, 0.35);
+  }
+  [data-toggle-root][data-current="code"] .hearth-code-toggle__segment[data-segment="code"] {
+    box-shadow: inset 0 0 0 1px var(--color-accent-signal, #1FB6A8), 0 0 12px rgba(31, 182, 168, 0.35);
+  }
+  [data-toggle-root][data-current="balanced"] .hearth-code-toggle__segment[data-segment="balanced"] {
+    box-shadow: inset 0 0 0 1px transparent, 0 0 8px rgba(155, 93, 229, 0.25);
+  }
+
+  .hearth-code-toggle__segment-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .hearth-code-toggle__segment-desc {
+    font-size: 0.6875rem;
+    color: var(--text-secondary, #b89e7e);
+    font-weight: 400;
+  }
+
+  .hearth-code-toggle__segment.is-active .hearth-code-toggle__segment-desc {
+    color: var(--text-secondary, #cfc1ab);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggles = document.querySelectorAll('[data-toggle-root]');
+    toggles.forEach((toggleRoot) => {
+      const segments = toggleRoot.querySelectorAll('[data-segment]');
+      segments.forEach((segment) => {
+        segment.addEventListener('click', () => {
+          const view = segment.getAttribute('data-segment');
+          if (!view) return;
+
+          // Persist to URL
+          const url = new URL(window.location.href);
+          url.searchParams.set('view', view);
+          window.history.pushState({}, '', url);
+
+          // Persist to localStorage
+          try {
+            localStorage.setItem('hearth-code-view', view);
+          } catch (e) {
+            // localStorage may be disabled
+          }
+
+          // Update root data attribute for CSS styling
+          toggleRoot.setAttribute('data-current', view);
+
+          // Update other toggles on page (if multiple)
+          document.querySelectorAll('[data-toggle-root]').forEach((otherToggle) => {
+            if (otherToggle !== toggleRoot) {
+              otherToggle.setAttribute('data-current', view);
+              otherToggle.querySelectorAll('[data-segment]').forEach((otherSeg) => {
+                if (otherSeg.getAttribute('data-segment') === view) {
+                  otherSeg.setAttribute('aria-selected', 'true');
+                  otherSeg.classList.add('is-active');
+                } else {
+                  otherSeg.setAttribute('aria-selected', 'false');
+                  otherSeg.classList.remove('is-active');
+                }
+              });
+            }
+          });
+
+          // Trigger custom event for page-level updates
+          window.dispatchEvent(new CustomEvent('hearth-code-view-change', { detail: { view } }));
+        });
+      });
+    });
+
+    // Listen for popstate (browser back/forward)
+    window.addEventListener('popstate', () => {
+      const url = new URL(window.location.href);
+      const view = url.searchParams.get('view') || getStoredView() || 'balanced';
+      applyView(view);
+    });
+  });
+
+  function getStoredView() {
+    try {
+      return localStorage.getItem('hearth-code-view');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function applyView(view: string) {
+    document.querySelectorAll('[data-toggle-root]').forEach((toggleRoot) => {
+      toggleRoot.setAttribute('data-current', view);
+      toggleRoot.querySelectorAll('[data-segment]').forEach((seg) => {
+        if (seg.getAttribute('data-segment') === view) {
+          seg.setAttribute('aria-selected', 'true');
+          seg.classList.add('is-active');
+        } else {
+          seg.setAttribute('aria-selected', 'false');
+          seg.classList.remove('is-active');
+        }
+      });
+    });
+  }
+
+  // Initialize from URL or localStorage on page load
+  (function initView() {
+    const url = new URL(window.location.href);
+    const urlView = url.searchParams.get('view');
+    const storedView = getStoredView();
+    const view = urlView || storedView || 'balanced';
+    if (['hearth', 'code', 'balanced'].includes(view)) {
+      // Apply after DOM ready
+      document.addEventListener('DOMContentLoaded', () => applyView(view));
+    }
+  })();
+</script>
