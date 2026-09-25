@@ -1,158 +1,360 @@
 ---
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import HearthNavigation from './HearthNavigation.astro';
-import StudioArchetype from './StudioArchetype.astro';
-import StudioArchiveIndex from './StudioArchiveIndex.astro';
-import '../styles/research-studio-landing.css';
-import '../styles/ember-surface-framework.css';
-import '../styles/ember-circuit-library.css';
-
-const journal: CollectionEntry<'journal'>[] = (await getCollection('journal')) as CollectionEntry<'journal'>[];
-journal.sort((a, b) => new Date(`${b.data.published_date ?? b.data.date}T00:00:00`).getTime() - new Date(`${a.data.published_date ?? a.data.date}T00:00:00`).getTime());
-const latest = journal.slice(0, 3);
-
-// Studio stats — projected from the live catalog, journal, hearthside, and fieldcraft sources.
-const studioStats = [
-  { count: '35',  label: 'Method field cards',  href: '/methods/' },
-  { count: '128', label: 'Prompt techniques',   href: '/methods/#prompt-catalog-title' },
-  { count: '32',  label: 'Fieldcraft field notes', href: '/library/' },
-  { count: '10',  label: 'Field Journal entries', href: '/journal/' },
-  { count: '8',   label: 'Hearthside essays',   href: '/notes/' },
-  { count: '16',  label: 'Dossier entries',     href: '/dossier/' },
-] as const;
-
-const rooms = [
-  { number: '01', signal: 'green', eyebrow: 'Practice library', title: 'Methods', description: 'I keep thirty-five field cards for orientation, context, evaluation, and responsible return — the 4-lens method family, distinct from the 128-technique prompt catalog.', href: '/methods/', action: 'Open my methods lab' },
-  { number: '02', signal: 'violet', eyebrow: 'Public record', title: 'Research Library', description: 'I gather fifty published works — Field Journal entries, Hearthside essays, Fieldcraft field notes, and method cards — into one searchable workbench.', href: '/library/', action: 'Enter my research library' },
-  { number: '03', signal: 'cyan', eyebrow: 'Technique atlas', title: 'Prompt engineering', description: 'I project 128 prompt techniques from a 512-record atlas. Each opens into an 8-section field file with a form-driven Prompt Lab template generator.', href: '/methods/#prompt-catalog-title', action: 'Browse my prompt catalog' },
-  { number: '04', signal: 'ember', eyebrow: 'Research programs', title: 'Technical reports', description: 'I connect TCCP, EKRP, Exocore, and system design through bounded dossiers and public-safe report orientations.', href: '/programs/', action: 'Read my program dossiers' },
-  { number: '05', signal: 'violet', eyebrow: 'Evidence desk', title: 'Artifacts', description: 'I use claim cards, evidence records, diagrams, templates, and correction routes to make the work inspectable.', href: '/evidence/', action: 'Inspect my artifact trail' },
-  { number: '06', signal: 'green', eyebrow: 'Selected practice', title: 'Portfolio', description: 'I collect selected research programs, software systems, publications, and current directions without hiding their posture.', href: '/portfolio/', action: 'View my selected work' },
-] as const;
-
-const methods = [
-  ['01', 'Semantic orientation', 'Keep literal evidence, interpreted meaning, and normalized language distinguishable.'],
-  ['02', 'Operational intelligence', 'Compare forms, transitions, ownership, and loss without centralizing authority.'],
-  ['03', 'Prompt & context practice', 'Design prompts as inspectable task contracts with bounded inputs and effects.'],
-  ['04', 'Evaluation & return', 'Check one named predicate, calibrate the claim, and leave a reliable way back.'],
-] as const;
-
-const portfolio = [
-  { code: 'TCCP', title: 'Typed Context & Control Protocol', kind: 'Research program', note: 'Representations, context, interaction, and proof obligations.' },
-  { code: 'EKRP', title: 'Knowledge Representation Profile', kind: 'Applied research', note: 'Human-readable knowledge architecture with explicit provenance.' },
-  { code: 'EXO', title: 'Exocore', kind: 'Software system', note: 'A local-first workbench for agents, knowledge, governance, and return.' },
-  { code: 'H+C', title: 'Field Journal', kind: 'Published practice', note: 'Essays and technical writing from the workbench of the studio.' },
-] as const;
-
-function displayDate(value: string) {
-  return new Date(`${value}T00:00:00`).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-}
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Hearth & Code is an independent research studio publishing methods, technical work, artifacts, essays, and software for answerable systems." />
-    <meta name="theme-color" content="#1a1410" />
-    <title>Hearth &amp; Code · Independent Research Studio</title>
-  </head>
-  <body class="research-studio-landing ember-surface">
-    <a class="studio-skip" href="#main-content">Skip to the studio index</a>
-    <div class="studio-shell">
-      <HearthNavigation current="orientation" context="Hearthside Meta-Architect / public research studio" />
+<header class="orientation-header">
+  <div class="orientation-brand-row">
+    <a class="orientation-wordmark" href="/" aria-label="Hearth and Code, return to Orientation">Hearth <em>&amp;</em> Code</a>
+    <p>Independent research studio · operated by Scott Rallya (Cognitectus)</p>
+    <a class="orientation-journal" href="/journal/">
+      Field Journal <span aria-hidden="true">→</span>
+    </a>
+  </div>
+  <nav class="hearth-navigation" aria-label="Hearth and Code rooms">
+    <ol>
+      <li><a href="/" aria-current="page"><span aria-hidden="true">01</span><strong>Studio</strong></a></li>
+      <li><a href="/practice/"><span aria-hidden="true">02</span><strong>Practice</strong></a></li>
+      <li><a href="/philosophy/"><span aria-hidden="true">03</span><strong>Philosophy</strong></a></li>
+      <li><a href="/research/"><span aria-hidden="true">04</span><strong>Research</strong></a></li>
+      <li><a href="/portfolio/"><span aria-hidden="true">05</span><strong>Portfolio</strong></a></li>
+      <li><a href="/dossier/"><span aria-hidden="true">06</span><strong>Dossier</strong></a></li>
+      <li><a href="/questions/"><span aria-hidden="true">07</span><strong>Questions</strong></a></li>
+      <li><a href="/correspondence/"><span aria-hidden="true">08</span><strong>Contact</strong></a></li>
+    </ol>
+  </nav>
+</header>
 
-      <main id="main-content">
-        <section class="studio-threshold" aria-labelledby="studio-title">
-          <div class="studio-threshold__intro">
-            <p class="studio-kicker"><span>H+C / Research Studio</span><span>Public orientation · 2026</span></p>
-            <h1 id="studio-title">I build systems that can <em>explain themselves</em>—and leave a way back.</h1>
-            <p class="studio-deck">Hearth &amp; Code is my public workbench for research, software, knowledge architecture, prompt practice, and creative systems. I use the Hearthside Meta-Architect as a working name for the craft: forge enough structure to make complexity inspectable, then keep it warm enough to inhabit, question, and revise.</p>
-            <div class="studio-actions">
-              <a class="studio-action studio-action--primary" href="#studio-index">Explore the studio <span aria-hidden="true">↓</span></a>
-              <a class="studio-action" href="/portfolio/">View selected work <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
+<style>
+  .orientation-header {
+    background: var(--surface-elevated);
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .orientation-brand-row {
+    max-width: 70ch;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+  .orientation-wordmark {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: inherit;
+    text-decoration: none;
+  }
+  .orientation-brand-row p {
+    margin: 0;
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+  }
+  .orientation-journal {
+    margin-left: auto;
+    color: var(--signal-gray);
+    text-decoration: none;
+    font-size: var(--font-caption);
+  }
+  .orientation-journal:hover {
+    color: var(--signal-ember);
+  }
+  .hearth-navigation ol {
+    list-style: none;
+    padding: 0 var(--space-lg);
+    margin: 0 auto;
+    max-width: 70ch;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+  .hearth-navigation a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: var(--signal-gray);
+    text-decoration: none;
+    font-size: var(--font-caption);
+  }
+  .hearth-navigation a[aria-current="page"] {
+    color: var(--signal-ember);
+    font-weight: 600;
+  }
+  .hearth-navigation a:hover {
+    color: var(--signal-ember);
+  }
+</style>
 
-          <aside class="studio-orientation" aria-label="Research studio orientation">
-            <div class="studio-orientation__head"><span>My studio index</span><strong>Which thread would you like to pick up?</strong></div>
-            <ol>
-              <li><a href="/methods/"><span>01</span><strong>Use a method</strong><small>35 field cards · 128 prompts</small></a></li>
-              <li><a href="/library/"><span>02</span><strong>Search the library</strong><small>50 published works</small></a></li>
-              <li><a href="/journal/"><span>03</span><strong>Read the journal</strong><small>10 field journal entries</small></a></li>
-              <li><a href="/dossier/"><span>04</span><strong>Meet my working archetype</strong><small>16 dossier entries</small></a></li>
-            </ol>
-            <p><i aria-hidden="true"></i> Public research surface · correction-friendly</p>
-          </aside>
-        </section>
+<main class="ec-studio-page">
+  <article class="ec-studio-content">
 
-        <section class="studio-stats" aria-label="Studio publication counts">
-          <p class="studio-kicker">Public by the count</p>
-          <ol>
-            {studioStats.map((stat) => <li><a href={stat.href}><strong>{stat.count}</strong><span>{stat.label}</span></a></li>)}
-          </ol>
-        </section>
+    <header class="ec-studio-intro">
+      <p class="ec-eyebrow">Hearth &amp; Code</p>
+      <h1>An independent research studio for answerable systems.</h1>
+      <p class="ec-studio-lede">
+        Hearth &amp; Code is my public workbench for research, software, knowledge
+        architecture, and policy thinking. The goal isn't to show everything I've done.
+        It's to make the work legible enough that you can question it, use it, or
+        build on it.
+      </p>
+    </header>
 
-        <StudioArchetype />
+    <section class="ec-studio-section">
+      <h2>Who runs it</h2>
+      <p>
+        I'm Scott Rallya (online: Cognitectus). I work independently on systems where
+        complexity needs to stay inspectable — AI governance, knowledge architecture,
+        agent coordination, and public reasoning.
+      </p>
+      <p>
+        The studio runs on a single principle: <strong>every consequential claim should
+        have a source, a scope, and a way to be challenged.</strong> That's the bar.
+        Everything else follows from it.
+      </p>
+      <p class="ec-studio-link"><a href="/dossier/">→ Read my working profile</a></p>
+    </section>
 
-        <section id="studio-index" class="studio-index" aria-labelledby="studio-index-title">
-          <header class="studio-section-head">
-            <div><p class="studio-kicker">02 / Research Studio Index</p><h2 id="studio-index-title">Six ways into my work.</h2></div>
-            <p>I give each room its own publication form and evidence boundary. Begin with the kind of material you want to read, use, or inspect.</p>
-          </header>
-          <div class="studio-room-grid">
-            {rooms.map((room) => (
-              <a class={`studio-room studio-room--${room.signal}`} href={room.href}>
-                <div><span>{room.number}</span><i aria-hidden="true"></i><small>{room.eyebrow}</small></div>
-                <h3>{room.title}</h3><p>{room.description}</p><strong>{room.action} <span aria-hidden="true">↗</span></strong>
-              </a>
-            ))}
-          </div>
-        </section>
+    <section class="ec-studio-section">
+      <h2>What you'll find here</h2>
+      <p>The site is organized in eight layers. Each layer has a different purpose and a different reading mode.</p>
+    </section>
 
-        <StudioArchiveIndex />
+    <nav class="ec-studio-nav" aria-label="Site navigation guide">
+      <div class="ec-studio-nav-item">
+        <h3><a href="/practice/">Practice</a></h3>
+        <p class="ec-studio-nav-meta">Methods, library, artifacts</p>
+        <p>The working tools. Field cards, prompt techniques, research notes. If you want to <em>do</em> something, start here.</p>
+      </div>
 
-        <section class="studio-methods" aria-labelledby="studio-methods-title">
-          <header class="studio-section-head studio-section-head--dark">
-            <div><p class="studio-kicker">04 / Method Architecture</p><h2 id="studio-methods-title">I use methods as routes through uncertainty.</h2></div>
-            <p>I keep this library practical rather than doctrinal: take a field card, adapt it to your sources and constraints, and preserve what the attempt cannot prove.</p>
-          </header>
-          <ol>{methods.map(([number, title, description]) => <li><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
-          <div class="studio-methods__actions"><a href="/methods/">Open 35 field cards and 128 prompt techniques →</a></div>
-        </section>
+      <div class="ec-studio-nav-item">
+        <h3><a href="/philosophy/">Philosophy</a></h3>
+        <p class="ec-studio-nav-meta">Epistemology, civic governance, AI literacy</p>
+        <p>Position papers and framework essays. Where I argue for specific ways of thinking about complex systems.</p>
+      </div>
 
-        <section class="studio-publications" aria-labelledby="studio-publications-title">
-          <header class="studio-section-head">
-            <div><p class="studio-kicker">05 / Publication Desk</p><h2 id="studio-publications-title">Recent from my Field Journal.</h2></div>
-            <p>I use long-form entries to preserve publication date, source context, and claim labels. Technical articles and shorter essays live beside them in the reading room.</p>
-          </header>
-          <ol>{latest.map((entry, index) => <li>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <div><p><time datetime={entry.data.published_date ?? entry.data.date}>{displayDate(entry.data.published_date ?? entry.data.date)}</time> · Field Journal</p><h3><a href={`/journal/${entry.id}/`}>{entry.data.title}</a></h3><p>{entry.data.description}</p></div>
-            <a href={`/journal/${entry.id}/`} aria-label={`Read ${entry.data.title}`}>Read <span aria-hidden="true">→</span></a>
-          </li>)}</ol>
-          <div class="studio-publications__footer"><a href="/journal/">Browse the journal</a><a href="/library/">Open the Research Library</a></div>
-        </section>
+      <div class="ec-studio-nav-item">
+        <h3><a href="/research/">Research</a></h3>
+        <p class="ec-studio-nav-meta">Technical work, methods, reports</p>
+        <p>The research programs and system work — Exocore, HCAN, ESS, Ember Circuit — with sources and artifacts.</p>
+      </div>
 
-        <section class="studio-portfolio" aria-labelledby="studio-portfolio-title">
-          <div class="studio-portfolio__intro"><p class="studio-kicker">06 / Selected Portfolio</p><h2 id="studio-portfolio-title">I make research useful through its artifacts.</h2><p>This is my selected view across research programs, knowledge systems, software, and public writing. I keep each item’s current posture visible.</p><a href="/portfolio/">Open the full portfolio <span aria-hidden="true">→</span></a></div>
-          <ol>{portfolio.map((item) => <li><span>{item.code}</span><div><small>{item.kind}</small><h3>{item.title}</h3><p>{item.note}</p></div></li>)}</ol>
-        </section>
+      <div class="ec-studio-nav-item">
+        <h3><a href="/portfolio/">Portfolio</a></h3>
+        <p class="ec-studio-nav-meta">Selected projects</p>
+        <p>The projects themselves, organized by domain and purpose. What I'm working on and why.</p>
+      </div>
 
-        <section class="studio-principles" aria-labelledby="studio-principles-title">
-          <div><p class="studio-kicker">07 / Publication Posture</p><h2 id="studio-principles-title">I want the work legible and the claims honest.</h2></div>
-          <dl><div><dt>Source-aware</dt><dd>Published material names the sources and limits that shape its reading.</dd></div><div><dt>Human-released</dt><dd>Automation may prepare and check; publication remains a deliberate human act.</dd></div><div><dt>Privacy-preserving</dt><dd>The public studio collects no visitor profile and exposes no private working context.</dd></div><div><dt>Corrigible</dt><dd>Evidence, uncertainty, revision, and a route for correction remain visible.</dd></div></dl>
-        </section>
+      <div class="ec-studio-nav-item">
+        <h3><a href="/dossier/">Dossier</a></h3>
+        <p class="ec-studio-nav-meta">Working profile</p>
+        <p>How I think and work — my "Hearthside Meta-Architect" archetype. The personality behind the work.</p>
+      </div>
 
-        <section class="studio-invitation" aria-labelledby="invitation-title">
-          <p class="studio-kicker">08 / Continue the inquiry</p><h2 id="invitation-title">Follow one of my questions.<br /><em>Bring back a better one.</em></h2>
-          <div><a href="/questions/">Browse open questions <span aria-hidden="true">→</span></a><a href="/correspondence/">Begin a correspondence <span aria-hidden="true">↗</span></a></div>
-        </section>
-      </main>
+      <div class="ec-studio-nav-item">
+        <h3><a href="/questions/">Questions</a></h3>
+        <p class="ec-studio-nav-meta">Open inquiries</p>
+        <p>Questions I'm actively investigating. No conclusions yet — just the live threads.</p>
+      </div>
 
-      <footer class="studio-footer"><span>Hearth &amp; Code · Hearthside Meta-Architect</span><span>My public workbench · no tracking · correction welcome</span><a href="#main-content">Return to index ↑</a></footer>
-    </div>
-  </body>
-</html>
+      <div class="ec-studio-nav-item">
+        <h3><a href="/journal/">Field Journal</a></h3>
+        <p class="ec-studio-nav-meta">Published writing</p>
+        <p>Essays, technical articles, and notes. The narrative thread of the work.</p>
+      </div>
+
+      <div class="ec-studio-nav-item">
+        <h3><a href="/correspondence/">Contact</a></h3>
+        <p class="ec-studio-nav-meta">Public return path</p>
+        <p>How to discuss a project, offer a correction, or start a correspondence.</p>
+      </div>
+    </nav>
+
+    <section class="ec-studio-section">
+      <h2>Where to start</h2>
+
+      <div class="ec-studio-start">
+        <h3>If you're new here</h3>
+        <p>Begin with <a href="/philosophy/ai-literacy/">AI Literacy as Developing Practice</a> — a position paper on how to think about working with AI systems. It shows you the kind of work this studio does.</p>
+      </div>
+
+      <div class="ec-studio-start">
+        <h3>If you want to build something</h3>
+        <p>Go to <a href="/practice/">Practice</a> for the method cards and prompt techniques. Then check <a href="/research/">Research</a> for the technical systems.</p>
+      </div>
+
+      <div class="ec-studio-start">
+        <h3>If you want to understand the perspective</h3>
+        <p>Read the <a href="/dossier/">Dossier</a> for the working archetype, then explore <a href="/philosophy/">Philosophy</a> for the deeper positions.</p>
+      </div>
+    </section>
+
+    <footer class="ec-studio-footer">
+      <p>
+        This site is independently operated. No tracking. No visitor profiles.
+        If something here is wrong or incomplete, <a href="/correspondence/">tell me</a> —
+        correction is always welcome.
+      </p>
+    </footer>
+
+  </article>
+</main>
+
+<style>
+  .ec-studio-page {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-lg);
+    line-height: 1.7;
+  }
+
+  .ec-studio-content {
+    /* Single article, clean reading flow */
+  }
+
+  .ec-studio-intro {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .ec-studio-intro .ec-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+    margin-bottom: var(--space-sm);
+  }
+
+  .ec-studio-intro h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 var(--space-md) 0;
+    color: inherit;
+  }
+
+  .ec-studio-lede {
+    font-size: 1.125rem;
+    color: var(--signal-gray);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .ec-studio-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .ec-studio-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-md) 0;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .ec-studio-section p {
+    margin: 0 0 var(--space-md) 0;
+  }
+
+  .ec-studio-link {
+    margin-top: var(--space-md);
+  }
+
+  .ec-studio-link a {
+    color: var(--signal-ember);
+    text-decoration: none;
+  }
+
+  .ec-studio-link a:hover {
+    text-decoration: underline;
+  }
+
+  .ec-studio-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    margin: 0 0 var(--space-2xl) 0;
+  }
+
+  @media (min-width: 720px) {
+    .ec-studio-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .ec-studio-nav-item {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .ec-studio-nav-item h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .ec-studio-nav-item h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ec-studio-nav-item h3 a:hover {
+    color: var(--signal-ember);
+  }
+
+  .ec-studio-nav-meta {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+    margin: 0 0 var(--space-sm) 0;
+  }
+
+  .ec-studio-nav-item p:last-child {
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  .ec-studio-start {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-md);
+    border-left: 3px solid var(--signal-ember);
+  }
+
+  .ec-studio-start h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-xs) 0;
+  }
+
+  .ec-studio-start p {
+    margin: 0;
+  }
+
+  .ec-studio-start a {
+    color: var(--signal-ember);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .ec-studio-start a:hover {
+    text-decoration: underline;
+  }
+
+  .ec-studio-footer {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid #e5e7eb;
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+  }
+
+  .ec-studio-footer p {
+    margin: 0;
+  }
+
+  .ec-studio-footer a {
+    color: var(--signal-ember);
+    text-decoration: none;
+  }
+
+  .ec-studio-footer a:hover {
+    text-decoration: underline;
+  }
+</style>
