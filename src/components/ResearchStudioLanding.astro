@@ -1,5 +1,7 @@
 ---
 import HearthCodeToggle from './HearthCodeToggle.astro';
+import CircuitBackground from './CircuitBackground.astro';
+import NavigationCard from './NavigationCard.astro';
 import { getNavigationCards, getStartPaths } from '../lib/content';
 
 // Fetch content for the page
@@ -7,9 +9,10 @@ const navCards = getNavigationCards('balanced');
 const startPaths = getStartPaths('balanced');
 ---
 
-<div class="ec-studio-page">
-  <article class="ec-studio-content">
+<section class="ec-studio-page">
+  <CircuitBackground density="low" animated={true} accent="signal" />
 
+  <article class="ec-studio-content">
     <header class="ec-studio-intro">
       <p class="ec-eyebrow">Hearth &amp; Code</p>
       <h1>An independent research studio for answerable systems.</h1>
@@ -45,11 +48,13 @@ const startPaths = getStartPaths('balanced');
 
       <div class="ec-studio-nav" aria-label="Site navigation guide">
         {navCards.map((card) => (
-          <a class="ec-studio-nav-item" href={card.href || '#'}>
-            <h3>{card.title}</h3>
-            <p class="ec-studio-nav-meta">{card.description || card.metadata?.icon || ''}</p>
-            <p class="ec-studio-nav-detail">{card.description}</p>
-          </a>
+          <NavigationCard
+            href={card.href || '#'}
+            title={card.title}
+            description={card.description}
+            emphasis={card.emphasis || 5}
+            view="balanced"
+          />
         ))}
       </div>
     </section>
@@ -72,16 +77,21 @@ const startPaths = getStartPaths('balanced');
         correction is always welcome.
       </p>
     </footer>
-
   </article>
-</div>
+</section>
 
 <style>
   .ec-studio-page {
+    position: relative;
     max-width: 65ch;
     margin: 0 auto;
     padding: var(--space-xl) var(--space-lg);
     line-height: 1.7;
+  }
+
+  .ec-studio-content {
+    position: relative;
+    z-index: 1;
   }
 
   .ec-studio-intro {
@@ -117,6 +127,7 @@ const startPaths = getStartPaths('balanced');
 
   .ec-studio-section {
     margin-bottom: var(--space-2xl);
+    position: relative;
   }
 
   .ec-studio-section h2 {
@@ -157,41 +168,6 @@ const startPaths = getStartPaths('balanced');
     }
   }
 
-  .ec-studio-nav-item {
-    display: block;
-    padding: var(--spacing_md, 1rem);
-    background: var(--color-surface-raised, #211d18);
-    border-left: 3px solid var(--color-accent-ember, #E85B4E);
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 200ms, box-shadow 200ms;
-  }
-
-  .ec-studio-nav-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  }
-
-  .ec-studio-nav-item h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin: 0 0 0.25rem 0;
-  }
-
-  .ec-studio-nav-meta {
-    color: var(--text_secondary, #cfc1ab);
-    font-size: var(--font-size-caption, 0.8125rem);
-    margin: 0 0 var(--spacing_sm, 0.5rem) 0;
-    font-style: italic;
-  }
-
-  .ec-studio-nav-detail {
-    color: var(--text_primary, #f1e7d2);
-    font-size: var(--font-size-body-small, 0.9375rem);
-    margin: 0;
-  }
-
   .ec-studio-start {
     margin-bottom: var(--spacing_lg, 1.5rem);
     padding-left: var(--spacing_md, 1rem);
@@ -229,15 +205,3 @@ const startPaths = getStartPaths('balanced');
     text-decoration: underline;
   }
 </style>
-
-<script>
-  // Listen for view changes and update navigation cards
-  document.addEventListener('hearth-code-view-change', (event) => {
-    const view = (event as CustomEvent).detail.view;
-
-    // Reload the page to get fresh content
-    // (In production, this would fetch from a content API)
-    // For now, just re-render with the new view
-    window.location.reload();
-  });
-</script>

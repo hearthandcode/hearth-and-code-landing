@@ -1,0 +1,186 @@
+---
+/**
+ * NavigationCard.astro
+ *
+ * Molecule component for navigation cards.
+ * Supports Hearth/Code/Balanced view projections.
+ * Includes Circuit visual elements (gradient line, signal dot).
+ */
+
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  emphasis?: number;
+  view?: 'hearth' | 'code' | 'balanced';
+}
+
+const { href, title, description, meta, emphasis = 5, view = 'balanced' } = Astro.props;
+
+// Emphasis-based styling
+const emphasisClass =
+  emphasis >= 8 ? 'is-featured' :
+  emphasis >= 5 ? 'is-default' :
+  'is-subtle';
+
+// View-based accent color
+const accentClass = `is-${view}`;
+---
+
+<a class:list={['ec-nav-card', accentClass, emphasisClass]} href={href}>
+  <div class="ec-nav-card__indicator" aria-hidden="true">
+    <span class="ec-nav-card__dot"></span>
+  </div>
+  <div class="ec-nav-card__content">
+    <h3 class="ec-nav-card__title">{title}</h3>
+    {meta && <p class="ec-nav-card__meta">{meta}</p>}
+    {description && <p class="ec-nav-card__desc">{description}</p>}
+    <span class="ec-nav-card__cta">→</span>
+  </div>
+</a>
+
+<style>
+  .ec-nav-card {
+    display: block;
+    position: relative;
+    padding: var(--spacing_md, 1rem);
+    background: var(--color-surface-raised, #211d18);
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: transform 200ms cubic-bezier(0.2, 0, 0, 1),
+                box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .ec-nav-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Circuit line effect on hover */
+  .ec-nav-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      var(--color-accent-ember, #E85B4E) 50%,
+      transparent 100%);
+    opacity: 0;
+    transition: opacity 250ms;
+    pointer-events: none;
+    height: 1px;
+    top: 0;
+  }
+
+  .ec-nav-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Indicator dot (Circuit element) */
+  .ec-nav-card__indicator {
+    position: absolute;
+    top: var(--spacing_md, 1rem);
+    right: var(--spacing_md, 1rem);
+  }
+
+  .ec-nav-card__dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-surface-rule, #4b4237);
+    transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  /* View-based accent colors */
+  .ec-nav-card.is-hearth .ec-nav-card__dot {
+    background: var(--color-accent-ember, #E85B4E);
+    box-shadow: 0 0 8px rgba(232, 91, 78, 0.5);
+  }
+
+  .ec-nav-card.is-code .ec-nav-card__dot {
+    background: var(--color-accent-signal, #1FB6A8);
+    box-shadow: 0 0 8px rgba(31, 182, 168, 0.5);
+  }
+
+  .ec-nav-card.is-balanced .ec-nav-card__dot {
+    background: linear-gradient(135deg, #E85B4E 0%, #1FB6A8 100%);
+    box-shadow: 0 0 8px rgba(155, 93, 229, 0.3);
+  }
+
+  .ec-nav-card:hover .ec-nav-card__dot {
+    transform: scale(1.5);
+  }
+
+  /* Emphasis-based styling */
+  .ec-nav-card.is-featured {
+    border-left: 3px solid var(--color-accent-ember, #E85B4E);
+    padding-left: calc(var(--spacing_md, 1rem) + 0.25rem);
+  }
+
+  .ec-nav-card.is-default {
+    border-left: 1px solid var(--color-surface-rule, #4b4237);
+    padding-left: var(--spacing_md, 1rem);
+  }
+
+  .ec-nav-card.is-subtle {
+    border-left: 1px solid var(--color-surface-rule, #4b4237);
+    padding-left: var(--spacing_md, 1rem);
+    opacity: 0.85;
+  }
+
+  /* View-based border accent */
+  .ec-nav-card.is-hearth.is-featured {
+    border-left-color: var(--color-accent-ember, #E85B4E);
+  }
+
+  .ec-nav-card.is-code.is-featured {
+    border-left-color: var(--color-accent-signal, #1FB6A8);
+  }
+
+  .ec-nav-card.is-balanced.is-featured {
+    border-left: 3px solid;
+    border-image: linear-gradient(135deg, #E85B4E 0%, #1FB6A8 100%) 1;
+  }
+
+  /* Content */
+  .ec-nav-card__content {
+    padding-right: var(--spacing_lg, 1.5rem);
+  }
+
+  .ec-nav-card__title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: var(--color-text-display, #f1e7d2);
+  }
+
+  .ec-nav-card__meta {
+    color: var(--text_secondary, #cfc1ab);
+    font-size: var(--font-size-caption, 0.8125rem);
+    font-style: italic;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .ec-nav-card__desc {
+    color: var(--color-text-primary, #f1e7d2);
+    font-size: var(--font-size-body-small, 0.9375rem);
+    margin: 0 0 var(--spacing_sm, 0.5rem) 0;
+    line-height: 1.5;
+  }
+
+  .ec-nav-card__cta {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: var(--color-accent-ember, #E85B4E);
+    transition: transform 200ms;
+  }
+
+  .ec-nav-card:hover .ec-nav-card__cta {
+    transform: translateX(4px);
+  }
+</style>

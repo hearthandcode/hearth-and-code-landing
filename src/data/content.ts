@@ -1,0 +1,344 @@
+/**
+ * content.ts - Content data for Hearth and Code landing page
+ *
+ * Uses Hearth-Code Content DSL (schema in hub: 02-design-system/08-data/content-schema.yaml)
+ * Each item supports three views: hearth, code, balanced
+ *
+ * TypeScript-based (not YAML) to avoid Astro content collection parsing issues.
+ */
+
+export interface ContentViews {
+  hearth?: Record<string, unknown>;
+  code?: Record<string, unknown>;
+  balanced?: Record<string, unknown>;
+}
+
+export interface ViewOrders {
+  hearth?: string[];
+  code?: string[];
+  balanced?: string[];
+}
+
+export interface ContentItem {
+  id: string;
+  type: 'page' | 'card' | 'section' | 'callout' | 'reference' | 'quote' | 'list' | 'code' | 'metric' | 'timeline' | 'comparison' | 'embed';
+  title: string;
+  description?: string;
+  href?: string;
+  category?: string;
+  tags?: string[];
+  date?: string;
+  status?: 'draft' | 'review' | 'published' | 'archived' | 'concept';
+  views?: ContentViews;
+  hearth_override?: Record<string, unknown>;
+  code_override?: Record<string, unknown>;
+  metadata?: Record<string, unknown> & { view_orders?: ViewOrders };
+  references?: string[];
+  children?: string[];
+  layout?: 'default' | 'compact' | 'expanded' | 'hidden' | 'featured';
+  emphasis?: number;
+  // Type-specific fields (for reference, section, etc.)
+  url?: string;
+  author?: string;
+  publication_date?: string;
+  accessed_date?: string;
+  section_id?: string;
+  content_type?: 'narrative' | 'grid' | 'list' | 'accordion' | 'tabs';
+  [key: string]: unknown;
+}
+
+export const contentData: ContentItem[] = [
+  // ============================================================================
+  // NAVIGATION GUIDE CARDS (8 cards, one per surface)
+  // ============================================================================
+  {
+    id: 'nav-practice',
+    type: 'card',
+    title: 'Practice',
+    description: 'The working tools. Field cards, prompt techniques, research notes. If you want to do something, start here.',
+    href: '/practice/',
+    category: 'navigation',
+    tags: ['methods', 'library', 'artifacts'],
+    views: {
+      hearth: { description: "The practical methods I've developed for working with complex systems" },
+      code: { description: 'Field cards, prompt techniques, and operational artifacts' },
+      balanced: { description: 'Methods and tools, organized by domain' },
+    },
+    hearth_override: { emphasis: 8, metadata: { icon: 'hearth-flame' } },
+    code_override: { emphasis: 7, metadata: { icon: 'circuit-gear' } },
+    layout: 'featured',
+  },
+  {
+    id: 'nav-philosophy',
+    type: 'card',
+    title: 'Philosophy',
+    description: 'Position papers and framework essays. Where I argue for specific ways of thinking about complex systems.',
+    href: '/philosophy/',
+    category: 'navigation',
+    tags: ['philosophy', 'epistemology', 'governance', 'ai-literacy'],
+    views: {
+      hearth: { description: 'How I think about meaning, agency, and the good life in the age of AI' },
+      code: { description: 'Frameworks for designing systems that preserve human judgment' },
+      balanced: { description: 'Epistemology and civic governance for the AI age' },
+    },
+    hearth_override: { emphasis: 9, metadata: { icon: 'thought-bubble' } },
+    code_override: { emphasis: 6, metadata: { icon: 'frame-square' } },
+    layout: 'featured',
+  },
+  {
+    id: 'nav-research',
+    type: 'card',
+    title: 'Research',
+    description: 'Technical work, research programs, and methods. Exocore, HCAN, ESS, Ember Circuit.',
+    href: '/research/',
+    category: 'navigation',
+    tags: ['research', 'programs', 'methods'],
+    views: {
+      hearth: { description: 'Research exploring how complexity can stay inspectable' },
+      code: { description: 'Technical research programs, system architectures, and methodology' },
+      balanced: { description: 'Technical work and research programs' },
+    },
+    hearth_override: { emphasis: 6, metadata: { icon: 'tree' } },
+    code_override: { emphasis: 9, metadata: { icon: 'circuit-board' } },
+    layout: 'featured',
+  },
+  {
+    id: 'nav-portfolio',
+    type: 'card',
+    title: 'Portfolio',
+    description: "Selected projects. What I'm working on and why.",
+    href: '/portfolio/',
+    category: 'navigation',
+    tags: ['projects', 'work'],
+    views: {
+      hearth: { description: 'Projects that embody my values and ways of working' },
+      code: { description: 'Technical systems and research outputs' },
+      balanced: { description: 'Selected research programs and systems' },
+    },
+    hearth_override: { emphasis: 7 },
+    code_override: { emphasis: 7 },
+    layout: 'default',
+  },
+  {
+    id: 'nav-dossier',
+    type: 'card',
+    title: 'Dossier',
+    description: "How I think and work — my 'Hearthside Meta-Architect' archetype. The personality behind the work.",
+    href: '/dossier/',
+    category: 'navigation',
+    tags: ['profile', 'archetype', 'working-style'],
+    views: {
+      hearth: { description: 'How I think and work - the personality behind the work' },
+      code: { description: 'Architecture and process documentation' },
+      balanced: { description: 'Working profile and methodology' },
+    },
+    hearth_override: { emphasis: 9, metadata: { icon: 'hearth-flame' } },
+    code_override: { emphasis: 5 },
+    layout: 'featured',
+  },
+  {
+    id: 'nav-questions',
+    type: 'card',
+    title: 'Questions',
+    description: "Open inquiries. Questions I'm actively investigating. No conclusions yet.",
+    href: '/questions/',
+    category: 'navigation',
+    tags: ['questions', 'inquiry'],
+    views: {
+      hearth: { description: "Big questions I'm holding without answers" },
+      code: { description: 'Active research questions and hypotheses' },
+      balanced: { description: 'Open questions under investigation' },
+    },
+    hearth_override: { emphasis: 6 },
+    code_override: { emphasis: 6 },
+    layout: 'default',
+  },
+  {
+    id: 'nav-journal',
+    type: 'card',
+    title: 'Field Journal',
+    description: 'Essays, technical articles, and notes. The narrative thread of the work.',
+    href: '/journal/',
+    category: 'navigation',
+    tags: ['writing', 'essays', 'journal'],
+    views: {
+      hearth: { description: 'Essays and reflections on the work' },
+      code: { description: 'Technical articles and field notes' },
+      balanced: { description: 'Published writing and field notes' },
+    },
+    hearth_override: { emphasis: 7 },
+    code_override: { emphasis: 5 },
+    layout: 'default',
+  },
+  {
+    id: 'nav-contact',
+    type: 'card',
+    title: 'Contact',
+    description: 'Public return path. How to discuss a project, offer a correction, or start a correspondence.',
+    href: '/correspondence/',
+    category: 'navigation',
+    tags: ['contact', 'feedback'],
+    views: {
+      hearth: { description: 'Public correspondence and feedback' },
+      code: { description: 'Issue reports and technical discussion' },
+      balanced: { description: 'How to reach out' },
+    },
+    hearth_override: { emphasis: 4 },
+    code_override: { emphasis: 4 },
+    layout: 'default',
+  },
+
+  // ============================================================================
+  // PAGES
+  // ============================================================================
+  {
+    id: 'philosophy-ai-literacy',
+    type: 'page',
+    title: 'AI Literacy as Developing Practice',
+    description: 'Understanding AI systems and building judgment',
+    href: '/philosophy/ai-literacy/',
+    category: 'philosophy',
+    tags: ['ai-literacy', 'epistemology', 'critical-thinking', 'trust-calibration'],
+    date: '2026-09-23',
+    status: 'published',
+    views: {
+      hearth: { description: 'How to think clearly about AI in your daily life' },
+      code: { description: 'Practical methods for working with AI systems' },
+      balanced: { description: 'Understanding AI systems and building judgment' },
+    },
+    metadata: {
+      intro: 'AI literacy is a practice that develops through reflection, not a checklist to complete.',
+      reading_time: 15,
+      body_sections: ['position', 'why-this-matters', 'substantive-claims', 'rules-for-high-stakes', 'reflection-practice', 'counterargument', 'what-would-change-my-mind'],
+      sources: ['source-oecd-2026', 'source-eu-ai-act', 'source-nature-2026'],
+      related: ['philosophy-governed-intelligence', 'nav-research'],
+    },
+    layout: 'expanded',
+  },
+  {
+    id: 'philosophy-governed-intelligence',
+    type: 'page',
+    title: 'Governed Intelligence',
+    description: 'AI-assisted systems that preserve human judgment',
+    href: '/philosophy/governed-intelligence/',
+    category: 'philosophy',
+    tags: ['governance', 'ai-systems', 'human-judgment'],
+    date: '2026-07-20',
+    status: 'concept',
+    views: {
+      hearth: { description: 'Keeping human judgment central in an age of AI' },
+      code: { description: 'Designing AI systems that preserve human authority' },
+      balanced: { description: 'AI-assisted systems with human governance' },
+    },
+    metadata: {
+      intro: 'AI-assisted systems that increase understanding while keeping consequential claims attributable to humans.',
+      reading_time: 20,
+    },
+    layout: 'expanded',
+  },
+
+  // ============================================================================
+  // SECTION: Navigation Guide
+  // ============================================================================
+  {
+    id: 'section-navigation-guide',
+    type: 'section',
+    title: "What you'll find here",
+    section_id: 'navigation',
+    content_type: 'grid',
+    views: {
+      hearth: { title: 'Explore by purpose' },
+      code: { title: 'Explore by domain' },
+      balanced: { title: "What you'll find here" },
+    },
+    metadata: {
+      view_orders: {
+        hearth: ['nav-dossier', 'nav-philosophy', 'nav-portfolio', 'nav-questions', 'nav-journal', 'nav-practice', 'nav-research', 'nav-contact'],
+        code: ['nav-practice', 'nav-research', 'nav-portfolio', 'nav-dossier', 'nav-questions', 'nav-journal', 'nav-contact', 'nav-philosophy'],
+        balanced: ['nav-practice', 'nav-philosophy', 'nav-research', 'nav-portfolio', 'nav-dossier', 'nav-questions', 'nav-journal', 'nav-contact'],
+      },
+    },
+    children: ['nav-practice', 'nav-philosophy', 'nav-research', 'nav-portfolio', 'nav-dossier', 'nav-questions', 'nav-journal', 'nav-contact'],
+    layout: 'expanded',
+  },
+
+  // ============================================================================
+  // PATHS: "Where to start"
+  // ============================================================================
+  {
+    id: 'path-new-visitor',
+    type: 'card',
+    title: "If you're new here",
+    description: 'Begin with the AI Literacy policy card to see what kind of work this is.',
+    href: '/philosophy/ai-literacy/',
+    category: 'path',
+    tags: ['onboarding'],
+    views: {
+      hearth: { description: 'Start here for a sense of how I think about AI' },
+      code: { description: 'Start here for an example of how I document positions' },
+      balanced: { description: 'Begin with the AI Literacy policy card' },
+    },
+    layout: 'featured',
+    references: ['philosophy-ai-literacy'],
+  },
+  {
+    id: 'path-builder',
+    type: 'card',
+    title: 'If you want to build something',
+    description: 'Go to Practice for methods and prompt techniques, then Research for the technical systems.',
+    href: '/practice/',
+    category: 'path',
+    tags: ['onboarding', 'methods'],
+    views: {
+      hearth: { description: 'Start with Practice for hands-on methods' },
+      code: { description: 'Start with Practice for prompt techniques and methods' },
+      balanced: { description: 'Go to Practice for methods, then Research for systems' },
+    },
+    layout: 'featured',
+    references: ['nav-practice', 'nav-research'],
+  },
+  {
+    id: 'path-understand',
+    type: 'card',
+    title: 'If you want to understand the perspective',
+    description: 'Read the Dossier for the working archetype, then explore Philosophy for the deeper positions.',
+    href: '/dossier/',
+    category: 'path',
+    tags: ['onboarding', 'perspective'],
+    views: {
+      hearth: { description: 'Begin with the Dossier to understand who I am' },
+      code: { description: 'Read the Dossier for working methodology, then Philosophy for context' },
+      balanced: { description: 'Start with Dossier, then Philosophy' },
+    },
+    layout: 'featured',
+    references: ['nav-dossier', 'nav-philosophy'],
+  },
+
+  // ============================================================================
+  // REFERENCES: Sources for AI Literacy card
+  // ============================================================================
+  {
+    id: 'source-oecd-2026',
+    type: 'reference',
+    title: 'Empowering Learners for the Age of AI',
+    url: 'https://www.oecd.org/en/publications/empowering-learners-for-the-age-of-ai_65cd27d4-en.html',
+    author: 'OECD',
+    publication_date: '2026-06-18',
+    accessed_date: '2026-09-23',
+  },
+  {
+    id: 'source-eu-ai-act',
+    type: 'reference',
+    title: 'EU AI Act, Article 4: AI literacy',
+    url: 'https://artificialintelligenceact.eu/article/4/',
+    accessed_date: '2026-09-23',
+  },
+  {
+    id: 'source-nature-2026',
+    type: 'reference',
+    title: 'Examining human reliance on artificial intelligence in decision making',
+    url: 'https://www.nature.com/articles/s41598-026-34983-y',
+    publication_date: '2026-02-05',
+    accessed_date: '2026-09-23',
+  },
+];

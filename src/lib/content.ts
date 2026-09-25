@@ -7,7 +7,8 @@
  * Schema: 02-design-system/08-data/content-schema.yaml (hub canonical)
  */
 
-import contentData from '../data/content.yaml';
+import { contentData } from '../data/content';
+import type { ContentItem as DataContentItem } from '../data/content';
 
 // ============================================================================
 // TYPES
@@ -19,27 +20,8 @@ export type ContentType =
   | 'quote' | 'list' | 'code' | 'metric' | 'timeline'
   | 'comparison' | 'embed';
 
-export interface ContentItem {
-  id: string;
-  type: ContentType;
-  title: string;
-  description?: string;
-  href?: string;
-  category?: string;
-  tags?: string[];
-  date?: string;
-  author?: string;
-  status?: 'draft' | 'review' | 'published' | 'archived';
-  views?: Partial<Record<View, unknown>>;
-  hearth_override?: Record<string, unknown>;
-  code_override?: Record<string, unknown>;
-  metadata?: Record<string, unknown>;
-  references?: string[];
-  children?: string[];
-  layout?: 'default' | 'compact' | 'expanded' | 'hidden' | 'featured';
-  emphasis?: number;
-  [key: string]: unknown;
-}
+export type { ContentItem as DataContentItem } from '../data/content';
+export interface ContentItem extends DataContentItem {}
 
 export type ContentSet = ContentItem[];
 
@@ -47,7 +29,7 @@ export type ContentSet = ContentItem[];
 // CONTENT LOADING
 // ============================================================================
 
-const allContent = contentData as ContentSet;
+const allContent = contentData;
 
 export function getAllContent(): ContentSet {
   return allContent;
