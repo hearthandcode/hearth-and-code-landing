@@ -32,6 +32,38 @@ const startPaths = getStartPaths('balanced');
       <div class="ec-hero__toggle-row">
         <HearthCodeToggle current="balanced" />
       </div>
+      <!-- View disposition panel — surfaces view-specific links separately -->
+      <aside class="ec-view-panel" id="view-panel" data-view="balanced" aria-live="polite">
+        <div class="ec-view-panel__inner">
+          <p class="ec-view-panel__eyebrow" id="view-panel-eyebrow">Current view</p>
+          <h3 class="ec-view-panel__title" id="view-panel-title">Full spectrum</h3>
+          <p class="ec-view-panel__disposition" id="view-panel-disposition">
+            Each surface offers both the philosophical context and the technical artifacts
+            to act on it. The navigation below is balanced between personal understanding
+            and implementation depth.
+          </p>
+          <div class="ec-view-panel__links">
+            <div class="ec-view-panel__links-col">
+              <h4 class="ec-view-panel__links-heading">Hearth</h4>
+              <ul class="ec-view-panel__links-list" id="view-panel-hearth">
+                <li><a href="/dossier/">Dossier</a></li>
+                <li><a href="/philosophy/">Philosophy</a></li>
+                <li><a href="/portfolio/">Portfolio</a></li>
+                <li><a href="/questions/">Questions</a></li>
+              </ul>
+            </div>
+            <div class="ec-view-panel__links-col">
+              <h4 class="ec-view-panel__links-heading">Code</h4>
+              <ul class="ec-view-panel__links-list" id="view-panel-code">
+                <li><a href="/practice/">Practice (Methods)</a></li>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/portfolio/">Portfolio</a></li>
+                <li><a href="/dossier/">Dossier</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
     </header>
   </div>
 </section>
@@ -215,6 +247,155 @@ const startPaths = getStartPaths('balanced');
 
   .ec-hero__toggle-row {
     margin-top: var(--space-7);
+  }
+
+  /* ==========================================================================
+     VIEW DISPOSITION PANEL
+     Shows what the current view emphasizes + links separated
+     ========================================================================== */
+  .ec-view-panel {
+    margin-top: var(--space-8);
+    padding: var(--space-6) var(--space-7);
+    background: var(--color-surface-raised, #211d18);
+    border-radius: 8px;
+    border-left: 4px solid var(--ember_500, #E85B4E);
+    max-width: 70rem;
+  }
+
+  /* View-specific accent colors */
+  .ec-view-panel[data-view="hearth"] {
+    border-left-color: var(--ember_500, #E85B4E);
+    background: linear-gradient(135deg,
+      rgba(232, 91, 78, 0.04) 0%,
+      var(--color-surface-raised, #211d18) 100%);
+  }
+
+  .ec-view-panel[data-view="code"] {
+    border-left-color: var(--signal_500, #1FB6A8);
+    background: linear-gradient(135deg,
+      rgba(31, 182, 168, 0.04) 0%,
+      var(--color-surface-raised, #211d18) 100%);
+  }
+
+  .ec-view-panel[data-view="balanced"] {
+    border-left-color: var(--violet_500, #9B5DE5);
+    background: linear-gradient(135deg,
+      rgba(155, 93, 229, 0.04) 0%,
+      var(--color-surface-raised, #211d18) 100%);
+  }
+
+  .ec-view-panel__inner {
+    width: 100%;
+  }
+
+  .ec-view-panel__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: var(--text_secondary, #b89e7e);
+    margin: 0 0 var(--space-2) 0;
+    opacity: 0.8;
+  }
+
+  .ec-view-panel__title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0 0 var(--space-3) 0;
+    color: var(--text_display, #faf3e2);
+  }
+
+  .ec-view-panel[data-view="hearth"] .ec-view-panel__title { color: var(--ember_400, #ED7568); }
+  .ec-view-panel[data-view="code"] .ec-view-panel__title { color: var(--signal_400, #5DCBC2); }
+  .ec-view-panel[data-view="balanced"] .ec-view-panel__title { color: var(--violet_500, #9B5DE5); }
+
+  .ec-view-panel__disposition {
+    font-size: clamp(1rem, 1.125vw, 1.125rem);
+    line-height: 1.6;
+    color: var(--text_primary, #f1e7d2);
+    margin: 0 0 var(--space-5) 0;
+    max-width: 60rem;
+  }
+
+  .ec-view-panel__links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 640px) {
+    .ec-view-panel__links {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ec-view-panel__links-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 var(--space-3) 0;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule, #4b4237);
+  }
+
+  .ec-view-panel[data-view="hearth"] .ec-view-panel__links-col:nth-child(1) .ec-view-panel__links-heading {
+    color: var(--ember_400, #ED7568);
+    border-bottom-color: var(--ember_500, #E85B4E);
+  }
+
+  .ec-view-panel[data-view="code"] .ec-view-panel__links-col:nth-child(2) .ec-view-panel__links-heading {
+    color: var(--signal_400, #5DCBC2);
+    border-bottom-color: var(--signal_500, #1FB6A8);
+  }
+
+  .ec-view-panel[data-view="balanced"] .ec-view-panel__links-col:nth-child(1) .ec-view-panel__links-heading {
+    color: var(--ember_400, #ED7568);
+    border-bottom-color: var(--ember_500, #E85B4E);
+  }
+
+  .ec-view-panel[data-view="balanced"] .ec-view-panel__links-col:nth-child(2) .ec-view-panel__links-heading {
+    color: var(--signal_400, #5DCBC2);
+    border-bottom-color: var(--signal_500, #1FB6A8);
+  }
+
+  .ec-view-panel__links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .ec-view-panel__links-list a {
+    color: var(--text_primary, #f1e7d2);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    transition: color 200ms;
+  }
+
+  .ec-view-panel__links-list a:hover {
+    color: var(--ember_400, #ED7568);
+  }
+
+  /* Highlight active column when in matching view */
+  .ec-view-panel[data-view="hearth"] .ec-view-panel__links-col:nth-child(1) {
+    opacity: 1;
+  }
+  .ec-view-panel[data-view="hearth"] .ec-view-panel__links-col:nth-child(2) {
+    opacity: 0.5;
+  }
+
+  .ec-view-panel[data-view="code"] .ec-view-panel__links-col:nth-child(1) {
+    opacity: 0.5;
+  }
+  .ec-view-panel[data-view="code"] .ec-view-panel__links-col:nth-child(2) {
+    opacity: 1;
+  }
+
+  .ec-view-panel[data-view="balanced"] .ec-view-panel__links-col {
+    opacity: 0.75;
   }
 
   /* ==========================================================================
@@ -520,6 +701,39 @@ const startPaths = getStartPaths('balanced');
     }
     if (navDisposition && viewContent[view]) {
       navDisposition.textContent = viewContent[view].description;
+    }
+
+    // Update view disposition panel
+    const viewPanel = document.getElementById('view-panel');
+    const viewPanelEyebrow = document.getElementById('view-panel-eyebrow');
+    const viewPanelTitle = document.getElementById('view-panel-title');
+    const viewPanelDisposition = document.getElementById('view-panel-disposition');
+    const viewPanelData: Record<string, { eyebrow: string; title: string; disposition: string }> = {
+      hearth: {
+        eyebrow: 'Hearth view',
+        title: 'Dossier & Philosophy first',
+        disposition: 'Hearth emphasizes the personal side: the working archetype and the positions. Methods and research are present but secondary. Start with who I am, then what I think.',
+      },
+      code: {
+        eyebrow: 'Code view',
+        title: 'Methods & Research first',
+        disposition: 'Code emphasizes the technical side: field cards, prompt techniques, system architectures, and implementation depth. Dossier and philosophy are present but secondary. Start with how to build, then who built it.',
+      },
+      balanced: {
+        eyebrow: 'Current view',
+        title: 'Full spectrum',
+        disposition: 'Each surface offers both the philosophical context and the technical artifacts to act on it.',
+      },
+    };
+    if (viewPanel) viewPanel.setAttribute('data-view', view);
+    if (viewPanelEyebrow && viewPanelData[view]) {
+      viewPanelEyebrow.textContent = viewPanelData[view].eyebrow;
+    }
+    if (viewPanelTitle && viewPanelData[view]) {
+      viewPanelTitle.textContent = viewPanelData[view].title;
+    }
+    if (viewPanelDisposition && viewPanelData[view]) {
+      viewPanelDisposition.textContent = viewPanelData[view].disposition;
     }
 
     // Update path section content
