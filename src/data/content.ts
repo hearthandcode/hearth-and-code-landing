@@ -247,15 +247,29 @@ export const contentData: ContentItem[] = [
     section_id: 'navigation',
     content_type: 'grid',
     views: {
-      hearth: { title: 'Explore by purpose' },
-      code: { title: 'Explore by domain' },
-      balanced: { title: "What you'll find here" },
+      hearth: {
+        title: 'Explore by purpose',
+        description: 'Eight layers of work, ordered by what matters for personal understanding and ethical clarity.',
+      },
+      code: {
+        title: 'Explore by domain',
+        description: 'Eight layers of work, ordered by technical depth and implementation readiness.',
+      },
+      balanced: {
+        title: "What you'll find here",
+        description: 'Eight layers of work, each with a different purpose and reading mode.',
+      },
     },
     metadata: {
       view_orders: {
         hearth: ['nav-dossier', 'nav-philosophy', 'nav-portfolio', 'nav-questions', 'nav-journal', 'nav-practice', 'nav-research', 'nav-contact'],
         code: ['nav-practice', 'nav-research', 'nav-portfolio', 'nav-dossier', 'nav-questions', 'nav-journal', 'nav-contact', 'nav-philosophy'],
         balanced: ['nav-practice', 'nav-philosophy', 'nav-research', 'nav-portfolio', 'nav-dossier', 'nav-questions', 'nav-journal', 'nav-contact'],
+      },
+      view_summaries: {
+        hearth: "Each surface maps to a question about meaning, agency, or how to live and work well in the age of AI.",
+        code: "Each surface contains technical depth: methods, architectures, code, and research with sources.",
+        balanced: "Each surface offers both the philosophical context and the technical artifacts to act on it.",
       },
     },
     children: ['nav-practice', 'nav-philosophy', 'nav-research', 'nav-portfolio', 'nav-dossier', 'nav-questions', 'nav-journal', 'nav-contact'],
