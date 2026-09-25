@@ -1,0 +1,336 @@
+---
+import HearthNavigation from '../../components/HearthNavigation.astro';
+
+const researchAreas = [
+  {
+    id: 'exocore',
+    title: 'Exocore / pi-ember-exocore',
+    description: 'A local-first workbench for agents, knowledge, governance, and return. The Exocore platform provides structured environment for human-AI collaboration.',
+    status: 'active',
+    type: 'software',
+    href: '/exocore',
+    domains: ['agentic-os', 'knowledge-governance', 'local-first']
+  },
+  {
+    id: 'hcan',
+    title: 'HCAN (Human Communication Agent Notation)',
+    description: 'A bounded communication medium for agents and humans. Eight primitives compose into programs that are inspectable, correctable, and returnable.',
+    status: 'in-development',
+    type: 'specification',
+    href: '/hcan',
+    domains: ['communication', 'agents', 'notation']
+  },
+  {
+    id: 'ess',
+    title: 'ESS (Exocore Standard System)',
+    description: 'Standardization work for the agentic OS. Versioned artifacts, conformance profiles, and public-safe reference surfaces.',
+    status: 'active',
+    type: 'standard',
+    href: '/programs/',
+    domains: ['standards', 'conformance', 'public-surface']
+  },
+  {
+    id: 'ember-circuit',
+    title: 'Ember Circuit',
+    description: 'A public-facing design language and surface system. Eight layered surfaces with navigable tree structure, supporting multiple audiences.',
+    status: 'active',
+    type: 'design-system',
+    href: '/review/ember-circuit/',
+    domains: ['design', 'public-surface', 'architecture']
+  }
+];
+
+const researchMethods = [
+  { name: 'Typed Context & Control Protocol (TCCP)', count: 149 },
+  { name: 'Knowledge Representation Profile (EKRP)', count: 185 },
+  { name: 'Methodological INtelligence Compact (MINC)', count: 150 },
+  { name: 'Sigil (exocore programming language)', count: 179 }
+];
+
+const domains = [
+  { name: 'agentic-os', count: 1 },
+  { name: 'knowledge-governance', count: 1 },
+  { name: 'local-first', count: 1 },
+  { name: 'communication', count: 1 },
+  { name: 'agents', count: 1 },
+  { name: 'notation', count: 1 },
+  { name: 'standards', count: 1 },
+  { name: 'conformance', count: 1 },
+  { name: 'public-surface', count: 2 },
+  { name: 'design', count: 1 },
+  { name: 'architecture', count: 1 }
+];
+---
+
+<HearthNavigation current="research" context="Research · technical work and methods" />
+
+  <main class="ec-page ec-research-index">
+    <header class="ec-page-header">
+      <p class="ec-eyebrow">Research</p>
+      <h1>Research</h1>
+      <p class="ec-subtitle">
+        Technical work, research programs, and methods. Each area is source-grounded,
+        version-controlled, and designed to be reviewed, revised, and built upon.
+      </p>
+    </header>
+
+    <section class="ec-section">
+      <h2>By Domain</h2>
+      <div class="ec-domain-tree">
+        {domains.map(domain => (
+          <a href={`/research/#${domain.name}`} class="ec-domain-tag">
+            <span class="ec-domain-name">{domain.name}</span>
+            <span class="ec-domain-count">{domain.count}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="ec-section">
+      <h2>Research Programs</h2>
+      <div class="ec-research-grid">
+        {researchAreas.map(area => (
+          <article class="ec-research-card" id={area.id}>
+            <header class="ec-research-header">
+              <p class="ec-research-type">{area.type}</p>
+              <h3><a href={area.href}>{area.title}</a></h3>
+              <span class={`ec-status ec-status-${area.status.replace('-', '')}`}>{area.status}</span>
+            </header>
+            <p class="ec-research-description">{area.description}</p>
+            <footer class="ec-research-domains">
+              {area.domains.map(domain => (
+                <span class="ec-domain-mini">{domain}</span>
+              ))}
+            </footer>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ec-section">
+      <h2>Research Methods</h2>
+      <div class="ec-methods-list">
+        {researchMethods.map(method => (
+          <article class="ec-method-item">
+            <h3>{method.name}</h3>
+            <p class="ec-method-meta">
+              <span class="ec-method-count">{method.count} features</span>
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ec-section">
+      <h2>Cross-References</h2>
+      <div class="ec-cross-refs">
+        <a href="/philosophy/" class="ec-cross-ref-card">
+          <p class="ec-cross-ref-label">Related</p>
+          <p class="ec-cross-ref-title">Philosophy</p>
+          <p class="ec-cross-ref-desc">The philosophical positions that inform this research</p>
+        </a>
+        <a href="/practice/" class="ec-cross-ref-card">
+          <p class="ec-cross-ref-label">Related</p>
+          <p class="ec-cross-ref-title">Practice</p>
+          <p class="ec-cross-ref-desc">The methods and artifacts that operationalize this research</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+<style>
+  .ec-research-index .ec-page-header {
+    background: linear-gradient(135deg, #cffafe 0%, #ffffff 100%);
+    padding: var(--space-xl) var(--space-lg);
+    margin: calc(var(--space-lg) * -1) calc(var(--space-lg) * -1) var(--space-xl);
+    border-radius: 8px;
+    border-bottom: 3px solid var(--signal-cyan);
+  }
+
+  .ec-domain-tree {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .ec-domain-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: #f3f4f6;
+    border-left: 3px solid var(--signal-cyan);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .ec-domain-tag:hover {
+    background: #e5e7eb;
+  }
+
+  .ec-domain-name {
+    font-family: var(--font-mono);
+    font-size: var(--font-caption);
+  }
+
+  .ec-domain-count {
+    background: rgba(0,0,0,0.1);
+    padding: 0.125rem 0.5rem;
+    border-radius: 10px;
+    font-size: var(--font-caption);
+    font-weight: 600;
+  }
+
+  .ec-research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .ec-research-card {
+    background: var(--surface-elevated);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--signal-cyan);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .ec-research-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .ec-research-type {
+    display: inline-block;
+    background: #f0f9ff;
+    color: #1e40af;
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-size: var(--font-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .ec-research-header h3 {
+    margin: var(--space-sm) 0;
+    font-size: var(--font-h3);
+  }
+
+  .ec-research-header h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ec-research-header h3 a:hover {
+    color: var(--signal-cyan);
+  }
+
+  .ec-status {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-size: var(--font-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: var(--space-sm);
+  }
+
+  .ec-status-active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .ec-status-indevelopment {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .ec-research-description {
+    margin: var(--space-md) 0;
+    line-height: 1.6;
+  }
+
+  .ec-research-domains {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ec-domain-mini {
+    background: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--signal-gray);
+  }
+
+  .ec-methods-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .ec-method-item {
+    padding: var(--space-md);
+    background: #f9fafb;
+    border-left: 3px solid var(--signal-gray);
+    border-radius: 4px;
+  }
+
+  .ec-method-item h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+  }
+
+  .ec-method-count {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+    font-family: var(--font-mono);
+  }
+
+  .ec-cross-refs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .ec-cross-ref-card {
+    display: block;
+    padding: var(--space-md);
+    background: #f9fafb;
+    border-left: 3px solid var(--signal-cyan);
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ec-cross-ref-card:hover {
+    background: #f3f4f6;
+  }
+
+  .ec-cross-ref-label {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .ec-cross-ref-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .ec-cross-ref-desc {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+  }
+</style>

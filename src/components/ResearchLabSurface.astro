@@ -136,7 +136,7 @@ const runtime = [
   </head>
   <body class={`studio-room-body studio-room-body--${route}`}>
     <a class="studio-skip" href="#main-content">Skip to content</a>
-    <HearthNavigation current={meta.key} context={meta.context} />
+    <HearthNavigation current={meta.key as string} context={meta.context} />
     <main id="main-content" class="studio-room-main">
       <section class="studio-room-threshold" aria-labelledby="page-title">
         <div class="studio-room-threshold__copy">

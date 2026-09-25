@@ -1,20 +1,36 @@
 ---
 interface Props {
-  current?: 'orientation' | 'builder' | 'exocore' | 'workbench' | 'library' | 'atlas' | 'method' | 'return';
+  // Accept any string; validate against canonical values internally.
+  // Legacy values are accepted and mapped to canonical values via aliasMap.
+  current?: string;
   context: string;
 }
 
 const { current, context } = Astro.props;
 
+// Map legacy aliases to nearest current value
+const aliasMap: Record<string, string> = {
+  builder: 'questions',
+  exocore: 'portfolio',
+  workbench: 'practice',
+  library: 'portfolio',
+  atlas: 'research',
+  method: 'dossier',
+  return: 'contact',
+};
+
+// Accept legacy `current` values by mapping through aliasMap
+const resolvedCurrent = current ? (aliasMap[current] || current) : undefined;
+
 const routes = [
-  ['01', 'orientation', 'Studio', '/'],
-  ['02', 'builder', 'Questions', '/questions/'],
-  ['03', 'exocore', 'Portfolio', '/portfolio/'],
-  ['04', 'workbench', 'Methods', '/methods/'],
-  ['05', 'library', 'Library', '/library/'],
-  ['06', 'atlas', 'Artifacts', '/evidence/'],
-  ['07', 'method', 'Dossier', '/dossier/'],
-  ['08', 'return', 'Contact', '/correspondence/'],
+  ['01', 'orientation', 'Studio',         '/'],
+  ['02', 'practice',    'Practice',        '/practice/'],
+  ['03', 'philosophy',  'Philosophy',      '/philosophy/'],
+  ['04', 'research',    'Research',        '/research/'],
+  ['05', 'portfolio',   'Portfolio',       '/portfolio/'],
+  ['06', 'dossier',     'Dossier',         '/dossier/'],
+  ['07', 'questions',   'Questions',       '/questions/'],
+  ['08', 'contact',     'Contact',         '/correspondence/'],
 ] as const;
 ---
 
@@ -30,7 +46,7 @@ const routes = [
     <ol>
       {routes.map(([number, key, label, href]) => (
         <li>
-          <a href={href} aria-current={current === key ? 'page' : undefined}>
+          <a href={href} aria-current={resolvedCurrent === key ? 'page' : undefined}>
             <span aria-hidden="true">{number}</span>
             <strong>{label}</strong>
           </a>

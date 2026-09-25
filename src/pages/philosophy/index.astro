@@ -1,0 +1,267 @@
+---
+import HearthNavigation from '../../components/HearthNavigation.astro';
+
+const philosophyTopics = [
+  {
+    id: 'ai-literacy',
+    title: 'AI Literacy as Developing Practice',
+    description: 'Understanding and building discipline for working with AI systems. A practice that develops through reflection, combining rules for high-stakes decisions with reflective practice for everyday use.',
+    status: 'AI-drafted, Human-Approved',
+    date: '2026-09-23',
+    href: '/philosophy/ai-literacy/',
+    domains: ['ai-literacy', 'epistemics', 'human-ai-interaction']
+  },
+  {
+    id: 'governed-intelligence',
+    title: 'Governed Intelligence',
+    description: 'AI-assisted systems that increase a person\'s or institution\'s ability to understand and act in complex situations, while keeping every consequential claim, decision, delegation, and revision attributable, challengeable, and returnable to human judgment.',
+    status: 'concept',
+    date: '2026-07-20',
+    href: '/philosophy/governed-intelligence/',
+    domains: ['epistemics', 'governance', 'ai-systems']
+  },
+  {
+    id: 'self-directed-governance',
+    title: 'Self-Directed Governance',
+    description: 'Exercising fundamental liberties to govern ourselves and choose our own destiny. A framework for individual agency in the age of AI and accelerated development.',
+    status: 'developing',
+    date: '2026-09-23',
+    href: '/philosophy/self-directed-governance/',
+    domains: ['governance', 'civic-rights', 'agency']
+  }
+];
+
+const domains = [
+  { name: 'epistemics', count: 3, color: 'ember' },
+  { name: 'governance', count: 2, color: 'cyan' },
+  { name: 'ai-literacy', count: 1, color: 'green' },
+  { name: 'human-ai-interaction', count: 1, color: 'violet' },
+  { name: 'civic-rights', count: 1, color: 'ember' },
+  { name: 'agency', count: 1, color: 'cyan' },
+  { name: 'ai-systems', count: 1, color: 'green' }
+];
+---
+
+<HearthNavigation current="philosophy" context="Philosophy · epistemic frameworks and civic governance" />
+
+  <main class="ec-page ec-philosophy-index">
+    <header class="ec-page-header">
+      <p class="ec-eyebrow">Philosophy</p>
+      <h1>Philosophy</h1>
+      <p class="ec-subtitle">
+        Epistemological frameworks, civic governance, AI literacy, and the philosophy
+        underlying the work. Each piece is grounded in evidence, honest about uncertainty,
+        and designed to develop through use.
+      </p>
+    </header>
+
+    <section class="ec-section">
+      <h2>By Domain</h2>
+      <div class="ec-domain-tree">
+        {domains.map(domain => (
+          <a href={`/philosophy/#${domain.name}`} class={`ec-domain-tag ec-domain-${domain.color}`}>
+            <span class="ec-domain-name">{domain.name}</span>
+            <span class="ec-domain-count">{domain.count}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="ec-section">
+      <h2>All Pieces</h2>
+      <div class="ec-piece-grid">
+        {philosophyTopics.map(topic => (
+          <article class="ec-piece-card" id={topic.id}>
+            <header class="ec-piece-header">
+              <p class="ec-piece-status">{topic.status}</p>
+              <h3><a href={topic.href}>{topic.title}</a></h3>
+              <time class="ec-piece-date">{topic.date}</time>
+            </header>
+            <p class="ec-piece-description">{topic.description}</p>
+            <footer class="ec-piece-domains">
+              {topic.domains.map(domain => (
+                <span class="ec-domain-mini">{domain}</span>
+              ))}
+            </footer>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ec-section">
+      <h2>Cross-References</h2>
+      <div class="ec-cross-refs">
+        <a href="/research/" class="ec-cross-ref-card">
+          <p class="ec-cross-ref-label">Related</p>
+          <p class="ec-cross-ref-title">Research</p>
+          <p class="ec-cross-ref-desc">Technical work that grounds these philosophical positions</p>
+        </a>
+        <a href="/practice/articles" class="ec-cross-ref-card">
+          <p class="ec-cross-ref-label">Related</p>
+          <p class="ec-cross-ref-title">Practice · Articles</p>
+          <p class="ec-cross-ref-desc">Articles that explore these ideas in practice</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+<style>
+  .ec-philosophy-index .ec-page-header {
+    background: linear-gradient(135deg, #fef3c7 0%, #ffffff 100%);
+    padding: var(--space-xl) var(--space-lg);
+    margin: calc(var(--space-lg) * -1) calc(var(--space-lg) * -1) var(--space-xl);
+    border-radius: 8px;
+    border-bottom: 3px solid var(--signal-ember);
+  }
+
+  .ec-domain-tree {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .ec-domain-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: #f3f4f6;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .ec-domain-tag:hover {
+    background: #e5e7eb;
+  }
+
+  .ec-domain-tag.ec-domain-ember { border-left: 3px solid var(--signal-ember); }
+  .ec-domain-tag.ec-domain-green { border-left: 3px solid var(--signal-green); }
+  .ec-domain-tag.ec-domain-violet { border-left: 3px solid var(--signal-violet); }
+  .ec-domain-tag.ec-domain-cyan { border-left: 3px solid var(--signal-cyan); }
+
+  .ec-domain-name {
+    font-family: var(--font-mono);
+    font-size: var(--font-caption);
+  }
+
+  .ec-domain-count {
+    background: rgba(0,0,0,0.1);
+    padding: 0.125rem 0.5rem;
+    border-radius: 10px;
+    font-size: var(--font-caption);
+    font-weight: 600;
+  }
+
+  .ec-piece-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .ec-piece-card {
+    background: var(--surface-elevated);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    border-left: 4px solid var(--signal-ember);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .ec-piece-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .ec-piece-status {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-size: var(--font-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .ec-piece-header h3 {
+    margin: var(--space-sm) 0;
+    font-size: var(--font-h3);
+  }
+
+  .ec-piece-header h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ec-piece-header h3 a:hover {
+    color: var(--signal-ember);
+  }
+
+  .ec-piece-date {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+  }
+
+  .ec-piece-description {
+    margin: var(--space-md) 0;
+    line-height: 1.6;
+  }
+
+  .ec-piece-domains {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ec-domain-mini {
+    background: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--signal-gray);
+  }
+
+  .ec-cross-refs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .ec-cross-ref-card {
+    display: block;
+    padding: var(--space-md);
+    background: #f9fafb;
+    border-left: 3px solid var(--signal-cyan);
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ec-cross-ref-card:hover {
+    background: #f3f4f6;
+  }
+
+  .ec-cross-ref-label {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .ec-cross-ref-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .ec-cross-ref-desc {
+    color: var(--signal-gray);
+    font-size: var(--font-caption);
+  }
+</style>
