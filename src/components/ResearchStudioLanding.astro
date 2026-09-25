@@ -6,204 +6,449 @@ import CircuitBackground from './CircuitBackground.astro';
 import NavigationCard from './NavigationCard.astro';
 import { getNavigationCards, getStartPaths } from '../lib/content';
 
-// Fetch content for the page
 const navCards = getNavigationCards('balanced');
 const startPaths = getStartPaths('balanced');
 ---
 
-<section class="ec-studio-page">
-  <CircuitBackground density="low" animated={true} accent="signal" />
+<!-- HERO SECTION (Section 1) -->
+<section class="ec-presentation ec-presentation--hero" data-section="hero">
+  <CircuitBackground density="medium" animated={true} accent="signal" />
 
-  <article class="ec-studio-content">
-    <header class="ec-studio-intro">
+  <div class="ec-presentation__inner">
+    <header class="ec-hero">
       <p class="ec-eyebrow">Hearth &amp; Code</p>
-      <h1>An independent research studio for answerable systems.</h1>
-      <p class="ec-studio-lede">
-        Hearth &amp; Code is my public workbench for research, software, knowledge
-        architecture, and policy thinking. The goal isn't to show everything I've done.
-        It's to make the work legible enough that you can question it, use it, or
-        build on it.
+      <h1 class="ec-hero__title">An independent research studio for answerable systems.</h1>
+      <p class="ec-hero__lede">
+        Hearth &amp; Code is my public workbench for research, software, knowledge architecture,
+        and policy thinking. The goal isn't to show everything I've done. It's to make
+        the work legible enough that you can question it, use it, or build on it.
       </p>
-      <div class="ec-studio-toggle-row">
+      <div class="ec-hero__toggle-row">
         <HearthCodeToggle current="balanced" />
       </div>
     </header>
+  </div>
+</section>
 
-    <section class="ec-studio-section">
-      <h2>Who runs it</h2>
-      <p>
+<!-- WHO RUNS IT (Section 2) -->
+<section class="ec-presentation ec-presentation--who" data-section="who">
+  <div class="ec-presentation__inner ec-presentation__inner--centered">
+    <p class="ec-eyebrow">Who runs it</p>
+    <h2 class="ec-presentation__title">A practice, not a platform.</h2>
+    <div class="ec-who__content">
+      <p class="ec-who__lede">
         I'm Scott Rallya (online: Cognitectus). I work independently on systems where
         complexity needs to stay inspectable — AI governance, knowledge architecture,
         agent coordination, and public reasoning.
       </p>
-      <p>
-        The studio runs on a single principle: <strong>every consequential claim should
-        have a source, a scope, and a way to be challenged.</strong> That's the bar.
-        Everything else follows from it.
+      <p class="ec-who__principle">
+        The studio runs on a single principle: <strong>every consequential claim
+        should have a source, a scope, and a way to be challenged.</strong>
       </p>
-      <p class="ec-studio-link"><a href="/dossier/">→ Read my working profile</a></p>
-    </section>
+      <p class="ec-who__principle">
+        That's the bar. Everything else follows from it. <a href="/dossier/">Read my
+        working profile to see how this plays out in practice</a> — the personality
+        behind the work, the methodology, and what I'm currently working on.
+      </p>
+    </div>
+  </div>
+</section>
 
-    <section class="ec-studio-section">
-      <h2>What you'll find here</h2>
-      <p>The site is organized in eight layers. Each layer has a different purpose and a different reading mode. Toggle the view above to see them through a Hearth or Code lens.</p>
+<!-- WHAT YOU'LL FIND HERE (Section 3) -->
+<section class="ec-presentation ec-presentation--navigate" data-section="navigate">
+  <CircuitBackground density="low" animated={false} accent="ember" />
 
-      <div class="ec-studio-nav" aria-label="Site navigation guide">
-        {navCards.map((card) => (
-          <NavigationCard
-            href={card.href || '#'}
-            title={card.title}
-            description={card.description}
-            emphasis={card.emphasis || 5}
-            view="balanced"
-          />
-        ))}
-      </div>
-    </section>
+  <div class="ec-presentation__inner">
+    <p class="ec-eyebrow">What you'll find here</p>
+    <h2 class="ec-presentation__title">Eight layers of work.</h2>
+    <p class="ec-presentation__lede">
+      The site is organized in eight layers, each with a different purpose and reading mode.
+      Toggle the view above to see them through a Hearth or Code lens — the same paths,
+      different emphasis.
+    </p>
 
-    <section class="ec-studio-section">
-      <h2>Where to start</h2>
-
-      {startPaths.map((path) => (
-        <div class="ec-studio-start">
-          <h3>{path.title}</h3>
-          <p>{path.description}</p>
-        </div>
+    <div class="ec-presentation__grid">
+      {navCards.map((card) => (
+        <NavigationCard
+          href={card.href || '#'}
+          title={card.title}
+          description={card.description}
+          emphasis={card.emphasis || 5}
+          view="balanced"
+        />
       ))}
-    </section>
+    </div>
+  </div>
+</section>
 
-    <footer class="ec-studio-footer">
-      <p>
-        This site is independently operated. No tracking. No visitor profiles.
-        If something here is wrong or incomplete, <a href="/correspondence/">tell me</a> —
-        correction is always welcome.
-      </p>
-    </footer>
-  </article>
+<!-- WHERE TO START (Section 4) -->
+<section class="ec-presentation ec-presentation--start" data-section="start">
+  <div class="ec-presentation__inner ec-presentation__inner--centered">
+    <p class="ec-eyebrow">Where to start</p>
+    <h2 class="ec-presentation__title">Three paths, depending on you.</h2>
+
+    <div class="ec-presentation__paths">
+      {startPaths.map((path, idx) => (
+        <article class="ec-path" data-num={idx + 1}>
+          <div class="ec-path__num">{String(idx + 1).padStart(2, '0')}</div>
+          <div class="ec-path__content">
+            <h3 class="ec-path__title">{path.title}</h3>
+            <p class="ec-path__desc">{path.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (Section 5) -->
+<section class="ec-presentation ec-presentation--footer" data-section="footer">
+  <div class="ec-presentation__inner ec-presentation__inner--centered">
+    <p class="ec-footer__text">
+      This site is independently operated. No tracking. No visitor profiles.
+      If something here is wrong or incomplete, <a href="/correspondence/">tell me</a> —
+      correction is always welcome.
+    </p>
+  </div>
 </section>
 
 <style>
-  .ec-studio-page {
+  /* ==========================================================================
+     PRESENTATION CONTAINER
+     Each section is a full-viewport "slide"
+     ========================================================================== */
+  .ec-presentation {
     position: relative;
-    max-width: 65ch;
-    margin: 0 auto;
-    padding: var(--space-xl) var(--space-lg);
-    line-height: 1.7;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2xl) var(--space-xl);
+    overflow: hidden;
   }
 
-  .ec-studio-content {
+  .ec-presentation__inner {
+    width: 100%;
+    max-width: 90rem; /* Wide for 2560x1440 - generous reading space */
+    margin: 0 auto;
     position: relative;
     z-index: 1;
   }
 
-  .ec-studio-intro {
-    margin-bottom: var(--space-2xl);
+  .ec-presentation__inner--centered {
+    text-align: center;
+    max-width: 56rem;
   }
 
-  .ec-studio-intro .ec-eyebrow {
+  /* ==========================================================================
+     HERO (Section 1)
+     ========================================================================== */
+  .ec-presentation--hero {
+    padding-top: var(--space-2xl);
+  }
+
+  .ec-hero {
+    max-width: 64rem;
+  }
+
+  .ec-hero .ec-eyebrow {
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     color: var(--text_secondary, #cfc1ab);
-    font-size: var(--font-size-caption, 0.8125rem);
-    margin-bottom: var(--space-sm);
+    font-size: 0.875rem;
+    margin: 0 0 var(--space-md) 0;
+    opacity: 0.8;
   }
 
-  .ec-studio-intro h1 {
-    font-size: 2rem;
+  .ec-hero__title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2rem, 4vw, 4rem);
     font-weight: 600;
-    line-height: 1.3;
-    margin: 0 0 var(--space-md) 0;
-    color: inherit;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-lg) 0;
+    color: var(--text_display, #faf3e2);
+    white-space: nowrap; /* Keep title on one line */
   }
 
-  .ec-studio-lede {
-    font-size: 1.125rem;
+  .ec-hero__lede {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+    line-height: 1.55;
     color: var(--text_secondary, #cfc1ab);
+    margin: 0 0 var(--space-xl) 0;
+    max-width: 52rem;
+  }
+
+  .ec-hero__toggle-row {
+    margin-top: var(--space-xl);
+  }
+
+  /* ==========================================================================
+     WHO (Section 2)
+     ========================================================================== */
+  .ec-presentation--who {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(232, 91, 78, 0.03) 50%,
+      transparent 100%
+    );
+  }
+
+  .ec-presentation--who .ec-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ember_400, #ED7568);
+    font-size: 0.875rem;
     margin: 0 0 var(--space-md) 0;
+  }
+
+  .ec-presentation__title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.75rem, 3.5vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0 0 var(--space-xl) 0;
+    color: var(--text_display, #faf3e2);
+  }
+
+  .ec-who__content {
+    text-align: left;
+    max-width: 52rem;
+    margin: 0 auto;
+  }
+
+  .ec-who__lede {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
     line-height: 1.6;
+    color: var(--text_primary, #f1e7d2);
+    margin: 0 0 var(--space-xl) 0;
   }
 
-  .ec-studio-toggle-row {
-    margin-top: var(--space-md);
+  .ec-who__principle {
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    line-height: 1.7;
+    color: var(--text_secondary, #cfc1ab);
+    margin: 0 0 var(--space-lg) 0;
   }
 
-  .ec-studio-section {
-    margin-bottom: var(--space-2xl);
-    position: relative;
+  .ec-who__principle a {
+    color: var(--ember_400, #ED7568);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ember_400, #ED7568);
   }
 
-  .ec-studio-section h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
+  .ec-who__principle a:hover {
+    color: var(--ember_300, #F18B7E);
+    border-bottom-color: var(--ember_300, #F18B7E);
+  }
+
+  .ec-who__principle strong {
+    color: var(--text_display, #faf3e2);
+    font-weight: 500;
+  }
+
+  /* ==========================================================================
+     NAVIGATE (Section 3)
+     ========================================================================== */
+  .ec-presentation--navigate {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .ec-presentation--navigate .ec-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--signal_400, #5DCBC2);
+    font-size: 0.875rem;
     margin: 0 0 var(--space-md) 0;
-    padding-bottom: var(--space-sm);
+  }
+
+  .ec-presentation--navigate .ec-presentation__lede {
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--text_secondary, #cfc1ab);
+    margin: 0 0 var(--space-2xl) 0;
+    max-width: 60rem;
+  }
+
+  .ec-presentation__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--space-lg);
+  }
+
+  /* ==========================================================================
+     START (Section 4)
+     ========================================================================== */
+  .ec-presentation--start {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .ec-presentation--start .ec-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--plasma_500, #3FE0D0);
+    font-size: 0.875rem;
+    margin: 0 0 var(--space-md) 0;
+  }
+
+  .ec-presentation__paths {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+    max-width: 56rem;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .ec-path {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+    padding: var(--space-lg) 0;
     border-bottom: 1px solid var(--color-surface-rule, #4b4237);
   }
 
-  .ec-studio-section p {
-    margin: 0 0 var(--space-md) 0;
+  .ec-path:last-child {
+    border-bottom: none;
   }
 
-  .ec-studio-link {
-    margin-top: var(--space-md);
+  .ec-path__num {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300;
+    color: var(--ember_500, #E85B4E);
+    line-height: 1;
+    opacity: 0.7;
+    min-width: 3rem;
   }
 
-  .ec-studio-link a {
-    color: var(--color-accent-ember, #E85B4E);
+  .ec-path__title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0 0 var(--space-sm) 0;
+    color: var(--text_display, #faf3e2);
+  }
+
+  .ec-path__desc {
+    font-size: clamp(1rem, 1.125vw, 1.125rem);
+    line-height: 1.6;
+    color: var(--text_secondary, #cfc1ab);
+    margin: 0;
+  }
+
+  /* ==========================================================================
+     FOOTER (Section 5)
+     ========================================================================== */
+  .ec-presentation--footer {
+    min-height: 30vh; /* Shorter than other sections */
+    padding: var(--space-xl);
+  }
+
+  .ec-footer__text {
+    font-size: 0.875rem;
+    color: var(--text_secondary, #cfc1ab);
+    text-align: center;
+    max-width: 40rem;
+    margin: 0 auto;
+    opacity: 0.8;
+  }
+
+  .ec-footer__text a {
+    color: var(--ember_400, #ED7568);
     text-decoration: none;
+    border-bottom: 1px dotted var(--ember_400, #ED7568);
   }
 
-  .ec-studio-link a:hover {
-    text-decoration: underline;
+  .ec-footer__text a:hover {
+    color: var(--ember_300, #F18B7E);
   }
 
-  .ec-studio-nav {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-    margin: 0 0 var(--space-md) 0;
-  }
+  /* ==========================================================================
+     RESPONSIVE
+     ========================================================================== */
+  @media (max-width: 768px) {
+    .ec-presentation {
+      padding: var(--space-xl) var(--space-lg);
+      min-height: auto;
+    }
 
-  @media (min-width: 720px) {
-    .ec-studio-nav {
-      grid-template-columns: 1fr 1fr;
+    .ec-hero__title {
+      font-size: 1.75rem;
+      white-space: normal; /* Allow wrapping on small screens */
+    }
+
+    .ec-presentation__title {
+      font-size: 1.5rem;
+    }
+
+    .ec-presentation__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ec-path {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
     }
   }
 
-  .ec-studio-start {
-    margin-bottom: var(--spacing_lg, 1.5rem);
-    padding-left: var(--spacing_md, 1rem);
-    border-left: 3px solid var(--color-accent-ember, #E85B4E);
+  /* ==========================================================================
+     Hearth-Code view states (when toggle changes view)
+     ========================================================================== */
+  :root[data-hc-view="hearth"] .ec-presentation--hero {
+    background: radial-gradient(ellipse at 30% 50%, rgba(232, 91, 78, 0.05) 0%, transparent 60%);
   }
 
-  .ec-studio-start h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 var(--spacing_xs, 0.25rem) 0;
+  :root[data-hc-view="code"] .ec-presentation--hero {
+    background: radial-gradient(ellipse at 70% 50%, rgba(31, 182, 168, 0.05) 0%, transparent 60%);
   }
 
-  .ec-studio-start p {
-    margin: 0;
-  }
-
-  .ec-studio-footer {
-    margin-top: var(--space-2xl);
-    padding-top: var(--spacing_lg, 1.5rem);
-    border-top: 1px solid var(--color-surface-rule, #4b4237);
-    color: var(--text_secondary, #cfc1ab);
-    font-size: var(--font-size-caption, 0.8125rem);
-  }
-
-  .ec-studio-footer p {
-    margin: 0;
-  }
-
-  .ec-studio-footer a {
-    color: var(--color-accent-ember, #E85B4E);
-    text-decoration: none;
-  }
-
-  .ec-studio-footer a:hover {
-    text-decoration: underline;
+  :root[data-hc-view="balanced"] .ec-presentation--hero {
+    background: radial-gradient(ellipse at center, rgba(155, 93, 229, 0.03) 0%, transparent 60%);
   }
 </style>
+
+<script>
+  // Listen for view changes and dynamically update the page
+  document.addEventListener('hearth-code-view-change', (event) => {
+    const view = (event as CustomEvent).detail.view;
+    if (!['hearth', 'code', 'balanced'].includes(view)) return;
+
+    // Set data attribute on root for CSS targeting
+    document.documentElement.setAttribute('data-hc-view', view);
+
+    // Update toggle state
+    document.querySelectorAll('[data-toggle-root]').forEach((toggle) => {
+      toggle.setAttribute('data-current', view);
+      toggle.querySelectorAll('[data-segment]').forEach((seg) => {
+        const segValue = seg.getAttribute('data-segment');
+        if (segValue === view) {
+          seg.setAttribute('aria-selected', 'true');
+          seg.classList.add('is-active');
+        } else {
+          seg.setAttribute('aria-selected', 'false');
+          seg.classList.remove('is-active');
+        }
+      });
+    });
+
+    // Update navigation cards with view-specific styling
+    document.querySelectorAll('.ec-nav-card').forEach((card) => {
+      card.setAttribute('data-view', view);
+    });
+  });
+
+  // Initialize view from URL on page load
+  (function initView() {
+    const url = new URL(window.location.href);
+    const view = url.searchParams.get('view') || 'balanced';
+    if (['hearth', 'code', 'balanced'].includes(view)) {
+      document.documentElement.setAttribute('data-hc-view', view);
+    }
+  })();
+</script>
