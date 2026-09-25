@@ -10,7 +10,7 @@ const navCards = getNavigationCards('balanced');
 const startPaths = getStartPaths('balanced');
 ---
 
-<!-- HERO SECTION (Section 1) -->
+<!-- HERO SECTION -->
 <section class="ec-presentation ec-presentation--hero" data-section="hero">
   <CircuitBackground density="medium" animated={true} accent="signal" />
 
@@ -30,7 +30,10 @@ const startPaths = getStartPaths('balanced');
   </div>
 </section>
 
-<!-- WHO RUNS IT (Section 2) -->
+<!-- DIVIDER -->
+<div class="ec-divider" aria-hidden="true"></div>
+
+<!-- WHO RUNS IT -->
 <section class="ec-presentation ec-presentation--who" data-section="who">
   <div class="ec-presentation__inner ec-presentation__inner--centered">
     <p class="ec-eyebrow">Who runs it</p>
@@ -54,7 +57,9 @@ const startPaths = getStartPaths('balanced');
   </div>
 </section>
 
-<!-- WHAT YOU'LL FIND HERE (Section 3) -->
+<div class="ec-divider" aria-hidden="true"></div>
+
+<!-- WHAT YOU'LL FIND HERE -->
 <section class="ec-presentation ec-presentation--navigate" data-section="navigate">
   <CircuitBackground density="low" animated={false} accent="ember" />
 
@@ -67,7 +72,7 @@ const startPaths = getStartPaths('balanced');
       different emphasis.
     </p>
 
-    <div class="ec-presentation__grid">
+    <div class="ec-presentation__grid" id="nav-grid">
       {navCards.map((card) => (
         <NavigationCard
           href={card.href || '#'}
@@ -81,13 +86,15 @@ const startPaths = getStartPaths('balanced');
   </div>
 </section>
 
-<!-- WHERE TO START (Section 4) -->
+<div class="ec-divider" aria-hidden="true"></div>
+
+<!-- WHERE TO START -->
 <section class="ec-presentation ec-presentation--start" data-section="start">
   <div class="ec-presentation__inner ec-presentation__inner--centered">
     <p class="ec-eyebrow">Where to start</p>
     <h2 class="ec-presentation__title">Three paths, depending on you.</h2>
 
-    <div class="ec-presentation__paths">
+    <div class="ec-presentation__paths" id="paths-list">
       {startPaths.map((path, idx) => (
         <article class="ec-path" data-num={idx + 1}>
           <div class="ec-path__num">{String(idx + 1).padStart(2, '0')}</div>
@@ -101,7 +108,9 @@ const startPaths = getStartPaths('balanced');
   </div>
 </section>
 
-<!-- FOOTER (Section 5) -->
+<div class="ec-divider" aria-hidden="true"></div>
+
+<!-- FOOTER -->
 <section class="ec-presentation ec-presentation--footer" data-section="footer">
   <div class="ec-presentation__inner ec-presentation__inner--centered">
     <p class="ec-footer__text">
@@ -131,7 +140,7 @@ const startPaths = getStartPaths('balanced');
 
   .ec-presentation__inner {
     width: 100%;
-    max-width: 90rem; /* Wide for 2560x1440 - generous reading space */
+    max-width: 90rem; /* Wide for 2560x1440 */
     margin: 0 auto;
     position: relative;
     z-index: 1;
@@ -139,7 +148,24 @@ const startPaths = getStartPaths('balanced');
 
   .ec-presentation__inner--centered {
     text-align: center;
-    max-width: 56rem;
+    max-width: 60rem;
+  }
+
+  /* ==========================================================================
+     DIVIDER - clear visual separator between sections
+     ========================================================================== */
+  .ec-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-surface-rule, #4b4237) 20%,
+      var(--ember_500, #E85B4E) 50%,
+      var(--color-surface-rule, #4b4237) 80%,
+      transparent 100%
+    );
+    opacity: 0.6;
   }
 
   /* ==========================================================================
@@ -150,7 +176,7 @@ const startPaths = getStartPaths('balanced');
   }
 
   .ec-hero {
-    max-width: 64rem;
+    max-width: 70rem;
   }
 
   .ec-hero .ec-eyebrow {
@@ -164,13 +190,13 @@ const startPaths = getStartPaths('balanced');
 
   .ec-hero__title {
     font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: clamp(1.75rem, 3.5vw, 3.75rem);
     font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.02em;
     margin: 0 0 var(--space-lg) 0;
     color: var(--text_display, #faf3e2);
-    white-space: nowrap; /* Keep title on one line */
+    white-space: nowrap;
   }
 
   .ec-hero__lede {
@@ -178,7 +204,7 @@ const startPaths = getStartPaths('balanced');
     line-height: 1.55;
     color: var(--text_secondary, #cfc1ab);
     margin: 0 0 var(--space-xl) 0;
-    max-width: 52rem;
+    max-width: 56rem;
   }
 
   .ec-hero__toggle-row {
@@ -265,7 +291,7 @@ const startPaths = getStartPaths('balanced');
     margin: 0 0 var(--space-md) 0;
   }
 
-  .ec-presentation--navigate .ec-presentation__lede {
+  .ec-presentation__lede {
     font-size: clamp(1rem, 1.25vw, 1.25rem);
     line-height: 1.6;
     color: var(--text_secondary, #cfc1ab);
@@ -275,12 +301,12 @@ const startPaths = getStartPaths('balanced');
 
   .ec-presentation__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
     gap: var(--space-lg);
   }
 
   /* ==========================================================================
-     START (Section 4)
+     START (Section 4) - Generous spacing, full paths
      ========================================================================== */
   .ec-presentation--start {
     padding: var(--space-2xl) var(--space-xl);
@@ -297,47 +323,54 @@ const startPaths = getStartPaths('balanced');
   .ec-presentation__paths {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2xl);
-    max-width: 56rem;
+    gap: var(--space-3xl); /* Much more space between paths */
+    max-width: 64rem;
     margin: 0 auto;
     text-align: left;
+    padding: var(--space-xl) 0;
   }
 
   .ec-path {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: var(--space-xl);
+    gap: var(--space-2xl);
     align-items: start;
-    padding: var(--space-lg) 0;
-    border-bottom: 1px solid var(--color-surface-rule, #4b4237);
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--color-surface-rule, #4b4237);
+    transition: border-color 200ms;
   }
 
   .ec-path:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid var(--color-surface-rule, #4b4237);
+  }
+
+  .ec-path:hover {
+    border-top-color: var(--ember_500, #E85B4E);
   }
 
   .ec-path__num {
     font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(2rem, 3vw, 3rem);
+    font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 300;
     color: var(--ember_500, #E85B4E);
     line-height: 1;
     opacity: 0.7;
-    min-width: 3rem;
+    min-width: 4rem;
+    letter-spacing: -0.02em;
   }
 
   .ec-path__title {
     font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(1.25rem, 1.75vw, 1.75rem);
+    font-size: clamp(1.5rem, 2vw, 2rem);
     font-weight: 500;
     line-height: 1.3;
-    margin: 0 0 var(--space-sm) 0;
+    margin: 0 0 var(--space-md) 0;
     color: var(--text_display, #faf3e2);
   }
 
   .ec-path__desc {
-    font-size: clamp(1rem, 1.125vw, 1.125rem);
-    line-height: 1.6;
+    font-size: clamp(1.0625rem, 1.125vw, 1.125rem);
+    line-height: 1.7;
     color: var(--text_secondary, #cfc1ab);
     margin: 0;
   }
@@ -346,7 +379,7 @@ const startPaths = getStartPaths('balanced');
      FOOTER (Section 5)
      ========================================================================== */
   .ec-presentation--footer {
-    min-height: 30vh; /* Shorter than other sections */
+    min-height: 30vh;
     padding: var(--space-xl);
   }
 
@@ -380,7 +413,7 @@ const startPaths = getStartPaths('balanced');
 
     .ec-hero__title {
       font-size: 1.75rem;
-      white-space: normal; /* Allow wrapping on small screens */
+      white-space: normal;
     }
 
     .ec-presentation__title {
@@ -398,31 +431,48 @@ const startPaths = getStartPaths('balanced');
   }
 
   /* ==========================================================================
-     Hearth-Code view states (when toggle changes view)
+     Hearth-Code view states
      ========================================================================== */
   :root[data-hc-view="hearth"] .ec-presentation--hero {
-    background: radial-gradient(ellipse at 30% 50%, rgba(232, 91, 78, 0.05) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 30% 50%, rgba(232, 91, 78, 0.06) 0%, transparent 60%);
   }
 
   :root[data-hc-view="code"] .ec-presentation--hero {
-    background: radial-gradient(ellipse at 70% 50%, rgba(31, 182, 168, 0.05) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 70% 50%, rgba(31, 182, 168, 0.06) 0%, transparent 60%);
   }
 
   :root[data-hc-view="balanced"] .ec-presentation--hero {
-    background: radial-gradient(ellipse at center, rgba(155, 93, 229, 0.03) 0%, transparent 60%);
+    background: radial-gradient(ellipse at center, rgba(155, 93, 229, 0.04) 0%, transparent 60%);
   }
+
+  /* View-specific content visibility */
+  :root[data-hc-view="hearth"] [data-view-only="code"] { display: none; }
+  :root[data-hc-view="code"] [data-view-only="hearth"] { display: none; }
+  :root[data-hc-view="balanced"] [data-view-only="hearth"],
+  :root[data-hc-view="balanced"] [data-view-only="code"] { display: none; }
 </style>
 
 <script>
-  // Listen for view changes and dynamically update the page
-  document.addEventListener('hearth-code-view-change', (event) => {
-    const view = (event as CustomEvent).detail.view;
-    if (!['hearth', 'code', 'balanced'].includes(view)) return;
+  // ============================================================
+  // View state management
+  // ============================================================
 
-    // Set data attribute on root for CSS targeting
+  // Initialize view from URL or localStorage
+  function getView() {
+    try {
+      const url = new URL(window.location.href);
+      const urlView = url.searchParams.get('view');
+      if (urlView && ['hearth', 'code', 'balanced'].includes(urlView)) return urlView;
+      const stored = localStorage.getItem('hearth-code-view');
+      if (stored && ['hearth', 'code', 'balanced'].includes(stored)) return stored;
+    } catch (e) {}
+    return 'balanced';
+  }
+
+  function applyView(view: string) {
     document.documentElement.setAttribute('data-hc-view', view);
 
-    // Update toggle state
+    // Update all toggles on page
     document.querySelectorAll('[data-toggle-root]').forEach((toggle) => {
       toggle.setAttribute('data-current', view);
       toggle.querySelectorAll('[data-segment]').forEach((seg) => {
@@ -437,18 +487,23 @@ const startPaths = getStartPaths('balanced');
       });
     });
 
-    // Update navigation cards with view-specific styling
+    // Update navigation cards data-view
     document.querySelectorAll('.ec-nav-card').forEach((card) => {
       card.setAttribute('data-view', view);
     });
+  }
+
+  // Listen for toggle changes
+  document.addEventListener('hearth-code-view-change', (event) => {
+    const view = (event as CustomEvent).detail.view;
+    applyView(view);
   });
 
-  // Initialize view from URL on page load
-  (function initView() {
-    const url = new URL(window.location.href);
-    const view = url.searchParams.get('view') || 'balanced';
-    if (['hearth', 'code', 'balanced'].includes(view)) {
-      document.documentElement.setAttribute('data-hc-view', view);
-    }
-  })();
+  // Handle browser back/forward
+  window.addEventListener('popstate', () => {
+    applyView(getView());
+  });
+
+  // Initialize on load
+  applyView(getView());
 </script>
