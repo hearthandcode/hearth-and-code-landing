@@ -4,11 +4,17 @@ import '../styles/global.css';
 import HearthCodeToggle from './HearthCodeToggle.astro';
 import CircuitBackground from './CircuitBackground.astro';
 import NavigationCard from './NavigationCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { getNavigationCards, getStartPaths } from '../lib/content';
 
 const navCards = getNavigationCards('balanced');
 const startPaths = getStartPaths('balanced');
 ---
+
+<BaseLayout
+  title="Hearth & Code — Independent Research Studio"
+  description="An independent research studio for answerable systems. Research, software, knowledge architecture, and policy thinking."
+>
 
 <!-- HERO SECTION -->
 <section class="ec-presentation ec-presentation--hero" data-section="hero">
@@ -134,7 +140,7 @@ const startPaths = getStartPaths('balanced');
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--space-8) var(--space-7);
     overflow: hidden;
   }
 
@@ -172,7 +178,7 @@ const startPaths = getStartPaths('balanced');
      HERO (Section 1)
      ========================================================================== */
   .ec-presentation--hero {
-    padding-top: var(--space-2xl);
+    padding-top: var(--space-8);
   }
 
   .ec-hero {
@@ -203,12 +209,12 @@ const startPaths = getStartPaths('balanced');
     font-size: clamp(1.125rem, 1.5vw, 1.5rem);
     line-height: 1.55;
     color: var(--text_secondary, #cfc1ab);
-    margin: 0 0 var(--space-xl) 0;
+    margin: 0 0 var(--space-7) 0;
     max-width: 56rem;
   }
 
   .ec-hero__toggle-row {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-7);
   }
 
   /* ==========================================================================
@@ -236,7 +242,7 @@ const startPaths = getStartPaths('balanced');
     font-size: clamp(1.75rem, 3.5vw, 3.25rem);
     font-weight: 500;
     line-height: 1.2;
-    margin: 0 0 var(--space-xl) 0;
+    margin: 0 0 var(--space-7) 0;
     color: var(--text_display, #faf3e2);
   }
 
@@ -250,7 +256,7 @@ const startPaths = getStartPaths('balanced');
     font-size: clamp(1.125rem, 1.5vw, 1.5rem);
     line-height: 1.6;
     color: var(--text_primary, #f1e7d2);
-    margin: 0 0 var(--space-xl) 0;
+    margin: 0 0 var(--space-7) 0;
   }
 
   .ec-who__principle {
@@ -280,7 +286,7 @@ const startPaths = getStartPaths('balanced');
      NAVIGATE (Section 3)
      ========================================================================== */
   .ec-presentation--navigate {
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--space-8) var(--space-7);
   }
 
   .ec-presentation--navigate .ec-eyebrow {
@@ -295,7 +301,7 @@ const startPaths = getStartPaths('balanced');
     font-size: clamp(1rem, 1.25vw, 1.25rem);
     line-height: 1.6;
     color: var(--text_secondary, #cfc1ab);
-    margin: 0 0 var(--space-2xl) 0;
+    margin: 0 0 var(--space-8) 0;
     max-width: 60rem;
   }
 
@@ -309,7 +315,7 @@ const startPaths = getStartPaths('balanced');
      START (Section 4) - Generous spacing, full paths
      ========================================================================== */
   .ec-presentation--start {
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--space-8) var(--space-7);
   }
 
   .ec-presentation--start .ec-eyebrow {
@@ -323,19 +329,19 @@ const startPaths = getStartPaths('balanced');
   .ec-presentation__paths {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3xl); /* Much more space between paths */
+    gap: var(--space-9); /* Maximum space between paths (6rem / 96px) */
     max-width: 64rem;
     margin: 0 auto;
     text-align: left;
-    padding: var(--space-xl) 0;
+    padding: var(--space-7) 0;
   }
 
   .ec-path {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: var(--space-2xl);
+    gap: var(--space-8);
     align-items: start;
-    padding: var(--space-2xl) 0;
+    padding: var(--space-8) 0;
     border-top: 1px solid var(--color-surface-rule, #4b4237);
     transition: border-color 200ms;
   }
@@ -380,7 +386,7 @@ const startPaths = getStartPaths('balanced');
      ========================================================================== */
   .ec-presentation--footer {
     min-height: 30vh;
-    padding: var(--space-xl);
+    padding: var(--space-7);
   }
 
   .ec-footer__text {
@@ -407,7 +413,7 @@ const startPaths = getStartPaths('balanced');
      ========================================================================== */
   @media (max-width: 768px) {
     .ec-presentation {
-      padding: var(--space-xl) var(--space-lg);
+      padding: var(--space-7) var(--space-lg);
       min-height: auto;
     }
 
@@ -553,3 +559,4 @@ const startPaths = getStartPaths('balanced');
   // Initialize on load
   applyView(getView());
 </script>
+</BaseLayout>

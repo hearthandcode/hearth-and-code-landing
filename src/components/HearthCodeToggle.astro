@@ -15,9 +15,9 @@ interface Props {
 const { current = 'balanced' } = Astro.props;
 
 const segments = [
-  { id: 'hearth',   label: 'Hearth',   description: 'Personal &middot; philosophical' },
+  { id: 'hearth',   label: 'Hearth',   description: 'Personal \u00b7 philosophical' },
   { id: 'balanced', label: 'Both',     description: 'Full spectrum' },
-  { id: 'code',     label: 'Code',     description: 'Technical &middot; methods' },
+  { id: 'code',     label: 'Code',     description: 'Technical \u00b7 methods' },
 ] as const;
 ---
 

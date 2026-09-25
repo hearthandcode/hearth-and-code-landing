@@ -1,0 +1,30 @@
+---
+/**
+ * BaseLayout.astro - Root HTML wrapper for all pages
+ * Provides proper <html>, <head>, charset, viewport
+ */
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Hearth & Code',
+  description = 'An independent research studio for answerable systems.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#161411" />
+  <title>{title}</title>
+</head>
+<body>
+  <slot />
+</body>
+</html>
