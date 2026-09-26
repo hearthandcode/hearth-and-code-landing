@@ -1,23 +1,27 @@
 /**
  * CodeBlock (React port)
  *
- * Auto-generated from: k-code-block
- * Source: src/components/knowledge/composites/CodeBlock.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface CodeBlockProps {
-
+code: string;
+language: 'python' | 'typescript' | 'javascript' | 'rust' | 'yaml' | 'json' | 'bash' | 'sql' | 'markdown' | 'tsx' | 'jsx' | 'css' | 'html';
+filename?: string;
+highlightLines?: number[];
+showLineNumbers?: boolean;
+theme?: 'github-dark' | 'github-light';
+class?: string;
+  className?: string;
 }
 
-export function CodeBlock({
-
-}: CodeBlockProps) {
+export function CodeBlock(props: CodeBlockProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-code-block kc-k-code-block--placeholder">
-      <span>CodeBlock (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/CodeBlock.astro */}
+    <div className={['kc-codeblock', className].filter(Boolean).join(' ')}>
+      <span className="kc-codeblock__placeholder">CodeBlock (React port)</span>
     </div>
   );
 }

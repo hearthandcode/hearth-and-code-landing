@@ -1,23 +1,22 @@
 /**
  * SourceChain (React port)
  *
- * Auto-generated from: k-source-chain
- * Source: src/components/knowledge/composites/SourceChain.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface SourceChainProps {
-
+root: SourceNode;
+class?: string;
+  className?: string;
 }
 
-export function SourceChain({
-
-}: SourceChainProps) {
+export function SourceChain(props: SourceChainProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-source-chain kc-k-source-chain--placeholder">
-      <span>SourceChain (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/SourceChain.astro */}
+    <div className={['kc-sourcechain', className].filter(Boolean).join(' ')}>
+      <span className="kc-sourcechain__placeholder">SourceChain (React port)</span>
     </div>
   );
 }

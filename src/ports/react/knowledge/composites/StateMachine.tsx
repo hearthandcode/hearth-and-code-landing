@@ -1,23 +1,23 @@
 /**
  * StateMachine (React port)
  *
- * Auto-generated from: k-state-machine
- * Source: src/components/knowledge/composites/StateMachine.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface StateMachineProps {
-
+states: State[];
+transitions: Transition[];
+class?: string;
+  className?: string;
 }
 
-export function StateMachine({
-
-}: StateMachineProps) {
+export function StateMachine(props: StateMachineProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-state-machine kc-k-state-machine--placeholder">
-      <span>StateMachine (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/StateMachine.astro */}
+    <div className={['kc-statemachine', className].filter(Boolean).join(' ')}>
+      <span className="kc-statemachine__placeholder">StateMachine (React port)</span>
     </div>
   );
 }

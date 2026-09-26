@@ -1,23 +1,24 @@
 /**
  * SynthesisSummary (React port)
  *
- * Auto-generated from: k-synthesis-summary
- * Source: src/components/knowledge/composites/SynthesisSummary.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface SynthesisSummaryProps {
-
+title?: string;
+claims: Claim[];
+consensus?: number;
+class?: string;
+  className?: string;
 }
 
-export function SynthesisSummary({
-
-}: SynthesisSummaryProps) {
+export function SynthesisSummary(props: SynthesisSummaryProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-synthesis-summary kc-k-synthesis-summary--placeholder">
-      <span>SynthesisSummary (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/SynthesisSummary.astro */}
+    <div className={['kc-synthesissummary', className].filter(Boolean).join(' ')}>
+      <span className="kc-synthesissummary__placeholder">SynthesisSummary (React port)</span>
     </div>
   );
 }

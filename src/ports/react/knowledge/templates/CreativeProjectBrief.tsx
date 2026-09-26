@@ -1,23 +1,26 @@
 /**
  * CreativeProjectBrief (React port)
  *
- * Auto-generated from: k-creative-project-brief
- * Source: src/components/knowledge/templates/CreativeProjectBrief.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface CreativeProjectBriefProps {
-
+title: string;
+premise: string;
+arc: any[];
+sampleDialogue: any[];
+characters: { name: string; role: string; description: string }[];
+class?: string;
+  className?: string;
 }
 
-export function CreativeProjectBrief({
-
-}: CreativeProjectBriefProps) {
+export function CreativeProjectBrief(props: CreativeProjectBriefProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-creative-project-brief kc-k-creative-project-brief--placeholder">
-      <span>CreativeProjectBrief (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/CreativeProjectBrief.astro */}
+    <div className={['kc-creativeprojectbrief', className].filter(Boolean).join(' ')}>
+      <span className="kc-creativeprojectbrief__placeholder">CreativeProjectBrief (React port)</span>
     </div>
   );
 }

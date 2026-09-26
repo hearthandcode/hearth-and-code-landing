@@ -1,23 +1,29 @@
 /**
  * HumanGate (React port)
  *
- * Auto-generated from: k-human-gate
- * Source: src/components/knowledge/composites/HumanGate.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface HumanGateProps {
-
+id: string;
+name: string;
+description: string;
+reviewer: string;
+reviewerRole?: string;
+decision: 'approved' | 'rejected' | 'pending' | 'escalated';
+sealedAt?: string;
+criteria?: string[];
+class?: string;
+  className?: string;
 }
 
-export function HumanGate({
-
-}: HumanGateProps) {
+export function HumanGate(props: HumanGateProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-human-gate kc-k-human-gate--placeholder">
-      <span>HumanGate (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/HumanGate.astro */}
+    <div className={['kc-humangate', className].filter(Boolean).join(' ')}>
+      <span className="kc-humangate__placeholder">HumanGate (React port)</span>
     </div>
   );
 }

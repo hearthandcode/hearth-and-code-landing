@@ -1,23 +1,30 @@
 /**
  * PaperSummary (React port)
  *
- * Auto-generated from: k-paper-summary
- * Source: src/components/knowledge/composites/PaperSummary.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface PaperSummaryProps {
-
+title: string;
+authors: string[];
+year: number | string;
+venue?: string;
+abstract: string;
+claims: string[];
+limitations: string[];
+citationCount?: number;
+doi?: string;
+class?: string;
+  className?: string;
 }
 
-export function PaperSummary({
-
-}: PaperSummaryProps) {
+export function PaperSummary(props: PaperSummaryProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-paper-summary kc-k-paper-summary--placeholder">
-      <span>PaperSummary (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/PaperSummary.astro */}
+    <div className={['kc-papersummary', className].filter(Boolean).join(' ')}>
+      <span className="kc-papersummary__placeholder">PaperSummary (React port)</span>
     </div>
   );
 }

@@ -1,23 +1,23 @@
 /**
  * ReleaseNotes (React port)
  *
- * Auto-generated from: k-release-notes
- * Source: src/components/knowledge/templates/ReleaseNotes.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface ReleaseNotesProps {
-
+product: string;
+releases: Release[];
+class?: string;
+  className?: string;
 }
 
-export function ReleaseNotes({
-
-}: ReleaseNotesProps) {
+export function ReleaseNotes(props: ReleaseNotesProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-release-notes kc-k-release-notes--placeholder">
-      <span>ReleaseNotes (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/ReleaseNotes.astro */}
+    <div className={['kc-releasenotes', className].filter(Boolean).join(' ')}>
+      <span className="kc-releasenotes__placeholder">ReleaseNotes (React port)</span>
     </div>
   );
 }

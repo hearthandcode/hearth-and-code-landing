@@ -1,23 +1,22 @@
 /**
  * APIReference (React port)
  *
- * Auto-generated from: k-api-reference
- * Source: src/components/knowledge/composites/APIReference.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface APIReferenceProps {
-
+endpoint: Endpoint;
+class?: string;
+  className?: string;
 }
 
-export function APIReference({
-
-}: APIReferenceProps) {
+export function APIReference(props: APIReferenceProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-api-reference kc-k-api-reference--placeholder">
-      <span>APIReference (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/APIReference.astro */}
+    <div className={['kc-apireference', className].filter(Boolean).join(' ')}>
+      <span className="kc-apireference__placeholder">APIReference (React port)</span>
     </div>
   );
 }

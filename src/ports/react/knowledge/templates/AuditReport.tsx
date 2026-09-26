@@ -1,23 +1,30 @@
 /**
  * AuditReport (React port)
  *
- * Auto-generated from: k-audit-report
- * Source: src/components/knowledge/templates/AuditReport.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface AuditReportProps {
-
+title: string;
+scope: string;
+auditor: string;
+auditedEntity: string;
+period: string;
+findings: Finding[];
+auditTrail: any[]; // AuditTrail Event[]
+compliance: any[]; // ComplianceStatus Control[]
+status: 'pass' | 'fail' | 'conditional' | 'in-progress';
+class?: string;
+  className?: string;
 }
 
-export function AuditReport({
-
-}: AuditReportProps) {
+export function AuditReport(props: AuditReportProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-audit-report kc-k-audit-report--placeholder">
-      <span>AuditReport (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/AuditReport.astro */}
+    <div className={['kc-auditreport', className].filter(Boolean).join(' ')}>
+      <span className="kc-auditreport__placeholder">AuditReport (React port)</span>
     </div>
   );
 }

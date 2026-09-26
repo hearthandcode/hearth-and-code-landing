@@ -1,23 +1,28 @@
 /**
  * PolicyCard (React port)
  *
- * Auto-generated from: k-policy-card
- * Source: src/components/knowledge/composites/PolicyCard.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface PolicyCardProps {
-
+id: string;
+title: string;
+statement: string;
+effectiveDate: string;
+scope: string;
+owner?: string;
+status?: 'draft' | 'active' | 'suspended' | 'retired';
+class?: string;
+  className?: string;
 }
 
-export function PolicyCard({
-
-}: PolicyCardProps) {
+export function PolicyCard(props: PolicyCardProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-policy-card kc-k-policy-card--placeholder">
-      <span>PolicyCard (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/PolicyCard.astro */}
+    <div className={['kc-policycard', className].filter(Boolean).join(' ')}>
+      <span className="kc-policycard__placeholder">PolicyCard (React port)</span>
     </div>
   );
 }

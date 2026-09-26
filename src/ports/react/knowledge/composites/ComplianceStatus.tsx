@@ -1,23 +1,23 @@
 /**
  * ComplianceStatus (React port)
  *
- * Auto-generated from: k-compliance-status
- * Source: src/components/knowledge/composites/ComplianceStatus.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface ComplianceStatusProps {
-
+framework: string;
+controls: Control[];
+class?: string;
+  className?: string;
 }
 
-export function ComplianceStatus({
-
-}: ComplianceStatusProps) {
+export function ComplianceStatus(props: ComplianceStatusProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-compliance-status kc-k-compliance-status--placeholder">
-      <span>ComplianceStatus (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/ComplianceStatus.astro */}
+    <div className={['kc-compliancestatus', className].filter(Boolean).join(' ')}>
+      <span className="kc-compliancestatus__placeholder">ComplianceStatus (React port)</span>
     </div>
   );
 }

@@ -1,23 +1,23 @@
 /**
  * VersionDiff (React port)
  *
- * Auto-generated from: k-version-diff
- * Source: src/components/knowledge/composites/VersionDiff.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface VersionDiffProps {
-
+before: { version: string; lines: Line[] };
+after: { version: string; lines: Line[] };
+class?: string;
+  className?: string;
 }
 
-export function VersionDiff({
-
-}: VersionDiffProps) {
+export function VersionDiff(props: VersionDiffProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-version-diff kc-k-version-diff--placeholder">
-      <span>VersionDiff (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/VersionDiff.astro */}
+    <div className={['kc-versiondiff', className].filter(Boolean).join(' ')}>
+      <span className="kc-versiondiff__placeholder">VersionDiff (React port)</span>
     </div>
   );
 }

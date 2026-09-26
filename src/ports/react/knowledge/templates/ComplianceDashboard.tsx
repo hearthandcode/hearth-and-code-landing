@@ -1,23 +1,22 @@
 /**
  * ComplianceDashboard (React port)
  *
- * Auto-generated from: k-compliance-dashboard
- * Source: src/components/knowledge/templates/ComplianceDashboard.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface ComplianceDashboardProps {
-
+frameworks: Framework[];
+class?: string;
+  className?: string;
 }
 
-export function ComplianceDashboard({
-
-}: ComplianceDashboardProps) {
+export function ComplianceDashboard(props: ComplianceDashboardProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-compliance-dashboard kc-k-compliance-dashboard--placeholder">
-      <span>ComplianceDashboard (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/ComplianceDashboard.astro */}
+    <div className={['kc-compliancedashboard', className].filter(Boolean).join(' ')}>
+      <span className="kc-compliancedashboard__placeholder">ComplianceDashboard (React port)</span>
     </div>
   );
 }

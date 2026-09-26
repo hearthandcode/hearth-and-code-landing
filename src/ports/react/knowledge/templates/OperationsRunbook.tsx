@@ -1,23 +1,25 @@
 /**
  * OperationsRunbook (React port)
  *
- * Auto-generated from: k-operations-runbook
- * Source: src/components/knowledge/templates/OperationsRunbook.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface OperationsRunbookProps {
-
+title: string;
+procedure: Step[];
+recentLogs: any[];
+oncall?: string;
+class?: string;
+  className?: string;
 }
 
-export function OperationsRunbook({
-
-}: OperationsRunbookProps) {
+export function OperationsRunbook(props: OperationsRunbookProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-operations-runbook kc-k-operations-runbook--placeholder">
-      <span>OperationsRunbook (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/OperationsRunbook.astro */}
+    <div className={['kc-operationsrunbook', className].filter(Boolean).join(' ')}>
+      <span className="kc-operationsrunbook__placeholder">OperationsRunbook (React port)</span>
     </div>
   );
 }

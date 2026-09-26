@@ -1,23 +1,24 @@
 /**
  * KnowledgeBaseBrowser (React port)
  *
- * Auto-generated from: k-knowledge-base-browser
- * Source: src/components/knowledge/templates/KnowledgeBaseBrowser.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface KnowledgeBaseBrowserProps {
-
+taxonomy: { label: string; href?: string; active?: boolean }[];
+sections: Section[];
+searchable?: boolean;
+class?: string;
+  className?: string;
 }
 
-export function KnowledgeBaseBrowser({
-
-}: KnowledgeBaseBrowserProps) {
+export function KnowledgeBaseBrowser(props: KnowledgeBaseBrowserProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-knowledge-base-browser kc-k-knowledge-base-browser--placeholder">
-      <span>KnowledgeBaseBrowser (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/KnowledgeBaseBrowser.astro */}
+    <div className={['kc-knowledgebasebrowser', className].filter(Boolean).join(' ')}>
+      <span className="kc-knowledgebasebrowser__placeholder">KnowledgeBaseBrowser (React port)</span>
     </div>
   );
 }

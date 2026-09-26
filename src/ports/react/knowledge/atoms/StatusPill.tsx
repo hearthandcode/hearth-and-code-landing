@@ -1,27 +1,30 @@
 /**
  * StatusPill (React port)
- *
- * Auto-generated from: k-status-pill
  * Source: src/components/knowledge/atoms/StatusPill.astro
+ * Knowledge primitive (k-atom): k-status-pill
  *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * 10-state status pill
  */
+import * as React from 'react';
 
 export interface StatusPillProps {
-  status: string;
+  status: 'open' | 'closed' | 'pending' | 'sealed' | 'active' | 'archived' | 'review' | 'rejected' | 'approved' | 'draft';
   label?: string;
-  size: string;
+  size?: 'sm' | 'md';
+  className?: string;
 }
 
 export function StatusPill({
   status,
   label,
-  size = "md",
+  size = 'md',
+  className = '',
 }: StatusPillProps) {
+  const classes = ['kc-status-pill', `kc-status-pill--${status}`, `kc-status-pill--${size}`, className].filter(Boolean).join(' ');
   return (
-    <div className="kc-k-status-pill kc-k-status-pill--placeholder">
-      <span>StatusPill (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/atoms/StatusPill.astro */}
-    </div>
+    <span className={classes}>
+      <span className="kc-status-pill__dot" aria-hidden="true" />
+      <span className="kc-status-pill__label">{label ?? status}</span>
+    </span>
   );
 }

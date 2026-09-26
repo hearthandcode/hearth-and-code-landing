@@ -1,23 +1,23 @@
 /**
  * TaxonomyTree (React port)
  *
- * Auto-generated from: k-taxonomy-tree
- * Source: src/components/knowledge/composites/TaxonomyTree.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface TaxonomyTreeProps {
-
+root: Node;
+initiallyExpanded?: number;
+class?: string;
+  className?: string;
 }
 
-export function TaxonomyTree({
-
-}: TaxonomyTreeProps) {
+export function TaxonomyTree(props: TaxonomyTreeProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-taxonomy-tree kc-k-taxonomy-tree--placeholder">
-      <span>TaxonomyTree (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/TaxonomyTree.astro */}
+    <div className={['kc-taxonomytree', className].filter(Boolean).join(' ')}>
+      <span className="kc-taxonomytree__placeholder">TaxonomyTree (React port)</span>
     </div>
   );
 }

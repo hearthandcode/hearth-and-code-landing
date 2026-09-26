@@ -1,25 +1,30 @@
 /**
  * RelationVerb (React port)
- *
- * Auto-generated from: k-relation-verb
  * Source: src/components/knowledge/atoms/RelationVerb.astro
+ * Knowledge primitive (k-atom): k-relation-verb
  *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * 12 semantic relation types
  */
+import * as React from 'react';
 
 export interface RelationVerbProps {
-  verb: string;
-  direction: string;
+  verb: 'is-a' | 'part-of' | 'causes' | 'requires' | 'enables' | 'precedes' | 'follows' | 'contradicts' | 'supports' | 'extends' | 'instance-of' | 'same-as';
+  direction?: 'forward' | 'backward' | 'bidirectional';
+  className?: string;
 }
+
+const arrows = { forward: '→', backward: '←', bidirectional: '↔' };
 
 export function RelationVerb({
   verb,
-  direction = "forward",
+  direction = 'forward',
+  className = '',
 }: RelationVerbProps) {
+  const classes = ['kc-relation-verb', `kc-relation-verb--${verb}`, className].filter(Boolean).join(' ');
   return (
-    <div className="kc-k-relation-verb kc-k-relation-verb--placeholder">
-      <span>RelationVerb (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/atoms/RelationVerb.astro */}
-    </div>
+    <span className={classes}>
+      <span className="kc-relation-verb__arrow" aria-hidden="true">{arrows[direction]}</span>
+      <span className="kc-relation-verb__label">{verb}</span>
+    </span>
   );
 }

@@ -1,29 +1,45 @@
 /**
  * ConceptTerm (React port)
- *
- * Auto-generated from: k-concept-term
  * Source: src/components/knowledge/atoms/ConceptTerm.astro
+ * Knowledge primitive (k-atom): k-concept-term
  *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Defined term with type indicator
  */
+import * as React from 'react';
 
 export interface ConceptTermProps {
   term: string;
-  type: string;
+  type?: 'noun' | 'verb' | 'adjective' | 'phrase' | 'abbreviation';
   definition?: string;
   href?: string;
+  className?: string;
 }
+
+const typeIndicators: Record<string, string> = {
+  noun: '◆',
+  abbreviation: '⌖',
+  verb: '◆',
+  phrase: '◆',
+  adjective: '◆',
+};
 
 export function ConceptTerm({
   term,
-  type = "noun",
+  type = 'noun',
   definition,
   href,
+  className = '',
 }: ConceptTermProps) {
-  return (
-    <div className="kc-k-concept-term kc-k-concept-term--placeholder">
-      <span>ConceptTerm (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/atoms/ConceptTerm.astro */}
-    </div>
+  const classes = ['kc-concept-term', `kc-concept-term--${type}`, className].filter(Boolean).join(' ');
+  const content = (
+    <>
+      <span className="kc-concept-term__type" aria-label={`type: ${type}`}>{typeIndicators[type]}</span>
+      <span className="kc-concept-term__label">{term}</span>
+    </>
+  );
+  return href ? (
+    <a className={classes} title={definition} href={href}>{content}</a>
+  ) : (
+    <span className={classes} title={definition}>{content}</span>
   );
 }

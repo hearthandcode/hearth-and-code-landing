@@ -1,23 +1,23 @@
 /**
  * SequenceDiagram (React port)
  *
- * Auto-generated from: k-sequence-diagram
- * Source: src/components/knowledge/composites/SequenceDiagram.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface SequenceDiagramProps {
-
+actors: string[];
+messages: Message[];
+class?: string;
+  className?: string;
 }
 
-export function SequenceDiagram({
-
-}: SequenceDiagramProps) {
+export function SequenceDiagram(props: SequenceDiagramProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-sequence-diagram kc-k-sequence-diagram--placeholder">
-      <span>SequenceDiagram (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/SequenceDiagram.astro */}
+    <div className={['kc-sequencediagram', className].filter(Boolean).join(' ')}>
+      <span className="kc-sequencediagram__placeholder">SequenceDiagram (React port)</span>
     </div>
   );
 }

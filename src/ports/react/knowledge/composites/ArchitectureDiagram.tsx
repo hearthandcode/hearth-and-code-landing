@@ -1,23 +1,23 @@
 /**
  * ArchitectureDiagram (React port)
  *
- * Auto-generated from: k-architecture-diagram
- * Source: src/components/knowledge/composites/ArchitectureDiagram.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface ArchitectureDiagramProps {
-
+nodes: Node[];
+edges: Edge[];
+class?: string;
+  className?: string;
 }
 
-export function ArchitectureDiagram({
-
-}: ArchitectureDiagramProps) {
+export function ArchitectureDiagram(props: ArchitectureDiagramProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-architecture-diagram kc-k-architecture-diagram--placeholder">
-      <span>ArchitectureDiagram (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/ArchitectureDiagram.astro */}
+    <div className={['kc-architecturediagram', className].filter(Boolean).join(' ')}>
+      <span className="kc-architecturediagram__placeholder">ArchitectureDiagram (React port)</span>
     </div>
   );
 }

@@ -1,0 +1,81 @@
+/* Ember Circuit Design System tokens — global stylesheet for Storybook */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --color-surface-primary: #161411;
+  --color-surface-raised: #211d18;
+  --color-surface-recessed: #0e1114;
+  --color-surface-rule: #4b4237;
+  --color-surface-rule-strong: #6e5d4b;
+
+  /* Text */
+  --color-text-primary: #f1e7d2;
+  --color-text-secondary: #cfc1ab;
+  --color-text-display: #f1e7d2;
+
+  /* Accent palette */
+  --color-accent-ember: #e85b4e;
+  --color-accent-forge: #c25a3a;
+  --color-accent-gold: #f4b860;
+  --color-accent-violet: #9b5de5;
+  --color-accent-amethyst: #c67bea;
+  --color-accent-plasma: #3fe0d0;
+  --color-accent-signal: #1fb6a8;
+
+  /* State */
+  --color-state-success: #8fa395;
+  --color-state-caution: #e8923c;
+  --color-state-error: #c25a2a;
+  --color-state-info: #3fe0d0;
+
+  --color-focus-ring: #3fe0d0;
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-2rem: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Motion */
+  --motion-duration-fast: 0.2s;
+  --motion-duration-normal: 0.3s;
+  --motion-easing-default: ease-out;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Story layout */
+.sbdocs-wrapper,
+.docs-story {
+  background: var(--color-surface-primary) !important;
+}

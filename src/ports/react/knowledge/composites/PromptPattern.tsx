@@ -1,23 +1,27 @@
 /**
  * PromptPattern (React port)
  *
- * Auto-generated from: k-prompt-pattern
- * Source: src/components/knowledge/composites/PromptPattern.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface PromptPatternProps {
-
+name: string;
+category: 'reasoning' | 'extraction' | 'transformation' | 'generation' | 'analysis' | 'tooling';
+template: string;
+variables?: { name: string; description: string }[];
+example?: { input?: string; output: string };
+author?: string;
+class?: string;
+  className?: string;
 }
 
-export function PromptPattern({
-
-}: PromptPatternProps) {
+export function PromptPattern(props: PromptPatternProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-prompt-pattern kc-k-prompt-pattern--placeholder">
-      <span>PromptPattern (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/PromptPattern.astro */}
+    <div className={['kc-promptpattern', className].filter(Boolean).join(' ')}>
+      <span className="kc-promptpattern__placeholder">PromptPattern (React port)</span>
     </div>
   );
 }

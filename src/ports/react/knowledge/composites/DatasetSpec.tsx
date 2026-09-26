@@ -1,23 +1,28 @@
 /**
  * DatasetSpec (React port)
  *
- * Auto-generated from: k-dataset-spec
- * Source: src/components/knowledge/composites/DatasetSpec.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface DatasetSpecProps {
-
+name: string;
+version: string;
+size: string;
+format: string;
+license: string;
+schema: { name: string; type: string; description?: string }[];
+ethicalNotes?: string[];
+class?: string;
+  className?: string;
 }
 
-export function DatasetSpec({
-
-}: DatasetSpecProps) {
+export function DatasetSpec(props: DatasetSpecProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-dataset-spec kc-k-dataset-spec--placeholder">
-      <span>DatasetSpec (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/DatasetSpec.astro */}
+    <div className={['kc-datasetspec', className].filter(Boolean).join(' ')}>
+      <span className="kc-datasetspec__placeholder">DatasetSpec (React port)</span>
     </div>
   );
 }

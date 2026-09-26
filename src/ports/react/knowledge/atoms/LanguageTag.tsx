@@ -1,25 +1,45 @@
 /**
  * LanguageTag (React port)
- *
- * Auto-generated from: k-language-tag
  * Source: src/components/knowledge/atoms/LanguageTag.astro
+ * Knowledge primitive (k-atom): k-language-tag
  *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Code language tag with 11 colors
  */
+import * as React from 'react';
 
 export interface LanguageTagProps {
   language: string;
-  variant: string;
+  variant?: 'plain' | 'compact' | 'minimal';
+  className?: string;
 }
+
+const langColors: Record<string, string> = {
+  python: 'var(--color-accent-signal)',
+  typescript: 'var(--color-accent-plasma)',
+  javascript: 'var(--color-accent-gold)',
+  rust: 'var(--color-accent-ember)',
+  yaml: 'var(--color-accent-violet)',
+  json: 'var(--color-text-secondary)',
+  bash: 'var(--color-state-success)',
+  markdown: 'var(--color-text-display)',
+  sql: 'var(--color-state-caution)',
+  go: 'var(--color-accent-plasma)',
+};
 
 export function LanguageTag({
   language,
-  variant = "plain",
+  variant = 'plain',
+  className = '',
 }: LanguageTagProps) {
+  const color = langColors[language.toLowerCase()] ?? 'var(--color-text-secondary)';
+  const classes = ['kc-language-tag', `kc-language-tag--${variant}`, className].filter(Boolean).join(' ');
   return (
-    <div className="kc-k-language-tag kc-k-language-tag--placeholder">
-      <span>LanguageTag (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/atoms/LanguageTag.astro */}
-    </div>
+    <span
+      className={classes}
+      style={{ '--lang-color': color } as React.CSSProperties}
+    >
+      <span className="kc-language-tag__pip" aria-hidden="true" />
+      {variant !== 'minimal' && <span className="kc-language-tag__label">{language}</span>}
+    </span>
   );
 }

@@ -1,23 +1,24 @@
 /**
  * SystemArchitectureDoc (React port)
  *
- * Auto-generated from: k-system-architecture-doc
- * Source: src/components/knowledge/templates/SystemArchitectureDoc.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface SystemArchitectureDocProps {
-
+title: string;
+version: string;
+sections: Section[];
+class?: string;
+  className?: string;
 }
 
-export function SystemArchitectureDoc({
-
-}: SystemArchitectureDocProps) {
+export function SystemArchitectureDoc(props: SystemArchitectureDocProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-system-architecture-doc kc-k-system-architecture-doc--placeholder">
-      <span>SystemArchitectureDoc (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/SystemArchitectureDoc.astro */}
+    <div className={['kc-systemarchitecturedoc', className].filter(Boolean).join(' ')}>
+      <span className="kc-systemarchitecturedoc__placeholder">SystemArchitectureDoc (React port)</span>
     </div>
   );
 }

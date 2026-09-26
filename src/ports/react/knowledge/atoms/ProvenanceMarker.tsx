@@ -1,25 +1,37 @@
 /**
  * ProvenanceMarker (React port)
- *
- * Auto-generated from: k-provenance-marker
  * Source: src/components/knowledge/atoms/ProvenanceMarker.astro
+ * Knowledge primitive (k-atom): k-provenance-marker
  *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Provenance badge (6 kinds)
  */
+import * as React from 'react';
 
 export interface ProvenanceMarkerProps {
-  kind: string;
+  kind: 'primary' | 'derived' | 'cited' | 'verified' | 'inferred' | 'speculative';
   source?: string;
+  className?: string;
 }
+
+const kindIcons: Record<string, string> = {
+  primary: '◉',
+  derived: '⊛',
+  cited: '↗',
+  verified: '✓',
+  inferred: '◐',
+  speculative: '◌',
+};
 
 export function ProvenanceMarker({
   kind,
   source,
+  className = '',
 }: ProvenanceMarkerProps) {
+  const classes = ['kc-provenance', `kc-provenance--${kind}`, className].filter(Boolean).join(' ');
   return (
-    <div className="kc-k-provenance-marker kc-k-provenance-marker--placeholder">
-      <span>ProvenanceMarker (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/atoms/ProvenanceMarker.astro */}
-    </div>
+    <span className={classes} title={source}>
+      <span className="kc-provenance__icon" aria-hidden="true">{kindIcons[kind]}</span>
+      <span className="kc-provenance__label">{kind}</span>
+    </span>
   );
 }

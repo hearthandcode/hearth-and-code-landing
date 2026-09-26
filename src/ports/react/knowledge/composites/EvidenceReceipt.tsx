@@ -1,23 +1,29 @@
 /**
  * EvidenceReceipt (React port)
  *
- * Auto-generated from: k-evidence-receipt
- * Source: src/components/knowledge/composites/EvidenceReceipt.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface EvidenceReceiptProps {
-
+id: string;
+type: 'document' | 'testimony' | 'observation' | 'measurement' | 'artifact';
+description: string;
+hash: string;
+hashAlgorithm?: 'sha256' | 'sha1' | 'blake3';
+timestamp: string;
+witness?: string;
+locator?: string;
+class?: string;
+  className?: string;
 }
 
-export function EvidenceReceipt({
-
-}: EvidenceReceiptProps) {
+export function EvidenceReceipt(props: EvidenceReceiptProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-evidence-receipt kc-k-evidence-receipt--placeholder">
-      <span>EvidenceReceipt (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/EvidenceReceipt.astro */}
+    <div className={['kc-evidencereceipt', className].filter(Boolean).join(' ')}>
+      <span className="kc-evidencereceipt__placeholder">EvidenceReceipt (React port)</span>
     </div>
   );
 }

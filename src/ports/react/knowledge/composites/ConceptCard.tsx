@@ -1,23 +1,26 @@
 /**
  * ConceptCard (React port)
  *
- * Auto-generated from: k-concept-card
- * Source: src/components/knowledge/composites/ConceptCard.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface ConceptCardProps {
-
+term: string;
+definition: string;
+type?: string;
+relations?: Relation[];
+source?: string;
+class?: string;
+  className?: string;
 }
 
-export function ConceptCard({
-
-}: ConceptCardProps) {
+export function ConceptCard(props: ConceptCardProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-concept-card kc-k-concept-card--placeholder">
-      <span>ConceptCard (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/ConceptCard.astro */}
+    <div className={['kc-conceptcard', className].filter(Boolean).join(' ')}>
+      <span className="kc-conceptcard__placeholder">ConceptCard (React port)</span>
     </div>
   );
 }

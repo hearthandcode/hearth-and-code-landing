@@ -1,23 +1,26 @@
 /**
  * EvidencePackage (React port)
  *
- * Auto-generated from: k-evidence-package
- * Source: src/components/knowledge/templates/EvidencePackage.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface EvidencePackageProps {
-
+title: string;
+claim: string;
+receipts: Receipt[];
+sealedBy?: string;
+sealedAt?: string;
+class?: string;
+  className?: string;
 }
 
-export function EvidencePackage({
-
-}: EvidencePackageProps) {
+export function EvidencePackage(props: EvidencePackageProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-evidence-package kc-k-evidence-package--placeholder">
-      <span>EvidencePackage (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/EvidencePackage.astro */}
+    <div className={['kc-evidencepackage', className].filter(Boolean).join(' ')}>
+      <span className="kc-evidencepackage__placeholder">EvidencePackage (React port)</span>
     </div>
   );
 }

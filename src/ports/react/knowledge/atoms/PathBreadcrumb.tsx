@@ -1,27 +1,37 @@
 /**
  * PathBreadcrumb (React port)
- *
- * Auto-generated from: k-path-segment
  * Source: src/components/knowledge/atoms/PathBreadcrumb.astro
+ * Knowledge primitive (k-atom): k-path-segment
  *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Single file path segment
  */
+import * as React from 'react';
 
 export interface PathBreadcrumbProps {
   segment: string;
   href?: string;
-  icon: string;
+  icon?: 'folder' | 'file' | 'package';
+  className?: string;
 }
+
+const icons = { folder: '◫', file: '◧', package: '⌘' };
 
 export function PathBreadcrumb({
   segment,
   href,
-  icon = "folder",
+  icon = 'folder',
+  className = '',
 }: PathBreadcrumbProps) {
-  return (
-    <div className="kc-k-path-segment kc-k-path-segment--placeholder">
-      <span>PathBreadcrumb (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/atoms/PathBreadcrumb.astro */}
-    </div>
+  const classes = ['kc-path-segment', className].filter(Boolean).join(' ');
+  const content = (
+    <>
+      <span className="kc-path-segment__icon" aria-hidden="true">{icons[icon]}</span>
+      <span className="kc-path-segment__name">{segment}</span>
+    </>
+  );
+  return href ? (
+    <a className={classes} href={href}>{content}</a>
+  ) : (
+    <span className={classes}>{content}</span>
   );
 }

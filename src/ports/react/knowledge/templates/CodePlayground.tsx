@@ -1,23 +1,26 @@
 /**
  * CodePlayground (React port)
  *
- * Auto-generated from: k-code-playground
- * Source: src/components/knowledge/templates/CodePlayground.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface CodePlaygroundProps {
-
+title: string;
+code: string;
+language: 'python' | 'typescript' | 'javascript' | 'rust' | 'yaml' | 'json' | 'bash' | 'sql' | 'markdown';
+output: string;
+explanation: string;
+class?: string;
+  className?: string;
 }
 
-export function CodePlayground({
-
-}: CodePlaygroundProps) {
+export function CodePlayground(props: CodePlaygroundProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-code-playground kc-k-code-playground--placeholder">
-      <span>CodePlayground (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/CodePlayground.astro */}
+    <div className={['kc-codeplayground', className].filter(Boolean).join(' ')}>
+      <span className="kc-codeplayground__placeholder">CodePlayground (React port)</span>
     </div>
   );
 }

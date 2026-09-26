@@ -1,23 +1,23 @@
 /**
  * DialogueTree (React port)
  *
- * Auto-generated from: k-dialogue-tree
- * Source: src/components/knowledge/composites/DialogueTree.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface DialogueTreeProps {
-
+nodes: Node[];
+rootId: string;
+class?: string;
+  className?: string;
 }
 
-export function DialogueTree({
-
-}: DialogueTreeProps) {
+export function DialogueTree(props: DialogueTreeProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-dialogue-tree kc-k-dialogue-tree--placeholder">
-      <span>DialogueTree (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/DialogueTree.astro */}
+    <div className={['kc-dialoguetree', className].filter(Boolean).join(' ')}>
+      <span className="kc-dialoguetree__placeholder">DialogueTree (React port)</span>
     </div>
   );
 }

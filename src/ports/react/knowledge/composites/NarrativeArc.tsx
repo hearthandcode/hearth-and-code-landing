@@ -1,23 +1,22 @@
 /**
  * NarrativeArc (React port)
  *
- * Auto-generated from: k-narrative-arc
- * Source: src/components/knowledge/composites/NarrativeArc.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface NarrativeArcProps {
-
+beats: Beat[];
+class?: string;
+  className?: string;
 }
 
-export function NarrativeArc({
-
-}: NarrativeArcProps) {
+export function NarrativeArc(props: NarrativeArcProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-narrative-arc kc-k-narrative-arc--placeholder">
-      <span>NarrativeArc (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/NarrativeArc.astro */}
+    <div className={['kc-narrativearc', className].filter(Boolean).join(' ')}>
+      <span className="kc-narrativearc__placeholder">NarrativeArc (React port)</span>
     </div>
   );
 }

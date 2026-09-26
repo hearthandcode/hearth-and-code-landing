@@ -1,23 +1,23 @@
 /**
  * ResearchBrief (React port)
  *
- * Auto-generated from: k-research-brief
- * Source: src/components/knowledge/templates/ResearchBrief.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface ResearchBriefProps {
-
+paper: any;
+related?: any[];
+class?: string;
+  className?: string;
 }
 
-export function ResearchBrief({
-
-}: ResearchBriefProps) {
+export function ResearchBrief(props: ResearchBriefProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-research-brief kc-k-research-brief--placeholder">
-      <span>ResearchBrief (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/ResearchBrief.astro */}
+    <div className={['kc-researchbrief', className].filter(Boolean).join(' ')}>
+      <span className="kc-researchbrief__placeholder">ResearchBrief (React port)</span>
     </div>
   );
 }

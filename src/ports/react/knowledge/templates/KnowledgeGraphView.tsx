@@ -1,23 +1,23 @@
 /**
  * KnowledgeGraphView (React port)
  *
- * Auto-generated from: k-knowledge-graph-view
- * Source: src/components/knowledge/templates/KnowledgeGraphView.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface KnowledgeGraphViewProps {
-
+nodes: Node[];
+edges: Edge[];
+class?: string;
+  className?: string;
 }
 
-export function KnowledgeGraphView({
-
-}: KnowledgeGraphViewProps) {
+export function KnowledgeGraphView(props: KnowledgeGraphViewProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-knowledge-graph-view kc-k-knowledge-graph-view--placeholder">
-      <span>KnowledgeGraphView (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/KnowledgeGraphView.astro */}
+    <div className={['kc-knowledgegraphview', className].filter(Boolean).join(' ')}>
+      <span className="kc-knowledgegraphview__placeholder">KnowledgeGraphView (React port)</span>
     </div>
   );
 }

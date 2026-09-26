@@ -1,23 +1,28 @@
 /**
  * PolicyDocument (React port)
  *
- * Auto-generated from: k-policy-document
- * Source: src/components/knowledge/templates/PolicyDocument.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface PolicyDocumentProps {
-
+id: string;
+title: string;
+effectiveDate: string;
+reviewDate: string;
+owner: string;
+sections: Section[];
+gates?: any[]; // HumanGate props
+class?: string;
+  className?: string;
 }
 
-export function PolicyDocument({
-
-}: PolicyDocumentProps) {
+export function PolicyDocument(props: PolicyDocumentProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-policy-document kc-k-policy-document--placeholder">
-      <span>PolicyDocument (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/templates/PolicyDocument.astro */}
+    <div className={['kc-policydocument', className].filter(Boolean).join(' ')}>
+      <span className="kc-policydocument__placeholder">PolicyDocument (React port)</span>
     </div>
   );
 }

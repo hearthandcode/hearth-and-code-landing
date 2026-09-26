@@ -1,23 +1,24 @@
 /**
  * CitationChain (React port)
  *
- * Auto-generated from: k-citation-chain
- * Source: src/components/knowledge/composites/CitationChain.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface CitationChainProps {
-
+citations: Citation[];
+label?: string;
+separator?: 'arrow' | 'pipe' | 'dot';
+class?: string;
+  className?: string;
 }
 
-export function CitationChain({
-
-}: CitationChainProps) {
+export function CitationChain(props: CitationChainProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-citation-chain kc-k-citation-chain--placeholder">
-      <span>CitationChain (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/CitationChain.astro */}
+    <div className={['kc-citationchain', className].filter(Boolean).join(' ')}>
+      <span className="kc-citationchain__placeholder">CitationChain (React port)</span>
     </div>
   );
 }

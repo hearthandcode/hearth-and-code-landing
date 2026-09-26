@@ -1,23 +1,24 @@
 /**
  * SchemaViewer (React port)
  *
- * Auto-generated from: k-schema-viewer
- * Source: src/components/knowledge/composites/SchemaViewer.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface SchemaViewerProps {
-
+name: string;
+fields: Field[];
+description?: string;
+class?: string;
+  className?: string;
 }
 
-export function SchemaViewer({
-
-}: SchemaViewerProps) {
+export function SchemaViewer(props: SchemaViewerProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-schema-viewer kc-k-schema-viewer--placeholder">
-      <span>SchemaViewer (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/SchemaViewer.astro */}
+    <div className={['kc-schemaviewer', className].filter(Boolean).join(' ')}>
+      <span className="kc-schemaviewer__placeholder">SchemaViewer (React port)</span>
     </div>
   );
 }

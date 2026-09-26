@@ -1,23 +1,23 @@
 /**
  * TaskHierarchy (React port)
  *
- * Auto-generated from: k-task-hierarchy
- * Source: src/components/knowledge/composites/TaskHierarchy.astro
- *
- * NOTE: Skeleton port. Visual fidelity depends on host framework CSS.
+ * Generated skeleton from Astro composite. Hand-port the render logic
+ * for full visual parity.
  */
+import * as React from 'react';
 
 export interface TaskHierarchyProps {
-
+tasks: Task[];
+initiallyExpanded?: boolean;
+class?: string;
+  className?: string;
 }
 
-export function TaskHierarchy({
-
-}: TaskHierarchyProps) {
+export function TaskHierarchy(props: TaskHierarchyProps) {
+  const { className = '', ...rest } = props as any;
   return (
-    <div className="kc-k-task-hierarchy kc-k-task-hierarchy--placeholder">
-      <span>TaskHierarchy (React port)</span>
-      {/* TODO: port rendering logic from src/components/knowledge/composites/TaskHierarchy.astro */}
+    <div className={['kc-taskhierarchy', className].filter(Boolean).join(' ')}>
+      <span className="kc-taskhierarchy__placeholder">TaskHierarchy (React port)</span>
     </div>
   );
 }
