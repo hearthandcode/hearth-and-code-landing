@@ -1,5 +1,14 @@
-/* Ember Circuit Design System tokens — global stylesheet for Storybook */
-:root {
+/* Ember Circuit Design System tokens — applied via decorator wrapper class */
+.ec-preview,
+.ec-preview html,
+.ec-preview body,
+.ec-preview #storybook-root {
+  /* This file's import side-effect only — actual styling via the wrapper class below */
+}
+
+/* All Ember Circuit tokens are scoped under .ec-preview so they don't leak
+   into Storybook's UI chrome (which uses its own CSS vars). */
+.ec-preview {
   color-scheme: dark;
 
   /* Surfaces */
@@ -31,18 +40,43 @@
 
   --color-focus-ring: #3fe0d0;
 
+  /* Gradients */
+  --gradient-signal-travel: linear-gradient(90deg, #e85b4e 0%, #e8923c 42%, #f4b860 70%, #3fe0d0 100%);
+  --gradient-firelight: linear-gradient(180deg, #e85b4e 0%, #e8923c 45%, #f4b860 100%);
+
+  /* Shadows */
+  --shadow-glow-ember: 0 0 16px #e85b4e59;
+  --shadow-glow-plasma: 0 0 14px #3fe0d066;
+  --shadow-card: 0 2px 8px #0000004d;
+  --shadow-card-hover: 0 4px 16px #0006;
+  --shadow-overlay: 0 8px 32px #00000080;
+
   /* Typography */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Spacing */
+  /* Font sizes */
+  --font-size-body: 1rem;
+  --font-size-small: 0.875rem;
+
+  /* Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Line heights */
+  --line-height-body: 1.6;
+  --line-height-reading: 1.75;
+  --line-height-heading: 1.2;
+
+  /* Spacing (8px base) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-5: 1.5rem;
-  --space-2rem: 2rem;
+  --space-6: 2rem;
   --space-7: 3rem;
   --space-8: 4rem;
   --space-9: 6rem;
@@ -55,27 +89,25 @@
   /* Motion */
   --motion-duration-fast: 0.2s;
   --motion-duration-normal: 0.3s;
+  --motion-duration-atmospheric: 8s;
   --motion-easing-default: ease-out;
-}
+  --motion-easing-atmospheric: ease-in-out;
 
-html,
-body,
-#root {
-  margin: 0;
-  padding: 0;
+  /* Sizes */
+  --size-content-max: 51.25rem;
+  --size-reading-max: 65ch;
+
+  /* Background + base styling */
   background: var(--color-surface-primary);
   color: var(--color-text-primary);
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: var(--font-size-small);
   line-height: 1.5;
-}
-
-* {
+  padding: 2rem;
+  min-height: 100vh;
   box-sizing: border-box;
 }
 
-/* Story layout */
-.sbdocs-wrapper,
-.docs-story {
-  background: var(--color-surface-primary) !important;
+.ec-preview * {
+  box-sizing: border-box;
 }
