@@ -1,199 +1,994 @@
 ---
 /**
  * Design System Showcase - Ember Circuit
- * Storybook-style component gallery with isolated previews.
- * Tabs: Atoms | Molecules | Organisms | Patterns | Showcase
+ *
+ * Storybook-style component gallery. Each component rendered in isolation
+ * inside a tile. All styling token-driven via tokens.css + global.css.
  */
 
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+
 import Layout from '../../layouts/Layout.astro';
-import Button from '../../components/primitives/Button.astro';
-import Input from '../../components/primitives/Input.astro';
-import Icon from '../../components/primitives/Icon.astro';
-import Badge from '../../components/primitives/Badge.astro';
-import Tag from '../../components/primitives/Tag.astro';
-import Divider from '../../components/primitives/Divider.astro';
-import Label from '../../components/primitives/Label.astro';
-import Tooltip from '../../components/primitives/Tooltip.astro';
+
+// Atoms
 import Avatar from '../../components/primitives/Avatar.astro';
+import Badge from '../../components/primitives/Badge.astro';
+import Button from '../../components/primitives/Button.astro';
 import Checkbox from '../../components/primitives/Checkbox.astro';
+import Divider from '../../components/primitives/Divider.astro';
+import Icon from '../../components/primitives/Icon.astro';
+import Input from '../../components/primitives/Input.astro';
+import Label from '../../components/primitives/Label.astro';
 import Radio from '../../components/primitives/Radio.astro';
-import Spinner from '../../components/primitives/Spinner.astro';
 import Skeleton from '../../components/primitives/Skeleton.astro';
-import Card from '../../components/composites/Card.astro';
-import FeatureCard from '../../components/composites/FeatureCard.astro';
-import StatCard from '../../components/composites/StatCard.astro';
-import ProfileCard from '../../components/composites/ProfileCard.astro';
-import QuoteCard from '../../components/composites/QuoteCard.astro';
-import PricingCard from '../../components/composites/PricingCard.astro';
-import ProductCard from '../../components/composites/ProductCard.astro';
-import TestimonialCard from '../../components/composites/TestimonialCard.astro';
+import Spinner from '../../components/primitives/Spinner.astro';
+import Tag from '../../components/primitives/Tag.astro';
+import Tooltip from '../../components/primitives/Tooltip.astro';
+
+// Composites
 import Accordion from '../../components/composites/Accordion.astro';
-import Tabs from '../../components/composites/Tabs.astro';
-import Breadcrumb from '../../components/composites/Breadcrumb.astro';
-import Pagination from '../../components/composites/Pagination.astro';
-import Stepper from '../../components/composites/Stepper.astro';
-import LinkGroup from '../../components/composites/LinkGroup.astro';
-import Textarea from '../../components/composites/Textarea.astro';
-import Select from '../../components/composites/Select.astro';
-import FormField from '../../components/composites/FormField.astro';
-import SearchBar from '../../components/composites/SearchBar.astro';
 import Alert from '../../components/composites/Alert.astro';
-import Toast from '../../components/composites/Toast.astro';
-import Progress from '../../components/composites/Progress.astro';
-import EmptyState from '../../components/composites/EmptyState.astro';
-import Table from '../../components/composites/Table.astro';
-import TableSortable from '../../components/composites/TableSortable.astro';
-import TableFilterable from '../../components/composites/TableFilterable.astro';
+import Breadcrumb from '../../components/composites/Breadcrumb.astro';
+import Card from '../../components/composites/Card.astro';
 import ChartBar from '../../components/composites/ChartBar.astro';
 import ChartLine from '../../components/composites/ChartLine.astro';
 import ChartPie from '../../components/composites/ChartPie.astro';
+import EmptyState from '../../components/composites/EmptyState.astro';
+import FeatureCard from '../../components/composites/FeatureCard.astro';
+import FormField from '../../components/composites/FormField.astro';
+import LinkGroup from '../../components/composites/LinkGroup.astro';
 import List from '../../components/composites/List.astro';
 import ListGrid from '../../components/composites/ListGrid.astro';
+import Pagination from '../../components/composites/Pagination.astro';
+import PricingCard from '../../components/composites/PricingCard.astro';
+import ProductCard from '../../components/composites/ProductCard.astro';
+import ProfileCard from '../../components/composites/ProfileCard.astro';
+import Progress from '../../components/composites/Progress.astro';
+import QuoteCard from '../../components/composites/QuoteCard.astro';
+import SearchBar from '../../components/composites/SearchBar.astro';
+import Select from '../../components/composites/Select.astro';
+import StatCard from '../../components/composites/StatCard.astro';
+import Stepper from '../../components/composites/Stepper.astro';
+import Table from '../../components/composites/Table.astro';
+import TableFilterable from '../../components/composites/TableFilterable.astro';
+import TableSortable from '../../components/composites/TableSortable.astro';
+import Tabs from '../../components/composites/Tabs.astro';
+import TestimonialCard from '../../components/composites/TestimonialCard.astro';
+import Textarea from '../../components/composites/Textarea.astro';
 import Timeline from '../../components/composites/Timeline.astro';
+import Toast from '../../components/composites/Toast.astro';
 import Toc from '../../components/composites/Toc.astro';
+
+// Templates
+import Dashboard from '../../components/templates/Dashboard.astro';
+import HeaderLayout from '../../components/templates/HeaderLayout.astro';
 import HeroCentered from '../../components/templates/HeroCentered.astro';
 import HeroSplit from '../../components/templates/HeroSplit.astro';
 import HeroVideo from '../../components/templates/HeroVideo.astro';
-import SectionContent from '../../components/templates/SectionContent.astro';
-import SectionFeatures from '../../components/templates/SectionFeatures.astro';
-import SectionCTA from '../../components/templates/SectionCTA.astro';
-import SectionPricing from '../../components/templates/SectionPricing.astro';
-import SectionTestimonials from '../../components/templates/SectionTestimonials.astro';
-import PageHeader from '../../components/templates/PageHeader.astro';
-import PageFooter from '../../components/templates/PageFooter.astro';
+import LayoutGrid from '../../components/templates/LayoutGrid.astro';
+import LayoutSidebar from '../../components/templates/LayoutSidebar.astro';
+import LayoutStack from '../../components/templates/LayoutStack.astro';
+import Modal from '../../components/templates/Modal.astro';
 import NavHeader from '../../components/templates/NavHeader.astro';
 import NavSidebar from '../../components/templates/NavSidebar.astro';
-import LayoutGrid from '../../components/templates/LayoutGrid.astro';
-import LayoutStack from '../../components/templates/LayoutStack.astro';
-import LayoutSidebar from '../../components/templates/LayoutSidebar.astro';
-import HeaderLayout from '../../components/templates/HeaderLayout.astro';
-import TabsLayout from '../../components/templates/TabsLayout.astro';
+import PageFooter from '../../components/templates/PageFooter.astro';
+import PageHeader from '../../components/templates/PageHeader.astro';
+import SectionCTA from '../../components/templates/SectionCTA.astro';
+import SectionContent from '../../components/templates/SectionContent.astro';
+import SectionFeatures from '../../components/templates/SectionFeatures.astro';
+import SectionPricing from '../../components/templates/SectionPricing.astro';
+import SectionTestimonials from '../../components/templates/SectionTestimonials.astro';
 import StepperLayout from '../../components/templates/StepperLayout.astro';
-import Dashboard from '../../components/templates/Dashboard.astro';
-import Modal from '../../components/templates/Modal.astro';
+import TabsLayout from '../../components/templates/TabsLayout.astro';
 ---
 
-<Layout title="Design System · Ember Circuit" description="Storybook-style component gallery. Atoms, molecules, organisms, patterns — all isolated, all token-driven.">
+<Layout title="Design System · Ember Circuit" description="Storybook-style gallery of all 64 Hearth & Code components. Atoms, molecules, organisms — isolated, token-driven, accessible.">
 
-<!-- EMBER CIRCUIT HERO -->
-<section class="ec-circ-hero">
-  <div class="ec-circ-hero__bg">
-    <svg class="ec-circ-hero__circuit" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="ec-circ-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-accent-signal, #1FB6A8)" stroke-width="0.5" opacity="0.2"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#ec-circ-grid)" />
-      <!-- Circuit traces -->
-      <g class="ec-circ-traces" stroke="var(--color-accent-ember, #E85B4E)" fill="none" stroke-width="1.5" opacity="0.4">
-        <path d="M 50 100 L 200 100 L 200 200 L 350 200" />
-        <path d="M 450 200 L 600 200 L 600 100 L 750 100" />
-        <path d="M 200 300 L 350 300 L 350 200" />
-        <path d="M 450 300 L 600 300 L 600 200" />
-      </g>
-      <!-- Circuit nodes -->
-      <g class="ec-circ-nodes" fill="var(--color-accent-signal, #1FB6A8)">
-        <circle cx="50" cy="100" r="4" />
-        <circle cx="200" cy="100" r="4" />
-        <circle cx="200" cy="200" r="4" />
-        <circle cx="350" cy="200" r="4" />
-        <circle cx="450" cy="200" r="4" />
-        <circle cx="600" cy="100" r="4" />
-        <circle cx="750" cy="100" r="4" />
-        <circle cx="200" cy="300" r="4" />
-        <circle cx="600" cy="300" r="4" />
-      </g>
-    </svg>
-  </div>
-  <div class="ec-circ-hero__inner">
-    <p class="ec-circ-hero__eyebrow">Ember Circuit Design System</p>
-    <h1 class="ec-circ-hero__title">
-      <span class="ec-circ-hero__title-ember">Hearth</span>
-      <span class="ec-circ-hero__title-divider">|</span>
-      <span class="ec-circ-hero__title-code">Code</span>
+<!-- HERO -->
+<header class="ds-hero">
+  <div class="ds-hero__inner">
+    <p class="ds-hero__eyebrow">Ember Circuit · Design System</p>
+    <h1 class="ds-hero__title">
+      <span class="ds-hero__hearth">Hearth</span>
+      <span class="ds-hero__bar">|</span>
+      <span class="ds-hero__code">Code</span>
     </h1>
-    <p class="ec-circ-hero__lede">
-      64 components across four layers — atoms, molecules, organisms, and patterns —
-      each isolated, each token-driven, each ready for inspection.
+    <p class="ds-hero__lede">
+      All 64 components, rendered in isolation. Three layers — primitives, composites,
+      and templates. Token-driven, accessible, production-ready.
     </p>
-    <div class="ec-circ-hero__stats">
-      <StatCard value="12" label="Atoms" trend="flat" accent="hearth" />
-      <StatCard value="32" label="Molecules" trend="up" context="+8" accent="code" />
-      <StatCard value="20" label="Organisms" trend="up" context="+9" accent="balanced" />
-      <StatCard value="64" label="Total" trend="up" context="Complete" accent="balanced" />
+    <div class="ds-hero__counts">
+      <a href="#atoms" class="ds-count">
+        <span class="ds-count__value">12</span>
+        <span class="ds-count__label">Atoms</span>
+      </a>
+      <a href="#composites" class="ds-count">
+        <span class="ds-count__value">32</span>
+        <span class="ds-count__label">Composites</span>
+      </a>
+      <a href="#templates" class="ds-count">
+        <span class="ds-count__value">20</span>
+        <span class="ds-count__label">Templates</span>
+      </a>
+      <span class="ds-count ds-count--total">
+        <span class="ds-count__value">64</span>
+        <span class="ds-count__label">Total</span>
+      </span>
     </div>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="ds-nav">
+  <div class="ds-nav__inner">
+    <a href="#atoms" class="ds-nav__link">Atoms</a>
+    <a href="#composites" class="ds-nav__link">Composites</a>
+    <a href="#templates" class="ds-nav__link">Templates</a>
+  </div>
+</nav>
+
+<!-- ATOMS -->
+<section id="atoms" class="ds-section">
+  <header class="ds-section__header">
+    <p class="ds-section__eyebrow">Layer 1 · Primitives</p>
+    <h2 class="ds-section__title">Atoms</h2>
+    <p class="ds-section__desc">12 single-purpose elements. The irreducible building blocks.</p>
+  </header>
+
+  <div class="ds-tiles">
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="danger">Danger</Button>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-button</span>
+        <span class="ds-tile__name">Button</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Input type="email" placeholder="you@example.com" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-input</span>
+        <span class="ds-tile__name">Input</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Icon name="check" size="lg" />
+        <Icon name="info" size="lg" />
+        <Icon name="warning" size="lg" />
+        <Icon name="user" size="lg" />
+        <Icon name="arrow-right" size="lg" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-icon</span>
+        <span class="ds-tile__name">Icon</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Badge>Default</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="caution">Caution</Badge>
+        <Badge variant="danger">Danger</Badge>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-badge</span>
+        <span class="ds-tile__name">Badge</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Tag label="token" />
+        <Tag label="hearth" variant="hearth" />
+        <Tag label="code" variant="code" />
+        <Tag label="balanced" variant="balanced" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-tag</span>
+        <span class="ds-tile__name">Tag</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Divider variant="solid" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-divider</span>
+        <span class="ds-tile__name">Divider</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Avatar name="SR" size="lg" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-avatar</span>
+        <span class="ds-tile__name">Avatar</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Label text="Email" htmlFor="lbl-email" required />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-label</span>
+        <span class="ds-tile__name">Label</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Tooltip content="Tooltip helper text">Hover me</Tooltip>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-tooltip</span>
+        <span class="ds-tile__name">Tooltip</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Checkbox id="ds-cb" label="Subscribe" checked />
+        <Checkbox id="ds-cb2" label="Unchecked" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-checkbox</span>
+        <span class="ds-tile__name">Checkbox</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Radio name="ds-radio" value="a" label="Option A" checked />
+        <Radio name="ds-radio" value="b" label="Option B" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-radio</span>
+        <span class="ds-tile__name">Radio</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Spinner size="lg" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-spinner</span>
+        <span class="ds-tile__name">Spinner</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="flex-direction: column; align-items: stretch; gap: 0.5rem;">
+        <Skeleton variant="text" width="80%" />
+        <Skeleton variant="text" width="60%" />
+        <Skeleton variant="text" width="70%" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">p-skeleton</span>
+        <span class="ds-tile__name">Skeleton</span>
+      </figcaption>
+    </figure>
+
   </div>
 </section>
 
-<!-- TABS PANEL -->
-<Tabs
-  tabs={[
-    {
-      id: 'atoms',
-      label: 'Atoms',
-      content: 'atoms',
-    },
-    {
-      id: 'molecules',
-      label: 'Molecules',
-      content: 'molecules',
-    },
-    {
-      id: 'organisms',
-      label: 'Organisms',
-      content: 'organisms',
-    },
-    {
-      id: 'patterns',
-      label: 'Patterns',
-      content: 'patterns',
-    },
-    {
-      id: 'showcase',
-      label: 'Showcase',
-      content: 'showcase',
-    },
-  ]}
-  variant="pills"
-/>
+<!-- COMPOSITES -->
+<section id="composites" class="ds-section">
+  <header class="ds-section__header">
+    <p class="ds-section__eyebrow">Layer 2 · Molecules</p>
+    <h2 class="ds-section__title">Composites</h2>
+    <p class="ds-section__desc">32 composed elements. Atoms arranged into functional units.</p>
+  </header>
+
+  <div class="ds-tiles">
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <FeatureCard icon="check" title="Fast" description="Built for speed and reliability." accent="hearth" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-feature-card</span>
+        <span class="ds-tile__name">Feature Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <StatCard value="98%" label="Accessibility" trend="up" context="+12%" accent="success" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-stat-card</span>
+        <span class="ds-tile__name">Stat Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Card>
+          <h3 style="margin: 0 0 0.5rem 0;">Card title</h3>
+          <p style="margin: 0;">Composable surface with header, body, and footer slots.</p>
+        </Card>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-card</span>
+        <span class="ds-tile__name">Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <ProfileCard name="Scott Rallya" title="Hearthside Meta-Architect" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-profile-card</span>
+        <span class="ds-tile__name">Profile Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <QuoteCard quote="Every consequential claim should have a source." attribution="Hearth & Code" source="Studio Charter" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-quote-card</span>
+        <span class="ds-tile__name">Quote Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <PricingCard tier="Pro" price="$29" period="/mo" features={['Unlimited', 'Priority support']} ctaLabel="Subscribe" ctaHref="#" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-pricing-card</span>
+        <span class="ds-tile__name">Pricing Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <ProductCard title="Component Library" description="64 components built with tokens." price="Free" href="#" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-product-card</span>
+        <span class="ds-tile__name">Product Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <TestimonialCard quote="This design system transformed our workflow." author="User" role="Developer" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-testimonial-card</span>
+        <span class="ds-tile__name">Testimonial Card</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="flex-direction: column; align-items: stretch; gap: 0.5rem;">
+        <Alert variant="info">Information message</Alert>
+        <Alert variant="success">Success message</Alert>
+        <Alert variant="caution">Caution message</Alert>
+        <Alert variant="danger">Danger message</Alert>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-alert</span>
+        <span class="ds-tile__name">Alert</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="flex-direction: column; align-items: stretch; gap: 1rem;">
+        <Progress value={68} label="Wave 2" />
+        <Progress value={100} label="Wave 1" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-progress</span>
+        <span class="ds-tile__name">Progress</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Toast visible={true} variant="success" title="Saved!" position="bottom-right" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-toast</span>
+        <span class="ds-tile__name">Toast</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <EmptyState icon="search" title="No results" description="Try adjusting your search." actionLabel="Browse all" actionHref="#" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-empty-state</span>
+        <span class="ds-tile__name">Empty State</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <Accordion items={[
+          { id: 'a1', title: 'Section 1', content: 'First section content.', defaultOpen: true },
+          { id: 'a2', title: 'Section 2', content: 'Second section content.' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-accordion</span>
+        <span class="ds-tile__name">Accordion</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Tabs tabs={[
+          { id: 't1', label: 'Overview', content: 'Overview content' },
+          { id: 't2', label: 'Details', content: 'Details content' },
+          { id: 't3', label: 'Settings', content: 'Settings content' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-tabs</span>
+        <span class="ds-tile__name">Tabs</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Breadcrumb items={[
+          { label: 'Home', href: '#' },
+          { label: 'Studio', href: '#' },
+          { label: 'Page', href: '#' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-breadcrumb</span>
+        <span class="ds-tile__name">Breadcrumb</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Pagination currentPage={3} totalPages={12} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-pagination</span>
+        <span class="ds-tile__name">Pagination</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Stepper steps={[
+          { label: 'Setup' },
+          { label: 'Configure' },
+          { label: 'Deploy' },
+        ]} currentStep={1} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-stepper</span>
+        <span class="ds-tile__name">Stepper</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <LinkGroup title="Related links" links={[
+          { label: 'Documentation', href: '#', description: 'Read the docs' },
+          { label: 'GitHub', href: '#', description: 'View source' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-link-group</span>
+        <span class="ds-tile__name">Link Group</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <FormField label="Email" htmlFor="ds-email" required>
+          <Input id="ds-email" type="email" placeholder="you@example.com" />
+        </FormField>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-form-field</span>
+        <span class="ds-tile__name">Form Field</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <SearchBar placeholder="Search components..." />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-search-bar</span>
+        <span class="ds-tile__name">Search Bar</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <Select options={[
+          { value: 'option1', label: 'Option 1' },
+          { value: 'option2', label: 'Option 2' },
+          { value: 'option3', label: 'Option 3' },
+        ]} placeholder="Select option" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-select</span>
+        <span class="ds-tile__name">Select</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <Textarea placeholder="Enter your thoughts..." rows={3} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-textarea</span>
+        <span class="ds-tile__name">Textarea</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <Table columns={[
+          { key: 'name', label: 'Name' },
+          { key: 'count', label: 'Count' },
+        ]} data={[
+          { name: 'Atoms', count: 12 },
+          { name: 'Composites', count: 32 },
+          { name: 'Templates', count: 20 },
+        ]} striped />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-table</span>
+        <span class="ds-tile__name">Table</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <TableSortable columns={[
+          { key: 'name', label: 'Name' },
+          { key: 'role', label: 'Role' },
+        ]} data={[
+          { name: 'Primitives', role: 'Foundation' },
+          { name: 'Composites', role: 'Composed' },
+          { name: 'Templates', role: 'Pages' },
+        ]} initialSort={{ key: 'name', direction: 'asc' }} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-table-sortable</span>
+        <span class="ds-tile__name">Table Sortable</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <TableFilterable columns={[
+          { key: 'name', label: 'Name', filterable: true },
+          { key: 'count', label: 'Count', filterable: true },
+        ]} data={[
+          { name: 'Atoms', count: 12 },
+          { name: 'Composites', count: 32 },
+        ]} searchable={true} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-table-filterable</span>
+        <span class="ds-tile__name">Table Filterable</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <ChartBar data={[
+          { label: 'Atoms', value: 12 },
+          { label: 'Composites', value: 32 },
+          { label: 'Templates', value: 20 },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-chart-bar</span>
+        <span class="ds-tile__name">Bar Chart</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <ChartLine series={[
+          { name: 'Atoms', color: 'var(--color-accent-ember)', data: [{ x: 1, y: 5 }, { x: 2, y: 12 }, { x: 3, y: 18 }, { x: 4, y: 32 }] },
+          { name: 'Composites', color: 'var(--color-accent-signal)', data: [{ x: 1, y: 0 }, { x: 2, y: 8 }, { x: 3, y: 15 }, { x: 4, y: 28 }] },
+        ]} height="10rem" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-chart-line</span>
+        <span class="ds-tile__name">Line Chart</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <ChartPie data={[
+          { label: 'Atoms', value: 12 },
+          { label: 'Composites', value: 32 },
+          { label: 'Templates', value: 20 },
+        ]} donut={true} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-chart-pie</span>
+        <span class="ds-tile__name">Pie Chart</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview">
+        <List items={[
+          { content: 'Token-driven styling' },
+          { content: 'Semantic HTML' },
+          { content: 'ARIA support' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-list</span>
+        <span class="ds-tile__name">List</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <ListGrid items={[
+          { content: 'Item 1' },
+          { content: 'Item 2' },
+          { content: 'Item 3' },
+          { content: 'Item 4' },
+        ]} columns={2} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-list-grid</span>
+        <span class="ds-tile__name">List Grid</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <Timeline events={[
+          { date: '2026-09-01', title: 'Convergence doc', description: '64 components defined' },
+          { date: '2026-09-15', title: 'Wave 1 complete', description: 'All primitives built' },
+          { date: '2026-09-20', title: 'Wave 2 complete', description: 'All composites built' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-timeline</span>
+        <span class="ds-tile__name">Timeline</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile">
+      <div class="ds-tile__preview" style="width: 100%;">
+        <Toc headings={[
+          { id: 'intro', text: 'Introduction', level: 1 },
+          { id: 'setup', text: 'Setup', level: 2 },
+          { id: 'config', text: 'Configuration', level: 2 },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">c-toc</span>
+        <span class="ds-tile__name">Table of Contents</span>
+      </figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="ds-section">
+  <header class="ds-section__header">
+    <p class="ds-section__eyebrow">Layer 3 · Organisms</p>
+    <h2 class="ds-section__title">Templates</h2>
+    <p class="ds-section__desc">20 page-level compositions. Atoms, molecules, and sections combined.</p>
+  </header>
+
+  <div class="ds-tiles ds-tiles--wide">
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <HeroCentered eyebrow="Welcome" title="Hearth & Code" lede="An independent research studio for answerable systems." accent="balanced" size="sm">
+          <Button>Get started</Button>
+        </HeroCentered>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-hero-centered</span>
+        <span class="ds-tile__name">Hero (Centered)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <HeroSplit eyebrow="Feature" title="Two-column hero" lede="With text on the left and visual on the right." accent="hearth" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-hero-split</span>
+        <span class="ds-tile__name">Hero (Split)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <HeroVideo eyebrow="Story" title="Hero Video" lede="Background video hero." accent="code" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-hero-video</span>
+        <span class="ds-tile__name">Hero (Video)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <PageHeader title="Page Title" subtitle="Subtitle description" size="sm" accent="balanced" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-page-header</span>
+        <span class="ds-tile__name">Page Header</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <SectionContent eyebrow="Content" title="Section title" lede="Standard content section." accent="balanced">
+          <p>Body content goes here.</p>
+        </SectionContent>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-section-content</span>
+        <span class="ds-tile__name">Section (Content)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <SectionFeatures eyebrow="Features" title="Features grid" lede="Three-column feature list." accent="hearth" columns={3} features={[
+          { icon: 'check', title: 'Fast', description: 'Built for speed.' },
+          { icon: 'check', title: 'Reliable', description: 'Always available.' },
+          { icon: 'check', title: 'Open', description: 'Token-driven.' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-section-features</span>
+        <span class="ds-tile__name">Section (Features)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <SectionTestimonials eyebrow="Testimonials" title="What users say" accent="balanced" testimonials={[
+          { quote: 'Great design system.', author: 'User A', role: 'Developer' },
+          { quote: 'Easy to use.', author: 'User B', role: 'Designer' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-section-testimonials</span>
+        <span class="ds-tile__name">Section (Testimonials)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <SectionPricing eyebrow="Pricing" title="Plans" accent="balanced" tiers={[
+          { tier: 'Free', price: '$0', features: ['Basic features'] },
+          { tier: 'Pro', price: '$29', features: ['All features'], highlighted: true },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-section-pricing</span>
+        <span class="ds-tile__name">Section (Pricing)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <SectionCTA title="Ready to start?" description="Get started today." primaryCta={{ label: 'Start', href: '#' }} accent="balanced" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-section-cta</span>
+        <span class="ds-tile__name">Section (CTA)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <NavHeader logo="Hearth & Code" logoHref="/" links={[
+          { label: 'Studio', href: '/', active: true },
+          { label: 'Gallery', href: '/gallery' },
+        ]} cta={{ label: 'GitHub', href: '#' }} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-nav-header</span>
+        <span class="ds-tile__name">Nav Header</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3); min-height: 12rem;">
+        <NavSidebar title="Navigation" sections={[
+          { title: 'Studio', items: [
+            { label: 'Studio', href: '/', active: true },
+            { label: 'Philosophy', href: '/philosophy' },
+          ] },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-nav-sidebar</span>
+        <span class="ds-tile__name">Nav Sidebar</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <LayoutGrid columns={3}>
+          <Card><h3 style="margin:0;">One</h3></Card>
+          <Card><h3 style="margin:0;">Two</h3></Card>
+          <Card><h3 style="margin:0;">Three</h3></Card>
+        </LayoutGrid>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-layout-grid</span>
+        <span class="ds-tile__name">Layout (Grid)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <LayoutStack>
+          <Card><h3 style="margin:0;">First</h3></Card>
+          <Card><h3 style="margin:0;">Second</h3></Card>
+        </LayoutStack>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-layout-stack</span>
+        <span class="ds-tile__name">Layout (Stack)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3); min-height: 14rem;">
+        <LayoutSidebar sidebarPosition="left" sidebarWidth="10rem">
+          <p slot="sidebar" style="margin:0;font-size:0.875rem;">Sidebar content</p>
+          <p>Main content area.</p>
+        </LayoutSidebar>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-layout-sidebar</span>
+        <span class="ds-tile__name">Layout (Sidebar)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <HeaderLayout title="Sticky Header" stickyHeader={true}>
+          <p style="margin:0;">Content area below the sticky header.</p>
+        </HeaderLayout>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-layout-header</span>
+        <span class="ds-tile__name">Layout (Header)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <TabsLayout tabs={[
+          { id: 'overview', label: 'Overview', content: 'Overview content' },
+          { id: 'specs', label: 'Specs', content: 'Specs content' },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-layout-tabs</span>
+        <span class="ds-tile__name">Layout (Tabs)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <StepperLayout steps={[
+          { label: 'Step 1' },
+          { label: 'Step 2' },
+          { label: 'Step 3' },
+        ]} currentStep={1} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-layout-stepper</span>
+        <span class="ds-tile__name">Layout (Stepper)</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3); min-height: 14rem;">
+        <Dashboard navItems={[
+          { label: 'Overview', href: '#', active: true },
+          { label: 'Analytics', href: '#' },
+        ]} title="Dashboard" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-dashboard</span>
+        <span class="ds-tile__name">Dashboard</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: var(--space-3);">
+        <Modal id="ds-modal" title="Modal Title" size="md">
+          <p>Modal content goes here.</p>
+        </Modal>
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-modal</span>
+        <span class="ds-tile__name">Modal</span>
+      </figcaption>
+    </figure>
+
+    <figure class="ds-tile ds-tile--wide">
+      <div class="ds-tile__preview" style="padding: 0;">
+        <PageFooter copyright="2026 Hearth & Code" columns={[
+          { title: 'Links', links: [{ label: 'Home', href: '/' }] },
+        ]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">t-page-footer</span>
+        <span class="ds-tile__name">Page Footer</span>
+      </figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ds-footer">
+  <p class="ds-footer__text">
+    Ember Circuit Design System · 64 components · Token-driven · <a href="/gallery">View Gallery →</a>
+  </p>
+</footer>
+
+</Layout>
 
 <style>
-  /* === EMBER CIRCUIT HERO === */
-  .ec-circ-hero {
-    position: relative;
+  /* === HERO === */
+  .ds-hero {
     padding: var(--space-9) var(--space-5);
-    overflow: hidden;
     background: var(--color-surface-primary);
     border-bottom: 1px solid var(--color-surface-rule);
+    position: relative;
+    overflow: hidden;
   }
-  .ec-circ-hero__bg {
+  .ds-hero::before {
+    content: '';
     position: absolute;
     inset: 0;
-    opacity: 0.3;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(232, 91, 78, 0.08), transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(31, 182, 168, 0.08), transparent 50%);
     pointer-events: none;
   }
-  .ec-circ-hero__circuit {
-    width: 100%;
-    height: 100%;
-  }
-  .ec-circ-hero__traces {
-    animation: ec-circ-flow 20s linear infinite;
-  }
-  @keyframes ec-circ-flow {
-    to { stroke-dashoffset: -100; }
-  }
-  .ec-circ-hero__nodes circle {
-    animation: ec-circ-pulse 3s ease-in-out infinite;
-  }
-  .ec-circ-hero__nodes circle:nth-child(even) {
-    animation-delay: 1.5s;
-  }
-  @keyframes ec-circ-pulse {
-    0%, 100% { opacity: 0.4; r: 4; }
-    50% { opacity: 1; r: 6; }
-  }
-  .ec-circ-hero__inner {
+  .ds-hero__inner {
     position: relative;
     z-index: 1;
     max-width: 64rem;
@@ -201,1452 +996,227 @@ import Modal from '../../components/templates/Modal.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-5);
+    gap: var(--space-4);
     text-align: center;
   }
-  .ec-circ-hero__eyebrow {
+  .ds-hero__eyebrow {
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-medium);
+    font-size: 0.75rem;
+    font-weight: 500;
     color: var(--color-text-secondary);
   }
-  .ec-circ-hero__title {
+  .ds-hero__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: var(--font-weight-bold);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
     color: var(--color-text-display);
   }
-  .ec-circ-hero__title-ember { color: var(--color-accent-ember); }
-  .ec-circ-hero__title-code { color: var(--color-accent-signal); }
-  .ec-circ-hero__title-divider {
-    margin: 0 0.5em;
+  .ds-hero__hearth { color: var(--color-accent-ember); }
+  .ds-hero__code { color: var(--color-accent-signal); }
+  .ds-hero__bar {
+    margin: 0 0.4em;
     color: var(--color-text-secondary);
-    font-weight: var(--font-weight-normal);
+    font-weight: 300;
   }
-  .ec-circ-hero__lede {
+  .ds-hero__lede {
     margin: 0;
-    max-width: 48rem;
-    font-size: 1.125rem;
+    max-width: 40rem;
+    font-size: 1.0625rem;
     line-height: 1.6;
     color: var(--color-text-secondary);
   }
-  .ec-circ-hero__stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  .ds-hero__counts {
+    display: flex;
     gap: var(--space-4);
-    width: 100%;
-    max-width: 48rem;
     margin-top: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ds-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color 150ms ease;
+    min-width: 6rem;
+  }
+  a.ds-count:hover {
+    border-color: var(--color-accent-ember);
+  }
+  .ds-count--total {
+    background: var(--color-accent-ember);
+    border-color: var(--color-accent-ember);
+  }
+  .ds-count--total .ds-count__value,
+  .ds-count--total .ds-count__label {
+    color: var(--color-surface-primary);
+  }
+  .ds-count__value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-text-display);
+  }
+  .ds-count__label {
+    margin-top: 0.25rem;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
   }
 
-  /* === TAB PANEL ENHANCEMENTS === */
-  .ec-tabs {
-    background: var(--color-surface-recessed) !important;
-    padding: var(--space-3) var(--space-5) !important;
-    border-bottom: 1px solid var(--color-surface-rule) !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 50 !important;
+  /* === NAV === */
+  .ds-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-surface-recessed);
+    border-bottom: 1px solid var(--color-surface-rule);
   }
-  .ec-tabs__list {
-    border-bottom: none !important;
-    gap: var(--space-1) !important;
-    justify-content: center !important;
+  .ds-nav__inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+    display: flex;
+    gap: var(--space-5);
   }
-  .ec-tabs__trigger {
-    padding: var(--space-2) var(--space-5) !important;
-    font-size: var(--font-size-small) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
+  .ds-nav__link {
+    padding: var(--space-3) 0;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid transparent;
+    transition: all 150ms ease;
+  }
+  .ds-nav__link:hover {
+    color: var(--color-text-display);
+    border-bottom-color: var(--color-accent-ember);
   }
 
-  /* === COMPONENT PREVIEW CARD === */
-  .ec-preview-card {
+  /* === SECTIONS === */
+  .ds-section {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: var(--space-9) var(--space-5);
+  }
+  .ds-section__header {
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ds-section__eyebrow {
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-accent-signal);
+  }
+  .ds-section__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-display);
+    letter-spacing: -0.02em;
+  }
+  .ds-section__desc {
+    margin: 0.5rem 0 0 0;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    max-width: 48rem;
+  }
+
+  /* === TILES === */
+  .ds-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: var(--space-4);
+  }
+  .ds-tiles--wide {
+    grid-template-columns: 1fr;
+  }
+  .ds-tile {
+    margin: 0;
     background: var(--color-surface-raised);
     border: 1px solid var(--color-surface-rule);
     border-radius: var(--radius-md);
     overflow: hidden;
-    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
-  }
-  .ec-preview-card:hover {
-    border-color: var(--color-accent-ember);
-  }
-  .ec-preview-card__header {
-    padding: var(--space-4) var(--space-5);
-    border-bottom: 1px solid var(--color-surface-rule);
-    background: var(--color-surface-recessed);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-  }
-  .ec-preview-card__title-group {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    transition: border-color 150ms ease, transform 150ms ease;
   }
-  .ec-preview-card__name {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-accent-ember);
+  .ds-tile:hover {
+    border-color: var(--color-accent-ember);
   }
-  .ec-preview-card__type {
-    font-family: var(--font-body);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-secondary);
+  .ds-tile--wide {
+    grid-column: 1 / -1;
   }
-  .ec-preview-card__badges {
-    display: flex;
-    gap: var(--space-1);
-  }
-  .ec-preview-card__preview {
-    padding: var(--space-7);
-    background: var(--color-surface-primary);
-    min-height: 8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ec-preview-card__tabs {
-    border-top: 1px solid var(--color-surface-rule);
-  }
-  .ec-preview-card__tab-bar {
-    display: flex;
-    background: var(--color-surface-recessed);
-    border-bottom: 1px solid var(--color-surface-rule);
-  }
-  .ec-preview-card__tab {
+  .ds-tile__preview {
     flex: 1;
-    padding: var(--space-2) var(--space-4);
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--color-text-secondary);
-    font-family: var(--font-body);
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    transition: all var(--motion-duration-fast) var(--motion-easing-default);
-  }
-  .ec-preview-card__tab:hover {
-    color: var(--color-text-primary);
-    background: var(--color-surface-raised);
-  }
-  .ec-preview-card__tab.is-active {
-    color: var(--color-text-display);
-    border-bottom-color: var(--color-accent-ember);
-    background: var(--color-surface-raised);
-  }
-  .ec-preview-card__content {
-    padding: 0;
-  }
-  .ec-preview-card__panel {
-    padding: var(--space-4) var(--space-5);
-    border-bottom: 1px solid var(--color-surface-rule);
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--color-text-primary);
-    background: var(--color-surface-primary);
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  .ec-preview-card__panel:last-child { border-bottom: none; }
-  .ec-preview-card__panel--variants {
+    min-height: 9rem;
     padding: var(--space-5);
     background: var(--color-surface-primary);
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    align-items: center;
-    justify-content: space-around;
-    white-space: normal;
-  }
-  .ec-preview-card__panel-title {
-    margin: 0 0 var(--space-3) 0;
-    font-family: var(--font-body);
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-secondary);
-    white-space: normal;
-  }
-  .ec-preview-card__props {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-  }
-  .ec-preview-card__props th,
-  .ec-preview-card__props td {
-    text-align: left;
-    padding: var(--space-2) var(--space-3);
-    border-bottom: 1px solid var(--color-surface-rule);
-    color: var(--color-text-primary);
-    white-space: normal;
-  }
-  .ec-preview-card__props th {
-    background: var(--color-surface-recessed);
-    color: var(--color-text-secondary);
-    font-weight: var(--font-weight-medium);
-  }
-  .ec-preview-card__props td code {
-    background: var(--color-surface-recessed);
-    color: var(--color-accent-ember);
-    padding: 0.125rem 0.375rem;
-    border-radius: 3px;
-    font-size: 0.75rem;
-  }
-
-  /* === SECTION HEADERS === */
-  .ec-layer-header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    margin: var(--space-9) 0 var(--space-7);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-surface-rule);
-  }
-  .ec-layer-header__badge {
-    display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background: var(--color-surface-raised);
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .ds-tile--wide .ds-tile__preview {
+    min-height: auto;
+    align-items: stretch;
+  }
+  .ds-tile__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-recessed);
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .ds-tile__id {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     color: var(--color-accent-ember);
   }
-  .ec-layer-header--hearth .ec-layer-header__badge { background: rgba(232, 91, 78, 0.15); color: var(--color-accent-ember); }
-  .ec-layer-header--code .ec-layer-header__badge { background: rgba(31, 182, 168, 0.15); color: var(--color-accent-signal); }
-  .ec-layer-header--organism .ec-layer-header__badge { background: rgba(155, 93, 229, 0.15); color: var(--color-accent-violet); }
-  .ec-layer-header__content {
-    flex: 1;
-  }
-  .ec-layer-header__name {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: var(--font-weight-bold);
+  .ds-tile__name {
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--color-text-display);
   }
-  .ec-layer-header__desc {
-    margin: 0.25rem 0 0 0;
-    font-size: var(--font-size-small);
-    color: var(--color-text-secondary);
+
+  /* === FOOTER === */
+  .ds-footer {
+    padding: var(--space-7) var(--space-5);
+    background: var(--color-surface-recessed);
+    border-top: 1px solid var(--color-surface-rule);
+    text-align: center;
   }
-  .ec-layer-header__count {
-    font-family: var(--font-mono);
+  .ds-footer__text {
+    margin: 0;
+    color: var(--color-text-secondary);
     font-size: 0.875rem;
-    color: var(--color-text-secondary);
   }
-
-  /* === COMPONENT GRID === */
-  .ec-components-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
+  .ds-footer__text a {
+    color: var(--color-accent-signal);
+    text-decoration: none;
   }
-  @media (min-width: 1024px) {
-    .ec-components-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  /* === SHOWCASE SECTION === */
-  .ec-showcase-content {
-    padding: var(--space-7);
-    background: var(--color-surface-primary);
-    border: 1px solid var(--color-surface-rule);
-    border-radius: var(--radius-md);
+  .ds-footer__text a:hover {
+    text-decoration: underline;
   }
 </style>
-
-<script>
-  // Tab switching logic - re-render the tab panel based on which tab is active
-  document.querySelectorAll('.ec-tabs__trigger').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      // Tabs component already handles its own state
-      // We listen for which tab is active and show corresponding section
-      const tabId = trigger.getAttribute('data-tab-id');
-      document.querySelectorAll<HTMLElement>('.ec-layer-section').forEach((section) => {
-        (section as HTMLElement).style.display = 'none';
-      });
-      const target = document.getElementById(`layer-${tabId}`);
-      if (target) (target as HTMLElement).style.display = 'block';
-    });
-  });
-
-  // Initialize: show the first tab's content (atoms)
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll<HTMLElement>('.ec-layer-section').forEach((section, idx) => {
-      (section as HTMLElement).style.display = idx === 0 ? 'block' : 'none';
-    });
-  });
-</script>
-
-<!-- ATOMS SECTION -->
-<div id="layer-atoms" class="ec-layer-section">
-  <div class="ec-layer-header ec-layer-header--hearth">
-    <div class="ec-layer-header__badge">
-      <Icon name="circle" size="sm" />
-    </div>
-    <div class="ec-layer-header__content">
-      <h2 class="ec-layer-header__name">Atoms</h2>
-      <p class="ec-layer-header__desc">Single-purpose elements. The building blocks.</p>
-    </div>
-    <span class="ec-layer-header__count">12 components</span>
-  </div>
-  <div class="ec-components-grid">
-    <!-- BUTTON -->
-    <div class="ec-preview-card" id="atom-button">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-button</span>
-          <span class="ec-preview-card__name">Button</span>
-        </div>
-        <div class="ec-preview-card__badges">
-          <Badge variant="hearth">Primary</Badge>
-          <Badge variant="code">Code</Badge>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Button variant="primary">Primary Action</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="danger">Danger</Button>
-      </div>
-      <div class="ec-preview-card__tabs">
-        <div class="ec-preview-card__tab-bar">
-          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-button">Props</button>
-          <button class="ec-preview-card__tab" data-preview-tab="variants" data-target="atom-button">Variants</button>
-          <button class="ec-preview-card__tab" data-preview-tab="states" data-target="atom-button">States</button>
-        </div>
-        <div class="ec-preview-card__content">
-          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-button">
-            <table class="ec-preview-card__props">
-              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
-              <tr><td><code>variant</code></td><td>'primary' | 'secondary' | 'ghost' | 'danger'</td><td>'primary'</td></tr>
-              <tr><td><code>size</code></td><td>'sm' | 'md' | 'lg'</td><td>'md'</td></tr>
-              <tr><td><code>disabled</code></td><td>boolean</td><td>false</td></tr>
-              <tr><td><code>loading</code></td><td>boolean</td><td>false</td></tr>
-              <tr><td><code>href</code></td><td>string</td><td>undefined</td></tr>
-            </table>
-          </div>
-          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="variants" data-target="atom-button" hidden>
-            <p class="ec-preview-card__panel-title">Button Variants</p>
-            <Button variant="primary" size="sm">Small Primary</Button>
-            <Button variant="primary" size="md">Medium Primary</Button>
-            <Button variant="primary" size="lg">Large Primary</Button>
-          </div>
-          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="states" data-target="atom-button" hidden>
-            <p class="ec-preview-card__panel-title">Button States</p>
-            <Button variant="primary">Default</Button>
-            <Button variant="primary" disabled>Disabled</Button>
-            <Button variant="primary" loading>Loading</Button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- INPUT -->
-    <div class="ec-preview-card" id="atom-input">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-input</span>
-          <span class="ec-preview-card__name">Input</span>
-        </div>
-        <div class="ec-preview-card__badges">
-          <Badge variant="info">7 Types</Badge>
-          <Badge variant="success">Validated</Badge>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Input type="email" placeholder="you@example.com" />
-      </div>
-      <div class="ec-preview-card__tabs">
-        <div class="ec-preview-card__tab-bar">
-          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-input">Props</button>
-          <button class="ec-preview-card__tab" data-preview-tab="variants" data-target="atom-input">Variants</button>
-          <button class="ec-preview-card__tab" data-preview-tab="states" data-target="atom-input">States</button>
-        </div>
-        <div class="ec-preview-card__content">
-          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-input">
-            <table class="ec-preview-card__props">
-              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
-              <tr><td><code>type</code></td><td>'text' | 'email' | 'password' | 'number' | 'url' | 'search' | 'tel'</td><td>'text'</td></tr>
-              <tr><td><code>size</code></td><td>'sm' | 'md' | 'lg'</td><td>'md'</td></tr>
-              <tr><td><code>error</code></td><td>boolean</td><td>false</td></tr>
-              <tr><td><code>success</code></td><td>boolean</td><td>false</td></tr>
-              <tr><td><code>disabled</code></td><td>boolean</td><td>false</td></tr>
-            </table>
-          </div>
-          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="variants" data-target="atom-input" hidden>
-            <p class="ec-preview-card__panel-title">Input Variants</p>
-            <Input type="text" placeholder="Text input" />
-            <Input type="email" placeholder="Email input" />
-            <Input type="password" placeholder="Password input" />
-            <Input type="search" placeholder="Search input" />
-          </div>
-          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="states" data-target="atom-input" hidden>
-            <p class="ec-preview-card__panel-title">Input States</p>
-            <Input placeholder="Default" />
-            <Input placeholder="Disabled" disabled />
-            <Input placeholder="Error" error />
-            <Input placeholder="Success" success />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ICON -->
-    <div class="ec-preview-card" id="atom-icon">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-icon</span>
-          <span class="ec-preview-card__name">Icon</span>
-        </div>
-        <div class="ec-preview-card__badges">
-          <Badge variant="balanced">5 Sizes</Badge>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Icon name="check" size="xs" />
-        <Icon name="arrow-right" size="sm" />
-        <Icon name="info" size="md" />
-        <Icon name="warning" size="lg" />
-        <Icon name="user" size="xl" />
-      </div>
-      <div class="ec-preview-card__tabs">
-        <div class="ec-preview-card__tab-bar">
-          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-icon">Props</button>
-          <button class="ec-preview-card__tab" data-preview-tab="variants" data-target="atom-icon">Sizes</button>
-        </div>
-        <div class="ec-preview-card__content">
-          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-icon">
-            <table class="ec-preview-card__props">
-              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
-              <tr><td><code>name</code></td><td>string</td><td>required</td></tr>
-              <tr><td><code>size</code></td><td>'xs' | 'sm' | 'md' | 'lg' | 'xl'</td><td>'md'</td></tr>
-              <tr><td><code>color</code></td><td>string</td><td>currentColor</td></tr>
-            </table>
-          </div>
-          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="variants" data-target="atom-icon" hidden>
-            <p class="ec-preview-card__panel-title">Available Icons</p>
-            <Icon name="check" />
-            <Icon name="close" />
-            <Icon name="arrow-right" />
-            <Icon name="arrow-down" />
-            <Icon name="plus" />
-            <Icon name="minus" />
-            <Icon name="chevron-down" />
-            <Icon name="search" />
-            <Icon name="menu" />
-            <Icon name="user" />
-            <Icon name="info" />
-            <Icon name="warning" />
-            <Icon name="edit" />
-            <Icon name="circle" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BADGE -->
-    <div class="ec-preview-card" id="atom-badge">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-badge</span>
-          <span class="ec-preview-card__name">Badge</span>
-        </div>
-        <div class="ec-preview-card__badges">
-          <Badge variant="info">8 Variants</Badge>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Badge>Default</Badge>
-        <Badge variant="hearth">Hearth</Badge>
-        <Badge variant="code">Code</Badge>
-        <Badge variant="balanced">Balanced</Badge>
-        <Badge variant="success">Success</Badge>
-        <Badge variant="caution">Caution</Badge>
-        <Badge variant="danger">Danger</Badge>
-        <Badge variant="info">Info</Badge>
-      </div>
-      <div class="ec-preview-card__tabs">
-        <div class="ec-preview-card__tab-bar">
-          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-badge">Props</button>
-        </div>
-        <div class="ec-preview-card__content">
-          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-badge">
-            <table class="ec-preview-card__props">
-              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
-              <tr><td><code>variant</code></td><td>'neutral' | 'success' | 'caution' | 'danger' | 'info' | 'hearth' | 'code' | 'balanced'</td><td>'neutral'</td></tr>
-              <tr><td><code>size</code></td><td>'sm' | 'md'</td><td>'md'</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAG -->
-    <div class="ec-preview-card" id="atom-tag">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-tag</span>
-          <span class="ec-preview-card__name">Tag</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Tag label="neutral" />
-        <Tag label="hearth" variant="hearth" />
-        <Tag label="code" variant="code" />
-        <Tag label="balanced" variant="balanced" />
-        <Tag label="removable" variant="removable" onRemove="remove" />
-      </div>
-    </div>
-
-    <!-- DIVIDER -->
-    <div class="ec-preview-card" id="atom-divider">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-divider</span>
-          <span class="ec-preview-card__name">Divider</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <div style="width: 100%;">
-          <Divider variant="solid" />
-          <Divider variant="dashed" />
-          <Divider variant="gradient" />
-        </div>
-      </div>
-    </div>
-
-    <!-- LABEL -->
-    <div class="ec-preview-card" id="atom-label">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-label</span>
-          <span class="ec-preview-card__name">Label</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Label text="Email address" htmlFor="demo" />
-        <Label text="Password" htmlFor="demo2" required />
-        <Label text="Bio (optional)" htmlFor="demo3" optional />
-      </div>
-    </div>
-
-    <!-- TOOLTIP -->
-    <div class="ec-preview-card" id="atom-tooltip">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-tooltip</span>
-          <span class="ec-preview-card__name">Tooltip</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Tooltip content="Helpful information about this field">Hover for info</Tooltip>
-      </div>
-    </div>
-
-    <!-- AVATAR -->
-    <div class="ec-preview-card" id="atom-avatar">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-avatar</span>
-          <span class="ec-preview-card__name">Avatar</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Avatar name="SR" size="xs" />
-        <Avatar name="SR" size="sm" />
-        <Avatar name="SR" size="md" />
-        <Avatar name="SR" size="lg" />
-        <Avatar name="SR" size="xl" />
-      </div>
-    </div>
-
-    <!-- CHECKBOX -->
-    <div class="ec-preview-card" id="atom-checkbox">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-checkbox</span>
-          <span class="ec-preview-card__name">Checkbox</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="gap: var(--space-5);">
-        <Checkbox id="cb1" label="Unchecked" />
-        <Checkbox id="cb2" label="Checked" checked />
-        <Checkbox id="cb3" label="Disabled" disabled />
-      </div>
-    </div>
-
-    <!-- RADIO -->
-    <div class="ec-preview-card" id="atom-radio">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-radio</span>
-          <span class="ec-preview-card__name">Radio</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="flex-direction: column; align-items: flex-start; gap: var(--space-3);">
-        <Radio name="demo" value="a" label="Option A" />
-        <Radio name="demo" value="b" label="Option B" checked />
-        <Radio name="demo" value="c" label="Option C" />
-      </div>
-    </div>
-
-    <!-- SPINNER -->
-    <div class="ec-preview-card" id="atom-spinner">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-spinner</span>
-          <span class="ec-preview-card__name">Spinner</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="gap: var(--space-5);">
-        <Spinner size="sm" />
-        <Spinner size="md" />
-        <Spinner size="lg" />
-      </div>
-    </div>
-
-    <!-- SKELETON -->
-    <div class="ec-preview-card" id="atom-skeleton">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Atom · p-skeleton</span>
-          <span class="ec-preview-card__name">Skeleton</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="flex-direction: column; gap: var(--space-2); width: 80%;">
-        <Skeleton variant="text" width="60%" />
-        <Skeleton variant="text" width="80%" />
-        <Skeleton variant="text" width="70%" />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MOLECULES SECTION -->
-<div id="layer-molecules" class="ec-layer-section" style="display: none;">
-  <div class="ec-layer-header ec-layer-header--code">
-    <div class="ec-layer-header__badge">
-      <Icon name="plus" size="sm" />
-    </div>
-    <div class="ec-layer-header__content">
-      <h2 class="ec-layer-header__name">Molecules</h2>
-      <p class="ec-layer-header__desc">Composed elements combining atoms into functional units.</p>
-    </div>
-    <span class="ec-layer-header__count">32 components</span>
-  </div>
-  <div class="ec-components-grid">
-    <!-- CARDS -->
-    <div class="ec-preview-card" id="mol-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-card-basic</span>
-          <span class="ec-preview-card__name">Card</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Card>
-          <h3>Card Title</h3>
-          <p>Card content with header, body, and footer slots.</p>
-        </Card>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-feature">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-card-feature</span>
-          <span class="ec-preview-card__name">Feature Card</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <FeatureCard icon="check" title="Featured" description="Highlighted card with icon and accent." accent="hearth" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-stat">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-card-stat</span>
-          <span class="ec-preview-card__name">Stat Card</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <StatCard value="98%" label="Accessibility score" trend="up" context="+12%" accent="success" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-profile">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-card-profile</span>
-          <span class="ec-preview-card__name">Profile Card</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <ProfileCard name="Scott Rallya" title="Hearthside Meta-Architect" avatarSrc="" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-quote">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-card-quote</span>
-          <span class="ec-preview-card__name">Quote Card</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <QuoteCard quote="Every consequential claim should have a source." attribution="Hearth & Code" source="Studio Charter" accent="balanced" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-pricing">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-card-pricing</span>
-          <span class="ec-preview-card__name">Pricing Card</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <PricingCard tier="Pro" price="$29" period="/mo" features={['Unlimited', 'Priority support']} ctaLabel="Subscribe" ctaHref="#" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-alert">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-alert</span>
-          <span class="ec-preview-card__name">Alert</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="flex-direction: column; width: 100%; gap: var(--space-3);">
-        <Alert variant="info">Information message</Alert>
-        <Alert variant="success">Success message</Alert>
-        <Alert variant="caution" title="Warning">Caution with title</Alert>
-        <Alert variant="danger">Error message</Alert>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-progress">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-progress</span>
-          <span class="ec-preview-card__name">Progress</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="flex-direction: column; width: 80%; gap: var(--space-3);">
-        <Progress value={68} label="Wave 2" />
-        <Progress value={100} label="Wave 1" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-table">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-table-basic</span>
-          <span class="ec-preview-card__name">Table</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 90%; padding: var(--space-4);">
-        <Table columns={[{key:'name',label:'Name'},{key:'role',label:'Role'}]} data={[{name:'Atoms',role:'Building blocks'},{name:'Molecules',role:'Composed'}]} striped />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-chart-bar">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-chart-bar</span>
-          <span class="ec-preview-card__name">Bar Chart</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 80%; padding: var(--space-4);">
-        <ChartBar data={[{label:'Atoms',value:12},{label:'Molecules',value:32},{label:'Organisms',value:20}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-form">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · c-form-field</span>
-          <span class="ec-preview-card__name">Form Field</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%;">
-        <FormField label="Email" htmlFor="demo-email" required>
-          <Input id="demo-email" type="email" placeholder="you@example.com" />
-        </FormField>
-      </div>
-    </div>
-  </div>
-import Toast from '../../components/composites/Toast.astro';
-import Toc from '../../components/composites/Toc.astro';
-
-
-    <div class="ec-preview-card" id="mol-accordion">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Accordion</span>
-          <span class="ec-preview-card__name">Accordion</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Accordion items={[{"id":"a1","title":"Section 1","content":"First section content.","defaultOpen":true},{"id":"a2","title":"Section 2","content":"Second section content."},{"id":"a3","title":"Section 3","content":"Third section content."}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-breadcrumb">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Breadcrumb</span>
-          <span class="ec-preview-card__name">Breadcrumb</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Breadcrumb items={[{"label":"Home","href":"#"},{"label":"Studio","href":"#"},{"label":"Page","href":"#"}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-chart-line">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · ChartLine</span>
-          <span class="ec-preview-card__name">ChartLine</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <ChartLine series={[{"name":"Atoms","color":"var(--color-accent-ember)","data":[{"x":1,"y":5},{"x":2,"y":12},{"x":3,"y":18},{"x":4,"y":32}]},{"name":"Molecules","color":"var(--color-accent-signal)","data":[{"x":1,"y":0},{"x":2,"y":8},{"x":3,"y":15},{"x":4,"y":28}]}]} height="10rem" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-chart-pie">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · ChartPie</span>
-          <span class="ec-preview-card__name">ChartPie</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <ChartPie data={[{"label":"Atoms","value":12},{"label":"Molecules","value":32},{"label":"Organisms","value":20}]} donut={true} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-empty-state">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · EmptyState</span>
-          <span class="ec-preview-card__name">EmptyState</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <EmptyState icon="search" title="No results found" description="Try adjusting your search terms or browse all components." actionLabel="Browse all" actionHref="#" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-link-group">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · LinkGroup</span>
-          <span class="ec-preview-card__name">LinkGroup</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <LinkGroup title="Related links" links={[{"label":"Documentation","href":"#","description":"Read the docs"},{"label":"GitHub","href":"#","description":"View source"},{"label":"Examples","href":"#","description":"See in action"}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-list">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · List</span>
-          <span class="ec-preview-card__name">List</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <List items={[{"content":"Token-driven styling","href":"#"},{"content":"Semantic HTML"},{"content":"ARIA support"}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-list-grid">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · ListGrid</span>
-          <span class="ec-preview-card__name">ListGrid</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <ListGrid items={[{"content":"Item 1"},{"content":"Item 2"},{"content":"Item 3"},{"content":"Item 4"}]} columns={2} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-pagination">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Pagination</span>
-          <span class="ec-preview-card__name">Pagination</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Pagination currentPage=3 totalPages=12 />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-product-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · ProductCard</span>
-          <span class="ec-preview-card__name">ProductCard</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <ProductCard title=Component Library description=64 production-ready components built with tokens price=Free href=# />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-search-bar">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · SearchBar</span>
-          <span class="ec-preview-card__name">SearchBar</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <SearchBar placeholder=Search components... />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-select">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Select</span>
-          <span class="ec-preview-card__name">Select</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Select options={[{"value":"option1","label":"Option 1"},{"value":"option2","label":"Option 2"},{"value":"option3","label":"Option 3"}]} placeholder="Select option" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-stepper">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Stepper</span>
-          <span class="ec-preview-card__name">Stepper</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Stepper steps={[{"label":"Setup"},{"label":"Configure"},{"label":"Deploy"}]} currentStep={1} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-table-filter">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · TableFilterable</span>
-          <span class="ec-preview-card__name">TableFilterable</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <TableFilterable columns={[{"key":"name","label":"Name","filterable":true},{"key":"count","label":"Count","filterable":true}]} data={[{"name":"Atoms","count":12},{"name":"Molecules","count":32},{"name":"Organisms","count":20}]} searchable={true} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-table-sort">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · TableSortable</span>
-          <span class="ec-preview-card__name">TableSortable</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <TableSortable columns={[{"key":"name","label":"Name"},{"key":"role","label":"Role"},{"key":"year","label":"Year"}]} data={[{"name":"Primitives","role":"Foundation","year":2024},{"name":"Composites","role":"Composed","year":2024},{"name":"Templates","role":"Pages","year":2024}]} initialSort={{"key":"name","direction":"asc"}} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-tabs">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Tabs</span>
-          <span class="ec-preview-card__name">Tabs</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Tabs tabs={[{"id":"t1","label":"Overview","content":"Overview content"},{"id":"t2","label":"Details","content":"Details content"},{"id":"t3","label":"Settings","content":"Settings content"}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-testimonial">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · TestimonialCard</span>
-          <span class="ec-preview-card__name">TestimonialCard</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <TestimonialCard quote=This design system has transformed our workflow. author=Scott Rallya role=Hearthside Meta-Architect rating=5 />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-textarea">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Textarea</span>
-          <span class="ec-preview-card__name">Textarea</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Textarea placeholder=Enter your thoughts... rows=3 />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-timeline">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Timeline</span>
-          <span class="ec-preview-card__name">Timeline</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Timeline events={[{"date":"2026-09-01","title":"Convergence doc","description":"64 components defined"},{"date":"2026-09-15","title":"Wave 1 complete","description":"All primitives built"},{"date":"2026-09-20","title":"Wave 2 complete","description":"All composites built"}]} />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-toast">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Toast</span>
-          <span class="ec-preview-card__name">Toast</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Toast visible={true} variant="success" title="Saved!" position="bottom-right" />
-      </div>
-    </div>
-    <div class="ec-preview-card" id="mol-toc">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Molecule · Toc</span>
-          <span class="ec-preview-card__name">Toc</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview">
-        <Toc headings={[
-            { id: 'intro', text: 'Introduction', level: 1 },
-            { id: 'setup', text: 'Setup', level: 2 },
-            { id: 'config', text: 'Configuration', level: 2 },
-          ]} />
-      </div>
-    </div>
-</div>
-
-<!-- ORGANISMS SECTION -->
-<div id="layer-organisms" class="ec-layer-section" style="display: none;">
-  <div class="ec-layer-header ec-layer-header--organism">
-    <div class="ec-layer-header__badge">
-      <Icon name="user" size="sm" />
-    </div>
-    <div class="ec-layer-header__content">
-      <h2 class="ec-layer-header__name">Organisms</h2>
-      <p class="ec-layer-header__desc">Complex compositions combining molecules into page-level patterns.</p>
-    </div>
-    <span class="ec-layer-header__count">20 components</span>
-  </div>
-  <div class="ec-components-grid">
-    <div class="ec-preview-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · t-hero-centered</span>
-          <span class="ec-preview-card__name">Hero (Centered)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%; padding: 0;">
-        <HeroCentered eyebrow="Welcome" title="Hearth & Code" lede="Designing answerable systems." accent="balanced" size="sm">
-          <Button>Get started</Button>
-        </HeroCentered>
-      </div>
-    </div>
-    <div class="ec-preview-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · t-section-features</span>
-          <span class="ec-preview-card__name">Section (Features)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%; padding: 0;">
-        <SectionFeatures
-          columns={3}
-          features={[
-            { icon: 'check', title: 'Fast', description: 'Built for speed and reliability.' },
-            { icon: 'check', title: 'Secure', description: 'Privacy-preserving by design.' },
-            { icon: 'check', title: 'Open', description: 'Token-driven and source-available.' },
-          ]}
-        />
-      </div>
-    </div>
-    <div class="ec-preview-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · t-section-cta</span>
-          <span class="ec-preview-card__name">Section (CTA)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%; padding: 0;">
-        <SectionCTA title="Get Started" description="Build with Ember Circuit." primaryCta={{ label: 'Start', href: '#' }} accent="balanced" />
-      </div>
-    </div>
-    <div class="ec-preview-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · t-page-header</span>
-          <span class="ec-preview-card__name">Page Header</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%; padding: var(--space-3);">
-        <PageHeader title="Page Title" subtitle="Subtitle description" size="sm" accent="balanced" />
-      </div>
-    </div>
-    <div class="ec-preview-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · t-layout-grid</span>
-          <span class="ec-preview-card__name">Layout (Grid)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%; padding: var(--space-3);">
-        <LayoutGrid columns={3}>
-          <Card><h3>1</h3></Card>
-          <Card><h3>2</h3></Card>
-          <Card><h3>3</h3></Card>
-        </LayoutGrid>
-      </div>
-    </div>
-    <div class="ec-preview-card">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · t-dashboard</span>
-          <span class="ec-preview-card__name">Dashboard</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width: 100%; padding: var(--space-3); min-height: 16rem;">
-        <Dashboard
-          navItems={[
-            { label: 'Overview', href: '#', active: true },
-            { label: 'Analytics', href: '#' },
-            { label: 'Reports', href: '#' },
-          ]}
-          title="Dashboard"
-        >
-          <div style="padding: var(--space-4); background: var(--color-surface-recessed); border-radius: var(--radius-sm); color: var(--color-text-secondary); font-size: var(--font-size-small);">
-            Content area
-          </div>
-        </Dashboard>
-      </div>
-    </div>
-  </div>
-    <div class="ec-preview-card" id="org-hero-centered">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · HeroCentered</span>
-          <span class="ec-preview-card__name">Hero (Centered)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <HeroCentered eyebrow="Welcome" title="Hero Centered" lede="Centered hero for page introductions." accent="balanced" size="sm"><Button>Get started</Button></HeroCentered>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-hero-split">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · HeroSplit</span>
-          <span class="ec-preview-card__name">Hero (Split)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <HeroSplit eyebrow="Feature" title="Hero Split" lede="Two-column layout with text and visual." accent="hearth"></HeroSplit>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-hero-video">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · HeroVideo</span>
-          <span class="ec-preview-card__name">Hero (Video)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <HeroVideo videoSrc="" eyebrow="Story" title="Hero Video" lede="Background video hero." accent="code"></HeroVideo>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-section-content">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · SectionContent</span>
-          <span class="ec-preview-card__name">Section (Content)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <SectionContent eyebrow="Content" title="Section Content" lede="Standard content section." accent="balanced"><p>Body content goes here.</p></SectionContent>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-section-features">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · SectionFeatures</span>
-          <span class="ec-preview-card__name">Section (Features)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <SectionFeatures eyebrow="Features" title="Features" lede="Grid of features." accent="hearth" columns={3} features={[{"icon":"check","title":"Fast","description":"Built for speed."},{"icon":"check","title":"Reliable","description":"Always available."},{"icon":"check","title":"Open","description":"Token-driven."}]}></SectionFeatures>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-section-testimonials">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · SectionTestimonials</span>
-          <span class="ec-preview-card__name">Section (Testimonials)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <SectionTestimonials eyebrow="Testimonials" title="What users say" accent="balanced" testimonials={[{"quote":"Great design system.","author":"User A","role":"Developer"},{"quote":"Easy to use.","author":"User B","role":"Designer"}]}></SectionTestimonials>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-section-pricing">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · SectionPricing</span>
-          <span class="ec-preview-card__name">Section (Pricing)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <SectionPricing eyebrow="Pricing" title="Plans" accent="balanced" tiers={[{"tier":"Free","price":"$0","features":["Basic features"]},{"tier":"Pro","price":"$29","features":["All features"],"highlighted":true}]}></SectionPricing>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-section-cta">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · SectionCTA</span>
-          <span class="ec-preview-card__name">Section (CTA)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <SectionCTA title="Ready to start?" description="Get started today." primaryCtaLabel="Start" primaryCtaHref="#" accent="balanced"></SectionCTA>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-page-header">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · PageHeader</span>
-          <span class="ec-preview-card__name">Page Header</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <PageHeader title="Page Title" subtitle="Subtitle description" size="sm" accent="balanced"></PageHeader>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-page-footer">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · PageFooter</span>
-          <span class="ec-preview-card__name">Page Footer</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <PageFooter copyright="2026 Hearth and Code" columns={[{"title":"Links","links":[{"label":"Home","href":"/"}]}]}></PageFooter>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-nav-header">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · NavHeader</span>
-          <span class="ec-preview-card__name">Nav Header</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <NavHeader logo="Hearth and Code" logoHref="/" links={[{"label":"Studio","href":"/","active":true},{"label":"Gallery","href":"/gallery"}]} cta={{"label":"GitHub","href":"#"}}></NavHeader>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-nav-sidebar">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · NavSidebar</span>
-          <span class="ec-preview-card__name">Nav Sidebar</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <NavSidebar title="Navigation" sections={[{"items":[{"label":"Studio","href":"/","active":true},{"label":"Philosophy","href":"/philosophy"}]}]}></NavSidebar>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-layout-grid">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · LayoutGrid</span>
-          <span class="ec-preview-card__name">Layout (Grid)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <LayoutGrid columns={3}><Card><h3>1</h3></Card>
-<Card><h3>2</h3></Card>
-<Card><h3>3</h3></Card></LayoutGrid>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-layout-stack">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · LayoutStack</span>
-          <span class="ec-preview-card__name">Layout (Stack)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <LayoutStack ><Card><h3>First</h3></Card>
-<Card><h3>Second</h3></Card></LayoutStack>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-layout-sidebar">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · LayoutSidebar</span>
-          <span class="ec-preview-card__name">Layout (Sidebar)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <LayoutSidebar sidebarPosition="left" sidebarWidth="12rem"></LayoutSidebar>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-layout-header">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · HeaderLayout</span>
-          <span class="ec-preview-card__name">Layout (Header)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <HeaderLayout title="Sticky Header" stickyHeader={true}><p>Content area below the sticky header.</p></HeaderLayout>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-layout-tabs">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · TabsLayout</span>
-          <span class="ec-preview-card__name">Layout (Tabs)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <TabsLayout tabs={[{"id":"overview","label":"Overview","content":"Overview content"},{"id":"specs","label":"Specs","content":"Specs content"}]}></TabsLayout>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-layout-stepper">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · StepperLayout</span>
-          <span class="ec-preview-card__name">Layout (Stepper)</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <StepperLayout steps={[{"label":"Step 1"},{"label":"Step 2"},{"label":"Step 3"}]} currentStep={1}></StepperLayout>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-dashboard">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · Dashboard</span>
-          <span class="ec-preview-card__name">Dashboard</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <Dashboard navItems={[{"label":"Overview","href":"#","active":true},{"label":"Analytics","href":"#"}]} title="Dashboard"></Dashboard>
-      </div>
-    </div>
-    <div class="ec-preview-card" id="org-modal">
-      <div class="ec-preview-card__header">
-        <div class="ec-preview-card__title-group">
-          <span class="ec-preview-card__type">Organism · Modal</span>
-          <span class="ec-preview-card__name">Modal</span>
-        </div>
-      </div>
-      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
-        <Modal id="demo-modal" title="Modal Title" size="md"><p>Modal content goes here.</p></Modal>
-      </div>
-    </div>
-</div>
-
-<!-- PATTERNS SECTION -->
-<div id="layer-patterns" class="ec-layer-section" style="display: none;">
-  <div class="ec-layer-header">
-    <div class="ec-layer-header__badge">
-      <Icon name="circle" size="sm" />
-    </div>
-    <div class="ec-layer-header__content">
-      <h2 class="ec-layer-header__name">Patterns</h2>
-      <p class="ec-layer-header__desc">Recipe templates combining atoms, molecules, and organisms into reusable compositions.</p>
-    </div>
-    <span class="ec-layer-header__count">3 patterns</span>
-  </div>
-  <div class="ec-showcase-content">
-    <h3 style="margin-top: 0; font-family: var(--font-display); color: var(--color-text-display);">Studio Orientation Pattern</h3>
-    <p style="color: var(--color-text-secondary);">Clean router page that introduces Hearth & Code with hero, who-runs-it, navigation guide, and three-paths orientation. Avoids walls of text by limiting to 3 sections max.</p>
-    <Divider variant="gradient" />
-    <h3 style="font-family: var(--font-display); color: var(--color-text-display);">View-Disposition Pattern</h3>
-    <p style="color: var(--color-text-secondary);">Content panel below toggle that updates titles, descriptions, and links based on selected view (Hearth/Code/Balanced). Shows what changes when context shifts.</p>
-    <Divider variant="gradient" />
-    <h3 style="font-family: var(--font-display); color: var(--color-text-display);">Hero Presentation Pattern</h3>
-    <p style="color: var(--color-text-secondary);">Each section as a full-viewport slide. User scrolls naturally through hero → sections → CTA. Generous spacing between sections earns its place.</p>
-  </div>
-</div>
-
-<!-- SHOWCASE SECTION -->
-<div id="layer-showcase" class="ec-layer-section" style="display: none;">
-  <div class="ec-layer-header ec-layer-header--organism">
-    <div class="ec-layer-header__badge">
-      <Icon name="star" size="sm" />
-    </div>
-    <div class="ec-layer-header__content">
-      <h2 class="ec-layer-header__name">Showcase</h2>
-      <p class="ec-layer-header__desc">Real composition example. Full studio orientation with toggle and view-dynamic content.</p>
-    </div>
-    <span class="ec-layer-header__count">1 demo</span>
-  </div>
-  <div class="ec-showcase-content">
-    <SectionContent eyebrow="Hearth & Code" title="An independent research studio for answerable systems." lede="Building the design system layer by layer." accent="balanced">
-      <div style="display: flex; justify-content: center; margin: var(--space-5) 0;">
-        <Badge variant="hearth">Hearth</Badge>
-        <Badge variant="code">Code</Badge>
-        <Badge variant="balanced">Balanced</Badge>
-      </div>
-      <LayoutGrid columns={3}>
-        <Card>
-          <h3>Atoms</h3>
-          <p>12 single-purpose elements. Buttons, inputs, icons, badges.</p>
-        </Card>
-        <Card>
-          <h3>Molecules</h3>
-          <p>32 composed elements. Cards, forms, navigation, data display.</p>
-        </Card>
-        <Card>
-          <h3>Organisms</h3>
-          <p>20 page-level compositions. Heroes, sections, layouts.</p>
-        </Card>
-      </LayoutGrid>
-    </SectionContent>
-  </div>
-</div>
-
-<style>
-  body {
-    background: var(--color-surface-primary);
-  }
-</style>
-
-<script>
-  // Preview card tab switching - shows props / variants / states panels
-  document.querySelectorAll('.ec-preview-card__tab').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-target');
-      const tabName = tab.getAttribute('data-preview-tab');
-      if (!target || !tabName) return;
-
-      // Update tab states within this card
-      const card = tab.closest('.ec-preview-card');
-      if (!card) return;
-      card.querySelectorAll('.ec-preview-card__tab').forEach((t) => {
-        ((t as HTMLElement).classList.toggle('is-active', t === tab));
-      });
-
-      // Show the matching panel
-      card.querySelectorAll(`.ec-preview-card__panel[data-target="${target}"]`).forEach((panel) => {
-        (panel as HTMLElement).hidden = panel.getAttribute('data-preview-panel') !== tabName;
-      });
-    });
-  });
-
-  // Hero Hearth | Code title color animation
-  document.querySelectorAll('.ec-circ-hero__title-ember, .ec-circ-hero__title-code').forEach((el) => {
-    const color = window.getComputedStyle(el).color;
-    el.style.setProperty('--accent-glow', color + '40');
-  });
-</script>
-
-</Layout>
