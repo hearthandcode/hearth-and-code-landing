@@ -53,15 +53,24 @@ import Timeline from '../../components/composites/Timeline.astro';
 import Toc from '../../components/composites/Toc.astro';
 import HeroCentered from '../../components/templates/HeroCentered.astro';
 import HeroSplit from '../../components/templates/HeroSplit.astro';
+import HeroVideo from '../../components/templates/HeroVideo.astro';
 import SectionContent from '../../components/templates/SectionContent.astro';
 import SectionFeatures from '../../components/templates/SectionFeatures.astro';
 import SectionCTA from '../../components/templates/SectionCTA.astro';
 import SectionPricing from '../../components/templates/SectionPricing.astro';
+import SectionTestimonials from '../../components/templates/SectionTestimonials.astro';
 import PageHeader from '../../components/templates/PageHeader.astro';
 import PageFooter from '../../components/templates/PageFooter.astro';
+import NavHeader from '../../components/templates/NavHeader.astro';
+import NavSidebar from '../../components/templates/NavSidebar.astro';
 import LayoutGrid from '../../components/templates/LayoutGrid.astro';
 import LayoutStack from '../../components/templates/LayoutStack.astro';
+import LayoutSidebar from '../../components/templates/LayoutSidebar.astro';
+import HeaderLayout from '../../components/templates/HeaderLayout.astro';
+import TabsLayout from '../../components/templates/TabsLayout.astro';
+import StepperLayout from '../../components/templates/StepperLayout.astro';
 import Dashboard from '../../components/templates/Dashboard.astro';
+import Modal from '../../components/templates/Modal.astro';
 ---
 
 <Layout title="Design System · Ember Circuit" description="Storybook-style component gallery. Atoms, molecules, organisms, patterns — all isolated, all token-driven.">
@@ -468,7 +477,7 @@ import Dashboard from '../../components/templates/Dashboard.astro';
       // Tabs component already handles its own state
       // We listen for which tab is active and show corresponding section
       const tabId = trigger.getAttribute('data-tab-id');
-      document.querySelectorAll<HTMLElement>('.ec-layer-section'>).forEach((section) => {
+      document.querySelectorAll<HTMLElement>('.ec-layer-section').forEach((section) => {
         (section as HTMLElement).style.display = 'none';
       });
       const target = document.getElementById(`layer-${tabId}`);
@@ -478,7 +487,7 @@ import Dashboard from '../../components/templates/Dashboard.astro';
 
   // Initialize: show the first tab's content (atoms)
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll<HTMLElement>('.ec-layer-section'>).forEach((section, idx) => {
+    document.querySelectorAll<HTMLElement>('.ec-layer-section').forEach((section, idx) => {
       (section as HTMLElement).style.display = idx === 0 ? 'block' : 'none';
     });
   });
@@ -986,26 +995,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Accordion {
-  items: [
-    {
-      id: 'a1',
-      title: 'Section 1',
-      content: 'First section content.',
-      defaultOpen: true
-    },
-    {
-      id: 'a2',
-      title: 'Section 2',
-      content: 'Second section content.'
-    },
-    {
-      id: 'a3',
-      title: 'Section 3',
-      content: 'Third section content.'
-    }
-  ]
-} />
+        <Accordion items={[{"id":"a1","title":"Section 1","content":"First section content.","defaultOpen":true},{"id":"a2","title":"Section 2","content":"Second section content."},{"id":"a3","title":"Section 3","content":"Third section content."}]} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-breadcrumb">
@@ -1016,22 +1006,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Breadcrumb {
-  items: [
-    {
-      label: 'Home',
-      href: '#'
-    },
-    {
-      label: 'Studio',
-      href: '#'
-    },
-    {
-      label: 'Page',
-      href: '#'
-    }
-  ]
-} />
+        <Breadcrumb items={[{"label":"Home","href":"#"},{"label":"Studio","href":"#"},{"label":"Page","href":"#"}]} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-chart-line">
@@ -1042,55 +1017,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <ChartLine {
-  series: [
-    {
-      name: 'Atoms',
-      color: 'var(--color-accent-ember)',
-      data: [
-        {
-          x: 1,
-          y: 5
-        },
-        {
-          x: 2,
-          y: 12
-        },
-        {
-          x: 3,
-          y: 18
-        },
-        {
-          x: 4,
-          y: 32
-        }
-      ]
-    },
-    {
-      name: 'Molecules',
-      color: 'var(--color-accent-signal)',
-      data: [
-        {
-          x: 1,
-          y: 0
-        },
-        {
-          x: 2,
-          y: 8
-        },
-        {
-          x: 3,
-          y: 15
-        },
-        {
-          x: 4,
-          y: 28
-        }
-      ]
-    }
-  ],
-  height: '10rem'
-} />
+        <ChartLine series={[{"name":"Atoms","color":"var(--color-accent-ember)","data":[{"x":1,"y":5},{"x":2,"y":12},{"x":3,"y":18},{"x":4,"y":32}]},{"name":"Molecules","color":"var(--color-accent-signal)","data":[{"x":1,"y":0},{"x":2,"y":8},{"x":3,"y":15},{"x":4,"y":28}]}]} height="10rem" />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-chart-pie">
@@ -1101,23 +1028,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <ChartPie {
-  data: [
-    {
-      label: 'Atoms',
-      value: 12
-    },
-    {
-      label: 'Molecules',
-      value: 32
-    },
-    {
-      label: 'Organisms',
-      value: 20
-    }
-  ],
-  donut: true
-} />
+        <ChartPie data={[{"label":"Atoms","value":12},{"label":"Molecules","value":32},{"label":"Organisms","value":20}]} donut={true} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-empty-state">
@@ -1128,7 +1039,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <EmptyState icon=search title=No results found description=Try adjusting your search terms or browse all components. actionLabel=Browse all actionHref=# />
+        <EmptyState icon="search" title="No results found" description="Try adjusting your search terms or browse all components." actionLabel="Browse all" actionHref="#" />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-link-group">
@@ -1139,26 +1050,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <LinkGroup {
-  title: 'Related links',
-  links: [
-    {
-      label: 'Documentation',
-      href: '#',
-      description: 'Read the docs'
-    },
-    {
-      label: 'GitHub',
-      href: '#',
-      description: 'View source'
-    },
-    {
-      label: 'Examples',
-      href: '#',
-      description: 'See in action'
-    }
-  ]
-} />
+        <LinkGroup title="Related links" links={[{"label":"Documentation","href":"#","description":"Read the docs"},{"label":"GitHub","href":"#","description":"View source"},{"label":"Examples","href":"#","description":"See in action"}]} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-list">
@@ -1169,20 +1061,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <List {
-  items: [
-    {
-      content: 'Token-driven styling',
-      href: '#'
-    },
-    {
-      content: 'Semantic HTML'
-    },
-    {
-      content: 'ARIA support'
-    }
-  ]
-} />
+        <List items={[{"content":"Token-driven styling","href":"#"},{"content":"Semantic HTML"},{"content":"ARIA support"}]} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-list-grid">
@@ -1193,23 +1072,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <ListGrid {
-  items: [
-    {
-      content: 'Item 1'
-    },
-    {
-      content: 'Item 2'
-    },
-    {
-      content: 'Item 3'
-    },
-    {
-      content: 'Item 4'
-    }
-  ],
-  columns: 2
-} />
+        <ListGrid items={[{"content":"Item 1"},{"content":"Item 2"},{"content":"Item 3"},{"content":"Item 4"}]} columns={2} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-pagination">
@@ -1253,23 +1116,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Select {
-  options: [
-    {
-      value: 'option1',
-      label: 'Option 1'
-    },
-    {
-      value: 'option2',
-      label: 'Option 2'
-    },
-    {
-      value: 'option3',
-      label: 'Option 3'
-    }
-  ],
-  placeholder: 'Select option'
-} />
+        <Select options={[{"value":"option1","label":"Option 1"},{"value":"option2","label":"Option 2"},{"value":"option3","label":"Option 3"}]} placeholder="Select option" />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-stepper">
@@ -1280,20 +1127,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Stepper {
-  steps: [
-    {
-      label: 'Setup'
-    },
-    {
-      label: 'Configure'
-    },
-    {
-      label: 'Deploy'
-    }
-  ],
-  currentStep: 1
-} />
+        <Stepper steps={[{"label":"Setup"},{"label":"Configure"},{"label":"Deploy"}]} currentStep={1} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-table-filter">
@@ -1304,35 +1138,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <TableFilterable {
-  columns: [
-    {
-      key: 'name',
-      label: 'Name',
-      filterable: true
-    },
-    {
-      key: 'count',
-      label: 'Count',
-      filterable: true
-    }
-  ],
-  data: [
-    {
-      name: 'Atoms',
-      count: 12
-    },
-    {
-      name: 'Molecules',
-      count: 32
-    },
-    {
-      name: 'Organisms',
-      count: 20
-    }
-  ],
-  searchable: true
-} />
+        <TableFilterable columns={[{"key":"name","label":"Name","filterable":true},{"key":"count","label":"Count","filterable":true}]} data={[{"name":"Atoms","count":12},{"name":"Molecules","count":32},{"name":"Organisms","count":20}]} searchable={true} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-table-sort">
@@ -1343,43 +1149,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <TableSortable {
-  columns: [
-    {
-      key: 'name',
-      label: 'Name'
-    },
-    {
-      key: 'role',
-      label: 'Role'
-    },
-    {
-      key: 'year',
-      label: 'Year'
-    }
-  ],
-  data: [
-    {
-      name: 'Primitives',
-      role: 'Foundation',
-      year: 2024
-    },
-    {
-      name: 'Composites',
-      role: 'Composed',
-      year: 2024
-    },
-    {
-      name: 'Templates',
-      role: 'Pages',
-      year: 2024
-    }
-  ],
-  initialSort: {
-    key: 'name',
-    direction: 'asc'
-  }
-} />
+        <TableSortable columns={[{"key":"name","label":"Name"},{"key":"role","label":"Role"},{"key":"year","label":"Year"}]} data={[{"name":"Primitives","role":"Foundation","year":2024},{"name":"Composites","role":"Composed","year":2024},{"name":"Templates","role":"Pages","year":2024}]} initialSort={{"key":"name","direction":"asc"}} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-tabs">
@@ -1390,25 +1160,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Tabs {
-  tabs: [
-    {
-      id: 't1',
-      label: 'Overview',
-      content: 'Overview content'
-    },
-    {
-      id: 't2',
-      label: 'Details',
-      content: 'Details content'
-    },
-    {
-      id: 't3',
-      label: 'Settings',
-      content: 'Settings content'
-    }
-  ]
-} />
+        <Tabs tabs={[{"id":"t1","label":"Overview","content":"Overview content"},{"id":"t2","label":"Details","content":"Details content"},{"id":"t3","label":"Settings","content":"Settings content"}]} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-testimonial">
@@ -1441,25 +1193,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Timeline {
-  events: [
-    {
-      date: '2026-09-01',
-      title: 'Convergence doc',
-      description: '64 components defined'
-    },
-    {
-      date: '2026-09-15',
-      title: 'Wave 1 complete',
-      description: 'All primitives built'
-    },
-    {
-      date: '2026-09-20',
-      title: 'Wave 2 complete',
-      description: 'All composites built'
-    }
-  ]
-} />
+        <Timeline events={[{"date":"2026-09-01","title":"Convergence doc","description":"64 components defined"},{"date":"2026-09-15","title":"Wave 1 complete","description":"All primitives built"},{"date":"2026-09-20","title":"Wave 2 complete","description":"All composites built"}]} />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-toast">
@@ -1470,7 +1204,7 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Toast visible=true variant=success title=Saved! position=bottom-right />
+        <Toast visible={true} variant="success" title="Saved!" position="bottom-right" />
       </div>
     </div>
     <div class="ec-preview-card" id="mol-toc">
@@ -1481,21 +1215,13 @@ import Toc from '../../components/composites/Toc.astro';
         </div>
       </div>
       <div class="ec-preview-card__preview">
-        <Toc {
-  headings: [
-    {
-      id: 'intro',
-      text: 'Introduction',
-      level: 1
-    },
-    {
-      id: 'setup',
-      text: 'Setup',
-      level: 2
-    },
-    {
-      id: 'config',
-      text: 'Configuration',
+        <Toc headings={[
+            { id: 'intro', text: 'Introduction', level: 1 },
+            { id: 'setup', text: 'Setup', level: 2 },
+            { id: 'config', text: 'Configuration', level: 2 },
+          ]} />
+      </div>
+    </div>
 </div>
 
 <!-- ORGANISMS SECTION -->
@@ -1602,6 +1328,229 @@ import Toc from '../../components/composites/Toc.astro';
       </div>
     </div>
   </div>
+    <div class="ec-preview-card" id="org-hero-centered">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · HeroCentered</span>
+          <span class="ec-preview-card__name">Hero (Centered)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <HeroCentered eyebrow="Welcome" title="Hero Centered" lede="Centered hero for page introductions." accent="balanced" size="sm"><Button>Get started</Button></HeroCentered>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-hero-split">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · HeroSplit</span>
+          <span class="ec-preview-card__name">Hero (Split)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <HeroSplit eyebrow="Feature" title="Hero Split" lede="Two-column layout with text and visual." accent="hearth"></HeroSplit>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-hero-video">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · HeroVideo</span>
+          <span class="ec-preview-card__name">Hero (Video)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <HeroVideo videoSrc="" eyebrow="Story" title="Hero Video" lede="Background video hero." accent="code"></HeroVideo>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-section-content">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · SectionContent</span>
+          <span class="ec-preview-card__name">Section (Content)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <SectionContent eyebrow="Content" title="Section Content" lede="Standard content section." accent="balanced"><p>Body content goes here.</p></SectionContent>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-section-features">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · SectionFeatures</span>
+          <span class="ec-preview-card__name">Section (Features)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <SectionFeatures eyebrow="Features" title="Features" lede="Grid of features." accent="hearth" columns={3} features={[{"icon":"check","title":"Fast","description":"Built for speed."},{"icon":"check","title":"Reliable","description":"Always available."},{"icon":"check","title":"Open","description":"Token-driven."}]}></SectionFeatures>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-section-testimonials">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · SectionTestimonials</span>
+          <span class="ec-preview-card__name">Section (Testimonials)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <SectionTestimonials eyebrow="Testimonials" title="What users say" accent="balanced" testimonials={[{"quote":"Great design system.","author":"User A","role":"Developer"},{"quote":"Easy to use.","author":"User B","role":"Designer"}]}></SectionTestimonials>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-section-pricing">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · SectionPricing</span>
+          <span class="ec-preview-card__name">Section (Pricing)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <SectionPricing eyebrow="Pricing" title="Plans" accent="balanced" tiers={[{"tier":"Free","price":"$0","features":["Basic features"]},{"tier":"Pro","price":"$29","features":["All features"],"highlighted":true}]}></SectionPricing>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-section-cta">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · SectionCTA</span>
+          <span class="ec-preview-card__name">Section (CTA)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <SectionCTA title="Ready to start?" description="Get started today." primaryCtaLabel="Start" primaryCtaHref="#" accent="balanced"></SectionCTA>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-page-header">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · PageHeader</span>
+          <span class="ec-preview-card__name">Page Header</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <PageHeader title="Page Title" subtitle="Subtitle description" size="sm" accent="balanced"></PageHeader>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-page-footer">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · PageFooter</span>
+          <span class="ec-preview-card__name">Page Footer</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <PageFooter copyright="2026 Hearth and Code" columns={[{"title":"Links","links":[{"label":"Home","href":"/"}]}]}></PageFooter>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-nav-header">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · NavHeader</span>
+          <span class="ec-preview-card__name">Nav Header</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <NavHeader logo="Hearth and Code" logoHref="/" links={[{"label":"Studio","href":"/","active":true},{"label":"Gallery","href":"/gallery"}]} cta={{"label":"GitHub","href":"#"}}></NavHeader>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-nav-sidebar">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · NavSidebar</span>
+          <span class="ec-preview-card__name">Nav Sidebar</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <NavSidebar title="Navigation" sections={[{"items":[{"label":"Studio","href":"/","active":true},{"label":"Philosophy","href":"/philosophy"}]}]}></NavSidebar>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-layout-grid">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · LayoutGrid</span>
+          <span class="ec-preview-card__name">Layout (Grid)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <LayoutGrid columns={3}><Card><h3>1</h3></Card>
+<Card><h3>2</h3></Card>
+<Card><h3>3</h3></Card></LayoutGrid>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-layout-stack">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · LayoutStack</span>
+          <span class="ec-preview-card__name">Layout (Stack)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <LayoutStack ><Card><h3>First</h3></Card>
+<Card><h3>Second</h3></Card></LayoutStack>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-layout-sidebar">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · LayoutSidebar</span>
+          <span class="ec-preview-card__name">Layout (Sidebar)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <LayoutSidebar sidebarPosition="left" sidebarWidth="12rem"></LayoutSidebar>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-layout-header">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · HeaderLayout</span>
+          <span class="ec-preview-card__name">Layout (Header)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <HeaderLayout title="Sticky Header" stickyHeader={true}><p>Content area below the sticky header.</p></HeaderLayout>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-layout-tabs">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · TabsLayout</span>
+          <span class="ec-preview-card__name">Layout (Tabs)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <TabsLayout tabs={[{"id":"overview","label":"Overview","content":"Overview content"},{"id":"specs","label":"Specs","content":"Specs content"}]}></TabsLayout>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-layout-stepper">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · StepperLayout</span>
+          <span class="ec-preview-card__name">Layout (Stepper)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <StepperLayout steps={[{"label":"Step 1"},{"label":"Step 2"},{"label":"Step 3"}]} currentStep={1}></StepperLayout>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-dashboard">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · Dashboard</span>
+          <span class="ec-preview-card__name">Dashboard</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <Dashboard navItems={[{"label":"Overview","href":"#","active":true},{"label":"Analytics","href":"#"}]} title="Dashboard"></Dashboard>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="org-modal">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · Modal</span>
+          <span class="ec-preview-card__name">Modal</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width:100%;padding:var(--space-3);">
+        <Modal id="demo-modal" title="Modal Title" size="md"><p>Modal content goes here.</p></Modal>
+      </div>
+    </div>
 </div>
 
 <!-- PATTERNS SECTION -->
@@ -1683,7 +1632,7 @@ import Toc from '../../components/composites/Toc.astro';
       const card = tab.closest('.ec-preview-card');
       if (!card) return;
       card.querySelectorAll('.ec-preview-card__tab').forEach((t) => {
-        ((t as HTMLElement).classList.toggle('is-active', t === tab);
+        ((t as HTMLElement).classList.toggle('is-active', t === tab));
       });
 
       // Show the matching panel
