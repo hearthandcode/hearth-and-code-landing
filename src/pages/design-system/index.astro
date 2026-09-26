@@ -974,6 +974,528 @@ import Dashboard from '../../components/templates/Dashboard.astro';
       </div>
     </div>
   </div>
+import Toast from '../../components/composites/Toast.astro';
+import Toc from '../../components/composites/Toc.astro';
+
+
+    <div class="ec-preview-card" id="mol-accordion">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Accordion</span>
+          <span class="ec-preview-card__name">Accordion</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Accordion {
+  items: [
+    {
+      id: 'a1',
+      title: 'Section 1',
+      content: 'First section content.',
+      defaultOpen: true
+    },
+    {
+      id: 'a2',
+      title: 'Section 2',
+      content: 'Second section content.'
+    },
+    {
+      id: 'a3',
+      title: 'Section 3',
+      content: 'Third section content.'
+    }
+  ]
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-breadcrumb">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Breadcrumb</span>
+          <span class="ec-preview-card__name">Breadcrumb</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Breadcrumb {
+  items: [
+    {
+      label: 'Home',
+      href: '#'
+    },
+    {
+      label: 'Studio',
+      href: '#'
+    },
+    {
+      label: 'Page',
+      href: '#'
+    }
+  ]
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-chart-line">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · ChartLine</span>
+          <span class="ec-preview-card__name">ChartLine</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <ChartLine {
+  series: [
+    {
+      name: 'Atoms',
+      color: 'var(--color-accent-ember)',
+      data: [
+        {
+          x: 1,
+          y: 5
+        },
+        {
+          x: 2,
+          y: 12
+        },
+        {
+          x: 3,
+          y: 18
+        },
+        {
+          x: 4,
+          y: 32
+        }
+      ]
+    },
+    {
+      name: 'Molecules',
+      color: 'var(--color-accent-signal)',
+      data: [
+        {
+          x: 1,
+          y: 0
+        },
+        {
+          x: 2,
+          y: 8
+        },
+        {
+          x: 3,
+          y: 15
+        },
+        {
+          x: 4,
+          y: 28
+        }
+      ]
+    }
+  ],
+  height: '10rem'
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-chart-pie">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · ChartPie</span>
+          <span class="ec-preview-card__name">ChartPie</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <ChartPie {
+  data: [
+    {
+      label: 'Atoms',
+      value: 12
+    },
+    {
+      label: 'Molecules',
+      value: 32
+    },
+    {
+      label: 'Organisms',
+      value: 20
+    }
+  ],
+  donut: true
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-empty-state">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · EmptyState</span>
+          <span class="ec-preview-card__name">EmptyState</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <EmptyState icon=search title=No results found description=Try adjusting your search terms or browse all components. actionLabel=Browse all actionHref=# />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-link-group">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · LinkGroup</span>
+          <span class="ec-preview-card__name">LinkGroup</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <LinkGroup {
+  title: 'Related links',
+  links: [
+    {
+      label: 'Documentation',
+      href: '#',
+      description: 'Read the docs'
+    },
+    {
+      label: 'GitHub',
+      href: '#',
+      description: 'View source'
+    },
+    {
+      label: 'Examples',
+      href: '#',
+      description: 'See in action'
+    }
+  ]
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-list">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · List</span>
+          <span class="ec-preview-card__name">List</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <List {
+  items: [
+    {
+      content: 'Token-driven styling',
+      href: '#'
+    },
+    {
+      content: 'Semantic HTML'
+    },
+    {
+      content: 'ARIA support'
+    }
+  ]
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-list-grid">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · ListGrid</span>
+          <span class="ec-preview-card__name">ListGrid</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <ListGrid {
+  items: [
+    {
+      content: 'Item 1'
+    },
+    {
+      content: 'Item 2'
+    },
+    {
+      content: 'Item 3'
+    },
+    {
+      content: 'Item 4'
+    }
+  ],
+  columns: 2
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-pagination">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Pagination</span>
+          <span class="ec-preview-card__name">Pagination</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Pagination currentPage=3 totalPages=12 />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-product-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · ProductCard</span>
+          <span class="ec-preview-card__name">ProductCard</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <ProductCard title=Component Library description=64 production-ready components built with tokens price=Free href=# />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-search-bar">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · SearchBar</span>
+          <span class="ec-preview-card__name">SearchBar</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <SearchBar placeholder=Search components... />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-select">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Select</span>
+          <span class="ec-preview-card__name">Select</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Select {
+  options: [
+    {
+      value: 'option1',
+      label: 'Option 1'
+    },
+    {
+      value: 'option2',
+      label: 'Option 2'
+    },
+    {
+      value: 'option3',
+      label: 'Option 3'
+    }
+  ],
+  placeholder: 'Select option'
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-stepper">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Stepper</span>
+          <span class="ec-preview-card__name">Stepper</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Stepper {
+  steps: [
+    {
+      label: 'Setup'
+    },
+    {
+      label: 'Configure'
+    },
+    {
+      label: 'Deploy'
+    }
+  ],
+  currentStep: 1
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-table-filter">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · TableFilterable</span>
+          <span class="ec-preview-card__name">TableFilterable</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <TableFilterable {
+  columns: [
+    {
+      key: 'name',
+      label: 'Name',
+      filterable: true
+    },
+    {
+      key: 'count',
+      label: 'Count',
+      filterable: true
+    }
+  ],
+  data: [
+    {
+      name: 'Atoms',
+      count: 12
+    },
+    {
+      name: 'Molecules',
+      count: 32
+    },
+    {
+      name: 'Organisms',
+      count: 20
+    }
+  ],
+  searchable: true
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-table-sort">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · TableSortable</span>
+          <span class="ec-preview-card__name">TableSortable</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <TableSortable {
+  columns: [
+    {
+      key: 'name',
+      label: 'Name'
+    },
+    {
+      key: 'role',
+      label: 'Role'
+    },
+    {
+      key: 'year',
+      label: 'Year'
+    }
+  ],
+  data: [
+    {
+      name: 'Primitives',
+      role: 'Foundation',
+      year: 2024
+    },
+    {
+      name: 'Composites',
+      role: 'Composed',
+      year: 2024
+    },
+    {
+      name: 'Templates',
+      role: 'Pages',
+      year: 2024
+    }
+  ],
+  initialSort: {
+    key: 'name',
+    direction: 'asc'
+  }
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-tabs">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Tabs</span>
+          <span class="ec-preview-card__name">Tabs</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Tabs {
+  tabs: [
+    {
+      id: 't1',
+      label: 'Overview',
+      content: 'Overview content'
+    },
+    {
+      id: 't2',
+      label: 'Details',
+      content: 'Details content'
+    },
+    {
+      id: 't3',
+      label: 'Settings',
+      content: 'Settings content'
+    }
+  ]
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-testimonial">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · TestimonialCard</span>
+          <span class="ec-preview-card__name">TestimonialCard</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <TestimonialCard quote=This design system has transformed our workflow. author=Scott Rallya role=Hearthside Meta-Architect rating=5 />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-textarea">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Textarea</span>
+          <span class="ec-preview-card__name">Textarea</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Textarea placeholder=Enter your thoughts... rows=3 />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-timeline">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Timeline</span>
+          <span class="ec-preview-card__name">Timeline</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Timeline {
+  events: [
+    {
+      date: '2026-09-01',
+      title: 'Convergence doc',
+      description: '64 components defined'
+    },
+    {
+      date: '2026-09-15',
+      title: 'Wave 1 complete',
+      description: 'All primitives built'
+    },
+    {
+      date: '2026-09-20',
+      title: 'Wave 2 complete',
+      description: 'All composites built'
+    }
+  ]
+} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-toast">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Toast</span>
+          <span class="ec-preview-card__name">Toast</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Toast visible=true variant=success title=Saved! position=bottom-right />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-toc">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · Toc</span>
+          <span class="ec-preview-card__name">Toc</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Toc {
+  headings: [
+    {
+      id: 'intro',
+      text: 'Introduction',
+      level: 1
+    },
+    {
+      id: 'setup',
+      text: 'Setup',
+      level: 2
+    },
+    {
+      id: 'config',
+      text: 'Configuration',
 </div>
 
 <!-- ORGANISMS SECTION -->
