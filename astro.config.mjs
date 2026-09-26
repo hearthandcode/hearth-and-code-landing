@@ -8,27 +8,35 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
-  server: {
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-    },
-  },
-  preview: {
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-    },
-  },
   vite: {
-    server: {
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
+    plugins: [
+      {
+        name: 'set-html-charset',
+        configurePreviewServer(server) {
+          // Override writeHead to add charset to HTML responses
+          server.middlewares.use((req, res, next) => {
+            const url = req.url || '';
+            if (url === '/' || url.endsWith('.html') || url.endsWith('/')) {
+              const origWriteHead = res.writeHead.bind(res);
+              res.writeHead = function(statusCode, headers) {
+                if (headers && headers['Content-Type'] && String(headers['Content-Type']).startsWith('text/html')) {
+                  headers['Content-Type'] = 'text/html; charset=utf-8';
+                }
+                return origWriteHead(statusCode, headers);
+              };
+              const origSetHeader = res.setHeader.bind(res);
+              res.setHeader = function(name, value) {
+                if (name === 'Content-Type' && typeof value === 'string' && value.startsWith('text/html')) {
+                  return origSetHeader(name, 'text/html; charset=utf-8');
+                }
+                return origSetHeader(name, value);
+              };
+            }
+            next();
+          });
+        },
       },
-    },
-    preview: {
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
-      },
-    },
+    ],
   },
   markdown: {
     shikiConfig: {
