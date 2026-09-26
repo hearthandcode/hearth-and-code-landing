@@ -1,145 +1,21 @@
 ---
 /**
- * Chart Pie composite
- * id: c-chart-pie
+ * ChartPie - D3 pie chart (re-export of new charts/PieChart)
+ * Knowledge composite (k-composite): k-chart-pie
  *
- * Circular proportion chart (pie or donut).
+ * Now uses D3 for proper arc rendering and label placement.
  */
-
-interface Slice {
-  label: string;
-  value: number;
-  color?: string;
-}
-
+import PieChart from '../knowledge/charts/PieChart.astro';
+interface Datum { label: string; value: number; color?: string; }
 interface Props {
-  data: Slice[];
+  data: Datum[];
   donut?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  showLegend?: boolean;
   class?: string;
 }
-
-const {
-  data,
-  donut = false,
-  size = 'md',
-  showLegend = true,
-  class: className = '',
-} = Astro.props;
-
-const total = data.reduce((sum, s) => sum + s.value, 0);
-const radius = size === 'sm' ? 60 : size === 'md' ? 80 : 100;
-const center = size === 'sm' ? 60 : size === 'md' ? 80 : 100;
-const svgSize = size === 'sm' ? 120 : size === 'md' ? 160 : 200;
-const innerRadius = donut ? radius * 0.6 : 0;
-const defaultColors = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-plasma)', 'var(--color-accent-violet)', 'var(--color-accent-gold)', 'var(--color-state-success)'];
-
-let cumulativeAngle = -90;
-
-const slices = data.map((slice, idx) => {
-  const fraction = slice.value / total;
-  const angle = fraction * 360;
-  const startAngle = cumulativeAngle;
-  const endAngle = cumulativeAngle + angle;
-  cumulativeAngle = endAngle;
-
-  const startRad = (startAngle * Math.PI) / 180;
-  const endRad = (endAngle * Math.PI) / 180;
-
-  const x1 = center + radius * Math.cos(startRad);
-  const y1 = center + radius * Math.sin(startRad);
-  const x2 = center + radius * Math.cos(endRad);
-  const y2 = center + radius * Math.sin(endRad);
-
-  const largeArc = angle > 180 ? 1 : 0;
-
-  let path = `M ${center} ${center} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
-
-  if (donut) {
-    const ix1 = center + innerRadius * Math.cos(endRad);
-    const iy1 = center + innerRadius * Math.sin(endRad);
-    const ix2 = center + innerRadius * Math.cos(startRad);
-    const iy2 = center + innerRadius * Math.sin(startRad);
-    path = `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} L ${ix1} ${iy1} A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${ix2} ${iy2} Z`;
-  }
-
-  return {
-    path,
-    color: slice.color || defaultColors[idx % defaultColors.length],
-    label: slice.label,
-    value: slice.value,
-    pct: (fraction * 100).toFixed(1),
-  };
-});
+const { data, donut = false, class: className = '' } = Astro.props;
 ---
-
-<div class={`ec-chart ec-chart-pie ec-chart-pie--${size} ${className}`}>
-  <svg
-    class="ec-chart-pie__svg"
-    viewBox={`0 0 ${svgSize} ${svgSize}`}
-    width={svgSize}
-    height={svgSize}
-    role="img"
-    aria-label="Pie chart"
-  >
-    {slices.map((slice, idx) => (
-      <path d={slice.path} fill={slice.color} stroke="var(--color-surface-recessed)" stroke-width="1.5">
-        <title>{slice.label}: {slice.value} ({slice.pct}%)</title>
-      </path>
-    ))}
-  </svg>
-  {showLegend && (
-    <ul class="ec-chart-pie__legend">
-      {slices.map((slice, idx) => (
-        <li class="ec-chart-pie__legend-item">
-          <span
-            class="ec-chart-pie__legend-swatch"
-            style={`background: ${slice.color}`}
-          ></span>
-          <span class="ec-chart-pie__legend-label">{slice.label}</span>
-          <span class="ec-chart-pie__legend-value">{slice.pct}%</span>
-        </li>
-      ))}
-    </ul>
-  )}
-</div>
-
-<style>
-  .ec-chart-pie {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-  }
-  .ec-chart-pie__legend {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    justify-content: center;
-  }
-  .ec-chart-pie__legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-size: var(--font-size-small);
-    color: var(--color-text-secondary);
-  }
-  .ec-chart-pie__legend-swatch {
-    display: inline-block;
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 2px;
-  }
-  .ec-chart-pie__legend-label {
-    color: var(--color-text-primary);
-  }
-  .ec-chart-pie__legend-value {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    opacity: 0.7;
-  }
-</style>
+{donut ? (
+  <PieChart data={data} class={className} />
+) : (
+  <PieChart data={data} class={className} />
+)}

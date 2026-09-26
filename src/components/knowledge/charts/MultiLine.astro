@@ -1,0 +1,16 @@
+---
+/**
+ * MultiLine - D3 multi-line chart (alias for LineChart, multi-series focused)
+ * Knowledge chart: k-chart-multiline
+ */
+import LineChart from './LineChart.astro';
+interface Point { x: number | string; y: number; }
+interface Series { name: string; data: Point[]; color?: string; }
+interface Props {
+  series: Series[];
+  height?: number;
+  class?: string;
+}
+const { series, height = 240, class: className = '' } = Astro.props;
+---
+<LineChart series={series} height={height} showPoints={true} smooth={true} class={className} />

@@ -1,0 +1,54 @@
+---
+/**
+ * AreaChart - D3 filled area chart (single series)
+ * Knowledge chart: k-chart-area
+ */
+import * as d3 from 'd3';
+interface Point { x: number; y: number; }
+interface Props {
+  data: Point[];
+  height?: number;
+  color?: string;
+  class?: string;
+}
+const { data, height = 240, color = 'var(--color-accent-ember)', class: className = '' } = Astro.props;
+const chartId = `kc-area-${Math.random().toString(36).slice(2, 9)}`;
+const width = 320;
+const margin = { top: 12, right: 12, bottom: 28, left: 36 };
+const innerW = width - margin.left - margin.right;
+const innerH = height - margin.top - margin.bottom;
+const max = Math.max(...data.map(d => d.y), 1);
+---
+<div class:list={['kc-d3-area', className]} data-chart-id={chartId}>
+  <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-area__svg"></svg>
+</div>
+
+<script define:vars={{ chartId, data, width, height, margin, innerW, innerH, max, color }}>
+  import('d3').then((d3) => {
+    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
+      const svg = d3.select(container).select('svg');
+      svg.selectAll('*').remove();
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+      const x = d3.scaleLinear().domain(d3.extent(data, d => d.x) as [number, number]).range([0, innerW]);
+      const y = d3.scaleLinear().domain([0, max * 1.1]).range([innerH, 0]);
+      const area = d3.area<Point>().x(d => x(d.x)).y0(innerH).y1(d => y(d.y)).curve(d3.curveMonotoneX);
+      const line = d3.line<Point>().x(d => x(d.x)).y(d => y(d.y)).curve(d3.curveMonotoneX);
+      const gradId = `kc-area-grad-${chartId}`;
+      svg.append('defs').append('linearGradient').attr('id', gradId).attr('x1', '0').attr('x2', '0').attr('y1', '0').attr('y2', '1')
+        .selectAll('stop').data([{ off: '0%', op: 0.6 }, { off: '100%', op: 0.05 }]).enter().append('stop')
+        .attr('offset', d => d.off).attr('stop-color', color).attr('stop-opacity', d => d.op);
+      g.append('path').datum(data).attr('fill', `url(#${gradId})`).attr('d', area);
+      g.append('path').datum(data).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('d', line);
+      g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5))
+        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+      g.append('g').call(d3.axisLeft(y).ticks(4))
+        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+    });
+  });
+</script>
+
+<style>
+  .kc-d3-area { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); }
+  .kc-d3-area__svg { width: 100%; height: auto; display: block; }
+</style>

@@ -1,0 +1,263 @@
+
+<h3 class="ds-subsection__title">Charts <span class="ds-subsection__count">16</span></h3>
+<div class="ds-tiles">
+  <figure class="ds-tile" id="kc-chart-bar">
+    <div class="ds-tile__preview">
+      <D3Bar data={[
+        { label: 'Atoms', value: 12 },
+        { label: 'Composites', value: 32 },
+        { label: 'Templates', value: 20 },
+        { label: 'Knowledge', value: 64 },
+      ]} showValues={true} showAxis={true} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-bar</span>
+      <span class="ds-tile__name">Bar Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-hbar">
+    <div class="ds-tile__preview">
+      <HorizontalBar data={[
+        { label: 'Atoms', value: 12 },
+        { label: 'Composites', value: 32 },
+        { label: 'Templates', value: 20 },
+        { label: 'Knowledge', value: 64 },
+      ]} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-hbar</span>
+      <span class="ds-tile__name">Horizontal Bar</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-grouped-bar">
+    <div class="ds-tile__preview">
+      <GroupedBar data={[
+        { category: 'Q1', series: 'Atoms', value: 8 },
+        { category: 'Q1', series: 'Composites', value: 16 },
+        { category: 'Q2', series: 'Atoms', value: 10 },
+        { category: 'Q2', series: 'Composites', value: 24 },
+        { category: 'Q3', series: 'Atoms', value: 12 },
+        { category: 'Q3', series: 'Composites', value: 32 },
+      ]} seriesNames={['Atoms', 'Composites']} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-grouped-bar</span>
+      <span class="ds-tile__name">Grouped Bar</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-stacked-bar">
+    <div class="ds-tile__preview">
+      <StackedBar data={[
+        { category: 'Q1', series: 'Built', value: 24 },
+        { category: 'Q1', series: 'Pending', value: 12 },
+        { category: 'Q2', series: 'Built', value: 42 },
+        { category: 'Q2', series: 'Pending', value: 8 },
+        { category: 'Q3', series: 'Built', value: 64 },
+        { category: 'Q3', series: 'Pending', value: 0 },
+      ]} seriesNames={['Built', 'Pending']} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-stacked-bar</span>
+      <span class="ds-tile__name">Stacked Bar</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-line">
+    <div class="ds-tile__preview">
+      <D3Line series={[
+        { name: 'Components', data: [{ x: 1, y: 12 }, { x: 2, y: 28 }, { x: 3, y: 52 }, { x: 4, y: 64 }] },
+      ]} showPoints={true} smooth={true} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-line</span>
+      <span class="ds-tile__name">Line Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-multiline">
+    <div class="ds-tile__preview">
+      <MultiLine series={[
+        { name: 'Atoms', data: [{ x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 10 }, { x: 4, y: 12 }] },
+        { name: 'Composites', data: [{ x: 1, y: 12 }, { x: 2, y: 18 }, { x: 3, y: 25 }, { x: 4, y: 32 }] },
+        { name: 'Templates', data: [{ x: 1, y: 6 }, { x: 2, y: 12 }, { x: 3, y: 16 }, { x: 4, y: 20 }] },
+      ]} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-multiline</span>
+      <span class="ds-tile__name">Multi-Line Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-area">
+    <div class="ds-tile__preview">
+      <AreaChart data={[
+        { x: 1, y: 12 }, { x: 2, y: 28 }, { x: 3, y: 52 }, { x: 4, y: 64 }, { x: 5, y: 78 },
+      ]} color="var(--color-accent-ember)" />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-area</span>
+      <span class="ds-tile__name">Area Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-stacked-area">
+    <div class="ds-tile__preview">
+      <StackedArea series={[
+        { name: 'Atoms', data: [{ x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 10 }, { x: 4, y: 12 }] },
+        { name: 'Composites', data: [{ x: 1, y: 12 }, { x: 2, y: 18 }, { x: 3, y: 25 }, { x: 4, y: 32 }] },
+        { name: 'Templates', data: [{ x: 1, y: 6 }, { x: 2, y: 12 }, { x: 3, y: 16 }, { x: 4, y: 20 }] },
+      ]} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-stacked-area</span>
+      <span class="ds-tile__name">Stacked Area</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-pie">
+    <div class="ds-tile__preview">
+      <D3Pie data={[
+        { label: 'Atoms', value: 12 },
+        { label: 'Composites', value: 32 },
+        { label: 'Templates', value: 20 },
+        { label: 'Knowledge', value: 64 },
+      ]} showLabels={true} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-pie</span>
+      <span class="ds-tile__name">Pie Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-donut">
+    <div class="ds-tile__preview">
+      <DonutChart data={[
+        { label: 'Atoms', value: 12 },
+        { label: 'Composites', value: 32 },
+        { label: 'Templates', value: 20 },
+        { label: 'Knowledge', value: 64 },
+      ]} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-donut</span>
+      <span class="ds-tile__name">Donut Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-scatter">
+    <div class="ds-tile__preview">
+      <ScatterPlot data={[
+        { x: 1, y: 5 }, { x: 2, y: 12 }, { x: 3, y: 18 }, { x: 4, y: 32 },
+        { x: 5, y: 28 }, { x: 6, y: 42 }, { x: 7, y: 38 }, { x: 8, y: 55 },
+      ]} trendLine={true} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-scatter</span>
+      <span class="ds-tile__name">Scatter Plot</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-bubble">
+    <div class="ds-tile__preview">
+      <BubbleChart data={[
+        { label: 'A', x: 2, y: 5, r: 8 },
+        { label: 'B', x: 4, y: 12, r: 16 },
+        { label: 'C', x: 6, y: 18, r: 24 },
+        { label: 'D', x: 8, y: 32, r: 32 },
+      ]} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-bubble</span>
+      <span class="ds-tile__name">Bubble Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-heatmap">
+    <div class="ds-tile__preview">
+      <Heatmap data={[
+        { row: 'Mon', col: '9am', value: 12 },
+        { row: 'Mon', col: '12pm', value: 28 },
+        { row: 'Mon', col: '3pm', value: 18 },
+        { row: 'Tue', col: '9am', value: 22 },
+        { row: 'Tue', col: '12pm', value: 36 },
+        { row: 'Tue', col: '3pm', value: 30 },
+        { row: 'Wed', col: '9am', value: 18 },
+        { row: 'Wed', col: '12pm', value: 42 },
+        { row: 'Wed', col: '3pm', value: 24 },
+      ]} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-heatmap</span>
+      <span class="ds-tile__name">Heatmap</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-radar">
+    <div class="ds-tile__preview">
+      <RadarChart
+        axes={[
+          { label: 'Speed', max: 100 },
+          { label: 'Quality', max: 100 },
+          { label: 'Coverage', max: 100 },
+          { label: 'Tokens', max: 100 },
+          { label: 'Reuse', max: 100 },
+        ]}
+        data={[
+          { label: 'Atoms', values: [85, 90, 70, 95, 80] },
+          { label: 'Composites', values: [70, 85, 90, 80, 75] },
+        ]}
+      />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-radar</span>
+      <span class="ds-tile__name">Radar Chart</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-treemap">
+    <div class="ds-tile__preview">
+      <Treemap data={{
+        name: 'root',
+        children: [
+          { name: 'Atoms', value: 12 },
+          { name: 'Composites', value: 32 },
+          { name: 'Templates', value: 20 },
+          { name: 'Knowledge', value: 64 },
+        ],
+      }} />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-treemap</span>
+      <span class="ds-tile__name">Treemap</span>
+    </figcaption>
+  </figure>
+
+  <figure class="ds-tile" id="kc-chart-force">
+    <div class="ds-tile__preview">
+      <ForceGraph
+        nodes={[
+          { id: 'a', label: 'A', type: 'concept' },
+          { id: 'b', label: 'B', type: 'claim' },
+          { id: 'c', label: 'C', type: 'source' },
+          { id: 'd', label: 'D', type: 'task' },
+          { id: 'e', label: 'E', type: 'concept' },
+        ]}
+        edges={[
+          { source: 'a', target: 'b' },
+          { source: 'b', target: 'c' },
+          { source: 'a', target: 'd' },
+          { source: 'd', target: 'e' },
+          { source: 'e', target: 'b' },
+        ]}
+      />
+    </div>
+    <figcaption class="ds-tile__meta">
+      <span class="ds-tile__id">kc-chart-force</span>
+      <span class="ds-tile__name">Force Graph</span>
+    </figcaption>
+  </figure>
+
+</div>

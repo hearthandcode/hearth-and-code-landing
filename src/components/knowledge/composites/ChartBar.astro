@@ -1,0 +1,121 @@
+---
+/**
+ * ChartBar - D3-rendered vertical bar chart
+ * Knowledge composite (k-composite): k-chart-bar
+ * 
+ * Replaces hand-coded CSS bars with D3-rendered SVG for proper
+ * scaling, axes, and interactivity.
+ */
+import * as d3 from 'd3';
+
+interface Datum {
+  label: string;
+  value: number;
+  color?: string;
+}
+interface Props {
+  data: Datum[];
+  height?: number;
+  showAxis?: boolean;
+  showValues?: boolean;
+  class?: string;
+}
+const {
+  data,
+  height = 220,
+  showAxis = true,
+  showValues = true,
+  class: className = '',
+} = Astro.props;
+const chartId = `kc-chart-bar-${Math.random().toString(36).slice(2, 9)}`;
+
+// Compute scales
+const width = 320;
+const margin = { top: 12, right: 12, bottom: showAxis ? 28 : 4, left: showAxis ? 36 : 4 };
+const innerW = width - margin.left - margin.right;
+const innerH = height - margin.top - margin.bottom;
+const max = Math.max(...data.map((d) => d.value), 1);
+const barWidth = innerW / Math.max(1, data.length) * 0.7;
+const step = innerW / Math.max(1, data.length);
+---
+<div class:list={['kc-d3-bar', className]} data-chart-id={chartId}>
+  <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-bar__svg"></svg>
+  <div class="kc-d3-bar__caption">{data.length} bars · max {max}</div>
+</div>
+
+<script define:vars={{ chartId, data, width, height, margin, innerW, innerH, barWidth, step, max, showAxis, showValues }}>
+  import('d3').then((d3) => {
+    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
+      const svg = d3.select(container).select('svg');
+      svg.selectAll('*').remove();
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+      const xScale = d3.scaleBand().domain(data.map(d => d.label)).range([0, innerW]).padding(0.3);
+      const yScale = d3.scaleLinear().domain([0, max * 1.1]).range([innerH, 0]);
+
+      // Bars
+      g.selectAll('rect.kc-bar')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('class', 'kc-bar')
+        .attr('x', (d) => xScale(d.label) ?? 0)
+        .attr('y', (d) => yScale(d.value))
+        .attr('width', xScale.bandwidth())
+        .attr('height', (d) => innerH - yScale(d.value))
+        .attr('fill', (d, i) => d.color || ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-violet)', 'var(--color-accent-gold)'][i % 4])
+        .attr('rx', 3);
+
+      // Value labels
+      if (showValues) {
+        g.selectAll('text.kc-bar-value')
+          .data(data)
+          .enter()
+          .append('text')
+          .attr('class', 'kc-bar-value')
+          .attr('x', (d) => (xScale(d.label) ?? 0) + xScale.bandwidth() / 2)
+          .attr('y', (d) => yScale(d.value) - 4)
+          .attr('text-anchor', 'middle')
+          .attr('fill', 'var(--color-text-display)')
+          .attr('font-family', 'var(--font-mono)')
+          .attr('font-size', '10')
+          .text((d) => d.value);
+      }
+
+      // Axes
+      if (showAxis) {
+        g.append('g')
+          .attr('transform', `translate(0,${innerH})`)
+          .call(d3.axisBottom(xScale))
+          .selectAll('text')
+          .attr('fill', 'var(--color-text-secondary)')
+          .attr('font-family', 'var(--font-mono)')
+          .attr('font-size', '9');
+
+        g.append('g')
+          .call(d3.axisLeft(yScale).ticks(4))
+          .selectAll('text')
+          .attr('fill', 'var(--color-text-secondary)')
+          .attr('font-family', 'var(--font-mono)')
+          .attr('font-size', '9');
+
+        g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+      }
+    });
+  });
+</script>
+
+<style>
+  .kc-d3-bar {
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+  }
+  .kc-d3-bar__svg { width: 100%; height: auto; display: block; }
+  .kc-d3-bar__caption {
+    margin-top: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-text-secondary);
+    text-align: center;
+  }
+</style>

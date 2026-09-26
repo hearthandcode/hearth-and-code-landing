@@ -112,8 +112,8 @@ const lineCount = lines.length;
         .join('\n');
       try {
         await navigator.clipboard.writeText(code);
-        const def = block.querySelector('[data-copy-default]');
-        const done = block.querySelector('[data-copy-done]');
+        const def = block.querySelector('[data-copy-default]') as HTMLElement | null;
+        const done = block.querySelector('[data-copy-done]') as HTMLElement | null;
         if (def && done) {
           def.hidden = true;
           done.hidden = false;

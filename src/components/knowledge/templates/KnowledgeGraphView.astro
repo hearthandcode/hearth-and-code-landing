@@ -85,76 +85,78 @@ const edgeData = edges.map((e) => ({ ...e }));
   </div>
 </div>
 
-<script define:vars={{ graphId }}>
-  import('d3').then((d3) => {
-    document.querySelectorAll(`[data-graph-id="${graphId}"]`).forEach((gv) => {
-      const svg = d3.select(gv).select('svg');
-      const nodesG = svg.select('.kc-graph-view__nodes').selectAll('.kc-graph-view__node').nodes().map((n, i) => {
-        const t = n.getAttribute('transform').match(/translate\(([\d.]+),\s*([\d.]+)\)/);
-        return {
-          id: n.getAttribute('data-node-id'),
-          x: +t[1], y: +t[2],
-          elem: n,
-        };
+<script>
+  import * as d3 from 'd3';
+
+  // Find every graph view on the page and run the force simulation
+  document.querySelectorAll('.kc-graph-view').forEach((gv) => {
+    const svg = d3.select(gv).select('svg');
+    const nodeElements = svg.select('.kc-graph-view__nodes').selectAll('.kc-graph-view__node').nodes();
+    if (nodeElements.length === 0) return;
+
+    const nodesG = nodeElements.map((n) => {
+      const t = (n as Element).getAttribute('transform')?.match(/translate\(([\d.]+),\s*([\d.]+)\)/);
+      return {
+        id: (n as Element).getAttribute('data-node-id'),
+        x: +(t?.[1] ?? '0'), y: +(t?.[2] ?? '0'),
+        elem: n,
+      };
+    });
+    const edgesG = Array.from(gv.querySelectorAll('.kc-graph-view__edge'));
+    const links = edgesG.map((edge) => ({
+      source: nodesG.findIndex((n) => {
+        const line = edge.querySelector('line');
+        return line && Math.abs(+(line.getAttribute('x1') ?? '0') - n.x) < 1 && Math.abs(+(line.getAttribute('y1') ?? '0') - n.y) < 1;
+      }),
+      target: nodesG.findIndex((n) => {
+        const line = edge.querySelector('line');
+        return line && Math.abs(+(line.getAttribute('x2') ?? '0') - n.x) < 1 && Math.abs(+(line.getAttribute('y2') ?? '0') - n.y) < 1;
+      }),
+      elem: edge,
+    })).filter((l) => l.source !== -1 && l.target !== -1);
+
+    const simulation = d3.forceSimulation(nodesG)
+      .force('link', d3.forceLink(links).id((d: any) => d.id).distance(120))
+      .force('charge', d3.forceManyBody().strength(-300))
+      .force('center', d3.forceCenter(300, 200))
+      .alpha(0.6)
+      .alphaDecay(0.02);
+
+    const drag = d3.drag()
+      .on('start', (event: any, d: any) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+      })
+      .on('drag', (event: any, d: any) => {
+        d.fx = event.x; d.fy = event.y;
+      })
+      .on('end', (event: any, d: any) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
       });
-      const edgesG = Array.from(gv.querySelectorAll('.kc-graph-view__edge'));
-      // Build links from edge line endpoints
-      const links = edgesG.map((edge, i) => ({
-        source: nodesG.findIndex((n) => {
-          const line = edge.querySelector('line');
-          return line && Math.abs(+line.getAttribute('x1') - n.x) < 1 && Math.abs(+line.getAttribute('y1') - n.y) < 1;
-        }),
-        target: nodesG.findIndex((n) => {
-          const line = edge.querySelector('line');
-          return line && Math.abs(+line.getAttribute('x2') - n.x) < 1 && Math.abs(+line.getAttribute('y2') - n.y) < 1;
-        }),
-        elem: edge,
-      })).filter((l) => l.source !== -1 && l.target !== -1);
 
-      const simulation = d3.forceSimulation(nodesG)
-        .force('link', d3.forceLink(links).id((d) => d.id).distance(120))
-        .force('charge', d3.forceManyBody().strength(-300))
-        .force('center', d3.forceCenter(300, 200))
-        .alpha(0.6)
-        .alphaDecay(0.02);
+    svg.selectAll('.kc-graph-view__node').call(drag);
 
-      // Drag behavior
-      const drag = d3.drag()
-        .on('start', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0.3).restart();
-          d.fx = d.x; d.fy = d.y;
-        })
-        .on('drag', (event, d) => {
-          d.fx = event.x; d.fy = event.y;
-        })
-        .on('end', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0);
-          d.fx = null; d.fy = null;
-        });
-
-      svg.selectAll('.kc-graph-view__node').call(drag);
-
-      simulation.on('tick', () => {
-        svg.selectAll('.kc-graph-view__node').attr('transform', (d) => `translate(${d.x}, ${d.y})`);
-        edgesG.forEach((edge, i) => {
-          const line = edge.querySelector('line');
-          const label = edge.querySelector('.kc-graph-view__edge-label');
-          const link = links[i];
-          if (!line || !link || link.source === -1 || link.target === -1) return;
-          const s = nodesG[link.source];
-          const t = nodesG[link.target];
-          line.setAttribute('x1', s.x);
-          line.setAttribute('y1', s.y);
-          line.setAttribute('x2', t.x);
-          line.setAttribute('y2', t.y);
-          if (label) {
-            label.setAttribute('x', (s.x + t.x) / 2);
-            label.setAttribute('y', (s.y + t.y) / 2 - 4);
-          }
-        });
+    simulation.on('tick', () => {
+      svg.selectAll('.kc-graph-view__node').attr('transform', (d: any) => `translate(${d.x}, ${d.y})`);
+      edgesG.forEach((edge, i) => {
+        const line = edge.querySelector('line');
+        const label = edge.querySelector('.kc-graph-view__edge-label');
+        const link = links[i];
+        if (!line || !link || link.source === -1 || link.target === -1) return;
+        const s = nodesG[link.source];
+        const t = nodesG[link.target];
+        line.setAttribute('x1', String(s.x));
+        line.setAttribute('y1', String(s.y));
+        line.setAttribute('x2', String(t.x));
+        line.setAttribute('y2', String(t.y));
+        if (label) {
+          label.setAttribute('x', String((s.x + t.x) / 2));
+          label.setAttribute('y', String((s.y + t.y) / 2 - 4));
+        }
       });
     });
-  }).catch((e) => console.error('D3 failed to load:', e));
+  });
 </script>
 
 <style>

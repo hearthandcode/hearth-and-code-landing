@@ -1,0 +1,74 @@
+---
+/**
+ * StackedBar - D3 stacked bar chart
+ * Knowledge chart: k-chart-stacked-bar
+ */
+import * as d3 from 'd3';
+interface StackedDatum { category: string; series: string; value: number; }
+interface Props {
+  data: StackedDatum[];
+  seriesNames?: string[];
+  height?: number;
+  class?: string;
+}
+const { data, seriesNames, height = 240, class: className = '' } = Astro.props;
+const chartId = `kc-sbar-${Math.random().toString(36).slice(2, 9)}`;
+const width = 320;
+const margin = { top: 16, right: 12, bottom: 36, left: 36 };
+const innerW = width - margin.left - margin.right;
+const innerH = height - margin.top - margin.bottom;
+const series = seriesNames ?? Array.from(new Set(data.map(d => d.series)));
+const categories = Array.from(new Set(data.map(d => d.category)));
+const palette = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-violet)', 'var(--color-accent-gold)'];
+---
+<div class:list={['kc-d3-sbar', className]} data-chart-id={chartId}>
+  <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-sbar__svg"></svg>
+  <div class="kc-d3-sbar__legend">
+    {series.map((s, i) => (
+      <span><span class="kc-d3-sbar__swatch" style={`background: ${palette[i % 4]}`}></span>{s}</span>
+    ))}
+  </div>
+</div>
+
+<script define:vars={{ chartId, data, width, height, margin, innerW, innerH, series, categories, palette }}>
+  import('d3').then((d3) => {
+    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
+      const svg = d3.select(container).select('svg');
+      svg.selectAll('*').remove();
+      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+      const stack = d3.stack().keys(series)(categories.map(c => ({
+        category: c,
+        ...Object.fromEntries(series.map(s => [s, data.find(d => d.category === c && d.series === s)?.value ?? 0])),
+      })));
+      const x = d3.scaleBand().domain(categories).range([0, innerW]).padding(0.2);
+      const y = d3.scaleLinear().domain([0, d3.max(stack[stack.length - 1], d => d[1]) || 1]).range([innerH, 0]);
+
+      g.selectAll('g.kc-sbar-series').data(stack).enter().append('g')
+        .attr('class', 'kc-sbar-series')
+        .attr('fill', (d, i) => palette[i % 4])
+        .selectAll('rect').data(d => d.map(v => ({ ...v, key: d.key }))).enter().append('rect')
+        .attr('x', d => x(d.data.category) ?? 0)
+        .attr('y', d => y(d[1]))
+        .attr('height', d => y(d[0]) - y(d[1]))
+        .attr('width', x.bandwidth())
+        .attr('rx', 0);
+
+      g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x))
+        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+      g.append('g').call(d3.axisLeft(y).ticks(4))
+        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+    });
+  });
+</script>
+
+<style>
+  .kc-d3-sbar { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); }
+  .kc-d3-sbar__svg { width: 100%; height: auto; display: block; }
+  .kc-d3-sbar__legend {
+    display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2);
+    font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-text-secondary);
+  }
+  .kc-d3-sbar__legend span { display: inline-flex; align-items: center; gap: 0.3em; }
+  .kc-d3-sbar__swatch { width: 0.7rem; height: 0.7rem; border-radius: 2px; }
+</style>

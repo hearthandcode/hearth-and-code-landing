@@ -1,0 +1,38 @@
+---
+/**
+ * DonutChart - D3 donut/pie with hole
+ * Knowledge chart: k-chart-donut
+ */
+import PieChart from './PieChart.astro';
+interface Datum { label: string; value: number; color?: string; }
+interface Props {
+  data: Datum[];
+  size?: number;
+  class?: string;
+}
+const { data, size = 240, class: className = '' } = Astro.props;
+---
+<div class={className} style="position: relative;">
+  <PieChart data={data} size={size} showLabels={true} />
+  <div class="kc-d3-donut__center" style={`position: absolute; left: calc(50% - ${size/4}px); top: calc(50% - ${size/4 - 8}px); width: ${size/2 - 16}px; text-align: center;`}>
+    <div class="kc-d3-donut__center-value">{data.reduce((s, d) => s + d.value, 0)}</div>
+    <div class="kc-d3-donut__center-label">total</div>
+  </div>
+</div>
+
+<style>
+  .kc-d3-donut__center { pointer-events: none; }
+  .kc-d3-donut__center-value {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-text-display);
+  }
+  .kc-d3-donut__center-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
