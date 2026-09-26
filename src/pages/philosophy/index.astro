@@ -68,11 +68,34 @@ const contract = parse(
                 {contract.featured_position.domains.map((domain: string) => <span>{domain}</span>)}
               </div>
             </div>
-            <a class="philosophy-action philosophy-action--primary" href={contract.featured_position.href}>{contract.featured_position.action_label} <span aria-hidden="true">→</span></a>
+            <a class="philosophy-action philosophy-action--primary" href={contract.featured_position.href} data-position-preview aria-controls="ai-literacy-preview">{contract.featured_position.action_label} <span aria-hidden="true">→</span></a>
           </div>
         </article>
       </div>
     </section>
+
+    <dialog class="philosophy-preview" id="ai-literacy-preview" aria-labelledby="ai-literacy-preview-title">
+      <div class="philosophy-preview__chrome">
+        <p>{contract.featured_position.preview.label}</p>
+        <form method="dialog"><button type="submit" aria-label="Close AI Literacy preview">Close <span aria-hidden="true">×</span></button></form>
+      </div>
+      <article class="philosophy-preview__article">
+        <p class="philosophy-kicker">Published position · {contract.featured_position.date}</p>
+        <h2 id="ai-literacy-preview-title">{contract.featured_position.title}</h2>
+        <p class="philosophy-preview__lede">{contract.featured_position.preview.lede}</p>
+        <div class="philosophy-preview__sections">
+          {contract.featured_position.preview.sections.map((section: any, index: number) => (
+            <section>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{section.title}</h3>
+              <p>{section.detail}</p>
+            </section>
+          ))}
+        </div>
+        <p class="philosophy-preview__boundary">{contract.featured_position.preview.boundary}</p>
+        <form method="dialog" class="philosophy-preview__footer"><button type="submit">Return to Philosophy <span aria-hidden="true">←</span></button></form>
+      </article>
+    </dialog>
 
     <section class="philosophy-section philosophy-section--ledger" aria-labelledby="ledger-title">
       <div class="philosophy-shell">
@@ -84,7 +107,7 @@ const contract = parse(
         <div class="philosophy-ledger">
           {contract.position_ledger.entries.map((entry: any) => (
             entry.href ? (
-              <a class={`philosophy-ledger__entry is-${entry.state}`} href={entry.href}>
+              <a class={`philosophy-ledger__entry is-${entry.state}`} href={entry.href} data-position-preview aria-controls="ai-literacy-preview">
                 <div class="philosophy-ledger__state"><span class={`philosophy-state is-${entry.state}`}>{entry.state_label}</span><span aria-hidden="true">↗</span></div>
                 <h3>{entry.title}</h3>
                 <p>{entry.summary}</p>
@@ -177,6 +200,22 @@ const contract = parse(
   .philosophy-principle p, .philosophy-throughlines p, .philosophy-ledger p, .philosophy-feature p, .philosophy-connections p { color: var(--color-text-secondary); line-height: 1.55; }
 
   .philosophy-feature { margin-top: 2.25rem; border: 1px solid var(--color-surface-rule-strong); border-left: 3px solid var(--color-accent-signal); background: var(--color-surface-raised); }
+  .philosophy-preview { width: min(100% - 2rem, 62rem); max-height: min(80vh, 50rem); padding: 0; overflow: auto; border: 1px solid var(--color-surface-rule-strong); background: var(--color-surface-primary); color: var(--color-text-primary); box-shadow: var(--shadow-overlay); }
+  .philosophy-preview::backdrop { background: rgba(4, 5, 7, 0.76); backdrop-filter: blur(5px); }
+  .philosophy-preview__chrome { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-surface-rule); background: rgba(22, 20, 17, 0.96); }
+  .philosophy-preview__chrome p { margin: 0; color: var(--color-accent-violet); font: 0.7rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+  .philosophy-preview button { min-height: 2.25rem; padding: 0 0.7rem; border: 1px solid var(--color-surface-rule); background: transparent; color: var(--color-text-display); font: 0.75rem var(--font-mono); cursor: pointer; }
+  .philosophy-preview button:hover { border-color: var(--color-accent-signal); color: var(--color-accent-signal); }
+  .philosophy-preview__article { padding: clamp(1.5rem, 5vw, 4rem); }
+  .philosophy-preview__article h2 { max-width: 18ch; margin: 0; color: var(--color-text-display); font: 700 clamp(2.2rem, 5vw, 4.3rem)/1 var(--font-display); letter-spacing: -0.04em; }
+  .philosophy-preview__lede { max-width: 48rem; margin: 1.25rem 0 0; color: var(--color-text-secondary); font-size: 1.125rem; line-height: 1.6; }
+  .philosophy-preview__sections { display: grid; gap: 1px; margin-top: 2rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-rule); }
+  .philosophy-preview__sections section { padding: 1.25rem; background: var(--color-surface-raised); }
+  .philosophy-preview__sections span { color: var(--color-accent-gold); font: 0.7rem var(--font-mono); }
+  .philosophy-preview__sections h3 { margin: 0.6rem 0 0; color: var(--color-text-display); font: 700 1.35rem/1.1 var(--font-display); }
+  .philosophy-preview__sections p, .philosophy-preview__boundary { margin: 0.75rem 0 0; color: var(--color-text-secondary); line-height: 1.6; }
+  .philosophy-preview__boundary { padding-left: 1rem; border-left: 2px solid var(--color-accent-violet); font-size: 0.9rem; }
+  .philosophy-preview__footer { display: flex; justify-content: flex-end; margin-top: 2rem; }
   .philosophy-feature__meta { display: flex; gap: 0.75rem; flex-wrap: wrap; padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-surface-rule); color: var(--color-text-secondary); font: 0.7rem var(--font-mono); }
   .philosophy-feature__body { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; padding: clamp(1.5rem, 4vw, 2.5rem); }
   .philosophy-feature h3 { font-size: clamp(1.75rem, 3vw, 2.6rem); }
@@ -215,3 +254,14 @@ const contract = parse(
   }
   @media (max-width: 36rem) { .philosophy-shell { width: min(100% - 2rem, 76rem); } .philosophy-hero h1 { font-size: clamp(2.75rem, 15vw, 4rem); } }
 </style>
+
+<script>
+  const preview = document.getElementById('ai-literacy-preview') as HTMLDialogElement | null;
+  document.querySelectorAll<HTMLAnchorElement>('[data-position-preview]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      if (!preview || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      preview.showModal();
+    });
+  });
+</script>

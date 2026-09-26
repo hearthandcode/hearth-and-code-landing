@@ -32,7 +32,18 @@ featured_position:
   date: "2026-09-23"
   read_time: "15 min read"
   domains: ["AI literacy", "Epistemics", "Human–AI practice"]
-  action_label: "Read the position"
+  action_label: "Preview the position"
+  preview:
+    label: "Bounded reading preview"
+    lede: "AI literacy is a practice that develops through reflection, not a checklist to complete. The full position joins high-stakes verification rules with reflective practice for ordinary use."
+    sections:
+      - title: "The position"
+        detail: "Use AI critically, keep human authority over consequential decisions, and learn from what you trusted, changed, or rejected."
+      - title: "High-stakes boundary"
+        detail: "For medical, legal, financial, safety-critical, or other consequential decisions: verify independently, consult appropriate expertise, and do not act on an AI output alone."
+      - title: "Reflection practice"
+        detail: "After a significant interaction, ask what you trusted, what you changed, what the system was good or poor at in this case, and what you would do differently next time."
+    boundary: "This preview is an orientation to the published position, not a substitute for the complete public reading or for professional judgment."
 position_ledger:
   title: "Position ledger"
   description: "Publication state is part of the claim boundary. Only published entries are public reading destinations."
