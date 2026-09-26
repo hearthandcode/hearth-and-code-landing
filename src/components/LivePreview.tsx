@@ -121,12 +121,20 @@ const REGISTRY: Record<string, React.ComponentType<any>> = {
   Dashboard, Modal,
 };
 
+ensureCssInjected();  // module-load time injection
+
 /**
- * Inject the component CSS once on first render. The CSS string is
- * large (~10KB) so we only inject if it's not already present.
+ * Inject the component CSS into document.head on first import.
+ * This runs at module load time and adds the style to <head>, not inside
+ * any astro-island shadow DOM. The Astro island pattern means component
+ * renders go into a shadow tree — styles defined inside the island
+ * don't apply, so we must inject at top-level.
  */
+let cssInjected = false;
 function ensureCssInjected() {
   if (typeof document === 'undefined') return;
+  if (cssInjected) return;
+  cssInjected = true;
   if (document.getElementById('ec-component-styles')) return;
   const style = document.createElement('style');
   style.id = 'ec-component-styles';
@@ -137,16 +145,14 @@ function ensureCssInjected() {
 /**
  * ComponentCssTag - rendered as a React element so it appears in SSR'd HTML.
  * Astro will render this as an actual <style> tag in the head.
+ *
+ * NOTE: Astro islands render into shadow DOM, so this style tag only
+ * applies to content WITHIN the island. For the components to be styled
+ * when rendered via astro-island, we must use ensureCssInjected() which
+ * appends to document.head (top-level, not shadow-scoped).
  */
 function ComponentCssTag() {
-  if (typeof document !== 'undefined') {
-    // Client-side: inject as before for the React hydration boundary
-    React.useEffect(() => ensureCssInjected(), []);
-    return null;
-  }
-  // SSR: return an actual style element so it appears in the static HTML
-  // This is rendered once per LivePreview instance (deduped by browser)
-  return <style id="ec-component-styles" dangerouslySetInnerHTML={{ __html: EMBER_CIRCUIT_COMPONENT_CSS }} />;
+  return null;  // No-op; CSS injected at module load via ensureCssInjected()
 }
 
 export function LivePreview({

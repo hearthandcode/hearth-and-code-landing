@@ -25,6 +25,7 @@ const {
   <meta name="description" content={description} />
   <meta name="theme-color" content="#161411" />
   <title>{title}</title>
+  <slot name="head" />
 </head>
 <body class={className}>
   <slot />

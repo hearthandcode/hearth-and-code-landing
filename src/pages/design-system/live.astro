@@ -10,9 +10,20 @@ import '../../styles/tokens.css';
 import '../../styles/global.css';
 import Layout from '../../layouts/Layout.astro';
 import { LivePreview } from '../../components/LivePreview.tsx';
+
+// Import the component CSS — Astro will bundle it and inject via <link>
+// at top of page. This bypasses the shadow-DOM scoping problem.
+// Component CSS is loaded via the <link> tag below, which works
+// correctly with Astro islands (injects at top-level <head>, not inside shadow DOM).
+// The actual file lives at /ember-circuit-component.css (public/ dir).
+
 ---
 
 <Layout title="Design System · Live Previews · Ember Circuit" description="Interactive React port previews with live prop controls.">
+  <Fragment slot="head">
+    {/* Component CSS — Astro islands use shadow DOM, so styles must be at top-level */}
+    <link rel="stylesheet" href="/ember-circuit-component.css" />
+  </Fragment>
   <section class="ec-live-hero">
     <div class="ec-live-hero__inner">
       <p class="ec-live-hero__eyebrow">Interactive · React Ports</p>
