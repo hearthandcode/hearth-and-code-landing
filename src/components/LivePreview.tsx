@@ -180,6 +180,12 @@ export function LivePreview({
 
   const reset = () => setValues(initialProps);
 
+  // WorkflowState has its own transition buttons. Feed those transitions back
+  // into this control panel so its select and displayed JSX never drift apart.
+  const componentProps = componentName === 'WorkflowState'
+    ? { ...values, onCurrentChange: (current: string) => updateValue('current', current) }
+    : values;
+
   const codeLines = Object.entries(values)
     .map(([k, v]) => {
       const valStr = typeof v === 'string' ? `"${v}"` : JSON.stringify(v);
@@ -245,7 +251,7 @@ export function LivePreview({
         </div>
         <div className="ec-live-preview__render">
           <div className="ec-live-preview__component">
-            <Component {...values} />
+            <Component {...componentProps} />
           </div>
           <pre className="ec-live-preview__code">
             <code>{codeStr}</code>

@@ -347,8 +347,8 @@ export const EMBER_CIRCUIT_COMPONENT_CSS = `
   cursor: pointer;
   transition: all 150ms var(--motion-easing-default);
 }
-.ec-button--primary { background: var(--color-accent-ember); color: var(--color-surface-primary); border-color: var(--color-accent-ember); }
-.ec-button--primary:hover { background: var(--color-accent-forge); }
+.ec-button--primary { background: var(--color-accent-signal); color: var(--color-surface-primary); border-color: var(--color-accent-signal); }
+.ec-button--primary:hover { background: var(--color-accent-plasma); }
 .ec-button--secondary { background: var(--color-surface-raised); color: var(--color-text-display); border-color: var(--color-surface-rule); }
 .ec-button--secondary:hover { border-color: var(--color-accent-signal); }
 .ec-button--ghost { background: transparent; color: var(--color-text-secondary); }

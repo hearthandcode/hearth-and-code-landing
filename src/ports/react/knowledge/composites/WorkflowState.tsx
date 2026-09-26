@@ -17,6 +17,8 @@ export interface WorkflowStateProps {
   states: string[];
   current: string;
   transitions: Transition[];
+  /** Reports a transition so an embedding live control can stay in sync. */
+  onCurrentChange?: (current: string) => void;
   className?: string;
 }
 
@@ -24,9 +26,17 @@ export function WorkflowState({
   states,
   current: initialCurrent,
   transitions,
+  onCurrentChange,
   className = '',
 }: WorkflowStateProps) {
   const [current, setCurrent] = React.useState(initialCurrent);
+
+  // LivePreview can change the `current` prop through its select control.
+  // Keep local transition-button state, but resync when that external prop changes.
+  React.useEffect(() => {
+    setCurrent(initialCurrent);
+  }, [initialCurrent]);
+
   const classes = ['kc-workflow-state', className].filter(Boolean).join(' ');
   return (
     <div className={classes} data-current={current}>
@@ -47,7 +57,10 @@ export function WorkflowState({
           <button
             key={i}
             className="kc-workflow-state__btn"
-            onClick={() => setCurrent(t.to)}
+            onClick={() => {
+              setCurrent(t.to);
+              onCurrentChange?.(t.to);
+            }}
             type="button"
           >
             {t.label}
