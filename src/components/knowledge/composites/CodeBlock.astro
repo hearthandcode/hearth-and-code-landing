@@ -3,66 +3,102 @@
  * CodeBlock - syntax-highlighted code with copy button
  * Knowledge composite (k-composite): k-code-block
  *
- * Interactive: copy to clipboard, optional line highlighting
+ * Interactive: copy to clipboard, optional line highlighting.
+ * Highlighter: Shiki (TextMate grammar) for production-quality highlighting.
  */
+import { codeToHtml } from 'shiki';
+
 interface Props {
   code: string;
-  language: 'python' | 'typescript' | 'javascript' | 'rust' | 'yaml' | 'json' | 'bash' | 'sql' | 'markdown';
+  language: 'python' | 'typescript' | 'javascript' | 'rust' | 'yaml' | 'json' | 'bash' | 'sql' | 'markdown' | 'tsx' | 'jsx' | 'css' | 'html';
   filename?: string;
   highlightLines?: number[];
   showLineNumbers?: boolean;
+  theme?: 'github-dark' | 'github-light';
   class?: string;
 }
 const {
-  code, language, filename, highlightLines = [], showLineNumbers = true, class: className = '',
+  code,
+  language,
+  filename,
+  highlightLines = [],
+  showLineNumbers = true,
+  theme = 'github-dark',
+  class: className = '',
 } = Astro.props;
 const blockId = `kc-code-${Math.random().toString(36).slice(2, 9)}`;
 
-// Simple token highlighting — replace with a real highlighter if available
-function tokenize(src: string, lang: string): string {
-  const keywords: Record<string, string[]> = {
-    python: ['def', 'class', 'import', 'from', 'return', 'if', 'else', 'elif', 'for', 'in', 'while', 'try', 'except', 'with', 'as', 'yield', 'lambda', 'pass', 'break', 'continue', 'None', 'True', 'False'],
-    typescript: ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'interface', 'type', 'import', 'export', 'from', 'as', 'async', 'await', 'new', 'this'],
-    javascript: ['const', 'let', 'var', 'function', 'return', 'if', 'else', 'for', 'while', 'class', 'import', 'export', 'from', 'as', 'async', 'await', 'new', 'this'],
-    rust: ['fn', 'let', 'mut', 'pub', 'use', 'mod', 'struct', 'enum', 'impl', 'trait', 'for', 'while', 'if', 'else', 'match', 'return', 'self', 'Self'],
-    yaml: [],
-    json: [],
-    bash: ['if', 'then', 'else', 'fi', 'for', 'do', 'done', 'while', 'case', 'esac', 'function'],
-    sql: ['SELECT', 'FROM', 'WHERE', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON', 'GROUP', 'BY', 'ORDER', 'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE'],
-    markdown: [],
-  };
-  const kw = keywords[lang] || [];
-  return src
-    .replace(/&/g, '&')
-    .replace(/</g, '<')
-    .replace(/>/g, '>')
-    .replace(/("[^"]*"|'[^']*'|`[^`]*`)/g, '<span class="kc-code__string">$1</span>')
-    .replace(/\b(\d+\.?\d*)\b/g, '<span class="kc-code__number">$1</span>')
-    .replace(/(\/\/.*$|#.*$)/gm, '<span class="kc-code__comment">$1</span>')
-    .replace(new RegExp(`\\b(${kw.join('|')})\\b`, 'g'), '<span class="kc-code__keyword">$1</span>');
+// Map our language aliases to Shiki's bundled language ids
+const shikiLangMap: Record<string, string> = {
+  python: 'python',
+  typescript: 'typescript',
+  javascript: 'javascript',
+  rust: 'rust',
+  yaml: 'yaml',
+  json: 'json',
+  bash: 'bash',
+  sql: 'sql',
+  markdown: 'markdown',
+  tsx: 'tsx',
+  jsx: 'jsx',
+  css: 'css',
+  html: 'html',
+};
+const shikiLang = shikiLangMap[language] || 'text';
+
+// Highlight via Shiki. We strip Shiki's outer <pre> and keep only the inner content
+// so our surrounding styles can apply uniformly.
+let highlightedHtml: string;
+try {
+  highlightedHtml = await codeToHtml(code, {
+    lang: shikiLang,
+    theme,
+  });
+} catch (e) {
+  // Fallback to plain escaped text if the grammar isn't loaded
+  highlightedHtml = `<pre><code>${code.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>')}</code></pre>`;
 }
 
+// Extract the inner <code>...</code> from Shiki output so we control the wrapping
+// Shiki returns: <pre class="shiki ..."><code><span class="line">...</span></code></pre>
+// We replace each <span class="line">...</span> with our own line wrapper that includes
+// line numbers and highlight-line styling.
 const lines = code.split('\n');
+const lineHtml = lines
+  .map((_, i) => {
+    const num = i + 1;
+    const isHi = highlightLines.includes(num);
+    return `<span class="kc-code-block__line${isHi ? ' is-highlighted' : ''}" data-linenum="${num}">${showLineNumbers ? `<span class="kc-code-block__linenum">${num}</span>` : ''}<span class="kc-code-block__content"></span></span>`;
+  })
+  .join('');
+
+// Build the final HTML by combining the Shiki inner spans (per-line) with our wrappers.
+// Shiki produces spans with class "line" inside <code>; we map each line's inner HTML
+// by index. Since Shiki output is deterministic, the simplest approach is to parse
+// each line from Shiki output. We do that via simple regex.
+const shikiLines = highlightedHtml.match(/<span class="line">(.*?)<\/span>(?=\s*<span class="line"|<\/code>|<\/pre>)/gs) || [];
+const innerHtml = lines.map((_, i) => {
+  const num = i + 1;
+  const isHi = highlightLines.includes(num);
+  const inner = shikiLines[i] ? shikiLines[i].replace(/^<span class="line">/, '').replace(/<\/span>$/, '') : '';
+  return `<span class="kc-code-block__line${isHi ? ' is-highlighted' : ''}" data-linenum="${num}">${showLineNumbers ? `<span class="kc-code-block__linenum">${num}</span>` : ''}<span class="kc-code-block__content">${inner}</span></span>`;
+}).join('');
+
+const lineCount = lines.length;
 ---
 <div class:list={['kc-code-block', className]} data-code-id={blockId}>
   {(filename || language) && (
     <header class="kc-code-block__header">
       <span class="kc-code-block__filename">{filename || language}</span>
       <span class="kc-code-block__lang">{language}</span>
+      <span class="kc-code-block__lines">{lineCount} {lineCount === 1 ? 'line' : 'lines'}</span>
       <button class="kc-code-block__copy" data-copy-btn>
         <span data-copy-default>Copy</span>
         <span data-copy-done hidden>Copied</span>
       </button>
     </header>
   )}
-  <pre class:list={['kc-code-block__pre', showLineNumbers && 'has-line-nums']}><code>{
-    lines.map((line, i) => (
-      <span class:list={['kc-code-block__line', highlightLines.includes(i + 1) && 'is-highlighted']}>
-        {showLineNumbers && <span class="kc-code-block__linenum">{i + 1}</span>}
-        <span class="kc-code-block__content" set:html={tokenize(line, language)}></span>
-      </span>
-    ))
-  }</code></pre>
+  <pre class:list={['kc-code-block__pre', showLineNumbers && 'has-line-nums']}><code set:html={innerHtml} /></pre>
 </div>
 
 <script>
@@ -70,13 +106,17 @@ const lines = code.split('\n');
     const btn = block.querySelector('.kc-code-block__copy');
     if (!btn) return;
     btn.addEventListener('click', async () => {
-      const code = Array.from(block.querySelectorAll('.kc-code-block__content')).map((s) => (s as HTMLElement).innerText).join('\n');
+      // Reconstruct the original code from each line's text content
+      const code = Array.from(block.querySelectorAll('.kc-code-block__content'))
+        .map((s) => (s.textContent || ''))
+        .join('\n');
       try {
         await navigator.clipboard.writeText(code);
-        const def = block.querySelector('[data-copy-default]') as HTMLElement;
-        const done = block.querySelector('[data-copy-done]') as HTMLElement;
+        const def = block.querySelector('[data-copy-default]');
+        const done = block.querySelector('[data-copy-done]');
         if (def && done) {
-          def.hidden = true; done.hidden = false;
+          def.hidden = true;
+          done.hidden = false;
           setTimeout(() => { def.hidden = false; done.hidden = true; }, 1200);
         }
       } catch (e) {
@@ -112,6 +152,10 @@ const lines = code.split('\n');
     font-size: 0.625rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+  .kc-code-block__lines {
+    color: var(--color-text-secondary);
+    font-size: 0.625rem;
     margin-left: auto;
   }
   .kc-code-block__copy {
@@ -139,9 +183,11 @@ const lines = code.split('\n');
     display: flex;
     gap: var(--space-3);
   }
-  .kc-code-block__line.is-highlighted { background: rgba(63, 224, 208, 0.06); }
-  .kc-code-block.has-line-nums .kc-code-block__line {
-    padding-left: 0;
+  .kc-code-block__line.is-highlighted {
+    background: rgba(63, 224, 208, 0.08);
+    border-left: 2px solid var(--color-accent-plasma);
+    margin-left: -0.5rem;
+    padding-left: 0.5rem;
   }
   .kc-code-block__linenum {
     color: var(--color-text-secondary);
@@ -152,8 +198,7 @@ const lines = code.split('\n');
     flex-shrink: 0;
   }
   .kc-code-block__content { flex: 1; }
-  .kc-code-block :global(.kc-code__keyword) { color: var(--color-accent-violet); font-weight: var(--font-weight-bold); }
-  .kc-code-block :global(.kc-code__string) { color: var(--color-state-success); }
-  .kc-code-block :global(.kc-code__number) { color: var(--color-accent-gold); }
-  .kc-code-block :global(.kc-code__comment) { color: var(--color-text-secondary); font-style: italic; }
+  /* Shiki spans inherit color */
+  .kc-code-block :global(.shiki) { background: transparent !important; }
+  .kc-code-block :global(.shiki span) { color: var(--shiki-color, currentColor); }
 </style>

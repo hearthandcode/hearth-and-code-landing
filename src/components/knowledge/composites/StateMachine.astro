@@ -3,9 +3,14 @@
  * StateMachine - states + transitions + events
  * Knowledge composite (k-composite): k-state-machine
  *
- * NOTE: Hand-coded SVG. For production, integrate D3.js,
- * mxGraph, or React Flow for richer interaction.
+ * Routes edges with proper bezier curves and exits/entries at the circle
+ * boundary (not center), so lines connect cleanly to state nodes.
+ *
+ * NOTE: For runtime state machines, see XState. For static rendering
+ * via Mermaid, the diagram logic here is easy to port.
  */
+import * as d3 from 'd3';
+
 interface State {
   id: string;
   label: string;
@@ -23,55 +28,131 @@ interface Props {
   class?: string;
 }
 const { states, transitions, class: className = '' } = Astro.props;
+
+const diagramId = `kc-sm-${Math.random().toString(36).slice(2, 9)}`;
+
+// Layout states in a grid (4 columns max)
+const colCount = 4;
+const colW = 150;
+const rowH = 80;
+const positions: Record<string, { x: number; y: number }> = {};
+states.forEach((s, i) => {
+  const col = i % colCount;
+  const row = Math.floor(i / colCount);
+  positions[s.id] = {
+    x: 80 + col * colW,
+    y: 50 + row * rowH,
+  };
+});
+
+const viewW = Math.min(4, states.length) * colW + 40;
+const viewH = Math.ceil(states.length / 4) * rowH + 40;
+
+function nodeRadius(s: State): number {
+  if (s.type === 'final') return 22;
+  return 20;
+}
+
+interface EdgeData {
+  path: string;
+  labelX: number;
+  labelY: number;
+  label: string;
+  guard?: string;
+  isLoop: boolean;
+}
+
+const edgePaths: EdgeData[] = [];
+for (const t of transitions) {
+  const from = states.find((s) => s.id === t.from);
+  const to = states.find((s) => s.id === t.to);
+  if (!from || !to) continue;
+  const fromP = positions[t.from];
+  const toP = positions[t.to];
+  const fromR = nodeRadius(from);
+  const toR = nodeRadius(to);
+
+  // Same-state loops draw as a self-arc above the node
+  if (t.from === t.to) {
+    const cx = fromP.x;
+    const cy = fromP.y;
+    edgePaths.push({
+      path: `M ${cx + fromR} ${cy} A ${fromR + 12} ${fromR + 12} 0 1 1 ${cx - fromR} ${cy}`,
+      labelX: cx,
+      labelY: cy - fromR - 14,
+      label: t.event,
+      guard: t.guard,
+      isLoop: true,
+    });
+    continue;
+  }
+
+  // Calculate edge endpoints at the circle boundary along the line between centers
+  const dx = toP.x - fromP.x;
+  const dy = toP.y - fromP.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const ux = dx / dist;
+  const uy = dy / dist;
+
+  // Exit point: from circle boundary
+  const x1 = fromP.x + ux * fromR;
+  const y1 = fromP.y + uy * fromR;
+  // Entry point: to circle boundary
+  const x2 = toP.x - ux * toR;
+  const y2 = toP.y - uy * toR;
+
+  // Curve control points (perpendicular for arc)
+  const midX = (x1 + x2) / 2;
+  const midY = (y1 + y2) / 2;
+  // Add slight perpendicular offset for nicer curves
+  const perpX = -uy * 8;
+  const perpY = ux * 8;
+
+  edgePaths.push({
+    path: `M ${x1} ${y1} Q ${midX + perpX} ${midY + perpY}, ${x2} ${y2}`,
+    labelX: midX,
+    labelY: midY - 6,
+    label: t.event,
+    guard: t.guard,
+    isLoop: false,
+  });
+}
 ---
 <div class:list={['kc-state-machine', className]}>
-  <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" class="kc-state-machine__svg">
+  <svg viewBox={`0 0 ${viewW} ${viewH}`} xmlns="http://www.w3.org/2000/svg" class="kc-state-machine__svg">
     <defs>
-      <marker id="kc-sm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <marker id={`${diagramId}-arrow`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-accent-plasma)" />
       </marker>
     </defs>
-    {states.map((s, i) => {
-      const col = i % 4;
-      const row = Math.floor(i / 4);
-      const cx = 100 + col * 150;
-      const cy = 70 + row * 80;
+    {/* Edges */}
+    {edgePaths.map((e, i) => (
+      <g class:list={['kc-state-machine__edge', e.isLoop && 'is-loop']}>
+        <path d={e.path} fill="none" stroke="var(--color-accent-plasma)" stroke-width="1.2" marker-end={`url(#${diagramId}-arrow)`} />
+        {/* Label background for legibility */}
+        <rect x={e.labelX - e.label.length * 3 - 4} y={e.labelY - 9} width={e.label.length * 6 + 8} height={e.guard ? 20 : 14} rx="2" fill="var(--color-surface-recessed)" />
+        <text x={e.labelX} y={e.labelY + 1} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{e.label}</text>
+        {e.guard && (
+          <text x={e.labelX} y={e.labelY + 11} text-anchor="middle" fill="var(--color-text-secondary)" font-family="var(--font-mono)" font-size="8">[ {e.guard} ]</text>
+        )}
+      </g>
+    ))}
+    {/* States */}
+    {states.map((s) => {
+      const pos = positions[s.id];
+      const r = nodeRadius(s);
       const isInitial = s.type === 'initial';
       const isFinal = s.type === 'final';
-      const radius = isInitial ? 12 : isFinal ? 22 : 20;
+      const stroke = isFinal ? 'var(--color-state-success)' : isInitial ? 'var(--color-accent-ember)' : 'var(--color-accent-signal)';
+      // Double-circle for final state
+      const ringOffset = isFinal ? 4 : 0;
       return (
-        <g class="kc-state-machine__state">
-          <circle cx={cx} cy={cy} r={radius} fill="var(--color-surface-recessed)" stroke={isFinal ? 'var(--color-state-success)' : isInitial ? 'var(--color-accent-ember)' : 'var(--color-accent-signal)'} stroke-width="2" />
-          <text x={cx} y={cy + 4} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="10">{s.label}</text>
-        </g>
-      );
-    })}
-    {transitions.map((t) => {
-      const fromIdx = states.findIndex((s) => s.id === t.from);
-      const toIdx = states.findIndex((s) => s.id === t.to);
-      if (fromIdx === -1 || toIdx === -1) return null;
-      const col1 = fromIdx % 4, row1 = Math.floor(fromIdx / 4);
-      const col2 = toIdx % 4, row2 = Math.floor(toIdx / 4);
-      const x1 = 100 + col1 * 150;
-      const y1 = 70 + row1 * 80;
-      const x2 = 100 + col2 * 150;
-      const y2 = 70 + row2 * 80;
-      const isLoop = t.from === t.to;
-      if (isLoop) {
-        return (
-          <g>
-            <path d={`M ${x1 + 18} ${y1} A 18 18 0 1 1 ${x1 - 18} ${y1}`} fill="none" stroke="var(--color-accent-plasma)" stroke-width="1.2" marker-end="url(#kc-sm-arrow)" />
-            <text x={x1} y={y1 - 28} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{t.event}</text>
-          </g>
-        );
-      }
-      const midX = (x1 + x2) / 2;
-      const midY = (y1 + y2) / 2;
-      return (
-        <g>
-          <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-accent-plasma)" stroke-width="1.2" marker-end="url(#kc-sm-arrow)" />
-          <text x={midX} y={midY - 4} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{t.event}</text>
-          {t.guard && <text x={midX} y={midY + 8} text-anchor="middle" fill="var(--color-text-secondary)" font-family="var(--font-mono)" font-size="8">[ {t.guard} ]</text>}
+        <g class:list={['kc-state-machine__state', isInitial && 'is-initial', isFinal && 'is-final']}>
+          {isFinal && (
+            <circle cx={pos.x} cy={pos.y} r={r + ringOffset} fill="var(--color-surface-recessed)" stroke={stroke} stroke-width="1.5" />
+          )}
+          <circle cx={pos.x} cy={pos.y} r={r} fill="var(--color-surface-recessed)" stroke={stroke} stroke-width="2" />
+          <text x={pos.x} y={pos.y + 4} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="10">{s.label}</text>
         </g>
       );
     })}
@@ -91,6 +172,8 @@ const { states, transitions, class: className = '' } = Astro.props;
     border-radius: var(--radius-md);
   }
   .kc-state-machine__svg { width: 100%; height: auto; display: block; }
+  .kc-state-machine__state circle { transition: filter 150ms ease; }
+  .kc-state-machine__state:hover circle { filter: brightness(1.2); }
   .kc-state-machine__legend {
     display: flex;
     gap: var(--space-3);
@@ -103,6 +186,7 @@ const { states, transitions, class: className = '' } = Astro.props;
   }
   .kc-state-machine__legend-item { display: inline-flex; align-items: center; gap: 0.4em; }
   .kc-state-machine__swatch {
+    display: inline-block;
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 50%;

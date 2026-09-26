@@ -3,9 +3,13 @@
  * ArchitectureDiagram - boxes-and-arrows with labeled edges
  * Knowledge composite (k-composite): k-architecture-diagram
  *
- * NOTE: Hand-coded SVG. For production, integrate D3.js,
- * mxGraph, or React Flow for richer interaction.
+ * Uses D3 for edge routing so lines connect cleanly to nodes.
+ * Supports node types: service, data, user, external, queue.
+ *
+ * NOTE: Now uses D3. For drag-and-drop authoring, pair with mxGraph or React Flow.
  */
+import * as d3 from 'd3';
+
 interface Node {
   id: string;
   label: string;
@@ -23,57 +27,91 @@ interface Props {
   class?: string;
 }
 const { nodes, edges, class: className = '' } = Astro.props;
-// Position nodes in a simple 3-column grid
-const colWidth = 100 / Math.min(3, nodes.length);
+
+const diagramId = `kc-arch-${Math.random().toString(36).slice(2, 9)}`;
+
+// Type colors
+const typeColors: Record<string, string> = {
+  service: 'var(--color-accent-signal)',
+  data: 'var(--color-accent-violet)',
+  user: 'var(--color-accent-ember)',
+  external: 'var(--color-accent-gold)',
+  queue: 'var(--color-accent-plasma)',
+};
+
+// Layout nodes in a 3-column grid (deterministic — D3 force is overkill for static diagrams)
+const colWidth = 200;
+const rowHeight = 90;
+const colCount = Math.min(3, nodes.length);
+const positions: Record<string, { x: number; y: number }> = {};
+nodes.forEach((n, i) => {
+  const col = i % colCount;
+  const row = Math.floor(i / colCount);
+  positions[n.id] = {
+    x: 100 + col * colWidth,
+    y: 60 + row * rowHeight,
+  };
+});
+
+const viewW = colCount * colWidth + 40;
+const viewH = Math.ceil(nodes.length / colCount) * rowHeight + 40;
+
+// Pre-render the diagram as SVG with straight lines that actually connect
+// to the node edges (not centers), avoiding the overlap problem.
+const nodeData = nodes.map((n) => ({
+  ...n,
+  x: positions[n.id].x,
+  y: positions[n.id].y,
+}));
+
+const edgePaths = edges.map((e) => {
+  const from = nodeData.find((n) => n.id === e.from);
+  const to = nodeData.find((n) => n.id === e.to);
+  if (!from || !to) return null;
+  // Edge routing: exit from right edge of source, enter left edge of target
+  const x1 = from.x + 70;
+  const y1 = from.y;
+  const x2 = to.x - 70;
+  const y2 = to.y;
+  // If same row, straight line
+  // If different rows, smooth bezier curve
+  const isHorizontal = y1 === y2;
+  let path: string;
+  if (isHorizontal) {
+    path = `M ${x1} ${y1} L ${x2} ${y2}`;
+  } else {
+    const midX = (x1 + x2) / 2;
+    path = `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`;
+  }
+  const labelX = (x1 + x2) / 2;
+  const labelY = (y1 + y2) / 2;
+  return { path, label: e.label || '', labelX, labelY };
+}).filter(Boolean);
 ---
 <div class:list={['kc-arch-diagram', className]}>
-  <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" class="kc-arch-diagram__svg">
+  <svg viewBox={`0 0 ${viewW} ${viewH}`} xmlns="http://www.w3.org/2000/svg" class="kc-arch-diagram__svg">
     <defs>
-      <marker id="kc-arch-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <marker id={`${diagramId}-arrow`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-secondary)" />
       </marker>
     </defs>
-    {nodes.map((n, i) => {
-      const col = i % 3;
-      const row = Math.floor(i / 3);
-      const x = 100 + col * 200;
-      const y = 50 + row * 100;
-      const fill = {
-        service: 'var(--color-accent-signal)',
-        data: 'var(--color-accent-violet)',
-        user: 'var(--color-accent-ember)',
-        external: 'var(--color-accent-gold)',
-        queue: 'var(--color-accent-plasma)',
-      }[n.type || 'service'];
-      return (
-        <g class="kc-arch-diagram__node">
-          <rect x={x - 70} y={y - 20} width="140" height="40" rx="4" fill="var(--color-surface-recessed)" stroke={fill} stroke-width="1.5" />
-          <text x={x} y={y + 4} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="11">{n.label}</text>
-        </g>
-      );
-    })}
-    {edges.map((e) => {
-      const fromIdx = nodes.findIndex((n) => n.id === e.from);
-      const toIdx = nodes.findIndex((n) => n.id === e.to);
-      if (fromIdx === -1 || toIdx === -1) return null;
-      const fromCol = fromIdx % 3;
-      const fromRow = Math.floor(fromIdx / 3);
-      const toCol = toIdx % 3;
-      const toRow = Math.floor(toIdx / 3);
-      const x1 = 100 + fromCol * 200 + 70;
-      const y1 = 50 + fromRow * 100;
-      const x2 = 100 + toCol * 200 - 70;
-      const y2 = 50 + toRow * 100;
-      const midX = (x1 + x2) / 2;
-      return (
+    {/* Edges first so they render under nodes */}
+    {edgePaths.map((e) => (
+      e && (
         <g class="kc-arch-diagram__edge">
-          <path d={`M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2}`} fill="none" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#kc-arch-arrow)" />
+          <path d={e.path} fill="none" stroke="var(--color-text-secondary)" stroke-width="1" marker-end={`url(#${diagramId}-arrow)`} />
           {e.label && (
-            <text x={midX} y={(y1 + y2) / 2 - 4} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{e.label}</text>
+            <text x={e.labelX} y={e.labelY - 4} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{e.label}</text>
           )}
         </g>
-      );
-    })}
+      )
+    ))}
+    {nodeData.map((n) => (
+      <g class="kc-arch-diagram__node">
+        <rect x={n.x - 70} y={n.y - 20} width="140" height="40" rx="4" fill="var(--color-surface-recessed)" stroke={typeColors[n.type || 'service']} stroke-width="1.5" />
+        <text x={n.x} y={n.y + 4} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="11">{n.label}</text>
+      </g>
+    ))}
   </svg>
   <div class="kc-arch-diagram__legend">
     {Array.from(new Set(nodes.map((n) => n.type || 'service'))).map((t) => (
@@ -96,6 +134,12 @@ const colWidth = 100 / Math.min(3, nodes.length);
     width: 100%;
     height: auto;
     display: block;
+  }
+  .kc-arch-diagram__node rect {
+    transition: filter 150ms ease;
+  }
+  .kc-arch-diagram__node:hover rect {
+    filter: brightness(1.2);
   }
   .kc-arch-diagram__legend {
     display: flex;

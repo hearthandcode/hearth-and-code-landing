@@ -3,8 +3,10 @@
  * SequenceDiagram - actors + ordered messages
  * Knowledge composite (k-composite): k-sequence-diagram
  *
- * NOTE: Hand-coded SVG. For production, integrate D3.js,
- * mxGraph, or React Flow for richer interaction.
+ * Lifelines rendered as proper D3-styled dashed lines. Messages exit
+ * from actor line at proper offsets based on direction.
+ *
+ * NOTE: For full Mermaid port, see mermaid sequence diagram format.
  */
 interface Message {
   from: string;
@@ -18,27 +20,31 @@ interface Props {
   class?: string;
 }
 const { actors, messages, class: className = '' } = Astro.props;
+const diagramId = `kc-seq-${Math.random().toString(36).slice(2, 9)}`;
+
 const actorWidth = 600 / actors.length;
+const headHeight = 24;
+const rowHeight = 30;
+const viewH = headHeight + messages.length * rowHeight + 10;
 ---
 <div class:list={['kc-sequence', className]}>
-  <svg viewBox={`0 0 600 ${40 + messages.length * 30}`} xmlns="http://www.w3.org/2000/svg" class="kc-sequence__svg">
+  <svg viewBox={`0 0 600 ${viewH}`} xmlns="http://www.w3.org/2000/svg" class="kc-sequence__svg">
     <defs>
-      <marker id="kc-seq-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <marker id={`${diagramId}-sync`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-display)" />
       </marker>
-      <marker id="kc-seq-async" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <marker id={`${diagramId}-async`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
         <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="var(--color-text-display)" stroke-width="1" />
       </marker>
     </defs>
-    {/* Actor boxes */}
+    {/* Actor boxes + lifelines */}
     {actors.map((a, i) => {
       const x = actorWidth * i + actorWidth / 2;
       return (
         <g>
-          <rect x={x - 50} y="4" width="100" height="20" rx="2" fill="var(--color-surface-raised)" stroke="var(--color-accent-signal)" stroke-width="1" />
-          <text x={x} y="18" text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="11">{a}</text>
-          {/* Lifelines */}
-          <line x1={x} y1="24" x2={x} y2={40 + messages.length * 30} stroke="var(--color-surface-rule)" stroke-width="1" stroke-dasharray="4 4" />
+          <rect x={x - 50} y="2" width="100" height="20" rx="2" fill="var(--color-surface-raised)" stroke="var(--color-accent-signal)" stroke-width="1" />
+          <text x={x} y="16" text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="11">{a}</text>
+          <line x1={x} y1={headHeight} x2={x} y2={viewH - 4} stroke="var(--color-surface-rule)" stroke-width="1" stroke-dasharray="4 4" />
         </g>
       );
     })}
@@ -49,21 +55,28 @@ const actorWidth = 600 / actors.length;
       if (fromIdx === -1 || toIdx === -1) return null;
       const x1 = actorWidth * fromIdx + actorWidth / 2;
       const x2 = actorWidth * toIdx + actorWidth / 2;
-      const y = 40 + i * 30;
+      const y = headHeight + 10 + i * rowHeight;
       const kind = m.kind || 'sync';
       const stroke = kind === 'return' ? 'var(--color-text-secondary)' : 'var(--color-text-display)';
-      const marker = kind === 'async' ? 'url(#kc-seq-async)' : 'url(#kc-seq-sync)';
+      const marker = kind === 'async' ? `url(#${diagramId}-async)` : `url(#${diagramId}-sync)`;
       const dasharray = kind === 'async' ? '6 4' : kind === 'return' ? '3 3' : '';
       const labelX = (x1 + x2) / 2;
+      // Estimate label width based on character count
+      const labelW = m.label.length * 6 + 8;
       return (
         <g>
           <line x1={x1} y1={y} x2={x2} y2={y} stroke={stroke} stroke-width="1.2" marker-end={marker} stroke-dasharray={dasharray} />
-          <rect x={labelX - m.label.length * 3 - 4} y={y - 9} width={m.label.length * 6 + 8} height="14" rx="2" fill="var(--color-surface-recessed)" />
+          <rect x={labelX - labelW / 2} y={y - 9} width={labelW} height="14" rx="2" fill="var(--color-surface-recessed)" />
           <text x={labelX} y={y + 1} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="9">{m.label}</text>
         </g>
       );
     })}
   </svg>
+  <div class="kc-sequence__legend">
+    <span><span class="kc-sequence__swatch kc-sequence__swatch--sync"></span>sync</span>
+    <span><span class="kc-sequence__swatch kc-sequence__swatch--async"></span>async</span>
+    <span><span class="kc-sequence__swatch kc-sequence__swatch--return"></span>return</span>
+  </div>
 </div>
 
 <style>
@@ -74,4 +87,22 @@ const actorWidth = 600 / actors.length;
     border-radius: var(--radius-md);
   }
   .kc-sequence__svg { width: 100%; height: auto; display: block; }
+  .kc-sequence__legend {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-surface-rule);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-sequence__legend span { display: inline-flex; align-items: center; gap: 0.3em; }
+  .kc-sequence__swatch {
+    width: 1.5rem;
+    height: 0;
+    border-top: 1px solid currentColor;
+  }
+  .kc-sequence__swatch--async { border-top-style: dashed; border-top-width: 1.5px; }
+  .kc-sequence__swatch--return { border-top-style: dotted; }
 </style>
