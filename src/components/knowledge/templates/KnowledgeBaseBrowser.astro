@@ -1,0 +1,158 @@
+---
+/**
+ * KnowledgeBaseBrowser - taxonomy + search + content
+ * Knowledge template (k-template): k-knowledge-base-browser
+ *
+ * Interactive: search filter + section navigation
+ */
+interface Section {
+  id: string;
+  title: string;
+  body: string;
+  tags?: string[];
+}
+interface Props {
+  taxonomy: { label: string; href?: string; active?: boolean }[];
+  sections: Section[];
+  searchable?: boolean;
+  class?: string;
+}
+const { taxonomy, sections, searchable = true, class: className = '' } = Astro.props;
+const browserId = `kc-kb-${Math.random().toString(36).slice(2, 9)}`;
+---
+<div class:list={['kc-kb-browser', className]} data-kb-id={browserId}>
+  <aside class="kc-kb-browser__sidebar">
+    <h4 class="kc-kb-browser__nav-title">Topics</h4>
+    <nav class="kc-kb-browser__nav">
+      {taxonomy.map((t) => (
+        <a href={`#${browserId}-${t.label}`} class:list={['kc-kb-browser__nav-link', t.active && 'is-active']}>
+          {t.label}
+        </a>
+      ))}
+    </nav>
+  </aside>
+  <main class="kc-kb-browser__main">
+    {searchable && (
+      <input
+        type="search"
+        class="kc-kb-browser__search"
+        placeholder="Search the knowledge base..."
+        data-kb-search
+      />
+    )}
+    {sections.map((s) => (
+      <article
+        id={`${browserId}-${s.id}`}
+        class="kc-kb-browser__section"
+        data-section-keywords={`${s.title} ${s.body} ${s.tags?.join(' ') || ''}`}
+      >
+        <header class="kc-kb-browser__section-header">
+          <h3 class="kc-kb-browser__section-title">{s.title}</h3>
+          {s.tags && (
+            <div class="kc-kb-browser__tags">
+              {s.tags.map((t) => <span class="kc-kb-browser__tag">{t}</span>)}
+            </div>
+          )}
+        </header>
+        <p>{s.body}</p>
+      </article>
+    ))}
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.kc-kb-browser').forEach((kb) => {
+    const search = kb.querySelector('.kc-kb-browser__search');
+    if (!search) return;
+    search.addEventListener('input', (e) => {
+      const q = (e.target as HTMLInputElement).value.toLowerCase();
+      kb.querySelectorAll('.kc-kb-browser__section').forEach((section) => {
+        const kw = section.getAttribute('data-section-keywords')?.toLowerCase() || '';
+        (section as HTMLElement).style.display = kw.includes(q) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  .kc-kb-browser {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-kb-browser__sidebar {
+    border-right: 1px solid var(--color-surface-rule);
+    padding-right: var(--space-3);
+  }
+  .kc-kb-browser__nav-title {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-kb-browser__nav { display: flex; flex-direction: column; gap: 0.2em; }
+  .kc-kb-browser__nav-link {
+    padding: 0.3em 0.6em;
+    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+  .kc-kb-browser__nav-link:hover { background: var(--color-surface-recessed); color: var(--color-text-display); }
+  .kc-kb-browser__nav-link.is-active { background: var(--color-accent-signal); color: var(--color-surface-primary); }
+  .kc-kb-browser__main { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+  .kc-kb-browser__search {
+    padding: 0.4em 0.7em;
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-display);
+    font-size: 0.875rem;
+  }
+  .kc-kb-browser__search:focus {
+    outline: 1px solid var(--color-accent-signal);
+    border-color: var(--color-accent-signal);
+  }
+  .kc-kb-browser__section {
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--color-accent-signal);
+  }
+  .kc-kb-browser__section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .kc-kb-browser__section-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-kb-browser__tags { display: flex; gap: 0.3em; flex-wrap: wrap; }
+  .kc-kb-browser__tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    padding: 0.1em 0.4em;
+    background: var(--color-surface-raised);
+    color: var(--color-accent-signal);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-surface-rule);
+  }
+  .kc-kb-browser__section p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+</style>

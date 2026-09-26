@@ -1,0 +1,116 @@
+---
+/**
+ * APIDocumentationPage - full API reference page
+ * Knowledge template (k-template): k-api-documentation-page
+ */
+import APIReference from '../composites/APIReference.astro';
+interface Endpoint {
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  path: string;
+  description: string;
+  params?: any[];
+  response?: { status: number; description: string };
+}
+interface Section {
+  id: string;
+  title: string;
+  description?: string;
+  endpoints: Endpoint[];
+}
+interface Props {
+  apiName: string;
+  version: string;
+  baseUrl: string;
+  sections: Section[];
+  class?: string;
+}
+const { apiName, version, baseUrl, sections, class: className = '' } = Astro.props;
+---
+<article class:list={['kc-api-docs', className]}>
+  <header class="kc-api-docs__cover">
+    <p class="kc-api-docs__eyebrow">API Reference</p>
+    <h2 class="kc-api-docs__title">{apiName}</h2>
+    <p class="kc-api-docs__version">v{version} · <code>{baseUrl}</code></p>
+  </header>
+  <div class="kc-api-docs__body">
+    {sections.map((section) => (
+      <section class="kc-api-docs__section" id={`${apiName}-${section.id}`}>
+        <header class="kc-api-docs__section-header">
+          <h3>{section.title}</h3>
+          {section.description && <p>{section.description}</p>}
+        </header>
+        <div class="kc-api-docs__endpoints">
+          {section.endpoints.map((ep) => <APIReference endpoint={ep} />)}
+        </div>
+      </section>
+    ))}
+  </div>
+</article>
+
+<style>
+  .kc-api-docs {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .kc-api-docs__cover {
+    padding: var(--space-7);
+    background: var(--color-surface-recessed);
+    border-bottom: 2px solid var(--color-accent-signal);
+  }
+  .kc-api-docs__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent-gold);
+  }
+  .kc-api-docs__title {
+    margin: 0.5em 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-api-docs__version {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  .kc-api-docs__version code {
+    background: var(--color-surface-raised);
+    color: var(--color-accent-signal);
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+  }
+  .kc-api-docs__body {
+    padding: var(--space-5) var(--space-7);
+  }
+  .kc-api-docs__section {
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-api-docs__section:last-child { border-bottom: none; }
+  .kc-api-docs__section-header { margin-bottom: var(--space-3); }
+  .kc-api-docs__section-header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-api-docs__section-header p {
+    margin: 0.3em 0 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  .kc-api-docs__endpoints {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+</style>

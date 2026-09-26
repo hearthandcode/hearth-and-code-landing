@@ -1,0 +1,93 @@
+---
+/**
+ * SystemArchitectureDoc - architecture diagrams + descriptions
+ * Knowledge template (k-template): k-system-architecture-doc
+ */
+import ArchitectureDiagram from '../composites/ArchitectureDiagram.astro';
+interface Section {
+  id: string;
+  title: string;
+  description: string;
+  diagram: { nodes: any[]; edges: any[] };
+}
+interface Props {
+  title: string;
+  version: string;
+  sections: Section[];
+  class?: string;
+}
+const { title, version, sections, class: className = '' } = Astro.props;
+---
+<article class:list={['kc-arch-doc', className]}>
+  <header class="kc-arch-doc__cover">
+    <p class="kc-arch-doc__eyebrow">System Architecture</p>
+    <h2 class="kc-arch-doc__title">{title}</h2>
+    <p class="kc-arch-doc__version">Version {version}</p>
+  </header>
+  <div class="kc-arch-doc__body">
+    {sections.map((s) => (
+      <section class="kc-arch-doc__section">
+        <header class="kc-arch-doc__section-header">
+          <h3>{s.title}</h3>
+          <p>{s.description}</p>
+        </header>
+        <ArchitectureDiagram nodes={s.diagram.nodes} edges={s.diagram.edges} />
+      </section>
+    ))}
+  </div>
+</article>
+
+<style>
+  .kc-arch-doc {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .kc-arch-doc__cover {
+    padding: var(--space-7);
+    background: var(--color-surface-recessed);
+    border-bottom: 2px solid var(--color-accent-signal);
+  }
+  .kc-arch-doc__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent-gold);
+  }
+  .kc-arch-doc__title {
+    margin: 0.5em 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-arch-doc__version {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  .kc-arch-doc__body {
+    padding: var(--space-5) var(--space-7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  .kc-arch-doc__section-header {
+    margin-bottom: var(--space-3);
+  }
+  .kc-arch-doc__section-header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-text-display);
+  }
+  .kc-arch-doc__section-header p {
+    margin: 0.3em 0 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+</style>

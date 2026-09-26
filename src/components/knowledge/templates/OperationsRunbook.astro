@@ -1,0 +1,138 @@
+---
+/**
+ * OperationsRunbook - ops procedure + run logs
+ * Knowledge template (k-template): k-operations-runbook
+ */
+import RunLog from '../composites/RunLog.astro';
+interface Step {
+  order: number;
+  action: string;
+  expected?: string;
+}
+interface Props {
+  title: string;
+  procedure: Step[];
+  recentLogs: any[];
+  oncall?: string;
+  class?: string;
+}
+const { title, procedure, recentLogs, oncall, class: className = '' } = Astro.props;
+---
+<article class:list={['kc-runbook', className]}>
+  <header class="kc-runbook__cover">
+    <p class="kc-runbook__eyebrow">Operations Runbook</p>
+    <h2 class="kc-runbook__title">{title}</h2>
+    {oncall && <p class="kc-runbook__oncall">On-call: <strong>{oncall}</strong></p>}
+  </header>
+  <div class="kc-runbook__body">
+    <section class="kc-runbook__section">
+      <h3>Procedure</h3>
+      <ol class="kc-runbook__steps">
+        {procedure.map((s) => (
+          <li class="kc-runbook__step">
+            <span class="kc-runbook__step-num">{s.order}</span>
+            <div>
+              <strong>{s.action}</strong>
+              {s.expected && <p>Expected: {s.expected}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <section class="kc-runbook__section">
+      <h3>Recent runs</h3>
+      <RunLog entries={recentLogs} />
+    </section>
+  </div>
+</article>
+
+<style>
+  .kc-runbook {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .kc-runbook__cover {
+    padding: var(--space-7);
+    background: var(--color-surface-recessed);
+    border-bottom: 2px solid var(--color-accent-plasma);
+  }
+  .kc-runbook__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent-gold);
+  }
+  .kc-runbook__title {
+    margin: 0.5em 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-runbook__oncall {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  .kc-runbook__oncall strong {
+    color: var(--color-accent-plasma);
+    font-family: var(--font-mono);
+  }
+  .kc-runbook__body {
+    padding: var(--space-5) var(--space-7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  .kc-runbook__section h3 {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-text-display);
+  }
+  .kc-runbook__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    counter-reset: step;
+  }
+  .kc-runbook__step {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+  }
+  .kc-runbook__step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--color-accent-plasma);
+    color: var(--color-surface-primary);
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+  .kc-runbook__step strong {
+    color: var(--color-text-display);
+    font-size: 0.9375rem;
+    display: block;
+  }
+  .kc-runbook__step p {
+    margin: 0.3em 0 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+  }
+</style>

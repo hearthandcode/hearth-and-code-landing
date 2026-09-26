@@ -1,0 +1,114 @@
+---
+/**
+ * ADRIndex - list of ADRs with filters
+ * Knowledge template (k-template): k-adr-index
+ */
+import ADRCard from '../composites/ADRCard.astro';
+interface ADR {
+  number: string;
+  title: string;
+  status: 'proposed' | 'accepted' | 'rejected' | 'superseded' | 'deprecated';
+  date: string;
+  context: string;
+  decision: string;
+  consequences: string[];
+}
+interface Props {
+  adrs: ADR[];
+  filterable?: boolean;
+  class?: string;
+}
+const { adrs, filterable = true, class: className = '' } = Astro.props;
+const statuses = ['all', 'proposed', 'accepted', 'rejected', 'superseded', 'deprecated'];
+---
+<section class:list={['kc-adr-index', className]}>
+  <header class="kc-adr-index__header">
+    <h3 class="kc-adr-index__title">Architecture Decision Records</h3>
+    <span class="kc-adr-index__count">{adrs.length} decisions</span>
+  </header>
+  {filterable && (
+    <div class="kc-adr-index__filters">
+      {statuses.map((s) => (
+        <button class="kc-adr-index__filter" data-filter={s}>{s}</button>
+      ))}
+    </div>
+  )}
+  <div class="kc-adr-index__list">
+    {adrs.map((a) => (
+      <div class="kc-adr-index__item" data-status={a.status}>
+        <ADRCard {...a} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.kc-adr-index').forEach((idx) => {
+    idx.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.kc-adr-index__filter');
+      if (!btn) return;
+      const filter = btn.getAttribute('data-filter') || 'all';
+      idx.querySelectorAll('.kc-adr-index__filter').forEach((b) => b.classList.toggle('is-active', b === btn));
+      idx.querySelectorAll('.kc-adr-index__item').forEach((item) => {
+        const status = item.getAttribute('data-status');
+        (item as HTMLElement).style.display = filter === 'all' || status === filter ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  .kc-adr-index {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-adr-index__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-adr-index__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-adr-index__count {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.1);
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-adr-index__filters {
+    display: flex;
+    gap: 0.3em;
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .kc-adr-index__filter {
+    padding: 0.2em 0.6em;
+    background: transparent;
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+  .kc-adr-index__filter.is-active {
+    background: var(--color-accent-signal);
+    color: var(--color-surface-primary);
+    border-color: var(--color-accent-signal);
+  }
+  .kc-adr-index__list { display: flex; flex-direction: column; gap: var(--space-2); }
+</style>

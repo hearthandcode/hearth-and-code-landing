@@ -1,0 +1,106 @@
+---
+/**
+ * EvidencePackage - bundle of evidence receipts
+ * Knowledge template (k-template): k-evidence-package
+ */
+import EvidenceReceipt from '../composites/EvidenceReceipt.astro';
+interface Receipt {
+  id: string;
+  type: 'document' | 'testimony' | 'observation' | 'measurement' | 'artifact';
+  description: string;
+  hash: string;
+  hashAlgorithm?: 'sha256' | 'sha1' | 'blake3';
+  timestamp: string;
+  witness?: string;
+  locator?: string;
+}
+interface Props {
+  title: string;
+  claim: string;
+  receipts: Receipt[];
+  sealedBy?: string;
+  sealedAt?: string;
+  class?: string;
+}
+const { title, claim, receipts, sealedBy, sealedAt, class: className = '' } = Astro.props;
+---
+<section class:list={['kc-evidence-package', className]}>
+  <header class="kc-evidence-package__header">
+    <div>
+      <p class="kc-evidence-package__eyebrow">Evidence Package</p>
+      <h3 class="kc-evidence-package__title">{title}</h3>
+      <p class="kc-evidence-package__claim">{claim}</p>
+    </div>
+    {(sealedBy || sealedAt) && (
+      <div class="kc-evidence-package__seal">
+        {sealedBy && <div><span class="kc-evidence-package__seal-label">Sealed by</span><strong>{sealedBy}</strong></div>}
+        {sealedAt && <div><span class="kc-evidence-package__seal-label">Sealed at</span><strong>{sealedAt}</strong></div>}
+      </div>
+    )}
+  </header>
+  <div class="kc-evidence-package__list">
+    {receipts.map((r) => <EvidenceReceipt {...r} />)}
+  </div>
+</section>
+
+<style>
+  .kc-evidence-package {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-evidence-package__header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-evidence-package__eyebrow {
+    margin: 0 0 0.3em 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-gold);
+  }
+  .kc-evidence-package__title {
+    margin: 0 0 0.5em 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-evidence-package__claim {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    max-width: 40rem;
+    line-height: 1.5;
+  }
+  .kc-evidence-package__seal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .kc-evidence-package__seal-label {
+    display: block;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.625rem;
+  }
+  .kc-evidence-package__seal strong {
+    color: var(--color-state-success);
+  }
+  .kc-evidence-package__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+</style>

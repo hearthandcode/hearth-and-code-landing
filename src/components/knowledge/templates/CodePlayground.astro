@@ -1,0 +1,106 @@
+---
+/**
+ * CodePlayground - code + output + explanation
+ * Knowledge template (k-template): k-code-playground
+ */
+import CodeBlock from '../composites/CodeBlock.astro';
+interface Props {
+  title: string;
+  code: string;
+  language: 'python' | 'typescript' | 'javascript' | 'rust' | 'yaml' | 'json' | 'bash' | 'sql' | 'markdown';
+  output: string;
+  explanation: string;
+  class?: string;
+}
+const { title, code, language, output, explanation, class: className = '' } = Astro.props;
+---
+<section class:list={['kc-code-playground', className]}>
+  <header class="kc-code-playground__header">
+    <h3 class="kc-code-playground__title">{title}</h3>
+  </header>
+  <div class="kc-code-playground__body">
+    <div class="kc-code-playground__main">
+      <div class="kc-code-playground__panel">
+        <h4 class="kc-code-playground__panel-title">Code</h4>
+        <CodeBlock code={code} language={language} />
+      </div>
+      <div class="kc-code-playground__panel">
+        <h4 class="kc-code-playground__panel-title">Output</h4>
+        <pre class="kc-code-playground__output"><code>{output}</code></pre>
+      </div>
+    </div>
+    <aside class="kc-code-playground__explanation">
+      <h4 class="kc-code-playground__panel-title">Explanation</h4>
+      <p>{explanation}</p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .kc-code-playground {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-code-playground__header {
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-code-playground__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-code-playground__body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-3);
+  }
+  .kc-code-playground__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+  .kc-code-playground__panel {
+    background: var(--color-surface-recessed);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+  }
+  .kc-code-playground__panel-title {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-code-playground__output {
+    margin: 0;
+    padding: var(--space-3);
+    background: var(--color-surface-primary);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-state-success);
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  .kc-code-playground__explanation {
+    background: var(--color-surface-recessed);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--color-accent-gold);
+  }
+  .kc-code-playground__explanation p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+</style>

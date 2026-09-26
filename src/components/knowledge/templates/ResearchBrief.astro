@@ -1,0 +1,78 @@
+---
+/**
+ * ResearchBrief - academic paper summary layout
+ * Knowledge template (k-template): k-research-brief
+ */
+import PaperSummary from '../composites/PaperSummary.astro';
+interface Props {
+  paper: any;
+  related?: any[];
+  class?: string;
+}
+const { paper, related = [], class: className = '' } = Astro.props;
+---
+<article class:list={['kc-research-brief', className]}>
+  <PaperSummary {...paper} />
+  {related.length > 0 && (
+    <section class="kc-research-brief__related">
+      <h3 class="kc-research-brief__related-title">Related work</h3>
+      <ul class="kc-research-brief__related-list">
+        {related.map((r) => (
+          <li>
+            <strong>{r.title}</strong>
+            <span>{r.authors?.join(', ')} ({r.year})</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</article>
+
+<style>
+  .kc-research-brief {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .kc-research-brief__related {
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+  }
+  .kc-research-brief__related-title {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+  }
+  .kc-research-brief__related-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+  .kc-research-brief__related-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+    padding: var(--space-2);
+    background: var(--color-surface-raised);
+    border-radius: var(--radius-sm);
+  }
+  .kc-research-brief__related-list strong {
+    color: var(--color-text-display);
+    font-size: 0.875rem;
+  }
+  .kc-research-brief__related-list span {
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+  }
+</style>

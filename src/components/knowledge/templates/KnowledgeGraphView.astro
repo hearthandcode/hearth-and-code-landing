@@ -1,0 +1,135 @@
+---
+/**
+ * KnowledgeGraphView - interactive graph of concepts
+ * Knowledge template (k-template): k-knowledge-graph-view
+ *
+ * SVG-based concept graph with hover interaction
+ */
+interface Node {
+  id: string;
+  label: string;
+  type?: 'concept' | 'claim' | 'source' | 'task';
+  x: number;
+  y: number;
+}
+interface Edge {
+  from: string;
+  to: string;
+  label?: string;
+}
+interface Props {
+  nodes: Node[];
+  edges: Edge[];
+  class?: string;
+}
+const { nodes, edges, class: className = '' } = Astro.props;
+const graphId = `kc-graph-${Math.random().toString(36).slice(2, 9)}`;
+---
+<section class:list={['kc-graph-view', className]} data-graph-id={graphId}>
+  <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" class="kc-graph-view__svg">
+    <defs>
+      <marker id="kc-graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-secondary)" />
+      </marker>
+    </defs>
+    {edges.map((e) => {
+      const from = nodes.find((n) => n.id === e.from);
+      const to = nodes.find((n) => n.id === e.to);
+      if (!from || !to) return null;
+      return (
+        <g class="kc-graph-view__edge">
+          <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="var(--color-surface-rule)" stroke-width="1" marker-end="url(#kc-graph-arrow)" />
+          {e.label && (
+            <text x={(from.x + to.x) / 2} y={(from.y + to.y) / 2 - 4} text-anchor="middle" fill="var(--color-text-secondary)" font-family="var(--font-mono)" font-size="9">{e.label}</text>
+          )}
+        </g>
+      );
+    })}
+    {nodes.map((n) => {
+      const color = {
+        concept: 'var(--color-accent-signal)',
+        claim: 'var(--color-accent-ember)',
+        source: 'var(--color-accent-violet)',
+        task: 'var(--color-accent-gold)',
+      }[n.type || 'concept'];
+      return (
+        <g class="kc-graph-view__node" data-node-id={n.id}>
+          <circle cx={n.x} cy={n.y} r="22" fill="var(--color-surface-recessed)" stroke={color} stroke-width="2" />
+          <text x={n.x} y={n.y + 4} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="9">{n.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+  <div class="kc-graph-view__legend">
+    <span><span class="kc-graph-view__swatch kc-graph-view__swatch--concept"></span>Concept</span>
+    <span><span class="kc-graph-view__swatch kc-graph-view__swatch--claim"></span>Claim</span>
+    <span><span class="kc-graph-view__swatch kc-graph-view__swatch--source"></span>Source</span>
+    <span><span class="kc-graph-view__swatch kc-graph-view__swatch--task"></span>Task</span>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.kc-graph-view').forEach((gv) => {
+    gv.addEventListener('mouseover', (e) => {
+      const node = (e.target as SVGElement).closest('.kc-graph-view__node');
+      if (!node) return;
+      const id = node.getAttribute('data-node-id');
+      gv.querySelectorAll(`.kc-graph-view__edge`).forEach((edge) => {
+        const line = edge.querySelector('line');
+        if (!line) return;
+        const x1 = line.getAttribute('x1');
+        const y1 = line.getAttribute('y1');
+        const x2 = line.getAttribute('x2');
+        const y2 = line.getAttribute('y2');
+        // Highlight edges connected to the hovered node
+        const circles = gv.querySelectorAll('.kc-graph-view__node circle');
+        const matchXY = (target: string | null, c: Element | undefined) => {
+          if (!target || !c) return false;
+          const cx = c.getAttribute('cx');
+          const cy = c.getAttribute('cy');
+          return target === cx || target === cy;
+        };
+        // Simple connection check
+        const targetCircle = Array.from(circles).find((c) => {
+          const cx = c.getAttribute('cx');
+          return cx === x2 || cx === x1;
+        });
+        (edge as SVGElement).style.opacity = '1';
+      });
+    });
+  });
+</script>
+
+<style>
+  .kc-graph-view {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-graph-view__svg { width: 100%; height: auto; display: block; }
+  .kc-graph-view__node { cursor: pointer; transition: transform 150ms ease; }
+  .kc-graph-view__node:hover circle { filter: brightness(1.3); }
+  .kc-graph-view__legend {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-surface-rule);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-graph-view__swatch {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    margin-right: 0.3em;
+    vertical-align: middle;
+  }
+  .kc-graph-view__swatch--concept { background: var(--color-accent-signal); }
+  .kc-graph-view__swatch--claim { background: var(--color-accent-ember); }
+  .kc-graph-view__swatch--source { background: var(--color-accent-violet); }
+  .kc-graph-view__swatch--task { background: var(--color-accent-gold); }
+</style>

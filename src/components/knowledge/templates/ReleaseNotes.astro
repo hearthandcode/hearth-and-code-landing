@@ -1,0 +1,155 @@
+---
+/**
+ * ReleaseNotes - version release documentation
+ * Knowledge template (k-template): k-release-notes
+ */
+interface Release {
+  version: string;
+  date: string;
+  type: 'major' | 'minor' | 'patch';
+  changes: { kind: 'added' | 'changed' | 'fixed' | 'removed' | 'deprecated'; text: string }[];
+}
+interface Props {
+  product: string;
+  releases: Release[];
+  class?: string;
+}
+const { product, releases, class: className = '' } = Astro.props;
+---
+<article class:list={['kc-release-notes', className]}>
+  <header class="kc-release-notes__cover">
+    <p class="kc-release-notes__eyebrow">Release Notes</p>
+    <h2 class="kc-release-notes__title">{product}</h2>
+  </header>
+  <ol class="kc-release-notes__list">
+    {releases.map((r) => (
+      <li class:list={['kc-release-notes__release', `kc-release-notes__release--${r.type}`]}>
+        <header class="kc-release-notes__release-header">
+          <h3 class="kc-release-notes__version">v{r.version}</h3>
+          <time class="kc-release-notes__date">{r.date}</time>
+          <span class={`kc-release-notes__type kc-release-notes__type--${r.type}`}>{r.type}</span>
+        </header>
+        <ul class="kc-release-notes__changes">
+          {r.changes.map((c) => (
+            <li class:list={['kc-release-notes__change', `kc-release-notes__change--${c.kind}`]}>
+              <span class="kc-release-notes__kind">{c.kind}</span>
+              <span>{c.text}</span>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))}
+  </ol>
+</article>
+
+<style>
+  .kc-release-notes {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .kc-release-notes__cover {
+    padding: var(--space-7);
+    background: var(--color-surface-recessed);
+    border-bottom: 2px solid var(--color-accent-ember);
+  }
+  .kc-release-notes__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent-gold);
+  }
+  .kc-release-notes__title {
+    margin: 0.5em 0 0 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-release-notes__list {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-5) var(--space-7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .kc-release-notes__release {
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-accent-signal);
+  }
+  .kc-release-notes__release--major { border-left-color: var(--color-accent-ember); }
+  .kc-release-notes__release--minor { border-left-color: var(--color-accent-signal); }
+  .kc-release-notes__release--patch { border-left-color: var(--color-text-secondary); }
+  .kc-release-notes__release-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-release-notes__version {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-release-notes__date {
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .kc-release-notes__type {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-release-notes__type--major { color: var(--color-accent-ember); background: rgba(232, 91, 78, 0.12); }
+  .kc-release-notes__type--minor { color: var(--color-accent-signal); background: rgba(31, 182, 168, 0.12); }
+  .kc-release-notes__type--patch { color: var(--color-text-secondary); background: rgba(207, 193, 171, 0.08); }
+  .kc-release-notes__changes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .kc-release-notes__change {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    font-size: 0.8125rem;
+    padding: 0.2em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-release-notes__change--added { background: rgba(143, 163, 149, 0.08); }
+  .kc-release-notes__change--changed { background: rgba(63, 224, 208, 0.08); }
+  .kc-release-notes__change--fixed { background: rgba(155, 93, 229, 0.08); }
+  .kc-release-notes__change--removed { background: rgba(194, 90, 42, 0.1); }
+  .kc-release-notes__change--deprecated { background: rgba(232, 146, 60, 0.08); }
+  .kc-release-notes__kind {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-primary);
+  }
+  .kc-release-notes__change--added .kc-release-notes__kind { color: var(--color-state-success); }
+  .kc-release-notes__change--changed .kc-release-notes__kind { color: var(--color-accent-plasma); }
+  .kc-release-notes__change--fixed .kc-release-notes__kind { color: var(--color-accent-violet); }
+  .kc-release-notes__change--removed .kc-release-notes__kind { color: var(--color-state-error); }
+  .kc-release-notes__change--deprecated .kc-release-notes__kind { color: var(--color-state-caution); }
+</style>

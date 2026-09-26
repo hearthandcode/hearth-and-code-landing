@@ -1,0 +1,168 @@
+---
+/**
+ * AuditReport - formal audit report template
+ * Knowledge template (k-template): k-audit-report
+ */
+import AuditTrail from '../composites/AuditTrail.astro';
+import ComplianceStatus from '../composites/ComplianceStatus.astro';
+interface Finding {
+  id: string;
+  severity: 'info' | 'success' | 'caution' | 'warning' | 'error' | 'critical';
+  title: string;
+  description: string;
+}
+interface Props {
+  title: string;
+  scope: string;
+  auditor: string;
+  auditedEntity: string;
+  period: string;
+  findings: Finding[];
+  auditTrail: any[]; // AuditTrail Event[]
+  compliance: any[]; // ComplianceStatus Control[]
+  status: 'pass' | 'fail' | 'conditional' | 'in-progress';
+  class?: string;
+}
+const { title, scope, auditor, auditedEntity, period, findings, auditTrail, compliance, status, class: className = '' } = Astro.props;
+---
+<article class:list={['kc-audit-report', `kc-audit-report--${status}`, className]}>
+  <header class="kc-audit-report__cover">
+    <p class="kc-audit-report__eyebrow">Audit Report</p>
+    <h2 class="kc-audit-report__title">{title}</h2>
+    <dl class="kc-audit-report__meta">
+      <div><dt>Audited entity</dt><dd>{auditedEntity}</dd></div>
+      <div><dt>Period</dt><dd>{period}</dd></div>
+      <div><dt>Auditor</dt><dd>{auditor}</dd></div>
+      <div><dt>Scope</dt><dd>{scope}</dd></div>
+      <div><dt>Disposition</dt><dd><span class={`kc-audit-report__status kc-audit-report__status--${status}`}>{status}</span></dd></div>
+    </dl>
+  </header>
+  <section class="kc-audit-report__section">
+    <h3 class="kc-audit-report__section-title">Findings</h3>
+    <ul class="kc-audit-report__findings">
+      {findings.map((f) => (
+        <li class:list={['kc-audit-report__finding', `kc-audit-report__finding--${f.severity}`]}>
+          <span class="kc-audit-report__finding-id">{f.id}</span>
+          <strong>{f.title}</strong>
+          <p>{f.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <section class="kc-audit-report__section">
+    <h3 class="kc-audit-report__section-title">Compliance status</h3>
+    <ComplianceStatus framework={title} controls={compliance} />
+  </section>
+  <section class="kc-audit-report__section">
+    <h3 class="kc-audit-report__section-title">Audit trail</h3>
+    <AuditTrail events={auditTrail} />
+  </section>
+</article>
+
+<style>
+  .kc-audit-report {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .kc-audit-report__cover {
+    padding: var(--space-7);
+    background: var(--color-surface-recessed);
+    border-bottom: 2px solid var(--color-accent-ember);
+  }
+  .kc-audit-report--pass .kc-audit-report__cover { border-bottom-color: var(--color-state-success); }
+  .kc-audit-report--fail .kc-audit-report__cover { border-bottom-color: var(--color-state-error); }
+  .kc-audit-report__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent-gold);
+  }
+  .kc-audit-report__title {
+    margin: 0.5em 0 1em 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+    line-height: 1.2;
+  }
+  .kc-audit-report__meta {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-3);
+  }
+  .kc-audit-report__meta div { display: flex; flex-direction: column; gap: 0.2em; }
+  .kc-audit-report__meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-audit-report__meta dd {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-display);
+  }
+  .kc-audit-report__status {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-audit-report__status--pass { color: var(--color-state-success); background: rgba(143, 163, 149, 0.15); }
+  .kc-audit-report__status--fail { color: var(--color-state-error); background: rgba(194, 90, 42, 0.15); }
+  .kc-audit-report__status--conditional { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.15); }
+  .kc-audit-report__status--in-progress { color: var(--color-accent-plasma); background: rgba(63, 224, 208, 0.15); }
+  .kc-audit-report__section {
+    padding: var(--space-4) var(--space-7);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-audit-report__section:last-child { border-bottom: none; }
+  .kc-audit-report__section-title {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-audit-report__findings {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .kc-audit-report__finding {
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid currentColor;
+  }
+  .kc-audit-report__finding--critical { color: var(--color-accent-ember); }
+  .kc-audit-report__finding--error { color: var(--color-state-error); }
+  .kc-audit-report__finding--warning { color: var(--color-accent-gold); }
+  .kc-audit-report__finding--caution { color: var(--color-state-caution); }
+  .kc-audit-report__finding--success { color: var(--color-state-success); }
+  .kc-audit-report__finding--info { color: var(--color-accent-plasma); }
+  .kc-audit-report__finding-id {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    margin-right: 0.5em;
+    color: inherit;
+  }
+  .kc-audit-report__finding strong { color: var(--color-text-display); display: block; }
+  .kc-audit-report__finding p {
+    margin: 0.3em 0 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+</style>

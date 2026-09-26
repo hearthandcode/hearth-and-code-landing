@@ -1,0 +1,65 @@
+---
+/**
+ * ComplianceDashboard - full compliance board
+ * Knowledge template (k-template): k-compliance-dashboard
+ */
+import ComplianceStatus from '../composites/ComplianceStatus.astro';
+interface Framework {
+  name: string;
+  controls: any[];
+}
+interface Props {
+  frameworks: Framework[];
+  class?: string;
+}
+const { frameworks, class: className = '' } = Astro.props;
+---
+<section class:list={['kc-compliance-dashboard', className]}>
+  <header class="kc-compliance-dashboard__header">
+    <h3 class="kc-compliance-dashboard__title">Compliance Dashboard</h3>
+    <div class="kc-compliance-dashboard__totals">
+      <span>{frameworks.length} frameworks</span>
+      <span>·</span>
+      <span>{frameworks.reduce((acc, f) => acc + f.controls.length, 0)} controls</span>
+    </div>
+  </header>
+  <div class="kc-compliance-dashboard__list">
+    {frameworks.map((f) => <ComplianceStatus framework={f.name} controls={f.controls} />)}
+  </div>
+</section>
+
+<style>
+  .kc-compliance-dashboard {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-compliance-dashboard__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-compliance-dashboard__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-compliance-dashboard__totals {
+    display: flex;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-compliance-dashboard__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+</style>
