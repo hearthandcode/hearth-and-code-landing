@@ -1,0 +1,109 @@
+---
+/**
+ * Search Bar composite
+ * id: c-search-bar
+ *
+ * Input + submit button for search.
+ */
+
+import Input from '../primitives/Input.astro';
+import Button from '../primitives/Button.astro';
+import Icon from '../primitives/Icon.astro';
+
+interface Props {
+  placeholder?: string;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'compact' | 'expanded';
+  value?: string;
+  name?: string;
+  class?: string;
+}
+
+const {
+  placeholder = 'Search...',
+  size = 'md',
+  variant = 'compact',
+  value,
+  name = 'search',
+  class: className = '',
+} = Astro.props;
+
+const sizeMap = { sm: 'sm' as const, md: 'md' as const, lg: 'lg' as const };
+---
+
+<form
+  class={`ec-search-bar ec-search-bar--${variant} ec-search-bar--${size} ${className}`}
+  role="search"
+  method="get"
+>
+  <div class="ec-search-bar__input-wrap">
+    <span class="ec-search-bar__icon" aria-hidden="true">
+      <Icon name="search" size={size === 'lg' ? 'lg' : 'md'} />
+    </span>
+    <Input
+      type="search"
+      name={name}
+      placeholder={placeholder}
+      size={size}
+      value={value}
+      class="ec-search-bar__input"
+    />
+  </div>
+  {variant === 'expanded' ? (
+    <Button type="submit" variant="primary" size={sizeMap[size]}>
+      Search
+    </Button>
+  ) : (
+    <button type="submit" class="ec-search-bar__submit" aria-label="Search">
+      <Icon name="arrow-right" size="md" />
+    </button>
+  )}
+</form>
+
+<style>
+  .ec-search-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+  }
+  .ec-search-bar__input-wrap {
+    position: relative;
+    flex: 1;
+  }
+  .ec-search-bar__icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+  .ec-search-bar__input.ec-search-bar__input {
+    padding-left: 2.75rem;
+  }
+  .ec-search-bar__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-control-md);
+    height: var(--size-control-md);
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-search-bar--sm .ec-search-bar__submit { width: var(--size-control-sm); height: var(--size-control-sm); }
+  .ec-search-bar--lg .ec-search-bar__submit { width: var(--size-control-lg); height: var(--size-control-lg); }
+  .ec-search-bar__submit:hover {
+    background: var(--color-accent-forge);
+  }
+  .ec-search-bar__submit:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+</style>

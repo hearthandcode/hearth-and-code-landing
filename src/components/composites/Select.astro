@@ -1,0 +1,129 @@
+---
+/**
+ * Select composite
+ * id: c-select
+ *
+ * Dropdown selection control.
+ */
+
+interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  options: SelectOption[];
+  value?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  required?: boolean;
+  error?: boolean;
+  success?: boolean;
+  id?: string;
+  name?: string;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  options,
+  value,
+  placeholder = 'Select an option',
+  disabled = false,
+  required = false,
+  error = false,
+  success = false,
+  id,
+  name,
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+
+const cls = [
+  'ec-select',
+  `ec-select--${size}`,
+  error && 'is-error',
+  success && 'is-success',
+  disabled && 'is-disabled',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<div class={`ec-select__wrapper ${cls}`}>
+  <select
+    id={id}
+    name={name}
+    disabled={disabled}
+    required={required}
+    aria-invalid={error ? 'true' : undefined}
+    class="ec-select__field"
+  >
+    {placeholder && (
+      <option value="" disabled selected={!value}>
+        {placeholder}
+      </option>
+    )}
+    {options.map((option) => (
+      <option
+        value={option.value}
+        disabled={option.disabled}
+        selected={option.value === value}
+      >
+        {option.label}
+      </option>
+    ))}
+  </select>
+  <svg class="ec-select__icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M7 10l5 5 5-5z"/>
+  </svg>
+</div>
+
+<style>
+  .ec-select__wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+  .ec-select__field {
+    width: 100%;
+    padding: 0 var(--space-7) 0 var(--space-4);
+    height: var(--size-control-md);
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text-primary);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    appearance: none;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default),
+                box-shadow var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-select--sm .ec-select__field { height: var(--size-control-sm); font-size: var(--font-size-small); }
+  .ec-select--lg .ec-select__field { height: var(--size-control-lg); font-size: 1.125rem; }
+  .ec-select__field:focus {
+    outline: none;
+    border-color: var(--color-accent-signal);
+    box-shadow: 0 0 0 3px rgba(31, 182, 168, 0.15);
+  }
+  .ec-select.is-error .ec-select__field {
+    border-color: var(--color-state-error);
+  }
+  .ec-select.is-success .ec-select__field {
+    border-color: var(--color-state-success);
+  }
+  .ec-select.is-disabled .ec-select__field {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    background: var(--color-surface-recessed);
+  }
+  .ec-select__icon {
+    position: absolute;
+    right: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    pointer-events: none;
+  }
+</style>

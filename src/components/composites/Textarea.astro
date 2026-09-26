@@ -1,0 +1,96 @@
+---
+/**
+ * Textarea composite
+ * id: c-textarea
+ *
+ * Multi-line text input.
+ */
+
+interface Props {
+  value?: string;
+  placeholder?: string;
+  rows?: number;
+  cols?: number;
+  disabled?: boolean;
+  required?: boolean;
+  error?: boolean;
+  success?: boolean;
+  id?: string;
+  name?: string;
+  resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+  class?: string;
+}
+
+const {
+  value,
+  placeholder,
+  rows = 4,
+  cols,
+  disabled = false,
+  required = false,
+  error = false,
+  success = false,
+  id,
+  name,
+  resize = 'vertical',
+  class: className = '',
+} = Astro.props;
+
+const cls = [
+  'ec-textarea',
+  error && 'is-error',
+  success && 'is-success',
+  disabled && 'is-disabled',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<textarea
+  id={id}
+  name={name}
+  rows={rows}
+  cols={cols}
+  placeholder={placeholder}
+  disabled={disabled}
+  required={required}
+  aria-invalid={error ? 'true' : undefined}
+  class={`ec-textarea__field ${cls}`}
+  style={`resize: ${resize}`}
+>{value}</textarea>
+
+<style>
+  .ec-textarea__field {
+    width: 100%;
+    min-height: 5rem;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default),
+                box-shadow var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-textarea__field::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.6;
+  }
+  .ec-textarea__field:focus {
+    outline: none;
+    border-color: var(--color-accent-signal);
+    box-shadow: 0 0 0 3px rgba(31, 182, 168, 0.15);
+  }
+  .ec-textarea.is-error .ec-textarea__field {
+    border-color: var(--color-state-error);
+  }
+  .ec-textarea.is-success .ec-textarea__field {
+    border-color: var(--color-state-success);
+  }
+  .ec-textarea.is-disabled .ec-textarea__field {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    background: var(--color-surface-recessed);
+  }
+</style>
