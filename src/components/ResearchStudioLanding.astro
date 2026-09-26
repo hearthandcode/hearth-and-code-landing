@@ -19,6 +19,24 @@ const navigationCards = getNavigationCards('balanced').map((card) => ({
   href: card.href === '/practice/' ? '/methods/' : card.href,
 }));
 
+// The projections are deliberately different navigation maps, not merely
+// different prose over the same links. Balanced keeps every route visible
+// and foregrounds Portfolio as the synthesis of the studio's work.
+const projectionMembership: Record<string, string[]> = {
+  'Practice': ['code', 'balanced'],
+  'Philosophy': ['hearth', 'balanced'],
+  'Research': ['code', 'balanced'],
+  'Portfolio': ['balanced'],
+  'Dossier': ['hearth', 'balanced'],
+  'Questions': ['code', 'balanced'],
+  'Field Journal': ['code', 'balanced'],
+  'Contact': ['hearth', 'balanced'],
+};
+const projectionOrder = ['Portfolio', 'Practice', 'Philosophy', 'Research', 'Dossier', 'Questions', 'Field Journal', 'Contact'];
+const orderedNavigationCards = [...navigationCards].sort(
+  (a, b) => projectionOrder.indexOf(a.title) - projectionOrder.indexOf(b.title),
+);
+
 const startPaths = [
   {
     href: '/philosophy/ai-literacy/',
@@ -132,19 +150,28 @@ const currentSignals = [
       <div class="studio-shell studio-section__content">
         <div class="studio-section__intro studio-section__intro--wide">
           <p class="studio-kicker">Work map</p>
-          <h2 id="nav-title">The studio surfaces.</h2>
-          <p id="nav-disposition">Each surface has a distinct reading mode: orient, learn, inspect, or return with a correction.</p>
+          <h2 id="nav-title">The full studio map.</h2>
+          <p id="nav-disposition">All eight surfaces are available here; Portfolio is the synthesis route across the Hearth and Code seams.</p>
         </div>
         <div class="studio-map" id="nav-grid">
-          {navigationCards.map((card) => (
-            <NavigationCard
-              href={card.href || '#'}
-              title={card.title}
-              description={card.description}
-              emphasis={card.emphasis || 5}
-              view="balanced"
-            />
-          ))}
+          {orderedNavigationCards.map((card) => {
+            const projections = projectionMembership[card.title] || ['balanced'];
+            return (
+              <div
+                class:list={['studio-map__item', card.title === 'Portfolio' && 'is-synthesis']}
+                data-map-card
+                data-projections={projections.join(' ')}
+              >
+                <NavigationCard
+                  href={card.href || '#'}
+                  title={card.title}
+                  description={card.description}
+                  emphasis={card.emphasis || 5}
+                  view="balanced"
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -227,7 +254,10 @@ const currentSignals = [
   .studio-path__arrow { align-self: end; color: var(--color-accent-signal); font-size: 1.5rem; }
 
   .studio-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 2.25rem; }
-  .studio-map :global(.ec-nav-card) { min-height: 10rem; }
+  .studio-map__item :global(.ec-nav-card) { min-height: 10rem; height: 100%; box-sizing: border-box; }
+  .studio-map__item.is-synthesis :global(.ec-nav-card) { border-left-color: var(--color-accent-violet); background: linear-gradient(145deg, rgba(155, 93, 229, 0.12), var(--color-surface-raised)); }
+  .studio[data-studio-view="hearth"] .studio-map__item:not([data-projections~="hearth"]),
+  .studio[data-studio-view="code"] .studio-map__item:not([data-projections~="code"]) { display: none; }
 
   .studio-signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
   .studio-signal { display: flex; flex-direction: column; padding: 1.5rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-raised); }
@@ -249,6 +279,8 @@ const currentSignals = [
     .studio-orientation { grid-template-columns: 1fr; }
     .studio-paths, .studio-signals { grid-template-columns: 1fr; }
     .studio-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .studio[data-studio-view="hearth"] .studio-map,
+    .studio[data-studio-view="code"] .studio-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .studio-path { min-height: auto; }
   }
   @media (max-width: 36rem) {
@@ -260,24 +292,30 @@ const currentSignals = [
 </style>
 
 <script>
-  const viewCopy: Record<string, { hero: string; eyebrow: string; title: string; detail: string }> = {
+  const viewCopy: Record<string, { hero: string; eyebrow: string; title: string; detail: string; mapTitle: string; mapDetail: string }> = {
     hearth: {
       hero: 'A public workbench for questions of meaning, judgment, and how to stay human in complex systems.',
       eyebrow: 'Hearth projection',
       title: 'Meaning and judgment first.',
       detail: 'This projection foregrounds the working perspective: the questions, values, and public reasoning behind the systems. Methods and research remain available as the practical form of that work.',
+      mapTitle: 'Hearth surfaces.',
+      mapDetail: 'Philosophy, Dossier, and Contact: the perspective, the person behind the practice, and a clear path back.',
     },
     balanced: {
       hero: 'Research, software, knowledge architecture, and policy thinking made legible enough to inspect, question, use, and revise.',
       eyebrow: 'Current projection',
       title: 'The full studio, in one view.',
       detail: 'Hearth holds the questions of meaning and judgment. Code holds the methods and systems. The balanced view keeps both visible, so a visitor can move from a claim to its working form.',
+      mapTitle: 'The full studio map.',
+      mapDetail: 'All eight surfaces are available here; Portfolio is the synthesis route across the Hearth and Code seams.',
     },
     code: {
       hero: 'A public workbench for methods, systems, and research that keeps its sources, limits, and human decision points visible.',
       eyebrow: 'Code projection',
       title: 'Methods and systems first.',
       detail: 'This projection foregrounds practical instruments, architectures, and technical research. The Dossier and Philosophy remain available as the context that keeps implementation accountable.',
+      mapTitle: 'Code surfaces.',
+      mapDetail: 'Methods, Research, Questions, and Field Journal: practical instruments, active inquiry, and the public working record.',
     },
   };
 
@@ -288,11 +326,17 @@ const currentSignals = [
     const title = document.getElementById('view-panel-title');
     const detail = document.getElementById('view-panel-disposition');
     const panel = document.getElementById('view-panel');
+    const studio = document.querySelector<HTMLElement>('[data-studio-root]');
+    const mapTitle = document.getElementById('nav-title');
+    const mapDetail = document.getElementById('nav-disposition');
     if (hero) hero.textContent = copy.hero;
     if (eyebrow) eyebrow.textContent = copy.eyebrow;
     if (title) title.textContent = copy.title;
     if (detail) detail.textContent = copy.detail;
     if (panel) panel.setAttribute('data-view', view);
+    if (studio) studio.setAttribute('data-studio-view', view);
+    if (mapTitle) mapTitle.textContent = copy.mapTitle;
+    if (mapDetail) mapDetail.textContent = copy.mapDetail;
   }
 
   window.addEventListener('hearth-code-view-change', ((event: CustomEvent<{ view: string }>) => {
