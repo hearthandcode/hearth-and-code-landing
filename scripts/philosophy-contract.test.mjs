@@ -13,7 +13,11 @@ test('the Philosophy page contract has the expected bounded public shape', () =>
   assert.equal(contract.schema_version, 'hnc.public-page-contract.v1');
   assert.equal(contract.page.route, '/philosophy/');
   assert.equal(contract.principles.length, 3);
-  assert.equal(contract.featured_position.preview.sections.length, 3);
+  assert.equal(contract.featured_position.preview.sections.length, 8);
+  assert.deepEqual(
+    contract.featured_position.preview.sections.map((section) => section.id),
+    ['position', 'stakes', 'claims', 'high-stakes', 'reflection', 'counterargument', 'revision', 'evidence'],
+  );
   assert.ok(contract.featured_position.preview.boundary.length > 40);
   assert.equal(contract.throughlines.items.length, 3);
   assert.equal(contract.connections.items.length, 3);

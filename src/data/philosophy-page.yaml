@@ -37,13 +37,77 @@ featured_position:
     label: "Bounded reading preview"
     lede: "AI literacy is a practice that develops through reflection, not a checklist to complete. The full position joins high-stakes verification rules with reflective practice for ordinary use."
     sections:
-      - title: "The position"
-        detail: "Use AI critically, keep human authority over consequential decisions, and learn from what you trusted, changed, or rejected."
-      - title: "High-stakes boundary"
-        detail: "For medical, legal, financial, safety-critical, or other consequential decisions: verify independently, consult appropriate expertise, and do not act on an AI output alone."
-      - title: "Reflection practice"
-        detail: "After a significant interaction, ask what you trusted, what you changed, what the system was good or poor at in this case, and what you would do differently next time."
-    boundary: "This preview is an orientation to the published position, not a substitute for the complete public reading or for professional judgment."
+      - id: position
+        title: "The position"
+        body:
+          - "AI literacy is a practice that develops through reflection, not a checklist to complete. It means understanding enough about AI systems to use them responsibly, evaluate outputs critically, and retain human authority over how they are employed."
+          - "The position joins two modes of practice: explicit verification rules when consequences are high, and reflective habits that improve judgment during ordinary use."
+      - id: stakes
+        title: "Why this matters"
+        body:
+          - "AI is increasingly present in work, education, health, law, and daily decisions. The practical problem is not simply that systems can be wrong; it is that people can over-trust plausible outputs and offload judgment without noticing."
+          - "The aim is calibrated trust: use a system where it helps, identify when its output needs independent checking, and remain responsible for the decision that follows."
+        evidence:
+          - "Nature (2026) frames over-reliance as a trust-calibration problem in human–AI decision-making."
+          - "RMIT University (2026) discusses automation bias and the harms that can follow when AI suggestions are accepted without adequate verification."
+      - id: claims
+        title: "Substantive claims"
+        body:
+          - "The position does not depend on treating every interaction alike. It distinguishes between what an AI system can assist with and what a person remains accountable for."
+        points:
+          - "AI outputs can appear reasoned without carrying equivalent human understanding or responsibility."
+          - "The required level of verification should increase with the consequence of a decision."
+          - "Trust calibration can be practiced; it is not a fixed personal trait."
+          - "Reviewing what was trusted, changed, or rejected can improve later judgment."
+          - "The user remains the custodian of how an AI system is directed and used."
+      - id: high-stakes
+        title: "Rules for high-stakes decisions"
+        body:
+          - "For medical, legal, financial, safety-critical, or other decisions that materially affect another person’s wellbeing, an AI output is not enough to justify action."
+        points:
+          - "Verify consequential claims with independent, non-AI sources."
+          - "Consult appropriate domain expertise before a final decision."
+          - "Cross-reference the claim and record the reason for accepting or rejecting it."
+        evidence:
+          - "EU AI Act, Article 4, identifies AI literacy as a necessary competence context."
+          - "The underlying public position cites documented automation-bias and reliance research as its reason for treating these rules as practical safeguards rather than aspirational advice."
+      - id: reflection
+        title: "Reflection practice for everyday use"
+        body:
+          - "Not every interaction merits a formal review. For significant everyday use, the practice is to make a small return to the interaction and learn something concrete from it."
+        points:
+          - "What did I take from this interaction that I trust, and did I verify it?"
+          - "What did I change or reject, and why?"
+          - "What did this case show about the system’s strengths or limits?"
+          - "What is one thing I would do differently next time?"
+        evidence:
+          - "Notre Dame Learning (2021) and BERA Journal (2025) are cited in the published position for the role of metacognitive reflection in learning practice."
+      - id: counterargument
+        title: "The strongest counterargument"
+        body:
+          - "A serious objection is that reflection is too soft to change behavior: people may not verify outputs, and a concrete measurable skill set may be more effective than a reflective practice."
+          - "The position accepts that objection as a limit. Reflection is not presented as a complete solution; it is one necessary discipline alongside rules, expertise, and institutional safeguards."
+      - id: revision
+        title: "What would change this position"
+        body:
+          - "A public position should name the evidence that could require revision rather than treating its current formulation as final."
+        points:
+          - "Evidence that prescriptive frameworks reliably outperform reflection-plus-rules approaches."
+          - "Evidence that reflective practices fail to reduce AI-related harms in measurable settings."
+          - "Evidence that a user-custodian model becomes technically impossible for increasingly agentic systems."
+          - "Evidence that critical-thinking interventions have no effect on later reliance behavior."
+      - id: evidence
+        title: "Evidence and revision record"
+        body:
+          - "The published position brings together policy, research, and learning-practice sources. Its source set is part of the claim boundary, not an afterthought."
+        evidence:
+          - "OECD (2026), Empowering Learners for the Age of AI."
+          - "European Union AI Act, Article 4; European Commission AI Literacy Questions & Answers (2025)."
+          - "Nature (2026), examining human reliance on artificial intelligence in decision making."
+          - "Springer (2026), trust calibration in human–AI collaborative decision-making."
+          - "ScienceDirect (2026), critical-thinking intervention and reliance behaviors."
+        revision_note: "Initial public record: 2026-09-23. The complete source list and revision history remain available in the full position record."
+    boundary: "This is an eight-section orientation to the published position. It does not replace the complete source record, independent verification, domain expertise, or professional judgment."
 position_ledger:
   title: "Position ledger"
   description: "Publication state is part of the claim boundary. Only published entries are public reading destinations."

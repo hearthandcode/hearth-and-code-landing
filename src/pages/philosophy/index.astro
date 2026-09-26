@@ -88,7 +88,17 @@ const contract = parse(
             <section>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <h3>{section.title}</h3>
-              <p>{section.detail}</p>
+              {section.body.map((paragraph: string) => <p>{paragraph}</p>)}
+              {section.points && (
+                <ol>{section.points.map((point: string) => <li>{point}</li>)}</ol>
+              )}
+              {section.evidence && (
+                <aside class="philosophy-preview__evidence">
+                  <strong>Evidence notes</strong>
+                  <ul>{section.evidence.map((note: string) => <li>{note}</li>)}</ul>
+                </aside>
+              )}
+              {section.revision_note && <p class="philosophy-preview__revision">{section.revision_note}</p>}
             </section>
           ))}
         </div>
@@ -214,6 +224,11 @@ const contract = parse(
   .philosophy-preview__sections span { color: var(--color-accent-gold); font: 0.7rem var(--font-mono); }
   .philosophy-preview__sections h3 { margin: 0.6rem 0 0; color: var(--color-text-display); font: 700 1.35rem/1.1 var(--font-display); }
   .philosophy-preview__sections p, .philosophy-preview__boundary { margin: 0.75rem 0 0; color: var(--color-text-secondary); line-height: 1.6; }
+  .philosophy-preview__sections ol { display: grid; gap: 0.45rem; margin: 1rem 0 0; padding-left: 1.35rem; color: var(--color-text-primary); line-height: 1.5; }
+  .philosophy-preview__evidence { margin-top: 1rem; padding: 0.9rem 1rem; border-left: 2px solid var(--color-accent-signal); background: rgba(31, 182, 168, 0.07); }
+  .philosophy-preview__evidence strong { color: var(--color-accent-signal); font: 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .philosophy-preview__evidence ul { display: grid; gap: 0.35rem; margin: 0.65rem 0 0; padding-left: 1.1rem; color: var(--color-text-secondary); font-size: 0.875rem; line-height: 1.45; }
+  .philosophy-preview__revision { color: var(--color-accent-violet) !important; font-size: 0.875rem; }
   .philosophy-preview__boundary { padding-left: 1rem; border-left: 2px solid var(--color-accent-violet); font-size: 0.9rem; }
   .philosophy-preview__footer { display: flex; justify-content: flex-end; margin-top: 2rem; }
   .philosophy-feature__meta { display: flex; gap: 0.75rem; flex-wrap: wrap; padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-surface-rule); color: var(--color-text-secondary); font: 0.7rem var(--font-mono); }
