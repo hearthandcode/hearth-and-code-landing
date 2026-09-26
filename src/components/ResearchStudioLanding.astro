@@ -113,9 +113,9 @@ const currentSignals = [
             Hearth holds the questions of meaning and judgment. Code holds the methods and systems. The balanced view keeps both visible, so a visitor can move from a claim to its working form.
           </p>
           <div class="studio-orientation__routes" aria-label="Projection routes">
-            <a href="/dossier/">Read the dossier <span aria-hidden="true">↗</span></a>
-            <a href="/methods/">Open the methods <span aria-hidden="true">↗</span></a>
-            <a href="/research/">Inspect the research <span aria-hidden="true">↗</span></a>
+            <a id="orientation-route-1" href="/portfolio/">View the portfolio <span aria-hidden="true">↗</span></a>
+            <a id="orientation-route-2" href="/dossier/">Read the dossier <span aria-hidden="true">↗</span></a>
+            <a id="orientation-route-3" href="/research/">Inspect the research <span aria-hidden="true">↗</span></a>
           </div>
         </aside>
       </div>
@@ -292,14 +292,24 @@ const currentSignals = [
 </style>
 
 <script>
-  const viewCopy: Record<string, { hero: string; eyebrow: string; title: string; detail: string; mapTitle: string; mapDetail: string }> = {
+  type ProjectionRoute = { href: string; label: string };
+  type ProjectionCopy = {
+    hero: string; eyebrow: string; title: string; detail: string;
+    mapTitle: string; mapDetail: string; routes: ProjectionRoute[];
+  };
+  const viewCopy: Record<string, ProjectionCopy> = {
     hearth: {
       hero: 'A public workbench for questions of meaning, judgment, and how to stay human in complex systems.',
       eyebrow: 'Hearth projection',
       title: 'Meaning and judgment first.',
-      detail: 'This projection foregrounds the working perspective: the questions, values, and public reasoning behind the systems. Methods and research remain available as the practical form of that work.',
+      detail: 'This projection foregrounds the working perspective: the questions, values, and public reasoning behind the systems. Begin with the position, understand the working profile, or return with a question or correction.',
       mapTitle: 'Hearth surfaces.',
       mapDetail: 'Philosophy, Dossier, and Contact: the perspective, the person behind the practice, and a clear path back.',
+      routes: [
+        { href: '/philosophy/', label: 'Read the philosophy' },
+        { href: '/dossier/', label: 'Open the dossier' },
+        { href: '/correspondence/', label: 'Start a correspondence' },
+      ],
     },
     balanced: {
       hero: 'Research, software, knowledge architecture, and policy thinking made legible enough to inspect, question, use, and revise.',
@@ -308,14 +318,24 @@ const currentSignals = [
       detail: 'Hearth holds the questions of meaning and judgment. Code holds the methods and systems. The balanced view keeps both visible, so a visitor can move from a claim to its working form.',
       mapTitle: 'The full studio map.',
       mapDetail: 'All eight surfaces are available here; Portfolio is the synthesis route across the Hearth and Code seams.',
+      routes: [
+        { href: '/portfolio/', label: 'View the portfolio' },
+        { href: '/dossier/', label: 'Read the dossier' },
+        { href: '/research/', label: 'Inspect the research' },
+      ],
     },
     code: {
       hero: 'A public workbench for methods, systems, and research that keeps its sources, limits, and human decision points visible.',
       eyebrow: 'Code projection',
       title: 'Methods and systems first.',
-      detail: 'This projection foregrounds practical instruments, architectures, and technical research. The Dossier and Philosophy remain available as the context that keeps implementation accountable.',
+      detail: 'This projection foregrounds practical instruments, architectures, and technical research. Begin with a method, inspect the active research, or read the public working record.',
       mapTitle: 'Code surfaces.',
       mapDetail: 'Methods, Research, Questions, and Field Journal: practical instruments, active inquiry, and the public working record.',
+      routes: [
+        { href: '/methods/', label: 'Open the methods' },
+        { href: '/research/', label: 'Inspect the research' },
+        { href: '/journal/', label: 'Read the Field Journal' },
+      ],
     },
   };
 
@@ -337,6 +357,12 @@ const currentSignals = [
     if (studio) studio.setAttribute('data-studio-view', view);
     if (mapTitle) mapTitle.textContent = copy.mapTitle;
     if (mapDetail) mapDetail.textContent = copy.mapDetail;
+    copy.routes.forEach((route, index) => {
+      const link = document.getElementById(`orientation-route-${index + 1}`) as HTMLAnchorElement | null;
+      if (!link) return;
+      link.href = route.href;
+      link.innerHTML = `${route.label} <span aria-hidden="true">↗</span>`;
+    });
   }
 
   window.addEventListener('hearth-code-view-change', ((event: CustomEvent<{ view: string }>) => {
