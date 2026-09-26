@@ -1,0 +1,125 @@
+---
+/**
+ * Timeline composite
+ * id: c-list-timeline
+ *
+ * Chronological list of events.
+ */
+
+interface TimelineEvent {
+  date: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  events: TimelineEvent[];
+  orientation?: 'vertical' | 'horizontal';
+  class?: string;
+}
+
+const { events, orientation = 'vertical', class: className = '' } = Astro.props;
+---
+
+<ol class={`ec-timeline ec-timeline--${orientation} ${className}`}>
+  {events.map((event, idx) => (
+    <li class="ec-timeline__item">
+      <div class="ec-timeline__marker">
+        <span class="ec-timeline__dot"></span>
+        {idx < events.length - 1 && <span class="ec-timeline__line"></span>}
+      </div>
+      <div class="ec-timeline__content">
+        <time class="ec-timeline__date">{event.date}</time>
+        <h4 class="ec-timeline__title">{event.title}</h4>
+        {event.description && <p class="ec-timeline__description">{event.description}</p>}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .ec-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .ec-timeline--horizontal {
+    flex-direction: row;
+    gap: var(--space-4);
+    overflow-x: auto;
+  }
+  .ec-timeline__item {
+    display: flex;
+    gap: var(--space-4);
+    flex: 1;
+    min-width: 0;
+  }
+  .ec-timeline--horizontal .ec-timeline__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 12rem;
+  }
+  .ec-timeline__marker {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 0.75rem;
+  }
+  .ec-timeline--horizontal .ec-timeline__marker {
+    flex-direction: row;
+    width: auto;
+    height: 0.75rem;
+  }
+  .ec-timeline__dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--color-accent-ember);
+    border-radius: 50%;
+    border: 2px solid var(--color-surface-recessed);
+    z-index: 1;
+  }
+  .ec-timeline__line {
+    flex: 1;
+    width: 2px;
+    background: var(--color-surface-rule);
+    min-height: 2rem;
+    margin-top: -2px;
+  }
+  .ec-timeline--horizontal .ec-timeline__line {
+    width: auto;
+    height: 2px;
+    background: var(--color-surface-rule);
+    margin-top: 0;
+    margin-left: -2px;
+  }
+  .ec-timeline__content {
+    flex: 1;
+    padding-bottom: var(--space-2);
+  }
+  .ec-timeline__date {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent-ember);
+    margin-bottom: var(--space-1);
+  }
+  .ec-timeline__title {
+    margin: 0 0 var(--space-1) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-display);
+  }
+  .ec-timeline__description {
+    margin: 0;
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+</style>

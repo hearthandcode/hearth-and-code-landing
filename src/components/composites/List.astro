@@ -1,0 +1,67 @@
+---
+/**
+ * List composite
+ * id: c-list-basic
+ *
+ * Vertical list of items.
+ */
+
+interface ListItem {
+  id?: string;
+  content: string;
+  href?: string;
+}
+
+interface Props {
+  items: ListItem[];
+  ordered?: boolean;
+  spacing?: 'tight' | 'normal' | 'loose';
+  class?: string;
+}
+
+const {
+  items,
+  ordered = false,
+  spacing = 'normal',
+  class: className = '',
+} = Astro.props;
+
+const Tag = ordered ? 'ol' : 'ul';
+---
+
+<Tag class={`ec-list ec-list--${spacing} ${className}`}>
+  {items.map((item) => {
+    const Wrapper = item.href ? 'a' : 'li';
+    const wrapperProps = item.href ? { href: item.href } : {};
+    return (
+      <li class="ec-list__item">
+        <Wrapper class={item.href ? 'ec-list__link' : ''} {...wrapperProps}>
+          {item.content}
+        </Wrapper>
+      </li>
+    );
+  })}
+</Tag>
+
+<style>
+  .ec-list {
+    list-style: revert;
+    padding-left: var(--space-5);
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+  .ec-list--tight { gap: var(--space-1); }
+  .ec-list--normal { gap: var(--space-2); }
+  .ec-list--loose { gap: var(--space-4); }
+  .ec-list__item {
+    line-height: 1.6;
+    color: var(--color-text-primary);
+  }
+  .ec-list__link {
+    color: var(--color-accent-ember);
+    text-decoration: none;
+  }
+  .ec-list__link:hover {
+    text-decoration: underline;
+  }
+</style>

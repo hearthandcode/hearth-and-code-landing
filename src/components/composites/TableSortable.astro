@@ -1,0 +1,157 @@
+---
+/**
+ * Table (Sortable) composite
+ * id: c-table-sortable
+ *
+ * Table with clickable column headers for sorting.
+ */
+
+interface Column {
+  key: string;
+  label: string;
+  align?: 'left' | 'center' | 'right';
+}
+
+interface Props {
+  columns: Column[];
+  data: Record<string, unknown>[];
+  initialSort?: { key: string; direction: 'asc' | 'desc' };
+  striped?: boolean;
+  caption?: string;
+  class?: string;
+}
+
+const {
+  columns,
+  data,
+  initialSort,
+  striped = true,
+  caption,
+  class: className = '',
+} = Astro.props;
+
+const sortKey = initialSort?.key || columns[0]?.key || '';
+const sortDir = initialSort?.direction || 'asc';
+---
+
+<table
+  class={`ec-table ec-table--sortable ${striped ? 'is-striped' : ''} ${className}`}
+  data-sort-key={sortKey}
+  data-sort-dir={sortDir}
+>
+  {caption && <caption>{caption}</caption>}
+  <thead>
+    <tr>
+      {columns.map((col) => (
+        <th
+          class={`ec-table__th ec-table__th--${col.align || 'left'} ec-table__th--sortable`}
+          data-sort-key={col.key}
+          scope="col"
+          tabindex="0"
+          role="button"
+          aria-sort={col.key === sortKey ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+        >
+          <span class="ec-table__th-content">
+            {col.label}
+            <span class="ec-table__sort-indicator" aria-hidden="true">
+              {col.key === sortKey ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}
+            </span>
+          </span>
+        </th>
+      ))}
+    </tr>
+  </thead>
+  <tbody>
+    {data.map((row) => (
+      <tr>
+        {columns.map((col) => (
+          <td class={`ec-table__td ec-table__td--${col.align || 'left'}`}>
+            {String(row[col.key] ?? '')}
+          </td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<script>
+  document.querySelectorAll<HTMLTableElement>('.ec-table--sortable').forEach((table) => {
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    const initialKey = table.getAttribute('data-sort-key') || '';
+    const initialDir = table.getAttribute('data-sort-dir') || 'asc';
+    let currentSort = { key: initialKey, dir: initialDir as 'asc' | 'desc' };
+    const sortTable = (key: string, dir: 'asc' | 'desc') => {
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aCell = a.querySelector('td');
+        const bCell = b.querySelector('td');
+        const aVal = aCell?.textContent?.trim() || '';
+        const bVal = bCell?.textContent?.trim() || '';
+        const aNum = parseFloat(aVal);
+        const bNum = parseFloat(bVal);
+        const isNum = !isNaN(aNum) && !isNaN(bNum);
+        let cmp: number;
+        if (isNum) cmp = aNum - bNum;
+        else cmp = aVal.localeCompare(bVal);
+        return dir === 'asc' ? cmp : -cmp;
+      });
+      rows.forEach((row) => tbody.appendChild(row));
+    };
+    if (currentSort.key) sortTable(currentSort.key, currentSort.dir);
+    table.querySelectorAll<HTMLElement>('.ec-table__th--sortable').forEach((th) => {
+      const handler = () => {
+        const key = th.getAttribute('data-sort-key');
+        if (!key) return;
+        const newDir: 'asc' | 'desc' = currentSort.key === key && currentSort.dir === 'asc' ? 'desc' : 'asc';
+        currentSort = { key, dir: newDir };
+        sortTable(key, newDir);
+        table.querySelectorAll<HTMLElement>('.ec-table__th--sortable').forEach((otherTh) => {
+          const otherKey = otherTh.getAttribute('data-sort-key');
+          otherTh.setAttribute('aria-sort', otherKey === key ? (newDir === 'asc' ? 'ascending' : 'descending') : 'none');
+          const indicator = otherTh.querySelector('.ec-table__sort-indicator');
+          if (indicator) {
+            indicator.textContent = otherKey === key ? (newDir === 'asc' ? '↑' : '↓') : '↕';
+          }
+        });
+        table.setAttribute('data-sort-key', key);
+        table.setAttribute('data-sort-dir', newDir);
+      };
+      th.addEventListener('click', handler);
+      th.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler();
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .ec-table--sortable .ec-table__th--sortable {
+    cursor: pointer;
+    user-select: none;
+  }
+  .ec-table--sortable .ec-table__th--sortable:hover {
+    color: var(--color-text-display);
+  }
+  .ec-table--sortable .ec-table__th--sortable:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: -2px;
+  }
+  .ec-table__th-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .ec-table__sort-indicator {
+    font-size: 0.75rem;
+    opacity: 0.5;
+  }
+  .ec-table__th[aria-sort="ascending"] .ec-table__sort-indicator,
+  .ec-table__th[aria-sort="descending"] .ec-table__sort-indicator {
+    opacity: 1;
+    color: var(--color-accent-ember);
+  }
+</style>

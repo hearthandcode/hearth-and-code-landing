@@ -1,0 +1,162 @@
+---
+/**
+ * Chart Line composite
+ * id: c-chart-line
+ *
+ * Line chart for time series data.
+ */
+
+interface Point {
+  x: number | string;
+  y: number;
+}
+
+interface Series {
+  name: string;
+  color?: string;
+  data: Point[];
+}
+
+interface Props {
+  series: Series[];
+  xLabel?: string;
+  yLabel?: string;
+  height?: string;
+  showDots?: boolean;
+  showGrid?: boolean;
+  smooth?: boolean;
+  class?: string;
+}
+
+const {
+  series,
+  xLabel,
+  yLabel,
+  height = '16rem',
+  showDots = true,
+  showGrid = true,
+  smooth = false,
+  class: className = '',
+} = Astro.props;
+
+const width = 600;
+const heightNum = parseInt(height) || 256;
+const padding = { top: 20, right: 20, bottom: 30, left: 40 };
+
+const allPoints = series.flatMap((s) => s.data);
+const xValues = allPoints.map((p) => p.x);
+const yValues = allPoints.map((p) => p.y);
+const xMin = Math.min(...xValues.map((v) => typeof v === 'number' ? v : 0));
+const xMax = Math.max(...xValues.map((v) => typeof v === 'number' ? v : 0));
+const yMin = Math.min(...yValues);
+const yMax = Math.max(...yValues);
+const xRange = xMax - xMin || 1;
+const yRange = yMax - yMin || 1;
+
+const xScale = (x: number | string): number => {
+  const numX = typeof x === 'number' ? x : 0;
+  return padding.left + ((numX - xMin) / xRange) * (width - padding.left - padding.right);
+};
+const yScale = (y: number): number => (heightNum - padding.bottom) - ((y - yMin) / yRange) * (heightNum - padding.top - padding.bottom);
+
+const buildPath = (data: Point[]): string => {
+  if (data.length === 0) return '';
+  let path = `M ${xScale(typeof data[0].x === 'number' ? data[0].x : 0)} ${yScale(data[0].y)}`;
+  for (let i = 1; i < data.length; i++) {
+    if (smooth && i < data.length - 1) {
+      const x1 = xScale(typeof data[i].x === 'number' ? data[i].x : 0);
+      const y1 = yScale(data[i].y);
+      const x2 = xScale(typeof data[i + 1].x === 'number' ? data[i + 1].x : 0);
+      const y2 = yScale(data[i + 1].y);
+      const cx = (x1 + x2) / 2;
+      path += ` Q ${x1} ${y1}, ${cx} ${(y1 + y2) / 2}`;
+    } else {
+      path += ` L ${xScale(typeof data[i].x === 'number' ? data[i].x : 0)} ${yScale(data[i].y)}`;
+    }
+  }
+  return path;
+};
+---
+
+<div class={`ec-chart ec-chart-line ${className}`} style={`height: ${height}`}>
+  <svg
+    class="ec-chart-line__svg"
+    viewBox={`0 0 ${width} ${heightNum}`}
+    preserveAspectRatio="none"
+    role="img"
+    aria-label="Line chart"
+  >
+    {showGrid && (
+      <g class="ec-chart-line__grid">
+        {[0, 0.25, 0.5, 0.75, 1].map((pct) => {
+          const y = padding.top + pct * (heightNum - padding.top - padding.bottom);
+          return <line x1={padding.left} y1={y} x2={width - padding.right} y2={y} stroke="var(--color-surface-rule)" stroke-width="0.5" />;
+        })}
+      </g>
+    )}
+    {series.map((s, idx) => (
+      <g class="ec-chart-line__series">
+        <path
+          d={buildPath(s.data)}
+          fill="none"
+          stroke={s.color || ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-plasma)'][idx % 3]}
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+        {showDots && s.data.map((point) => (
+          <circle
+            cx={xScale(typeof point.x === 'number' ? point.x : 0)}
+            cy={yScale(point.y)}
+            r="3"
+            fill={s.color || ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-plasma)'][idx % 3]}
+          />
+        ))}
+      </g>
+    ))}
+    {yLabel && <text x={padding.left - 8} y={padding.top} text-anchor="end" font-size="10" fill="var(--color-text-secondary)">{yLabel}</text>}
+    {xLabel && <text x={width - padding.right} y={heightNum - 8} text-anchor="end" font-size="10" fill="var(--color-text-secondary)">{xLabel}</text>}
+  </svg>
+  <div class="ec-chart-line__legend">
+    {series.map((s, idx) => (
+      <span class="ec-chart-line__legend-item">
+        <span
+          class="ec-chart-line__legend-swatch"
+          style={`background: ${s.color || ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-plasma)'][idx % 3]}`}
+        ></span>
+        {s.name}
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ec-chart-line {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+  }
+  .ec-chart-line__svg {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+  }
+  .ec-chart-line__legend {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+  .ec-chart-line__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .ec-chart-line__legend-swatch {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+  }
+</style>

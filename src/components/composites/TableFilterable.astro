@@ -1,0 +1,169 @@
+---
+/**
+ * Table (Filterable) composite
+ * id: c-table-filterable
+ *
+ * Table with per-column filtering and search.
+ */
+
+interface Column {
+  key: string;
+  label: string;
+  filterable?: boolean;
+}
+
+interface Props {
+  columns: Column[];
+  data: Record<string, unknown>[];
+  searchable?: boolean;
+  striped?: boolean;
+  caption?: string;
+  class?: string;
+}
+
+const {
+  columns,
+  data: initialData,
+  searchable = true,
+  striped = true,
+  caption,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`ec-table-filterable ${className}`}>
+  {searchable && (
+    <div class="ec-table-filterable__search">
+      <input
+        type="search"
+        class="ec-table-filterable__search-input"
+        placeholder="Search..."
+        aria-label="Search table"
+        data-table-search
+      />
+    </div>
+  )}
+  <table class="ec-table is-filterable" data-table-filterable>
+    {caption && <caption>{caption}</caption>}
+    <thead>
+      <tr>
+        {columns.map((col) => (
+          <th scope="col">
+            {col.label}
+            {col.filterable !== false && (
+              <input
+                type="search"
+                class="ec-table-filterable__col-filter"
+                placeholder="Filter..."
+                aria-label={`Filter ${col.label}`}
+                data-col-filter={col.key}
+              />
+            )}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody data-table-body>
+      {initialData.map((row) => (
+        <tr data-row>
+          {columns.map((col) => (
+            <td data-cell={col.key}>{String(row[col.key] ?? '')}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="ec-table-filterable__empty" data-table-empty hidden>No results found.</p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-table-filterable]').forEach((table) => {
+    const searchInput = table.parentElement?.querySelector<HTMLInputElement>('[data-table-search]');
+    const colFilters = table.parentElement?.querySelectorAll<HTMLInputElement>('[data-col-filter]');
+    const rows = table.querySelectorAll<HTMLTableRowElement>('tbody tr[data-row]');
+    const emptyMsg = table.parentElement?.querySelector<HTMLElement>('[data-table-empty]');
+
+    const applyFilters = () => {
+      const query = (searchInput?.value || '').toLowerCase();
+      const colQueries: Record<string, string> = {};
+      colFilters?.forEach((input) => {
+        const key = input.getAttribute('data-col-filter');
+        if (key) colQueries[key] = (input.value || '').toLowerCase();
+      });
+      let visibleCount = 0;
+      rows.forEach((row) => {
+        let show = true;
+        if (query) {
+          const text = row.textContent?.toLowerCase() || '';
+          if (!text.includes(query)) show = false;
+        }
+        if (show) {
+          for (const [key, val] of Object.entries(colQueries)) {
+            if (val) {
+              const cell = row.querySelector<HTMLElement>(`[data-cell="${key}"]`);
+              if (!cell || !(cell.textContent?.toLowerCase().includes(val))) {
+                show = false;
+                break;
+              }
+            }
+          }
+        }
+        row.hidden = !show;
+        if (show) visibleCount++;
+      });
+      if (emptyMsg) emptyMsg.hidden = visibleCount > 0;
+    };
+
+    searchInput?.addEventListener('input', applyFilters);
+    colFilters?.forEach((input) => input.addEventListener('input', applyFilters));
+  });
+</script>
+
+<style>
+  .ec-table-filterable__search {
+    margin-bottom: var(--space-3);
+  }
+  .ec-table-filterable__search-input {
+    width: 100%;
+    max-width: 20rem;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+  }
+  .ec-table-filterable__search-input:focus {
+    outline: none;
+    border-color: var(--color-accent-signal);
+  }
+  .ec-table-filterable__col-filter {
+    display: block;
+    width: 100%;
+    margin-top: var(--space-1);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.6875rem;
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+  }
+  .ec-table-filterable__col-filter:focus {
+    outline: none;
+    border-color: var(--color-accent-signal);
+  }
+  .ec-table-filterable th {
+    padding-top: var(--space-2) !important;
+    vertical-align: top;
+  }
+  .ec-table-filterable__empty {
+    margin: var(--space-3) 0;
+    padding: var(--space-4);
+    text-align: center;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-raised);
+    border-radius: var(--radius-sm);
+  }
+</style>

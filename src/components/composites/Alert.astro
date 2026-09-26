@@ -51,9 +51,9 @@ const iconMap = {
 </div>
 
 <script>
-  document.querySelectorAll('[data-alert-dismiss]').forEach((btn) => {
+  document.querySelectorAll<HTMLElement>('[data-alert-dismiss]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const alert = btn.closest('.ec-alert');
+      const alert = btn.closest<HTMLElement>('.ec-alert');
       if (alert) alert.style.display = 'none';
     });
   });

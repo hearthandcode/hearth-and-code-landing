@@ -1,0 +1,81 @@
+---
+/**
+ * List (Grid) composite
+ * id: c-list-grid
+ *
+ * Items in a responsive grid.
+ */
+
+interface ListItem {
+  id?: string;
+  content: string;
+  href?: string;
+}
+
+interface Props {
+  items: ListItem[];
+  columns?: number | 'auto';
+  minColumnWidth?: string;
+  gap?: string;
+  class?: string;
+}
+
+const {
+  items,
+  columns = 'auto',
+  minColumnWidth = '12rem',
+  gap = '1rem',
+  class: className = '',
+} = Astro.props;
+
+const gridTemplate = columns === 'auto'
+  ? `repeat(auto-fill, minmax(${minColumnWidth}, 1fr))`
+  : `repeat(${columns}, 1fr)`;
+---
+
+<ul
+  class={`ec-list-grid ${className}`}
+  style={`grid-template-columns: ${gridTemplate}; gap: ${gap};`}
+>
+  {items.map((item) => {
+    const Wrapper = item.href ? 'a' : 'div';
+    const wrapperProps = item.href ? { href: item.href } : {};
+    return (
+      <li class="ec-list-grid__item">
+        <Wrapper class={item.href ? 'ec-list-grid__link' : 'ec-list-grid__cell'} {...wrapperProps}>
+          {item.content}
+        </Wrapper>
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .ec-list-grid {
+    display: grid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ec-list-grid__item {
+    list-style: none;
+  }
+  .ec-list-grid__cell,
+  .ec-list-grid__link {
+    display: block;
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+  }
+  .ec-list-grid__link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-list-grid__link:hover {
+    border-color: var(--color-accent-ember);
+  }
+</style>

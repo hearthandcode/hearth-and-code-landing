@@ -58,18 +58,18 @@ const activeId = defaultTab || tabs[0]?.id;
 </div>
 
 <script>
-  document.querySelectorAll('[data-tab-id]').forEach((trigger) => {
+  document.querySelectorAll<HTMLElement>('[data-tab-id]').forEach((trigger) => {
     trigger.addEventListener('click', () => {
       const id = trigger.getAttribute('data-tab-id');
       if (!id) return;
-      document.querySelectorAll('[data-tab-id]').forEach((t) => {
+      document.querySelectorAll<HTMLElement>('[data-tab-id]').forEach((t) => {
         t.classList.toggle('is-active', t === trigger);
         t.setAttribute('aria-selected', t === trigger ? 'true' : 'false');
       });
-      document.querySelectorAll('[data-tab-panel]').forEach((p) => {
+      document.querySelectorAll<HTMLElement>('[data-tab-panel]').forEach((p) => {
         const isActive = p.getAttribute('data-tab-panel') === id;
         p.classList.toggle('is-active', isActive);
-        p.hidden = !isActive;
+        (p as HTMLElement).hidden = !isActive;
       });
     });
   });

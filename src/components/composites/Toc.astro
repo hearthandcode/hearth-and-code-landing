@@ -1,0 +1,87 @@
+---
+/**
+ * Table of Contents composite
+ * id: c-list-toc
+ *
+ * Auto-generated document outline.
+ */
+
+interface Heading {
+  id: string;
+  text: string;
+  level: number;
+  children?: Heading[];
+}
+
+interface Props {
+  headings: Heading[];
+  depth?: number;
+  class?: string;
+}
+
+const { headings, depth = 3, class: className = '' } = Astro.props;
+
+function flatten(items: Heading[], currentDepth = 1): Heading[] {
+  const result: Heading[] = [];
+  for (const h of items) {
+    if (currentDepth <= depth) {
+      result.push({ ...h, children: undefined });
+    }
+    if (h.children && currentDepth < depth) {
+      result.push(...flatten(h.children, currentDepth + 1));
+    }
+  }
+  return result;
+}
+
+const items = flatten(headings, 1);
+---
+
+<nav class={`ec-toc ${className}`} aria-label="Table of contents">
+  <h2 class="ec-toc__title">On this page</h2>
+  <ol class="ec-toc__list">
+    {items.map((item) => (
+      <li class={`ec-toc__item ec-toc__item--level-${item.level}`}>
+        <a class="ec-toc__link" href={`#${item.id}`}>{item.text}</a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .ec-toc {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .ec-toc__title {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+  .ec-toc__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ec-toc__item {
+    padding: var(--space-1) 0;
+  }
+  .ec-toc__item--level-1 { padding-left: 0; }
+  .ec-toc__item--level-2 { padding-left: var(--space-4); }
+  .ec-toc__item--level-3 { padding-left: var(--space-7); }
+  .ec-toc__link {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-toc__link:hover {
+    color: var(--color-accent-ember);
+  }
+</style>
