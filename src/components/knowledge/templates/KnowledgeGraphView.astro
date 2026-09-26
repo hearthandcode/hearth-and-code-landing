@@ -135,7 +135,7 @@ const edgeData = edges.map((e) => ({ ...e }));
         d.fx = null; d.fy = null;
       });
 
-    svg.selectAll('.kc-graph-view__node').call(drag);
+    svg.selectAll<SVGGElement, any>('.kc-graph-view__node').call(drag);
 
     simulation.on('tick', () => {
       svg.selectAll('.kc-graph-view__node').attr('transform', (d: any) => `translate(${d.x}, ${d.y})`);

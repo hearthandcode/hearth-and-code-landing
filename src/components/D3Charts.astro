@@ -1,0 +1,579 @@
+---
+/**
+ * D3Charts - emits the bundled D3 charts client script.
+ * This Astro component renders nothing visible, but the <script> below
+ * is processed by Vite (no is:inline, no define:vars) so it gets bundled
+ * with all its imports including d3.
+ *
+ * Place this component anywhere in the page tree to activate D3 charts.
+ */
+---
+
+<script>
+  import * as d3 from 'd3';
+
+  // === Chart type registry ===
+  const REGISTRY: Record<string, (el: HTMLElement, props: any) => void> = {};
+  const PALETTE = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-violet)', 'var(--color-accent-gold)', 'var(--color-accent-plasma)'];
+
+  // === Bar Chart ===
+  REGISTRY['kc-bar'] = REGISTRY['kc-chart-bar'] = (el, p) => {
+    const data = p.data || [];
+    const height = p.height || 240;
+    const showAxis = p.showAxis !== false;
+    const showValues = p.showValues !== false;
+    const width = 320;
+    const margin = { top: 12, right: 12, bottom: showAxis ? 28 : 4, left: showAxis ? 36 : 4 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const max = Math.max(...data.map((d: any) => d.value), 1);
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const x = d3.scaleBand().domain(data.map((d: any) => d.label)).range([0, innerW]).padding(0.3);
+    const y = d3.scaleLinear().domain([0, max * 1.1]).range([innerH, 0]);
+    g.selectAll('rect').data(data).enter().append('rect')
+      .attr('x', (d: any) => x(d.label) || 0)
+      .attr('y', (d: any) => y(d.value))
+      .attr('width', x.bandwidth())
+      .attr('height', (d: any) => innerH - y(d.value))
+      .attr('fill', (d: any, i: number) => d.color || PALETTE[i % 4])
+      .attr('rx', 3);
+    if (showValues) {
+      g.selectAll('text.kc-bar-val').data(data).enter().append('text')
+        .attr('class', 'kc-bar-val')
+        .attr('x', (d: any) => (x(d.label) || 0) + x.bandwidth() / 2)
+        .attr('y', (d: any) => y(d.value) - 4)
+        .attr('text-anchor', 'middle')
+        .attr('fill', 'var(--color-text-display)')
+        .attr('font-family', 'var(--font-mono)')
+        .attr('font-size', '10')
+        .text((d: any) => d.value);
+    }
+    if (showAxis) {
+      g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x) as any)
+        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+      g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+    }
+  };
+
+  // === Horizontal Bar ===
+  REGISTRY['kc-hbar'] = REGISTRY['kc-chart-hbar'] = (el, p) => {
+    const data = p.data || [];
+    const height = p.height || 240;
+    const showValues = p.showValues !== false;
+    const width = 320;
+    const margin = { top: 4, right: 28, bottom: 4, left: 90 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const max = Math.max(...data.map((d: any) => d.value), 1);
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const y = d3.scaleBand().domain(data.map((d: any) => d.label)).range([0, innerH]).padding(0.2);
+    const x = d3.scaleLinear().domain([0, max * 1.1]).range([0, innerW]);
+    g.selectAll('rect').data(data).enter().append('rect')
+      .attr('x', 0).attr('y', (d: any) => y(d.label) || 0)
+      .attr('width', (d: any) => x(d.value))
+      .attr('height', y.bandwidth())
+      .attr('fill', (d: any, i: number) => d.color || ['var(--color-accent-signal)', 'var(--color-accent-ember)', 'var(--color-accent-violet)'][i % 3])
+      .attr('rx', 2);
+    g.selectAll('text.kc-hbar-label').data(data).enter().append('text')
+      .attr('class', 'kc-hbar-label')
+      .attr('x', -6).attr('y', (d: any) => (y(d.label) || 0) + y.bandwidth() / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('fill', 'var(--color-text-display)')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', '10')
+      .text((d: any) => d.label);
+    if (showValues) {
+      g.selectAll('text.kc-hbar-val').data(data).enter().append('text')
+        .attr('class', 'kc-hbar-val')
+        .attr('x', (d: any) => x(d.value) + 4)
+        .attr('y', (d: any) => (y(d.label) || 0) + y.bandwidth() / 2)
+        .attr('dy', '0.35em')
+        .attr('fill', 'var(--color-text-display)')
+        .attr('font-family', 'var(--font-mono)').attr('font-size', '10')
+        .text((d: any) => d.value);
+    }
+  };
+
+  // === Grouped Bar ===
+  REGISTRY['kc-gbar'] = REGISTRY['kc-chart-grouped-bar'] = (el, p) => {
+    const data = p.data || [];
+    const series = p.seriesNames || Array.from(new Set(data.map((d: any) => d.series)));
+    const categories = Array.from(new Set(data.map((d: any) => d.category)));
+    const height = p.height || 240;
+    const width = 320;
+    const margin = { top: 16, right: 12, bottom: 36, left: 36 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const max = Math.max(...data.map((d: any) => d.value), 1);
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const x0 = d3.scaleBand().domain(categories).range([0, innerW]).padding(0.2);
+    const x1 = d3.scaleBand().domain(series).range([0, x0.bandwidth()]).padding(0.05);
+    const y = d3.scaleLinear().domain([0, max * 1.1]).range([innerH, 0]);
+    const grouped = categories.map((c: string) => ({
+      category: c,
+      values: series.map((s: string) => ({ series: s, value: data.find((d: any) => d.category === c && d.series === s)?.value ?? 0 })),
+    }));
+    const cat = g.selectAll('.kc-gbar-cat').data(grouped).enter().append('g').attr('class', 'kc-gbar-cat').attr('transform', (d: any) => `translate(${x0(d.category) || 0},0)`);
+    cat.selectAll('rect').data((d: any) => d.values).enter().append('rect')
+      .attr('x', (_: any, i: number) => x1(series[i]) || 0)
+      .attr('y', (d: any) => y(d.value))
+      .attr('width', x1.bandwidth())
+      .attr('height', (d: any) => innerH - y(d.value))
+      .attr('fill', (_: any, i: number) => PALETTE[i % 4])
+      .attr('rx', 2);
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x0) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Stacked Bar ===
+  REGISTRY['kc-sbar'] = REGISTRY['kc-chart-stacked-bar'] = (el, p) => {
+    const data = p.data || [];
+    const series = p.seriesNames || Array.from(new Set(data.map((d: any) => d.series)));
+    const categories = Array.from(new Set(data.map((d: any) => d.category)));
+    const height = p.height || 240;
+    const width = 320;
+    const margin = { top: 16, right: 12, bottom: 36, left: 36 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const stack = d3.stack().keys(series)(categories.map((c: string) => ({
+      category: c,
+      ...Object.fromEntries(series.map((s: string) => [s, data.find((d: any) => d.category === c && d.series === s)?.value ?? 0])),
+    })) as any);
+    const x = d3.scaleBand().domain(categories).range([0, innerW]).padding(0.2);
+    const y = d3.scaleLinear().domain([0, d3.max(stack[stack.length - 1], (d: any) => d[1]) || 1]).range([innerH, 0]);
+    g.selectAll('g.kc-sbar-series').data(stack).enter().append('g')
+      .attr('class', 'kc-sbar-series')
+      .attr('fill', (_: any, i: number) => PALETTE[i % 4])
+      .selectAll('rect').data((d: any) => d.map((v: any) => ({ ...v, key: d.key }))).enter().append('rect')
+      .attr('x', (d: any) => x(d.data.category) || 0)
+      .attr('y', (d: any) => y(d[1]))
+      .attr('height', (d: any) => y(d[0]) - y(d[1]))
+      .attr('width', x.bandwidth());
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Line Chart (also MultiLine) ===
+  REGISTRY['kc-line'] = REGISTRY['kc-chart-line'] = REGISTRY['kc-multiline'] = REGISTRY['kc-chart-multiline'] = (el, p) => {
+    const series = p.series || [];
+    const showPoints = p.showPoints !== false;
+    const smooth = p.smooth !== false;
+    const height = p.height || 240;
+    const width = 320;
+    const margin = { top: 12, right: 12, bottom: 28, left: 32 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const allPoints = series.flatMap((s: any) => s.data);
+    const xIsNumeric = allPoints.every((p: any) => typeof p.x === 'number');
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const xDomain = xIsNumeric ? d3.extent(allPoints, (d: any) => d.x) as [number, number] : Array.from(new Set(allPoints.map((d: any) => d.x))) as any;
+    const x: any = xIsNumeric ? d3.scaleLinear().domain(xDomain).range([0, innerW]) : d3.scalePoint().domain(xDomain).range([0, innerW]);
+    const y = d3.scaleLinear().domain([0, d3.max(allPoints, (d: any) => d.y) || 1]).nice().range([innerH, 0]);
+    const lineGen: any = smooth
+      ? d3.line().x((d: any) => (x(d.x) || 0) + (xIsNumeric ? 0 : (x.bandwidth?.() || 0) / 2)).y((d: any) => y(d.y)).curve(d3.curveMonotoneX)
+      : d3.line().x((d: any) => (x(d.x) || 0) + (xIsNumeric ? 0 : (x.bandwidth?.() || 0) / 2)).y((d: any) => y(d.y));
+    series.forEach((s: any, i: number) => {
+      const color = s.color || ['var(--color-accent-signal)', 'var(--color-accent-ember)', 'var(--color-accent-violet)', 'var(--color-accent-gold)'][i % 4];
+      g.append('path').datum(s.data).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('d', lineGen);
+      if (showPoints) {
+        g.selectAll(`circle.kc-line-pt-${i}`).data(s.data).enter().append('circle')
+          .attr('class', `kc-line-pt-${i}`)
+          .attr('cx', (d: any) => (x(d.x) || 0) + (xIsNumeric ? 0 : (x.bandwidth?.() || 0) / 2))
+          .attr('cy', (d: any) => y(d.y)).attr('r', 3).attr('fill', color);
+      }
+    });
+    const xAxis: any = xIsNumeric ? d3.axisBottom(x).ticks(5) : d3.axisBottom(x);
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(xAxis)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Area Chart ===
+  REGISTRY['kc-area'] = REGISTRY['kc-chart-area'] = (el, p) => {
+    const data = p.data || [];
+    const height = p.height || 240;
+    const color = p.color || 'var(--color-accent-ember)';
+    const width = 320;
+    const margin = { top: 12, right: 12, bottom: 28, left: 36 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const max = Math.max(...data.map((d: any) => d.y), 1);
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const gradId = `grad-${el.getAttribute('data-chart-id')}`;
+    const defs = svg.append('defs');
+    const grad = defs.append('linearGradient').attr('id', gradId).attr('x1', '0').attr('x2', '0').attr('y1', '0').attr('y2', '1');
+    grad.append('stop').attr('offset', '0%').attr('stop-color', color).attr('stop-opacity', 0.6);
+    grad.append('stop').attr('offset', '100%').attr('stop-color', color).attr('stop-opacity', 0.05);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const x = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.x) as [number, number]).range([0, innerW]);
+    const y = d3.scaleLinear().domain([0, max * 1.1]).range([innerH, 0]);
+    const area: any = d3.area().x((d: any) => x(d.x)).y0(innerH).y1((d: any) => y(d.y)).curve(d3.curveMonotoneX);
+    const line: any = d3.line().x((d: any) => x(d.x)).y((d: any) => y(d.y)).curve(d3.curveMonotoneX);
+    g.append('path').datum(data).attr('fill', `url(#${gradId})`).attr('d', area);
+    g.append('path').datum(data).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('d', line);
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Stacked Area ===
+  REGISTRY['kc-sarea'] = REGISTRY['kc-chart-stacked-area'] = (el, p) => {
+    const series = p.series || [];
+    const height = p.height || 240;
+    const width = 320;
+    const margin = { top: 12, right: 12, bottom: 28, left: 36 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const allData = series.flatMap((s: any) => s.data);
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const x = d3.scaleLinear().domain(d3.extent(allData, (d: any) => d.x) as [number, number]).range([0, innerW]);
+    const stack = d3.stack().keys(series.map((s: any) => s.name))(allData);
+    const y = d3.scaleLinear().domain([0, d3.max(stack[stack.length - 1], (d: any) => d[1]) || 1]).nice().range([innerH, 0]);
+    const area: any = d3.area().x((d: any) => x(d.data.x)).y0((d: any) => y(d[0])).y1((d: any) => y(d[1])).curve(d3.curveMonotoneX);
+    g.selectAll('path').data(stack).enter().append('path')
+      .attr('fill', (_: any, i: number) => series[i].color || PALETTE[i % 4])
+      .attr('fill-opacity', 0.6)
+      .attr('d', area);
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Pie Chart ===
+  REGISTRY['kc-pie'] = REGISTRY['kc-chart-pie'] = (el, p) => {
+    const data = p.data || [];
+    const size = p.size || 240;
+    const showLabels = p.showLabels !== false;
+    const radius = size / 2 - 8;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${size} ${size}`);
+    const g = svg.append('g').attr('transform', `translate(${size / 2},${size / 2})`);
+    const pie: any = d3.pie().value((d: any) => d.value).sort(null);
+    const arc: any = d3.arc().innerRadius(0).outerRadius(radius);
+    g.selectAll('path').data(pie(data)).enter().append('path')
+      .attr('fill', (_: any, i: number) => PALETTE[i % 5])
+      .attr('d', arc as any);
+    if (showLabels) {
+      const labelArc: any = d3.arc().innerRadius(radius * 0.6).outerRadius(radius);
+      g.selectAll('text').data(pie(data)).enter().append('text')
+        .attr('transform', (d: any) => `translate(${labelArc.centroid(d)})`)
+        .attr('text-anchor', 'middle')
+        .attr('fill', 'var(--color-surface-primary)')
+        .attr('font-family', 'var(--font-mono)')
+        .attr('font-size', '10')
+        .attr('font-weight', 'bold')
+        .text((d: any) => `${((d.endAngle - d.startAngle) / (2 * Math.PI) * 100).toFixed(0)}%`);
+    }
+  };
+
+  // === Donut Chart ===
+  REGISTRY['kc-chart-donut'] = (el, p) => {
+    const data = p.data || [];
+    const size = p.size || 240;
+    const radius = size / 2 - 8;
+    const innerRadius = radius * 0.55;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${size} ${size}`);
+    const g = svg.append('g').attr('transform', `translate(${size / 2},${size / 2})`);
+    const pie: any = d3.pie().value((d: any) => d.value).sort(null);
+    const arc: any = d3.arc().innerRadius(innerRadius).outerRadius(radius);
+    g.selectAll('path').data(pie(data)).enter().append('path')
+      .attr('fill', (_: any, i: number) => PALETTE[i % 5])
+      .attr('d', arc as any);
+    const total = data.reduce((s: number, d: any) => s + d.value, 0);
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '-0.2em')
+      .attr('fill', 'var(--color-text-display)').attr('font-family', 'var(--font-display)')
+      .attr('font-size', '24').attr('font-weight', 'bold').text(total);
+    g.append('text').attr('text-anchor', 'middle').attr('dy', '1.2em')
+      .attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)')
+      .attr('font-size', '9').attr('text-transform', 'uppercase').attr('letter-spacing', '0.1em').text('total');
+  };
+
+  // === Scatter Plot ===
+  REGISTRY['kc-scatter'] = REGISTRY['kc-chart-scatter'] = (el, p) => {
+    const data = p.data || [];
+    const trendLine = p.trendLine === true;
+    const height = p.height || 240;
+    const width = 320;
+    const margin = { top: 12, right: 12, bottom: 28, left: 36 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const x = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.x) as [number, number]).nice().range([0, innerW]);
+    const y = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.y) as [number, number]).nice().range([innerH, 0]);
+    g.selectAll('circle').data(data).enter().append('circle')
+      .attr('cx', (d: any) => x(d.x)).attr('cy', (d: any) => y(d.y)).attr('r', 4)
+      .attr('fill', (d: any) => d.color || 'var(--color-accent-signal)')
+      .attr('opacity', 0.8);
+    if (trendLine && data.length > 1) {
+      const n = data.length;
+      const sumX = d3.sum(data, (d: any) => d.x), sumY = d3.sum(data, (d: any) => d.y);
+      const sumXY = d3.sum(data, (d: any) => d.x * d.y), sumXX = d3.sum(data, (d: any) => d.x * d.x);
+      const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+      const intercept = (sumY - slope * sumX) / n;
+      const xMin = x.domain()[0] as number, xMax = x.domain()[1] as number;
+      g.append('line').attr('x1', x(xMin)).attr('y1', y(slope * xMin + intercept))
+        .attr('x2', x(xMax)).attr('y2', y(slope * xMax + intercept))
+        .attr('stroke', 'var(--color-accent-gold)').attr('stroke-width', 1.5).attr('stroke-dasharray', '4 4');
+    }
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Bubble Chart ===
+  REGISTRY['kc-bubble'] = REGISTRY['kc-chart-bubble'] = (el, p) => {
+    const data = p.data || [];
+    const height = p.height || 280;
+    const width = 320;
+    const margin = { top: 12, right: 12, bottom: 28, left: 36 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const x = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.x) as [number, number]).nice().range([0, innerW]);
+    const y = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.y) as [number, number]).nice().range([innerH, 0]);
+    const r = d3.scaleSqrt().domain([0, d3.max(data, (d: any) => d.r) || 1]).range([4, 32]);
+    g.selectAll('circle').data(data).enter().append('circle')
+      .attr('cx', (d: any) => x(d.x)).attr('cy', (d: any) => y(d.y)).attr('r', (d: any) => r(d.r))
+      .attr('fill', (d: any) => d.color || 'var(--color-accent-signal)')
+      .attr('opacity', 0.7)
+      .attr('stroke', 'var(--color-surface-recessed)').attr('stroke-width', 1.5);
+    g.selectAll('text.bubble-label').data(data).enter().append('text')
+      .attr('class', 'bubble-label')
+      .attr('x', (d: any) => x(d.x)).attr('y', (d: any) => y(d.y))
+      .attr('text-anchor', 'middle').attr('dy', '0.35em')
+      .attr('fill', 'var(--color-surface-primary)').attr('font-family', 'var(--font-mono)')
+      .attr('font-size', '9').attr('font-weight', 'bold').text((d: any) => d.label);
+    g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.append('g').call(d3.axisLeft(y).ticks(4) as any)
+      .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
+    g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
+  };
+
+  // === Heatmap ===
+  REGISTRY['kc-heatmap'] = REGISTRY['kc-chart-heatmap'] = (el, p) => {
+    const data = p.data || [];
+    const rows = Array.from(new Set(data.map((d: any) => d.row)));
+    const cols = Array.from(new Set(data.map((d: any) => d.col)));
+    const cellSize = Math.min(36, Math.floor(280 / cols.length));
+    const width = cols.length * cellSize + 60;
+    const height = rows.length * cellSize + 40;
+    const max = Math.max(...data.map((d: any) => d.value), 1);
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const color: any = d3.scaleSequential(d3.interpolateOranges).domain([0, max]);
+    svg.append('g').attr('transform', 'translate(50,20)')
+      .selectAll('rect').data(data).enter().append('rect')
+      .attr('x', (d: any) => cols.indexOf(d.col) * cellSize)
+      .attr('y', (d: any) => rows.indexOf(d.row) * cellSize)
+      .attr('width', cellSize - 1).attr('height', cellSize - 1)
+      .attr('fill', (d: any) => color(d.value));
+    svg.append('g').attr('transform', 'translate(50,20)')
+      .selectAll('text.cell-val').data(data).enter().append('text')
+      .attr('class', 'cell-val')
+      .attr('x', (d: any) => cols.indexOf(d.col) * cellSize + cellSize / 2)
+      .attr('y', (d: any) => rows.indexOf(d.row) * cellSize + cellSize / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'middle')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', '9')
+      .attr('fill', 'var(--color-surface-primary)').text((d: any) => d.value);
+    svg.append('g').selectAll('text.row-label').data(rows).enter().append('text')
+      .attr('class', 'row-label')
+      .attr('x', 46).attr('y', (_: any, i: number) => 20 + i * cellSize + cellSize / 2)
+      .attr('dy', '0.35em').attr('text-anchor', 'end')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', '9')
+      .attr('fill', 'var(--color-text-secondary)').text((d: any) => d);
+    svg.append('g').selectAll('text.col-label').data(cols).enter().append('text')
+      .attr('class', 'col-label')
+      .attr('x', (_: any, i: number) => 50 + i * cellSize + cellSize / 2)
+      .attr('y', 14)
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', '9')
+      .attr('fill', 'var(--color-text-secondary)').text((d: any) => d);
+  };
+
+  // === Radar ===
+  REGISTRY['kc-radar'] = REGISTRY['kc-chart-radar'] = (el, p) => {
+    const axes = p.axes || [];
+    const data = p.data || [];
+    const size = p.size || 260;
+    const radius = size / 2 - 30;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${size} ${size}`);
+    const g = svg.append('g').attr('transform', `translate(${size / 2},${size / 2})`);
+    const angle = (i: number) => (i / axes.length) * 2 * Math.PI - Math.PI / 2;
+    const levels = 4;
+    for (let i = 1; i <= levels; i++) {
+      const r = (radius / levels) * i;
+      const points = axes.map((_: any, j: number) => `${r * Math.cos(angle(j))},${r * Math.sin(angle(j))}`).join(' ');
+      g.append('polygon').attr('points', points).attr('fill', 'none')
+        .attr('stroke', 'var(--color-surface-rule)').attr('stroke-width', 0.5);
+    }
+    axes.forEach((axis: any, j: number) => {
+      g.append('line').attr('x1', 0).attr('y1', 0)
+        .attr('x2', radius * Math.cos(angle(j))).attr('y2', radius * Math.sin(angle(j)))
+        .attr('stroke', 'var(--color-surface-rule)').attr('stroke-width', 0.5);
+      g.append('text').attr('x', (radius + 8) * Math.cos(angle(j))).attr('y', (radius + 8) * Math.sin(angle(j)))
+        .attr('dy', '0.35em').attr('text-anchor', 'middle')
+        .attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '10')
+        .text((d: any) => d.label || axis.label);
+    });
+    data.forEach((d: any, i: number) => {
+      const color = d.color || PALETTE[i % 3];
+      const points = axes.map((axis: any, j: number) => {
+        const val = d.values[j] ?? 0;
+        const max = axis.max ?? 1;
+        const min = axis.min ?? 0;
+        const r = ((val - min) / (max - min)) * radius;
+        return `${r * Math.cos(angle(j))},${r * Math.sin(angle(j))}`;
+      }).join(' ');
+      g.append('polygon').attr('points', points)
+        .attr('fill', color).attr('fill-opacity', 0.2)
+        .attr('stroke', color).attr('stroke-width', 2);
+    });
+  };
+
+  // === Treemap ===
+  REGISTRY['kc-treemap'] = REGISTRY['kc-chart-treemap'] = (el, p) => {
+    const data = p.data;
+    const height = p.height || 240;
+    const width = 320;
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const root = d3.hierarchy<any>(data).sum((d: any) => d.value || 0);
+    d3.treemap<any>().size([width, height]).padding(2).round(true)(root);
+    const flatColors = new Map<string, string>();
+    let colorIdx = 0;
+    const leaves = root.leaves() as any[];
+    svg.selectAll('rect').data(leaves).enter().append('rect')
+      .attr('x', (d: any) => d.x0).attr('y', (d: any) => d.y0)
+      .attr('width', (d: any) => d.x1 - d.x0).attr('height', (d: any) => d.y1 - d.y0)
+      .attr('fill', (d: any) => {
+        if (!flatColors.has(d.data.name)) flatColors.set(d.data.name, PALETTE[colorIdx++ % 5]);
+        return d.data.color || flatColors.get(d.data.name);
+      }).attr('rx', 2);
+    svg.selectAll('text').data(leaves).enter().append('text')
+      .attr('x', (d: any) => d.x0 + 4).attr('y', (d: any) => d.y0 + 14)
+      .attr('fill', 'var(--color-surface-primary)').attr('font-family', 'var(--font-mono)')
+      .attr('font-size', '10').attr('font-weight', 'bold').text((d: any) => d.data.name);
+    svg.selectAll('text.value').data(leaves).enter().append('text')
+      .attr('class', 'value')
+      .attr('x', (d: any) => d.x0 + 4).attr('y', (d: any) => d.y0 + 26)
+      .attr('fill', 'var(--color-surface-primary)').attr('font-family', 'var(--font-mono)')
+      .attr('font-size', '9').attr('opacity', 0.8).text((d: any) => d.data.value || '');
+  };
+
+  // === Force Graph ===
+  REGISTRY['kc-force'] = REGISTRY['kc-chart-force'] = (el, p) => {
+    const nodes = p.nodes || [];
+    const edges = p.edges || [];
+    const height = p.height || 320;
+    const width = 320;
+    const colors: Record<string, string> = {
+      concept: 'var(--color-accent-signal)',
+      claim: 'var(--color-accent-ember)',
+      source: 'var(--color-accent-violet)',
+      task: 'var(--color-accent-gold)',
+    };
+    const svg = d3.select(el).select('svg');
+    svg.selectAll('*').remove();
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    const N = nodes.map((n: any) => ({ ...n }));
+    const L = edges.map((e: any) => ({ source: e.source, target: e.target }));
+    const sim = d3.forceSimulation(N)
+      .force('link', d3.forceLink<any, any>(L).id((d: any) => d.id).distance(80))
+      .force('charge', d3.forceManyBody().strength(-200))
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .alpha(0.5);
+    const link = svg.append('g').attr('stroke', 'var(--color-surface-rule)').attr('stroke-width', 1)
+      .selectAll('line').data(L).enter().append('line');
+    const node = svg.append('g').selectAll('g').data(N).enter().append('g');
+    node.append('circle').attr('r', 18).attr('fill', (d: any) => colors[d.type || 'concept'] || 'var(--color-accent-signal)')
+      .attr('opacity', 0.7).attr('stroke', 'var(--color-surface-recessed)').attr('stroke-width', 1.5);
+    node.append('text').attr('text-anchor', 'middle').attr('dy', '0.35em')
+      .attr('fill', 'var(--color-text-display)').attr('font-family', 'var(--font-mono)').attr('font-size', '8')
+      .text((d: any) => d.label);
+    sim.on('tick', () => {
+      link.attr('x1', (d: any) => d.source.x).attr('y1', (d: any) => d.source.y)
+        .attr('x2', (d: any) => d.target.x).attr('y2', (d: any) => d.target.y);
+      node.attr('transform', (d: any) => `translate(${d.x},${d.y})`);
+    });
+  };
+
+  // === Bootstrap ===
+  function init() {
+    document.querySelectorAll('[data-chart-id]').forEach((el) => {
+      const container = el as HTMLElement;
+      const id = container.getAttribute('data-chart-id');
+      if (!id) return;
+      // Determine chart type from id (e.g. "kc-bar-xyz" -> "kc-bar")
+      const prefix = id.split('-').slice(0, 2).join('-');
+      const matchedKey = Object.keys(REGISTRY).find((k) => prefix === k || prefix.startsWith(k + '-'));
+      if (!matchedKey) return;
+      // Read props from inline JSON script
+      const propsScript = document.getElementById(`props-${id}`);
+      let props: any = {};
+      if (propsScript && propsScript.textContent) {
+        try { props = JSON.parse(propsScript.textContent); } catch {}
+      }
+      try {
+        REGISTRY[matchedKey](container, props);
+      } catch (e) {
+        console.error(`Failed to render chart ${id} (${matchedKey}):`, e);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

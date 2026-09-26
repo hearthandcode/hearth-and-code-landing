@@ -19,7 +19,7 @@ const innerH = height - margin.top - margin.bottom;
 const allData = series.flatMap(s => s.data);
 const palette = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-violet)', 'var(--color-accent-gold)'];
 ---
-<div class:list={['kc-d3-sarea', className]} data-chart-id={chartId}>
+<div class:list={['kc-d3-sarea', className]} data-chart-id={chartId} data-props={JSON.stringify({ series: series, height: height })}>
   <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-sarea__svg"></svg>
   <div class="kc-d3-sarea__legend">
     {series.map((s, i) => (
@@ -28,29 +28,8 @@ const palette = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var
   </div>
 </div>
 
-<script define:vars={{ chartId, series, width, height, margin, innerW, innerH, allData, palette }}>
-  import('d3').then((d3) => {
-    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
-      const svg = d3.select(container).select('svg');
-      svg.selectAll('*').remove();
-      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-      const x = d3.scaleLinear().domain(d3.extent(allData, d => d.x) as [number, number]).range([0, innerW]);
-      const stack = d3.stack().keys(series.map(s => s.name))(allData);
-      const y = d3.scaleLinear().domain([0, d3.max(stack[stack.length - 1], d => d[1]) || 1]).nice().range([innerH, 0]);
-      const area = d3.area().x((d: any) => x(d.data.x)).y0((d: any) => y(d[0])).y1((d: any) => y(d[1])).curve(d3.curveMonotoneX);
-      g.selectAll('path').data(stack).enter().append('path')
-        .attr('fill', (d, i) => series[i].color || palette[i % 4])
-        .attr('fill-opacity', 0.6)
-        .attr('d', area);
-      g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.append('g').call(d3.axisLeft(y).ticks(4))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
-    });
-  });
-</script>
 
+  <script type="application/json" id={`props-${chartId}`} set:html={JSON.stringify({ series: series, height: height })}></script>
 <style>
   .kc-d3-sarea { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); }
   .kc-d3-sarea__svg { width: 100%; height: auto; display: block; }

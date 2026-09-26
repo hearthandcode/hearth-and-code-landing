@@ -17,7 +17,7 @@ const margin = { top: 12, right: 12, bottom: 28, left: 36 };
 const innerW = width - margin.left - margin.right;
 const innerH = height - margin.top - margin.bottom;
 ---
-<div class:list={['kc-d3-bubble', className]} data-chart-id={chartId}>
+<div class:list={['kc-d3-bubble', className]} data-chart-id={chartId} data-props={JSON.stringify({ data: data, height: height })}>
   <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-bubble__svg"></svg>
   <div class="kc-d3-bubble__legend">
     {data.map((b, i) => (
@@ -26,35 +26,8 @@ const innerH = height - margin.top - margin.bottom;
   </div>
 </div>
 
-<script define:vars={{ chartId, data, width, height, margin, innerW, innerH }}>
-  import('d3').then((d3) => {
-    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
-      const svg = d3.select(container).select('svg');
-      svg.selectAll('*').remove();
-      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-      const x = d3.scaleLinear().domain(d3.extent(data, d => d.x) as [number, number]).nice().range([0, innerW]);
-      const y = d3.scaleLinear().domain(d3.extent(data, d => d.y) as [number, number]).nice().range([innerH, 0]);
-      const r = d3.scaleSqrt().domain([0, d3.max(data, d => d.r) || 1]).range([4, 32]);
-      g.selectAll('circle').data(data).enter().append('circle')
-        .attr('cx', d => x(d.x)).attr('cy', d => y(d.y)).attr('r', d => r(d.r))
-        .attr('fill', d => d.color || 'var(--color-accent-signal)')
-        .attr('opacity', 0.7)
-        .attr('stroke', 'var(--color-surface-recessed)').attr('stroke-width', 1.5);
-      g.selectAll('text.bubble-label').data(data).enter().append('text')
-        .attr('class', 'bubble-label')
-        .attr('x', d => x(d.x)).attr('y', d => y(d.y))
-        .attr('text-anchor', 'middle').attr('dy', '0.35em')
-        .attr('fill', 'var(--color-surface-primary)').attr('font-family', 'var(--font-mono)')
-        .attr('font-size', '9').attr('font-weight', 'bold').text(d => d.label);
-      g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.append('g').call(d3.axisLeft(y).ticks(4))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
-    });
-  });
-</script>
 
+  <script type="application/json" id={`props-${chartId}`} set:html={JSON.stringify({ data: data, height: height })}></script>
 <style>
   .kc-d3-bubble { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); }
   .kc-d3-bubble__svg { width: 100%; height: auto; display: block; }

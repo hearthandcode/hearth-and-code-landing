@@ -167,6 +167,7 @@ import Heatmap from '../../components/knowledge/charts/Heatmap.astro';
 import RadarChart from '../../components/knowledge/charts/RadarChart.astro';
 import Treemap from '../../components/knowledge/charts/Treemap.astro';
 import ForceGraph from '../../components/knowledge/charts/ForceGraph.astro';
+import D3Charts from '../../components/D3Charts.astro';
 
 ---
 
@@ -1287,9 +1288,7 @@ import ForceGraph from '../../components/knowledge/charts/ForceGraph.astro';
 
   <figure class="ds-tile" id="kc-chart-treemap">
     <div class="ds-tile__preview">
-      <Treemap data={{
-        name: 'root',
-        children: [
+      <Treemap data={{ name: 'root', value: 128, children: [
           { name: 'Atoms', value: 12 },
           { name: 'Composites', value: 32 },
           { name: 'Templates', value: 20 },
@@ -1330,6 +1329,8 @@ import ForceGraph from '../../components/knowledge/charts/ForceGraph.astro';
 
 </div>
 </section>
+
+<D3Charts />
 
 <!-- KNOWLEDGE PRIMITIVES -->
 <section id="knowledge" class="ds-section">

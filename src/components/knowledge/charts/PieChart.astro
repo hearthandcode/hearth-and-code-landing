@@ -16,7 +16,7 @@ const chartId = `kc-pie-${Math.random().toString(36).slice(2, 9)}`;
 const radius = size / 2 - 8;
 const palette = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-violet)', 'var(--color-accent-gold)', 'var(--color-accent-plasma)'];
 ---
-<div class:list={['kc-d3-pie', className]} data-chart-id={chartId}>
+<div class:list={['kc-d3-pie', className]} data-chart-id={chartId} data-props={JSON.stringify({ data: data, size: size, showLabels: showLabels })}>
   <svg viewBox={`0 0 ${size} ${size}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-pie__svg"></svg>
   <div class="kc-d3-pie__legend">
     {data.map((d, i) => (
@@ -25,32 +25,8 @@ const palette = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var
   </div>
 </div>
 
-<script define:vars={{ chartId, data, size, radius, palette, showLabels }}>
-  import('d3').then((d3) => {
-    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
-      const svg = d3.select(container).select('svg');
-      svg.selectAll('*').remove();
-      const g = svg.append('g').attr('transform', `translate(${size / 2},${size / 2})`);
-      const pie = d3.pie<Datum>().value(d => d.value).sort(null);
-      const arc = d3.arc<d3.PieArcDatum<Datum>>().innerRadius(0).outerRadius(radius);
-      const arcs = g.selectAll('path').data(pie(data)).enter().append('path')
-        .attr('fill', (d, i) => d.data.color || palette[i % 5])
-        .attr('d', arc);
-      if (showLabels) {
-        const labelArc = d3.arc<d3.PieArcDatum<Datum>>().innerRadius(radius * 0.6).outerRadius(radius);
-        g.selectAll('text').data(pie(data)).enter().append('text')
-          .attr('transform', d => `translate(${labelArc.centroid(d)})`)
-          .attr('text-anchor', 'middle')
-          .attr('fill', 'var(--color-surface-primary)')
-          .attr('font-family', 'var(--font-mono)')
-          .attr('font-size', '10')
-          .attr('font-weight', 'bold')
-          .text(d => `${((d.endAngle - d.startAngle) / (2 * Math.PI) * 100).toFixed(0)}%`);
-      }
-    });
-  });
-</script>
 
+  <script type="application/json" id={`props-${chartId}`} set:html={JSON.stringify({ data: data, size: size, showLabels: showLabels })}></script>
 <style>
   .kc-d3-pie { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); display: flex; gap: var(--space-3); align-items: center; }
   .kc-d3-pie__svg { width: 50%; height: auto; display: block; flex-shrink: 0; }

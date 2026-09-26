@@ -18,42 +18,12 @@ const margin = { top: 12, right: 12, bottom: 28, left: 36 };
 const innerW = width - margin.left - margin.right;
 const innerH = height - margin.top - margin.bottom;
 ---
-<div class:list={['kc-d3-scatter', className]} data-chart-id={chartId}>
+<div class:list={['kc-d3-scatter', className]} data-chart-id={chartId} data-props={JSON.stringify({ data: data, height: height, trendLine: trendLine })}>
   <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-scatter__svg"></svg>
 </div>
 
-<script define:vars={{ chartId, data, width, height, margin, innerW, innerH, trendLine }}>
-  import('d3').then((d3) => {
-    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
-      const svg = d3.select(container).select('svg');
-      svg.selectAll('*').remove();
-      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-      const x = d3.scaleLinear().domain(d3.extent(data, d => d.x) as [number, number]).nice().range([0, innerW]);
-      const y = d3.scaleLinear().domain(d3.extent(data, d => d.y) as [number, number]).nice().range([innerH, 0]);
-      g.selectAll('circle').data(data).enter().append('circle')
-        .attr('cx', d => x(d.x)).attr('cy', d => y(d.y)).attr('r', 4)
-        .attr('fill', d => d.color || 'var(--color-accent-signal)')
-        .attr('opacity', 0.8);
-      if (trendLine) {
-        const n = data.length;
-        const sumX = d3.sum(data, d => d.x), sumY = d3.sum(data, d => d.y);
-        const sumXY = d3.sum(data, d => d.x * d.y), sumXX = d3.sum(data, d => d.x * d.x);
-        const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-        const intercept = (sumY - slope * sumX) / n;
-        const xMin = x.domain()[0], xMax = x.domain()[1];
-        g.append('line').attr('x1', x(xMin)).attr('y1', y(slope * xMin + intercept))
-          .attr('x2', x(xMax)).attr('y2', y(slope * xMax + intercept))
-          .attr('stroke', 'var(--color-accent-gold)').attr('stroke-width', 1.5).attr('stroke-dasharray', '4 4');
-      }
-      g.append('g').attr('transform', `translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.append('g').call(d3.axisLeft(y).ticks(4))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
-    });
-  });
-</script>
 
+  <script type="application/json" id={`props-${chartId}`} set:html={JSON.stringify({ data: data, height: height, trendLine: trendLine })}></script>
 <style>
   .kc-d3-scatter { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); }
   .kc-d3-scatter__svg { width: 100%; height: auto; display: block; }

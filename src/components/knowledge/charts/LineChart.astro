@@ -27,7 +27,7 @@ const allPoints = series.flatMap(s => s.data);
 const xVals = allPoints.map(p => p.x);
 const xIsNumeric = xVals.every(v => typeof v === 'number');
 ---
-<div class:list={['kc-d3-line', className]} data-chart-id={chartId}>
+<div class:list={['kc-d3-line', className]} data-chart-id={chartId} data-props={JSON.stringify({ series: series, height: height, xLabel: xLabel, yLabel: yLabel, showPoints: showPoints, smooth: smooth })}>
   <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" class="kc-d3-line__svg"></svg>
   <div class="kc-d3-line__legend">
     {series.map((s, i) => (
@@ -36,39 +36,8 @@ const xIsNumeric = xVals.every(v => typeof v === 'number');
   </div>
 </div>
 
-<script define:vars={{ chartId, series, width, height, margin, innerW, innerH, xLabel, yLabel, showPoints, smooth, xIsNumeric }}>
-  import('d3').then((d3) => {
-    document.querySelectorAll(`[data-chart-id="${chartId}"]`).forEach((container) => {
-      const svg = d3.select(container).select('svg');
-      svg.selectAll('*').remove();
-      const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-      const all = series.flatMap(s => s.data);
-      const xDomain = xIsNumeric
-        ? d3.extent(all, d => d.x as number) as [number, number]
-        : Array.from(new Set(all.map(d => d.x as string)));
-      const x = xIsNumeric ? d3.scaleLinear().domain(xDomain).range([0, innerW]) : d3.scalePoint().domain(xDomain as string[]).range([0, innerW]);
-      const y = d3.scaleLinear().domain([0, d3.max(all, d => d.y) || 1]).nice().range([innerH, 0]);
-      const line = smooth ? d3.line().x(d => (x(d.x) ?? 0) + (xIsNumeric ? 0 : (x.bandwidth?.() ?? 0) / 2)).y(d => y(d.y)).curve(d3.curveMonotoneX) : d3.line().x(d => (x(d.x) ?? 0) + (xIsNumeric ? 0 : (x.bandwidth?.() ?? 0) / 2)).y(d => y(d.y));
-      series.forEach((s, i) => {
-        const color = s.color || ['var(--color-accent-signal)', 'var(--color-accent-ember)', 'var(--color-accent-violet)', 'var(--color-accent-gold)'][i % 4];
-        g.append('path').datum(s.data).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('d', line);
-        if (showPoints) {
-          g.selectAll(`circle.kc-line-pt-${i}`).data(s.data).enter().append('circle')
-            .attr('class', `kc-line-pt-${i}`)
-            .attr('cx', d => (x(d.x) ?? 0) + (xIsNumeric ? 0 : (x.bandwidth?.() ?? 0) / 2))
-            .attr('cy', d => y(d.y)).attr('r', 3).attr('fill', color);
-        }
-      });
-      const xAxis = xIsNumeric ? d3.axisBottom(x).ticks(5) : d3.axisBottom(x);
-      g.append('g').attr('transform', `translate(0,${innerH})`).call(xAxis)
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.append('g').call(d3.axisLeft(y).ticks(4))
-        .selectAll('text').attr('fill', 'var(--color-text-secondary)').attr('font-family', 'var(--font-mono)').attr('font-size', '9');
-      g.selectAll('.domain, .tick line').attr('stroke', 'var(--color-surface-rule)');
-    });
-  });
-</script>
 
+  <script type="application/json" id={`props-${chartId}`} set:html={JSON.stringify({ series: series, height: height, xLabel: xLabel, yLabel: yLabel, showPoints: showPoints, smooth: smooth })}></script>
 <style>
   .kc-d3-line { background: var(--color-surface-recessed); border-radius: var(--radius-sm); padding: var(--space-2); }
   .kc-d3-line__svg { width: 100%; height: auto; display: block; }
