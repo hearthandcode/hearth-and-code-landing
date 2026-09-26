@@ -1,0 +1,160 @@
+---
+/**
+ * Product Card composite
+ * id: c-card-product
+ *
+ * Card for product/project showcase with image, title, description, price, actions.
+ */
+
+interface Props {
+  image?: string;
+  imageAlt?: string;
+  title: string;
+  description?: string;
+  price?: string;
+  href?: string;
+  status?: 'available' | 'sold-out' | 'coming-soon';
+  class?: string;
+}
+
+const {
+  image,
+  imageAlt = '',
+  title,
+  description,
+  price,
+  href,
+  status,
+  class: className = '',
+} = Astro.props;
+
+const statusBadge = {
+  'available': null,
+  'sold-out': { label: 'Sold out', variant: 'danger' },
+  'coming-soon': { label: 'Coming soon', variant: 'info' },
+};
+const badgeInfo = status ? statusBadge[status] : null;
+---
+
+<article class={`ec-product-card ${className}`}>
+  {image && (
+    <a class="ec-product-card__media" href={href || '#'} aria-label={title}>
+      <img class="ec-product-card__image" src={image} alt={imageAlt || title} loading="lazy" />
+      {badgeInfo && (
+        <span class={`ec-product-card__badge ec-product-card__badge--${badgeInfo.variant}`}>
+          {badgeInfo.label}
+        </span>
+      )}
+    </a>
+  )}
+  <div class="ec-product-card__body">
+    <h3 class="ec-product-card__title">
+      <a href={href || '#'}>{title}</a>
+    </h3>
+    {description && <p class="ec-product-card__description">{description}</p>}
+    <div class="ec-product-card__footer">
+      {price && <span class="ec-product-card__price">{price}</span>}
+      {href && <a class="ec-product-card__link" href={href}>View →</a>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .ec-product-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-product-card:hover {
+    border-color: var(--color-surface-rule-strong);
+  }
+  .ec-product-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface-recessed);
+  }
+  .ec-product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--motion-duration-normal) var(--motion-easing-default);
+  }
+  .ec-product-card:hover .ec-product-card__image {
+    transform: scale(1.05);
+  }
+  .ec-product-card__badge {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+  }
+  .ec-product-card__badge--danger {
+    background: var(--color-state-error);
+    color: var(--color-text-display);
+  }
+  .ec-product-card__badge--info {
+    background: var(--color-accent-plasma);
+    color: var(--color-surface-recessed);
+  }
+  .ec-product-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    flex: 1;
+  }
+  .ec-product-card__title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.3;
+    margin: 0;
+  }
+  .ec-product-card__title a {
+    color: var(--color-text-display);
+    text-decoration: none;
+  }
+  .ec-product-card__title a:hover {
+    color: var(--color-accent-ember);
+  }
+  .ec-product-card__description {
+    margin: 0;
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    flex: 1;
+  }
+  .ec-product-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .ec-product-card__price {
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-display);
+  }
+  .ec-product-card__link {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-ember);
+    text-decoration: none;
+  }
+  .ec-product-card__link:hover {
+    text-decoration: underline;
+  }
+</style>

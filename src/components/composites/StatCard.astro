@@ -1,0 +1,113 @@
+---
+/**
+ * Stat Card composite
+ * id: c-card-stat
+ *
+ * Card displaying a metric with label and trend.
+ */
+
+interface Props {
+  value: string | number;
+  label: string;
+  trend?: 'up' | 'down' | 'flat';
+  context?: string;
+  href?: string;
+  accent?: 'neutral' | 'hearth' | 'code' | 'balanced' | 'success' | 'caution' | 'danger';
+  class?: string;
+}
+
+const {
+  value,
+  label,
+  trend,
+  context,
+  href,
+  accent = 'neutral',
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const tagProps = href ? { href } : {};
+---
+
+<Tag class={`ec-stat-card ec-stat-card--${accent} ${className}`} {...tagProps}>
+  <div class="ec-stat-card__value">{value}</div>
+  <div class="ec-stat-card__label">{label}</div>
+  {trend && (
+    <div class={`ec-stat-card__trend ec-stat-card__trend--${trend}`}>
+      {trend === 'up' && '↑'}
+      {trend === 'down' && '↓'}
+      {trend === 'flat' && '→'}
+      {context && <span class="ec-stat-card__context">{context}</span>}
+    </div>
+  )}
+</Tag>
+
+<style>
+  .ec-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  a.ec-stat-card:hover {
+    border-color: var(--color-surface-rule-strong);
+  }
+  .ec-stat-card__value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    color: var(--color-text-display);
+    letter-spacing: -0.02em;
+  }
+  .ec-stat-card--hearth .ec-stat-card__value {
+    color: var(--color-accent-ember);
+  }
+  .ec-stat-card--code .ec-stat-card__value {
+    color: var(--color-accent-signal);
+  }
+  .ec-stat-card--balanced .ec-stat-card__value {
+    color: var(--color-accent-violet);
+  }
+  .ec-stat-card--success .ec-stat-card__value {
+    color: var(--color-state-success);
+  }
+  .ec-stat-card--caution .ec-stat-card__value {
+    color: var(--color-state-caution);
+  }
+  .ec-stat-card--danger .ec-stat-card__value {
+    color: var(--color-state-error);
+  }
+  .ec-stat-card__label {
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+  .ec-stat-card__trend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--font-size-small);
+    margin-top: var(--space-1);
+  }
+  .ec-stat-card__trend--up {
+    color: var(--color-state-success);
+  }
+  .ec-stat-card__trend--down {
+    color: var(--color-state-error);
+  }
+  .ec-stat-card__trend--flat {
+    color: var(--color-text-secondary);
+  }
+  .ec-stat-card__context {
+    color: var(--color-text-secondary);
+  }
+</style>

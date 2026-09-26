@@ -1,0 +1,125 @@
+---
+/**
+ * Card (Basic) composite
+ * id: c-card-basic
+ *
+ * Standard content card with header, body, footer slots.
+ */
+
+interface Props {
+  elevated?: boolean;
+  interactive?: boolean;
+  href?: string;
+  class?: string;
+}
+
+const {
+  elevated = false,
+  interactive = false,
+  href,
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const tagProps = href ? { href } : {};
+const cardClass = [
+  'ec-card',
+  elevated && 'ec-card--elevated',
+  interactive && 'ec-card--interactive',
+  href && 'ec-card--linked',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<Tag class={cardClass} {...tagProps}>
+  {Astro.slots.has('header') && (
+    <header class="ec-card__header">
+      <slot name="header" />
+    </header>
+  )}
+  {Astro.slots.has('media') && (
+    <div class="ec-card__media">
+      <slot name="media" />
+    </div>
+  )}
+  <div class="ec-card__body">
+    <slot />
+  </div>
+  {Astro.slots.has('footer') && (
+    <footer class="ec-card__footer">
+      <slot name="footer" />
+    </footer>
+  )}
+  {Astro.slots.has('actions') && (
+    <div class="ec-card__actions">
+      <slot name="actions" />
+    </div>
+  )}
+</Tag>
+
+<style>
+  .ec-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default),
+                transform var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-card--elevated {
+    box-shadow: var(--shadow-card);
+  }
+  .ec-card--interactive:hover,
+  .ec-card--linked:hover {
+    border-color: var(--color-surface-rule-strong);
+    transform: translateY(-2px);
+  }
+  .ec-card--linked:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .ec-card__header {
+    margin: calc(var(--space-6) * -1);
+    margin-bottom: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-card__media {
+    margin: calc(var(--space-6) * -1);
+    margin-bottom: var(--space-4);
+    overflow: hidden;
+  }
+  .ec-card__media :global(img),
+  .ec-card__media :global(video) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .ec-card__body {
+    flex: 1;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+  .ec-card__footer {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-surface-rule);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
+  }
+  .ec-card__actions {
+    margin-top: var(--space-4);
+    display: flex;
+    gap: var(--space-3);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ec-card--interactive:hover,
+    .ec-card--linked:hover {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+/**
+ * Pricing Card composite
+ * id: c-card-pricing
+ *
+ * Card for pricing tiers with features list.
+ */
+
+interface Props {
+  tier: string;
+  price: string;
+  period?: string;
+  description?: string;
+  features: string[];
+  highlighted?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+  class?: string;
+}
+
+const {
+  tier,
+  price,
+  period,
+  description,
+  features,
+  highlighted = false,
+  ctaLabel = 'Choose plan',
+  ctaHref = '#',
+  class: className = '',
+} = Astro.props;
+---
+
+<article class={`ec-pricing-card ${highlighted ? 'ec-pricing-card--highlighted' : ''} ${className}`}>
+  {highlighted && <div class="ec-pricing-card__badge">Most Popular</div>}
+  <header class="ec-pricing-card__header">
+    <h3 class="ec-pricing-card__tier">{tier}</h3>
+    <div class="ec-pricing-card__price">
+      <span class="ec-pricing-card__amount">{price}</span>
+      {period && <span class="ec-pricing-card__period">{period}</span>}
+    </div>
+    {description && <p class="ec-pricing-card__description">{description}</p>}
+  </header>
+  <ul class="ec-pricing-card__features">
+    {features.map((feature) => (
+      <li class="ec-pricing-card__feature">{feature}</li>
+    ))}
+  </ul>
+  <footer class="ec-pricing-card__footer">
+    <a class="ec-pricing-card__cta" href={ctaHref}>{ctaLabel}</a>
+  </footer>
+</article>
+
+<style>
+  .ec-pricing-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-7);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-pricing-card:hover {
+    border-color: var(--color-surface-rule-strong);
+  }
+  .ec-pricing-card--highlighted {
+    border-color: var(--color-accent-ember);
+    background: linear-gradient(180deg, rgba(232, 91, 78, 0.04) 0%, var(--color-surface-raised) 30%);
+  }
+  .ec-pricing-card__badge {
+    position: absolute;
+    top: -0.625rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.125rem 0.625rem;
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+  }
+  .ec-pricing-card__header {
+    text-align: center;
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-pricing-card__tier {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .ec-pricing-card__price {
+    margin-top: var(--space-3);
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-1);
+  }
+  .ec-pricing-card__amount {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    color: var(--color-text-display);
+    letter-spacing: -0.02em;
+  }
+  .ec-pricing-card__period {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+  .ec-pricing-card__description {
+    margin: var(--space-3) 0 0 0;
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+  .ec-pricing-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding: var(--space-5) 0;
+    flex: 1;
+  }
+  .ec-pricing-card__feature {
+    padding: var(--space-2) 0;
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-pricing-card__feature:last-child {
+    border-bottom: none;
+  }
+  .ec-pricing-card__footer {
+    padding-top: var(--space-4);
+  }
+  .ec-pricing-card__cta {
+    display: block;
+    text-align: center;
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-surface-recessed);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    border: 1px solid var(--color-surface-rule-strong);
+    border-radius: var(--radius-md);
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-pricing-card__cta:hover {
+    background: var(--color-surface-raised);
+    border-color: var(--color-accent-ember);
+  }
+  .ec-pricing-card--highlighted .ec-pricing-card__cta {
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+    border-color: var(--color-accent-ember);
+  }
+  .ec-pricing-card--highlighted .ec-pricing-card__cta:hover {
+    background: var(--color-accent-forge);
+  }
+</style>

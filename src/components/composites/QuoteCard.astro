@@ -1,0 +1,112 @@
+---
+/**
+ * Quote Card composite
+ * id: c-card-quote
+ *
+ * Card for displaying a quotation with attribution.
+ */
+
+interface Props {
+  quote: string;
+  attribution?: string;
+  source?: string;
+  href?: string;
+  accent?: 'hearth' | 'code' | 'balanced' | 'neutral';
+  class?: string;
+}
+
+const {
+  quote,
+  attribution,
+  source,
+  href,
+  accent = 'balanced',
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'blockquote';
+const tagProps = href ? { href } : {};
+---
+
+<Tag class={`ec-quote-card ec-quote-card--${accent} ${className}`} {...tagProps}>
+  <div class="ec-quote-card__mark" aria-hidden="true">"</div>
+  <p class="ec-quote-card__quote">{quote}</p>
+  {attribution && (
+    <footer class="ec-quote-card__attribution">
+      <span class="ec-quote-card__author">{attribution}</span>
+      {source && <span class="ec-quote-card__source">— {source}</span>}
+    </footer>
+  )}
+</Tag>
+
+<style>
+  .ec-quote-card {
+    position: relative;
+    margin: 0;
+    padding: var(--space-6) var(--space-6) var(--space-6) var(--space-8);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-left: 3px solid var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    display: block;
+  }
+  a.ec-quote-card:hover {
+    border-color: var(--color-surface-rule-strong);
+  }
+  .ec-quote-card--hearth {
+    border-left-color: var(--color-accent-ember);
+  }
+  .ec-quote-card--code {
+    border-left-color: var(--color-accent-signal);
+  }
+  .ec-quote-card--balanced {
+    border-left-color: var(--color-accent-violet);
+  }
+  .ec-quote-card__mark {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--color-text-secondary);
+    opacity: 0.3;
+  }
+  .ec-quote-card--hearth .ec-quote-card__mark {
+    color: var(--color-accent-ember);
+    opacity: 0.4;
+  }
+  .ec-quote-card--code .ec-quote-card__mark {
+    color: var(--color-accent-signal);
+    opacity: 0.4;
+  }
+  .ec-quote-card--balanced .ec-quote-card__mark {
+    color: var(--color-accent-violet);
+    opacity: 0.4;
+  }
+  .ec-quote-card__quote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+  }
+  .ec-quote-card__attribution {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+  .ec-quote-card__author {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+  .ec-quote-card__source {
+    color: var(--color-text-secondary);
+  }
+</style>

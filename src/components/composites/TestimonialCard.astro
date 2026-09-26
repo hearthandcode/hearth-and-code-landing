@@ -1,0 +1,126 @@
+---
+/**
+ * Testimonial Card composite
+ * id: c-card-testimonial
+ *
+ * Card for displaying a testimonial with author and role.
+ */
+
+import Avatar from '../primitives/Avatar.astro';
+
+interface Props {
+  quote: string;
+  author: string;
+  role?: string;
+  avatarSrc?: string;
+  rating?: number;
+  href?: string;
+  accent?: 'hearth' | 'code' | 'balanced' | 'neutral';
+  class?: string;
+}
+
+const {
+  quote,
+  author,
+  role,
+  avatarSrc,
+  rating,
+  href,
+  accent = 'balanced',
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const tagProps = href ? { href } : {};
+---
+
+<Tag class={`ec-testimonial-card ec-testimonial-card--${accent} ${className}`} {...tagProps}>
+  {rating && rating > 0 && (
+    <div class="ec-testimonial-card__rating" aria-label={`${rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span class={`ec-testimonial-card__star ${i < rating ? 'is-filled' : ''}`}>★</span>
+      ))}
+    </div>
+  )}
+  <blockquote class="ec-testimonial-card__quote">{quote}</blockquote>
+  <footer class="ec-testimonial-card__footer">
+    <Avatar
+      src={avatarSrc}
+      name={author}
+      size="sm"
+      variant={avatarSrc ? 'image' : 'initials'}
+    />
+    <div class="ec-testimonial-card__author">
+      <span class="ec-testimonial-card__name">{author}</span>
+      {role && <span class="ec-testimonial-card__role">{role}</span>}
+    </div>
+  </footer>
+</Tag>
+
+<style>
+  .ec-testimonial-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  a.ec-testimonial-card:hover {
+    border-color: var(--color-surface-rule-strong);
+  }
+  .ec-testimonial-card__rating {
+    display: inline-flex;
+    gap: 0.125rem;
+  }
+  .ec-testimonial-card__star {
+    font-size: 1rem;
+    color: var(--color-surface-rule);
+  }
+  .ec-testimonial-card__star.is-filled {
+    color: var(--color-accent-gold);
+  }
+  .ec-testimonial-card--hearth .ec-testimonial-card__star.is-filled {
+    color: var(--color-accent-ember);
+  }
+  .ec-testimonial-card--code .ec-testimonial-card__star.is-filled {
+    color: var(--color-accent-signal);
+  }
+  .ec-testimonial-card__quote {
+    margin: 0;
+    font-size: var(--font-size-body);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    flex: 1;
+  }
+  .ec-testimonial-card__quote::before {
+    content: '"';
+    margin-right: 0.125em;
+    color: var(--color-text-secondary);
+  }
+  .ec-testimonial-card__footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .ec-testimonial-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+  .ec-testimonial-card__name {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+  .ec-testimonial-card__role {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>
