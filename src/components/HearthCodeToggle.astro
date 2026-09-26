@@ -167,12 +167,119 @@ const segments = [
             }
           });
 
-          // Trigger custom event for page-level updates
+          // =====================================================
+          // APPLY VIEW CHANGES DIRECTLY (inlined since
+          // Astro hoists scripts and page script was missing)
+          // =====================================================
+          applyViewToPage(view);
+
+          // Trigger custom event for any other listeners
           window.dispatchEvent(new CustomEvent('hearth-code-view-change', { detail: { view } }));
         });
       });
     });
   }
+
+  /**
+   * Apply view changes to page content.
+   * Handles all DOM updates that should happen when view changes.
+   */
+  function applyViewToPage(view: string): void {
+    // Update root data attribute for CSS styling
+    document.documentElement.setAttribute('data-hc-view', view);
+
+    // Update navigation cards data-view
+    document.querySelectorAll('.ec-nav-card').forEach((card) => {
+      card.setAttribute('data-view', view);
+    });
+
+    // Update navigation section title and disposition
+    const navTitle = document.getElementById('nav-title');
+    const navDisposition = document.getElementById('nav-disposition');
+    const viewContent: Record<string, { title: string; description: string }> = {
+      hearth: {
+        title: 'Explore by purpose',
+        description: 'Each surface maps to a question about meaning, agency, or how to live and work well in the age of AI.',
+      },
+      code: {
+        title: 'Explore by domain',
+        description: 'Each surface contains technical depth: methods, architectures, code, and research with sources.',
+      },
+      balanced: {
+        title: 'Eight layers of work.',
+        description: 'Each surface offers both the philosophical context and the technical artifacts to act on it.',
+      },
+    };
+    if (navTitle && viewContent[view]) navTitle.textContent = viewContent[view].title;
+    if (navDisposition && viewContent[view]) navDisposition.textContent = viewContent[view].description;
+
+    // Update view disposition panel
+    const viewPanel = document.getElementById('view-panel');
+    const viewPanelEyebrow = document.getElementById('view-panel-eyebrow');
+    const viewPanelTitle = document.getElementById('view-panel-title');
+    const viewPanelDisposition = document.getElementById('view-panel-disposition');
+    const viewPanelData: Record<string, { eyebrow: string; title: string; disposition: string }> = {
+      hearth: {
+        eyebrow: 'Hearth view',
+        title: 'Dossier & Philosophy first',
+        disposition: 'Hearth emphasizes the personal side: the working archetype and the positions. Methods and research are present but secondary. Start with who I am, then what I think.',
+      },
+      code: {
+        eyebrow: 'Code view',
+        title: 'Methods & Research first',
+        disposition: 'Code emphasizes the technical side: field cards, prompt techniques, system architectures, and implementation depth. Dossier and philosophy are present but secondary. Start with how to build, then who built it.',
+      },
+      balanced: {
+        eyebrow: 'Current view',
+        title: 'Full spectrum',
+        disposition: 'Each surface offers both the philosophical context and the technical artifacts to act on it.',
+      },
+    };
+    if (viewPanel) viewPanel.setAttribute('data-view', view);
+    if (viewPanelEyebrow && viewPanelData[view]) viewPanelEyebrow.textContent = viewPanelData[view].eyebrow;
+    if (viewPanelTitle && viewPanelData[view]) viewPanelTitle.textContent = viewPanelData[view].title;
+    if (viewPanelDisposition && viewPanelData[view]) viewPanelDisposition.textContent = viewPanelData[view].disposition;
+
+    // Update path section title
+    const pathIntro = document.querySelector('.ec-presentation--start .ec-presentation__title');
+    const viewPathIntro: Record<string, string> = {
+      hearth: 'Three paths, for how you want to explore.',
+      code: 'Three paths, organized by depth of engagement.',
+      balanced: 'Three paths, depending on you.',
+    };
+    if (pathIntro && viewPathIntro[view]) pathIntro.textContent = viewPathIntro[view];
+
+    // Update hero lede
+    const heroLede = document.querySelector('.ec-hero__lede');
+    const viewHeroLede: Record<string, string> = {
+      hearth: 'Hearth & Code is my public workbench — a place to share how I think, what I value, and the wisdom I\'ve gathered. I document because memory fails and writing helps me think.',
+      code: 'Hearth & Code is my public workbench for research, software, knowledge architecture, and policy thinking. I build because complex systems deserve careful design.',
+      balanced: 'Hearth & Code is my public workbench for research, software, knowledge architecture, and policy thinking. The goal isn\'t to show everything I\'ve done. It\'s to make the work legible enough that you can question it, use it, or build on it.',
+    };
+    if (heroLede && viewHeroLede[view]) heroLede.textContent = viewHeroLede[view];
+  }
+
+  // Listen for popstate (browser back/forward)
+  window.addEventListener('popstate', () => {
+    try {
+      const url = new URL(window.location.href);
+      const view = url.searchParams.get('view') || localStorage.getItem('hearth-code-view') || 'balanced';
+      if (['hearth', 'code', 'balanced'].includes(view)) {
+        applyViewToPage(view);
+      }
+    } catch (e) {}
+  });
+
+  // Initialize from URL or localStorage on load
+  try {
+    const url = new URL(window.location.href);
+    const urlView = url.searchParams.get('view');
+    const storedView = localStorage.getItem('hearth-code-view');
+    const view = urlView || storedView || 'balanced';
+    if (['hearth', 'code', 'balanced'].includes(view)) {
+      applyViewToPage(view);
+    }
+  } catch (e) {}
 
   // Run on DOMContentLoaded
   if (document.readyState === 'loading') {

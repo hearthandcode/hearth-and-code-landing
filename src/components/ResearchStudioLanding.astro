@@ -633,144 +633,16 @@ const startPaths = getStartPaths('balanced');
   }
 
   /* View-specific content visibility */
-  :root[data-hc-view="hearth"] [data-view-only="code"] { display: none; }
-  :root[data-hc-view="code"] [data-view-only="hearth"] { display: none; }
-  :root[data-hc-view="balanced"] [data-view-only="hearth"],
-  :root[data-hc-view="balanced"] [data-view-only="code"] { display: none; }
+  /* View-specific content visibility (using data-view attribute on elements) */
+  [data-view="hearth"] .is-code-only { display: none; }
+  [data-view="code"] .is-hearth-only { display: none; }
+  [data-view="balanced"] .is-code-only,
+  [data-view="balanced"] .is-hearth-only { display: none; }
 </style>
 
 <script>
-  // ============================================================
-  // View state management
-  // ============================================================
-
-  // Initialize view from URL or localStorage
-  function getView() {
-    try {
-      const url = new URL(window.location.href);
-      const urlView = url.searchParams.get('view');
-      if (urlView && ['hearth', 'code', 'balanced'].includes(urlView)) return urlView;
-      const stored = localStorage.getItem('hearth-code-view');
-      if (stored && ['hearth', 'code', 'balanced'].includes(stored)) return stored;
-    } catch (e) {}
-    return 'balanced';
-  }
-
-  function applyView(view: string) {
-    document.documentElement.setAttribute('data-hc-view', view);
-
-    // Update all toggles on page
-    document.querySelectorAll('[data-toggle-root]').forEach((toggle) => {
-      toggle.setAttribute('data-current', view);
-      toggle.querySelectorAll('[data-segment]').forEach((seg) => {
-        const segValue = seg.getAttribute('data-segment');
-        if (segValue === view) {
-          seg.setAttribute('aria-selected', 'true');
-          seg.classList.add('is-active');
-        } else {
-          seg.setAttribute('aria-selected', 'false');
-          seg.classList.remove('is-active');
-        }
-      });
-    });
-
-    // Update navigation cards data-view
-    document.querySelectorAll('.ec-nav-card').forEach((card) => {
-      card.setAttribute('data-view', view);
-    });
-
-    // Update navigation section content based on view
-    const navTitle = document.getElementById('nav-title');
-    const navDisposition = document.getElementById('nav-disposition');
-    const viewContent: Record<string, { title: string; description: string }> = {
-      hearth: {
-        title: 'Explore by purpose',
-        description: 'Each surface maps to a question about meaning, agency, or how to live and work well in the age of AI.',
-      },
-      code: {
-        title: 'Explore by domain',
-        description: 'Each surface contains technical depth: methods, architectures, code, and research with sources.',
-      },
-      balanced: {
-        title: 'Eight layers of work.',
-        description: 'Each surface offers both the philosophical context and the technical artifacts to act on it.',
-      },
-    };
-    if (navTitle && viewContent[view]) {
-      navTitle.textContent = viewContent[view].title;
-    }
-    if (navDisposition && viewContent[view]) {
-      navDisposition.textContent = viewContent[view].description;
-    }
-
-    // Update view disposition panel
-    const viewPanel = document.getElementById('view-panel');
-    const viewPanelEyebrow = document.getElementById('view-panel-eyebrow');
-    const viewPanelTitle = document.getElementById('view-panel-title');
-    const viewPanelDisposition = document.getElementById('view-panel-disposition');
-    const viewPanelData: Record<string, { eyebrow: string; title: string; disposition: string }> = {
-      hearth: {
-        eyebrow: 'Hearth view',
-        title: 'Dossier & Philosophy first',
-        disposition: 'Hearth emphasizes the personal side: the working archetype and the positions. Methods and research are present but secondary. Start with who I am, then what I think.',
-      },
-      code: {
-        eyebrow: 'Code view',
-        title: 'Methods & Research first',
-        disposition: 'Code emphasizes the technical side: field cards, prompt techniques, system architectures, and implementation depth. Dossier and philosophy are present but secondary. Start with how to build, then who built it.',
-      },
-      balanced: {
-        eyebrow: 'Current view',
-        title: 'Full spectrum',
-        disposition: 'Each surface offers both the philosophical context and the technical artifacts to act on it.',
-      },
-    };
-    if (viewPanel) viewPanel.setAttribute('data-view', view);
-    if (viewPanelEyebrow && viewPanelData[view]) {
-      viewPanelEyebrow.textContent = viewPanelData[view].eyebrow;
-    }
-    if (viewPanelTitle && viewPanelData[view]) {
-      viewPanelTitle.textContent = viewPanelData[view].title;
-    }
-    if (viewPanelDisposition && viewPanelData[view]) {
-      viewPanelDisposition.textContent = viewPanelData[view].disposition;
-    }
-
-    // Update path section content
-    const pathIntro = document.querySelector('.ec-presentation--start .ec-presentation__title');
-    const viewPathIntro: Record<string, string> = {
-      hearth: 'Three paths, for how you want to explore.',
-      code: 'Three paths, organized by depth of engagement.',
-      balanced: 'Three paths, depending on you.',
-    };
-    if (pathIntro && viewPathIntro[view]) {
-      pathIntro.textContent = viewPathIntro[view];
-    }
-
-    // Update hero lede
-    const heroLede = document.querySelector('.ec-hero__lede');
-    const viewHeroLede: Record<string, string> = {
-      hearth: 'Hearth & Code is my public workbench — a place to share how I think, what I value, and the wisdom I\'ve gathered. I document because memory fails and writing helps me think.',
-      code: 'Hearth & Code is my public workbench for research, software, knowledge architecture, and policy thinking. I build because complex systems deserve careful design.',
-      balanced: 'Hearth & Code is my public workbench for research, software, knowledge architecture, and policy thinking. The goal isn\'t to show everything I\'ve done. It\'s to make the work legible enough that you can question it, use it, or build on it.',
-    };
-    if (heroLede && viewHeroLede[view]) {
-      heroLede.textContent = viewHeroLede[view];
-    }
-  }
-
-  // Listen for toggle changes
-  document.addEventListener('hearth-code-view-change', (event) => {
-    const view = (event as CustomEvent).detail.view;
-    applyView(view);
-  });
-
-  // Handle browser back/forward
-  window.addEventListener('popstate', () => {
-    applyView(getView());
-  });
-
-  // Initialize on load
-  applyView(getView());
+  // Note: View change logic has been moved into the HearthCodeToggle
+  // component itself to avoid Astro script consolidation issues.
+  // The toggle now directly applies all view changes when clicked.
 </script>
 </BaseLayout>
