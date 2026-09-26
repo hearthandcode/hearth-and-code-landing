@@ -1,0 +1,129 @@
+---
+/**
+ * Navigation Sidebar template
+ * id: t-nav-sidebar
+ *
+ * Vertical sidebar navigation.
+ */
+
+interface NavItem {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+interface Props {
+  sections: NavSection[];
+  title?: string;
+  width?: string;
+  collapsible?: boolean;
+  sticky?: boolean;
+  class?: string;
+}
+
+const {
+  sections,
+  title,
+  width = '16rem',
+  collapsible = false,
+  sticky = true,
+  class: className = '',
+} = Astro.props;
+---
+
+<aside class={`ec-nav-sidebar ${sticky ? 'is-sticky' : ''} ${className}`} style={`flex-basis: ${width};`}>
+  {title && <h2 class="ec-nav-sidebar__title">{title}</h2>}
+  {sections.map((section) => (
+    <div class="ec-nav-sidebar__section">
+      <h3 class="ec-nav-sidebar__section-title">{section.title}</h3>
+      <nav aria-label={`${section.title} navigation`}>
+        <ul class="ec-nav-sidebar__list">
+          {section.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class={`ec-nav-sidebar__link ${item.active ? 'is-active' : ''}`}
+                aria-current={item.active ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  ))}
+</aside>
+
+<style>
+  .ec-nav-sidebar {
+    flex-shrink: 0;
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    max-height: calc(100vh - var(--space-7));
+    overflow-y: auto;
+  }
+  .ec-nav-sidebar.is-sticky {
+    position: sticky;
+    top: var(--space-5);
+  }
+  .ec-nav-sidebar__title {
+    margin: 0 0 var(--space-4) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+  .ec-nav-sidebar__section {
+    margin-bottom: var(--space-4);
+  }
+  .ec-nav-sidebar__section:last-child {
+    margin-bottom: 0;
+  }
+  .ec-nav-sidebar__section-title {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+  }
+  .ec-nav-sidebar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .ec-nav-sidebar__link {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border-left: 2px solid transparent;
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-nav-sidebar__link:hover {
+    background: var(--color-surface-recessed);
+    color: var(--color-text-primary);
+  }
+  .ec-nav-sidebar__link.is-active {
+    background: var(--color-surface-recessed);
+    color: var(--color-text-display);
+    border-left-color: var(--color-accent-ember);
+  }
+</style>

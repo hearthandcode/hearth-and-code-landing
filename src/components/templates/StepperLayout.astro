@@ -1,0 +1,45 @@
+---
+/**
+ * Layout (Stepper) template
+ * id: t-layout-stepper
+ *
+ * Multi-step layout with progress indication.
+ */
+
+import Stepper from '../composites/Stepper.astro';
+
+interface Step {
+  label: string;
+  description?: string;
+}
+
+interface Props {
+  steps: Step[];
+  currentStep: number;
+  orientation?: 'horizontal' | 'vertical';
+  class?: string;
+}
+
+const {
+  steps,
+  currentStep,
+  orientation = 'horizontal',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`ec-layout-stepper ${className}`}>
+  <Stepper steps={steps} currentStep={currentStep} orientation={orientation} />
+  <div class="ec-layout-stepper__content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .ec-layout-stepper {
+    width: 100%;
+  }
+  .ec-layout-stepper__content {
+    margin-top: var(--space-7);
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+/**
+ * Hero (Video) template
+ * id: t-hero-video
+ *
+ * Hero with background video.
+ */
+
+import Button from '../primitives/Button.astro';
+
+interface Props {
+  videoSrc?: string;
+  poster?: string;
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  primaryCta?: { label: string; href: string };
+  accent?: 'hearth' | 'code' | 'balanced';
+  overlay?: boolean;
+  class?: string;
+}
+
+const {
+  videoSrc,
+  poster,
+  eyebrow,
+  title,
+  lede,
+  primaryCta,
+  accent = 'balanced',
+  overlay = true,
+  class: className = '',
+} = Astro.props;
+---
+
+<section class={`ec-hero-video ec-hero-video--${accent} ${className}`}>
+  {videoSrc && (
+    <video
+      class="ec-hero-video__bg"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={poster}
+    >
+      <source src={videoSrc} type="video/mp4" />
+    </video>
+  )}
+  {overlay && <div class="ec-hero-video__overlay"></div>}
+  <div class="ec-hero-video__content">
+    {eyebrow && <p class="ec-hero-video__eyebrow">{eyebrow}</p>}
+    <h1 class="ec-hero-video__title">{title}</h1>
+    {lede && <p class="ec-hero-video__lede">{lede}</p>}
+    {primaryCta && (
+      <Button href={primaryCta.href} variant="primary" size="md">{primaryCta.label}</Button>
+    )}
+  </div>
+</section>
+
+<style>
+  .ec-hero-video {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: var(--space-8) var(--space-5);
+    overflow: hidden;
+    color: var(--color-text-display);
+  }
+  .ec-hero-video__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .ec-hero-video__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(14, 17, 20, 0.5) 0%, rgba(14, 17, 20, 0.85) 100%);
+    z-index: 1;
+  }
+  .ec-hero-video__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  .ec-hero-video__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-ember);
+  }
+  .ec-hero-video--code .ec-hero-video__eyebrow { color: var(--color-accent-signal); }
+  .ec-hero-video--balanced .ec-hero-video__eyebrow { color: var(--color-accent-violet); }
+  .ec-hero-video__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  .ec-hero-video__lede {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    max-width: 36rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ec-hero-video__bg {
+      animation: none;
+    }
+  }
+</style>

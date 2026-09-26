@@ -1,0 +1,128 @@
+---
+/**
+ * Hero (Split) template
+ * id: t-hero-split
+ *
+ * Hero with text left, visual right.
+ */
+
+import Button from '../primitives/Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  accent?: 'hearth' | 'code' | 'balanced';
+  reversed?: boolean;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  primaryCta,
+  secondaryCta,
+  accent = 'balanced',
+  reversed = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<section class={`ec-hero-split ec-hero-split--${accent} ${reversed ? 'is-reversed' : ''} ${className}`}>
+  <div class="ec-hero-split__content">
+    <div class="ec-hero-split__text">
+      {eyebrow && <p class="ec-hero-split__eyebrow">{eyebrow}</p>}
+      <h1 class="ec-hero-split__title">{title}</h1>
+      {lede && <p class="ec-hero-split__lede">{lede}</p>}
+      {(primaryCta || secondaryCta) && (
+        <div class="ec-hero-split__ctas">
+          {primaryCta && (
+            <Button href={primaryCta.href} variant="primary" size="md">{primaryCta.label}</Button>
+          )}
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="ghost" size="md">{secondaryCta.label}</Button>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+  <div class="ec-hero-split__visual">
+    <slot name="visual" />
+  </div>
+</section>
+
+<style>
+  .ec-hero-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    padding: var(--space-8) var(--space-5);
+    max-width: 80rem;
+    margin: 0 auto;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .ec-hero-split {
+      grid-template-columns: 1fr 1fr;
+    }
+    .ec-hero-split.is-reversed {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .ec-hero-split.is-reversed .ec-hero-split__content { order: 2; }
+  .ec-hero-split__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .ec-hero-split__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-ember);
+  }
+  .ec-hero-split--code .ec-hero-split__eyebrow { color: var(--color-accent-signal); }
+  .ec-hero-split--balanced .ec-hero-split__eyebrow { color: var(--color-accent-violet); }
+  .ec-hero-split__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.15;
+    color: var(--color-text-display);
+    letter-spacing: -0.02em;
+  }
+  .ec-hero-split__lede {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+  .ec-hero-split__ctas {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .ec-hero-split__visual {
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+  }
+  .ec-hero-split--hearth .ec-hero-split__visual {
+    border-top: 3px solid var(--color-accent-ember);
+  }
+  .ec-hero-split--code .ec-hero-split__visual {
+    border-top: 3px solid var(--color-accent-signal);
+  }
+  .ec-hero-split--balanced .ec-hero-split__visual {
+    border-top: 3px solid var(--color-accent-violet);
+  }
+</style>

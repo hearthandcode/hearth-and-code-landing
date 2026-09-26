@@ -1,0 +1,48 @@
+---
+/**
+ * Layout (Header) template
+ * id: t-layout-header
+ *
+ * Page with sticky header, content area, and optional footer.
+ */
+
+interface Props {
+  title?: string;
+  stickyHeader?: boolean;
+  class?: string;
+}
+
+const {
+  title,
+  stickyHeader = true,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`ec-layout-header ${stickyHeader ? 'is-sticky' : ''} ${className}`}>
+  {title && <div class="ec-layout-header__title">{title}</div>}
+  <div class="ec-layout-header__content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .ec-layout-header {
+    width: 100%;
+  }
+  .ec-layout-header__title {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-surface-raised);
+    border-bottom: 1px solid var(--color-surface-rule);
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+  .ec-layout-header__content {
+    padding: var(--space-5);
+  }
+</style>

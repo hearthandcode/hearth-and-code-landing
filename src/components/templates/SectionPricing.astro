@@ -1,0 +1,76 @@
+---
+/**
+ * Section (Pricing) template
+ * id: t-section-pricing
+ *
+ * Pricing tiers comparison section.
+ */
+
+import SectionContent from './SectionContent.astro';
+import PricingCard from '../composites/PricingCard.astro';
+
+interface PricingTier {
+  tier: string;
+  price: string;
+  period?: string;
+  description?: string;
+  features: string[];
+  highlighted?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  tiers: PricingTier[];
+  accent?: 'hearth' | 'code' | 'balanced';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  tiers,
+  accent = 'balanced',
+  class: className = '',
+} = Astro.props;
+---
+
+<SectionContent eyebrow={eyebrow} title={title} lede={lede} accent={accent} class={className}>
+  <div class="ec-pricing-grid">
+    {tiers.map((tier) => (
+      <PricingCard
+        tier={tier.tier}
+        price={tier.price}
+        period={tier.period}
+        description={tier.description}
+        features={tier.features}
+        highlighted={tier.highlighted}
+        ctaLabel={tier.ctaLabel}
+        ctaHref={tier.ctaHref}
+      />
+    ))}
+  </div>
+</SectionContent>
+
+<style>
+  .ec-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+  @media (min-width: 768px) {
+    .ec-pricing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .ec-pricing-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

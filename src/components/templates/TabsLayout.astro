@@ -1,0 +1,44 @@
+---
+/**
+ * Layout (Tabs) template
+ * id: t-layout-tabs
+ *
+ * Content organized into switchable tabs.
+ */
+
+import Tabs from '../composites/Tabs.astro';
+
+interface TabItem {
+  id: string;
+  label: string;
+  content?: string;
+}
+
+interface Props {
+  tabs: TabItem[];
+  variant?: 'underline' | 'pills' | 'boxed';
+  orientation?: 'horizontal' | 'vertical';
+  defaultTab?: string;
+  class?: string;
+}
+
+const {
+  tabs,
+  variant = 'underline',
+  orientation = 'horizontal',
+  defaultTab,
+  class: className = '',
+} = Astro.props;
+---
+
+<Tabs
+  tabs={tabs}
+  variant={variant}
+  orientation={orientation}
+  defaultTab={defaultTab}
+  class={className}
+/>
+
+<style>
+  /* Add any custom tab styling here */
+</style>

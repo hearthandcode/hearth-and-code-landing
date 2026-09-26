@@ -1,0 +1,120 @@
+---
+/**
+ * Modal template
+ * id: t-modal
+ *
+ * Modal overlay with backdrop.
+ */
+
+interface Props {
+  id?: string;
+  title?: string;
+  size?: 'sm' | 'md' | 'lg';
+  open?: boolean;
+  class?: string;
+}
+
+const {
+  id = 'modal',
+  title,
+  size = 'md',
+  open = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class={`ec-modal ${open ? 'is-open' : ''} ${className}`}
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={title ? `${id}-title` : undefined}
+  aria-hidden={!open}
+>
+  {open && (
+    <>
+      <div class="ec-modal__backdrop" data-modal-dismiss></div>
+      <div class={`ec-modal__dialog ec-modal__dialog--${size}`}>
+        {title && <h2 id={`${id}-title`} class="ec-modal__title">{title}</h2>}
+        <button
+          type="button"
+          class="ec-modal__close"
+          aria-label="Close"
+          data-modal-dismiss
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+        <div class="ec-modal__body">
+          <slot />
+        </div>
+      </div>
+    </>
+  )}
+</div>
+
+<style>
+  .ec-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal, 400);
+    display: none;
+  }
+  .ec-modal.is-open {
+    display: block;
+  }
+  .ec-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--color-overlay, rgba(14, 17, 20, 0.85));
+    backdrop-filter: blur(2px);
+  }
+  .ec-modal__dialog {
+    position: relative;
+    margin: 5vh auto;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-overlay, 0 8px 32px rgba(0, 0, 0, 0.5));
+    padding: var(--space-6);
+    color: var(--color-text-primary);
+  }
+  .ec-modal__dialog--sm { max-width: 24rem; }
+  .ec-modal__dialog--md { max-width: 36rem; }
+  .ec-modal__dialog--lg { max-width: 56rem; }
+  .ec-modal__title {
+    margin: 0 0 var(--space-4) 0;
+    padding-right: var(--space-7);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-display);
+  }
+  .ec-modal__close {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    width: var(--size-control-sm);
+    height: var(--size-control-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-modal__close:hover {
+    background: var(--color-surface-recessed);
+    color: var(--color-text-primary);
+  }
+  .ec-modal__body {
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+</style>
