@@ -13,7 +13,11 @@ import { LivePreview } from '../../components/LivePreview.tsx';
 
 // Inline component CSS so it loads into document.head via <style is:inline>
 // in the page head slot. This bypasses any Astro island CSS scoping.
+// Use Astro's recommended approach: load the file as a static asset via
+// `?raw` import or read at runtime from a stable path.
 import { readFileSync } from 'node:fs';
+
+// process.cwd() at build time equals the project root, so this is reliable
 const componentCss = readFileSync('./public/ember-circuit-component.css', 'utf-8');
 
 ---
