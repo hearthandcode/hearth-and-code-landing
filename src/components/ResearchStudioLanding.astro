@@ -1,648 +1,308 @@
 ---
+/**
+ * Public Studio landing page.
+ *
+ * The page is intentionally an orientation surface rather than a catalogue:
+ * choose a projection, understand the studio, choose a path, then inspect work.
+ */
 import '../styles/tokens.css';
 import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import HearthCodeToggle from './HearthCodeToggle.astro';
 import CircuitBackground from './CircuitBackground.astro';
 import NavigationCard from './NavigationCard.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getNavigationCards, getStartPaths } from '../lib/content';
+import { getNavigationCards } from '../lib/content';
 
-const navCards = getNavigationCards('balanced');
-const startPaths = getStartPaths('balanced');
+const navigationCards = getNavigationCards('balanced').map((card) => ({
+  ...card,
+  // The former /practice/ route is now the public methods surface.
+  href: card.href === '/practice/' ? '/methods/' : card.href,
+}));
+
+const startPaths = [
+  {
+    href: '/philosophy/ai-literacy/',
+    title: 'Understand the position',
+    description: 'Read a grounded entry point into how this studio approaches AI, judgment, and public reasoning.',
+    number: '01',
+  },
+  {
+    href: '/methods/',
+    title: 'Inspect the methods',
+    description: 'Open the practical instruments, prompt techniques, and working records behind the research.',
+    number: '02',
+  },
+  {
+    href: '/research/',
+    title: 'Follow the active work',
+    description: 'See the research programs, systems, and open questions currently being developed in public.',
+    number: '03',
+  },
+];
+
+const currentSignals = [
+  {
+    eyebrow: 'Research platform',
+    title: 'Exocore',
+    detail: 'A local-first research workbench for source-linked investigation, governed agent roles, and human return paths.',
+    href: '/exocore/',
+  },
+  {
+    eyebrow: 'Communication medium',
+    title: 'HCAN',
+    detail: 'A bounded language and evaluation surface for making system claims, context, and effects inspectable.',
+    href: '/hcan/',
+  },
+  {
+    eyebrow: 'Public method library',
+    title: 'Fieldcraft',
+    detail: 'Working methods, field cards, and techniques for research that remains legible and revisable.',
+    href: '/methods/',
+  },
+];
 ---
 
 <BaseLayout
   title="Hearth & Code — Independent Research Studio"
-  description="An independent research studio for answerable systems. Research, software, knowledge architecture, and policy thinking."
+  description="An independent research studio for answerable systems: research, software, knowledge architecture, and policy thinking."
 >
-
-<!-- HERO SECTION -->
-<section class="ec-presentation ec-presentation--hero" data-section="hero">
-  <CircuitBackground density="medium" animated={true} accent="signal" />
-
-  <div class="ec-presentation__inner">
-    <header class="ec-hero">
-      <p class="ec-eyebrow">Hearth &amp; Code</p>
-      <h1 class="ec-hero__title">An independent research studio for answerable systems.</h1>
-      <p class="ec-hero__lede">
-        Hearth &amp; Code is my public workbench for research, software, knowledge architecture,
-        and policy thinking. The goal isn't to show everything I've done. It's to make
-        the work legible enough that you can question it, use it, or build on it.
-      </p>
-      <div class="ec-hero__toggle-row">
-        <HearthCodeToggle current="balanced" />
-      </div>
-      <!-- View disposition panel — surfaces view-specific links separately -->
-      <aside class="ec-view-panel" id="view-panel" data-view="balanced" aria-live="polite">
-        <div class="ec-view-panel__inner">
-          <p class="ec-view-panel__eyebrow" id="view-panel-eyebrow">Current view</p>
-          <h3 class="ec-view-panel__title" id="view-panel-title">Full spectrum</h3>
-          <p class="ec-view-panel__disposition" id="view-panel-disposition">
-            Each surface offers both the philosophical context and the technical artifacts
-            to act on it. The navigation below is balanced between personal understanding
-            and implementation depth.
-          </p>
-          <div class="ec-view-panel__links">
-            <div class="ec-view-panel__links-col">
-              <h4 class="ec-view-panel__links-heading">Hearth</h4>
-              <ul class="ec-view-panel__links-list" id="view-panel-hearth">
-                <li><a href="/dossier/">Dossier</a></li>
-                <li><a href="/philosophy/">Philosophy</a></li>
-                <li><a href="/portfolio/">Portfolio</a></li>
-                <li><a href="/questions/">Questions</a></li>
-              </ul>
-            </div>
-            <div class="ec-view-panel__links-col">
-              <h4 class="ec-view-panel__links-heading">Code</h4>
-              <ul class="ec-view-panel__links-list" id="view-panel-code">
-                <li><a href="/practice/">Practice (Methods)</a></li>
-                <li><a href="/research/">Research</a></li>
-                <li><a href="/portfolio/">Portfolio</a></li>
-                <li><a href="/dossier/">Dossier</a></li>
-              </ul>
-            </div>
-          </div>
+  <main class="studio" data-studio-root>
+    <!-- 1. Identity and projection choice -->
+    <section class="studio-hero" aria-labelledby="studio-title">
+      <CircuitBackground density="medium" animated={true} accent="signal" />
+      <div class="studio-shell studio-hero__content">
+        <p class="studio-kicker">Hearth &amp; Code · Independent research studio</p>
+        <h1 id="studio-title">Answerable systems for consequential work.</h1>
+        <p class="studio-hero__lede" id="studio-hero-lede">
+          Research, software, knowledge architecture, and policy thinking made legible enough to inspect, question, use, and revise.
+        </p>
+        <div class="studio-hero__toggle">
+          <HearthCodeToggle current="balanced" />
         </div>
-      </aside>
-    </header>
-  </div>
-</section>
+        <p class="studio-hero__hint">Choose a projection to change the emphasis, not the underlying work.</p>
+      </div>
+    </section>
 
-<!-- DIVIDER -->
-<div class="ec-divider" aria-hidden="true"></div>
-
-<!-- WHO RUNS IT -->
-<section class="ec-presentation ec-presentation--who" data-section="who">
-  <div class="ec-presentation__inner ec-presentation__inner--centered">
-    <p class="ec-eyebrow">Who runs it</p>
-    <h2 class="ec-presentation__title">A practice, not a platform.</h2>
-    <div class="ec-who__content">
-      <p class="ec-who__lede">
-        I'm Scott Rallya (online: Cognitectus). I work independently on systems where
-        complexity needs to stay inspectable — AI governance, knowledge architecture,
-        agent coordination, and public reasoning.
-      </p>
-      <p class="ec-who__principle">
-        The studio runs on a single principle: <strong>every consequential claim
-        should have a source, a scope, and a way to be challenged.</strong>
-      </p>
-      <p class="ec-who__principle">
-        That's the bar. Everything else follows from it. <a href="/dossier/">Read my
-        working profile to see how this plays out in practice</a> — the personality
-        behind the work, the methodology, and what I'm currently working on.
-      </p>
-    </div>
-  </div>
-</section>
-
-<div class="ec-divider" aria-hidden="true"></div>
-
-<!-- WHAT YOU'LL FIND HERE -->
-<section class="ec-presentation ec-presentation--navigate" data-section="navigate">
-  <CircuitBackground density="low" animated={false} accent="ember" />
-
-  <div class="ec-presentation__inner">
-    <p class="ec-eyebrow">What you'll find here</p>
-    <h2 class="ec-presentation__title" id="nav-title">Eight layers of work.</h2>
-    <p class="ec-presentation__lede" id="nav-disposition">
-      The site is organized in eight layers, each with a different purpose and reading mode.
-      Toggle the view above to see them through a Hearth or Code lens — the same paths,
-      different emphasis.
-    </p>
-
-    <div class="ec-presentation__grid" id="nav-grid">
-      {navCards.map((card) => (
-        <NavigationCard
-          href={card.href || '#'}
-          title={card.title}
-          description={card.description}
-          emphasis={card.emphasis || 5}
-          view="balanced"
-        />
-      ))}
-    </div>
-  </div>
-</section>
-
-<div class="ec-divider" aria-hidden="true"></div>
-
-<!-- WHERE TO START -->
-<section class="ec-presentation ec-presentation--start" data-section="start">
-  <div class="ec-presentation__inner ec-presentation__inner--centered">
-    <p class="ec-eyebrow">Where to start</p>
-    <h2 class="ec-presentation__title">Three paths, depending on you.</h2>
-
-    <div class="ec-presentation__paths" id="paths-list">
-      {startPaths.map((path, idx) => (
-        <article class="ec-path" data-num={idx + 1}>
-          <div class="ec-path__num">{String(idx + 1).padStart(2, '0')}</div>
-          <div class="ec-path__content">
-            <h3 class="ec-path__title">{path.title}</h3>
-            <p class="ec-path__desc">{path.description}</p>
+    <!-- 2. Projection orientation -->
+    <section class="studio-section studio-section--orientation" aria-labelledby="orientation-title">
+      <div class="studio-shell studio-orientation">
+        <div class="studio-section__intro">
+          <p class="studio-kicker" id="view-panel-eyebrow">Current projection</p>
+          <h2 id="orientation-title"><span id="view-panel-title">The full studio, in one view.</span></h2>
+        </div>
+        <aside class="studio-orientation__panel" id="view-panel" data-view="balanced" aria-live="polite">
+          <p id="view-panel-disposition">
+            Hearth holds the questions of meaning and judgment. Code holds the methods and systems. The balanced view keeps both visible, so a visitor can move from a claim to its working form.
+          </p>
+          <div class="studio-orientation__routes" aria-label="Projection routes">
+            <a href="/dossier/">Read the dossier <span aria-hidden="true">↗</span></a>
+            <a href="/methods/">Open the methods <span aria-hidden="true">↗</span></a>
+            <a href="/research/">Inspect the research <span aria-hidden="true">↗</span></a>
           </div>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
+        </aside>
+      </div>
+    </section>
 
-<div class="ec-divider" aria-hidden="true"></div>
+    <!-- 3. Audience-led start paths -->
+    <section class="studio-section" aria-labelledby="start-title">
+      <div class="studio-shell">
+        <div class="studio-section__intro studio-section__intro--wide">
+          <p class="studio-kicker">Start here</p>
+          <h2 id="start-title">Three useful ways into the studio.</h2>
+          <p>Choose the route that best matches the question you brought with you.</p>
+        </div>
+        <div class="studio-paths">
+          {startPaths.map((path) => (
+            <a class="studio-path" href={path.href}>
+              <span class="studio-path__number">{path.number}</span>
+              <span class="studio-path__body">
+                <span class="studio-path__title">{path.title}</span>
+                <span class="studio-path__description">{path.description}</span>
+              </span>
+              <span class="studio-path__arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
 
-<!-- FOOTER -->
-<section class="ec-presentation ec-presentation--footer" data-section="footer">
-  <div class="ec-presentation__inner ec-presentation__inner--centered">
-    <p class="ec-footer__text">
-      This site is independently operated. No tracking. No visitor profiles.
-      If something here is wrong or incomplete, <a href="/correspondence/">tell me</a> —
-      correction is always welcome.
-    </p>
-  </div>
-</section>
+    <!-- 4. Site work map -->
+    <section class="studio-section studio-section--map" aria-labelledby="nav-title">
+      <CircuitBackground density="low" animated={false} accent="ember" />
+      <div class="studio-shell studio-section__content">
+        <div class="studio-section__intro studio-section__intro--wide">
+          <p class="studio-kicker">Work map</p>
+          <h2 id="nav-title">The studio surfaces.</h2>
+          <p id="nav-disposition">Each surface has a distinct reading mode: orient, learn, inspect, or return with a correction.</p>
+        </div>
+        <div class="studio-map" id="nav-grid">
+          {navigationCards.map((card) => (
+            <NavigationCard
+              href={card.href || '#'}
+              title={card.title}
+              description={card.description}
+              emphasis={card.emphasis || 5}
+              view="balanced"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Concrete current signals -->
+    <section class="studio-section" aria-labelledby="signal-title">
+      <div class="studio-shell">
+        <div class="studio-section__intro studio-section__intro--wide">
+          <p class="studio-kicker">Current signal</p>
+          <h2 id="signal-title">Three live bodies of work.</h2>
+          <p>These are useful entry points if you want to see the studio in motion rather than only navigate its archive.</p>
+        </div>
+        <div class="studio-signals">
+          {currentSignals.map((signal) => (
+            <article class="studio-signal">
+              <p class="studio-signal__eyebrow">{signal.eyebrow}</p>
+              <h3>{signal.title}</h3>
+              <p>{signal.detail}</p>
+              <a href={signal.href}>Open {signal.title} <span aria-hidden="true">→</span></a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Practice and return boundary -->
+    <section class="studio-section studio-section--return" aria-labelledby="return-title">
+      <div class="studio-shell studio-return">
+        <p class="studio-kicker">Practice and return</p>
+        <h2 id="return-title">A public surface should leave a way back.</h2>
+        <p>
+          This studio is independently operated, does not build visitor profiles, and treats correction as part of the work. If a claim, source, or route is incomplete, say so.
+        </p>
+        <div class="studio-return__actions">
+          <a class="studio-action studio-action--primary" href="/correspondence/">Start a correspondence</a>
+          <a class="studio-action" href="/dossier/">How the studio works</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
 
 <style>
-  /* ==========================================================================
-     PRESENTATION CONTAINER
-     Each section is a full-viewport "slide"
-     ========================================================================== */
-  .ec-presentation {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-8) var(--space-7);
-    overflow: hidden;
+  .studio { background: var(--color-surface-primary); color: var(--color-text-primary); overflow: hidden; }
+  .studio-shell { width: min(100% - 3rem, 76rem); margin-inline: auto; position: relative; z-index: 1; }
+  .studio-kicker { margin: 0 0 0.75rem; color: var(--color-accent-gold); font: 500 0.75rem/1.25 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+
+  .studio-hero { position: relative; min-height: min(46rem, 88vh); display: grid; align-items: center; padding: 7rem 0 5rem; border-bottom: 1px solid var(--color-surface-rule); }
+  .studio-hero__content { max-width: 66rem; }
+  .studio-hero h1 { max-width: 15ch; margin: 0; color: var(--color-text-display); font: 700 clamp(3rem, 7vw, 6.5rem)/0.96 var(--font-display); letter-spacing: -0.055em; }
+  .studio-hero__lede { max-width: 46rem; margin: 1.5rem 0 0; color: var(--color-text-secondary); font-size: clamp(1.125rem, 2vw, 1.35rem); line-height: 1.55; }
+  .studio-hero__toggle { margin-top: 2.25rem; }
+  .studio-hero__hint { margin: 0.5rem 0 0; color: var(--color-text-secondary); font: 0.8125rem/1.45 var(--font-mono); }
+
+  .studio-section { position: relative; padding: clamp(4rem, 8vw, 7rem) 0; border-bottom: 1px solid var(--color-surface-rule); }
+  .studio-section--orientation { background: var(--color-surface-recessed); }
+  .studio-section--map { overflow: hidden; }
+  .studio-section__content { position: relative; z-index: 1; }
+  .studio-section__intro { max-width: 38rem; }
+  .studio-section__intro--wide { max-width: 44rem; }
+  .studio-section__intro h2, .studio-return h2 { margin: 0; color: var(--color-text-display); font: 700 clamp(2rem, 4vw, 3.5rem)/1.02 var(--font-display); letter-spacing: -0.035em; }
+  .studio-section__intro > p:last-child { margin: 1rem 0 0; color: var(--color-text-secondary); font-size: 1.05rem; line-height: 1.6; }
+
+  .studio-orientation { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 1.15fr); align-items: end; gap: clamp(2rem, 7vw, 7rem); }
+  .studio-orientation__panel { padding: clamp(1.5rem, 3vw, 2.25rem); border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-violet); background: var(--color-surface-raised); box-shadow: var(--shadow-sm); }
+  .studio-orientation__panel[data-view="hearth"] { border-left-color: var(--color-accent-ember); }
+  .studio-orientation__panel[data-view="code"] { border-left-color: var(--color-accent-signal); }
+  .studio-orientation__panel p { margin: 0; color: var(--color-text-primary); font-size: 1.0625rem; line-height: 1.6; }
+  .studio-orientation__routes { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin-top: 1.5rem; }
+  .studio-orientation__routes a, .studio-signal a { color: var(--color-accent-signal); font: 0.8125rem/1.3 var(--font-mono); text-decoration: none; }
+  .studio-orientation__routes a:hover, .studio-signal a:hover { color: var(--color-text-display); }
+
+  .studio-paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 2.25rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-rule); }
+  .studio-path { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; min-height: 13.5rem; padding: 1.5rem; background: var(--color-surface-raised); color: inherit; text-decoration: none; transition: background 160ms ease, transform 160ms ease; }
+  .studio-path:hover { background: var(--color-surface-elevated); transform: translateY(-3px); }
+  .studio-path__number { color: var(--color-accent-gold); font: 0.75rem/1 var(--font-mono); }
+  .studio-path__body { display: flex; flex-direction: column; }
+  .studio-path__title { color: var(--color-text-display); font: 700 1.45rem/1.1 var(--font-display); }
+  .studio-path__description { margin-top: 0.75rem; color: var(--color-text-secondary); line-height: 1.55; }
+  .studio-path__arrow { align-self: end; color: var(--color-accent-signal); font-size: 1.5rem; }
+
+  .studio-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 2.25rem; }
+  .studio-map :global(.ec-nav-card) { min-height: 10rem; }
+
+  .studio-signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
+  .studio-signal { display: flex; flex-direction: column; padding: 1.5rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-raised); }
+  .studio-signal__eyebrow { margin: 0; color: var(--color-accent-signal); font: 0.6875rem/1.25 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .studio-signal h3 { margin: 1rem 0 0; color: var(--color-text-display); font: 700 1.5rem/1.1 var(--font-display); }
+  .studio-signal > p:not(.studio-signal__eyebrow) { flex: 1; margin: 0.75rem 0 1.5rem; color: var(--color-text-secondary); line-height: 1.55; }
+
+  .studio-section--return { background: linear-gradient(120deg, rgba(53, 34, 93, 0.22), var(--color-surface-primary) 55%, rgba(31, 182, 168, 0.1)); }
+  .studio-return { max-width: 52rem; text-align: center; }
+  .studio-return > p:not(.studio-kicker) { margin: 1.25rem auto 0; max-width: 42rem; color: var(--color-text-secondary); font-size: 1.0625rem; line-height: 1.65; }
+  .studio-return__actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .studio-action { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0 1rem; border: 1px solid var(--color-surface-rule); color: var(--color-text-display); font: 500 0.875rem/1 var(--font-body); text-decoration: none; transition: 160ms ease; }
+  .studio-action:hover { border-color: var(--color-accent-signal); color: var(--color-accent-signal); }
+  .studio-action--primary { border-color: var(--color-accent-signal); background: var(--color-accent-signal); color: var(--color-surface-primary); }
+  .studio-action--primary:hover { background: var(--color-accent-plasma); color: var(--color-surface-primary); }
+
+  @media (max-width: 56rem) {
+    .studio-hero { min-height: auto; padding: 6rem 0 4rem; }
+    .studio-orientation { grid-template-columns: 1fr; }
+    .studio-paths, .studio-signals { grid-template-columns: 1fr; }
+    .studio-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .studio-path { min-height: auto; }
   }
-
-  .ec-presentation__inner {
-    width: 100%;
-    max-width: 90rem; /* Wide for 2560x1440 */
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+  @media (max-width: 36rem) {
+    .studio-shell { width: min(100% - 2rem, 76rem); }
+    .studio-hero h1 { font-size: clamp(2.7rem, 15vw, 4rem); }
+    .studio-map { grid-template-columns: 1fr; }
+    .studio-hero__hint { max-width: 28ch; }
   }
-
-  .ec-presentation__inner--centered {
-    text-align: center;
-    max-width: 60rem;
-  }
-
-  /* ==========================================================================
-     DIVIDER - clear visual separator between sections
-     ========================================================================== */
-  .ec-divider {
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--color-surface-rule, #4b4237) 20%,
-      var(--ember_500, #E85B4E) 50%,
-      var(--color-surface-rule, #4b4237) 80%,
-      transparent 100%
-    );
-    opacity: 0.6;
-  }
-
-  /* ==========================================================================
-     HERO (Section 1)
-     ========================================================================== */
-  .ec-presentation--hero {
-    padding-top: var(--space-8);
-  }
-
-  .ec-hero {
-    max-width: 70rem;
-  }
-
-  .ec-hero .ec-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--text_secondary, #cfc1ab);
-    font-size: 0.875rem;
-    margin: 0 0 var(--space-md) 0;
-    opacity: 0.8;
-  }
-
-  .ec-hero__title {
-    font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(1.75rem, 3.5vw, 3.75rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin: 0 0 var(--space-lg) 0;
-    color: var(--text_display, #faf3e2);
-    white-space: nowrap;
-  }
-
-  .ec-hero__lede {
-    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
-    line-height: 1.55;
-    color: var(--text_secondary, #cfc1ab);
-    margin: 0 0 var(--space-7) 0;
-    max-width: 56rem;
-  }
-
-  .ec-hero__toggle-row {
-    margin-top: var(--space-7);
-  }
-
-  /* ==========================================================================
-     VIEW DISPOSITION PANEL
-     Shows what the current view emphasizes + links separated
-     ========================================================================== */
-  .ec-view-panel {
-    margin-top: var(--space-8);
-    padding: var(--space-6) var(--space-7);
-    background: var(--color-surface-raised, #211d18);
-    border-radius: 8px;
-    border-left: 4px solid var(--ember_500, #E85B4E);
-    max-width: 70rem;
-  }
-
-  /* View-specific accent colors */
-  .ec-view-panel[data-view="hearth"] {
-    border-left-color: var(--ember_500, #E85B4E);
-    background: linear-gradient(135deg,
-      rgba(232, 91, 78, 0.04) 0%,
-      var(--color-surface-raised, #211d18) 100%);
-  }
-
-  .ec-view-panel[data-view="code"] {
-    border-left-color: var(--signal_500, #1FB6A8);
-    background: linear-gradient(135deg,
-      rgba(31, 182, 168, 0.04) 0%,
-      var(--color-surface-raised, #211d18) 100%);
-  }
-
-  .ec-view-panel[data-view="balanced"] {
-    border-left-color: var(--violet_500, #9B5DE5);
-    background: linear-gradient(135deg,
-      rgba(155, 93, 229, 0.04) 0%,
-      var(--color-surface-raised, #211d18) 100%);
-  }
-
-  .ec-view-panel__inner {
-    width: 100%;
-  }
-
-  .ec-view-panel__eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-size: 0.75rem;
-    color: var(--text_secondary, #b89e7e);
-    margin: 0 0 var(--space-2) 0;
-    opacity: 0.8;
-  }
-
-  .ec-view-panel__title {
-    font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(1.25rem, 1.75vw, 1.75rem);
-    font-weight: 500;
-    line-height: 1.3;
-    margin: 0 0 var(--space-3) 0;
-    color: var(--text_display, #faf3e2);
-  }
-
-  .ec-view-panel[data-view="hearth"] .ec-view-panel__title { color: var(--ember_400, #ED7568); }
-  .ec-view-panel[data-view="code"] .ec-view-panel__title { color: var(--signal_400, #5DCBC2); }
-  .ec-view-panel[data-view="balanced"] .ec-view-panel__title { color: var(--violet_500, #9B5DE5); }
-
-  .ec-view-panel__disposition {
-    font-size: clamp(1rem, 1.125vw, 1.125rem);
-    line-height: 1.6;
-    color: var(--text_primary, #f1e7d2);
-    margin: 0 0 var(--space-5) 0;
-    max-width: 60rem;
-  }
-
-  .ec-view-panel__links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
-  }
-
-  @media (max-width: 640px) {
-    .ec-view-panel__links {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .ec-view-panel__links-heading {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 0 0 var(--space-3) 0;
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--color-surface-rule, #4b4237);
-  }
-
-  .ec-view-panel[data-view="hearth"] .ec-view-panel__links-col:nth-child(1) .ec-view-panel__links-heading {
-    color: var(--ember_400, #ED7568);
-    border-bottom-color: var(--ember_500, #E85B4E);
-  }
-
-  .ec-view-panel[data-view="code"] .ec-view-panel__links-col:nth-child(2) .ec-view-panel__links-heading {
-    color: var(--signal_400, #5DCBC2);
-    border-bottom-color: var(--signal_500, #1FB6A8);
-  }
-
-  .ec-view-panel[data-view="balanced"] .ec-view-panel__links-col:nth-child(1) .ec-view-panel__links-heading {
-    color: var(--ember_400, #ED7568);
-    border-bottom-color: var(--ember_500, #E85B4E);
-  }
-
-  .ec-view-panel[data-view="balanced"] .ec-view-panel__links-col:nth-child(2) .ec-view-panel__links-heading {
-    color: var(--signal_400, #5DCBC2);
-    border-bottom-color: var(--signal_500, #1FB6A8);
-  }
-
-  .ec-view-panel__links-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  .ec-view-panel__links-list a {
-    color: var(--text_primary, #f1e7d2);
-    text-decoration: none;
-    font-size: 0.9375rem;
-    transition: color 200ms;
-  }
-
-  .ec-view-panel__links-list a:hover {
-    color: var(--ember_400, #ED7568);
-  }
-
-  /* Highlight active column when in matching view */
-  .ec-view-panel[data-view="hearth"] .ec-view-panel__links-col:nth-child(1) {
-    opacity: 1;
-  }
-  .ec-view-panel[data-view="hearth"] .ec-view-panel__links-col:nth-child(2) {
-    opacity: 0.5;
-  }
-
-  .ec-view-panel[data-view="code"] .ec-view-panel__links-col:nth-child(1) {
-    opacity: 0.5;
-  }
-  .ec-view-panel[data-view="code"] .ec-view-panel__links-col:nth-child(2) {
-    opacity: 1;
-  }
-
-  .ec-view-panel[data-view="balanced"] .ec-view-panel__links-col {
-    opacity: 0.75;
-  }
-
-  /* ==========================================================================
-     WHO (Section 2)
-     ========================================================================== */
-  .ec-presentation--who {
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(232, 91, 78, 0.03) 50%,
-      transparent 100%
-    );
-  }
-
-  .ec-presentation--who .ec-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--ember_400, #ED7568);
-    font-size: 0.875rem;
-    margin: 0 0 var(--space-md) 0;
-  }
-
-  .ec-presentation__title {
-    font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(1.75rem, 3.5vw, 3.25rem);
-    font-weight: 500;
-    line-height: 1.2;
-    margin: 0 0 var(--space-7) 0;
-    color: var(--text_display, #faf3e2);
-  }
-
-  .ec-who__content {
-    text-align: left;
-    max-width: 52rem;
-    margin: 0 auto;
-  }
-
-  .ec-who__lede {
-    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
-    line-height: 1.6;
-    color: var(--text_primary, #f1e7d2);
-    margin: 0 0 var(--space-7) 0;
-  }
-
-  .ec-who__principle {
-    font-size: clamp(1rem, 1.25vw, 1.25rem);
-    line-height: 1.7;
-    color: var(--text_secondary, #cfc1ab);
-    margin: 0 0 var(--space-lg) 0;
-  }
-
-  .ec-who__principle a {
-    color: var(--ember_400, #ED7568);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--ember_400, #ED7568);
-  }
-
-  .ec-who__principle a:hover {
-    color: var(--ember_300, #F18B7E);
-    border-bottom-color: var(--ember_300, #F18B7E);
-  }
-
-  .ec-who__principle strong {
-    color: var(--text_display, #faf3e2);
-    font-weight: 500;
-  }
-
-  /* ==========================================================================
-     NAVIGATE (Section 3)
-     ========================================================================== */
-  .ec-presentation--navigate {
-    padding: var(--space-8) var(--space-7);
-  }
-
-  .ec-presentation--navigate .ec-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--signal_400, #5DCBC2);
-    font-size: 0.875rem;
-    margin: 0 0 var(--space-md) 0;
-  }
-
-  .ec-presentation__lede {
-    font-size: clamp(1rem, 1.25vw, 1.25rem);
-    line-height: 1.6;
-    color: var(--text_secondary, #cfc1ab);
-    margin: 0 0 var(--space-8) 0;
-    max-width: 60rem;
-  }
-
-  .ec-presentation__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-    gap: var(--space-lg);
-  }
-
-  /* ==========================================================================
-     START (Section 4) - Generous spacing, full paths
-     ========================================================================== */
-  .ec-presentation--start {
-    padding: var(--space-8) var(--space-7);
-  }
-
-  .ec-presentation--start .ec-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--plasma_500, #3FE0D0);
-    font-size: 0.875rem;
-    margin: 0 0 var(--space-md) 0;
-  }
-
-  .ec-presentation__paths {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-9); /* Maximum space between paths (6rem / 96px) */
-    max-width: 64rem;
-    margin: 0 auto;
-    text-align: left;
-    padding: var(--space-7) 0;
-  }
-
-  .ec-path {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-8);
-    align-items: start;
-    padding: var(--space-8) 0;
-    border-top: 1px solid var(--color-surface-rule, #4b4237);
-    transition: border-color 200ms;
-  }
-
-  .ec-path:last-child {
-    border-bottom: 1px solid var(--color-surface-rule, #4b4237);
-  }
-
-  .ec-path:hover {
-    border-top-color: var(--ember_500, #E85B4E);
-  }
-
-  .ec-path__num {
-    font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    font-weight: 300;
-    color: var(--ember_500, #E85B4E);
-    line-height: 1;
-    opacity: 0.7;
-    min-width: 4rem;
-    letter-spacing: -0.02em;
-  }
-
-  .ec-path__title {
-    font-family: var(--font-display, Georgia, serif);
-    font-size: clamp(1.5rem, 2vw, 2rem);
-    font-weight: 500;
-    line-height: 1.3;
-    margin: 0 0 var(--space-md) 0;
-    color: var(--text_display, #faf3e2);
-  }
-
-  .ec-path__desc {
-    font-size: clamp(1.0625rem, 1.125vw, 1.125rem);
-    line-height: 1.7;
-    color: var(--text_secondary, #cfc1ab);
-    margin: 0;
-  }
-
-  /* ==========================================================================
-     FOOTER (Section 5)
-     ========================================================================== */
-  .ec-presentation--footer {
-    min-height: 30vh;
-    padding: var(--space-7);
-  }
-
-  .ec-footer__text {
-    font-size: 0.875rem;
-    color: var(--text_secondary, #cfc1ab);
-    text-align: center;
-    max-width: 40rem;
-    margin: 0 auto;
-    opacity: 0.8;
-  }
-
-  .ec-footer__text a {
-    color: var(--ember_400, #ED7568);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--ember_400, #ED7568);
-  }
-
-  .ec-footer__text a:hover {
-    color: var(--ember_300, #F18B7E);
-  }
-
-  /* ==========================================================================
-     RESPONSIVE
-     ========================================================================== */
-  @media (max-width: 768px) {
-    .ec-presentation {
-      padding: var(--space-7) var(--space-lg);
-      min-height: auto;
-    }
-
-    .ec-hero__title {
-      font-size: 1.75rem;
-      white-space: normal;
-    }
-
-    .ec-presentation__title {
-      font-size: 1.5rem;
-    }
-
-    .ec-presentation__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .ec-path {
-      grid-template-columns: 1fr;
-      gap: var(--space-md);
-    }
-  }
-
-  /* ==========================================================================
-     Hearth-Code view states
-     ========================================================================== */
-  :root[data-hc-view="hearth"] .ec-presentation--hero {
-    background: radial-gradient(ellipse at 30% 50%, rgba(232, 91, 78, 0.06) 0%, transparent 60%);
-  }
-
-  :root[data-hc-view="code"] .ec-presentation--hero {
-    background: radial-gradient(ellipse at 70% 50%, rgba(31, 182, 168, 0.06) 0%, transparent 60%);
-  }
-
-  :root[data-hc-view="balanced"] .ec-presentation--hero {
-    background: radial-gradient(ellipse at center, rgba(155, 93, 229, 0.04) 0%, transparent 60%);
-  }
-
-  /* View-specific content visibility */
-  /* View-specific content visibility (using data-view attribute on elements) */
-  [data-view="hearth"] .is-code-only { display: none; }
-  [data-view="code"] .is-hearth-only { display: none; }
-  [data-view="balanced"] .is-code-only,
-  [data-view="balanced"] .is-hearth-only { display: none; }
 </style>
 
 <script>
-  // Note: View change logic has been moved into the HearthCodeToggle
-  // component itself to avoid Astro script consolidation issues.
-  // The toggle now directly applies all view changes when clicked.
+  const viewCopy: Record<string, { hero: string; eyebrow: string; title: string; detail: string }> = {
+    hearth: {
+      hero: 'A public workbench for questions of meaning, judgment, and how to stay human in complex systems.',
+      eyebrow: 'Hearth projection',
+      title: 'Meaning and judgment first.',
+      detail: 'This projection foregrounds the working perspective: the questions, values, and public reasoning behind the systems. Methods and research remain available as the practical form of that work.',
+    },
+    balanced: {
+      hero: 'Research, software, knowledge architecture, and policy thinking made legible enough to inspect, question, use, and revise.',
+      eyebrow: 'Current projection',
+      title: 'The full studio, in one view.',
+      detail: 'Hearth holds the questions of meaning and judgment. Code holds the methods and systems. The balanced view keeps both visible, so a visitor can move from a claim to its working form.',
+    },
+    code: {
+      hero: 'A public workbench for methods, systems, and research that keeps its sources, limits, and human decision points visible.',
+      eyebrow: 'Code projection',
+      title: 'Methods and systems first.',
+      detail: 'This projection foregrounds practical instruments, architectures, and technical research. The Dossier and Philosophy remain available as the context that keeps implementation accountable.',
+    },
+  };
+
+  function applyStudioProjection(view: string) {
+    const copy = viewCopy[view] || viewCopy.balanced;
+    const hero = document.getElementById('studio-hero-lede');
+    const eyebrow = document.getElementById('view-panel-eyebrow');
+    const title = document.getElementById('view-panel-title');
+    const detail = document.getElementById('view-panel-disposition');
+    const panel = document.getElementById('view-panel');
+    if (hero) hero.textContent = copy.hero;
+    if (eyebrow) eyebrow.textContent = copy.eyebrow;
+    if (title) title.textContent = copy.title;
+    if (detail) detail.textContent = copy.detail;
+    if (panel) panel.setAttribute('data-view', view);
+  }
+
+  window.addEventListener('hearth-code-view-change', ((event: CustomEvent<{ view: string }>) => {
+    applyStudioProjection(event.detail.view);
+  }) as EventListener);
+
+  try {
+    const view = new URL(window.location.href).searchParams.get('view') || localStorage.getItem('hearth-code-view') || 'balanced';
+    applyStudioProjection(view);
+  } catch {
+    applyStudioProjection('balanced');
+  }
 </script>
-</BaseLayout>

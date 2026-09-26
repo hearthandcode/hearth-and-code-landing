@@ -16,7 +16,8 @@ interface Props {
 
 const { density = 'low', animated = false, accent = 'signal' } = Astro.props;
 
-const gridSize = density === 'high' ? '24px' : density === 'medium' ? '32px' : '48px';
+// SVG geometry attributes are unitless user-space values, not CSS lengths.
+const gridSize = density === 'high' ? 24 : density === 'medium' ? 32 : 48;
 const accentColor = accent === 'plasma' ? 'var(--color-accent-plasma, #3FE0D0)' :
                     accent === 'ember' ? 'var(--color-accent-ember, #E85B4E)' :
                     'var(--color-accent-signal, #1FB6A8)';
