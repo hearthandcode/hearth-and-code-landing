@@ -1,0 +1,143 @@
+---
+/**
+ * ComplianceStatus - controls with pass/fail/pending
+ * Knowledge composite (k-composite): k-compliance-status
+ */
+interface Control {
+  id: string;
+  name: string;
+  status: 'pass' | 'fail' | 'pending' | 'waived';
+  evidence?: string;
+  lastChecked?: string;
+}
+interface Props {
+  framework: string;
+  controls: Control[];
+  class?: string;
+}
+const { framework, controls, class: className = '' } = Astro.props;
+const counts = {
+  pass: controls.filter((c) => c.status === 'pass').length,
+  fail: controls.filter((c) => c.status === 'fail').length,
+  pending: controls.filter((c) => c.status === 'pending').length,
+  waived: controls.filter((c) => c.status === 'waived').length,
+};
+---
+<section class:list={['kc-compliance', className]}>
+  <header class="kc-compliance__header">
+    <h4 class="kc-compliance__framework">{framework}</h4>
+    <div class="kc-compliance__counts">
+      <span class="kc-compliance__count kc-compliance__count--pass">{counts.pass} pass</span>
+      <span class="kc-compliance__count kc-compliance__count--fail">{counts.fail} fail</span>
+      <span class="kc-compliance__count kc-compliance__count--pending">{counts.pending} pending</span>
+      <span class="kc-compliance__count kc-compliance__count--waived">{counts.waived} waived</span>
+    </div>
+  </header>
+  <ul class="kc-compliance__list">
+    {controls.map((c) => (
+      <li class:list={['kc-compliance__control', `kc-compliance__control--${c.status}`]}>
+        <span class="kc-compliance__id">{c.id}</span>
+        <span class="kc-compliance__name">{c.name}</span>
+        <span class="kc-compliance__evidence">{c.evidence ?? '—'}</span>
+        <span class="kc-compliance__checked">{c.lastChecked ?? ''}</span>
+        <span class="kc-compliance__status">{c.status}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .kc-compliance {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-compliance__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-compliance__framework {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-compliance__counts {
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: wrap;
+  }
+  .kc-compliance__count {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-compliance__count--pass { color: var(--color-state-success); background: rgba(143, 163, 149, 0.12); }
+  .kc-compliance__count--fail { color: var(--color-state-error); background: rgba(194, 90, 42, 0.12); }
+  .kc-compliance__count--pending { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.12); }
+  .kc-compliance__count--waived { color: var(--color-text-secondary); background: rgba(207, 193, 171, 0.08); }
+  .kc-compliance__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .kc-compliance__control {
+    display: grid;
+    grid-template-columns: 4rem 1fr 8rem 6rem 4rem;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid currentColor;
+    font-size: 0.8125rem;
+  }
+  .kc-compliance__control--pass { color: var(--color-state-success); }
+  .kc-compliance__control--fail { color: var(--color-state-error); }
+  .kc-compliance__control--pending { color: var(--color-accent-gold); }
+  .kc-compliance__control--waived { color: var(--color-text-secondary); }
+  .kc-compliance__id {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-bold);
+  }
+  .kc-compliance__name { color: var(--color-text-display); }
+  .kc-compliance__evidence {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .kc-compliance__checked {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-compliance__status {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    background: currentColor;
+    color: var(--color-surface-primary);
+    text-align: center;
+  }
+</style>

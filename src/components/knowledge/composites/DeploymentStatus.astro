@@ -1,0 +1,133 @@
+---
+/**
+ * DeploymentStatus - environment status board
+ * Knowledge composite (k-composite): k-deployment-status
+ */
+interface Environment {
+  name: string;
+  status: 'live' | 'building' | 'failed' | 'paused' | 'deploying';
+  version: string;
+  lastDeploy?: string;
+  health?: 'healthy' | 'degraded' | 'down';
+}
+interface Props {
+  environments: Environment[];
+  class?: string;
+}
+const { environments, class: className = '' } = Astro.props;
+---
+<div class:list={['kc-deployment', className]}>
+  <header class="kc-deployment__header">
+    <span class="kc-deployment__title">Environments</span>
+    <span class="kc-deployment__count">{environments.length}</span>
+  </header>
+  <ul class="kc-deployment__list">
+    {environments.map((env) => (
+      <li class:list={['kc-deployment__env', `kc-deployment__env--${env.status}`]}>
+        <div class="kc-deployment__main">
+          <span class="kc-deployment__name">{env.name}</span>
+          <span class="kc-deployment__version">v{env.version}</span>
+        </div>
+        <div class="kc-deployment__meta">
+          {env.lastDeploy && <span class="kc-deployment__time">{env.lastDeploy}</span>}
+          {env.health && (
+            <span class:list={['kc-deployment__health', `kc-deployment__health--${env.health}`]}>
+              ● {env.health}
+            </span>
+          )}
+          <span class="kc-deployment__status">{env.status}</span>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .kc-deployment {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-deployment__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-deployment__title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-deployment__count {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.12);
+    padding: 0.1em 0.5em;
+    border-radius: 999px;
+  }
+  .kc-deployment__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+  .kc-deployment__env {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid currentColor;
+  }
+  .kc-deployment__env--live { color: var(--color-state-success); background: rgba(143, 163, 149, 0.04); }
+  .kc-deployment__env--building { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.04); }
+  .kc-deployment__env--failed { color: var(--color-state-error); background: rgba(194, 90, 42, 0.04); }
+  .kc-deployment__env--paused { color: var(--color-text-secondary); background: rgba(207, 193, 171, 0.04); }
+  .kc-deployment__env--deploying { color: var(--color-accent-plasma); background: rgba(63, 224, 208, 0.04); }
+  .kc-deployment__main { display: flex; align-items: baseline; gap: 0.5em; }
+  .kc-deployment__name {
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+    font-size: 0.875rem;
+  }
+  .kc-deployment__version {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-deployment__meta { display: flex; align-items: center; gap: 0.5em; flex-wrap: wrap; }
+  .kc-deployment__time {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-deployment__health {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: lowercase;
+  }
+  .kc-deployment__health--healthy { color: var(--color-state-success); }
+  .kc-deployment__health--degraded { color: var(--color-accent-gold); }
+  .kc-deployment__health--down { color: var(--color-state-error); }
+  .kc-deployment__status {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    background: currentColor;
+    color: var(--color-surface-primary);
+  }
+</style>

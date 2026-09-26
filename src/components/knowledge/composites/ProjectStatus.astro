@@ -1,0 +1,152 @@
+---
+/**
+ * ProjectStatus - project health dashboard
+ * Knowledge composite (k-composite): k-project-status
+ */
+interface Props {
+  name: string;
+  owner: string;
+  status: 'on-track' | 'at-risk' | 'blocked' | 'complete' | 'archived';
+  progress: number;
+  lastActivity: string;
+  blockers?: string[];
+  nextMilestone?: string;
+  class?: string;
+}
+const {
+  name, owner, status, progress, lastActivity, blockers, nextMilestone, class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-project-status', `kc-project-status--${status}`, className]}>
+  <header class="kc-project-status__header">
+    <h4 class="kc-project-status__name">{name}</h4>
+    <span class="kc-project-status__status">{status}</span>
+  </header>
+  <div class="kc-project-status__meta">
+    <span class="kc-project-status__owner">Owner: <strong>{owner}</strong></span>
+    <span class="kc-project-status__activity">Last activity: {lastActivity}</span>
+  </div>
+  <div class="kc-project-status__progress">
+    <div class="kc-project-status__track">
+      <div class="kc-project-status__fill" style={`width: ${progress}%`}></div>
+    </div>
+    <span class="kc-project-status__pct">{progress}%</span>
+  </div>
+  {nextMilestone && (
+    <p class="kc-project-status__milestone">Next: {nextMilestone}</p>
+  )}
+  {blockers && blockers.length > 0 && (
+    <ul class="kc-project-status__blockers">
+      {blockers.map((b) => (
+        <li class="kc-project-status__blocker">
+          <span class="kc-project-status__blocker-icon" aria-hidden="true">⚠</span>
+          {b}
+        </li>
+      ))}
+    </ul>
+  )}
+</article>
+
+<style>
+  .kc-project-status {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .kc-project-status--on-track { border-left: 3px solid var(--color-state-success); }
+  .kc-project-status--at-risk { border-left: 3px solid var(--color-accent-gold); }
+  .kc-project-status--blocked { border-left: 3px solid var(--color-state-error); }
+  .kc-project-status--complete { border-left: 3px solid var(--color-accent-signal); }
+  .kc-project-status--archived { border-left: 3px solid var(--color-text-secondary); opacity: 0.7; }
+  .kc-project-status__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  .kc-project-status__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-project-status__status {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+  .kc-project-status--on-track .kc-project-status__status { color: var(--color-state-success); }
+  .kc-project-status--at-risk .kc-project-status__status { color: var(--color-accent-gold); }
+  .kc-project-status--blocked .kc-project-status__status { color: var(--color-state-error); }
+  .kc-project-status--complete .kc-project-status__status { color: var(--color-accent-signal); }
+  .kc-project-status__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-project-status__owner strong { color: var(--color-text-display); font-weight: var(--font-weight-medium); }
+  .kc-project-status__progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .kc-project-status__track {
+    flex: 1;
+    height: 0.4rem;
+    background: var(--color-surface-recessed);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--color-surface-rule);
+  }
+  .kc-project-status__fill {
+    height: 100%;
+    background: var(--color-accent-signal);
+    border-radius: 999px;
+  }
+  .kc-project-status--complete .kc-project-status__fill { background: var(--color-state-success); }
+  .kc-project-status--blocked .kc-project-status__fill { background: var(--color-state-error); }
+  .kc-project-status__pct {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-display);
+    min-width: 3em;
+    text-align: right;
+  }
+  .kc-project-status__milestone {
+    margin: 0;
+    padding: var(--space-2);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    color: var(--color-accent-signal);
+  }
+  .kc-project-status__blockers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .kc-project-status__blocker {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.3em 0.5em;
+    background: rgba(194, 90, 42, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--color-state-error);
+    font-size: 0.75rem;
+  }
+  .kc-project-status__blocker-icon { color: var(--color-state-error); }
+</style>

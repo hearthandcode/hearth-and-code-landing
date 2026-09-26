@@ -1,0 +1,107 @@
+---
+/**
+ * SourceChain - chain of sources back to root evidence
+ * Knowledge composite (k-composite): k-source-chain
+ *
+ * Renders a tree of citations linking to root evidence.
+ */
+interface SourceNode {
+  id: string;
+  label: string;
+  author?: string;
+  year?: number | string;
+  href?: string;
+  provenance?: 'primary' | 'derived' | 'cited' | 'verified' | 'inferred';
+  children?: SourceNode[];
+}
+interface Props {
+  root: SourceNode;
+  class?: string;
+}
+const { root, class: className = '' } = Astro.props;
+
+function renderNode(node: SourceNode, depth: number): string {
+  const hasChildren = node.children && node.children.length > 0;
+  const childrenHtml = hasChildren
+    ? `<ul>${node.children!.map((c) => renderNode(c, depth + 1)).join('')}</ul>`
+    : '';
+  const prov = node.provenance || 'cited';
+  return `<li class="kc-source-chain__node kc-source-chain__node--${prov}">
+    <div class="kc-source-chain__item">
+      <span class="kc-source-chain__line"></span>
+      <span class="kc-source-chain__marker"></span>
+      <span class="kc-source-chain__label">${node.label}</span>
+      ${node.author ? `<span class="kc-source-chain__author">${node.author} (${node.year || '—'})</span>` : ''}
+      <span class="kc-source-chain__prov">${prov}</span>
+    </div>
+    ${childrenHtml}
+  </li>`;
+}
+const html = renderNode(root, 0);
+---
+<div class:list={['kc-source-chain', className]} set:html={`<ul class="kc-source-chain__root">${html}</ul>`} />
+
+<style>
+  .kc-source-chain {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .kc-source-chain__root,
+  .kc-source-chain ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1rem;
+  }
+  .kc-source-chain__node { margin: 0.4em 0; position: relative; }
+  .kc-source-chain__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.2em 0;
+    position: relative;
+  }
+  .kc-source-chain__line {
+    position: absolute;
+    left: -0.7rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-surface-rule);
+  }
+  .kc-source-chain__marker {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-surface-rule);
+    flex-shrink: 0;
+  }
+  .kc-source-chain__node--primary .kc-source-chain__marker { background: var(--color-accent-plasma); box-shadow: 0 0 4px var(--color-accent-plasma); }
+  .kc-source-chain__node--verified .kc-source-chain__marker { background: var(--color-state-success); }
+  .kc-source-chain__node--derived .kc-source-chain__marker { background: var(--color-accent-signal); }
+  .kc-source-chain__node--cited .kc-source-chain__marker { background: var(--color-accent-violet); }
+  .kc-source-chain__node--inferred .kc-source-chain__marker { background: var(--color-accent-gold); }
+  .kc-source-chain__label {
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-source-chain__author {
+    color: var(--color-text-secondary);
+    font-size: 0.6875rem;
+  }
+  .kc-source-chain__prov {
+    margin-left: auto;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+  .kc-source-chain__node--primary .kc-source-chain__prov { color: var(--color-accent-plasma); }
+  .kc-source-chain__node--verified .kc-source-chain__prov { color: var(--color-state-success); }
+  .kc-source-chain__node--derived .kc-source-chain__prov { color: var(--color-accent-signal); }
+  .kc-source-chain__node--cited .kc-source-chain__prov { color: var(--color-accent-violet); }
+  .kc-source-chain__node--inferred .kc-source-chain__prov { color: var(--color-accent-gold); }
+</style>

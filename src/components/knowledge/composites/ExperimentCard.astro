@@ -1,0 +1,124 @@
+---
+/**
+ * ExperimentCard - hypothesis/method/results/conclusion
+ * Knowledge composite (k-composite): k-experiment-card
+ */
+interface Props {
+  id: string;
+  title: string;
+  hypothesis: string;
+  method: string;
+  results: string;
+  conclusion: string;
+  outcome?: 'confirmed' | 'refuted' | 'inconclusive' | 'in-progress';
+  class?: string;
+}
+const {
+  id, title, hypothesis, method, results, conclusion, outcome = 'inconclusive', class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-experiment', `kc-experiment--${outcome}`, className]}>
+  <header class="kc-experiment__header">
+    <span class="kc-experiment__id">{id}</span>
+    <h4 class="kc-experiment__title">{title}</h4>
+    <span class="kc-experiment__outcome">{outcome}</span>
+  </header>
+  <dl class="kc-experiment__body">
+    <div class="kc-experiment__row">
+      <dt>Hypothesis</dt>
+      <dd>{hypothesis}</dd>
+    </div>
+    <div class="kc-experiment__row">
+      <dt>Method</dt>
+      <dd>{method}</dd>
+    </div>
+    <div class="kc-experiment__row">
+      <dt>Results</dt>
+      <dd>{results}</dd>
+    </div>
+    <div class="kc-experiment__row kc-experiment__row--conclusion">
+      <dt>Conclusion</dt>
+      <dd>{conclusion}</dd>
+    </div>
+  </dl>
+</article>
+
+<style>
+  .kc-experiment {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-experiment--confirmed { border-left: 3px solid var(--color-state-success); }
+  .kc-experiment--refuted { border-left: 3px solid var(--color-state-error); }
+  .kc-experiment--inconclusive { border-left: 3px solid var(--color-accent-gold); }
+  .kc-experiment--in-progress { border-left: 3px solid var(--color-accent-plasma); }
+  .kc-experiment__header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-experiment__id {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-experiment__title {
+    margin: 0;
+    flex: 1;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-experiment__outcome {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+  .kc-experiment--confirmed .kc-experiment__outcome { color: var(--color-state-success); }
+  .kc-experiment--refuted .kc-experiment__outcome { color: var(--color-state-error); }
+  .kc-experiment--inconclusive .kc-experiment__outcome { color: var(--color-accent-gold); }
+  .kc-experiment--in-progress .kc-experiment__outcome { color: var(--color-accent-plasma); }
+  .kc-experiment__body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .kc-experiment__row {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-3);
+    padding: var(--space-2);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+  }
+  .kc-experiment__row--conclusion {
+    border-left: 2px solid var(--color-accent-signal);
+  }
+  .kc-experiment__row dt {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+    margin: 0;
+  }
+  .kc-experiment__row dd {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+  }
+</style>

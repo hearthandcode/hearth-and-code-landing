@@ -1,0 +1,112 @@
+---
+/**
+ * StateMachine - states + transitions + events
+ * Knowledge composite (k-composite): k-state-machine
+ */
+interface State {
+  id: string;
+  label: string;
+  type?: 'initial' | 'normal' | 'final';
+}
+interface Transition {
+  from: string;
+  to: string;
+  event: string;
+  guard?: string;
+}
+interface Props {
+  states: State[];
+  transitions: Transition[];
+  class?: string;
+}
+const { states, transitions, class: className = '' } = Astro.props;
+---
+<div class:list={['kc-state-machine', className]}>
+  <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" class="kc-state-machine__svg">
+    <defs>
+      <marker id="kc-sm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-accent-plasma)" />
+      </marker>
+    </defs>
+    {states.map((s, i) => {
+      const col = i % 4;
+      const row = Math.floor(i / 4);
+      const cx = 100 + col * 150;
+      const cy = 70 + row * 80;
+      const isInitial = s.type === 'initial';
+      const isFinal = s.type === 'final';
+      const radius = isInitial ? 12 : isFinal ? 22 : 20;
+      return (
+        <g class="kc-state-machine__state">
+          <circle cx={cx} cy={cy} r={radius} fill="var(--color-surface-recessed)" stroke={isFinal ? 'var(--color-state-success)' : isInitial ? 'var(--color-accent-ember)' : 'var(--color-accent-signal)'} stroke-width="2" />
+          <text x={cx} y={cy + 4} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="10">{s.label}</text>
+        </g>
+      );
+    })}
+    {transitions.map((t) => {
+      const fromIdx = states.findIndex((s) => s.id === t.from);
+      const toIdx = states.findIndex((s) => s.id === t.to);
+      if (fromIdx === -1 || toIdx === -1) return null;
+      const col1 = fromIdx % 4, row1 = Math.floor(fromIdx / 4);
+      const col2 = toIdx % 4, row2 = Math.floor(toIdx / 4);
+      const x1 = 100 + col1 * 150;
+      const y1 = 70 + row1 * 80;
+      const x2 = 100 + col2 * 150;
+      const y2 = 70 + row2 * 80;
+      const isLoop = t.from === t.to;
+      if (isLoop) {
+        return (
+          <g>
+            <path d={`M ${x1 + 18} ${y1} A 18 18 0 1 1 ${x1 - 18} ${y1}`} fill="none" stroke="var(--color-accent-plasma)" stroke-width="1.2" marker-end="url(#kc-sm-arrow)" />
+            <text x={x1} y={y1 - 28} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{t.event}</text>
+          </g>
+        );
+      }
+      const midX = (x1 + x2) / 2;
+      const midY = (y1 + y2) / 2;
+      return (
+        <g>
+          <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-accent-plasma)" stroke-width="1.2" marker-end="url(#kc-sm-arrow)" />
+          <text x={midX} y={midY - 4} text-anchor="middle" fill="var(--color-accent-gold)" font-family="var(--font-mono)" font-size="9">{t.event}</text>
+          {t.guard && <text x={midX} y={midY + 8} text-anchor="middle" fill="var(--color-text-secondary)" font-family="var(--font-mono)" font-size="8">[ {t.guard} ]</text>}
+        </g>
+      );
+    })}
+  </svg>
+  <div class="kc-state-machine__legend">
+    <span class="kc-state-machine__legend-item"><span class="kc-state-machine__swatch kc-state-machine__swatch--initial"></span>Initial</span>
+    <span class="kc-state-machine__legend-item"><span class="kc-state-machine__swatch kc-state-machine__swatch--normal"></span>Normal</span>
+    <span class="kc-state-machine__legend-item"><span class="kc-state-machine__swatch kc-state-machine__swatch--final"></span>Final</span>
+  </div>
+</div>
+
+<style>
+  .kc-state-machine {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-state-machine__svg { width: 100%; height: auto; display: block; }
+  .kc-state-machine__legend {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-surface-rule);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-state-machine__legend-item { display: inline-flex; align-items: center; gap: 0.4em; }
+  .kc-state-machine__swatch {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    background: transparent;
+  }
+  .kc-state-machine__swatch--initial { color: var(--color-accent-ember); }
+  .kc-state-machine__swatch--normal { color: var(--color-accent-signal); }
+  .kc-state-machine__swatch--final { color: var(--color-state-success); }
+</style>

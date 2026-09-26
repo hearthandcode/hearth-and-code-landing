@@ -1,0 +1,121 @@
+---
+/**
+ * SynthesisSummary - multi-source summary with per-claim attribution
+ * Knowledge composite (k-composite): k-synthesis-summary
+ *
+ * Interactive: claims highlighted on hover show source
+ */
+interface Claim {
+  text: string;
+  sources: { author: string; year: number | string }[];
+  confidence?: number;
+}
+interface Props {
+  title?: string;
+  claims: Claim[];
+  consensus?: number;
+  class?: string;
+}
+const { title, claims, consensus, class: className = '' } = Astro.props;
+---
+<section class:list={['kc-synthesis', className]}>
+  {title && <header class="kc-synthesis__header">
+    <h4 class="kc-synthesis__title">{title}</h4>
+    {consensus !== undefined && (
+      <span class="kc-synthesis__consensus">Consensus: {consensus}%</span>
+    )}
+  </header>}
+  <ul class="kc-synthesis__claims">
+    {claims.map((c, i) => (
+      <li class="kc-synthesis__claim">
+        <span class="kc-synthesis__index">[{i + 1}]</span>
+        <span class="kc-synthesis__text">{c.text}</span>
+        <span class="kc-synthesis__sources">
+          {c.sources.map((s, j) => (
+            <span class="kc-synthesis__source">{s.author} ({s.year}){j < c.sources.length - 1 ? ', ' : ''}</span>
+          ))}
+        </span>
+        {c.confidence !== undefined && (
+          <span class:list={['kc-synthesis__conf', `kc-synthesis__conf--${c.confidence >= 80 ? 'high' : c.confidence >= 50 ? 'medium' : 'low'}`]}>
+            {c.confidence}%
+          </span>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .kc-synthesis {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-synthesis__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-synthesis__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-synthesis__consensus {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-state-success);
+  }
+  .kc-synthesis__claims {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .kc-synthesis__claim {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--color-surface-rule);
+  }
+  .kc-synthesis__index {
+    font-family: var(--font-mono);
+    color: var(--color-accent-signal);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+  }
+  .kc-synthesis__text {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+  }
+  .kc-synthesis__sources {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-synthesis__source { color: var(--color-text-secondary); }
+  .kc-synthesis__conf {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    padding: 0.05em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-synthesis__conf--high { color: var(--color-state-success); background: rgba(143, 163, 149, 0.12); }
+  .kc-synthesis__conf--medium { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.12); }
+  .kc-synthesis__conf--low { color: var(--color-state-error); background: rgba(194, 90, 42, 0.12); }
+</style>

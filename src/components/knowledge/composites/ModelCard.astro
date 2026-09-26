@@ -1,0 +1,144 @@
+---
+/**
+ * ModelCard - purpose/training/eval/limits
+ * Knowledge composite (k-composite): k-model-card
+ */
+interface Props {
+  name: string;
+  version: string;
+  purpose: string;
+  trainingData: string;
+  evalResults?: { benchmark: string; score: string }[];
+  knownLimits: string[];
+  intendedUse?: string;
+  outOfScope?: string[];
+  class?: string;
+}
+const {
+  name, version, purpose, trainingData, evalResults = [], knownLimits, intendedUse, outOfScope = [], class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-model-card', className]}>
+  <header class="kc-model-card__header">
+    <div>
+      <h4 class="kc-model-card__name">{name}</h4>
+      <span class="kc-model-card__version">v{version}</span>
+    </div>
+  </header>
+  <section class="kc-model-card__section">
+    <h5 class="kc-model-card__label">Purpose</h5>
+    <p>{purpose}</p>
+  </section>
+  {intendedUse && (
+    <section class="kc-model-card__section kc-model-card__section--use">
+      <h5 class="kc-model-card__label">Intended use</h5>
+      <p>{intendedUse}</p>
+    </section>
+  )}
+  <section class="kc-model-card__section">
+    <h5 class="kc-model-card__label">Training data</h5>
+    <p>{trainingData}</p>
+  </section>
+  {evalResults.length > 0 && (
+    <section class="kc-model-card__section">
+      <h5 class="kc-model-card__label">Evaluation</h5>
+      <ul class="kc-model-card__evals">
+        {evalResults.map((r) => (
+          <li>
+            <span>{r.benchmark}</span>
+            <span class="kc-model-card__score">{r.score}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  <section class="kc-model-card__section kc-model-card__section--limits">
+    <h5 class="kc-model-card__label">Known limits</h5>
+    <ul>
+      {knownLimits.map((l) => <li>{l}</li>)}
+    </ul>
+  </section>
+  {outOfScope.length > 0 && (
+    <section class="kc-model-card__section kc-model-card__section--oos">
+      <h5 class="kc-model-card__label">Out of scope</h5>
+      <ul>
+        {outOfScope.map((o) => <li>{o}</li>)}
+      </ul>
+    </section>
+  )}
+</article>
+
+<style>
+  .kc-model-card {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-model-card__header {
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-model-card__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-model-card__version {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-violet);
+    background: rgba(155, 93, 229, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-model-card__section { margin-bottom: var(--space-3); }
+  .kc-model-card__label {
+    margin: 0 0 var(--space-1) 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-violet);
+  }
+  .kc-model-card__section p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+  }
+  .kc-model-card__section--use { padding: var(--space-2); background: rgba(63, 224, 208, 0.06); border-left: 2px solid var(--color-accent-plasma); border-radius: var(--radius-sm); }
+  .kc-model-card__section--limits { padding: var(--space-2); background: rgba(232, 146, 60, 0.06); border-left: 2px solid var(--color-state-caution); border-radius: var(--radius-sm); }
+  .kc-model-card__section--oos { padding: var(--space-2); background: rgba(194, 90, 42, 0.06); border-left: 2px solid var(--color-state-error); border-radius: var(--radius-sm); }
+  .kc-model-card__evals,
+  .kc-model-card__section ul {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+  .kc-model-card__evals {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .kc-model-card__evals li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.2em 0.5em;
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+  }
+  .kc-model-card__score {
+    font-family: var(--font-mono);
+    color: var(--color-accent-gold);
+    font-weight: var(--font-weight-medium);
+  }
+</style>

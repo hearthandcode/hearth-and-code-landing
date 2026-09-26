@@ -1,0 +1,136 @@
+---
+/**
+ * DialogueTree - branching dialogue with speaker + choice
+ * Knowledge composite (k-composite): k-dialogue-tree
+ *
+ * Interactive: click choices to traverse
+ */
+interface Choice {
+  id: string;
+  text: string;
+  next: string | null;
+}
+interface Node {
+  id: string;
+  speaker: string;
+  text: string;
+  choices: Choice[];
+}
+interface Props {
+  nodes: Node[];
+  rootId: string;
+  class?: string;
+}
+const { nodes, rootId, class: className = '' } = Astro.props;
+const treeId = `kc-dialogue-${Math.random().toString(36).slice(2, 9)}`;
+---
+<div class:list={['kc-dialogue', className]} data-dialogue-id={treeId} data-current={rootId}>
+  {nodes.map((node) => (
+    <div
+      class:list={['kc-dialogue__node', node.id === rootId && 'is-active']}
+      data-node-id={node.id}
+      hidden={node.id !== rootId}
+    >
+      <div class="kc-dialogue__speaker">{node.speaker}</div>
+      <p class="kc-dialogue__text">{node.text}</p>
+      {node.choices.length > 0 && (
+        <div class="kc-dialogue__choices">
+          {node.choices.map((c) => (
+            <button
+              class="kc-dialogue__choice"
+              data-target={c.next || ''}
+              data-choice-id={c.id}
+              disabled={c.next === null}
+            >
+              {c.text}
+              {c.next === null && <span class="kc-dialogue__end">(end)</span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll('.kc-dialogue').forEach((dlg) => {
+    dlg.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.kc-dialogue__choice');
+      if (!btn) return;
+      const target = btn.getAttribute('data-target');
+      if (!target) return;
+      dlg.querySelectorAll('.kc-dialogue__node').forEach((n) => {
+        const id = n.getAttribute('data-node-id');
+        (n as HTMLElement).hidden = id !== target;
+        n.classList.toggle('is-active', id === target);
+      });
+    });
+  });
+</script>
+
+<style>
+  .kc-dialogue {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-dialogue__node {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .kc-dialogue__speaker {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+    font-weight: var(--font-weight-bold);
+  }
+  .kc-dialogue__text {
+    margin: 0;
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-left: 3px solid var(--color-accent-ember);
+    border-radius: var(--radius-sm);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+  .kc-dialogue__choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+  }
+  .kc-dialogue__choice {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-display);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .kc-dialogue__choice:hover:not(:disabled) {
+    background: var(--color-surface-recessed);
+    border-color: var(--color-accent-signal);
+    color: var(--color-accent-signal);
+  }
+  .kc-dialogue__choice:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: var(--color-text-secondary);
+  }
+  .kc-dialogue__end {
+    margin-left: 0.5em;
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+/**
+ * GlossaryIndex - alphabetical glossary with cross-references
+ * Knowledge composite (k-composite): k-glossary-index
+ */
+interface Entry {
+  term: string;
+  definition: string;
+  seeAlso?: string[];
+}
+interface Props {
+  entries: Entry[];
+  filterable?: boolean;
+  class?: string;
+}
+const { entries, filterable = true, class: className = '' } = Astro.props;
+
+// Group entries by first letter
+const grouped: Record<string, Entry[]> = {};
+entries.forEach((e) => {
+  const letter = e.term[0].toUpperCase();
+  if (!grouped[letter]) grouped[letter] = [];
+  grouped[letter].push(e);
+});
+const letters = Object.keys(grouped).sort();
+---
+<div class:list={['kc-glossary', className]}>
+  {filterable && (
+    <input
+      type="search"
+      class="kc-glossary__search"
+      placeholder="Filter terms..."
+      data-glossary-search
+    />
+  )}
+  <nav class="kc-glossary__nav" aria-label="Letter navigation">
+    {letters.map((l) => <a href={`#kc-glossary-${l}`} class="kc-glossary__nav-link">{l}</a>)}
+  </nav>
+  <div class="kc-glossary__content">
+    {letters.map((l) => (
+      <section class="kc-glossary__section" id={`kc-glossary-${l}`}>
+        <h3 class="kc-glossary__letter">{l}</h3>
+        <dl class="kc-glossary__list">
+          {grouped[l].map((e) => (
+            <div class="kc-glossary__entry">
+              <dt class="kc-glossary__term">{e.term}</dt>
+              <dd class="kc-glossary__definition">{e.definition}</dd>
+              {e.seeAlso && e.seeAlso.length > 0 && (
+                <dd class="kc-glossary__see-also">see also: {e.seeAlso.join(', ')}</dd>
+              )}
+            </div>
+          ))}
+        </dl>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.kc-glossary__search').forEach((input) => {
+    input.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase();
+      const glossary = input.closest('.kc-glossary');
+      if (!glossary) return;
+      glossary.querySelectorAll('.kc-glossary__entry').forEach((entry) => {
+        const text = entry.textContent?.toLowerCase() || '';
+        (entry as HTMLElement).style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  .kc-glossary {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .kc-glossary__search {
+    padding: 0.4em 0.7em;
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-display);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+  }
+  .kc-glossary__search:focus {
+    outline: 1px solid var(--color-accent-signal);
+    border-color: var(--color-accent-signal);
+  }
+  .kc-glossary__nav {
+    display: flex;
+    gap: 0.3em;
+    flex-wrap: wrap;
+  }
+  .kc-glossary__nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-recessed);
+    color: var(--color-accent-signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+  }
+  .kc-glossary__nav-link:hover { background: var(--color-accent-signal); color: var(--color-surface-primary); }
+  .kc-glossary__content { display: flex; flex-direction: column; gap: var(--space-4); }
+  .kc-glossary__letter {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-ember);
+    border-bottom: 1px solid var(--color-surface-rule);
+    padding-bottom: var(--space-1);
+  }
+  .kc-glossary__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+  }
+  .kc-glossary__entry {
+    padding: var(--space-2);
+    border-left: 2px solid var(--color-surface-rule);
+  }
+  .kc-glossary__term {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+    font-size: 0.9375rem;
+  }
+  .kc-glossary__definition {
+    margin: 0.2em 0 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  .kc-glossary__see-also {
+    margin: 0.2em 0 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-signal);
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,117 @@
+---
+/**
+ * SchemaViewer - typed schema with required/optional indicators
+ * Knowledge composite (k-composite): k-schema-viewer
+ */
+interface Field {
+  name: string;
+  type: string;
+  required: boolean;
+  description?: string;
+  children?: Field[];
+}
+interface Props {
+  name: string;
+  fields: Field[];
+  description?: string;
+  class?: string;
+}
+const { name, fields, description, class: className = '' } = Astro.props;
+
+function renderField(f: Field, depth: number): string {
+  const hasChildren = f.children && f.children.length > 0;
+  const childrenHtml = hasChildren
+    ? `<div class="kc-schema__nested">${f.children!.map((c) => renderField(c, depth + 1)).join('')}</div>`
+    : '';
+  return `<div class="kc-schema__field" style="margin-left: ${depth}rem">
+    <span class="kc-schema__req">${f.required ? '*' : '·'}</span>
+    <span class="kc-schema__fname">${f.name}</span>
+    <span class="kc-schema__ftype">${f.type}</span>
+    ${f.description ? `<span class="kc-schema__fdesc">${f.description}</span>` : ''}
+    ${childrenHtml}
+  </div>`;
+}
+const html = fields.map((f) => renderField(f, 0)).join('');
+---
+<section class:list={['kc-schema', className]}>
+  <header class="kc-schema__header">
+    <h4 class="kc-schema__name">{name}</h4>
+    {description && <p class="kc-schema__desc">{description}</p>}
+  </header>
+  <div class="kc-schema__body" set:html={html} />
+  <footer class="kc-schema__legend">
+    <span><span class="kc-schema__req">*</span> required</span>
+    <span><span class="kc-schema__req">·</span> optional</span>
+  </footer>
+</section>
+
+<style>
+  .kc-schema {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .kc-schema__header {
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-schema__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-schema__desc {
+    margin: 0.3em 0 0 0;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-schema__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+  .kc-schema__field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5em;
+    padding: 0.15em 0;
+  }
+  .kc-schema__req { color: var(--color-state-error); font-weight: var(--font-weight-bold); }
+  .kc-schema__nested {
+    margin-top: 0.2em;
+    padding-left: 1rem;
+    border-left: 1px dashed var(--color-surface-rule);
+    width: 100%;
+  }
+  .kc-schema__fname {
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-schema__ftype {
+    color: var(--color-accent-plasma);
+  }
+  .kc-schema__fdesc {
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    flex-basis: 100%;
+    padding-left: 1.25rem;
+  }
+  .kc-schema__legend {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-surface-rule);
+    color: var(--color-text-secondary);
+    font-size: 0.6875rem;
+  }
+</style>

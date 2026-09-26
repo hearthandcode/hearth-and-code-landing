@@ -1,0 +1,100 @@
+---
+/**
+ * TaxonomyTree - collapsible hierarchy browser
+ * Knowledge composite (k-composite): k-taxonomy-tree
+ *
+ * Interactive: click nodes to expand/collapse
+ */
+interface Node {
+  id: string;
+  label: string;
+  description?: string;
+  children?: Node[];
+}
+interface Props {
+  root: Node;
+  initiallyExpanded?: number;
+  class?: string;
+}
+const { root, initiallyExpanded = 1, class: className = '' } = Astro.props;
+const treeId = `kc-tree-${Math.random().toString(36).slice(2, 9)}`;
+
+// Render recursively using a fragment-like pattern via inline HTML
+function renderNode(node: Node, depth: number, expandedDepth: number): string {
+  const isExpanded = depth < expandedDepth;
+  const hasChildren = node.children && node.children.length > 0;
+  const desc = node.description ? `<span class="kc-taxonomy-tree__desc">${node.description}</span>` : '';
+  const childrenHtml = hasChildren
+    ? `<ul${isExpanded ? '' : ' style="display:none"'}>${node.children!.map((c) => renderNode(c, depth + 1, expandedDepth)).join('')}</ul>`
+    : '';
+  const toggleHtml = hasChildren ? `<span class="kc-taxonomy-tree__toggle" aria-hidden="true"></span>` : '<span class="kc-taxonomy-tree__toggle" aria-hidden="true"></span>';
+  return `<li class="kc-taxonomy-tree__item ${hasChildren ? 'has-children' : ''} ${isExpanded ? 'is-expanded' : ''}"><div class="kc-taxonomy-tree__row">${toggleHtml}<span class="kc-taxonomy-tree__label">${node.label}</span>${desc}</div>${childrenHtml}</li>`;
+}
+const treeHtml = renderNode(root, 0, initiallyExpanded);
+---
+<div class:list={['kc-taxonomy-tree', className]} data-tree-id={treeId} set:html={treeHtml} />
+
+<script>
+  document.querySelectorAll('.kc-taxonomy-tree').forEach((tree) => {
+    tree.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const btn = target.closest('.kc-taxonomy-tree__row');
+      if (!btn) return;
+      const li = btn.closest('.kc-taxonomy-tree__item');
+      if (!li || !li.classList.contains('has-children')) return;
+      li.classList.toggle('is-expanded');
+      const ul = li.querySelector(':scope > ul') as HTMLElement | null;
+      if (ul) ul.style.display = li.classList.contains('is-expanded') ? '' : 'none';
+    });
+  });
+</script>
+
+<style>
+  .kc-taxonomy-tree {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+  .kc-taxonomy-tree ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 1.25rem;
+    border-left: 1px dashed var(--color-surface-rule);
+  }
+  .kc-taxonomy-tree__item {
+    margin: 0.2em 0;
+  }
+  .kc-taxonomy-tree__row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--color-text-display);
+  }
+  .kc-taxonomy-tree__row:hover { background: var(--color-surface-recessed); }
+  .kc-taxonomy-tree__toggle {
+    display: inline-block;
+    width: 0.9em;
+    text-align: center;
+    color: var(--color-accent-signal);
+    font-weight: var(--font-weight-bold);
+    user-select: none;
+  }
+  .kc-taxonomy-tree__item:not(.has-children) > .kc-taxonomy-tree__row .kc-taxonomy-tree__toggle::before { content: '·'; }
+  .kc-taxonomy-tree__item.has-children:not(.is-expanded) > .kc-taxonomy-tree__row .kc-taxonomy-tree__toggle::before { content: '▸'; }
+  .kc-taxonomy-tree__item.has-children.is-expanded > .kc-taxonomy-tree__row .kc-taxonomy-tree__toggle::before { content: '▾'; }
+  .kc-taxonomy-tree__label {
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-taxonomy-tree__desc {
+    color: var(--color-text-secondary);
+    margin-left: 0.5em;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+  }
+</style>

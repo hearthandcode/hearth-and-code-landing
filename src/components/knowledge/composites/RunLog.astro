@@ -1,0 +1,167 @@
+---
+/**
+ * RunLog - timestamped log entries with severity filter
+ * Knowledge composite (k-composite): k-run-log
+ *
+ * Interactive: filter by severity, expand entries
+ */
+interface LogEntry {
+  timestamp: string;
+  severity: 'info' | 'success' | 'caution' | 'warning' | 'error' | 'critical';
+  source: string;
+  message: string;
+  details?: string;
+}
+interface Props {
+  entries: LogEntry[];
+  filterable?: boolean;
+  class?: string;
+}
+const { entries, filterable = true, class: className = '' } = Astro.props;
+const logId = `kc-log-${Math.random().toString(36).slice(2, 9)}`;
+const severities = ['all', 'info', 'success', 'caution', 'warning', 'error', 'critical'];
+---
+<section class:list={['kc-run-log', className]} data-log-id={logId}>
+  {filterable && (
+    <div class="kc-run-log__filters">
+      {severities.map((s) => (
+        <button class:list={['kc-run-log__filter', s === 'all' && 'is-active']} data-filter={s}>
+          {s}
+        </button>
+      ))}
+    </div>
+  )}
+  <ol class="kc-run-log__entries">
+    {entries.map((e) => (
+      <li class:list={['kc-run-log__entry', `kc-run-log__entry--${e.severity}`]} data-severity={e.severity}>
+        <button class="kc-run-log__header" data-expandable>
+          <span class="kc-run-log__time">{e.timestamp}</span>
+          <span class="kc-run-log__dot" aria-hidden="true"></span>
+          <span class="kc-run-log__source">{e.source}</span>
+          <span class="kc-run-log__msg">{e.message}</span>
+        </button>
+        {e.details && <pre class="kc-run-log__details" hidden>{e.details}</pre>}
+      </li>
+    ))}
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll('.kc-run-log').forEach((log) => {
+    log.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      // Filter buttons
+      const filterBtn = target.closest('.kc-run-log__filter');
+      if (filterBtn) {
+        const filter = filterBtn.getAttribute('data-filter');
+        log.querySelectorAll('.kc-run-log__filter').forEach((b) => b.classList.toggle('is-active', b === filterBtn));
+        log.querySelectorAll('.kc-run-log__entry').forEach((entry) => {
+          const sev = entry.getAttribute('data-severity');
+          (entry as HTMLElement).style.display = filter === 'all' || sev === filter ? '' : 'none';
+        });
+        return;
+      }
+      // Expand buttons
+      const expandBtn = target.closest('.kc-run-log__header');
+      if (expandBtn) {
+        const entry = expandBtn.closest('.kc-run-log__entry');
+        const details = entry?.querySelector('.kc-run-log__details') as HTMLElement | null;
+        if (details) details.hidden = !details.hidden;
+      }
+    });
+  });
+</script>
+
+<style>
+  .kc-run-log {
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+  .kc-run-log__filters {
+    display: flex;
+    gap: 0.3em;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2);
+  }
+  .kc-run-log__filter {
+    padding: 0.2em 0.6em;
+    background: transparent;
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+  .kc-run-log__filter.is-active {
+    background: var(--color-accent-signal);
+    color: var(--color-surface-primary);
+    border-color: var(--color-accent-signal);
+  }
+  .kc-run-log__entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+  }
+  .kc-run-log__entry {
+    border-left: 2px solid currentColor;
+    padding-left: var(--space-2);
+  }
+  .kc-run-log__entry--info { color: var(--color-accent-plasma); }
+  .kc-run-log__entry--success { color: var(--color-state-success); }
+  .kc-run-log__entry--caution { color: var(--color-state-caution); }
+  .kc-run-log__entry--warning { color: var(--color-accent-gold); }
+  .kc-run-log__entry--error { color: var(--color-state-error); }
+  .kc-run-log__entry--critical { color: var(--color-accent-ember); }
+  .kc-run-log__header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0.2em 0;
+    cursor: pointer;
+    text-align: left;
+  }
+  .kc-run-log__time {
+    color: var(--color-text-secondary);
+    font-size: 0.6875rem;
+    flex-shrink: 0;
+  }
+  .kc-run-log__dot {
+    width: 0.4em;
+    height: 0.4em;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .kc-run-log__source {
+    color: var(--color-accent-gold);
+    font-weight: var(--font-weight-medium);
+    flex-shrink: 0;
+  }
+  .kc-run-log__msg {
+    color: var(--color-text-display);
+    flex: 1;
+  }
+  .kc-run-log__details {
+    margin: 0.3em 0 0.5em 0;
+    padding: var(--space-2);
+    background: var(--color-surface-primary);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+</style>

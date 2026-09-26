@@ -1,0 +1,185 @@
+---
+/**
+ * HumanGate - sealed gate with reviewer + disposition
+ * Knowledge composite (k-composite): k-human-gate
+ */
+interface Props {
+  id: string;
+  name: string;
+  description: string;
+  reviewer: string;
+  reviewerRole?: string;
+  decision: 'approved' | 'rejected' | 'pending' | 'escalated';
+  sealedAt?: string;
+  criteria?: string[];
+  class?: string;
+}
+const {
+  id, name, description, reviewer, reviewerRole, decision, sealedAt, criteria = [], class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-human-gate', `kc-human-gate--${decision}`, className]}>
+  <div class="kc-human-gate__seal">
+    <span class="kc-human-gate__seal-icon" aria-hidden="true">
+      {decision === 'approved' && '✓'}
+      {decision === 'rejected' && '✗'}
+      {decision === 'pending' && '○'}
+      {decision === 'escalated' && '↑'}
+    </span>
+  </div>
+  <div class="kc-human-gate__body">
+    <header class="kc-human-gate__header">
+      <span class="kc-human-gate__id">{id}</span>
+      <h4 class="kc-human-gate__name">{name}</h4>
+      <span class="kc-human-gate__decision">{decision}</span>
+    </header>
+    <p class="kc-human-gate__desc">{description}</p>
+    {criteria.length > 0 && (
+      <ul class="kc-human-gate__criteria">
+        {criteria.map((c) => (
+          <li>
+            <span class="kc-human-gate__check" aria-hidden="true">▪</span>
+            {c}
+          </li>
+        ))}
+      </ul>
+    )}
+    <footer class="kc-human-gate__footer">
+      <div class="kc-human-gate__reviewer">
+        <span class="kc-human-gate__avatar">{reviewer.split(' ').map((w) => w[0]).slice(0, 2).join('')}</span>
+        <div>
+          <strong>{reviewer}</strong>
+          {reviewerRole && <span>{reviewerRole}</span>}
+        </div>
+      </div>
+      {sealedAt && (
+        <time class="kc-human-gate__sealed">Sealed: {sealedAt}</time>
+      )}
+    </footer>
+  </div>
+</article>
+
+<style>
+  .kc-human-gate {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-human-gate--approved { border-left: 3px solid var(--color-state-success); }
+  .kc-human-gate--rejected { border-left: 3px solid var(--color-state-error); }
+  .kc-human-gate--pending { border-left: 3px solid var(--color-accent-gold); }
+  .kc-human-gate--escalated { border-left: 3px solid var(--color-accent-violet); }
+  .kc-human-gate__seal {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: currentColor;
+    color: var(--color-surface-primary);
+  }
+  .kc-human-gate--approved .kc-human-gate__seal { color: var(--color-state-success); }
+  .kc-human-gate--rejected .kc-human-gate__seal { color: var(--color-state-error); }
+  .kc-human-gate--pending .kc-human-gate__seal { color: var(--color-accent-gold); }
+  .kc-human-gate--escalated .kc-human-gate__seal { color: var(--color-accent-violet); }
+  .kc-human-gate__seal-icon {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-surface-primary);
+  }
+  .kc-human-gate__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .kc-human-gate__header {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .kc-human-gate__id {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-human-gate__name {
+    margin: 0;
+    flex: 1;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-human-gate__decision {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+  .kc-human-gate--approved .kc-human-gate__decision { color: var(--color-state-success); }
+  .kc-human-gate--rejected .kc-human-gate__decision { color: var(--color-state-error); }
+  .kc-human-gate__desc {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+  .kc-human-gate__criteria {
+    list-style: none;
+    margin: 0;
+    padding: 0.5em 0;
+    border-top: 1px solid var(--color-surface-rule);
+    border-bottom: 1px solid var(--color-surface-rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    font-size: 0.8125rem;
+    color: var(--color-text-display);
+  }
+  .kc-human-gate__criteria li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+  }
+  .kc-human-gate__check {
+    color: var(--color-accent-signal);
+  }
+  .kc-human-gate__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+  .kc-human-gate__reviewer {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.75rem;
+  }
+  .kc-human-gate__reviewer strong { color: var(--color-text-display); display: block; }
+  .kc-human-gate__reviewer span { color: var(--color-text-secondary); display: block; font-size: 0.6875rem; }
+  .kc-human-gate__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--color-accent-ember);
+    color: var(--color-surface-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.6875rem;
+  }
+  .kc-human-gate__sealed {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+</style>

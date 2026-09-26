@@ -1,0 +1,169 @@
+---
+/**
+ * AuditTrail - append-only event log with actor + action
+ * Knowledge composite (k-composite): k-audit-trail
+ */
+interface Event {
+  id: string;
+  timestamp: string;
+  actor: string;
+  action: string;
+  target?: string;
+  outcome?: 'success' | 'failure' | 'pending';
+  meta?: Record<string, string>;
+}
+interface Props {
+  events: Event[];
+  filterable?: boolean;
+  class?: string;
+}
+const { events, filterable = true, class: className = '' } = Astro.props;
+---
+<section class:list={['kc-audit-trail', className]}>
+  {filterable && (
+    <input
+      type="search"
+      class="kc-audit-trail__search"
+      placeholder="Filter events..."
+    />
+  )}
+  <ol class="kc-audit-trail__events">
+    {events.map((e) => (
+      <li class:list={['kc-audit-trail__event', `kc-audit-trail__event--${e.outcome || 'success'}`]}>
+        <span class="kc-audit-trail__time">{e.timestamp}</span>
+        <span class="kc-audit-trail__dot" aria-hidden="true"></span>
+        <div class="kc-audit-trail__body">
+          <div class="kc-audit-trail__headline">
+            <span class="kc-audit-trail__actor">{e.actor}</span>
+            <span class="kc-audit-trail__action">{e.action}</span>
+            {e.target && <span class="kc-audit-trail__target">{e.target}</span>}
+          </div>
+          {e.meta && (
+            <div class="kc-audit-trail__meta">
+              {Object.entries(e.meta).map(([k, v]) => (
+                <span class="kc-audit-trail__meta-item">
+                  <span class="kc-audit-trail__meta-key">{k}</span>
+                  <span class="kc-audit-trail__meta-val">{v}</span>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        <span class="kc-audit-trail__id">{e.id}</span>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<script>
+  document.querySelectorAll('.kc-audit-trail__search').forEach((input) => {
+    input.addEventListener('input', (e) => {
+      const q = (e.target as HTMLInputElement).value.toLowerCase();
+      const trail = input.closest('.kc-audit-trail');
+      if (!trail) return;
+      trail.querySelectorAll('.kc-audit-trail__event').forEach((ev) => {
+        const text = ev.textContent?.toLowerCase() || '';
+        (ev as HTMLElement).style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  .kc-audit-trail {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-audit-trail__search {
+    width: 100%;
+    padding: 0.4em 0.7em;
+    margin-bottom: var(--space-2);
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-display);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+  }
+  .kc-audit-trail__search:focus {
+    outline: 1px solid var(--color-accent-signal);
+    border-color: var(--color-accent-signal);
+  }
+  .kc-audit-trail__events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    max-height: 20rem;
+    overflow-y: auto;
+  }
+  .kc-audit-trail__event {
+    display: grid;
+    grid-template-columns: 6rem 1rem 1fr auto;
+    gap: var(--space-2);
+    align-items: start;
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid currentColor;
+  }
+  .kc-audit-trail__event--success { color: var(--color-state-success); }
+  .kc-audit-trail__event--failure { color: var(--color-state-error); }
+  .kc-audit-trail__event--pending { color: var(--color-accent-gold); }
+  .kc-audit-trail__time { color: var(--color-text-secondary); }
+  .kc-audit-trail__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+    margin-top: 0.4em;
+  }
+  .kc-audit-trail__headline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    color: var(--color-text-display);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+  }
+  .kc-audit-trail__actor {
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-audit-trail__action {
+    color: var(--color-text-secondary);
+  }
+  .kc-audit-trail__target {
+    color: var(--color-accent-signal);
+    font-family: var(--font-mono);
+  }
+  .kc-audit-trail__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 0.3em;
+  }
+  .kc-audit-trail__meta-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    font-size: 0.6875rem;
+  }
+  .kc-audit-trail__meta-key {
+    color: var(--color-text-secondary);
+    text-transform: lowercase;
+  }
+  .kc-audit-trail__meta-val {
+    color: var(--color-text-display);
+  }
+  .kc-audit-trail__id {
+    color: var(--color-text-secondary);
+    font-size: 0.625rem;
+    align-self: center;
+  }
+</style>

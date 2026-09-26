@@ -1,0 +1,170 @@
+---
+/**
+ * DatasetSpec - schema/size/license/ethics
+ * Knowledge composite (k-composite): k-dataset-spec
+ */
+interface Props {
+  name: string;
+  version: string;
+  size: string;
+  format: string;
+  license: string;
+  schema: { name: string; type: string; description?: string }[];
+  ethicalNotes?: string[];
+  class?: string;
+}
+const {
+  name, version, size, format, license, schema, ethicalNotes = [], class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-dataset', className]}>
+  <header class="kc-dataset__header">
+    <div>
+      <h4 class="kc-dataset__name">{name}</h4>
+      <span class="kc-dataset__version">v{version}</span>
+    </div>
+    <div class="kc-dataset__stats">
+      <span class="kc-dataset__stat">
+        <span class="kc-dataset__stat-label">Size</span>
+        <span class="kc-dataset__stat-val">{size}</span>
+      </span>
+      <span class="kc-dataset__stat">
+        <span class="kc-dataset__stat-label">Format</span>
+        <span class="kc-dataset__stat-val">{format}</span>
+      </span>
+      <span class="kc-dataset__stat">
+        <span class="kc-dataset__stat-label">License</span>
+        <span class="kc-dataset__stat-val">{license}</span>
+      </span>
+    </div>
+  </header>
+  <section class="kc-dataset__schema">
+    <h5 class="kc-dataset__label">Schema</h5>
+    <table class="kc-dataset__table">
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        {schema.map((f) => (
+          <tr>
+            <td><code>{f.name}</code></td>
+            <td><code>{f.type}</code></td>
+            <td>{f.description || '—'}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+  {ethicalNotes.length > 0 && (
+    <section class="kc-dataset__ethics">
+      <h5 class="kc-dataset__label">Ethical considerations</h5>
+      <ul>
+        {ethicalNotes.map((n) => <li>{n}</li>)}
+      </ul>
+    </section>
+  )}
+</article>
+
+<style>
+  .kc-dataset {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-dataset__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-dataset__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-dataset__version {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-dataset__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    text-align: right;
+  }
+  .kc-dataset__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+  }
+  .kc-dataset__stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-dataset__stat-val {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-dataset__label {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+  }
+  .kc-dataset__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+  }
+  .kc-dataset__table th,
+  .kc-dataset__table td {
+    text-align: left;
+    padding: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+    vertical-align: top;
+  }
+  .kc-dataset__table th {
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .kc-dataset__table code {
+    background: var(--color-surface-recessed);
+    color: var(--color-accent-plasma);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-dataset__ethics {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+    background: rgba(244, 184, 96, 0.06);
+    border-left: 3px solid var(--color-accent-gold);
+    border-radius: var(--radius-sm);
+  }
+  .kc-dataset__ethics ul {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+</style>

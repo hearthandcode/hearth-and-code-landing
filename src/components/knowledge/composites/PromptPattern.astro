@@ -1,0 +1,178 @@
+---
+/**
+ * PromptPattern - reusable prompt template + example output
+ * Knowledge composite (k-composite): k-prompt-pattern
+ */
+interface Props {
+  name: string;
+  category: 'reasoning' | 'extraction' | 'transformation' | 'generation' | 'analysis' | 'tooling';
+  template: string;
+  variables?: { name: string; description: string }[];
+  example?: { input?: string; output: string };
+  author?: string;
+  class?: string;
+}
+const {
+  name, category, template, variables = [], example, author, class: className = '',
+} = Astro.props;
+const patternId = `kc-prompt-${Math.random().toString(36).slice(2, 9)}`;
+---
+<article class:list={['kc-prompt-pattern', `kc-prompt-pattern--${category}`, className]}>
+  <header class="kc-prompt-pattern__header">
+    <div>
+      <h4 class="kc-prompt-pattern__name">{name}</h4>
+      {author && <span class="kc-prompt-pattern__author">by {author}</span>}
+    </div>
+    <span class="kc-prompt-pattern__category">{category}</span>
+  </header>
+  <pre class="kc-prompt-pattern__template"><code>{template}</code></pre>
+  {variables.length > 0 && (
+    <section class="kc-prompt-pattern__vars">
+      <h5 class="kc-prompt-pattern__label">Variables</h5>
+      <ul>
+        {variables.map((v) => (
+          <li>
+            <code class="kc-prompt-pattern__vname">{`{{${v.name}}}`}</code>
+            <span>{v.description}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  {example && (
+    <section class="kc-prompt-pattern__example">
+      <h5 class="kc-prompt-pattern__label">Example</h5>
+      {example.input && (
+        <div class="kc-prompt-pattern__example-block">
+          <span class="kc-prompt-pattern__ex-label">Input</span>
+          <pre><code>{example.input}</code></pre>
+        </div>
+      )}
+      <div class="kc-prompt-pattern__example-block">
+        <span class="kc-prompt-pattern__ex-label">Output</span>
+        <pre><code>{example.output}</code></pre>
+      </div>
+    </section>
+  )}
+</article>
+
+<style>
+  .kc-prompt-pattern {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-prompt-pattern--reasoning { border-left: 3px solid var(--color-accent-violet); }
+  .kc-prompt-pattern--extraction { border-left: 3px solid var(--color-accent-signal); }
+  .kc-prompt-pattern--transformation { border-left: 3px solid var(--color-accent-plasma); }
+  .kc-prompt-pattern--generation { border-left: 3px solid var(--color-accent-ember); }
+  .kc-prompt-pattern--analysis { border-left: 3px solid var(--color-accent-gold); }
+  .kc-prompt-pattern--tooling { border-left: 3px solid var(--color-state-success); }
+  .kc-prompt-pattern__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-prompt-pattern__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-prompt-pattern__author {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-prompt-pattern__category {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.15em 0.5em;
+    border-radius: var(--radius-sm);
+    color: currentColor;
+    border: 1px solid currentColor;
+  }
+  .kc-prompt-pattern--reasoning .kc-prompt-pattern__category { color: var(--color-accent-violet); }
+  .kc-prompt-pattern--extraction .kc-prompt-pattern__category { color: var(--color-accent-signal); }
+  .kc-prompt-pattern--generation .kc-prompt-pattern__category { color: var(--color-accent-ember); }
+  .kc-prompt-pattern__template {
+    margin: 0 0 var(--space-3) 0;
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    border-left: 2px solid var(--color-accent-plasma);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  .kc-prompt-pattern__label {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+  }
+  .kc-prompt-pattern__vars ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .kc-prompt-pattern__vars li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    padding: 0.2em 0.5em;
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-prompt-pattern__vname {
+    color: var(--color-accent-gold);
+    font-family: var(--font-mono);
+    background: var(--color-surface-primary);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.6875rem;
+  }
+  .kc-prompt-pattern__example-block {
+    margin-top: var(--space-2);
+  }
+  .kc-prompt-pattern__ex-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+    margin-bottom: 0.3em;
+  }
+  .kc-prompt-pattern__example-block pre {
+    margin: 0;
+    padding: var(--space-2);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+</style>

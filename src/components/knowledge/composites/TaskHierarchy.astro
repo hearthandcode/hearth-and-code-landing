@@ -1,0 +1,116 @@
+---
+/**
+ * TaskHierarchy - task tree with owner and status
+ * Knowledge composite (k-composite): k-task-hierarchy
+ *
+ * Interactive: click to expand/collapse tasks
+ */
+interface Task {
+  id: string;
+  title: string;
+  owner?: string;
+  status?: 'todo' | 'in-progress' | 'review' | 'done' | 'blocked';
+  children?: Task[];
+}
+interface Props {
+  tasks: Task[];
+  initiallyExpanded?: boolean;
+  class?: string;
+}
+const { tasks, initiallyExpanded = false, class: className = '' } = Astro.props;
+
+function renderTask(task: Task, expanded: boolean): string {
+  const hasChildren = task.children && task.children.length > 0;
+  const status = task.status || 'todo';
+  const childrenHtml = hasChildren
+    ? `<ul${expanded ? '' : ' style="display:none"'}>${task.children!.map((c) => renderTask(c, expanded)).join('')}</ul>`
+    : '';
+  return `<li class="kc-task-hierarchy__item ${hasChildren ? 'has-children' : ''} ${expanded ? 'is-expanded' : ''}">
+    <div class="kc-task-hierarchy__row">
+      ${hasChildren ? '<span class="kc-task-hierarchy__toggle"></span>' : '<span class="kc-task-hierarchy__toggle"></span>'}
+      <span class="kc-task-hierarchy__status kc-task-hierarchy__status--${status}"></span>
+      <span class="kc-task-hierarchy__title">${task.title}</span>
+      ${task.owner ? `<span class="kc-task-hierarchy__owner">${task.owner}</span>` : ''}
+    </div>
+    ${childrenHtml}
+  </li>`;
+}
+
+const html = tasks.map((t) => renderTask(t, initiallyExpanded)).join('');
+---
+<div class:list={['kc-task-hierarchy', className]} set:html={`<ul class="kc-task-hierarchy__root">${html}</ul>`} />
+
+<script>
+  document.querySelectorAll('.kc-task-hierarchy').forEach((tree) => {
+    tree.addEventListener('click', (e) => {
+      const row = (e.target as HTMLElement).closest('.kc-task-hierarchy__row');
+      if (!row) return;
+      const item = row.closest('.kc-task-hierarchy__item');
+      if (!item || !item.classList.contains('has-children')) return;
+      item.classList.toggle('is-expanded');
+      const ul = item.querySelector(':scope > ul') as HTMLElement | null;
+      if (ul) ul.style.display = item.classList.contains('is-expanded') ? '' : 'none';
+    });
+  });
+</script>
+
+<style>
+  .kc-task-hierarchy {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+  }
+  .kc-task-hierarchy__root,
+  .kc-task-hierarchy ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+  .kc-task-hierarchy ul { padding-left: 1.5rem; border-left: 1px dashed var(--color-surface-rule); margin-left: 0.5em; }
+  .kc-task-hierarchy__item { margin: 0.3em 0; }
+  .kc-task-hierarchy__row {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  .kc-task-hierarchy__row:hover { background: var(--color-surface-recessed); }
+  .kc-task-hierarchy__toggle {
+    display: inline-block;
+    width: 0.9em;
+    text-align: center;
+    color: var(--color-accent-signal);
+    font-weight: var(--font-weight-bold);
+    user-select: none;
+  }
+  .kc-task-hierarchy__item:not(.has-children) .kc-task-hierarchy__toggle::before { content: '·'; }
+  .kc-task-hierarchy__item.has-children:not(.is-expanded) .kc-task-hierarchy__toggle::before { content: '▸'; }
+  .kc-task-hierarchy__item.has-children.is-expanded .kc-task-hierarchy__toggle::before { content: '▾'; }
+  .kc-task-hierarchy__status {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  .kc-task-hierarchy__status--todo { background: var(--color-text-secondary); }
+  .kc-task-hierarchy__status--in-progress { background: var(--color-accent-plasma); }
+  .kc-task-hierarchy__status--review { background: var(--color-accent-gold); }
+  .kc-task-hierarchy__status--done { background: var(--color-state-success); }
+  .kc-task-hierarchy__status--blocked { background: var(--color-state-error); }
+  .kc-task-hierarchy__title {
+    flex: 1;
+    color: var(--color-text-display);
+  }
+  .kc-task-hierarchy__owner {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-recessed);
+    padding: 0.05em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+</style>

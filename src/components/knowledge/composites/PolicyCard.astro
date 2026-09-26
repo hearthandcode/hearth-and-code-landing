@@ -1,0 +1,120 @@
+---
+/**
+ * PolicyCard - policy with effective date and scope
+ * Knowledge composite (k-composite): k-policy-card
+ */
+interface Props {
+  id: string;
+  title: string;
+  statement: string;
+  effectiveDate: string;
+  scope: string;
+  owner?: string;
+  status?: 'draft' | 'active' | 'suspended' | 'retired';
+  class?: string;
+}
+const {
+  id, title, statement, effectiveDate, scope, owner, status = 'active', class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-policy', `kc-policy--${status}`, className]}>
+  <header class="kc-policy__header">
+    <div class="kc-policy__id-row">
+      <span class="kc-policy__id">{id}</span>
+      <span class="kc-policy__status">{status}</span>
+    </div>
+    <h4 class="kc-policy__title">{title}</h4>
+  </header>
+  <p class="kc-policy__statement">{statement}</p>
+  <footer class="kc-policy__footer">
+    <span class="kc-policy__meta">
+      <span class="kc-policy__label">Effective</span>
+      <time>{effectiveDate}</time>
+    </span>
+    <span class="kc-policy__meta">
+      <span class="kc-policy__label">Scope</span>
+      <span>{scope}</span>
+    </span>
+    {owner && (
+      <span class="kc-policy__meta">
+        <span class="kc-policy__label">Owner</span>
+        <span>{owner}</span>
+      </span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .kc-policy {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-policy--active { border-left: 3px solid var(--color-state-success); }
+  .kc-policy--draft { border-left: 3px solid var(--color-accent-gold); }
+  .kc-policy--suspended { border-left: 3px solid var(--color-state-caution); }
+  .kc-policy--retired { border-left: 3px solid var(--color-text-secondary); }
+  .kc-policy__header { margin-bottom: var(--space-3); }
+  .kc-policy__id-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+  }
+  .kc-policy__id {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.1);
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+  .kc-policy__status {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+  .kc-policy--active .kc-policy__status { color: var(--color-state-success); }
+  .kc-policy--draft .kc-policy__status { color: var(--color-accent-gold); }
+  .kc-policy__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-policy__statement {
+    margin: 0 0 var(--space-3) 0;
+    padding: var(--space-3);
+    background: var(--color-surface-recessed);
+    border-left: 2px solid var(--color-accent-ember);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-display);
+  }
+  .kc-policy__footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .kc-policy__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+    font-size: 0.8125rem;
+    color: var(--color-text-display);
+  }
+  .kc-policy__label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+/**
+ * SequenceDiagram - actors + ordered messages
+ * Knowledge composite (k-composite): k-sequence-diagram
+ */
+interface Message {
+  from: string;
+  to: string;
+  label: string;
+  kind?: 'sync' | 'async' | 'return';
+}
+interface Props {
+  actors: string[];
+  messages: Message[];
+  class?: string;
+}
+const { actors, messages, class: className = '' } = Astro.props;
+const actorWidth = 600 / actors.length;
+---
+<div class:list={['kc-sequence', className]}>
+  <svg viewBox={`0 0 600 ${40 + messages.length * 30}`} xmlns="http://www.w3.org/2000/svg" class="kc-sequence__svg">
+    <defs>
+      <marker id="kc-seq-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-text-display)" />
+      </marker>
+      <marker id="kc-seq-async" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="var(--color-text-display)" stroke-width="1" />
+      </marker>
+    </defs>
+    {/* Actor boxes */}
+    {actors.map((a, i) => {
+      const x = actorWidth * i + actorWidth / 2;
+      return (
+        <g>
+          <rect x={x - 50} y="4" width="100" height="20" rx="2" fill="var(--color-surface-raised)" stroke="var(--color-accent-signal)" stroke-width="1" />
+          <text x={x} y="18" text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="11">{a}</text>
+          {/* Lifelines */}
+          <line x1={x} y1="24" x2={x} y2={40 + messages.length * 30} stroke="var(--color-surface-rule)" stroke-width="1" stroke-dasharray="4 4" />
+        </g>
+      );
+    })}
+    {/* Messages */}
+    {messages.map((m, i) => {
+      const fromIdx = actors.indexOf(m.from);
+      const toIdx = actors.indexOf(m.to);
+      if (fromIdx === -1 || toIdx === -1) return null;
+      const x1 = actorWidth * fromIdx + actorWidth / 2;
+      const x2 = actorWidth * toIdx + actorWidth / 2;
+      const y = 40 + i * 30;
+      const kind = m.kind || 'sync';
+      const stroke = kind === 'return' ? 'var(--color-text-secondary)' : 'var(--color-text-display)';
+      const marker = kind === 'async' ? 'url(#kc-seq-async)' : 'url(#kc-seq-sync)';
+      const dasharray = kind === 'async' ? '6 4' : kind === 'return' ? '3 3' : '';
+      const labelX = (x1 + x2) / 2;
+      return (
+        <g>
+          <line x1={x1} y1={y} x2={x2} y2={y} stroke={stroke} stroke-width="1.2" marker-end={marker} stroke-dasharray={dasharray} />
+          <rect x={labelX - m.label.length * 3 - 4} y={y - 9} width={m.label.length * 6 + 8} height="14" rx="2" fill="var(--color-surface-recessed)" />
+          <text x={labelX} y={y + 1} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="9">{m.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+</div>
+
+<style>
+  .kc-sequence {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-sequence__svg { width: 100%; height: auto; display: block; }
+</style>

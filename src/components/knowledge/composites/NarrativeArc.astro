@@ -1,0 +1,112 @@
+---
+/**
+ * NarrativeArc - three-act structure with beats
+ * Knowledge composite (k-composite): k-narrative-arc
+ */
+interface Beat {
+  label: string;
+  description?: string;
+  intensity?: number;
+}
+interface Props {
+  beats: Beat[];
+  class?: string;
+}
+const { beats, class: className = '' } = Astro.props;
+---
+<div class:list={['kc-narrative', className]}>
+  <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="kc-narrative__svg">
+    <defs>
+      <linearGradient id="kc-narrative-fill" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stop-color="var(--color-accent-signal)" stop-opacity="0.1" />
+        <stop offset="50%" stop-color="var(--color-accent-ember)" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="var(--color-accent-violet)" stop-opacity="0.2" />
+      </linearGradient>
+    </defs>
+    {/* Axes */}
+    <line x1="0" y1="180" x2="400" y2="180" stroke="var(--color-surface-rule)" stroke-width="1" />
+    <line x1="0" y1="20" x2="0" y2="180" stroke="var(--color-surface-rule)" stroke-width="1" />
+    {/* Curve */}
+    <path
+      d={`M 0 ${180 - (beats[0]?.intensity || 0) * 1.5} ${beats.map((b, i) => {
+        const x = (400 / (beats.length - 1)) * i;
+        const y = 180 - (b.intensity || 0) * 1.5;
+        return `L ${x} ${y}`;
+      }).join(' ')}`}
+      fill="url(#kc-narrative-fill)"
+      stroke="var(--color-accent-ember)"
+      stroke-width="2"
+    />
+    {/* Beat dots */}
+    {beats.map((b, i) => {
+      const x = (400 / Math.max(1, beats.length - 1)) * i;
+      const y = 180 - (b.intensity || 0) * 1.5;
+      return (
+        <g>
+          <circle cx={x} cy={y} r="5" fill="var(--color-accent-ember)" stroke="var(--color-surface-recessed)" stroke-width="2" />
+          <text x={x} y={y - 10} text-anchor="middle" fill="var(--color-text-display)" font-family="var(--font-mono)" font-size="9">{b.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+  <ol class="kc-narrative__beats">
+    {beats.map((b, i) => (
+      <li class="kc-narrative__beat">
+        <span class="kc-narrative__beat-num">{i + 1}</span>
+        <div class="kc-narrative__beat-body">
+          <strong>{b.label}</strong>
+          {b.description && <span>{b.description}</span>}
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .kc-narrative {
+    padding: var(--space-3);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-narrative__svg { width: 100%; height: auto; display: block; }
+  .kc-narrative__beats {
+    list-style: none;
+    margin: var(--space-2) 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+  }
+  .kc-narrative__beat {
+    display: flex;
+    gap: var(--space-2);
+    align-items: baseline;
+    padding: var(--space-2);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+  }
+  .kc-narrative__beat-num {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-ember);
+    background: rgba(232, 91, 78, 0.12);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  .kc-narrative__beat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+  }
+  .kc-narrative__beat-body strong {
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-narrative__beat-body span {
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+  }
+</style>

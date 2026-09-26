@@ -1,0 +1,124 @@
+---
+/**
+ * EvidenceReceipt - evidence with hash/timestamp/witness
+ * Knowledge composite (k-composite): k-evidence-receipt
+ */
+interface Props {
+  id: string;
+  type: 'document' | 'testimony' | 'observation' | 'measurement' | 'artifact';
+  description: string;
+  hash: string;
+  hashAlgorithm?: 'sha256' | 'sha1' | 'blake3';
+  timestamp: string;
+  witness?: string;
+  locator?: string;
+  class?: string;
+}
+const {
+  id, type, description, hash, hashAlgorithm = 'sha256', timestamp, witness, locator, class: className = '',
+} = Astro.props;
+const shortHash = `${hash.slice(0, 16)}…`;
+---
+<article class:list={['kc-evidence-receipt', `kc-evidence-receipt--${type}`, className]}>
+  <div class="kc-evidence-receipt__corner">
+    <span class="kc-evidence-receipt__icon" aria-hidden="true">▪</span>
+    <span class="kc-evidence-receipt__type">{type}</span>
+  </div>
+  <p class="kc-evidence-receipt__desc">{description}</p>
+  <dl class="kc-evidence-receipt__details">
+    <div>
+      <dt>ID</dt>
+      <dd>{id}</dd>
+    </div>
+    <div>
+      <dt>Hash</dt>
+      <dd><code>{hashAlgorithm}:{shortHash}</code></dd>
+    </div>
+    <div>
+      <dt>Sealed</dt>
+      <dd><time datetime={timestamp}>{timestamp}</time></dd>
+    </div>
+    {witness && (
+      <div>
+        <dt>Witness</dt>
+        <dd>{witness}</dd>
+      </div>
+    )}
+    {locator && (
+      <div>
+        <dt>Locator</dt>
+        <dd>{locator}</dd>
+      </div>
+    )}
+  </dl>
+</article>
+
+<style>
+  .kc-evidence-receipt {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    position: relative;
+  }
+  .kc-evidence-receipt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.2rem;
+    background: linear-gradient(90deg, var(--color-accent-ember), var(--color-accent-gold), var(--color-accent-signal));
+  }
+  .kc-evidence-receipt__corner {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-bottom: var(--space-2);
+  }
+  .kc-evidence-receipt__icon {
+    color: var(--color-accent-gold);
+    font-size: 1rem;
+  }
+  .kc-evidence-receipt__type {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-evidence-receipt__desc {
+    margin: 0 0 var(--space-3) 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+  }
+  .kc-evidence-receipt__details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-2);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+  }
+  .kc-evidence-receipt__details div { display: flex; flex-direction: column; gap: 0.1em; min-width: 0; }
+  .kc-evidence-receipt__details dt {
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.625rem;
+  }
+  .kc-evidence-receipt__details dd {
+    margin: 0;
+    color: var(--color-text-display);
+    word-break: break-all;
+  }
+  .kc-evidence-receipt__details code {
+    background: transparent;
+    color: var(--color-accent-signal);
+    padding: 0;
+  }
+</style>

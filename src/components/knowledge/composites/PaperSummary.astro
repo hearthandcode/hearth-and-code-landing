@@ -1,0 +1,141 @@
+---
+/**
+ * PaperSummary - abstract + claims + limitations + citations
+ * Knowledge composite (k-composite): k-paper-summary
+ */
+interface Props {
+  title: string;
+  authors: string[];
+  year: number | string;
+  venue?: string;
+  abstract: string;
+  claims: string[];
+  limitations: string[];
+  citationCount?: number;
+  doi?: string;
+  class?: string;
+}
+const {
+  title, authors, year, venue, abstract, claims, limitations, citationCount, doi, class: className = '',
+} = Astro.props;
+---
+<article class:list={['kc-paper', className]}>
+  <header class="kc-paper__header">
+    <h4 class="kc-paper__title">{title}</h4>
+    <p class="kc-paper__authors">{authors.join(', ')} <span class="kc-paper__year">({year})</span></p>
+    {venue && <p class="kc-paper__venue">{venue}</p>}
+  </header>
+  <section class="kc-paper__abstract">
+    <h5 class="kc-paper__label">Abstract</h5>
+    <p>{abstract}</p>
+  </section>
+  <section class="kc-paper__section">
+    <h5 class="kc-paper__label">Key claims <span class="kc-paper__count">{claims.length}</span></h5>
+    <ol class="kc-paper__list">
+      {claims.map((c) => <li>{c}</li>)}
+    </ol>
+  </section>
+  <section class="kc-paper__section kc-paper__section--limit">
+    <h5 class="kc-paper__label">Limitations</h5>
+    <ul class="kc-paper__list">
+      {limitations.map((l) => <li>{l}</li>)}
+    </ul>
+  </section>
+  <footer class="kc-paper__footer">
+    {citationCount !== undefined && (
+      <span class="kc-paper__citations">
+        <span class="kc-paper__cite-icon">↗</span>
+        {citationCount} citations
+      </span>
+    )}
+    {doi && (
+      <span class="kc-paper__doi">doi:{doi}</span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .kc-paper {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-paper__header {
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .kc-paper__title {
+    margin: 0 0 0.5em 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+    line-height: 1.3;
+  }
+  .kc-paper__authors {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-paper__year { color: var(--color-text-display); font-weight: var(--font-weight-medium); }
+  .kc-paper__venue {
+    margin: 0.2em 0 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-accent-signal);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .kc-paper__abstract { margin-bottom: var(--space-3); }
+  .kc-paper__abstract p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-display);
+  }
+  .kc-paper__section { margin-bottom: var(--space-3); }
+  .kc-paper__label {
+    margin: 0 0 var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+  }
+  .kc-paper__count {
+    background: rgba(31, 182, 168, 0.15);
+    color: var(--color-accent-signal);
+    padding: 0.05em 0.4em;
+    border-radius: 999px;
+    font-size: 0.625rem;
+  }
+  .kc-paper__list {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-display);
+  }
+  .kc-paper__list li { margin-bottom: 0.3em; }
+  .kc-paper__section--limit .kc-paper__list { color: var(--color-text-secondary); font-style: italic; }
+  .kc-paper__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-surface-rule);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-paper__citations {
+    color: var(--color-accent-gold);
+  }
+  .kc-paper__cite-icon { margin-right: 0.3em; }
+  .kc-paper__doi { color: var(--color-accent-signal); }
+</style>

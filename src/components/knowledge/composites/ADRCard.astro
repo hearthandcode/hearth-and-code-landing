@@ -1,0 +1,145 @@
+---
+/**
+ * ADRCard - Architecture Decision Record
+ * Knowledge composite (k-composite): k-adr-card
+ *
+ * Interactive: expand to see context + consequences
+ */
+interface Props {
+  number: string;
+  title: string;
+  status: 'proposed' | 'accepted' | 'rejected' | 'superseded' | 'deprecated';
+  date: string;
+  context: string;
+  decision: string;
+  consequences: string[];
+  class?: string;
+}
+const {
+  number, title, status, date, context, decision, consequences, class: className = '',
+} = Astro.props;
+const cardId = `kc-adr-${Math.random().toString(36).slice(2, 9)}`;
+---
+<article class:list={['kc-adr', `kc-adr--${status}`, className]}>
+  <button class="kc-adr__header" data-adr-toggle>
+    <div class="kc-adr__id">
+      <span class="kc-adr__number">ADR-{number}</span>
+      <span class="kc-adr__status">{status}</span>
+    </div>
+    <h4 class="kc-adr__title">{title}</h4>
+    <time class="kc-adr__date">{date}</time>
+    <span class="kc-adr__chevron" aria-hidden="true">▸</span>
+  </button>
+  <div class="kc-adr__body" hidden>
+    <section class="kc-adr__section">
+      <h5 class="kc-adr__label">Context</h5>
+      <p>{context}</p>
+    </section>
+    <section class="kc-adr__section kc-adr__section--decision">
+      <h5 class="kc-adr__label">Decision</h5>
+      <p>{decision}</p>
+    </section>
+    <section class="kc-adr__section">
+      <h5 class="kc-adr__label">Consequences</h5>
+      <ul>{consequences.map((c) => <li>{c}</li>)}</ul>
+    </section>
+  </div>
+</article>
+
+<script>
+  document.querySelectorAll('.kc-adr__header').forEach((hdr) => {
+    hdr.addEventListener('click', () => {
+      const body = hdr.nextElementSibling as HTMLElement | null;
+      if (!body) return;
+      body.hidden = !body.hidden;
+      hdr.classList.toggle('is-expanded');
+      const chev = hdr.querySelector('.kc-adr__chevron');
+      if (chev) chev.textContent = body.hidden ? '▸' : '▾';
+    });
+  });
+</script>
+
+<style>
+  .kc-adr {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .kc-adr--accepted { border-left: 3px solid var(--color-state-success); }
+  .kc-adr--proposed { border-left: 3px solid var(--color-accent-gold); }
+  .kc-adr--rejected { border-left: 3px solid var(--color-state-error); }
+  .kc-adr--superseded { border-left: 3px solid var(--color-text-secondary); }
+  .kc-adr--deprecated { border-left: 3px solid var(--color-state-caution); }
+  .kc-adr__header {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: var(--space-3);
+    align-items: center;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+  .kc-adr__header:hover { background: var(--color-surface-recessed); }
+  .kc-adr__id { display: flex; flex-direction: column; gap: 0.2em; min-width: 4rem; }
+  .kc-adr__number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .kc-adr__status {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+  .kc-adr--accepted .kc-adr__status { color: var(--color-state-success); }
+  .kc-adr--proposed .kc-adr__status { color: var(--color-accent-gold); }
+  .kc-adr--rejected .kc-adr__status { color: var(--color-state-error); }
+  .kc-adr__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-display);
+  }
+  .kc-adr__date {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-adr__chevron {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+  .kc-adr__body {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-surface-rule);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .kc-adr__section { font-size: 0.875rem; line-height: 1.5; color: var(--color-text-secondary); }
+  .kc-adr__section p { margin: 0; }
+  .kc-adr__section ul { margin: 0.5em 0 0 0; padding-left: 1.2em; }
+  .kc-adr__section--decision {
+    padding: var(--space-2);
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-display);
+    border-left: 2px solid var(--color-accent-signal);
+  }
+  .kc-adr__label {
+    margin: 0 0 0.3em 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-signal);
+  }
+</style>

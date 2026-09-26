@@ -1,0 +1,152 @@
+---
+/**
+ * WorkflowState - current state + allowed transitions
+ * Knowledge composite (k-composite): k-workflow-state
+ *
+ * Interactive: click transition to simulate state change
+ */
+interface Transition {
+  to: string;
+  label: string;
+  requires?: string;
+}
+interface Props {
+  states: string[];
+  current: string;
+  transitions: Transition[];
+  class?: string;
+}
+const { states, current: initialCurrent, transitions, class: className = '' } = Astro.props;
+const stateId = `kc-workflow-${Math.random().toString(36).slice(2, 9)}`;
+---
+<div class:list={['kc-workflow-state', className]} data-state-id={stateId} data-current={initialCurrent}>
+  <div class="kc-workflow-state__track">
+    {states.map((s) => (
+      <div class:list={['kc-workflow-state__node', s === initialCurrent && 'is-current']} data-state={s}>
+        <span class="kc-workflow-state__dot"></span>
+        <span class="kc-workflow-state__label">{s}</span>
+      </div>
+    ))}
+  </div>
+  <div class="kc-workflow-state__transitions">
+    <span class="kc-workflow-state__from">From: <strong>{initialCurrent}</strong></span>
+    {transitions.filter((t) => t.to !== initialCurrent).map((t) => (
+      <button class="kc-workflow-state__btn" data-transition={t.to}>
+        {t.label}
+        {t.requires && <span class="kc-workflow-state__req">({t.requires})</span>}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.kc-workflow-state').forEach((wf) => {
+    wf.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.kc-workflow-state__btn');
+      if (!btn) return;
+      const to = btn.getAttribute('data-transition');
+      if (!to) return;
+      const current = wf.getAttribute('data-current');
+      wf.setAttribute('data-current', to);
+      wf.querySelectorAll('.kc-workflow-state__node').forEach((node) => {
+        const state = node.getAttribute('data-state');
+        node.classList.toggle('is-current', state === to);
+      });
+      const fromEl = wf.querySelector('.kc-workflow-state__from strong');
+      if (fromEl) fromEl.textContent = to;
+    });
+  });
+</script>
+
+<style>
+  .kc-workflow-state {
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .kc-workflow-state__track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    margin-bottom: var(--space-3);
+  }
+  .kc-workflow-state__node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3em;
+    flex: 1;
+    position: relative;
+  }
+  .kc-workflow-state__node:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0.55em;
+    left: 50%;
+    right: -50%;
+    height: 1px;
+    background: var(--color-surface-rule);
+  }
+  .kc-workflow-state__dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--color-surface-rule);
+    border: 2px solid var(--color-surface-primary);
+    z-index: 1;
+  }
+  .kc-workflow-state__node.is-current .kc-workflow-state__dot {
+    background: var(--color-accent-ember);
+    box-shadow: 0 0 8px var(--color-accent-ember);
+  }
+  .kc-workflow-state__label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+  .kc-workflow-state__node.is-current .kc-workflow-state__label {
+    color: var(--color-accent-ember);
+    font-weight: var(--font-weight-bold);
+  }
+  .kc-workflow-state__transitions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .kc-workflow-state__from {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-right: var(--space-2);
+  }
+  .kc-workflow-state__from strong { color: var(--color-accent-ember); }
+  .kc-workflow-state__btn {
+    padding: 0.3em 0.7em;
+    background: var(--color-surface-recessed);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-display);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .kc-workflow-state__btn:hover {
+    background: var(--color-accent-signal);
+    color: var(--color-surface-primary);
+    border-color: var(--color-accent-signal);
+  }
+  .kc-workflow-state__req {
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    margin-left: 0.3em;
+  }
+</style>

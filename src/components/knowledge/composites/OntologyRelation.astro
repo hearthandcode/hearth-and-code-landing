@@ -1,0 +1,103 @@
+---
+/**
+ * OntologyRelation - typed semantic relation between two concepts
+ * Knowledge composite (k-composite): k-ontology-relation
+ */
+interface Props {
+  subject: string;
+  subjectType?: string;
+  verb: 'is-a' | 'part-of' | 'causes' | 'requires' | 'enables' | 'precedes' | 'follows' | 'contradicts' | 'supports' | 'extends' | 'instance-of' | 'same-as';
+  object: string;
+  objectType?: string;
+  direction?: 'forward' | 'backward' | 'bidirectional';
+  class?: string;
+}
+const {
+  subject,
+  subjectType,
+  verb,
+  object,
+  objectType,
+  direction = 'forward',
+  class: className = '',
+} = Astro.props;
+const arrows = { forward: '→', backward: '←', bidirectional: '↔' };
+---
+<div class:list={['kc-relation', `kc-relation--${verb}`, className]}>
+  <div class="kc-relation__subject">
+    <span class="kc-relation__concept">{subject}</span>
+    {subjectType && <span class="kc-relation__type">{subjectType}</span>}
+  </div>
+  <div class="kc-relation__connector">
+    <span class="kc-relation__verb">{verb}</span>
+    <span class="kc-relation__arrow" aria-hidden="true">{arrows[direction]}</span>
+  </div>
+  <div class="kc-relation__object">
+    <span class="kc-relation__concept">{object}</span>
+    {objectType && <span class="kc-relation__type">{objectType}</span>}
+  </div>
+</div>
+
+<style>
+  .kc-relation {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+  }
+  .kc-relation__subject,
+  .kc-relation__object {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    flex: 1;
+    min-width: 0;
+  }
+  .kc-relation__concept {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-display);
+    font-size: 0.9375rem;
+    word-wrap: break-word;
+  }
+  .kc-relation__type {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-relation__connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+    flex-shrink: 0;
+  }
+  .kc-relation__verb {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-violet);
+    padding: 0.1em 0.5em;
+    background: rgba(155, 93, 229, 0.08);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-accent-violet);
+  }
+  .kc-relation__arrow {
+    color: var(--color-accent-plasma);
+    font-size: 1.125rem;
+  }
+  .kc-relation--is-a .kc-relation__verb,
+  .kc-relation--instance-of .kc-relation__verb,
+  .kc-relation--same-as .kc-relation__verb { color: var(--color-accent-signal); border-color: var(--color-accent-signal); background: rgba(31, 182, 168, 0.08); }
+  .kc-relation--causes .kc-relation__verb,
+  .kc-relation--enables .kc-relation__verb { color: var(--color-accent-ember); border-color: var(--color-accent-ember); background: rgba(232, 91, 78, 0.08); }
+  .kc-relation--requires .kc-relation__verb { color: var(--color-state-caution); border-color: var(--color-state-caution); background: rgba(232, 146, 60, 0.08); }
+  .kc-relation--contradicts .kc-relation__verb { color: var(--color-state-error); border-color: var(--color-state-error); background: rgba(194, 90, 42, 0.08); }
+  .kc-relation--supports .kc-relation__verb { color: var(--color-state-success); border-color: var(--color-state-success); background: rgba(143, 163, 149, 0.08); }
+</style>
