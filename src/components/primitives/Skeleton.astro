@@ -1,0 +1,64 @@
+---
+/**
+ * Skeleton primitive
+ * id: p-skeleton
+ *
+ * Placeholder loading state for content.
+ */
+
+interface Props {
+  variant?: 'text' | 'circle' | 'rect' | 'card';
+  width?: string;
+  height?: string;
+  class?: string;
+}
+
+const {
+  variant = 'text',
+  width = '100%',
+  height = '1em',
+  class: className = '',
+} = Astro.props;
+---
+
+<span
+  class={`ec-skeleton ec-skeleton--${variant} ${className}`}
+  style={`width: ${width}; height: ${variant === 'text' || variant === 'rect' ? height : width};`}
+  aria-hidden="true"
+></span>
+
+<style>
+  .ec-skeleton {
+    display: inline-block;
+    background: linear-gradient(90deg,
+      var(--color-surface-recessed) 0%,
+      var(--color-surface-raised) 50%,
+      var(--color-surface-recessed) 100%);
+    background-size: 200% 100%;
+    animation: ec-skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+  }
+  .ec-skeleton--text {
+    border-radius: 3px;
+  }
+  .ec-skeleton--circle {
+    border-radius: 50%;
+  }
+  .ec-skeleton--rect {
+    border-radius: var(--radius-sm);
+  }
+  .ec-skeleton--card {
+    border-radius: var(--radius-md);
+    width: 100%;
+    height: 8rem;
+  }
+  @keyframes ec-skeleton-shimmer {
+    to { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ec-skeleton {
+      animation: none;
+      background: var(--color-surface-raised);
+    }
+  }
+</style>

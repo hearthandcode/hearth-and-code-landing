@@ -1,0 +1,73 @@
+---
+/**
+ * Badge primitive
+ * id: p-badge
+ *
+ * Small label or status indicator.
+ */
+
+interface Props {
+  variant?: 'neutral' | 'success' | 'caution' | 'danger' | 'info' | 'hearth' | 'code' | 'balanced';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { variant = 'neutral', size = 'md', class: className = '' } = Astro.props;
+---
+
+<span class={`ec-badge ec-badge--${variant} ec-badge--${size} ${className}`}>
+  <slot />
+</span>
+
+<style>
+  .ec-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.5rem;
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-small);
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+  }
+  .ec-badge--sm {
+    padding: 0 0.375rem;
+    font-size: 0.6875rem;
+  }
+  .ec-badge--neutral {
+    background: var(--color-surface-raised);
+    color: var(--color-text-secondary);
+    border-color: var(--color-surface-rule);
+  }
+  .ec-badge--success {
+    background: rgba(143, 163, 149, 0.15);
+    color: var(--color-state-success);
+  }
+  .ec-badge--caution {
+    background: rgba(232, 146, 60, 0.15);
+    color: var(--color-state-caution);
+  }
+  .ec-badge--danger {
+    background: rgba(194, 90, 42, 0.15);
+    color: var(--color-state-error);
+  }
+  .ec-badge--info {
+    background: rgba(63, 224, 208, 0.15);
+    color: var(--color-accent-plasma);
+  }
+  .ec-badge--hearth {
+    background: rgba(232, 91, 78, 0.15);
+    color: var(--color-accent-ember);
+  }
+  .ec-badge--code {
+    background: rgba(31, 182, 168, 0.15);
+    color: var(--color-accent-signal);
+  }
+  .ec-badge--balanced {
+    background: rgba(155, 93, 229, 0.15);
+    color: var(--color-accent-violet);
+  }
+</style>

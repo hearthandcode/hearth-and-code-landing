@@ -1,0 +1,50 @@
+---
+/**
+ * Label primitive
+ * id: p-label
+ *
+ * Form field label with required/optional indicators.
+ */
+
+interface Props {
+  text: string;
+  required?: boolean;
+  optional?: boolean;
+  htmlFor?: string;
+  class?: string;
+}
+
+const { text, required = false, optional = false, htmlFor, class: className = '' } = Astro.props;
+---
+
+<label class={`ec-label ${className}`} for={htmlFor}>
+  <span class="ec-label__text">{text}</span>
+  {required && <span class="ec-label__indicator ec-label__indicator--required" aria-label="required">*</span>}
+  {optional && <span class="ec-label__indicator ec-label__indicator--optional">(optional)</span>}
+</label>
+
+<style>
+  .ec-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .ec-label__indicator {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-normal);
+    opacity: 0.7;
+  }
+  .ec-label__indicator--required {
+    color: var(--color-state-error);
+  }
+  .ec-label__indicator--optional {
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+</style>

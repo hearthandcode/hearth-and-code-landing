@@ -1,0 +1,36 @@
+---
+/**
+ * Tooltip primitive
+ * id: p-tooltip
+ *
+ * Hover/focus informational popover.
+ * Note: Uses title attribute for simplicity in this initial build.
+ * More sophisticated implementation (portal-based) would come later.
+ */
+
+interface Props {
+  content: string;
+  position?: 'top' | 'right' | 'bottom' | 'left';
+  class?: string;
+}
+
+const { content, position = 'top', class: className = '' } = Astro.props;
+---
+
+<span class={`ec-tooltip ec-tooltip--${position} ${className}`} title={content} tabindex="0">
+  <slot />
+</span>
+
+<style>
+  .ec-tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted var(--color-text-secondary);
+    cursor: help;
+  }
+  .ec-tooltip:focus {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+/**
+ * Radio primitive
+ * id: p-radio
+ *
+ * Single-selection control within a group.
+ */
+
+interface Props {
+  name: string;
+  value: string;
+  checked?: boolean;
+  disabled?: boolean;
+  label?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  name,
+  value,
+  checked = false,
+  disabled = false,
+  label,
+  id,
+  class: className = '',
+} = Astro.props;
+---
+
+<label class={`ec-radio ${className}`} for={id}>
+  <input
+    type="radio"
+    id={id}
+    name={name}
+    value={value}
+    checked={checked}
+    disabled={disabled}
+    class="ec-radio__input"
+  />
+  <span class="ec-radio__dot" aria-hidden="true">
+    <span class="ec-radio__inner"></span>
+  </span>
+  {label && <span class="ec-radio__label">{label}</span>}
+</label>
+
+<style>
+  .ec-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text-primary);
+    user-select: none;
+  }
+  .ec-radio__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+  .ec-radio__dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.125rem;
+    height: 1.125rem;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule-strong);
+    border-radius: 50%;
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+    flex-shrink: 0;
+  }
+  .ec-radio__inner {
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--color-text-display);
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-radio__input:checked + .ec-radio__dot {
+    background: var(--color-accent-signal);
+    border-color: var(--color-accent-signal);
+  }
+  .ec-radio__input:checked + .ec-radio__dot .ec-radio__inner {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  .ec-radio__input:focus-visible + .ec-radio__dot {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .ec-radio__input:disabled ~ * {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+  .ec-radio__label {
+    line-height: 1.4;
+  }
+</style>

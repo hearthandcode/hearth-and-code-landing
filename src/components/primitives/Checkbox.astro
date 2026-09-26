@@ -1,0 +1,116 @@
+---
+/**
+ * Checkbox primitive
+ * id: p-checkbox
+ *
+ * Binary selection control with label.
+ */
+
+interface Props {
+  checked?: boolean;
+  disabled?: boolean;
+  indeterminate?: boolean;
+  label?: string;
+  value?: string;
+  name?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  checked = false,
+  disabled = false,
+  indeterminate = false,
+  label,
+  value,
+  name,
+  id,
+  class: className = '',
+} = Astro.props;
+---
+
+<label class={`ec-checkbox ${className}`} for={id}>
+  <input
+    type="checkbox"
+    id={id}
+    name={name}
+    value={value}
+    checked={checked}
+    disabled={disabled}
+    data-indeterminate={indeterminate ? 'true' : undefined}
+    class="ec-checkbox__input"
+  />
+  <span class="ec-checkbox__box" aria-hidden="true">
+    {checked && (
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+      </svg>
+    )}
+    {indeterminate && !checked && (
+      <span class="ec-checkbox__indeterminate"></span>
+    )}
+  </span>
+  {label && <span class="ec-checkbox__label">{label}</span>}
+</label>
+
+<script>
+  document.querySelectorAll<HTMLInputElement>('.ec-checkbox__input[data-indeterminate="true"]').forEach((el) => {
+    el.indeterminate = true;
+  });
+</script>
+
+<style>
+  .ec-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text-primary);
+    user-select: none;
+  }
+  .ec-checkbox__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+  .ec-checkbox__box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.125rem;
+    height: 1.125rem;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule-strong);
+    border-radius: 3px;
+    color: var(--color-text-display);
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+    flex-shrink: 0;
+  }
+  .ec-checkbox__input:checked + .ec-checkbox__box,
+  .ec-checkbox__input[data-indeterminate="true"] + .ec-checkbox__box {
+    background: var(--color-accent-signal);
+    border-color: var(--color-accent-signal);
+  }
+  .ec-checkbox__indeterminate {
+    display: block;
+    width: 60%;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+  .ec-checkbox__input:focus-visible + .ec-checkbox__box {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .ec-checkbox__input:disabled ~ * {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+  .ec-checkbox__label {
+    line-height: 1.4;
+  }
+</style>

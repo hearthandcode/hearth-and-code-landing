@@ -1,0 +1,102 @@
+---
+/**
+ * Avatar primitive
+ * id: p-avatar
+ *
+ * User or entity representation with image, initials, or icon variants.
+ */
+
+interface Props {
+  src?: string;
+  name?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'image' | 'initials' | 'icon';
+  alt?: string;
+  href?: string;
+  class?: string;
+}
+
+const {
+  src,
+  name = '',
+  size = 'md',
+  variant = 'image',
+  alt,
+  href,
+  class: className = '',
+} = Astro.props;
+
+const sizes = {
+  xs: '1.5rem',
+  sm: '2rem',
+  md: '3rem',
+  lg: '4rem',
+  xl: '6rem',
+};
+
+const initials = name
+  .split(/\s+/)
+  .map(word => word.charAt(0))
+  .slice(0, 2)
+  .join('')
+  .toUpperCase();
+
+const avatarSize = sizes[size];
+const Wrapper = href ? 'a' : 'div';
+const wrapperProps = href ? { href } : {};
+---
+
+<Wrapper class={`ec-avatar ec-avatar--${size} ${className}`} {...wrapperProps}>
+  {variant === 'image' && src && (
+    <img class="ec-avatar__img" src={src} alt={alt || name} width={avatarSize} height={avatarSize} />
+  )}
+  {variant === 'initials' && (
+    <span class="ec-avatar__initials" aria-hidden={!!src}>
+      {initials || '?'}
+    </span>
+  )}
+  {variant === 'icon' && (
+    <svg class="ec-avatar__icon" width={avatarSize} height={avatarSize} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </svg>
+  )}
+</Wrapper>
+
+<style>
+  .ec-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: 50%;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+  }
+  a.ec-avatar:hover {
+    border-color: var(--color-accent-ember);
+  }
+  .ec-avatar--xs { width: 1.5rem; height: 1.5rem; font-size: 0.625rem; }
+  .ec-avatar--sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
+  .ec-avatar--md { width: 3rem; height: 3rem; font-size: 1rem; }
+  .ec-avatar--lg { width: 4rem; height: 4rem; font-size: 1.25rem; }
+  .ec-avatar--xl { width: 6rem; height: 6rem; font-size: 1.5rem; }
+  .ec-avatar__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ec-avatar__initials {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    line-height: 1;
+    user-select: none;
+  }
+  .ec-avatar__icon {
+    color: var(--color-text-secondary);
+  }
+</style>

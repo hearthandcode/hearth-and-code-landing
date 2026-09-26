@@ -1,0 +1,83 @@
+---
+/**
+ * Tag primitive
+ * id: p-tag
+ *
+ * Removable label chip with optional close button.
+ */
+
+interface Props {
+  variant?: 'neutral' | 'hearth' | 'code' | 'balanced' | 'removable';
+  label?: string;
+  onRemove?: string;
+  href?: string;
+  class?: string;
+}
+
+const { variant = 'neutral', label, onRemove, href, class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag class={`ec-tag ec-tag--${variant} ${className}`} href={href}>
+  {label && <span class="ec-tag__label">{label}</span>}
+  {!label && <slot />}
+  {variant === 'removable' && onRemove && (
+    <button type="button" class="ec-tag__remove" aria-label="Remove" data-action={onRemove}>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
+  )}
+</Tag>
+
+<style>
+  .ec-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.125rem 0.5rem;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+  }
+  a.ec-tag:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-surface-rule-strong);
+  }
+  .ec-tag--hearth {
+    color: var(--color-accent-ember);
+    background: rgba(232, 91, 78, 0.1);
+    border-color: var(--color-accent-ember);
+  }
+  .ec-tag--code {
+    color: var(--color-accent-signal);
+    background: rgba(31, 182, 168, 0.1);
+    border-color: var(--color-accent-signal);
+  }
+  .ec-tag--balanced {
+    color: var(--color-accent-violet);
+    background: rgba(155, 93, 229, 0.1);
+    border-color: var(--color-accent-violet);
+  }
+  .ec-tag__remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 0.25rem;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-tag__remove:hover {
+    opacity: 1;
+  }
+</style>
