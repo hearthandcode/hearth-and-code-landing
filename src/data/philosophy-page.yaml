@@ -1,0 +1,92 @@
+schema_version: hnc.public-page-contract.v1
+page:
+  id: philosophy
+  route: /philosophy/
+  navigation_current: philosophy
+  title: "Philosophy · Hearth & Code"
+  description: "A public position ledger for judgment, agency, governance, and human–AI practice."
+  disposition:
+    label: "Public position ledger"
+    statement: "Philosophy is where Hearth & Code makes its working positions visible: claims about judgment, agency, governance, and human–AI practice that inform the studio’s methods and systems."
+    boundary: "These are inspectable, revisable positions—not universal prescriptions, product claims, or substitutes for professional advice."
+hero:
+  eyebrow: "Philosophy · public position ledger"
+  title: "Positions for human judgment in complex systems."
+  lede: "This is the studio’s public record of the ideas that shape its work: how claims earn trust, how agency is preserved, and how systems remain answerable to people."
+principles:
+  - id: position
+    title: "Position, not proclamation"
+    detail: "Each entry states a working view and leaves room for disagreement, qualification, and revision."
+  - id: evidence
+    title: "Evidence-aware, not evidence-complete"
+    detail: "Sources and reasons matter; a public position does not pretend to settle every relevant question."
+  - id: revision
+    title: "Revisable through challenge"
+    detail: "Better evidence, clearer arguments, and legitimate critique are reasons to change the record."
+featured_position:
+  status: published
+  status_label: "Published position"
+  title: "AI Literacy as Developing Practice"
+  summary: "A framework for working with AI that combines high-stakes verification rules with reflective practice for everyday use."
+  href: /philosophy/ai-literacy/
+  date: "2026-09-23"
+  read_time: "15 min read"
+  domains: ["AI literacy", "Epistemics", "Human–AI practice"]
+  action_label: "Read the position"
+position_ledger:
+  title: "Position ledger"
+  description: "Publication state is part of the claim boundary. Only published entries are public reading destinations."
+  entries:
+    - id: ai-literacy
+      state: published
+      state_label: "Published"
+      title: "AI Literacy as Developing Practice"
+      summary: "Human authority, calibrated trust, high-stakes verification, and reflection after consequential AI use."
+      href: /philosophy/ai-literacy/
+      domains: ["AI literacy", "Epistemics", "Human–AI practice"]
+    - id: self-directed-governance
+      state: developing
+      state_label: "Developing"
+      title: "Self-Directed Governance"
+      summary: "A developing framework for individual agency, fundamental liberties, and self-direction amid accelerated technical change."
+      domains: ["Governance", "Civic rights", "Agency"]
+    - id: governed-intelligence
+      state: concept
+      state_label: "Concept"
+      title: "Governed Intelligence"
+      summary: "A concept for AI-assisted systems that keep consequential claims, delegation, and revision attributable to human judgment."
+      domains: ["Epistemics", "Governance", "AI systems"]
+throughlines:
+  title: "Three throughlines"
+  description: "The ledger is organized around recurring questions, not a taxonomy that pretends the work is finished."
+  items:
+    - title: "Judgment and epistemics"
+      detail: "What a claim is, what makes it credible, and how uncertainty should remain visible."
+    - title: "Agency and civic governance"
+      detail: "How people and institutions retain the authority to decide, contest, and revise consequential choices."
+    - title: "Human–AI practice"
+      detail: "How AI can support inquiry without replacing human responsibility or calibrated judgment."
+connections:
+  title: "From position to practice"
+  items:
+    - title: "Methods"
+      detail: "See how philosophical commitments become practical instruments and working records."
+      href: /methods/
+      action_label: "Open the methods"
+    - title: "Research"
+      detail: "Inspect the systems and research programs these positions help constrain and orient."
+      href: /research/
+      action_label: "Inspect the research"
+    - title: "Correspondence"
+      detail: "Offer a correction, a counterargument, or context that could improve a public position."
+      href: /correspondence/
+      action_label: "Start a correspondence"
+return:
+  title: "A position should leave a way back."
+  detail: "If a claim, source, or framing here is incomplete, say so. The work improves through better evidence and clearer disagreement."
+  primary_action:
+    label: "Start a correspondence"
+    href: /correspondence/
+  secondary_action:
+    label: "Return to Studio"
+    href: /

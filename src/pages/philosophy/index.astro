@@ -1,267 +1,217 @@
 ---
-import HearthNavigation from '../../components/HearthNavigation.astro';
+/** Public Philosophy position ledger. Content is defined in philosophy-page.yaml. */
+import { readFileSync } from 'node:fs';
+import { parse } from 'yaml';
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNavigation from '../../components/StudioNavigation.astro';
 
-const philosophyTopics = [
-  {
-    id: 'ai-literacy',
-    title: 'AI Literacy as Developing Practice',
-    description: 'Understanding and building discipline for working with AI systems. A practice that develops through reflection, combining rules for high-stakes decisions with reflective practice for everyday use.',
-    status: 'AI-drafted, Human-Approved',
-    date: '2026-09-23',
-    href: '/philosophy/ai-literacy/',
-    domains: ['ai-literacy', 'epistemics', 'human-ai-interaction']
-  },
-  {
-    id: 'governed-intelligence',
-    title: 'Governed Intelligence',
-    description: 'AI-assisted systems that increase a person\'s or institution\'s ability to understand and act in complex situations, while keeping every consequential claim, decision, delegation, and revision attributable, challengeable, and returnable to human judgment.',
-    status: 'concept',
-    date: '2026-07-20',
-    href: '/philosophy/governed-intelligence/',
-    domains: ['epistemics', 'governance', 'ai-systems']
-  },
-  {
-    id: 'self-directed-governance',
-    title: 'Self-Directed Governance',
-    description: 'Exercising fundamental liberties to govern ourselves and choose our own destiny. A framework for individual agency in the age of AI and accelerated development.',
-    status: 'developing',
-    date: '2026-09-23',
-    href: '/philosophy/self-directed-governance/',
-    domains: ['governance', 'civic-rights', 'agency']
-  }
-];
-
-const domains = [
-  { name: 'epistemics', count: 3, color: 'ember' },
-  { name: 'governance', count: 2, color: 'cyan' },
-  { name: 'ai-literacy', count: 1, color: 'green' },
-  { name: 'human-ai-interaction', count: 1, color: 'violet' },
-  { name: 'civic-rights', count: 1, color: 'ember' },
-  { name: 'agency', count: 1, color: 'cyan' },
-  { name: 'ai-systems', count: 1, color: 'green' }
-];
+// Static builds execute from the project root; keep this contract source-owned
+// instead of resolving it relative to the generated prerender bundle.
+const contract = parse(
+  readFileSync('./src/data/philosophy-page.yaml', 'utf-8'),
+);
 ---
 
-<HearthNavigation current="philosophy" context="Philosophy · epistemic frameworks and civic governance" />
-
-  <main class="ec-page ec-philosophy-index">
-    <header class="ec-page-header">
-      <p class="ec-eyebrow">Philosophy</p>
-      <h1>Philosophy</h1>
-      <p class="ec-subtitle">
-        Epistemological frameworks, civic governance, AI literacy, and the philosophy
-        underlying the work. Each piece is grounded in evidence, honest about uncertainty,
-        and designed to develop through use.
-      </p>
-    </header>
-
-    <section class="ec-section">
-      <h2>By Domain</h2>
-      <div class="ec-domain-tree">
-        {domains.map(domain => (
-          <a href={`/philosophy/#${domain.name}`} class={`ec-domain-tag ec-domain-${domain.color}`}>
-            <span class="ec-domain-name">{domain.name}</span>
-            <span class="ec-domain-count">{domain.count}</span>
-          </a>
-        ))}
+<BaseLayout title={contract.page.title} description={contract.page.description}>
+  <StudioNavigation current={contract.page.navigation_current} disposition="Philosophy · public positions for human judgment" />
+  <main class="philosophy" id="page-main">
+    <section class="philosophy-hero" aria-labelledby="philosophy-title">
+      <div class="philosophy-shell">
+        <p class="philosophy-kicker">{contract.hero.eyebrow}</p>
+        <h1 id="philosophy-title">{contract.hero.title}</h1>
+        <p class="philosophy-hero__lede">{contract.hero.lede}</p>
+        <aside class="philosophy-disposition">
+          <p class="philosophy-disposition__label">{contract.page.disposition.label}</p>
+          <p>{contract.page.disposition.statement}</p>
+          <p class="philosophy-disposition__boundary">{contract.page.disposition.boundary}</p>
+        </aside>
       </div>
     </section>
 
-    <section class="ec-section">
-      <h2>All Pieces</h2>
-      <div class="ec-piece-grid">
-        {philosophyTopics.map(topic => (
-          <article class="ec-piece-card" id={topic.id}>
-            <header class="ec-piece-header">
-              <p class="ec-piece-status">{topic.status}</p>
-              <h3><a href={topic.href}>{topic.title}</a></h3>
-              <time class="ec-piece-date">{topic.date}</time>
-            </header>
-            <p class="ec-piece-description">{topic.description}</p>
-            <footer class="ec-piece-domains">
-              {topic.domains.map(domain => (
-                <span class="ec-domain-mini">{domain}</span>
-              ))}
-            </footer>
-          </article>
-        ))}
+    <section class="philosophy-section philosophy-section--recessed" aria-labelledby="reading-title">
+      <div class="philosophy-shell">
+        <header class="philosophy-intro">
+          <p class="philosophy-kicker">How to read this surface</p>
+          <h2 id="reading-title">A public position is a working object.</h2>
+        </header>
+        <div class="philosophy-principles">
+          {contract.principles.map((principle: any, index: number) => (
+            <article class="philosophy-principle">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{principle.title}</h3>
+              <p>{principle.detail}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
 
-    <section class="ec-section">
-      <h2>Cross-References</h2>
-      <div class="ec-cross-refs">
-        <a href="/research/" class="ec-cross-ref-card">
-          <p class="ec-cross-ref-label">Related</p>
-          <p class="ec-cross-ref-title">Research</p>
-          <p class="ec-cross-ref-desc">Technical work that grounds these philosophical positions</p>
-        </a>
-        <a href="/practice/articles" class="ec-cross-ref-card">
-          <p class="ec-cross-ref-label">Related</p>
-          <p class="ec-cross-ref-title">Practice · Articles</p>
-          <p class="ec-cross-ref-desc">Articles that explore these ideas in practice</p>
-        </a>
+    <section class="philosophy-section" aria-labelledby="featured-title">
+      <div class="philosophy-shell">
+        <header class="philosophy-intro">
+          <p class="philosophy-kicker">Featured published position</p>
+          <h2 id="featured-title">Start with a complete public reading.</h2>
+        </header>
+        <article class="philosophy-feature">
+          <div class="philosophy-feature__meta">
+            <span class="philosophy-state is-published">{contract.featured_position.status_label}</span>
+            <time datetime={contract.featured_position.date}>{contract.featured_position.date}</time>
+            <span>{contract.featured_position.read_time}</span>
+          </div>
+          <div class="philosophy-feature__body">
+            <div>
+              <h3>{contract.featured_position.title}</h3>
+              <p>{contract.featured_position.summary}</p>
+              <div class="philosophy-tags">
+                {contract.featured_position.domains.map((domain: string) => <span>{domain}</span>)}
+              </div>
+            </div>
+            <a class="philosophy-action philosophy-action--primary" href={contract.featured_position.href}>{contract.featured_position.action_label} <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="philosophy-section philosophy-section--ledger" aria-labelledby="ledger-title">
+      <div class="philosophy-shell">
+        <header class="philosophy-intro philosophy-intro--wide">
+          <p class="philosophy-kicker">{contract.position_ledger.title}</p>
+          <h2 id="ledger-title">State is part of the claim.</h2>
+          <p>{contract.position_ledger.description}</p>
+        </header>
+        <div class="philosophy-ledger">
+          {contract.position_ledger.entries.map((entry: any) => (
+            entry.href ? (
+              <a class={`philosophy-ledger__entry is-${entry.state}`} href={entry.href}>
+                <div class="philosophy-ledger__state"><span class={`philosophy-state is-${entry.state}`}>{entry.state_label}</span><span aria-hidden="true">↗</span></div>
+                <h3>{entry.title}</h3>
+                <p>{entry.summary}</p>
+                <div class="philosophy-tags">{entry.domains.map((domain: string) => <span>{domain}</span>)}</div>
+              </a>
+            ) : (
+              <article class={`philosophy-ledger__entry is-${entry.state}`}>
+                <div class="philosophy-ledger__state"><span class={`philosophy-state is-${entry.state}`}>{entry.state_label}</span><span class="philosophy-held">Held record</span></div>
+                <h3>{entry.title}</h3>
+                <p>{entry.summary}</p>
+                <div class="philosophy-tags">{entry.domains.map((domain: string) => <span>{domain}</span>)}</div>
+              </article>
+            )
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="philosophy-section" aria-labelledby="throughlines-title">
+      <div class="philosophy-shell">
+        <header class="philosophy-intro philosophy-intro--wide">
+          <p class="philosophy-kicker">{contract.throughlines.title}</p>
+          <h2 id="throughlines-title">Questions that recur across the work.</h2>
+          <p>{contract.throughlines.description}</p>
+        </header>
+        <div class="philosophy-throughlines">
+          {contract.throughlines.items.map((item: any) => (
+            <article><h3>{item.title}</h3><p>{item.detail}</p></article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="philosophy-section philosophy-section--recessed" aria-labelledby="connections-title">
+      <div class="philosophy-shell">
+        <header class="philosophy-intro philosophy-intro--wide">
+          <p class="philosophy-kicker">{contract.connections.title}</p>
+          <h2 id="connections-title">A position should change what we can do.</h2>
+        </header>
+        <div class="philosophy-connections">
+          {contract.connections.items.map((item: any, index: number) => (
+            <a href={item.href}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+              <strong>{item.action_label} <i aria-hidden="true">→</i></strong>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="philosophy-return" aria-labelledby="return-title">
+      <div class="philosophy-shell">
+        <p class="philosophy-kicker">Return boundary</p>
+        <h2 id="return-title">{contract.return.title}</h2>
+        <p>{contract.return.detail}</p>
+        <div>
+          <a class="philosophy-action philosophy-action--primary" href={contract.return.primary_action.href}>{contract.return.primary_action.label}</a>
+          <a class="philosophy-action" href={contract.return.secondary_action.href}>{contract.return.secondary_action.label}</a>
+        </div>
       </div>
     </section>
   </main>
+</BaseLayout>
 
 <style>
-  .ec-philosophy-index .ec-page-header {
-    background: linear-gradient(135deg, #fef3c7 0%, #ffffff 100%);
-    padding: var(--space-xl) var(--space-lg);
-    margin: calc(var(--space-lg) * -1) calc(var(--space-lg) * -1) var(--space-xl);
-    border-radius: 8px;
-    border-bottom: 3px solid var(--signal-ember);
-  }
+  .philosophy { background: var(--color-surface-primary); color: var(--color-text-primary); }
+  .philosophy-shell { width: min(100% - 3rem, 76rem); margin-inline: auto; }
+  .philosophy-kicker { margin: 0 0 0.75rem; color: var(--color-accent-gold); font: 500 0.75rem/1.25 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+  .philosophy-hero { padding: clamp(5rem, 12vw, 9rem) 0 clamp(4rem, 8vw, 6rem); border-bottom: 1px solid var(--color-surface-rule); background: radial-gradient(60rem 38rem at 80% 0%, rgba(155, 93, 229, 0.14), transparent 60%); }
+  .philosophy-hero h1 { max-width: 15ch; margin: 0; color: var(--color-text-display); font: 700 clamp(3rem, 7vw, 6.3rem)/0.96 var(--font-display); letter-spacing: -0.055em; }
+  .philosophy-hero__lede { max-width: 47rem; margin: 1.5rem 0 0; color: var(--color-text-secondary); font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.55; }
+  .philosophy-disposition { max-width: 54rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-violet); background: rgba(33, 29, 24, 0.9); }
+  .philosophy-disposition p { margin: 0; line-height: 1.6; }
+  .philosophy-disposition__label { margin-bottom: 0.5rem !important; color: var(--color-accent-violet); font: 0.7rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+  .philosophy-disposition__boundary { margin-top: 0.75rem !important; color: var(--color-text-secondary); font-size: 0.9rem; }
 
-  .ec-domain-tree {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-  }
+  .philosophy-section { padding: clamp(4rem, 8vw, 7rem) 0; border-bottom: 1px solid var(--color-surface-rule); }
+  .philosophy-section--recessed, .philosophy-section--ledger { background: var(--color-surface-recessed); }
+  .philosophy-intro { max-width: 42rem; }
+  .philosophy-intro--wide { max-width: 48rem; }
+  .philosophy-intro h2, .philosophy-return h2 { margin: 0; color: var(--color-text-display); font: 700 clamp(2rem, 4vw, 3.4rem)/1.03 var(--font-display); letter-spacing: -0.035em; }
+  .philosophy-intro > p:last-child { margin: 1rem 0 0; color: var(--color-text-secondary); line-height: 1.6; }
 
-  .ec-domain-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    background: #f3f4f6;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
+  .philosophy-principles, .philosophy-throughlines, .philosophy-connections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 2.25rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-rule); }
+  .philosophy-principle, .philosophy-throughlines article { padding: 1.5rem; background: var(--color-surface-raised); }
+  .philosophy-principle > span, .philosophy-connections a > span { color: var(--color-accent-gold); font: 0.7rem var(--font-mono); }
+  .philosophy-principle h3, .philosophy-throughlines h3, .philosophy-ledger h3, .philosophy-feature h3, .philosophy-connections h3 { margin: 1rem 0 0; color: var(--color-text-display); font: 700 1.4rem/1.1 var(--font-display); }
+  .philosophy-principle p, .philosophy-throughlines p, .philosophy-ledger p, .philosophy-feature p, .philosophy-connections p { color: var(--color-text-secondary); line-height: 1.55; }
 
-  .ec-domain-tag:hover {
-    background: #e5e7eb;
-  }
+  .philosophy-feature { margin-top: 2.25rem; border: 1px solid var(--color-surface-rule-strong); border-left: 3px solid var(--color-accent-signal); background: var(--color-surface-raised); }
+  .philosophy-feature__meta { display: flex; gap: 0.75rem; flex-wrap: wrap; padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-surface-rule); color: var(--color-text-secondary); font: 0.7rem var(--font-mono); }
+  .philosophy-feature__body { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .philosophy-feature h3 { font-size: clamp(1.75rem, 3vw, 2.6rem); }
+  .philosophy-feature p { max-width: 44rem; font-size: 1.0625rem; }
+  .philosophy-state { display: inline-flex; width: max-content; padding: 0.25rem 0.5rem; border: 1px solid currentColor; font: 0.65rem/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .is-published { color: var(--color-accent-signal); } .is-developing { color: var(--color-accent-gold); } .is-concept { color: var(--color-accent-violet); }
+  .philosophy-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .philosophy-tags span { padding: 0.2rem 0.4rem; border: 1px solid var(--color-surface-rule); color: var(--color-text-secondary); font: 0.65rem var(--font-mono); }
 
-  .ec-domain-tag.ec-domain-ember { border-left: 3px solid var(--signal-ember); }
-  .ec-domain-tag.ec-domain-green { border-left: 3px solid var(--signal-green); }
-  .ec-domain-tag.ec-domain-violet { border-left: 3px solid var(--signal-violet); }
-  .ec-domain-tag.ec-domain-cyan { border-left: 3px solid var(--signal-cyan); }
+  .philosophy-ledger { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.25rem; }
+  .philosophy-ledger__entry { display: flex; flex-direction: column; min-height: 19rem; padding: 1.5rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-raised); color: inherit; text-decoration: none; }
+  a.philosophy-ledger__entry:hover { border-color: var(--color-accent-signal); background: rgba(31, 182, 168, 0.06); }
+  .philosophy-ledger__state { display: flex; justify-content: space-between; gap: 0.75rem; align-items: center; color: var(--color-text-secondary); font: 0.8rem var(--font-mono); }
+  .philosophy-held { color: var(--color-text-secondary); font-size: 0.7rem; font-style: italic; }
+  .philosophy-ledger__entry .philosophy-tags { margin-top: auto; }
 
-  .ec-domain-name {
-    font-family: var(--font-mono);
-    font-size: var(--font-caption);
-  }
+  .philosophy-connections a { display: block; min-height: 16rem; padding: 1.5rem; background: var(--color-surface-raised); color: inherit; text-decoration: none; }
+  .philosophy-connections a:hover { background: rgba(31, 182, 168, 0.08); }
+  .philosophy-connections strong { display: block; margin-top: 1.5rem; color: var(--color-accent-signal); font: 0.75rem var(--font-mono); }
+  .philosophy-connections i { font-size: 1.1rem; font-style: normal; }
 
-  .ec-domain-count {
-    background: rgba(0,0,0,0.1);
-    padding: 0.125rem 0.5rem;
-    border-radius: 10px;
-    font-size: var(--font-caption);
-    font-weight: 600;
-  }
+  .philosophy-return { padding: clamp(4rem, 9vw, 7rem) 0; text-align: center; background: linear-gradient(120deg, rgba(155, 93, 229, 0.18), var(--color-surface-primary) 60%, rgba(31, 182, 168, 0.1)); }
+  .philosophy-return .philosophy-shell { max-width: 52rem; }
+  .philosophy-return > .philosophy-shell > p:not(.philosophy-kicker) { max-width: 42rem; margin: 1.25rem auto 0; color: var(--color-text-secondary); line-height: 1.65; }
+  .philosophy-return .philosophy-kicker { text-align: center; }
+  .philosophy-return > .philosophy-shell > div { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .philosophy-action { display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem; padding: 0 1rem; border: 1px solid var(--color-surface-rule); color: var(--color-text-display); font: 500 0.875rem var(--font-body); text-decoration: none; }
+  .philosophy-action:hover { border-color: var(--color-accent-signal); color: var(--color-accent-signal); }
+  .philosophy-action--primary { border-color: var(--color-accent-signal); background: var(--color-accent-signal); color: var(--color-surface-primary); }
+  .philosophy-action--primary:hover { background: var(--color-accent-plasma); color: var(--color-surface-primary); }
 
-  .ec-piece-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-md);
+  @media (max-width: 56rem) {
+    .philosophy-principles, .philosophy-throughlines, .philosophy-connections, .philosophy-ledger { grid-template-columns: 1fr; }
+    .philosophy-feature__body { grid-template-columns: 1fr; align-items: start; }
+    .philosophy-feature__body .philosophy-action { justify-self: start; }
   }
-
-  .ec-piece-card {
-    background: var(--surface-elevated);
-    padding: var(--space-lg);
-    border-radius: 8px;
-    border-left: 4px solid var(--signal-ember);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .ec-piece-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .ec-piece-status {
-    display: inline-block;
-    background: #fef3c7;
-    color: #92400e;
-    padding: 0.125rem 0.5rem;
-    border-radius: 3px;
-    font-size: var(--font-caption);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-sm);
-  }
-
-  .ec-piece-header h3 {
-    margin: var(--space-sm) 0;
-    font-size: var(--font-h3);
-  }
-
-  .ec-piece-header h3 a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .ec-piece-header h3 a:hover {
-    color: var(--signal-ember);
-  }
-
-  .ec-piece-date {
-    color: var(--signal-gray);
-    font-size: var(--font-caption);
-  }
-
-  .ec-piece-description {
-    margin: var(--space-md) 0;
-    line-height: 1.6;
-  }
-
-  .ec-piece-domains {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .ec-domain-mini {
-    background: #f3f4f6;
-    padding: 0.125rem 0.5rem;
-    border-radius: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--signal-gray);
-  }
-
-  .ec-cross-refs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-md);
-  }
-
-  .ec-cross-ref-card {
-    display: block;
-    padding: var(--space-md);
-    background: #f9fafb;
-    border-left: 3px solid var(--signal-cyan);
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .ec-cross-ref-card:hover {
-    background: #f3f4f6;
-  }
-
-  .ec-cross-ref-label {
-    color: var(--signal-gray);
-    font-size: var(--font-caption);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.25rem;
-  }
-
-  .ec-cross-ref-title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .ec-cross-ref-desc {
-    color: var(--signal-gray);
-    font-size: var(--font-caption);
-  }
+  @media (max-width: 36rem) { .philosophy-shell { width: min(100% - 2rem, 76rem); } .philosophy-hero h1 { font-size: clamp(2.75rem, 15vw, 4rem); } }
 </style>

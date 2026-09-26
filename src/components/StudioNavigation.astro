@@ -1,0 +1,97 @@
+---
+/** Global public-surface navigation shared by Studio-led pages. */
+interface Props {
+  current?: string;
+  disposition?: string;
+}
+
+const {
+  current = '',
+  disposition = 'Independent research studio · public workbench for inspectable systems',
+} = Astro.props;
+
+const links = [
+  { label: 'Studio', href: '/' },
+  { label: 'Philosophy', href: '/philosophy/' },
+  { label: 'Methods', href: '/methods/' },
+  { label: 'Research', href: '/research/' },
+  { label: 'Portfolio', href: '/portfolio/' },
+  { label: 'Dossier', href: '/dossier/' },
+  { label: 'Questions', href: '/questions/' },
+  { label: 'Journal', href: '/journal/' },
+  { label: 'Contact', href: '/correspondence/' },
+];
+---
+
+<a class="studio-skip" href="#page-main">Skip to content</a>
+<header class="studio-nav" data-studio-menu-root>
+  <div class="studio-nav__brand-row">
+    <a class="studio-nav__brand" href="/" aria-label="Hearth and Code Studio home">
+      <span class="studio-nav__mark" aria-hidden="true"></span>
+      <span>Hearth <em>&amp;</em> Code</span>
+    </a>
+    <p class="studio-nav__disposition">{disposition}</p>
+    <button class="studio-nav__menu-button" type="button" aria-expanded="false" aria-controls="studio-primary-nav" data-studio-menu-button>
+      <span>Menu</span><span aria-hidden="true">+</span>
+    </button>
+  </div>
+  <nav class="studio-nav__menu" id="studio-primary-nav" aria-label="Hearth and Code primary navigation" data-studio-menu>
+    <ol>
+      {links.map((link, index) => (
+        <li>
+          <a href={link.href} aria-current={current === link.label.toLowerCase() ? 'page' : undefined}>
+            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <strong>{link.label}</strong>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+</header>
+
+<style is:global>
+  .studio-skip { position: fixed; z-index: 1000; top: -4rem; left: 1rem; padding: 0.75rem 1rem; background: var(--color-surface-recessed); border: 1px solid var(--color-accent-plasma); color: var(--color-text-display); font: 0.75rem var(--font-mono); text-decoration: none; }
+  .studio-skip:focus { top: 1rem; }
+  .studio-nav { position: sticky; top: 0; z-index: var(--z-sticky); border-bottom: 1px solid var(--color-surface-rule); background: rgba(22, 20, 17, 0.96); backdrop-filter: blur(16px); }
+  .studio-nav__brand-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.5rem; width: min(100% - 3rem, 90rem); min-height: 4rem; margin: auto; }
+  .studio-nav__brand { display: inline-flex; align-items: baseline; gap: 0.65rem; color: var(--color-text-display); font: 700 1.25rem/1 var(--font-display); letter-spacing: -0.04em; text-decoration: none; white-space: nowrap; }
+  .studio-nav__brand em { color: var(--color-accent-gold); font-style: normal; }
+  .studio-nav__mark { width: 0.7rem; height: 0.7rem; border: 1px solid var(--color-accent-ember); background: linear-gradient(135deg, var(--color-accent-ember), var(--color-accent-gold)); box-shadow: var(--shadow-glow-ember); transform: rotate(45deg); }
+  .studio-nav__disposition { margin: 0; color: var(--color-text-secondary); font: 0.6875rem/1.3 var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase; }
+  .studio-nav__menu-button { display: none; min-height: 2.25rem; padding: 0 0.75rem; border: 1px solid var(--color-surface-rule); background: transparent; color: var(--color-text-display); font: 0.75rem var(--font-mono); cursor: pointer; }
+  .studio-nav__menu { border-top: 1px solid var(--color-surface-rule); }
+  .studio-nav__menu ol { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); width: min(100% - 3rem, 90rem); margin: auto; padding: 0; list-style: none; }
+  .studio-nav__menu li { min-width: 0; border-right: 1px solid var(--color-surface-rule); }
+  .studio-nav__menu li:first-child { border-left: 1px solid var(--color-surface-rule); }
+  .studio-nav__menu a { display: grid; gap: 0.25rem; min-height: 3.75rem; padding: 0.7rem 0.75rem; color: var(--color-text-secondary); text-decoration: none; transition: background var(--motion-duration-fast), color var(--motion-duration-fast); }
+  .studio-nav__menu a:hover { background: rgba(31, 182, 168, 0.1); color: var(--color-text-display); }
+  .studio-nav__menu a[aria-current="page"] { background: rgba(232, 91, 78, 0.1); color: var(--color-text-display); }
+  .studio-nav__menu a span { color: var(--color-accent-ember); font: 0.625rem/1 var(--font-mono); }
+  .studio-nav__menu a strong { overflow: hidden; font: 500 0.8125rem/1.15 var(--font-body); text-overflow: ellipsis; white-space: nowrap; }
+  @media (max-width: 56rem) {
+    .studio-nav__brand-row { width: min(100% - 2rem, 90rem); grid-template-columns: 1fr auto; min-height: 3.75rem; }
+    .studio-nav__disposition { display: none; }
+    .studio-nav__menu-button { display: inline-flex; align-items: center; gap: 0.5rem; justify-content: space-between; }
+    .studio-nav__menu { display: none; }
+    .studio-nav[data-menu-open="true"] .studio-nav__menu { display: block; }
+    .studio-nav__menu ol { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+    .studio-nav__menu li:nth-child(odd) { border-left: 1px solid var(--color-surface-rule); }
+    .studio-nav__menu a { min-height: 3.25rem; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-studio-menu-root]').forEach((menuRoot) => {
+    const menuButton = menuRoot.querySelector<HTMLButtonElement>('[data-studio-menu-button]');
+    const menu = menuRoot.querySelector<HTMLElement>('[data-studio-menu]');
+    menuButton?.addEventListener('click', () => {
+      const open = menuRoot.getAttribute('data-menu-open') === 'true';
+      menuRoot.setAttribute('data-menu-open', String(!open));
+      menuButton.setAttribute('aria-expanded', String(!open));
+    });
+    menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+      menuRoot.setAttribute('data-menu-open', 'false');
+      menuButton?.setAttribute('aria-expanded', 'false');
+    }));
+  });
+</script>
