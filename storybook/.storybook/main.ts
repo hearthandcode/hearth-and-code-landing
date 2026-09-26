@@ -14,6 +14,9 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+  manager: {
+    // Manager.ts already calls addons.setConfig with theme — referenced for build
+  },
   docs: {
     autodocs: 'tag',
   },
