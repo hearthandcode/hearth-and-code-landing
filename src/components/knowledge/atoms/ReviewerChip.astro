@@ -1,0 +1,67 @@
+---
+/**
+ * ReviewerChip - reviewer identity chip atom
+ * Knowledge primitive (k-atom): k-reviewer-chip
+ */
+interface Props {
+  name: string;
+  initials?: string;
+  role?: string;
+  decision?: 'approved' | 'rejected' | 'pending' | 'abstained';
+  class?: string;
+}
+const { name, initials, role, decision, class: className = '' } = Astro.props;
+const init = initials ?? name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+---
+<span class:list={['kc-reviewer-chip', decision && `kc-reviewer-chip--${decision}`, className]}>
+  <span class="kc-reviewer-chip__avatar">{init}</span>
+  <span class="kc-reviewer-chip__body">
+    <span class="kc-reviewer-chip__name">{name}</span>
+    {role && <span class="kc-reviewer-chip__role">{role}</span>}
+  </span>
+  {decision && <span class="kc-reviewer-chip__decision">{decision}</span>}
+</span>
+
+<style>
+  .kc-reviewer-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.25em 0.6em 0.25em 0.3em;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+  }
+  .kc-reviewer-chip__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-accent-ember);
+    color: var(--color-surface-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.625rem;
+    flex-shrink: 0;
+  }
+  .kc-reviewer-chip__body { display: flex; flex-direction: column; gap: 0.05em; }
+  .kc-reviewer-chip__name { color: var(--color-text-display); font-weight: var(--font-weight-medium); }
+  .kc-reviewer-chip__role { font-size: 0.6875rem; color: var(--color-text-secondary); }
+  .kc-reviewer-chip__decision {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    margin-left: 0.3em;
+  }
+  .kc-reviewer-chip--approved .kc-reviewer-chip__decision { color: var(--color-state-success); background: rgba(143, 163, 149, 0.15); }
+  .kc-reviewer-chip--rejected .kc-reviewer-chip__decision { color: var(--color-state-error); background: rgba(194, 90, 42, 0.15); }
+  .kc-reviewer-chip--pending .kc-reviewer-chip__decision { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.15); }
+  .kc-reviewer-chip--abstained .kc-reviewer-chip__decision { color: var(--color-text-secondary); background: rgba(207, 193, 171, 0.08); }
+</style>

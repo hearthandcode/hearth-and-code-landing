@@ -1,0 +1,56 @@
+---
+/**
+ * ConceptTerm - defined term with type atom
+ * Knowledge primitive (k-atom): k-concept-term
+ */
+interface Props {
+  term: string;
+  type?: 'noun' | 'verb' | 'adjective' | 'phrase' | 'abbreviation';
+  definition?: string;
+  href?: string;
+  class?: string;
+}
+const {
+  term,
+  type = 'noun',
+  definition,
+  href,
+  class: className = '',
+} = Astro.props;
+const Tag = href ? 'a' : 'span';
+const tagProps = href ? { href } : {};
+---
+<Tag
+  class:list={['kc-concept-term', `kc-concept-term--${type}`, className]}
+  title={definition}
+  {...tagProps}
+>
+  <span class="kc-concept-term__type" aria-label={`type: ${type}`}>{type === 'abbreviation' ? '⌖' : '◆'}</span>
+  <span class="kc-concept-term__label">{term}</span>
+</Tag>
+
+<style>
+  .kc-concept-term {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    padding: 0.05em 0.4em;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    color: var(--color-text-display);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: border-color 150ms ease;
+  }
+  a.kc-concept-term:hover { border-color: var(--color-accent-signal); }
+  .kc-concept-term__type {
+    color: var(--color-accent-signal);
+    font-size: 0.75em;
+  }
+  .kc-concept-term--abbreviation .kc-concept-term__type { color: var(--color-accent-ember); }
+  .kc-concept-term--verb .kc-concept-term__type { color: var(--color-accent-plasma); }
+  .kc-concept-term--phrase .kc-concept-term__type { color: var(--color-accent-violet); }
+</style>

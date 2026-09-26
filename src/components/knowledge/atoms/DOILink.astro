@@ -1,0 +1,39 @@
+---
+/**
+ * DOILink - DOI hyperlink atom
+ * Knowledge primitive (k-atom): k-doi-link
+ */
+interface Props {
+  doi: string;
+  short?: boolean;
+  class?: string;
+}
+const { doi, short = true, class: className = '' } = Astro.props;
+const url = doi.startsWith('http') ? doi : `https://doi.org/${doi}`;
+const display = short ? doi.replace(/^https?:\/\/(dx\.)?doi\.org\//, 'doi:') : doi;
+---
+<a class:list={['kc-doi-link', className]} href={url} target="_blank" rel="noopener noreferrer" title={doi}>
+  <span class="kc-doi-link__icon" aria-hidden="true">⊕</span>
+  <span class="kc-doi-link__label">{display}</span>
+</a>
+
+<style>
+  .kc-doi-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.05em 0.4em;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+    color: var(--color-accent-signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+    border: 1px solid var(--color-surface-rule);
+  }
+  .kc-doi-link:hover {
+    border-color: var(--color-accent-signal);
+    color: var(--color-accent-plasma);
+  }
+  .kc-doi-link__icon { color: var(--color-accent-gold); }
+</style>

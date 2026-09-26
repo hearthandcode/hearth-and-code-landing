@@ -1,0 +1,44 @@
+---
+/**
+ * TimestampAtom - relative time + machine timestamp
+ * Knowledge primitive (k-atom): k-timestamp
+ */
+interface Props {
+  iso: string;
+  relative?: string;
+  variant?: 'absolute' | 'relative' | 'both';
+  class?: string;
+}
+const { iso, relative, variant = 'both', class: className = '' } = Astro.props;
+const machineTs = iso;
+const rel = relative ?? iso;
+---
+<time
+  class:list={['kc-timestamp', `kc-timestamp--${variant}`, className]}
+  datetime={machineTs}
+  title={machineTs}
+>
+  {variant === 'absolute' && <span>{machineTs}</span>}
+  {variant === 'relative' && <span>{rel}</span>}
+  {variant === 'both' && (
+    <>
+      <span class="kc-timestamp__rel">{rel}</span>
+      <span class="kc-timestamp__iso">· {machineTs}</span>
+    </>
+  )}
+</time>
+
+<style>
+  .kc-timestamp {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-timestamp__rel { color: var(--color-text-display); }
+  .kc-timestamp__iso { color: var(--color-text-secondary); }
+  .kc-timestamp--absolute { color: var(--color-text-secondary); }
+  .kc-timestamp--relative { color: var(--color-text-display); }
+</style>

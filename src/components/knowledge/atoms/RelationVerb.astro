@@ -1,0 +1,52 @@
+---
+/**
+ * RelationVerb - semantic relation type atom
+ * Knowledge primitive (k-atom): k-relation-verb
+ */
+interface Props {
+  verb: 'is-a' | 'part-of' | 'causes' | 'requires' | 'enables' | 'precedes' | 'follows' | 'contradicts' | 'supports' | 'extends' | 'instance-of' | 'same-as';
+  direction?: 'forward' | 'backward' | 'bidirectional';
+  class?: string;
+}
+const { verb, direction = 'forward', class: className = '' } = Astro.props;
+const arrows = {
+  forward: '→',
+  backward: '←',
+  bidirectional: '↔',
+};
+---
+<span class:list={['kc-relation-verb', `kc-relation-verb--${verb}`, className]}>
+  <span class="kc-relation-verb__arrow" aria-hidden="true">{arrows[direction]}</span>
+  <span class="kc-relation-verb__label">{verb}</span>
+</span>
+
+<style>
+  .kc-relation-verb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+    color: var(--color-accent-violet);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    border: 1px solid var(--color-surface-rule);
+  }
+  .kc-relation-verb__arrow {
+    color: var(--color-accent-plasma);
+    font-weight: var(--font-weight-bold);
+  }
+  .kc-relation-verb--is-a,
+  .kc-relation-verb--instance-of,
+  .kc-relation-verb--same-as { color: var(--color-accent-signal); }
+  .kc-relation-verb--part-of { color: var(--color-accent-violet); }
+  .kc-relation-verb--causes,
+  .kc-relation-verb--enables { color: var(--color-accent-ember); }
+  .kc-relation-verb--requires { color: var(--color-state-caution); }
+  .kc-relation-verb--precedes,
+  .kc-relation-verb--follows { color: var(--color-accent-plasma); }
+  .kc-relation-verb--contradicts { color: var(--color-state-error); }
+  .kc-relation-verb--supports { color: var(--color-state-success); }
+  .kc-relation-verb--extends { color: var(--color-accent-gold); }
+</style>

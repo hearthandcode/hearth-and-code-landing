@@ -1,0 +1,47 @@
+---
+/**
+ * ProvenanceMarker - provenance badge atom
+ * Knowledge primitive (k-atom): k-provenance-marker
+ */
+interface Props {
+  kind: 'primary' | 'derived' | 'cited' | 'verified' | 'inferred' | 'speculative';
+  source?: string;
+  class?: string;
+}
+const { kind, source, class: className = '' } = Astro.props;
+---
+<span class:list={['kc-provenance', `kc-provenance--${kind}`, className]} title={source}>
+  <span class="kc-provenance__icon" aria-hidden="true">
+    {kind === 'primary' && '◉'}
+    {kind === 'derived' && '⊛'}
+    {kind === 'cited' && '↗'}
+    {kind === 'verified' && '✓'}
+    {kind === 'inferred' && '◐'}
+    {kind === 'speculative' && '◌'}
+  </span>
+  <span class="kc-provenance__label">{kind}</span>
+</span>
+
+<style>
+  .kc-provenance {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid currentColor;
+  }
+  .kc-provenance__icon {
+    font-size: 0.85em;
+  }
+  .kc-provenance--primary { color: var(--color-accent-plasma); background: rgba(63, 224, 208, 0.08); }
+  .kc-provenance--derived { color: var(--color-accent-signal); background: rgba(31, 182, 168, 0.08); }
+  .kc-provenance--cited { color: var(--color-accent-violet); background: rgba(155, 93, 229, 0.08); }
+  .kc-provenance--verified { color: var(--color-state-success); background: rgba(143, 163, 149, 0.08); }
+  .kc-provenance--inferred { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.08); }
+  .kc-provenance--speculative { color: var(--color-text-secondary); background: rgba(207, 193, 171, 0.04); }
+</style>

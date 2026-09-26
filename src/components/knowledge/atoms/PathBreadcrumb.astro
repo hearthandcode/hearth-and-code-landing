@@ -1,0 +1,43 @@
+---
+/**
+ * PathBreadcrumb - single path segment atom
+ * Knowledge primitive (k-atom): k-path-segment
+ */
+interface Props {
+  segment: string;
+  href?: string;
+  index?: number;
+  icon?: 'folder' | 'file' | 'package';
+  class?: string;
+}
+const { segment, href, icon = 'folder', class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'span';
+const tagProps = href ? { href } : {};
+const icons = { folder: '◫', file: '◧', package: '⌘' };
+---
+<Tag class:list={['kc-path-segment', className]} {...tagProps}>
+  <span class="kc-path-segment__icon" aria-hidden="true">{icons[icon]}</span>
+  <span class="kc-path-segment__name">{segment}</span>
+</Tag>
+
+<style>
+  .kc-path-segment {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.1em 0.45em;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+  a.kc-path-segment:hover {
+    background: var(--color-surface-raised);
+    color: var(--color-accent-signal);
+  }
+  .kc-path-segment__icon {
+    color: var(--color-accent-gold);
+    font-size: 0.85em;
+  }
+</style>

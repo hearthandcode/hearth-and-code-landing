@@ -1,0 +1,76 @@
+---
+/**
+ * HashDigest - short hash with copy button
+ * Knowledge primitive (k-atom): k-hash-digest
+ * Interactive: click to copy full hash
+ */
+interface Props {
+  hash: string;
+  algorithm?: 'sha256' | 'sha1' | 'md5' | 'blake3';
+  prefix?: boolean;
+  class?: string;
+}
+const { hash, algorithm = 'sha256', prefix = true, class: className = '' } = Astro.props;
+const display = prefix ? `${algorithm}:${hash.slice(0, 12)}…` : hash.slice(0, 12);
+const hashId = `kc-hash-${Math.random().toString(36).slice(2, 9)}`;
+---
+<span
+  class:list={['kc-hash-digest', className]}
+  data-hash={hash}
+  data-id={hashId}
+  title={`Click to copy · ${algorithm}:${hash}`}
+>
+  <span class="kc-hash-digest__algo">{algorithm}</span>
+  <span class="kc-hash-digest__hash" data-target={hashId}>{display}</span>
+  <span class="kc-hash-digest__copy" aria-hidden="true">⧉</span>
+  <span class="kc-hash-digest__copied" hidden>copied</span>
+</span>
+
+<script define:vars={{ hashId }}>
+  document.querySelectorAll(`[data-id="${hashId}"]`).forEach((el) => {
+    el.addEventListener('click', async () => {
+      const hash = el.getAttribute('data-hash') || '';
+      try {
+        await navigator.clipboard.writeText(hash);
+        const copied = el.querySelector('.kc-hash-digest__copied');
+        if (copied) {
+          copied.hidden = false;
+          setTimeout(() => { copied.hidden = true; }, 1200);
+        }
+      } catch (e) {
+        console.error('Copy failed', e);
+      }
+    });
+  });
+</script>
+
+<style>
+  .kc-hash-digest {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-recessed);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    cursor: pointer;
+    border: 1px solid var(--color-surface-rule);
+    transition: all 150ms ease;
+  }
+  .kc-hash-digest:hover {
+    border-color: var(--color-accent-signal);
+    color: var(--color-text-display);
+  }
+  .kc-hash-digest__algo {
+    color: var(--color-accent-gold);
+    text-transform: lowercase;
+  }
+  .kc-hash-digest__hash { color: var(--color-text-display); }
+  .kc-hash-digest__copy { color: var(--color-text-secondary); }
+  .kc-hash-digest__copied {
+    color: var(--color-state-success);
+    margin-left: 0.3em;
+  }
+</style>

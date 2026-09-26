@@ -1,0 +1,51 @@
+---
+/**
+ * ClaimMarker - claim/assertion marker atom
+ * Knowledge primitive (k-atom): k-claim-marker
+ *
+ * Numbers claims for citation. Use as superscript marker.
+ */
+interface Props {
+  index: number;
+  confidence?: number;
+  href?: string;
+  class?: string;
+}
+const { index, confidence, href, class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'span';
+const tagProps = href ? { href } : {};
+const confColor = confidence === undefined ? 'var(--color-text-secondary)'
+  : confidence >= 80 ? 'var(--color-state-success)'
+  : confidence >= 50 ? 'var(--color-accent-gold)'
+  : 'var(--color-state-error)';
+---
+<Tag
+  class:list={['kc-claim-marker', className]}
+  style={`--claim-color: ${confColor};`}
+  title={confidence !== undefined ? `Confidence: ${confidence}%` : undefined}
+  {...tagProps}
+>
+  <span class="kc-claim-marker__bracket">[</span>
+  <span class="kc-claim-marker__index">{index}</span>
+  <span class="kc-claim-marker__bracket">]</span>
+</Tag>
+
+<style>
+  .kc-claim-marker {
+    display: inline-flex;
+    align-items: baseline;
+    margin-left: 0.15em;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--claim-color, var(--color-text-secondary));
+    text-decoration: none;
+    vertical-align: super;
+    line-height: 1;
+  }
+  a.kc-claim-marker:hover { text-decoration: underline; }
+  .kc-claim-marker__bracket { color: var(--color-text-secondary); }
+  .kc-claim-marker__index {
+    color: var(--claim-color, var(--color-text-secondary));
+    font-weight: var(--font-weight-bold);
+  }
+</style>

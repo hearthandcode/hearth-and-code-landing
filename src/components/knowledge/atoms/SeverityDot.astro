@@ -1,0 +1,63 @@
+---
+/**
+ * SeverityDot - severity indicator atom
+ * Knowledge primitive (k-atom): k-severity-dot
+ */
+interface Props {
+  severity: 'info' | 'success' | 'caution' | 'warning' | 'error' | 'critical';
+  label?: string;
+  size?: 'sm' | 'md' | 'lg';
+  pulsing?: boolean;
+  class?: string;
+}
+const {
+  severity,
+  label,
+  size = 'md',
+  pulsing = false,
+  class: className = '',
+} = Astro.props;
+---
+<span class:list={['kc-severity-dot', `kc-severity-dot--${severity}`, `kc-severity-dot--${size}`, pulsing && 'is-pulsing', className]}>
+  <span class="kc-severity-dot__pip" aria-hidden="true"></span>
+  {label && <span class="kc-severity-dot__label">{label}</span>}
+</span>
+
+<style>
+  .kc-severity-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+  .kc-severity-dot__pip {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .kc-severity-dot--sm { font-size: 0.6875rem; }
+  .kc-severity-dot--lg { font-size: 0.875rem; }
+  .kc-severity-dot--sm .kc-severity-dot__pip { width: 0.4em; height: 0.4em; }
+  .kc-severity-dot--lg .kc-severity-dot__pip { width: 0.65em; height: 0.65em; }
+
+  .kc-severity-dot--info { color: var(--color-accent-plasma); }
+  .kc-severity-dot--success { color: var(--color-state-success); }
+  .kc-severity-dot--caution { color: var(--color-state-caution); }
+  .kc-severity-dot--warning { color: var(--color-accent-gold); }
+  .kc-severity-dot--error { color: var(--color-state-error); }
+  .kc-severity-dot--critical { color: var(--color-accent-ember); }
+
+  .kc-severity-dot.is-pulsing .kc-severity-dot__pip {
+    animation: kc-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes kc-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+    50% { opacity: 0.5; box-shadow: 0 0 0 4px transparent; }
+  }
+</style>

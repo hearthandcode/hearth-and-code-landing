@@ -1,0 +1,59 @@
+---
+/**
+ * CitationRef - minimal source reference atom
+ * Knowledge primitive (k-atom): k-citation-ref
+ *
+ * Compact author/year/locator reference. Token-driven.
+ */
+interface Props {
+  author: string;
+  year: number | string;
+  locator?: string;
+  href?: string;
+  variant?: 'inline' | 'footnote' | 'parenthetical';
+  class?: string;
+}
+const {
+  author,
+  year,
+  locator,
+  href,
+  variant = 'inline',
+  class: className = '',
+} = Astro.props;
+
+const Tag = href ? 'a' : 'span';
+const tagProps = href ? { href, class: 'kc-citation-ref kc-citation-ref--link' } : {};
+---
+<Tag class:list={['kc-citation-ref', `kc-citation-ref--${variant}`, className]} {...tagProps}>
+  <span class="kc-citation-ref__author">{author}</span>
+  <span class="kc-citation-ref__year">({year})</span>
+  {locator && <span class="kc-citation-ref__locator">{locator}</span>}
+</Tag>
+
+<style>
+  .kc-citation-ref {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.15em;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+  .kc-citation-ref__author { color: var(--color-text-display); }
+  .kc-citation-ref__year { color: var(--color-text-secondary); }
+  .kc-citation-ref__locator {
+    color: var(--color-accent-signal);
+    font-weight: var(--font-weight-medium);
+  }
+  .kc-citation-ref--link { text-decoration: none; }
+  .kc-citation-ref--link:hover { color: var(--color-accent-plasma); }
+  .kc-citation-ref--footnote {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    border-bottom: 1px dotted var(--color-surface-rule-strong);
+  }
+  .kc-citation-ref--parenthetical {
+    color: var(--color-text-secondary);
+  }
+</style>

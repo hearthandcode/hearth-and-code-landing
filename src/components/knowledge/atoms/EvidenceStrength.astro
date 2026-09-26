@@ -1,0 +1,59 @@
+---
+/**
+ * EvidenceStrength - evidence strength indicator atom
+ * Knowledge primitive (k-atom): k-evidence-strength
+ *
+ * 5-tier evidence strength: anecdotal < weak < moderate < strong < conclusive
+ */
+interface Props {
+  tier: 'anecdotal' | 'weak' | 'moderate' | 'strong' | 'conclusive';
+  showLabel?: boolean;
+  class?: string;
+}
+const { tier, showLabel = true, class: className = '' } = Astro.props;
+const tierIndex = ['anecdotal', 'weak', 'moderate', 'strong', 'conclusive'].indexOf(tier);
+---
+<span class:list={['kc-evidence-strength', `kc-evidence-strength--${tier}`, className]}>
+  <span class="kc-evidence-strength__bars" aria-label={`Evidence strength: ${tier}`}>
+    {[0, 1, 2, 3, 4].map((i) => (
+      <span class:list={['kc-evidence-strength__bar', i <= tierIndex && 'is-filled']} />
+    ))}
+  </span>
+  {showLabel && <span class="kc-evidence-strength__label">{tier}</span>}
+</span>
+
+<style>
+  .kc-evidence-strength {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .kc-evidence-strength__bars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15em;
+  }
+  .kc-evidence-strength__bar {
+    width: 0.25rem;
+    height: 0.7rem;
+    background: var(--color-surface-rule);
+    border-radius: 1px;
+  }
+  .kc-evidence-strength__bar.is-filled { background: currentColor; }
+  .kc-evidence-strength__bar:nth-child(2) { height: 0.95rem; }
+  .kc-evidence-strength__bar:nth-child(3) { height: 1.2rem; }
+  .kc-evidence-strength__bar:nth-child(4) { height: 1.45rem; }
+  .kc-evidence-strength__bar:nth-child(5) { height: 1.7rem; }
+  .kc-evidence-strength--anecdotal { color: var(--color-text-secondary); }
+  .kc-evidence-strength--weak { color: var(--color-state-error); }
+  .kc-evidence-strength--moderate { color: var(--color-accent-gold); }
+  .kc-evidence-strength--strong { color: var(--color-accent-signal); }
+  .kc-evidence-strength--conclusive { color: var(--color-state-success); }
+  .kc-evidence-strength__label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: currentColor;
+  }
+</style>

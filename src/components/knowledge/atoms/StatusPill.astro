@@ -1,0 +1,49 @@
+---
+/**
+ * StatusPill - small status indicator atom
+ * Knowledge primitive (k-atom): k-status-pill
+ */
+interface Props {
+  status: 'open' | 'closed' | 'pending' | 'sealed' | 'active' | 'archived' | 'review' | 'rejected' | 'approved' | 'draft';
+  label?: string;
+  size?: 'sm' | 'md';
+  class?: string;
+}
+const { status, label, size = 'md', class: className = '' } = Astro.props;
+---
+<span class:list={['kc-status-pill', `kc-status-pill--${status}`, `kc-status-pill--${size}`, className]}>
+  <span class="kc-status-pill__dot" aria-hidden="true"></span>
+  <span class="kc-status-pill__label">{label ?? status}</span>
+</span>
+
+<style>
+  .kc-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.15em 0.6em;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .kc-status-pill--sm { font-size: 0.625rem; padding: 0.05em 0.5em; }
+  .kc-status-pill__dot {
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .kc-status-pill--open { color: var(--color-accent-plasma); }
+  .kc-status-pill--closed { color: var(--color-text-secondary); }
+  .kc-status-pill--pending { color: var(--color-accent-gold); }
+  .kc-status-pill--sealed { color: var(--color-accent-violet); }
+  .kc-status-pill--active { color: var(--color-state-success); }
+  .kc-status-pill--archived { color: var(--color-text-secondary); }
+  .kc-status-pill--review { color: var(--color-accent-signal); }
+  .kc-status-pill--rejected { color: var(--color-state-error); }
+  .kc-status-pill--approved { color: var(--color-state-success); }
+  .kc-status-pill--draft { color: var(--color-accent-gold); }
+</style>
