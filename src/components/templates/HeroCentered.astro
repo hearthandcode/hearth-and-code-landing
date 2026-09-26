@@ -1,0 +1,113 @@
+---
+/**
+ * Hero (Centered) template
+ * id: t-hero-centered
+ *
+ * Centered hero with eyebrow, title, lede, CTAs.
+ */
+
+import Button from '../primitives/Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  accent?: 'hearth' | 'code' | 'balanced';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  primaryCta,
+  secondaryCta,
+  accent = 'balanced',
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+---
+
+<section class={`ec-hero ec-hero-centered ec-hero-centered--${accent} ec-hero-centered--${size} ${className}`}>
+  <div class="ec-hero-centered__inner">
+    {eyebrow && <p class="ec-hero-centered__eyebrow">{eyebrow}</p>}
+    <h1 class="ec-hero-centered__title">{title}</h1>
+    {lede && <p class="ec-hero-centered__lede">{lede}</p>}
+    {(primaryCta || secondaryCta) && (
+      <div class="ec-hero-centered__ctas">
+        {primaryCta && (
+          <Button href={primaryCta.href} variant="primary" size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
+            {primaryCta.label}
+          </Button>
+        )}
+        {secondaryCta && (
+          <Button href={secondaryCta.href} variant="ghost" size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
+            {secondaryCta.label}
+          </Button>
+        )}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .ec-hero-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-8) var(--space-5);
+  }
+  .ec-hero-centered__inner {
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .ec-hero-centered__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-small);
+    color: var(--color-accent-ember);
+    font-weight: var(--font-weight-medium);
+  }
+  .ec-hero-centered--code .ec-hero-centered__eyebrow {
+    color: var(--color-accent-signal);
+  }
+  .ec-hero-centered--balanced .ec-hero-centered__eyebrow {
+    color: var(--color-accent-violet);
+  }
+  .ec-hero-centered__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    color: var(--color-text-display);
+    letter-spacing: -0.02em;
+  }
+  .ec-hero-centered--sm .ec-hero-centered__title { font-size: 2rem; }
+  .ec-hero-centered--md .ec-hero-centered__title { font-size: 3rem; }
+  .ec-hero-centered--lg .ec-hero-centered__title { font-size: 4rem; }
+  .ec-hero-centered__lede {
+    margin: 0;
+    max-width: 36rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+  .ec-hero-centered--lg .ec-hero-centered__lede {
+    font-size: 1.25rem;
+  }
+  .ec-hero-centered__ctas {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>

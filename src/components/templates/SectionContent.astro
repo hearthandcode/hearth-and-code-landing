@@ -1,0 +1,100 @@
+---
+/**
+ * Section (Content) template
+ * id: t-section-content
+ *
+ * Generic content section with header and body.
+ */
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  accent?: 'hearth' | 'code' | 'balanced' | 'neutral';
+  width?: 'narrow' | 'medium' | 'wide' | 'full';
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  accent = 'neutral',
+  width = 'medium',
+  align = 'left',
+  class: className = '',
+} = Astro.props;
+
+const widths = {
+  narrow: '40rem',
+  medium: '60rem',
+  wide: '80rem',
+  full: '100%',
+};
+---
+
+<section class={`ec-section ec-section-content ec-section-content--${accent} ec-section-content--${align} ${className}`}>
+  <div class="ec-section-content__inner" style={`max-width: ${widths[width]}`}>
+    {(eyebrow || title || lede) && (
+      <header class="ec-section-content__header">
+        {eyebrow && <p class="ec-section-content__eyebrow">{eyebrow}</p>}
+        {title && <h2 class="ec-section-content__title">{title}</h2>}
+        {lede && <p class="ec-section-content__lede">{lede}</p>}
+      </header>
+    )}
+    <div class="ec-section-content__body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .ec-section-content {
+    padding: var(--space-9) var(--space-5);
+  }
+  .ec-section-content__inner {
+    margin: 0 auto;
+  }
+  .ec-section-content__header {
+    margin-bottom: var(--space-7);
+  }
+  .ec-section-content--center .ec-section-content__header {
+    text-align: center;
+  }
+  .ec-section-content__eyebrow {
+    margin: 0 0 var(--space-3) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-ember);
+  }
+  .ec-section-content--hearth .ec-section-content__eyebrow { color: var(--color-accent-ember); }
+  .ec-section-content--code .ec-section-content__eyebrow { color: var(--color-accent-signal); }
+  .ec-section-content--balanced .ec-section-content__eyebrow { color: var(--color-accent-violet); }
+  .ec-section-content__title {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    color: var(--color-text-display);
+    letter-spacing: -0.01em;
+  }
+  .ec-section-content__lede {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    max-width: 42rem;
+  }
+  .ec-section-content--center .ec-section-content__lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ec-section-content__body {
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+</style>

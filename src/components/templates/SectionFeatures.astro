@@ -1,0 +1,76 @@
+---
+/**
+ * Section (Features) template
+ * id: t-section-features
+ *
+ * Grid of feature cards.
+ */
+
+import SectionContent from './SectionContent.astro';
+import FeatureCard from '../composites/FeatureCard.astro';
+
+interface Feature {
+  icon?: string;
+  title: string;
+  description: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  features: Feature[];
+  columns?: 2 | 3 | 4;
+  accent?: 'hearth' | 'code' | 'balanced' | 'neutral';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  features,
+  columns = 3,
+  accent = 'neutral',
+  class: className = '',
+} = Astro.props;
+---
+
+<SectionContent eyebrow={eyebrow} title={title} lede={lede} accent={accent} class={className}>
+  <div
+    class={`ec-features-grid ec-features-grid--cols-${columns}`}
+  >
+    {features.map((feature) => (
+      <FeatureCard
+        icon={feature.icon}
+        title={feature.title}
+        description={feature.description}
+        href={feature.href}
+        accent={accent === 'neutral' ? 'balanced' : accent}
+        size="md"
+      />
+    ))}
+  </div>
+</SectionContent>
+
+<style>
+  .ec-features-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .ec-features-grid--cols-2 {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+  .ec-features-grid--cols-3 {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+  .ec-features-grid--cols-4 {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+  @media (min-width: 1024px) {
+    .ec-features-grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .ec-features-grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .ec-features-grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+/**
+ * Dashboard template
+ * id: t-dashboard
+ *
+ * Sidebar nav + header + content grid.
+ */
+
+interface NavItem {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+interface Props {
+  navItems: NavItem[];
+  title?: string;
+  collapsible?: boolean;
+  class?: string;
+}
+
+const {
+  navItems,
+  title,
+  collapsible = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`ec-dashboard ${className}`}>
+  <aside class="ec-dashboard__sidebar">
+    {title && <h2 class="ec-dashboard__sidebar-title">{title}</h2>}
+    <nav class="ec-dashboard__nav" aria-label="Dashboard navigation">
+      <ul class="ec-dashboard__nav-list">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={`ec-dashboard__nav-link ${item.active ? 'is-active' : ''}`}
+              aria-current={item.active ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </aside>
+  <div class="ec-dashboard__main">
+    <div class="ec-dashboard__content">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .ec-dashboard {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    min-height: calc(100vh - 4rem);
+  }
+  .ec-dashboard__sidebar {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+  .ec-dashboard__sidebar-title {
+    margin: 0 0 var(--space-4) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+  .ec-dashboard__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .ec-dashboard__nav-link {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    border-radius: var(--radius-sm);
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-dashboard__nav-link:hover {
+    background: var(--color-surface-recessed);
+    color: var(--color-text-primary);
+  }
+  .ec-dashboard__nav-link.is-active {
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+  }
+  .ec-dashboard__main {
+    min-width: 0;
+  }
+  .ec-dashboard__content {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    .ec-dashboard {
+      grid-template-columns: 16rem 1fr;
+    }
+  }
+</style>

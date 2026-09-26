@@ -1,0 +1,58 @@
+---
+/**
+ * Layout (Sidebar) template
+ * id: t-layout-sidebar
+ *
+ * Main content with persistent sidebar.
+ */
+
+interface Props {
+  sidebarPosition?: 'left' | 'right';
+  sidebarWidth?: string;
+  collapsible?: boolean;
+  class?: string;
+}
+
+const {
+  sidebarPosition = 'left',
+  sidebarWidth = '16rem',
+  collapsible = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`ec-layout-sidebar ec-layout-sidebar--${sidebarPosition} ${className}`}>
+  <aside class="ec-layout-sidebar__sidebar" style={`flex-basis: ${sidebarWidth};`}>
+    <slot name="sidebar" />
+  </aside>
+  <main class="ec-layout-sidebar__main">
+    <slot />
+  </main>
+</div>
+
+<style>
+  .ec-layout-sidebar {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+    width: 100%;
+  }
+  .ec-layout-sidebar--right {
+    flex-direction: row-reverse;
+  }
+  .ec-layout-sidebar__sidebar {
+    flex-shrink: 0;
+    position: sticky;
+    top: var(--space-5);
+    max-height: calc(100vh - var(--space-7));
+    overflow-y: auto;
+    padding: var(--space-4);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+  .ec-layout-sidebar__main {
+    flex: 1;
+    min-width: 0;
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+/**
+ * Page Footer template
+ * id: t-page-footer
+ *
+ * Standard page footer with columns, copyright, social.
+ */
+
+interface FooterColumn {
+  title: string;
+  links: { label: string; href: string }[];
+}
+
+interface Props {
+  columns?: FooterColumn[];
+  copyright?: string;
+  social?: { label: string; href: string; icon?: string }[];
+  class?: string;
+}
+
+const {
+  columns = [],
+  copyright = '© ' + new Date().getFullYear() + ' Hearth & Code. All rights reserved.',
+  social = [],
+  class: className = '',
+} = Astro.props;
+---
+
+<footer class={`ec-page-footer ${className}`}>
+  <div class="ec-page-footer__inner">
+    {columns.length > 0 && (
+      <div class="ec-page-footer__columns">
+        {columns.map((col) => (
+          <div class="ec-page-footer__column">
+            <h3 class="ec-page-footer__column-title">{col.title}</h3>
+            <ul class="ec-page-footer__column-list">
+              {col.links.map((link) => (
+                <li>
+                  <a class="ec-page-footer__column-link" href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    )}
+    <div class="ec-page-footer__bottom">
+      <p class="ec-page-footer__copyright">{copyright}</p>
+      {social.length > 0 && (
+        <ul class="ec-page-footer__social">
+          {social.map((item) => (
+            <li>
+              <a class="ec-page-footer__social-link" href={item.href} aria-label={item.label}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ec-page-footer {
+    padding: var(--space-9) var(--space-5) var(--space-5);
+    background: var(--color-surface-recessed);
+    border-top: 1px solid var(--color-surface-rule);
+    color: var(--color-text-primary);
+    margin-top: var(--space-9);
+  }
+  .ec-page-footer__inner {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  .ec-page-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-7);
+    margin-bottom: var(--space-7);
+  }
+  .ec-page-footer__column-title {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+  .ec-page-footer__column-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .ec-page-footer__column-link {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-page-footer__column-link:hover {
+    color: var(--color-accent-ember);
+  }
+  .ec-page-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .ec-page-footer__copyright {
+    margin: 0;
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+  .ec-page-footer__social {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ec-page-footer__social-link {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .ec-page-footer__social-link:hover {
+    color: var(--color-accent-ember);
+  }
+</style>

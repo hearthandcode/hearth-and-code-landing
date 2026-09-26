@@ -1,0 +1,116 @@
+---
+/**
+ * Section (CTA) template
+ * id: t-section-cta
+ *
+ * Call-to-action banner section.
+ */
+
+import Button from '../primitives/Button.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  accent?: 'hearth' | 'code' | 'balanced';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  primaryCta,
+  secondaryCta,
+  accent = 'balanced',
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+---
+
+<section class={`ec-section ec-section-cta ec-section-cta--${accent} ec-section-cta--${size} ${className}`}>
+  <div class="ec-section-cta__inner">
+    <h2 class="ec-section-cta__title">{title}</h2>
+    {description && <p class="ec-section-cta__description">{description}</p>}
+    {(primaryCta || secondaryCta) && (
+      <div class="ec-section-cta__actions">
+        {primaryCta && (
+          <Button href={primaryCta.href} variant="primary" size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
+            {primaryCta.label}
+          </Button>
+        )}
+        {secondaryCta && (
+          <Button href={secondaryCta.href} variant="ghost" size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}>
+            {secondaryCta.label}
+          </Button>
+        )}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .ec-section-cta {
+    padding: var(--space-9) var(--space-5);
+  }
+  .ec-section-cta__inner {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: var(--space-7);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .ec-section-cta__inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, var(--accent-glow, transparent), transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .ec-section-cta--hearth .ec-section-cta__inner {
+    border-top: 3px solid var(--color-accent-ember);
+    --accent-glow: rgba(232, 91, 78, 0.08);
+  }
+  .ec-section-cta--code .ec-section-cta__inner {
+    border-top: 3px solid var(--color-accent-signal);
+    --accent-glow: rgba(31, 182, 168, 0.08);
+  }
+  .ec-section-cta--balanced .ec-section-cta__inner {
+    border-top: 3px solid var(--color-accent-violet);
+    --accent-glow: rgba(155, 93, 229, 0.08);
+  }
+  .ec-section-cta__title {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    color: var(--color-text-display);
+    position: relative;
+  }
+  .ec-section-cta--sm .ec-section-cta__title { font-size: 1.5rem; }
+  .ec-section-cta--md .ec-section-cta__title { font-size: 2rem; }
+  .ec-section-cta--lg .ec-section-cta__title { font-size: 2.5rem; }
+  .ec-section-cta__description {
+    margin: 0 0 var(--space-5) 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+  .ec-section-cta__actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+</style>

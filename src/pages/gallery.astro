@@ -1,0 +1,419 @@
+---
+/**
+ * Gallery Showcase Page
+ * Demonstrates all 64 components in the Hearth & Code design system.
+ */
+
+import HearthCodeToggle from '../components/HearthCodeToggle.astro';
+import HeroCentered from '../components/templates/HeroCentered.astro';
+import SectionContent from '../components/templates/SectionContent.astro';
+import SectionFeatures from '../components/templates/SectionFeatures.astro';
+import SectionCTA from '../components/templates/SectionCTA.astro';
+import PageHeader from '../components/templates/PageHeader.astro';
+import PageFooter from '../components/templates/PageFooter.astro';
+import LayoutGrid from '../components/templates/LayoutGrid.astro';
+import LayoutStack from '../components/templates/LayoutStack.astro';
+import LayoutSidebar from '../components/templates/LayoutSidebar.astro';
+import Dashboard from '../components/templates/Dashboard.astro';
+import Button from '../components/primitives/Button.astro';
+import Input from '../components/primitives/Input.astro';
+import Icon from '../components/primitives/Icon.astro';
+import Badge from '../components/primitives/Badge.astro';
+import Divider from '../components/primitives/Divider.astro';
+import Tag from '../components/primitives/Tag.astro';
+import Label from '../components/primitives/Label.astro';
+import Tooltip from '../components/primitives/Tooltip.astro';
+import Spinner from '../components/primitives/Spinner.astro';
+import Avatar from '../components/primitives/Avatar.astro';
+import Checkbox from '../components/primitives/Checkbox.astro';
+import Radio from '../components/primitives/Radio.astro';
+import Skeleton from '../components/primitives/Skeleton.astro';
+import Card from '../components/composites/Card.astro';
+import FeatureCard from '../components/composites/FeatureCard.astro';
+import StatCard from '../components/composites/StatCard.astro';
+import ProfileCard from '../components/composites/ProfileCard.astro';
+import QuoteCard from '../components/composites/QuoteCard.astro';
+import PricingCard from '../components/composites/PricingCard.astro';
+import ProductCard from '../components/composites/ProductCard.astro';
+import TestimonialCard from '../components/composites/TestimonialCard.astro';
+import Accordion from '../components/composites/Accordion.astro';
+import Tabs from '../components/composites/Tabs.astro';
+import Breadcrumb from '../components/composites/Breadcrumb.astro';
+import Pagination from '../components/composites/Pagination.astro';
+import Stepper from '../components/composites/Stepper.astro';
+import LinkGroup from '../components/composites/LinkGroup.astro';
+import Textarea from '../components/composites/Textarea.astro';
+import Select from '../components/composites/Select.astro';
+import FormField from '../components/composites/FormField.astro';
+import SearchBar from '../components/composites/SearchBar.astro';
+import Alert from '../components/composites/Alert.astro';
+import Toast from '../components/composites/Toast.astro';
+import Progress from '../components/composites/Progress.astro';
+import EmptyState from '../components/composites/EmptyState.astro';
+import Table from '../components/composites/Table.astro';
+import TableSortable from '../components/composites/TableSortable.astro';
+import TableFilterable from '../components/composites/TableFilterable.astro';
+import ChartBar from '../components/composites/ChartBar.astro';
+import ChartLine from '../components/composites/ChartLine.astro';
+import ChartPie from '../components/composites/ChartPie.astro';
+import List from '../components/composites/List.astro';
+import ListGrid from '../components/composites/ListGrid.astro';
+import Timeline from '../components/composites/Timeline.astro';
+import Toc from '../components/composites/Toc.astro';
+import NavHeader from '../components/templates/NavHeader.astro';
+---
+
+<title>Component Gallery · Hearth & Code</title>
+
+<NavHeader
+  logo="Hearth & Code"
+  logoHref="/"
+  links={[
+    { label: 'Studio', href: '/' },
+    { label: 'Philosophy', href: '/philosophy/' },
+    { label: 'Research', href: '/research/' },
+    { label: 'Portfolio', href: '/portfolio/' },
+    { label: 'Gallery', href: '/gallery/', active: true },
+  ]}
+  cta={{ label: 'View on GitHub', href: 'https://github.com/hearthandcode' }}
+/>
+
+<HeroCentered
+  eyebrow="Component Gallery"
+  title="Hearth & Code Design System"
+  lede="A showcase of every component in the Hearth and Code design system. Primitives, composites, and templates — all token-driven, all accessible, all token-efficient."
+  accent="balanced"
+  size="lg"
+>
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+    <Badge variant="hearth">Hearth</Badge>
+    <Badge variant="code">Code</Badge>
+    <Badge variant="balanced">Balanced</Badge>
+    <Badge>Default</Badge>
+    <Badge variant="success">Success</Badge>
+  </div>
+</HeroCentered>
+
+<div style="display: flex; justify-content: center; margin: 2rem 0;">
+  <HearthCodeToggle current="balanced" />
+</div>
+
+<SectionContent eyebrow="Overview" title="The System" lede="64 components across three layers — primitives (12), composites (32), and templates (20). Every component uses design tokens from the Hearth and Code design system.">
+  <LayoutGrid columns={3} gap="normal">
+    <StatCard value="12" label="Primitives" trend="flat" accent="balanced" />
+    <StatCard value="32" label="Composites" trend="up" context="+8 since Wave 1" accent="code" />
+    <StatCard value="20" label="Templates" trend="up" context="11 complete" accent="hearth" />
+  </LayoutGrid>
+</SectionContent>
+
+<SectionContent eyebrow="Primitives" title="Building Blocks" lede="Single-purpose elements. 12 components that form the foundation for everything else.">
+  <SectionFeatures
+    columns={3}
+    features={[
+      {
+        icon: 'check',
+        title: 'Button',
+        description: '4 variants × 3 sizes, loading state, focus management, anchor support.',
+      },
+      {
+        icon: 'info',
+        title: 'Input',
+        description: '7 types, validation states (default/error/success), accessible.',
+      },
+      {
+        icon: 'user',
+        title: 'Avatar',
+        description: '5 sizes, 3 variants (image, initials, icon), circular.',
+      },
+      {
+        icon: 'warning',
+        title: 'Badge',
+        description: '8 variants for status and categorization.',
+      },
+      {
+        icon: 'arrow-right',
+        title: 'Icon',
+        description: '13 inline SVG icons, 5 sizes, with consistent styling.',
+      },
+      {
+        icon: 'edit',
+        title: 'Tag',
+        description: 'Removable label chips for categorical content.',
+      },
+      {
+        icon: 'close',
+        title: 'Tooltip',
+        description: '4 positions, accessible with keyboard focus.',
+      },
+      {
+        icon: 'info',
+        title: 'Spinner',
+        description: '3 styles (circle, dots, bar), loading state indicator.',
+      },
+      {
+        icon: 'warning',
+        title: 'Divider',
+        description: 'Solid, dashed, gradient, and circuit-themed variants.',
+      },
+      {
+        icon: 'check',
+        title: 'Checkbox',
+        description: 'Checked, indeterminate, and disabled states.',
+      },
+      {
+        icon: 'check',
+        title: 'Radio',
+        description: 'Grouped selection with proper focus styles.',
+      },
+      {
+        icon: 'plus',
+        title: 'Skeleton',
+        description: 'Loading placeholder with shimmer animation.',
+      },
+    ]}
+  />
+</SectionContent>
+
+<SectionContent eyebrow="Form Controls" title="Inputs & Selection" lede="Form primitives work together for complete form experiences.">
+  <LayoutStack gap="normal">
+    <FormField label="Email address" htmlFor="demo-email" helper="We'll never share your email." required>
+      <Input id="demo-email" type="email" placeholder="you@example.com" />
+    </FormField>
+    <FormField label="Message" htmlFor="demo-message" helper="Tell us what you're thinking.">
+      <Textarea id="demo-message" rows={4} placeholder="Your thoughts..." />
+    </FormField>
+    <FormField label="Topic" htmlFor="demo-select" required>
+      <Select
+        id="demo-select"
+        options={[
+          { value: 'philosophy', label: 'Philosophy' },
+          { value: 'research', label: 'Research' },
+          { value: 'practice', label: 'Practice' },
+        ]}
+        placeholder="Select a topic"
+      />
+    </FormField>
+    <FormField label="Preferences" htmlFor="opt-newsletter">
+      <Checkbox id="opt-newsletter" checked={true} label="Subscribe to newsletter" />
+      <Radio name="pref" value="daily" label="Daily" checked={true} id="pref-daily" />
+      <Radio name="pref" value="weekly" label="Weekly" id="pref-weekly" />
+      <Radio name="pref" value="monthly" label="Monthly" id="pref-monthly" />
+    </FormField>
+    <FormField label="Search" htmlFor="demo-search">
+      <SearchBar placeholder="Search the system..." />
+    </FormField>
+  </LayoutStack>
+</SectionContent>
+
+<SectionContent eyebrow="Feedback" title="Alerts & Status" lede="User feedback components for system events and status updates.">
+  <LayoutStack gap="normal">
+    <Alert variant="info" title="Information">
+      A new version of the design system is available. Check the changelog for details.
+    </Alert>
+    <Alert variant="success" title="Success">
+      Your component has been published to the gallery.
+    </Alert>
+    <Alert variant="caution" title="Warning">
+      Some components are still in development. Use with caution.
+    </Alert>
+    <Alert variant="danger" title="Danger">
+      Breaking change: The old API has been removed. Update your code.
+    </Alert>
+    <Progress value={36} label="Wave 2: 75% complete" />
+    <Progress value={55} label="Wave 3: 55% complete" />
+    <Progress value={56} label="Total: 56/64" />
+  </LayoutStack>
+</SectionContent>
+
+<SectionContent eyebrow="Composites" title="Cards" lede="Composed elements for content presentation.">
+  <LayoutGrid columns={2} gap="normal">
+    <FeatureCard
+      icon="check"
+      title="Feature Card"
+      description="Highlighted card with icon, title, and description. Used for showcasing capabilities."
+      accent="hearth"
+    />
+    <StatCard value="98%" label="Accessibility score" trend="up" context="+12%" accent="success" />
+    <ProfileCard
+      name="Scott Rallya"
+      title="Hearthside Meta-Architect"
+      bio="Working on AI literacy, civic governance, and epistemic frameworks."
+      avatarSrc=""
+    />
+    <QuoteCard
+      quote="Every consequential claim should have a source, a scope, and a way to be challenged."
+      attribution="Hearth & Code principle"
+      source="Studio Charter"
+      accent="balanced"
+    />
+  </LayoutGrid>
+</SectionContent>
+
+<SectionContent eyebrow="Layouts" title="Navigation & Layout">
+  <LayoutSidebar sidebarPosition="left" sidebarWidth="14rem">
+    <div slot="sidebar">
+      <h3>Sidebar</h3>
+      <LinkGroup
+        links={[
+          { label: 'Dashboard', href: '#' },
+          { label: 'Projects', href: '#' },
+          { label: 'Settings', href: '#' },
+        ]}
+      />
+    </div>
+    <h2>Main Content</h2>
+    <p>This is the main content area. Sidebar layouts are useful for documentation, dashboards, and complex navigation.</p>
+  </LayoutSidebar>
+</SectionContent>
+
+<SectionContent eyebrow="Data Display" title="Tables & Charts">
+  <Tabs
+    tabs={[
+      {
+        id: 'table-basic',
+        label: 'Basic Table',
+        content: 'Standard data table with striped rows and hoverable headers.',
+      },
+      {
+        id: 'table-sort',
+        label: 'Sortable Table',
+        content: 'Table with clickable column headers for sorting. Click any header to test.',
+      },
+      {
+        id: 'chart-bar',
+        label: 'Bar Chart',
+        content: 'Horizontal bar chart showing relative magnitudes with semantic colors.',
+      },
+      {
+        id: 'chart-pie',
+        label: 'Pie Chart',
+        content: 'Donut-style pie chart with legend showing percentage breakdown.',
+      },
+    ]}
+  />
+
+  <div style="margin-top: 1.5rem;">
+    <Table
+      columns={[
+        { key: 'name', label: 'Name' },
+        { key: 'role', label: 'Role' },
+        { key: 'count', label: 'Components', align: 'right' },
+      ]}
+      data={[
+        { name: 'Primitives', role: 'Building blocks', count: 12 },
+        { name: 'Composites', role: 'Composed elements', count: 32 },
+        { name: 'Templates', role: 'Page patterns', count: 20 },
+      ]}
+      striped
+      caption="Component library status"
+    />
+  </div>
+
+  <div style="margin-top: 2rem;">
+    <ChartBar
+      data={[
+        { label: 'Primitives', value: 12 },
+        { label: 'Composites', value: 32 },
+        { label: 'Templates', value: 11 },
+        { label: 'Documentation', value: 4 },
+      ]}
+    />
+  </div>
+
+  <div style="margin-top: 2rem; max-width: 24rem; margin-left: auto; margin-right: auto;">
+    <ChartPie
+      data={[
+        { label: 'Built', value: 56 },
+        { label: 'Remaining', value: 8 },
+      ]}
+      donut
+    />
+  </div>
+</SectionContent>
+
+<SectionContent eyebrow="Lists" title="Lists & Navigation">
+  <LayoutGrid columns={2}>
+    <div>
+      <h3>Basic List</h3>
+      <List
+        items={[
+          { content: 'Token-driven styling throughout', href: '#' },
+          { content: 'Semantic HTML structure', href: '#' },
+          { content: 'ARIA labels and roles', href: '#' },
+          { content: 'Keyboard navigation', href: '#' },
+        ]}
+      />
+    </div>
+    <div>
+      <h3>Grid List</h3>
+      <ListGrid
+        items={[
+          { content: '4 variants', href: '#' },
+          { content: '3 sizes', href: '#' },
+          { content: '5 sizes', href: '#' },
+          { content: '8 variants', href: '#' },
+          { content: '13 icons', href: '#' },
+          { content: 'Removable', href: '#' },
+        ]}
+      />
+    </div>
+  </LayoutGrid>
+</SectionContent>
+
+<SectionContent eyebrow="Timeline" title="Build Progress">
+  <Timeline
+    events={[
+      { date: '2026-09-23 AM', title: 'Convergence document', description: '64 components defined across 3 layers' },
+      { date: '2026-09-23 AM', title: 'Wave 1 complete', description: '12 primitives built and validated' },
+      { date: '2026-09-23 PM', title: 'Wave 2 complete', description: '32 composites built and integrated' },
+      { date: '2026-09-23 PM', title: 'Wave 3 in progress', description: 'Templates, sections, layouts' },
+      { date: '2026-09-23 PM', title: 'Gallery showcase', description: 'Live component gallery online' },
+    ]}
+  />
+</SectionContent>
+
+<SectionCTA
+  title="Explore the System"
+  description="Every component uses tokens from tokens.css. Browse the source, contribute a new primitive, or build something with them."
+  primaryCta={{ label: 'View on GitHub', href: 'https://github.com/hearthandcode' }}
+  secondaryCta={{ label: 'Read Documentation', href: '/' }}
+  accent="balanced"
+  size="lg"
+/>
+
+<PageFooter
+  columns={[
+    {
+      title: 'Primitives',
+      links: [
+        { label: 'Button', href: '#' },
+        { label: 'Input', href: '#' },
+        { label: 'Icon', href: '#' },
+      ],
+    },
+    {
+      title: 'Composites',
+      links: [
+        { label: 'Card', href: '#' },
+        { label: 'Accordion', href: '#' },
+        { label: 'Toast', href: '#' },
+      ],
+    },
+    {
+      title: 'Templates',
+      links: [
+        { label: 'Hero', href: '#' },
+        { label: 'Section', href: '#' },
+        { label: 'Page Header', href: '#' },
+      ],
+    },
+  ]}
+  copyright="© 2026 Hearth & Code. Hearthside Meta-Architect."
+/>
+
+<style>
+  /* Gallery page styles */
+  body {
+    background: var(--color-surface-primary);
+  }
+</style>

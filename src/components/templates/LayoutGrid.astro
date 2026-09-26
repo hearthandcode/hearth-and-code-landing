@@ -1,0 +1,45 @@
+---
+/**
+ * Layout (Grid) template
+ * id: t-layout-grid
+ *
+ * Multi-column responsive grid layout.
+ */
+
+interface Props {
+  columns?: 1 | 2 | 3 | 4 | 'auto';
+  minColumnWidth?: string;
+  gap?: 'tight' | 'normal' | 'loose';
+  class?: string;
+}
+
+const {
+  columns = 'auto',
+  minColumnWidth = '16rem',
+  gap = 'normal',
+  class: className = '',
+} = Astro.props;
+
+const gaps = {
+  tight: 'var(--space-3)',
+  normal: 'var(--space-5)',
+  loose: 'var(--space-7)',
+};
+
+const gridTemplate = columns === 'auto'
+  ? `repeat(auto-fit, minmax(${minColumnWidth}, 1fr))`
+  : `repeat(${columns}, 1fr)`;
+---
+
+<div
+  class={`ec-layout-grid ${className}`}
+  style={`display: grid; grid-template-columns: ${gridTemplate}; gap: ${gaps[gap]};`}
+>
+  <slot />
+</div>
+
+<style>
+  .ec-layout-grid {
+    width: 100%;
+  }
+</style>

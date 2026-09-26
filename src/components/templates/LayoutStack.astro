@@ -1,0 +1,41 @@
+---
+/**
+ * Layout (Stack) template
+ * id: t-layout-stack
+ *
+ * Vertical stacked layout.
+ */
+
+interface Props {
+  gap?: 'tight' | 'normal' | 'loose';
+  align?: 'left' | 'center' | 'right';
+  maxWidth?: string;
+  class?: string;
+}
+
+const {
+  gap = 'normal',
+  align = 'left',
+  maxWidth,
+  class: className = '',
+} = Astro.props;
+
+const gaps = {
+  tight: 'var(--space-3)',
+  normal: 'var(--space-5)',
+  loose: 'var(--space-8)',
+};
+---
+
+<div
+  class={`ec-layout-stack ${className}`}
+  style={`display: flex; flex-direction: column; gap: ${gaps[gap]}; align-items: ${align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start'}; ${maxWidth ? `max-width: ${maxWidth}; margin: 0 auto;` : ''}`}
+>
+  <slot />
+</div>
+
+<style>
+  .ec-layout-stack {
+    width: 100%;
+  }
+</style>

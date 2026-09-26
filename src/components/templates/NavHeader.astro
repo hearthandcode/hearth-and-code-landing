@@ -1,0 +1,161 @@
+---
+/**
+ * Navigation Header template
+ * id: t-nav-header
+ *
+ * Top navigation with logo, links, CTAs.
+ */
+
+import Icon from '../primitives/Icon.astro';
+
+interface NavLink {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+interface Props {
+  logo?: string;
+  logoHref?: string;
+  links?: NavLink[];
+  cta?: { label: string; href: string };
+  sticky?: boolean;
+  transparent?: boolean;
+  class?: string;
+}
+
+const {
+  logo = 'Hearth & Code',
+  logoHref = '/',
+  links = [],
+  cta,
+  sticky = false,
+  transparent = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<header class={`ec-nav-header ${sticky ? 'is-sticky' : ''} ${transparent ? 'is-transparent' : ''} ${className}`}>
+  <div class="ec-nav-header__inner">
+    <a class="ec-nav-header__logo" href={logoHref}>{logo}</a>
+    {links.length > 0 && (
+      <nav class="ec-nav-header__links" aria-label="Main navigation">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            class={`ec-nav-header__link ${link.active ? 'is-active' : ''}`}
+            aria-current={link.active ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    )}
+    <div class="ec-nav-header__actions">
+      {cta && (
+        <a class="ec-nav-header__cta" href={cta.href}>{cta.label}</a>
+      )}
+      <button
+        type="button"
+        class="ec-nav-header__menu-btn"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        data-nav-toggle
+      >
+        <Icon name="menu" size="md" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .ec-nav-header {
+    background: var(--color-surface-raised);
+    border-bottom: 1px solid var(--color-surface-rule);
+    color: var(--color-text-primary);
+    z-index: var(--z-sticky, 200);
+  }
+  .ec-nav-header.is-sticky {
+    position: sticky;
+    top: 0;
+  }
+  .ec-nav-header.is-transparent {
+    background: transparent;
+    border-bottom-color: transparent;
+  }
+  .ec-nav-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-3) var(--space-5);
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  .ec-nav-header__logo {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-display);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .ec-nav-header__links {
+    display: none;
+    gap: var(--space-5);
+  }
+  .ec-nav-header__link {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-nav-header__link:hover,
+  .ec-nav-header__link.is-active {
+    color: var(--color-text-display);
+  }
+  .ec-nav-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .ec-nav-header__cta {
+    display: none;
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: background-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-nav-header__cta:hover {
+    background: var(--color-accent-forge);
+  }
+  .ec-nav-header__menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-control-sm);
+    height: var(--size-control-sm);
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+  .ec-nav-header__menu-btn:hover {
+    background: var(--color-surface-recessed);
+  }
+  @media (min-width: 768px) {
+    .ec-nav-header__links {
+      display: flex;
+    }
+    .ec-nav-header__cta {
+      display: inline-block;
+    }
+    .ec-nav-header__menu-btn {
+      display: none;
+    }
+  }
+</style>
