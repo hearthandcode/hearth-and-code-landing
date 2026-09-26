@@ -1,0 +1,1181 @@
+---
+/**
+ * Design System Showcase - Ember Circuit
+ * Storybook-style component gallery with isolated previews.
+ * Tabs: Atoms | Molecules | Organisms | Patterns | Showcase
+ */
+
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/primitives/Button.astro';
+import Input from '../../components/primitives/Input.astro';
+import Icon from '../../components/primitives/Icon.astro';
+import Badge from '../../components/primitives/Badge.astro';
+import Tag from '../../components/primitives/Tag.astro';
+import Divider from '../../components/primitives/Divider.astro';
+import Label from '../../components/primitives/Label.astro';
+import Tooltip from '../../components/primitives/Tooltip.astro';
+import Avatar from '../../components/primitives/Avatar.astro';
+import Checkbox from '../../components/primitives/Checkbox.astro';
+import Radio from '../../components/primitives/Radio.astro';
+import Spinner from '../../components/primitives/Spinner.astro';
+import Skeleton from '../../components/primitives/Skeleton.astro';
+import Card from '../../components/composites/Card.astro';
+import FeatureCard from '../../components/composites/FeatureCard.astro';
+import StatCard from '../../components/composites/StatCard.astro';
+import ProfileCard from '../../components/composites/ProfileCard.astro';
+import QuoteCard from '../../components/composites/QuoteCard.astro';
+import PricingCard from '../../components/composites/PricingCard.astro';
+import ProductCard from '../../components/composites/ProductCard.astro';
+import TestimonialCard from '../../components/composites/TestimonialCard.astro';
+import Accordion from '../../components/composites/Accordion.astro';
+import Tabs from '../../components/composites/Tabs.astro';
+import Breadcrumb from '../../components/composites/Breadcrumb.astro';
+import Pagination from '../../components/composites/Pagination.astro';
+import Stepper from '../../components/composites/Stepper.astro';
+import LinkGroup from '../../components/composites/LinkGroup.astro';
+import Textarea from '../../components/composites/Textarea.astro';
+import Select from '../../components/composites/Select.astro';
+import FormField from '../../components/composites/FormField.astro';
+import SearchBar from '../../components/composites/SearchBar.astro';
+import Alert from '../../components/composites/Alert.astro';
+import Toast from '../../components/composites/Toast.astro';
+import Progress from '../../components/composites/Progress.astro';
+import EmptyState from '../../components/composites/EmptyState.astro';
+import Table from '../../components/composites/Table.astro';
+import TableSortable from '../../components/composites/TableSortable.astro';
+import TableFilterable from '../../components/composites/TableFilterable.astro';
+import ChartBar from '../../components/composites/ChartBar.astro';
+import ChartLine from '../../components/composites/ChartLine.astro';
+import ChartPie from '../../components/composites/ChartPie.astro';
+import List from '../../components/composites/List.astro';
+import ListGrid from '../../components/composites/ListGrid.astro';
+import Timeline from '../../components/composites/Timeline.astro';
+import Toc from '../../components/composites/Toc.astro';
+import HeroCentered from '../../components/templates/HeroCentered.astro';
+import HeroSplit from '../../components/templates/HeroSplit.astro';
+import SectionContent from '../../components/templates/SectionContent.astro';
+import SectionFeatures from '../../components/templates/SectionFeatures.astro';
+import SectionCTA from '../../components/templates/SectionCTA.astro';
+import SectionPricing from '../../components/templates/SectionPricing.astro';
+import PageHeader from '../../components/templates/PageHeader.astro';
+import PageFooter from '../../components/templates/PageFooter.astro';
+import LayoutGrid from '../../components/templates/LayoutGrid.astro';
+import LayoutStack from '../../components/templates/LayoutStack.astro';
+import Dashboard from '../../components/templates/Dashboard.astro';
+---
+
+<Layout title="Design System · Ember Circuit" description="Storybook-style component gallery. Atoms, molecules, organisms, patterns — all isolated, all token-driven.">
+
+<!-- EMBER CIRCUIT HERO -->
+<section class="ec-circ-hero">
+  <div class="ec-circ-hero__bg">
+    <svg class="ec-circ-hero__circuit" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="ec-circ-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-accent-signal, #1FB6A8)" stroke-width="0.5" opacity="0.2"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#ec-circ-grid)" />
+      <!-- Circuit traces -->
+      <g class="ec-circ-traces" stroke="var(--color-accent-ember, #E85B4E)" fill="none" stroke-width="1.5" opacity="0.4">
+        <path d="M 50 100 L 200 100 L 200 200 L 350 200" />
+        <path d="M 450 200 L 600 200 L 600 100 L 750 100" />
+        <path d="M 200 300 L 350 300 L 350 200" />
+        <path d="M 450 300 L 600 300 L 600 200" />
+      </g>
+      <!-- Circuit nodes -->
+      <g class="ec-circ-nodes" fill="var(--color-accent-signal, #1FB6A8)">
+        <circle cx="50" cy="100" r="4" />
+        <circle cx="200" cy="100" r="4" />
+        <circle cx="200" cy="200" r="4" />
+        <circle cx="350" cy="200" r="4" />
+        <circle cx="450" cy="200" r="4" />
+        <circle cx="600" cy="100" r="4" />
+        <circle cx="750" cy="100" r="4" />
+        <circle cx="200" cy="300" r="4" />
+        <circle cx="600" cy="300" r="4" />
+      </g>
+    </svg>
+  </div>
+  <div class="ec-circ-hero__inner">
+    <p class="ec-circ-hero__eyebrow">Ember Circuit Design System</p>
+    <h1 class="ec-circ-hero__title">
+      <span class="ec-circ-hero__title-ember">Hearth</span>
+      <span class="ec-circ-hero__title-divider">|</span>
+      <span class="ec-circ-hero__title-code">Code</span>
+    </h1>
+    <p class="ec-circ-hero__lede">
+      64 components across four layers — atoms, molecules, organisms, and patterns —
+      each isolated, each token-driven, each ready for inspection.
+    </p>
+    <div class="ec-circ-hero__stats">
+      <StatCard value="12" label="Atoms" trend="flat" accent="hearth" />
+      <StatCard value="32" label="Molecules" trend="up" context="+8" accent="code" />
+      <StatCard value="20" label="Organisms" trend="up" context="+9" accent="balanced" />
+      <StatCard value="64" label="Total" trend="up" context="Complete" accent="balanced" />
+    </div>
+  </div>
+</section>
+
+<!-- TABS PANEL -->
+<Tabs
+  tabs={[
+    {
+      id: 'atoms',
+      label: 'Atoms',
+      content: 'atoms',
+    },
+    {
+      id: 'molecules',
+      label: 'Molecules',
+      content: 'molecules',
+    },
+    {
+      id: 'organisms',
+      label: 'Organisms',
+      content: 'organisms',
+    },
+    {
+      id: 'patterns',
+      label: 'Patterns',
+      content: 'patterns',
+    },
+    {
+      id: 'showcase',
+      label: 'Showcase',
+      content: 'showcase',
+    },
+  ]}
+  variant="pills"
+/>
+
+<style>
+  /* === EMBER CIRCUIT HERO === */
+  .ec-circ-hero {
+    position: relative;
+    padding: var(--space-9) var(--space-5);
+    overflow: hidden;
+    background: var(--color-surface-primary);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-circ-hero__bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .ec-circ-hero__circuit {
+    width: 100%;
+    height: 100%;
+  }
+  .ec-circ-hero__traces {
+    animation: ec-circ-flow 20s linear infinite;
+  }
+  @keyframes ec-circ-flow {
+    to { stroke-dashoffset: -100; }
+  }
+  .ec-circ-hero__nodes circle {
+    animation: ec-circ-pulse 3s ease-in-out infinite;
+  }
+  .ec-circ-hero__nodes circle:nth-child(even) {
+    animation-delay: 1.5s;
+  }
+  @keyframes ec-circ-pulse {
+    0%, 100% { opacity: 0.4; r: 4; }
+    50% { opacity: 1; r: 6; }
+  }
+  .ec-circ-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 64rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+  .ec-circ-hero__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+  .ec-circ-hero__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-text-display);
+  }
+  .ec-circ-hero__title-ember { color: var(--color-accent-ember); }
+  .ec-circ-hero__title-code { color: var(--color-accent-signal); }
+  .ec-circ-hero__title-divider {
+    margin: 0 0.5em;
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-normal);
+  }
+  .ec-circ-hero__lede {
+    margin: 0;
+    max-width: 48rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+  .ec-circ-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-4);
+    width: 100%;
+    max-width: 48rem;
+    margin-top: var(--space-3);
+  }
+
+  /* === TAB PANEL ENHANCEMENTS === */
+  .ec-tabs {
+    background: var(--color-surface-recessed) !important;
+    padding: var(--space-3) var(--space-5) !important;
+    border-bottom: 1px solid var(--color-surface-rule) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+  }
+  .ec-tabs__list {
+    border-bottom: none !important;
+    gap: var(--space-1) !important;
+    justify-content: center !important;
+  }
+  .ec-tabs__trigger {
+    padding: var(--space-2) var(--space-5) !important;
+    font-size: var(--font-size-small) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  /* === COMPONENT PREVIEW CARD === */
+  .ec-preview-card {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-preview-card:hover {
+    border-color: var(--color-accent-ember);
+  }
+  .ec-preview-card__header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-surface-rule);
+    background: var(--color-surface-recessed);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .ec-preview-card__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .ec-preview-card__name {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-ember);
+  }
+  .ec-preview-card__type {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+  }
+  .ec-preview-card__badges {
+    display: flex;
+    gap: var(--space-1);
+  }
+  .ec-preview-card__preview {
+    padding: var(--space-7);
+    background: var(--color-surface-primary);
+    min-height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ec-preview-card__tabs {
+    border-top: 1px solid var(--color-surface-rule);
+  }
+  .ec-preview-card__tab-bar {
+    display: flex;
+    background: var(--color-surface-recessed);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-preview-card__tab {
+    flex: 1;
+    padding: var(--space-2) var(--space-4);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-preview-card__tab:hover {
+    color: var(--color-text-primary);
+    background: var(--color-surface-raised);
+  }
+  .ec-preview-card__tab.is-active {
+    color: var(--color-text-display);
+    border-bottom-color: var(--color-accent-ember);
+    background: var(--color-surface-raised);
+  }
+  .ec-preview-card__content {
+    padding: 0;
+  }
+  .ec-preview-card__panel {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-surface-rule);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    background: var(--color-surface-primary);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .ec-preview-card__panel:last-child { border-bottom: none; }
+  .ec-preview-card__panel--variants {
+    padding: var(--space-5);
+    background: var(--color-surface-primary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-around;
+    white-space: normal;
+  }
+  .ec-preview-card__panel-title {
+    margin: 0 0 var(--space-3) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    white-space: normal;
+  }
+  .ec-preview-card__props {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+  .ec-preview-card__props th,
+  .ec-preview-card__props td {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-surface-rule);
+    color: var(--color-text-primary);
+    white-space: normal;
+  }
+  .ec-preview-card__props th {
+    background: var(--color-surface-recessed);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+  .ec-preview-card__props td code {
+    background: var(--color-surface-recessed);
+    color: var(--color-accent-ember);
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+  }
+
+  /* === SECTION HEADERS === */
+  .ec-layer-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-9) 0 var(--space-7);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-layer-header__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--color-surface-raised);
+    color: var(--color-accent-ember);
+  }
+  .ec-layer-header--hearth .ec-layer-header__badge { background: rgba(232, 91, 78, 0.15); color: var(--color-accent-ember); }
+  .ec-layer-header--code .ec-layer-header__badge { background: rgba(31, 182, 168, 0.15); color: var(--color-accent-signal); }
+  .ec-layer-header--organism .ec-layer-header__badge { background: rgba(155, 93, 229, 0.15); color: var(--color-accent-violet); }
+  .ec-layer-header__content {
+    flex: 1;
+  }
+  .ec-layer-header__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-display);
+  }
+  .ec-layer-header__desc {
+    margin: 0.25rem 0 0 0;
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+  .ec-layer-header__count {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* === COMPONENT GRID === */
+  .ec-components-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  @media (min-width: 1024px) {
+    .ec-components-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* === SHOWCASE SECTION === */
+  .ec-showcase-content {
+    padding: var(--space-7);
+    background: var(--color-surface-primary);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+  }
+</style>
+
+<script>
+  // Tab switching logic - re-render the tab panel based on which tab is active
+  document.querySelectorAll('.ec-tabs__trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      // Tabs component already handles its own state
+      // We listen for which tab is active and show corresponding section
+      const tabId = trigger.getAttribute('data-tab-id');
+      document.querySelectorAll<HTMLElement>('.ec-layer-section'>).forEach((section) => {
+        (section as HTMLElement).style.display = 'none';
+      });
+      const target = document.getElementById(`layer-${tabId}`);
+      if (target) (target as HTMLElement).style.display = 'block';
+    });
+  });
+
+  // Initialize: show the first tab's content (atoms)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll<HTMLElement>('.ec-layer-section'>).forEach((section, idx) => {
+      (section as HTMLElement).style.display = idx === 0 ? 'block' : 'none';
+    });
+  });
+</script>
+
+<!-- ATOMS SECTION -->
+<div id="layer-atoms" class="ec-layer-section">
+  <div class="ec-layer-header ec-layer-header--hearth">
+    <div class="ec-layer-header__badge">
+      <Icon name="circle" size="sm" />
+    </div>
+    <div class="ec-layer-header__content">
+      <h2 class="ec-layer-header__name">Atoms</h2>
+      <p class="ec-layer-header__desc">Single-purpose elements. The building blocks.</p>
+    </div>
+    <span class="ec-layer-header__count">12 components</span>
+  </div>
+  <div class="ec-components-grid">
+    <!-- BUTTON -->
+    <div class="ec-preview-card" id="atom-button">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-button</span>
+          <span class="ec-preview-card__name">Button</span>
+        </div>
+        <div class="ec-preview-card__badges">
+          <Badge variant="hearth">Primary</Badge>
+          <Badge variant="code">Code</Badge>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Button variant="primary">Primary Action</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="danger">Danger</Button>
+      </div>
+      <div class="ec-preview-card__tabs">
+        <div class="ec-preview-card__tab-bar">
+          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-button">Props</button>
+          <button class="ec-preview-card__tab" data-preview-tab="variants" data-target="atom-button">Variants</button>
+          <button class="ec-preview-card__tab" data-preview-tab="states" data-target="atom-button">States</button>
+        </div>
+        <div class="ec-preview-card__content">
+          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-button">
+            <table class="ec-preview-card__props">
+              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+              <tr><td><code>variant</code></td><td>'primary' | 'secondary' | 'ghost' | 'danger'</td><td>'primary'</td></tr>
+              <tr><td><code>size</code></td><td>'sm' | 'md' | 'lg'</td><td>'md'</td></tr>
+              <tr><td><code>disabled</code></td><td>boolean</td><td>false</td></tr>
+              <tr><td><code>loading</code></td><td>boolean</td><td>false</td></tr>
+              <tr><td><code>href</code></td><td>string</td><td>undefined</td></tr>
+            </table>
+          </div>
+          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="variants" data-target="atom-button" hidden>
+            <p class="ec-preview-card__panel-title">Button Variants</p>
+            <Button variant="primary" size="sm">Small Primary</Button>
+            <Button variant="primary" size="md">Medium Primary</Button>
+            <Button variant="primary" size="lg">Large Primary</Button>
+          </div>
+          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="states" data-target="atom-button" hidden>
+            <p class="ec-preview-card__panel-title">Button States</p>
+            <Button variant="primary">Default</Button>
+            <Button variant="primary" disabled>Disabled</Button>
+            <Button variant="primary" loading>Loading</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="ec-preview-card" id="atom-input">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-input</span>
+          <span class="ec-preview-card__name">Input</span>
+        </div>
+        <div class="ec-preview-card__badges">
+          <Badge variant="info">7 Types</Badge>
+          <Badge variant="success">Validated</Badge>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Input type="email" placeholder="you@example.com" />
+      </div>
+      <div class="ec-preview-card__tabs">
+        <div class="ec-preview-card__tab-bar">
+          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-input">Props</button>
+          <button class="ec-preview-card__tab" data-preview-tab="variants" data-target="atom-input">Variants</button>
+          <button class="ec-preview-card__tab" data-preview-tab="states" data-target="atom-input">States</button>
+        </div>
+        <div class="ec-preview-card__content">
+          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-input">
+            <table class="ec-preview-card__props">
+              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+              <tr><td><code>type</code></td><td>'text' | 'email' | 'password' | 'number' | 'url' | 'search' | 'tel'</td><td>'text'</td></tr>
+              <tr><td><code>size</code></td><td>'sm' | 'md' | 'lg'</td><td>'md'</td></tr>
+              <tr><td><code>error</code></td><td>boolean</td><td>false</td></tr>
+              <tr><td><code>success</code></td><td>boolean</td><td>false</td></tr>
+              <tr><td><code>disabled</code></td><td>boolean</td><td>false</td></tr>
+            </table>
+          </div>
+          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="variants" data-target="atom-input" hidden>
+            <p class="ec-preview-card__panel-title">Input Variants</p>
+            <Input type="text" placeholder="Text input" />
+            <Input type="email" placeholder="Email input" />
+            <Input type="password" placeholder="Password input" />
+            <Input type="search" placeholder="Search input" />
+          </div>
+          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="states" data-target="atom-input" hidden>
+            <p class="ec-preview-card__panel-title">Input States</p>
+            <Input placeholder="Default" />
+            <Input placeholder="Disabled" disabled />
+            <Input placeholder="Error" error />
+            <Input placeholder="Success" success />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ICON -->
+    <div class="ec-preview-card" id="atom-icon">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-icon</span>
+          <span class="ec-preview-card__name">Icon</span>
+        </div>
+        <div class="ec-preview-card__badges">
+          <Badge variant="balanced">5 Sizes</Badge>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Icon name="check" size="xs" />
+        <Icon name="arrow-right" size="sm" />
+        <Icon name="info" size="md" />
+        <Icon name="warning" size="lg" />
+        <Icon name="user" size="xl" />
+      </div>
+      <div class="ec-preview-card__tabs">
+        <div class="ec-preview-card__tab-bar">
+          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-icon">Props</button>
+          <button class="ec-preview-card__tab" data-preview-tab="variants" data-target="atom-icon">Sizes</button>
+        </div>
+        <div class="ec-preview-card__content">
+          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-icon">
+            <table class="ec-preview-card__props">
+              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+              <tr><td><code>name</code></td><td>string</td><td>required</td></tr>
+              <tr><td><code>size</code></td><td>'xs' | 'sm' | 'md' | 'lg' | 'xl'</td><td>'md'</td></tr>
+              <tr><td><code>color</code></td><td>string</td><td>currentColor</td></tr>
+            </table>
+          </div>
+          <div class="ec-preview-card__panel ec-preview-card__panel--variants" data-preview-panel="variants" data-target="atom-icon" hidden>
+            <p class="ec-preview-card__panel-title">Available Icons</p>
+            <Icon name="check" />
+            <Icon name="close" />
+            <Icon name="arrow-right" />
+            <Icon name="arrow-down" />
+            <Icon name="plus" />
+            <Icon name="minus" />
+            <Icon name="chevron-down" />
+            <Icon name="search" />
+            <Icon name="menu" />
+            <Icon name="user" />
+            <Icon name="info" />
+            <Icon name="warning" />
+            <Icon name="edit" />
+            <Icon name="circle" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BADGE -->
+    <div class="ec-preview-card" id="atom-badge">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-badge</span>
+          <span class="ec-preview-card__name">Badge</span>
+        </div>
+        <div class="ec-preview-card__badges">
+          <Badge variant="info">8 Variants</Badge>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Badge>Default</Badge>
+        <Badge variant="hearth">Hearth</Badge>
+        <Badge variant="code">Code</Badge>
+        <Badge variant="balanced">Balanced</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="caution">Caution</Badge>
+        <Badge variant="danger">Danger</Badge>
+        <Badge variant="info">Info</Badge>
+      </div>
+      <div class="ec-preview-card__tabs">
+        <div class="ec-preview-card__tab-bar">
+          <button class="ec-preview-card__tab is-active" data-preview-tab="props" data-target="atom-badge">Props</button>
+        </div>
+        <div class="ec-preview-card__content">
+          <div class="ec-preview-card__panel" data-preview-panel="props" data-target="atom-badge">
+            <table class="ec-preview-card__props">
+              <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+              <tr><td><code>variant</code></td><td>'neutral' | 'success' | 'caution' | 'danger' | 'info' | 'hearth' | 'code' | 'balanced'</td><td>'neutral'</td></tr>
+              <tr><td><code>size</code></td><td>'sm' | 'md'</td><td>'md'</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAG -->
+    <div class="ec-preview-card" id="atom-tag">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-tag</span>
+          <span class="ec-preview-card__name">Tag</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Tag label="neutral" />
+        <Tag label="hearth" variant="hearth" />
+        <Tag label="code" variant="code" />
+        <Tag label="balanced" variant="balanced" />
+        <Tag label="removable" variant="removable" onRemove="remove" />
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="ec-preview-card" id="atom-divider">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-divider</span>
+          <span class="ec-preview-card__name">Divider</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <div style="width: 100%;">
+          <Divider variant="solid" />
+          <Divider variant="dashed" />
+          <Divider variant="gradient" />
+        </div>
+      </div>
+    </div>
+
+    <!-- LABEL -->
+    <div class="ec-preview-card" id="atom-label">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-label</span>
+          <span class="ec-preview-card__name">Label</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Label text="Email address" htmlFor="demo" />
+        <Label text="Password" htmlFor="demo2" required />
+        <Label text="Bio (optional)" htmlFor="demo3" optional />
+      </div>
+    </div>
+
+    <!-- TOOLTIP -->
+    <div class="ec-preview-card" id="atom-tooltip">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-tooltip</span>
+          <span class="ec-preview-card__name">Tooltip</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Tooltip content="Helpful information about this field">Hover for info</Tooltip>
+      </div>
+    </div>
+
+    <!-- AVATAR -->
+    <div class="ec-preview-card" id="atom-avatar">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-avatar</span>
+          <span class="ec-preview-card__name">Avatar</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Avatar name="SR" size="xs" />
+        <Avatar name="SR" size="sm" />
+        <Avatar name="SR" size="md" />
+        <Avatar name="SR" size="lg" />
+        <Avatar name="SR" size="xl" />
+      </div>
+    </div>
+
+    <!-- CHECKBOX -->
+    <div class="ec-preview-card" id="atom-checkbox">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-checkbox</span>
+          <span class="ec-preview-card__name">Checkbox</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="gap: var(--space-5);">
+        <Checkbox id="cb1" label="Unchecked" />
+        <Checkbox id="cb2" label="Checked" checked />
+        <Checkbox id="cb3" label="Disabled" disabled />
+      </div>
+    </div>
+
+    <!-- RADIO -->
+    <div class="ec-preview-card" id="atom-radio">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-radio</span>
+          <span class="ec-preview-card__name">Radio</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="flex-direction: column; align-items: flex-start; gap: var(--space-3);">
+        <Radio name="demo" value="a" label="Option A" />
+        <Radio name="demo" value="b" label="Option B" checked />
+        <Radio name="demo" value="c" label="Option C" />
+      </div>
+    </div>
+
+    <!-- SPINNER -->
+    <div class="ec-preview-card" id="atom-spinner">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-spinner</span>
+          <span class="ec-preview-card__name">Spinner</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="gap: var(--space-5);">
+        <Spinner size="sm" />
+        <Spinner size="md" />
+        <Spinner size="lg" />
+      </div>
+    </div>
+
+    <!-- SKELETON -->
+    <div class="ec-preview-card" id="atom-skeleton">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Atom · p-skeleton</span>
+          <span class="ec-preview-card__name">Skeleton</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="flex-direction: column; gap: var(--space-2); width: 80%;">
+        <Skeleton variant="text" width="60%" />
+        <Skeleton variant="text" width="80%" />
+        <Skeleton variant="text" width="70%" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOLECULES SECTION -->
+<div id="layer-molecules" class="ec-layer-section" style="display: none;">
+  <div class="ec-layer-header ec-layer-header--code">
+    <div class="ec-layer-header__badge">
+      <Icon name="plus" size="sm" />
+    </div>
+    <div class="ec-layer-header__content">
+      <h2 class="ec-layer-header__name">Molecules</h2>
+      <p class="ec-layer-header__desc">Composed elements combining atoms into functional units.</p>
+    </div>
+    <span class="ec-layer-header__count">32 components</span>
+  </div>
+  <div class="ec-components-grid">
+    <!-- CARDS -->
+    <div class="ec-preview-card" id="mol-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-card-basic</span>
+          <span class="ec-preview-card__name">Card</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <Card>
+          <h3>Card Title</h3>
+          <p>Card content with header, body, and footer slots.</p>
+        </Card>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-feature">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-card-feature</span>
+          <span class="ec-preview-card__name">Feature Card</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <FeatureCard icon="check" title="Featured" description="Highlighted card with icon and accent." accent="hearth" />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-stat">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-card-stat</span>
+          <span class="ec-preview-card__name">Stat Card</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <StatCard value="98%" label="Accessibility score" trend="up" context="+12%" accent="success" />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-profile">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-card-profile</span>
+          <span class="ec-preview-card__name">Profile Card</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <ProfileCard name="Scott Rallya" title="Hearthside Meta-Architect" avatarSrc="" />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-quote">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-card-quote</span>
+          <span class="ec-preview-card__name">Quote Card</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <QuoteCard quote="Every consequential claim should have a source." attribution="Hearth & Code" source="Studio Charter" accent="balanced" />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-pricing">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-card-pricing</span>
+          <span class="ec-preview-card__name">Pricing Card</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview">
+        <PricingCard tier="Pro" price="$29" period="/mo" features={['Unlimited', 'Priority support']} ctaLabel="Subscribe" ctaHref="#" />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-alert">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-alert</span>
+          <span class="ec-preview-card__name">Alert</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="flex-direction: column; width: 100%; gap: var(--space-3);">
+        <Alert variant="info">Information message</Alert>
+        <Alert variant="success">Success message</Alert>
+        <Alert variant="caution" title="Warning">Caution with title</Alert>
+        <Alert variant="danger">Error message</Alert>
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-progress">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-progress</span>
+          <span class="ec-preview-card__name">Progress</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="flex-direction: column; width: 80%; gap: var(--space-3);">
+        <Progress value={68} label="Wave 2" />
+        <Progress value={100} label="Wave 1" />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-table">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-table-basic</span>
+          <span class="ec-preview-card__name">Table</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 90%; padding: var(--space-4);">
+        <Table columns={[{key:'name',label:'Name'},{key:'role',label:'Role'}]} data={[{name:'Atoms',role:'Building blocks'},{name:'Molecules',role:'Composed'}]} striped />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-chart-bar">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-chart-bar</span>
+          <span class="ec-preview-card__name">Bar Chart</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 80%; padding: var(--space-4);">
+        <ChartBar data={[{label:'Atoms',value:12},{label:'Molecules',value:32},{label:'Organisms',value:20}]} />
+      </div>
+    </div>
+    <div class="ec-preview-card" id="mol-form">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Molecule · c-form-field</span>
+          <span class="ec-preview-card__name">Form Field</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%;">
+        <FormField label="Email" htmlFor="demo-email" required>
+          <Input id="demo-email" type="email" placeholder="you@example.com" />
+        </FormField>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANISMS SECTION -->
+<div id="layer-organisms" class="ec-layer-section" style="display: none;">
+  <div class="ec-layer-header ec-layer-header--organism">
+    <div class="ec-layer-header__badge">
+      <Icon name="user" size="sm" />
+    </div>
+    <div class="ec-layer-header__content">
+      <h2 class="ec-layer-header__name">Organisms</h2>
+      <p class="ec-layer-header__desc">Complex compositions combining molecules into page-level patterns.</p>
+    </div>
+    <span class="ec-layer-header__count">20 components</span>
+  </div>
+  <div class="ec-components-grid">
+    <div class="ec-preview-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · t-hero-centered</span>
+          <span class="ec-preview-card__name">Hero (Centered)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%; padding: 0;">
+        <HeroCentered eyebrow="Welcome" title="Hearth & Code" lede="Designing answerable systems." accent="balanced" size="sm">
+          <Button>Get started</Button>
+        </HeroCentered>
+      </div>
+    </div>
+    <div class="ec-preview-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · t-section-features</span>
+          <span class="ec-preview-card__name">Section (Features)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%; padding: 0;">
+        <SectionFeatures
+          columns={3}
+          features={[
+            { icon: 'check', title: 'Fast', description: 'Built for speed and reliability.' },
+            { icon: 'check', title: 'Secure', description: 'Privacy-preserving by design.' },
+            { icon: 'check', title: 'Open', description: 'Token-driven and source-available.' },
+          ]}
+        />
+      </div>
+    </div>
+    <div class="ec-preview-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · t-section-cta</span>
+          <span class="ec-preview-card__name">Section (CTA)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%; padding: 0;">
+        <SectionCTA title="Get Started" description="Build with Ember Circuit." primaryCta={{ label: 'Start', href: '#' }} accent="balanced" />
+      </div>
+    </div>
+    <div class="ec-preview-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · t-page-header</span>
+          <span class="ec-preview-card__name">Page Header</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%; padding: var(--space-3);">
+        <PageHeader title="Page Title" subtitle="Subtitle description" size="sm" accent="balanced" />
+      </div>
+    </div>
+    <div class="ec-preview-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · t-layout-grid</span>
+          <span class="ec-preview-card__name">Layout (Grid)</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%; padding: var(--space-3);">
+        <LayoutGrid columns={3}>
+          <Card><h3>1</h3></Card>
+          <Card><h3>2</h3></Card>
+          <Card><h3>3</h3></Card>
+        </LayoutGrid>
+      </div>
+    </div>
+    <div class="ec-preview-card">
+      <div class="ec-preview-card__header">
+        <div class="ec-preview-card__title-group">
+          <span class="ec-preview-card__type">Organism · t-dashboard</span>
+          <span class="ec-preview-card__name">Dashboard</span>
+        </div>
+      </div>
+      <div class="ec-preview-card__preview" style="width: 100%; padding: var(--space-3); min-height: 16rem;">
+        <Dashboard
+          navItems={[
+            { label: 'Overview', href: '#', active: true },
+            { label: 'Analytics', href: '#' },
+            { label: 'Reports', href: '#' },
+          ]}
+          title="Dashboard"
+        >
+          <div style="padding: var(--space-4); background: var(--color-surface-recessed); border-radius: var(--radius-sm); color: var(--color-text-secondary); font-size: var(--font-size-small);">
+            Content area
+          </div>
+        </Dashboard>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PATTERNS SECTION -->
+<div id="layer-patterns" class="ec-layer-section" style="display: none;">
+  <div class="ec-layer-header">
+    <div class="ec-layer-header__badge">
+      <Icon name="circle" size="sm" />
+    </div>
+    <div class="ec-layer-header__content">
+      <h2 class="ec-layer-header__name">Patterns</h2>
+      <p class="ec-layer-header__desc">Recipe templates combining atoms, molecules, and organisms into reusable compositions.</p>
+    </div>
+    <span class="ec-layer-header__count">3 patterns</span>
+  </div>
+  <div class="ec-showcase-content">
+    <h3 style="margin-top: 0; font-family: var(--font-display); color: var(--color-text-display);">Studio Orientation Pattern</h3>
+    <p style="color: var(--color-text-secondary);">Clean router page that introduces Hearth & Code with hero, who-runs-it, navigation guide, and three-paths orientation. Avoids walls of text by limiting to 3 sections max.</p>
+    <Divider variant="gradient" />
+    <h3 style="font-family: var(--font-display); color: var(--color-text-display);">View-Disposition Pattern</h3>
+    <p style="color: var(--color-text-secondary);">Content panel below toggle that updates titles, descriptions, and links based on selected view (Hearth/Code/Balanced). Shows what changes when context shifts.</p>
+    <Divider variant="gradient" />
+    <h3 style="font-family: var(--font-display); color: var(--color-text-display);">Hero Presentation Pattern</h3>
+    <p style="color: var(--color-text-secondary);">Each section as a full-viewport slide. User scrolls naturally through hero → sections → CTA. Generous spacing between sections earns its place.</p>
+  </div>
+</div>
+
+<!-- SHOWCASE SECTION -->
+<div id="layer-showcase" class="ec-layer-section" style="display: none;">
+  <div class="ec-layer-header ec-layer-header--organism">
+    <div class="ec-layer-header__badge">
+      <Icon name="star" size="sm" />
+    </div>
+    <div class="ec-layer-header__content">
+      <h2 class="ec-layer-header__name">Showcase</h2>
+      <p class="ec-layer-header__desc">Real composition example. Full studio orientation with toggle and view-dynamic content.</p>
+    </div>
+    <span class="ec-layer-header__count">1 demo</span>
+  </div>
+  <div class="ec-showcase-content">
+    <SectionContent eyebrow="Hearth & Code" title="An independent research studio for answerable systems." lede="Building the design system layer by layer." accent="balanced">
+      <div style="display: flex; justify-content: center; margin: var(--space-5) 0;">
+        <Badge variant="hearth">Hearth</Badge>
+        <Badge variant="code">Code</Badge>
+        <Badge variant="balanced">Balanced</Badge>
+      </div>
+      <LayoutGrid columns={3}>
+        <Card>
+          <h3>Atoms</h3>
+          <p>12 single-purpose elements. Buttons, inputs, icons, badges.</p>
+        </Card>
+        <Card>
+          <h3>Molecules</h3>
+          <p>32 composed elements. Cards, forms, navigation, data display.</p>
+        </Card>
+        <Card>
+          <h3>Organisms</h3>
+          <p>20 page-level compositions. Heroes, sections, layouts.</p>
+        </Card>
+      </LayoutGrid>
+    </SectionContent>
+  </div>
+</div>
+
+<style>
+  body {
+    background: var(--color-surface-primary);
+  }
+</style>
+
+<script>
+  // Preview card tab switching - shows props / variants / states panels
+  document.querySelectorAll('.ec-preview-card__tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-target');
+      const tabName = tab.getAttribute('data-preview-tab');
+      if (!target || !tabName) return;
+
+      // Update tab states within this card
+      const card = tab.closest('.ec-preview-card');
+      if (!card) return;
+      card.querySelectorAll('.ec-preview-card__tab').forEach((t) => {
+        ((t as HTMLElement).classList.toggle('is-active', t === tab);
+      });
+
+      // Show the matching panel
+      card.querySelectorAll(`.ec-preview-card__panel[data-target="${target}"]`).forEach((panel) => {
+        (panel as HTMLElement).hidden = panel.getAttribute('data-preview-panel') !== tabName;
+      });
+    });
+  });
+
+  // Hero Hearth | Code title color animation
+  document.querySelectorAll('.ec-circ-hero__title-ember, .ec-circ-hero__title-code').forEach((el) => {
+    const color = window.getComputedStyle(el).color;
+    el.style.setProperty('--accent-glow', color + '40');
+  });
+</script>
+
+</Layout>
