@@ -1,0 +1,118 @@
+---
+/**
+ * Accordion composite
+ * id: c-accordion
+ *
+ * Collapsible content sections with single or multi-open behavior.
+ */
+
+interface AccordionItem {
+  id: string;
+  title: string;
+  content: string;
+  defaultOpen?: boolean;
+}
+
+interface Props {
+  items: AccordionItem[];
+  variant?: 'single-open' | 'multi-open';
+  class?: string;
+}
+
+const { items, variant = 'multi-open', class: className = '' } = Astro.props;
+---
+
+<div class={`ec-accordion ec-accordion--${variant} ${className}`}>
+  {items.map((item, idx) => (
+    <details
+      class="ec-accordion__item"
+      open={item.defaultOpen}
+      data-accordion-item
+    >
+      <summary class="ec-accordion__header">
+        <span class="ec-accordion__title">{item.title}</span>
+        <svg class="ec-accordion__icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M7 10l5 5 5-5z"/>
+        </svg>
+      </summary>
+      <div class="ec-accordion__content">
+        <p>{item.content}</p>
+      </div>
+    </details>
+  ))}
+</div>
+
+<script define:vars={{ variant }}>
+  document.querySelectorAll(`[data-accordion-item]`).forEach((item) => {
+    item.addEventListener(`toggle`, () => {
+      if (variant === `single-open` && item.open) {
+        document.querySelectorAll(`[data-accordion-item]`).forEach((other) => {
+          if (other !== item) other.open = false;
+        });
+      }
+    });
+  });
+</script>
+
+<style>
+  .ec-accordion {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .ec-accordion__item {
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-accordion__item:last-child {
+    border-bottom: none;
+  }
+  .ec-accordion__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: background-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-accordion__header::-webkit-details-marker {
+    display: none;
+  }
+  .ec-accordion__header:hover {
+    background: var(--color-surface-recessed);
+  }
+  .ec-accordion__item[open] > .ec-accordion__header {
+    background: var(--color-surface-recessed);
+  }
+  .ec-accordion__title {
+    flex: 1;
+  }
+  .ec-accordion__icon {
+    color: var(--color-text-secondary);
+    transition: transform var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-accordion__item[open] > .ec-accordion__header .ec-accordion__icon {
+    transform: rotate(180deg);
+  }
+  .ec-accordion__content {
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+  .ec-accordion__content p {
+    margin: 0;
+  }
+  .ec-accordion__content > :global(*) + :global(*) {
+    margin-top: var(--space-3);
+  }
+</style>

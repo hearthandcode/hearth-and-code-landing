@@ -1,0 +1,135 @@
+---
+/**
+ * Stepper composite
+ * id: c-stepper
+ *
+ * Multi-step progress indicator.
+ */
+
+interface Step {
+  label: string;
+  description?: string;
+}
+
+interface Props {
+  steps: Step[];
+  currentStep: number;
+  orientation?: 'horizontal' | 'vertical';
+  class?: string;
+}
+
+const {
+  steps,
+  currentStep,
+  orientation = 'horizontal',
+  class: className = '',
+} = Astro.props;
+---
+
+<ol class={`ec-stepper ec-stepper--${orientation} ${className}`}>
+  {steps.map((step, idx) => {
+    const num = idx + 1;
+    const status = num < currentStep ? 'is-complete' : num === currentStep ? 'is-current' : 'is-upcoming';
+    return (
+      <li class={`ec-stepper__item ${status}`}>
+        <span class="ec-stepper__indicator" aria-hidden="true">
+          {status === 'is-complete' ? '✓' : num}
+        </span>
+        <span class="ec-stepper__content">
+          <span class="ec-stepper__label">{step.label}</span>
+          {step.description && <span class="ec-stepper__description">{step.description}</span>}
+        </span>
+      </li>
+    );
+  })}
+</ol>
+
+<style>
+  .ec-stepper {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: var(--space-2);
+  }
+  .ec-stepper--horizontal {
+    flex-direction: row;
+    align-items: flex-start;
+    overflow-x: auto;
+  }
+  .ec-stepper--vertical {
+    flex-direction: column;
+  }
+  .ec-stepper__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: 1;
+    min-width: 0;
+  }
+  .ec-stepper--vertical .ec-stepper__item {
+    flex: none;
+  }
+  .ec-stepper__indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--color-surface-recessed);
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    border: 1px solid var(--color-surface-rule);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .ec-stepper--horizontal .ec-stepper__item:not(:last-child)::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-surface-rule);
+    margin-left: var(--space-2);
+  }
+  .ec-stepper--vertical .ec-stepper__item:not(:last-child)::after {
+    content: '';
+    width: 1px;
+    height: 1.5rem;
+    background: var(--color-surface-rule);
+    margin-left: 1rem;
+    margin-top: var(--space-1);
+  }
+  .ec-stepper__item.is-complete .ec-stepper__indicator {
+    background: var(--color-state-success);
+    color: var(--color-text-display);
+    border-color: var(--color-state-success);
+  }
+  .ec-stepper__item.is-current .ec-stepper__indicator {
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+    border-color: var(--color-accent-ember);
+  }
+  .ec-stepper__content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .ec-stepper__label {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+  }
+  .ec-stepper__item.is-current .ec-stepper__label {
+    color: var(--color-text-display);
+  }
+  .ec-stepper__item.is-complete .ec-stepper__label {
+    color: var(--color-text-primary);
+  }
+  .ec-stepper__description {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.125rem;
+  }
+</style>

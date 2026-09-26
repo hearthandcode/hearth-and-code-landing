@@ -1,0 +1,75 @@
+---
+/**
+ * Breadcrumb composite
+ * id: c-breadcrumb
+ *
+ * Hierarchical navigation path.
+ */
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+  separator?: string;
+  class?: string;
+}
+
+const { items, separator = '/', class: className = '' } = Astro.props;
+---
+
+<nav class={`ec-breadcrumb ${className}`} aria-label="Breadcrumb">
+  <ol class="ec-breadcrumb__list">
+    {items.map((item, idx) => {
+      const isLast = idx === items.length - 1;
+      return (
+        <li class="ec-breadcrumb__item">
+          {item.href && !isLast ? (
+            <a class="ec-breadcrumb__link" href={item.href}>{item.label}</a>
+          ) : (
+            <span class="ec-breadcrumb__current" aria-current={isLast ? 'page' : undefined}>
+              {item.label}
+            </span>
+          )}
+          {!isLast && <span class="ec-breadcrumb__separator" aria-hidden="true">{separator}</span>}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+  .ec-breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+  }
+  .ec-breadcrumb__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .ec-breadcrumb__link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .ec-breadcrumb__link:hover {
+    color: var(--color-accent-ember);
+  }
+  .ec-breadcrumb__current {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+  }
+  .ec-breadcrumb__separator {
+    color: var(--color-text-secondary);
+    opacity: 0.5;
+  }
+</style>

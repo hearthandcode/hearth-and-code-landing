@@ -1,0 +1,107 @@
+---
+/**
+ * Link Group composite
+ * id: c-link-group
+ *
+ * Collection of related links with orientation.
+ */
+
+interface LinkItem {
+  label: string;
+  href: string;
+  description?: string;
+}
+
+interface Props {
+  links: LinkItem[];
+  orientation?: 'vertical' | 'horizontal' | 'grid';
+  divider?: boolean;
+  title?: string;
+  class?: string;
+}
+
+const {
+  links,
+  orientation = 'vertical',
+  divider = true,
+  title,
+  class: className = '',
+} = Astro.props;
+---
+
+<section class={`ec-link-group ec-link-group--${orientation} ${className}`}>
+  {title && <h3 class="ec-link-group__title">{title}</h3>}
+  <ul class={`ec-link-group__list ${divider ? 'ec-link-group__list--divider' : ''}`}>
+    {links.map((link) => (
+      <li class="ec-link-group__item">
+        <a class="ec-link-group__link" href={link.href}>
+          <span class="ec-link-group__label">{link.label}</span>
+          {link.description && <span class="ec-link-group__description">{link.description}</span>}
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .ec-link-group__title {
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-3) 0;
+  }
+  .ec-link-group__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ec-link-group--vertical .ec-link-group__list {
+    display: flex;
+    flex-direction: column;
+  }
+  .ec-link-group--horizontal .ec-link-group__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .ec-link-group--grid .ec-link-group__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: var(--space-3);
+  }
+  .ec-link-group__item {
+    display: block;
+  }
+  .ec-link-group__list--divider .ec-link-group__item {
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-link-group__list--divider .ec-link-group__item:last-child {
+    border-bottom: none;
+  }
+  .ec-link-group__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) 0;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-link-group--horizontal .ec-link-group__link {
+    padding: 0;
+  }
+  .ec-link-group__link:hover {
+    color: var(--color-accent-ember);
+  }
+  .ec-link-group__label {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+  }
+  .ec-link-group__description {
+    font-size: var(--font-size-small);
+    color: var(--color-text-secondary);
+  }
+</style>

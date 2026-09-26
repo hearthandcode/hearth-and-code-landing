@@ -1,0 +1,161 @@
+---
+/**
+ * Tabs composite
+ * id: c-tabs
+ *
+ * Tabbed content switcher with horizontal/vertical orientations.
+ */
+
+interface TabItem {
+  id: string;
+  label: string;
+  content: string;
+}
+
+interface Props {
+  tabs: TabItem[];
+  orientation?: 'horizontal' | 'vertical';
+  variant?: 'underline' | 'pills' | 'boxed';
+  defaultTab?: string;
+  class?: string;
+}
+
+const {
+  tabs,
+  orientation = 'horizontal',
+  variant = 'underline',
+  defaultTab,
+  class: className = '',
+} = Astro.props;
+
+const activeId = defaultTab || tabs[0]?.id;
+---
+
+<div class={`ec-tabs ec-tabs--${orientation} ec-tabs--${variant} ${className}`}>
+  <div class="ec-tabs__list" role="tablist">
+    {tabs.map((tab) => (
+      <button
+        type="button"
+        role="tab"
+        class={`ec-tabs__trigger ${tab.id === activeId ? 'is-active' : ''}`}
+        data-tab-id={tab.id}
+        aria-selected={tab.id === activeId ? 'true' : 'false'}
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+  {tabs.map((tab) => (
+    <div
+      class={`ec-tabs__panel ${tab.id === activeId ? 'is-active' : ''}`}
+      role="tabpanel"
+      data-tab-panel={tab.id}
+      hidden={tab.id !== activeId}
+    >
+      <p>{tab.content}</p>
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll('[data-tab-id]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const id = trigger.getAttribute('data-tab-id');
+      if (!id) return;
+      document.querySelectorAll('[data-tab-id]').forEach((t) => {
+        t.classList.toggle('is-active', t === trigger);
+        t.setAttribute('aria-selected', t === trigger ? 'true' : 'false');
+      });
+      document.querySelectorAll('[data-tab-panel]').forEach((p) => {
+        const isActive = p.getAttribute('data-tab-panel') === id;
+        p.classList.toggle('is-active', isActive);
+        p.hidden = !isActive;
+      });
+    });
+  });
+</script>
+
+<style>
+  .ec-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .ec-tabs--vertical {
+    flex-direction: row;
+  }
+  .ec-tabs__list {
+    display: flex;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-tabs--vertical .ec-tabs__list {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--color-surface-rule);
+    min-width: 12rem;
+  }
+  .ec-tabs__trigger {
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    cursor: pointer;
+    transition: color var(--motion-duration-fast) var(--motion-easing-default);
+    position: relative;
+  }
+  .ec-tabs--underline .ec-tabs__trigger.is-active {
+    color: var(--color-text-display);
+  }
+  .ec-tabs--underline .ec-tabs__trigger.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent-ember);
+  }
+  .ec-tabs--vertical .ec-tabs__trigger.is-active::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-accent-ember);
+  }
+  .ec-tabs--pills .ec-tabs__trigger {
+    border-radius: var(--radius-sm);
+  }
+  .ec-tabs--pills .ec-tabs__trigger.is-active {
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+  }
+  .ec-tabs--boxed .ec-tabs__trigger.is-active {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-bottom: 1px solid var(--color-surface-raised);
+    position: relative;
+    z-index: 1;
+    margin-bottom: -1px;
+  }
+  .ec-tabs__trigger:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .ec-tabs__panel {
+    padding: var(--space-4) 0;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+  .ec-tabs__panel p {
+    margin: 0;
+  }
+  .ec-tabs--vertical .ec-tabs__panel {
+    padding: 0 0 0 var(--space-5);
+    flex: 1;
+  }
+</style>

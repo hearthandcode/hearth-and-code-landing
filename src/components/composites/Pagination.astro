@@ -1,0 +1,163 @@
+---
+/**
+ * Pagination composite
+ * id: c-pagination
+ *
+ * Page number navigation with various display variants.
+ */
+
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl?: string;
+  variant?: 'numbers' | 'prev-next' | 'simple';
+  showFirstLast?: boolean;
+  maxVisible?: number;
+  class?: string;
+}
+
+const {
+  currentPage,
+  totalPages,
+  baseUrl = '',
+  variant = 'numbers',
+  showFirstLast = true,
+  maxVisible = 5,
+  class: className = '',
+} = Astro.props;
+
+function getPageNumbers(): (number | '...')[] {
+  if (totalPages <= maxVisible) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  const half = Math.floor(maxVisible / 2);
+  let start = Math.max(2, currentPage - half);
+  let end = Math.min(totalPages - 1, currentPage + half);
+  if (currentPage <= half + 1) {
+    end = maxVisible - 1;
+  }
+  if (currentPage >= totalPages - half) {
+    start = totalPages - maxVisible + 2;
+  }
+  const pages: (number | '...')[] = [1];
+  if (start > 2) pages.push('...');
+  for (let i = start; i <= end; i++) pages.push(i);
+  if (end < totalPages - 1) pages.push('...');
+  if (totalPages > 1) pages.push(totalPages);
+  return pages;
+}
+
+function pageUrl(page: number): string {
+  if (page === 1) return baseUrl || '/';
+  return `${baseUrl}?page=${page}`;
+}
+
+const pages = getPageNumbers();
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < totalPages;
+---
+
+<nav class={`ec-pagination ec-pagination--${variant} ${className}`} aria-label="Pagination">
+  {variant === 'prev-next' || variant === 'simple' ? (
+    <div class="ec-pagination__prevnext">
+      {hasPrev ? (
+        <a class="ec-pagination__btn ec-pagination__prev" href={pageUrl(currentPage - 1)} rel="prev">
+          ← Previous
+        </a>
+      ) : (
+        <span class="ec-pagination__btn ec-pagination__prev is-disabled">← Previous</span>
+      )}
+      {variant === 'simple' && (
+        <span class="ec-pagination__position">Page {currentPage} of {totalPages}</span>
+      )}
+      {hasNext ? (
+        <a class="ec-pagination__btn ec-pagination__next" href={pageUrl(currentPage + 1)} rel="next">
+          Next →
+        </a>
+      ) : (
+        <span class="ec-pagination__btn ec-pagination__next is-disabled">Next →</span>
+      )}
+    </div>
+  ) : (
+    <div class="ec-pagination__numbers">
+      {hasPrev && (
+        <a class="ec-pagination__btn ec-pagination__arrow" href={pageUrl(currentPage - 1)} rel="prev" aria-label="Previous page">
+          ←
+        </a>
+      )}
+      {pages.map((page) =>
+        page === '...' ? (
+          <span class="ec-pagination__ellipsis">…</span>
+        ) : page === currentPage ? (
+          <span class="ec-pagination__btn ec-pagination__page is-active" aria-current="page">
+            {page}
+          </span>
+        ) : (
+          <a class="ec-pagination__btn ec-pagination__page" href={pageUrl(page)}>
+            {page}
+          </a>
+        )
+      )}
+      {hasNext && (
+        <a class="ec-pagination__btn ec-pagination__arrow" href={pageUrl(currentPage + 1)} rel="next" aria-label="Next page">
+          →
+        </a>
+      )}
+    </div>
+  )}
+</nav>
+
+<style>
+  .ec-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+  }
+  .ec-pagination__prevnext,
+  .ec-pagination__numbers {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .ec-pagination__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 var(--space-2);
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-pagination__btn:hover:not(.is-disabled):not(.is-active) {
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
+    border-color: var(--color-surface-rule);
+  }
+  .ec-pagination__btn.is-active {
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+    border-color: var(--color-accent-ember);
+  }
+  .ec-pagination__btn.is-disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+  .ec-pagination__arrow {
+    font-weight: var(--font-weight-bold);
+  }
+  .ec-pagination__ellipsis {
+    padding: 0 var(--space-2);
+    color: var(--color-text-secondary);
+  }
+  .ec-pagination__position {
+    padding: 0 var(--space-3);
+    color: var(--color-text-secondary);
+  }
+</style>
