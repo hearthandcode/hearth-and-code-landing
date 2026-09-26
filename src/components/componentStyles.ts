@@ -1117,6 +1117,13 @@ export const EMBER_CIRCUIT_COMPONENT_CSS = `
 .kc-project-status__track { flex: 1; height: 0.4rem; background: var(--color-surface-recessed); border-radius: 999px; overflow: hidden; border: 1px solid var(--color-surface-rule); }
 .kc-project-status__fill { height: 100%; border-radius: 999px; background: var(--color-accent-signal); }
 
+.kc-taxonomy-tree__item:not(.is-expanded) > ul { display: none; }
+.kc-taxonomy-tree__toggle::before { content: '\u25B8'; }
+.kc-taxonomy-tree__item.has-children.is-expanded .kc-taxonomy-tree__toggle::before { content: '\u25BE'; }
+.kc-task-hierarchy__item:not(.is-expanded) > ul { display: none; }
+.kc-task-hierarchy__toggle::before { content: '\u25B8'; }
+.kc-task-hierarchy__item.has-children.is-expanded .kc-task-hierarchy__toggle::before { content: '\u25BE'; }
+
 /* Avatar */
 .kc-avatar { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
 .kc-avatar--sm { width: 2rem; height: 2rem; font-size: 0.625rem; }
