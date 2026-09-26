@@ -3,132 +3,227 @@
  * Design System Showcase — Live Previews
  *
  * Interactive React port preview with live prop controls.
- * All components from the React ports registry are rendered with
- * auto-generated controls derived from their TypeScript Props interface.
+ * Mirrors Storybook's Controls panel functionality using Astro+React.
  */
+
 import '../../styles/tokens.css';
 import '../../styles/global.css';
-import { readFileSync } from 'node:fs';
 import Layout from '../../layouts/Layout.astro';
 import { LivePreview } from '../../components/LivePreview.tsx';
-import {
-  componentRegistry,
-  componentsByLayer,
-  type ComponentConfig,
-} from '../../lib/componentRegistry';
 
-// Inline the full component CSS so it loads in <head> at SSR time.
-// Bypasses Astro island CSS scoping and avoids a CSS link that
-// might not load reliably on first request.
+// Inline component CSS so it loads into document.head via <style is:inline>
+// in the page head slot. This bypasses any Astro island CSS scoping.
+// Use Astro's recommended approach: load the file as a static asset via
+// `?raw` import or read at runtime from a stable path.
+import { readFileSync } from 'node:fs';
+
+// process.cwd() at build time equals the project root, so this is reliable
 const componentCss = readFileSync('./public/ember-circuit-component.css', 'utf-8');
 
-// Filter out components that require nested data structures that crash SSR.
-// The filter then keeps everything else (109 components in the registry).
-const skipComponents = new Set<string>([
-  'SourceChain', 'TaskHierarchy', 'TaxonomyTree', 'GlossaryIndex',
-  'AuditTrail', 'DeploymentStatus', 'EvidenceReceipt',
-  'WorkflowState', 'DialogueTree', 'SynthesisSummary',
-  'ConceptCard', 'ArchitectureDiagram', 'StateMachine', 'SequenceDiagram',
-  'KnowledgeGraphView', 'HeroSplit', 'SectionPricing', 'SectionTestimonials',
-  'TabsLayout', 'StepperLayout',
-]);
-const safeComponents = (cs: ComponentConfig[]) => cs.filter(
-  (c) => !skipComponents.has(c.name) && c.propControls.length > 0
-);
-
-const atomsToShow = safeComponents(componentsByLayer.atoms).slice(0, 30);
-const compositesToShow = safeComponents(componentsByLayer.composites).slice(0, 50);
-const templatesToShow = safeComponents(componentsByLayer.templates).slice(0, 30);
-
-// Group components by name for sectioning
-function groupByName(comps: ComponentConfig[]): Map<string, ComponentConfig[]> {
-  const map = new Map<string, ComponentConfig[]>();
-  for (const c of comps) {
-    if (!map.has(c.name)) map.set(c.name, []);
-    map.get(c.name)!.push(c);
-  }
-  return map;
-}
 ---
 
 <Layout title="Design System · Live Previews · Ember Circuit" description="Interactive React port previews with live prop controls.">
   <Fragment slot="head">
-    <style set:html={componentCss}></style>
+    {/* Component CSS injected via <style is:inline> so it lands in document.head */}
+    {/* before any Astro island renders. Using is:inline bypasses Astro's CSS */}
+    {/* scoping which can otherwise hide global CSS inside client:load islands. */}
+    <style is:inline set:html={componentCss}></style>
   </Fragment>
-
   <section class="ec-live-hero">
     <div class="ec-live-hero__inner">
       <p class="ec-live-hero__eyebrow">Interactive · React Ports</p>
       <h1 class="ec-live-hero__title">Live Component Previews</h1>
       <p class="ec-live-hero__lede">
-        Every Ember Circuit component rendered with <strong>interactive controls</strong>. Edit the inputs on the left and see the component update on the right.
-        Auto-generated from each component's TypeScript Props interface — controls match the actual API surface.
-      </p>
-      <p class="ec-live-hero__counts">
-        <strong>{atomsToShow.length}</strong> atoms ·
-        <strong>{compositesToShow.length}</strong> composites ·
-        <strong>{templatesToShow.length}</strong> templates
+        Each component rendered with <strong>interactive controls</strong>. Edit the inputs
+        on the left and see the component update on the right. The code below shows
+        the live JSX/TSX snippet.
       </p>
     </div>
   </section>
 
   <section class="ec-live-section">
-    {(['atoms', 'composites', 'templates'] as const).map((layer) => {
-      const items = layer === 'atoms' ? atomsToShow : layer === 'composites' ? compositesToShow : templatesToShow;
-      if (items.length === 0) return null;
-      const grouped = groupByName(items);
-      return (
-        <div class="ec-live-layer">
-          <h2 class="ec-live-layer__title">
-            {layer === 'atoms' ? 'Atoms' : layer === 'composites' ? 'Composites' : 'Templates'}
-            <span class="ec-live-layer__count">({items.length})</span>
-          </h2>
-          {Array.from(grouped.entries()).map(([name, comps]) => (
-            <div class="ec-live-component-group">
-              <h3 class="ec-live-component-group__title">{name}</h3>
-              {comps.map((cfg) => (
-                <LivePreview
-                  client:load
-                  componentName={cfg.name}
-                  initialProps={cfg.defaultProps}
-                  propMeta={cfg.propControls}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      );
-    })}
+    <h2 class="ec-live-section__title">Featured Components</h2>
+
+    <h3 class="ec-live-section__subtitle">Button</h3>
+    <LivePreview
+      client:load
+      componentName="Button"
+      initialProps={{ variant: 'primary', size: 'md', children: 'Click me' }}
+      propMeta={[
+        { name: 'variant', type: 'select', options: ['primary', 'secondary', 'ghost', 'danger'] },
+        { name: 'size', type: 'select', options: ['sm', 'md', 'lg'] },
+        { name: 'children', type: 'text' },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">CitationRef</h3>
+    <LivePreview
+      client:load
+      componentName="CitationRef"
+      initialProps={{ author: 'Rallya', year: 2026, locator: 'p.42' }}
+      propMeta={[
+        { name: 'author', type: 'text' },
+        { name: 'year', type: 'text' },
+        { name: 'locator', type: 'text' },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">ConfidenceBar</h3>
+    <LivePreview
+      client:load
+      componentName="ConfidenceBar"
+      initialProps={{ value: 65, variant: 'medium', showValue: true }}
+      propMeta={[
+        { name: 'value', type: 'number' },
+        { name: 'variant', type: 'select', options: ['low', 'medium', 'high', 'stated'] },
+        { name: 'showValue', type: 'boolean' },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">SeverityDot</h3>
+    <LivePreview
+      client:load
+      componentName="SeverityDot"
+      initialProps={{ severity: 'critical', label: 'Critical', pulsing: true }}
+      propMeta={[
+        { name: 'severity', type: 'select', options: ['info', 'success', 'caution', 'warning', 'error', 'critical'] },
+        { name: 'label', type: 'text' },
+        { name: 'pulsing', type: 'boolean' },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">StatusPill</h3>
+    <LivePreview
+      client:load
+      componentName="StatusPill"
+      initialProps={{ status: 'sealed', label: 'Sealed' }}
+      propMeta={[
+        { name: 'status', type: 'select', options: ['open', 'closed', 'pending', 'sealed', 'active', 'archived', 'review', 'rejected', 'approved', 'draft'] },
+        { name: 'label', type: 'text' },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">CitationChain</h3>
+    <LivePreview
+      client:load
+      componentName="CitationChain"
+      initialProps={{
+        label: 'Source chain',
+        citations: [
+          { author: 'Rallya', year: 2026, locator: 'p.42' },
+          { author: 'Dennett', year: 1991, locator: 'ch.3' },
+          { author: 'Popper', year: 1959 },
+        ],
+        separator: 'arrow',
+      }}
+      propMeta={[
+        { name: 'label', type: 'text' },
+        { name: 'separator', type: 'select', options: ['arrow', 'pipe', 'dot'] },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">ADRCard (interactive)</h3>
+    <LivePreview
+      client:load
+      componentName="ADRCard"
+      initialProps={{
+        number: '0042',
+        title: 'Adopt token-driven design system',
+        status: 'accepted',
+        date: '2026-09-15',
+        context: 'We need consistent visual language across all surfaces.',
+        decision: 'Build a token-driven system with 64 components.',
+        consequences: ['Higher upfront cost', 'Faster iteration', 'Easier brand evolution'],
+      }}
+      propMeta={[
+        { name: 'status', type: 'select', options: ['proposed', 'accepted', 'rejected', 'superseded', 'deprecated'] },
+        { name: 'number', type: 'text' },
+        { name: 'title', type: 'text' },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">WorkflowState (interactive)</h3>
+    <LivePreview
+      client:load
+      componentName="WorkflowState"
+      initialProps={{
+        states: ['Draft', 'Review', 'Approved', 'Sealed', 'Retired'],
+        current: 'Review',
+        transitions: [
+          { to: 'Draft', label: 'Send back' },
+          { to: 'Approved', label: 'Approve' },
+          { to: 'Sealed', label: 'Seal' },
+        ],
+      }}
+      propMeta={[
+        { name: 'current', type: 'select', options: ['Draft', 'Review', 'Approved', 'Sealed', 'Retired'] },
+      ]}
+    />
+
+    <h3 class="ec-live-section__subtitle">TaxonomyTree (interactive)</h3>
+    <LivePreview
+      client:load
+      componentName="TaxonomyTree"
+      initialProps={{
+        initiallyExpanded: 1,
+        root: {
+          id: 'r',
+          label: 'Knowledge',
+          description: 'Top-level domain',
+          children: [
+            { id: 'a', label: 'Atoms', description: 'Single-purpose primitives' },
+            { id: 'b', label: 'Composites', description: 'Composed elements', children: [
+              { id: 'b1', label: 'Cards' },
+              { id: 'b2', label: 'Forms' },
+            ] },
+            { id: 'c', label: 'Templates', description: 'Page compositions' },
+          ],
+        },
+      }}
+    />
+
+    <h3 class="ec-live-section__subtitle">DialogueTree (interactive)</h3>
+    <LivePreview
+      client:load
+      componentName="DialogueTree"
+      initialProps={{
+        rootId: 'n1',
+        nodes: [
+          { id: 'n1', speaker: 'A:', text: 'Should we ship this?', choices: [
+            { id: 'c1', text: 'Yes — ship it', next: 'n2' },
+            { id: 'c2', text: 'No — too risky', next: null },
+          ] },
+          { id: 'n2', speaker: 'A:', text: 'Great, deploying tomorrow.', choices: [
+            { id: 'c3', text: 'Confirm', next: null },
+          ] },
+        ],
+      }}
+    />
   </section>
 </Layout>
 
 <style is:global>
   .ec-live-hero { padding: 3rem 1.5rem 2rem; background: var(--color-surface-primary); border-bottom: 1px solid var(--color-surface-rule); position: relative; overflow: hidden; }
-  .ec-live-hero::before { content: ''; pointer-events: none; background: radial-gradient(900px 540px at 10% -5%, rgba(53, 34, 93, 0.5) 0, transparent 65%), radial-gradient(700px 540px at 94% 10%, rgba(11, 80, 96, 0.5) 0, transparent 68%); position: absolute; inset: 0; }
+  .ec-live-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(900px 540px at 10% -5%, rgba(53, 34, 93, 0.5) 0, transparent 65%), radial-gradient(700px 540px at 94% 10%, rgba(11, 80, 96, 0.5) 0, transparent 68%); pointer-events: none; }
   .ec-live-hero__inner { position: relative; max-width: 64rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
   .ec-live-hero__eyebrow { margin: 0; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.75rem; font-weight: 500; color: var(--color-accent-gold); }
   .ec-live-hero__title { margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: bold; line-height: 1; letter-spacing: -0.03em; color: var(--color-text-display); }
   .ec-live-hero__lede { margin: 0; max-width: 48rem; font-size: 1.0625rem; line-height: 1.6; color: var(--color-text-secondary); }
   .ec-live-hero__lede strong { color: var(--color-accent-ember); font-weight: 500; }
-  .ec-live-hero__counts { margin: 0.5rem 0 0 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-text-secondary); }
-  .ec-live-hero__counts strong { color: var(--color-accent-signal); font-weight: bold; }
 
-  .ec-live-section { max-width: 80rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; display: flex; flex-direction: column; gap: 3rem; }
-  .ec-live-layer { display: flex; flex-direction: column; gap: 1.5rem; }
-  .ec-live-layer__title { margin: 0; font-family: var(--font-display); font-size: 1.75rem; font-weight: bold; color: var(--color-text-display); display: flex; align-items: baseline; gap: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-surface-rule); }
-  .ec-live-layer__count { font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-accent-signal); font-weight: normal; }
-  .ec-live-component-group { display: flex; flex-direction: column; gap: 0.75rem; }
-  .ec-live-component-group__title { margin: 0.5rem 0 0 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-text-secondary); padding-left: 0.25rem; }
+  .ec-live-section { max-width: 80rem; margin: 0 auto; padding: 3rem 1.5rem; display: flex; flex-direction: column; gap: 2rem; }
+  .ec-live-section__title { margin: 0; font-family: var(--font-display); font-size: 2rem; font-weight: bold; color: var(--color-text-display); }
+  .ec-live-section__subtitle { margin: 0.5rem 0 0 0; font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent-signal); }
 
-  /* LivePreview component styling (restored from earlier working version) */
-  .ec-live-preview { display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 1rem; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.375rem; overflow: hidden; min-width: 0; }
-  .ec-live-preview__panel { padding: 1rem; background: var(--color-surface-raised); border-right: 1px solid var(--color-surface-rule); display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+  /* LivePreview styles */
+  .ec-live-preview { display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 1rem; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.375rem; overflow: hidden; }
+  .ec-live-preview__panel { padding: 1rem; background: var(--color-surface-raised); border-right: 1px solid var(--color-surface-rule); display: flex; flex-direction: column; gap: 0.75rem; }
   .ec-live-preview__name { margin: 0 0 0.5rem 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-accent-signal); padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-surface-rule); }
   .ec-live-preview__controls { display: flex; flex-direction: column; gap: 0.5rem; }
   .ec-live-preview__control { display: flex; flex-direction: column; gap: 0.2em; font-family: var(--font-mono); font-size: 0.75rem; }
   .ec-live-preview__control-label { color: var(--color-text-secondary); }
   .ec-live-preview__control input,
-  .ec-live-preview__control select { padding: 0.3em 0.5em; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; color: var(--color-text-display); font-family: var(--font-mono); font-size: 0.75rem; width: 100%; box-sizing: border-box; }
+  .ec-live-preview__control select { padding: 0.3em 0.5em; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; color: var(--color-text-display); font-family: var(--font-mono); font-size: 0.75rem; }
   .ec-live-preview__control input:focus,
   .ec-live-preview__control select:focus { outline: 1px solid var(--color-accent-signal); border-color: var(--color-accent-signal); }
   .ec-toggle { display: flex; align-items: center; gap: 0.3em; cursor: pointer; color: var(--color-text-secondary); }
@@ -136,10 +231,14 @@ function groupByName(comps: ComponentConfig[]): Map<string, ComponentConfig[]> {
   .ec-toggle span { font-size: 0.75rem; }
   .ec-live-preview__reset { padding: 0.3em 0.6em; background: transparent; border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; color: var(--color-text-secondary); font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer; margin-top: auto; }
   .ec-live-preview__reset:hover { color: var(--color-accent-signal); border-color: var(--color-accent-signal); }
-  .ec-live-preview__no-props { font-family: var(--font-mono); color: var(--color-text-secondary); margin: 0; font-size: 0.75rem; font-style: italic; }
-  .ec-live-preview__render { display: flex; flex-direction: column; gap: 0.5rem; min-height: 8rem; padding: 1rem; overflow: hidden; min-width: 0; }
-  .ec-live-preview__component { flex: 1; padding: 1rem; background: var(--color-surface-primary); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; min-width: 0; max-width: 100%; overflow: hidden; }
-  .ec-live-preview__loading { font-family: var(--font-mono); color: var(--color-text-secondary); font-size: 0.75rem; font-style: italic; }
-  .ec-live-preview__code { background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); font-family: var(--font-mono); color: var(--color-text-display); white-space: pre; border-radius: 0.25rem; margin: 0; padding: 0.75rem; font-size: 0.75rem; line-height: 1.5; overflow-x: auto; }
-  @media (max-width: 60rem) { .ec-live-preview { grid-template-columns: 1fr; } }
+  .ec-live-preview__no-props { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-secondary); font-style: italic; }
+  .ec-live-preview__render { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; min-height: 8rem; }
+  .ec-live-preview__component { flex: 1; padding: 1rem; background: var(--color-surface-primary); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; display: flex; align-items: center; justify-content: flex-start; flex-direction: column; flex-wrap: nowrap; gap: 0.5rem; min-width: 0; max-width: 100%; overflow: hidden; }
+  .ec-live-preview__loading { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-secondary); font-style: italic; }
+  .ec-live-preview__code { margin: 0; padding: 0.75rem; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.5; color: var(--color-text-display); overflow-x: auto; white-space: pre; }
+
+  /* Responsive */
+  @media (max-width: 60rem) {
+    .ec-live-preview { grid-template-columns: 1fr; }
+  }
 </style>
