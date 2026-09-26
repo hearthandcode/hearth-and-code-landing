@@ -4,7 +4,7 @@
  * Knowledge composite (k-composite): c-feature-card
  */
 import * as React from 'react';
-import Icon from '../atoms/Icon';
+import { Icon } from '../atoms/Icon';
 
 export interface FeatureCardProps {
   icon?: string;

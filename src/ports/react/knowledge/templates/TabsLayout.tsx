@@ -4,7 +4,7 @@
  * Knowledge template (k-template): t-layout-tabs
  */
 import * as React from 'react';
-import Tabs from '../composites/Tabs';
+import { Tabs } from '../composites/Tabs';
 
 export interface TabsLayoutProps {
   tabs: { id: string; label: string; content: string }[];

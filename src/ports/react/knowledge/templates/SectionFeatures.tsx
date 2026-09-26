@@ -4,7 +4,7 @@
  * Knowledge template (k-template): t-section-features
  */
 import * as React from 'react';
-import Icon from '../atoms/Icon';
+import { Icon } from '../atoms/Icon';
 
 interface Feature {
   icon: string;

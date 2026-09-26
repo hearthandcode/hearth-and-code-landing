@@ -6,24 +6,123 @@
  *  - The component itself rendered with current args
  *  - A code display showing the current JSX
  *
- * This is the Astro showcase equivalent of Storybook's Controls panel.
+ * Uses a static registry of all components instead of dynamic imports
+ * (Vite tree-shakes dynamic imports based on template literal patterns,
+ * making them unreliable for this use case).
  */
 import * as React from 'react';
+import { CitationRef } from '../ports/react/knowledge/atoms/CitationRef';
+import { ConceptTerm } from '../ports/react/knowledge/atoms/ConceptTerm';
+import { SeverityDot } from '../ports/react/knowledge/atoms/SeverityDot';
+import { ProvenanceMarker } from '../ports/react/knowledge/atoms/ProvenanceMarker';
+import { TimestampAtom } from '../ports/react/knowledge/atoms/TimestampAtom';
+import { StatusPill } from '../ports/react/knowledge/atoms/StatusPill';
+import { LicenseIcon } from '../ports/react/knowledge/atoms/LicenseIcon';
+import { DOILink } from '../ports/react/knowledge/atoms/DOILink';
+import { HashDigest } from '../ports/react/knowledge/atoms/HashDigest';
+import { PathBreadcrumb } from '../ports/react/knowledge/atoms/PathBreadcrumb';
+import { ConfidenceBar } from '../ports/react/knowledge/atoms/ConfidenceBar';
+import { LanguageTag } from '../ports/react/knowledge/atoms/LanguageTag';
+import { ReviewerChip } from '../ports/react/knowledge/atoms/ReviewerChip';
+import { EvidenceStrength } from '../ports/react/knowledge/atoms/EvidenceStrength';
+import { ClaimMarker } from '../ports/react/knowledge/atoms/ClaimMarker';
+import { RelationVerb } from '../ports/react/knowledge/atoms/RelationVerb';
+import { Button } from '../ports/react/knowledge/composites/Button';
+import { Alert } from '../ports/react/knowledge/composites/Alert';
+import { EvidenceReceipt } from '../ports/react/knowledge/composites/EvidenceReceipt';
+import { CitationChain } from '../ports/react/knowledge/composites/CitationChain';
+import { ConceptCard } from '../ports/react/knowledge/composites/ConceptCard';
+import { SynthesisSummary } from '../ports/react/knowledge/composites/SynthesisSummary';
+import { ADRCard } from '../ports/react/knowledge/composites/ADRCard';
+import { WorkflowState } from '../ports/react/knowledge/composites/WorkflowState';
+import { HumanGate } from '../ports/react/knowledge/composites/HumanGate';
+import { QuoteCard } from '../ports/react/knowledge/composites/QuoteCard';
+import { ProfileCard } from '../ports/react/knowledge/composites/ProfileCard';
+import { PricingCard } from '../ports/react/knowledge/composites/PricingCard';
+import { ProductCard } from '../ports/react/knowledge/composites/ProductCard';
+import { TestimonialCard } from '../ports/react/knowledge/composites/TestimonialCard';
+import { Card } from '../ports/react/knowledge/composites/Card';
+import { SearchBar } from '../ports/react/knowledge/composites/SearchBar';
+import { DialogueTree } from '../ports/react/knowledge/composites/DialogueTree';
+import { Pagination } from '../ports/react/knowledge/composites/Pagination';
+import { RunLog } from '../ports/react/knowledge/composites/RunLog';
+import { Breadcrumb } from '../ports/react/knowledge/composites/Breadcrumb';
+import { Tabs } from '../ports/react/knowledge/composites/Tabs';
+import { Stepper } from '../ports/react/knowledge/composites/Stepper';
+import { LinkGroup } from '../ports/react/knowledge/composites/LinkGroup';
+import { List } from '../ports/react/knowledge/composites/List';
+import { ListGrid } from '../ports/react/knowledge/composites/ListGrid';
+import { TaskHierarchy } from '../ports/react/knowledge/composites/TaskHierarchy';
+import { EmptyState } from '../ports/react/knowledge/composites/EmptyState';
+import { Toast } from '../ports/react/knowledge/composites/Toast';
+import { FormField } from '../ports/react/knowledge/composites/FormField';
+import { Select } from '../ports/react/knowledge/composites/Select';
+import { Textarea } from '../ports/react/knowledge/composites/Textarea';
+import { DeploymentStatus } from '../ports/react/knowledge/composites/DeploymentStatus';
+import { TaxonomyTree } from '../ports/react/knowledge/composites/TaxonomyTree';
+import { OntologyRelation } from '../ports/react/knowledge/composites/OntologyRelation';
+import { GlossaryIndex } from '../ports/react/knowledge/composites/GlossaryIndex';
+import { SourceChain } from '../ports/react/knowledge/composites/SourceChain';
+import { AuditTrail } from '../ports/react/knowledge/composites/AuditTrail';
+import { Progress } from '../ports/react/knowledge/composites/Progress';
+import { PolicyCard as PolicyCardC } from '../ports/react/knowledge/composites/PolicyCard';
+import { ProjectStatus as ProjectStatusC } from '../ports/react/knowledge/composites/ProjectStatus';
+import { StatCard } from '../ports/react/knowledge/composites/StatCard';
+import { FeatureCard } from '../ports/react/knowledge/composites/FeatureCard';
+import { HeroCentered } from '../ports/react/knowledge/templates/HeroCentered';
+import { HeroSplit } from '../ports/react/knowledge/templates/HeroSplit';
+import { SectionContent } from '../ports/react/knowledge/templates/SectionContent';
+import { SectionFeatures } from '../ports/react/knowledge/templates/SectionFeatures';
+import { SectionCTA } from '../ports/react/knowledge/templates/SectionCTA';
+import { SectionPricing } from '../ports/react/knowledge/templates/SectionPricing';
+import { SectionTestimonials } from '../ports/react/knowledge/templates/SectionTestimonials';
+import { PageHeader } from '../ports/react/knowledge/templates/PageHeader';
+import { PageFooter } from '../ports/react/knowledge/templates/PageFooter';
+import { LayoutGrid } from '../ports/react/knowledge/templates/LayoutGrid';
+import { LayoutStack } from '../ports/react/knowledge/templates/LayoutStack';
+import { LayoutSidebar } from '../ports/react/knowledge/templates/LayoutSidebar';
+import { HeaderLayout } from '../ports/react/knowledge/templates/HeaderLayout';
+import { TabsLayout } from '../ports/react/knowledge/templates/TabsLayout';
+import { StepperLayout } from '../ports/react/knowledge/templates/StepperLayout';
+import { Dashboard } from '../ports/react/knowledge/templates/Dashboard';
+import { Modal } from '../ports/react/knowledge/templates/Modal';
 
 type PropType = 'text' | 'number' | 'boolean' | 'select';
 
-interface PropMeta {
+export interface PropMeta {
   name: string;
   type: PropType;
   options?: string[];
   defaultValue?: any;
 }
 
-interface LivePreviewProps {
+export interface LivePreviewProps {
   componentName: string;
   initialProps: Record<string, any>;
   propMeta?: PropMeta[];
 }
+
+// Static registry — maps component name → component reference.
+// All imports are at the top of the file (Vite tree-shakes unused ones).
+const REGISTRY: Record<string, React.ComponentType<any>> = {
+  // Atoms
+  CitationRef, ConceptTerm, SeverityDot, ProvenanceMarker, TimestampAtom,
+  StatusPill, LicenseIcon, DOILink, HashDigest, PathBreadcrumb, ConfidenceBar,
+  LanguageTag, ReviewerChip, EvidenceStrength, ClaimMarker, RelationVerb,
+  // Composites
+  Button, Alert, EvidenceReceipt, CitationChain, ConceptCard, SynthesisSummary,
+  ADRCard, WorkflowState, HumanGate, QuoteCard, ProfileCard, PricingCard,
+  ProductCard, TestimonialCard, Card, SearchBar, DialogueTree, Pagination,
+  RunLog, Breadcrumb, Tabs, Stepper, LinkGroup, List, ListGrid, TaskHierarchy,
+  EmptyState, Toast, FormField, Select, Textarea, DeploymentStatus,
+  TaxonomyTree, OntologyRelation, GlossaryIndex, SourceChain, AuditTrail,
+  Progress, PolicyCardC, ProjectStatusC, StatCard, FeatureCard,
+  // Templates
+  HeroCentered, HeroSplit, SectionContent, SectionFeatures, SectionCTA,
+  SectionPricing, SectionTestimonials, PageHeader, PageFooter, LayoutGrid,
+  LayoutStack, LayoutSidebar, HeaderLayout, TabsLayout, StepperLayout,
+  Dashboard, Modal,
+};
 
 export function LivePreview({
   componentName,
@@ -31,6 +130,16 @@ export function LivePreview({
   propMeta = [],
 }: LivePreviewProps) {
   const [values, setValues] = React.useState<Record<string, any>>(initialProps);
+
+  const Component = REGISTRY[componentName];
+
+  if (!Component) {
+    return (
+      <div className="ec-live-preview__loading">
+        Component "{componentName}" not found in registry. Available: {Object.keys(REGISTRY).length} components.
+      </div>
+    );
+  }
 
   const updateValue = (name: string, value: any) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -41,8 +150,7 @@ export function LivePreview({
   // Build the code snippet
   const codeLines = Object.entries(values)
     .map(([k, v]) => {
-      const valStr =
-        typeof v === 'string' ? `"${v}"` : JSON.stringify(v);
+      const valStr = typeof v === 'string' ? `"${v}"` : JSON.stringify(v);
       return `  ${k}={${valStr}}`;
     })
     .join('\n');
@@ -103,7 +211,7 @@ export function LivePreview({
       </div>
       <div className="ec-live-preview__render">
         <div className="ec-live-preview__component">
-          <DynamicRenderer componentName={componentName} values={values} />
+          <Component {...values} />
         </div>
         <pre className="ec-live-preview__code">
           <code>{codeStr}</code>
@@ -111,68 +219,4 @@ export function LivePreview({
       </div>
     </div>
   );
-}
-
-/**
- * DynamicRenderer — loads and renders a component from the React ports
- */
-function DynamicRenderer({
-  componentName,
-  values,
-}: {
-  componentName: string;
-  values: Record<string, any>;
-}) {
-  const [Component, setComponent] = React.useState<React.ComponentType<any> | null>(null);
-
-  React.useEffect(() => {
-    let cancelled = false;
-    import(`../../ports/react/knowledge/${getLayerForComponent(componentName)}/${componentName}.tsx`)
-      .then((mod) => {
-        if (!cancelled) {
-          // The component is named export
-          setComponent(() => mod[componentName] || mod.default);
-        }
-      })
-      .catch((err) => {
-        console.error(`Failed to load ${componentName}:`, err);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [componentName]);
-
-  if (!Component) {
-    return (
-      <div className="ec-live-preview__loading">Loading {componentName}…</div>
-    );
-  }
-  return <Component {...values} />;
-}
-
-/**
- * Map component names to their layer directory
- */
-function getLayerForComponent(name: string): string {
-  const atoms = [
-    'CitationRef', 'ConceptTerm', 'SeverityDot', 'ProvenanceMarker', 'TimestampAtom',
-    'StatusPill', 'LicenseIcon', 'DOILink', 'HashDigest', 'PathBreadcrumb',
-    'ConfidenceBar', 'LanguageTag', 'ReviewerChip', 'EvidenceStrength', 'ClaimMarker',
-    'RelationVerb', 'Avatar', 'Badge', 'Button', 'Checkbox', 'Divider', 'Icon',
-    'Input', 'Label', 'Radio', 'Skeleton', 'Spinner', 'Tag', 'Tooltip'
-  ];
-  if (atoms.includes(name)) return 'atoms';
-
-  const composites = [
-    'CitationChain', 'ConceptCard', 'SynthesisSummary', 'ADRCard', 'WorkflowState',
-    'HumanGate', 'Alert', 'EvidenceReceipt', 'FeatureCard', 'QuoteCard', 'ProfileCard',
-    'PricingCard', 'ProductCard', 'TestimonialCard', 'Card', 'SearchBar', 'DialogueTree',
-    'Pagination', 'RunLog', 'Breadcrumb', 'Tabs', 'Stepper', 'LinkGroup', 'List',
-    'ListGrid', 'TaskHierarchy', 'EmptyState', 'Toast', 'FormField', 'Select', 'Textarea',
-    'DeploymentStatus', 'TaxonomyTree', 'OntologyRelation', 'GlossaryIndex',
-    'SourceChain', 'AuditTrail', 'Progress', 'PolicyCard', 'ProjectStatus', 'StatCard'
-  ];
-  if (composites.includes(name)) return 'composites';
-
-  return 'templates';
 }

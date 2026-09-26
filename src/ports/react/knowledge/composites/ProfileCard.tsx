@@ -4,7 +4,7 @@
  * Knowledge composite (k-composite): c-profile-card
  */
 import * as React from 'react';
-import Avatar from '../atoms/Avatar';
+import { Avatar } from '../atoms/Avatar';
 
 export interface ProfileCardProps {
   name: string;
