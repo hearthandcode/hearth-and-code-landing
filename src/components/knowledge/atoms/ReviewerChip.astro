@@ -36,7 +36,7 @@ const init = initials ?? name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('')
     font-size: 0.75rem;
   }
   .kc-reviewer-chip__avatar {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 1.5rem;
@@ -46,6 +46,7 @@ const init = initials ?? name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('')
     color: var(--color-surface-primary);
     font-weight: var(--font-weight-bold);
     font-size: 0.625rem;
+    line-height: 1;
     flex-shrink: 0;
   }
   .kc-reviewer-chip__body { display: flex; flex-direction: column; gap: 0.05em; }

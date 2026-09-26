@@ -166,7 +166,7 @@ const {
   .kc-human-gate__reviewer strong { color: var(--color-text-display); display: block; }
   .kc-human-gate__reviewer span { color: var(--color-text-secondary); display: block; font-size: 0.6875rem; }
   .kc-human-gate__avatar {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 1.75rem;
@@ -176,6 +176,9 @@ const {
     color: var(--color-surface-primary);
     font-weight: var(--font-weight-bold);
     font-size: 0.6875rem;
+    line-height: 1;
+    flex-shrink: 0;
+    align-self: center;
   }
   .kc-human-gate__sealed {
     font-family: var(--font-mono);
