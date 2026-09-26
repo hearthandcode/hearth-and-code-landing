@@ -81,6 +81,74 @@ import SectionPricing from '../../components/templates/SectionPricing.astro';
 import SectionTestimonials from '../../components/templates/SectionTestimonials.astro';
 import StepperLayout from '../../components/templates/StepperLayout.astro';
 import TabsLayout from '../../components/templates/TabsLayout.astro';
+// Knowledge Work Components
+// Atoms
+import CitationRef from '../../components/knowledge/atoms/CitationRef.astro';
+import ConceptTerm from '../../components/knowledge/atoms/ConceptTerm.astro';
+import SeverityDot from '../../components/knowledge/atoms/SeverityDot.astro';
+import ProvenanceMarker from '../../components/knowledge/atoms/ProvenanceMarker.astro';
+import TimestampAtom from '../../components/knowledge/atoms/TimestampAtom.astro';
+import StatusPill from '../../components/knowledge/atoms/StatusPill.astro';
+import LicenseIcon from '../../components/knowledge/atoms/LicenseIcon.astro';
+import DOILink from '../../components/knowledge/atoms/DOILink.astro';
+import HashDigest from '../../components/knowledge/atoms/HashDigest.astro';
+import PathBreadcrumb from '../../components/knowledge/atoms/PathBreadcrumb.astro';
+import ConfidenceBar from '../../components/knowledge/atoms/ConfidenceBar.astro';
+import LanguageTag from '../../components/knowledge/atoms/LanguageTag.astro';
+import ReviewerChip from '../../components/knowledge/atoms/ReviewerChip.astro';
+import EvidenceStrength from '../../components/knowledge/atoms/EvidenceStrength.astro';
+import ClaimMarker from '../../components/knowledge/atoms/ClaimMarker.astro';
+import RelationVerb from '../../components/knowledge/atoms/RelationVerb.astro';
+// Composites
+import CitationChain from '../../components/knowledge/composites/CitationChain.astro';
+import ConceptCard from '../../components/knowledge/composites/ConceptCard.astro';
+import SynthesisSummary from '../../components/knowledge/composites/SynthesisSummary.astro';
+import TaxonomyTree from '../../components/knowledge/composites/TaxonomyTree.astro';
+import OntologyRelation from '../../components/knowledge/composites/OntologyRelation.astro';
+import GlossaryIndex from '../../components/knowledge/composites/GlossaryIndex.astro';
+import WorkflowState from '../../components/knowledge/composites/WorkflowState.astro';
+import RunLog from '../../components/knowledge/composites/RunLog.astro';
+import DeploymentStatus from '../../components/knowledge/composites/DeploymentStatus.astro';
+import ADRCard from '../../components/knowledge/composites/ADRCard.astro';
+import ProjectStatus from '../../components/knowledge/composites/ProjectStatus.astro';
+import TaskHierarchy from '../../components/knowledge/composites/TaskHierarchy.astro';
+import PolicyCard from '../../components/knowledge/composites/PolicyCard.astro';
+import ComplianceStatus from '../../components/knowledge/composites/ComplianceStatus.astro';
+import HumanGate from '../../components/knowledge/composites/HumanGate.astro';
+import SourceChain from '../../components/knowledge/composites/SourceChain.astro';
+import EvidenceReceipt from '../../components/knowledge/composites/EvidenceReceipt.astro';
+import VersionDiff from '../../components/knowledge/composites/VersionDiff.astro';
+import AuditTrail from '../../components/knowledge/composites/AuditTrail.astro';
+import ArchitectureDiagram from '../../components/knowledge/composites/ArchitectureDiagram.astro';
+import StateMachine from '../../components/knowledge/composites/StateMachine.astro';
+import SequenceDiagram from '../../components/knowledge/composites/SequenceDiagram.astro';
+import CodeBlock from '../../components/knowledge/composites/CodeBlock.astro';
+import APIReference from '../../components/knowledge/composites/APIReference.astro';
+import SchemaViewer from '../../components/knowledge/composites/SchemaViewer.astro';
+import NarrativeArc from '../../components/knowledge/composites/NarrativeArc.astro';
+import DialogueTree from '../../components/knowledge/composites/DialogueTree.astro';
+import ExperimentCard from '../../components/knowledge/composites/ExperimentCard.astro';
+import PaperSummary from '../../components/knowledge/composites/PaperSummary.astro';
+import DatasetSpec from '../../components/knowledge/composites/DatasetSpec.astro';
+import ModelCard from '../../components/knowledge/composites/ModelCard.astro';
+import PromptPattern from '../../components/knowledge/composites/PromptPattern.astro';
+// Templates
+import KnowledgeBaseBrowser from '../../components/knowledge/templates/KnowledgeBaseBrowser.astro';
+import ADRIndex from '../../components/knowledge/templates/ADRIndex.astro';
+import EvidencePackage from '../../components/knowledge/templates/EvidencePackage.astro';
+import AuditReport from '../../components/knowledge/templates/AuditReport.astro';
+import PolicyDocument from '../../components/knowledge/templates/PolicyDocument.astro';
+import ComplianceDashboard from '../../components/knowledge/templates/ComplianceDashboard.astro';
+import ResearchBrief from '../../components/knowledge/templates/ResearchBrief.astro';
+import ExperimentNotebook from '../../components/knowledge/templates/ExperimentNotebook.astro';
+import DecisionWorkspace from '../../components/knowledge/templates/DecisionWorkspace.astro';
+import CodePlayground from '../../components/knowledge/templates/CodePlayground.astro';
+import APIDocumentationPage from '../../components/knowledge/templates/APIDocumentationPage.astro';
+import SystemArchitectureDoc from '../../components/knowledge/templates/SystemArchitectureDoc.astro';
+import KnowledgeGraphView from '../../components/knowledge/templates/KnowledgeGraphView.astro';
+import ReleaseNotes from '../../components/knowledge/templates/ReleaseNotes.astro';
+import CreativeProjectBrief from '../../components/knowledge/templates/CreativeProjectBrief.astro';
+import OperationsRunbook from '../../components/knowledge/templates/OperationsRunbook.astro';
 ---
 
 <Layout title="Design System · Ember Circuit" description="Storybook-style gallery of all 64 Hearth & Code components. Atoms, molecules, organisms — isolated, token-driven, accessible.">
@@ -95,7 +163,7 @@ import TabsLayout from '../../components/templates/TabsLayout.astro';
       <span class="ds-hero__code">Code</span>
     </h1>
     <p class="ds-hero__lede">
-      All 64 components, rendered in isolation. Three layers — primitives, composites,
+      All 128 components, rendered in isolation. Four layers — primitives, composites, templates, and knowledge work —
       and templates. Token-driven, accessible, production-ready.
     </p>
     <div class="ds-hero__counts">
@@ -111,8 +179,12 @@ import TabsLayout from '../../components/templates/TabsLayout.astro';
         <span class="ds-count__value">20</span>
         <span class="ds-count__label">Templates</span>
       </a>
-      <span class="ds-count ds-count--total">
+      <a href="#knowledge" class="ds-count ds-count--knowledge">
         <span class="ds-count__value">64</span>
+        <span class="ds-count__label">Knowledge</span>
+      </a>
+      <span class="ds-count ds-count--total">
+        <span class="ds-count__value">128</span>
         <span class="ds-count__label">Total</span>
       </span>
     </div>
@@ -125,6 +197,7 @@ import TabsLayout from '../../components/templates/TabsLayout.astro';
     <a href="#atoms" class="ds-nav__link">Atoms</a>
     <a href="#composites" class="ds-nav__link">Composites</a>
     <a href="#templates" class="ds-nav__link">Templates</a>
+    <a href="#knowledge" class="ds-nav__link">Knowledge</a>
   </div>
 </nav>
 
@@ -961,10 +1034,615 @@ import TabsLayout from '../../components/templates/TabsLayout.astro';
   </div>
 </section>
 
+
+<!-- KNOWLEDGE PRIMITIVES -->
+<section id="knowledge" class="ds-section">
+  <header class="ds-section__header">
+    <p class="ds-section__eyebrow">Layer 4 · Knowledge Work</p>
+    <h2 class="ds-section__title">Knowledge Primitives</h2>
+    <p class="ds-section__desc">64 components for synthesis, governance, provenance, software design, documentation, research, and creative work. Token-driven, interactive, production-ready.</p>
+  </header>
+
+  <h3 class="ds-subsection__title">Atoms <span class="ds-subsection__count">16</span></h3>
+  <div class="ds-tiles">
+<figure class="ds-tile" id="k-citation-ref">
+      <div class="ds-tile__preview">
+        <CitationRef author="Rallya" year={2026} locator="p.42" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-citation-ref</span>
+        <span class="ds-tile__name">Citation Ref</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-concept-term">
+      <div class="ds-tile__preview">
+        <ConceptTerm term="Provenance" type="noun" definition="The documented chain of evidence for a claim." />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-concept-term</span>
+        <span class="ds-tile__name">Concept Term</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-severity-dot">
+      <div class="ds-tile__preview">
+        <SeverityDot severity="critical" label="Critical" pulsing={true} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-severity-dot</span>
+        <span class="ds-tile__name">Severity Dot</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-provenance-marker">
+      <div class="ds-tile__preview">
+        <ProvenanceMarker kind="verified" source="Independent reviewer" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-provenance-marker</span>
+        <span class="ds-tile__name">Provenance Marker</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-timestamp">
+      <div class="ds-tile__preview">
+        <TimestampAtom iso="2026-09-26T10:30:00Z" relative="2 hours ago" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-timestamp</span>
+        <span class="ds-tile__name">Timestamp</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-status-pill">
+      <div class="ds-tile__preview">
+        <StatusPill status="sealed" label="Sealed" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-status-pill</span>
+        <span class="ds-tile__name">Status Pill</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-license">
+      <div class="ds-tile__preview">
+        <LicenseIcon license="CC-BY" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-license</span>
+        <span class="ds-tile__name">License Icon</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-doi-link">
+      <div class="ds-tile__preview">
+        <DOILink doi="10.1234/example.2026.001" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-doi-link</span>
+        <span class="ds-tile__name">DOI Link</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-hash-digest">
+      <div class="ds-tile__preview">
+        <HashDigest hash="7d4f8e2a1b9c5d6e3f8a2b1c9d4e5f8a2b1c9d4e5f8a2b1c9d4e5f8a2b1c9d4e" algorithm="sha256" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-hash-digest</span>
+        <span class="ds-tile__name">Hash Digest</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-path-segment">
+      <div class="ds-tile__preview">
+        <PathBreadcrumb segment="knowledge/atoms" icon="folder" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-path-segment</span>
+        <span class="ds-tile__name">Path Segment</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-confidence-bar">
+      <div class="ds-tile__preview">
+        <ConfidenceBar value={75} variant="high" showValue={true} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-confidence-bar</span>
+        <span class="ds-tile__name">Confidence Bar</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-language-tag">
+      <div class="ds-tile__preview">
+        <LanguageTag language="typescript" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-language-tag</span>
+        <span class="ds-tile__name">Language Tag</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-reviewer-chip">
+      <div class="ds-tile__preview">
+        <ReviewerChip name="Scott Rallya" role="Architect" decision="approved" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-reviewer-chip</span>
+        <span class="ds-tile__name">Reviewer Chip</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-evidence-strength">
+      <div class="ds-tile__preview">
+        <EvidenceStrength tier="conclusive" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-evidence-strength</span>
+        <span class="ds-tile__name">Evidence Strength</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-claim-marker">
+      <div class="ds-tile__preview">
+        <ClaimMarker index={1} confidence={92} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-claim-marker</span>
+        <span class="ds-tile__name">Claim Marker</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-relation-verb">
+      <div class="ds-tile__preview">
+        <RelationVerb verb="is-a" direction="forward" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-relation-verb</span>
+        <span class="ds-tile__name">Relation Verb</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <h3 class="ds-subsection__title">Composites <span class="ds-subsection__count">32</span></h3>
+  <div class="ds-tiles">
+<figure class="ds-tile" id="k-citation-chain">
+      <div class="ds-tile__preview">
+        <CitationChain citations={[{"author":"Rallya","year":2026,"locator":"p.42"},{"author":"Dennett","year":1991,"locator":"ch.3"},{"author":"Popper","year":1959,"locator":"ch.1"}]} label="Source chain" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-citation-chain</span>
+        <span class="ds-tile__name">Citation Chain</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-concept-card">
+      <div class="ds-tile__preview">
+        <ConceptCard term="Provenance" definition="The documented origin and chain of custody for a claim or artifact." type="Noun" relations={[{"verb":"is-a","target":"evidence"},{"verb":"part-of","target":"auditability"}]} source="Hearth & Code vocabulary" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-concept-card</span>
+        <span class="ds-tile__name">Concept Card</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-synthesis-summary">
+      <div class="ds-tile__preview">
+        <SynthesisSummary title="Cross-source synthesis" claims={[{"text":"Token-driven design systems reduce maintenance cost.","sources":[{"author":"Rallya","year":2026},{"author":"Frost","year":2016}],"confidence":88},{"text":"Component isolation enables independent reuse.","sources":[{"author":"Atomic Design","year":2016}],"confidence":75}]} consensus={82} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-synthesis-summary</span>
+        <span class="ds-tile__name">Synthesis Summary</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-taxonomy-tree">
+      <div class="ds-tile__preview">
+        <TaxonomyTree root={{"id":"r","label":"Knowledge","description":"Top-level domain","children":[{"id":"a","label":"Atoms","description":"Single-purpose primitives"},{"id":"b","label":"Composites","description":"Composed elements","children":[{"id":"b1","label":"Cards"},{"id":"b2","label":"Navigation"}]},{"id":"c","label":"Templates","description":"Page compositions"}]}} initiallyExpanded={1} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-taxonomy-tree</span>
+        <span class="ds-tile__name">Taxonomy Tree</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-ontology-relation">
+      <div class="ds-tile__preview">
+        <OntologyRelation subject="EvidenceReceipt" subjectType="Class" verb="part-of" object="AuditPackage" objectType="Aggregate" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-ontology-relation</span>
+        <span class="ds-tile__name">Ontology Relation</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-glossary-index">
+      <div class="ds-tile__preview">
+        <GlossaryIndex entries={[{"term":"Atom","definition":"A single-purpose primitive component."},{"term":"Composite","definition":"A component composed of atoms.","seeAlso":["Molecule"]},{"term":"Template","definition":"A page-level composition of components."}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-glossary-index</span>
+        <span class="ds-tile__name">Glossary Index</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-workflow-state">
+      <div class="ds-tile__preview">
+        <WorkflowState states={["Draft","Review","Approved","Sealed","Retired"]} current="Review" transitions={[{"to":"Draft","label":"Send back"},{"to":"Approved","label":"Approve"},{"to":"Sealed","label":"Seal","requires":"all-gates"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-workflow-state</span>
+        <span class="ds-tile__name">Workflow State</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-run-log">
+      <div class="ds-tile__preview">
+        <RunLog entries={[{"timestamp":"10:30:01","severity":"info","source":"system","message":"Service started"},{"timestamp":"10:30:05","severity":"success","source":"deploy","message":"Build complete"},{"timestamp":"10:31:22","severity":"caution","source":"db","message":"Connection pool at 80%"},{"timestamp":"10:35:00","severity":"error","source":"auth","message":"Token validation failed"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-run-log</span>
+        <span class="ds-tile__name">Run Log</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-deployment-status">
+      <div class="ds-tile__preview">
+        <DeploymentStatus environments={[{"name":"production","status":"live","version":"2026.09.26","lastDeploy":"2h ago","health":"healthy"},{"name":"staging","status":"live","version":"2026.09.26","lastDeploy":"3h ago","health":"healthy"},{"name":"dev","status":"building","version":"2026.09.26","lastDeploy":"building","health":"healthy"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-deployment-status</span>
+        <span class="ds-tile__name">Deployment Status</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-adr-card">
+      <div class="ds-tile__preview">
+        <ADRCard number="0042" title="Adopt token-driven design system" status="accepted" date="2026-09-15" context="We need a consistent visual language across all surfaces." decision="Build a token-driven system with 64 components in 4 layers." consequences={["Higher upfront cost","Faster iteration later","Easier brand evolution"]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-adr-card</span>
+        <span class="ds-tile__name">ADR Card</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-project-status">
+      <div class="ds-tile__preview">
+        <ProjectStatus name="Ember Circuit" owner="SR" status="on-track" progress={84} lastActivity="1h ago" nextMilestone="v1.0 launch · Oct 15" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-project-status</span>
+        <span class="ds-tile__name">Project Status</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-task-hierarchy">
+      <div class="ds-tile__preview">
+        <TaskHierarchy tasks={[{"id":"t1","title":"Wave 3: Templates","owner":"SR","status":"in-progress","children":[{"id":"t1a","title":"Hero variants","status":"done"},{"id":"t1b","title":"Section variants","status":"in-progress"},{"id":"t1c","title":"Layout variants","status":"todo"}]},{"id":"t2","title":"Gallery page","status":"review"}]} initiallyExpanded={true} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-task-hierarchy</span>
+        <span class="ds-tile__name">Task Hierarchy</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-policy-card">
+      <div class="ds-tile__preview">
+        <PolicyCard id="POL-003" title="Provenance Required" statement="Every consequential claim must cite its source." effectiveDate="2026-01-01" scope="All published material" owner="Studio" status="active" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-policy-card</span>
+        <span class="ds-tile__name">Policy Card</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-compliance-status">
+      <div class="ds-tile__preview">
+        <ComplianceStatus framework="Hearth-Code Charter" controls={[{"id":"C-01","name":"Source citation","status":"pass","evidence":"auto-check","lastChecked":"today"},{"id":"C-02","name":"Token-driven styles","status":"pass","evidence":"auto-check","lastChecked":"today"},{"id":"C-03","name":"WCAG AA contrast","status":"pending","evidence":"manual","lastChecked":"2d ago"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-compliance-status</span>
+        <span class="ds-tile__name">Compliance Status</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-human-gate">
+      <div class="ds-tile__preview">
+        <HumanGate id="G-0042" name="Production deploy approval" description="Reviewer approves production deployment." reviewer="Scott Rallya" reviewerRole="Architect" decision="approved" sealedAt="2026-09-26" criteria={["All tests pass","Tokens validated","Documentation complete"]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-human-gate</span>
+        <span class="ds-tile__name">Human Gate</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-source-chain">
+      <div class="ds-tile__preview">
+        <SourceChain root={{"id":"root","label":"Primary source","author":"Original","year":1991,"provenance":"primary","children":[{"id":"cited1","label":"Cited in review","author":"Reviewer A","year":2020,"provenance":"cited"},{"id":"derived","label":"Derived finding","author":"Rallya","year":2026,"provenance":"derived"}]}} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-source-chain</span>
+        <span class="ds-tile__name">Source Chain</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-evidence-receipt">
+      <div class="ds-tile__preview">
+        <EvidenceReceipt id="EV-001" type="document" description="Original signed charter establishing the studio." hash="7d4f8e2a1b9c5d6e3f8a2b1c9d4e5f8a2b1c9d4e5f8a2b1c9d4e5f8a2b1c9d4e" timestamp="2026-01-15T12:00:00Z" witness="SR" locator="vault://charter.pdf" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-evidence-receipt</span>
+        <span class="ds-tile__name">Evidence Receipt</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-version-diff">
+      <div class="ds-tile__preview">
+        <VersionDiff before={{"version":"2026.09.20","lines":[{"kind":"context","text":"function validate() {"},{"kind":"removed","text":"  return false;"},{"kind":"context","text":"}"}]}} after={{"version":"2026.09.26","lines":[{"kind":"context","text":"function validate() {"},{"kind":"added","text":"  return check() && audit();"},{"kind":"context","text":"}"}]}} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-version-diff</span>
+        <span class="ds-tile__name">Version Diff</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-audit-trail">
+      <div class="ds-tile__preview">
+        <AuditTrail events={[{"id":"e1","timestamp":"10:00","actor":"SR","action":"created","target":"ADR-0042","outcome":"success"},{"id":"e2","timestamp":"10:15","actor":"SR","action":"submitted","target":"ADR-0042","outcome":"success"},{"id":"e3","timestamp":"11:30","actor":"reviewer","action":"approved","target":"ADR-0042","outcome":"success"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-audit-trail</span>
+        <span class="ds-tile__name">Audit Trail</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-architecture-diagram">
+      <div class="ds-tile__preview">
+        <ArchitectureDiagram nodes={[{"id":"web","label":"Web client","type":"user"},{"id":"api","label":"API gateway","type":"service"},{"id":"auth","label":"Auth service","type":"service"},{"id":"db","label":"Primary DB","type":"data"}]} edges={[{"from":"web","to":"api","label":"HTTPS"},{"from":"api","to":"auth","label":"verify"},{"from":"api","to":"db","label":"query"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-architecture-diagram</span>
+        <span class="ds-tile__name">Architecture Diagram</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-state-machine">
+      <div class="ds-tile__preview">
+        <StateMachine states={[{"id":"idle","label":"Idle","type":"initial"},{"id":"loading","label":"Loading"},{"id":"ready","label":"Ready"},{"id":"error","label":"Error"},{"id":"done","label":"Done","type":"final"}]} transitions={[{"from":"idle","to":"loading","event":"fetch"},{"from":"loading","to":"ready","event":"success"},{"from":"loading","to":"error","event":"failure"},{"from":"ready","to":"done","event":"complete"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-state-machine</span>
+        <span class="ds-tile__name">State Machine</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-sequence-diagram">
+      <div class="ds-tile__preview">
+        <SequenceDiagram actors={["Client","API","DB"]} messages={[{"from":"Client","to":"API","label":"GET /data"},{"from":"API","to":"DB","label":"SELECT","kind":"async"},{"from":"DB","to":"API","label":"rows","kind":"return"},{"from":"API","to":"Client","label":"200 OK","kind":"return"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-sequence-diagram</span>
+        <span class="ds-tile__name">Sequence Diagram</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-code-block">
+      <div class="ds-tile__preview">
+        <CodeBlock code="function validate(claim) {\n  return claim.source !== null\n    && claim.evidence.length > 0\n}" language="typescript" filename="validate.ts" highlightLines={[2]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-code-block</span>
+        <span class="ds-tile__name">Code Block</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-api-reference">
+      <div class="ds-tile__preview">
+        <APIReference endpoint={{"method":"POST","path":"/v1/claims","description":"Create a new claim with attached evidence.","params":[{"name":"claim","in":"body","type":"Claim","required":true,"description":"The claim to create"},{"name":"evidence","in":"body","type":"Evidence[]","required":true,"description":"Array of evidence references"}],"response":{"status":201,"description":"Claim created with assigned ID"}}} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-api-reference</span>
+        <span class="ds-tile__name">API Reference</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-schema-viewer">
+      <div class="ds-tile__preview">
+        <SchemaViewer name="Claim" description="A claim with attached evidence and provenance." fields={[{"name":"id","type":"UUID","required":true},{"name":"text","type":"string","required":true,"description":"The claim statement"},{"name":"provenance","type":"Provenance","required":true,"description":"Source chain reference","children":[{"name":"kind","type":"enum","required":true},{"name":"witness","type":"string","required":false}]},{"name":"evidence","type":"Evidence[]","required":true},{"name":"confidence","type":"number","required":false,"description":"0-100 confidence score"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-schema-viewer</span>
+        <span class="ds-tile__name">Schema Viewer</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-narrative-arc">
+      <div class="ds-tile__preview">
+        <NarrativeArc beats={[{"label":"Setup","description":"Establish the world","intensity":30},{"label":"Inciting","description":"Disruption arrives","intensity":50},{"label":"Rising","description":"Stakes escalate","intensity":70},{"label":"Crisis","description":"Worst point","intensity":95},{"label":"Resolution","description":"New equilibrium","intensity":60}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-narrative-arc</span>
+        <span class="ds-tile__name">Narrative Arc</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-dialogue-tree">
+      <div class="ds-tile__preview">
+        <DialogueTree rootId="n1" nodes={[{"id":"n1","speaker":"A:","text":"Should we adopt this approach?","choices":[{"id":"c1","text":"Yes — ship it","next":"n2"},{"id":"c2","text":"No — too risky","next":"n3"}]},{"id":"n2","speaker":"A:","text":"Great, deploying tomorrow.","choices":[{"id":"c3","text":"Confirm","next":null}]},{"id":"n3","speaker":"A:","text":"What concerns you most?","choices":[{"id":"c4","text":"Risk","next":"n4"},{"id":"c5","text":"Cost","next":"n5"}]},{"id":"n4","speaker":"A:","text":"Let me address the risk...","choices":[{"id":"c6","text":"Got it","next":null}]},{"id":"n5","speaker":"A:","text":"Let me show the cost analysis...","choices":[{"id":"c7","text":"Got it","next":null}]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-dialogue-tree</span>
+        <span class="ds-tile__name">Dialogue Tree</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-experiment-card">
+      <div class="ds-tile__preview">
+        <ExperimentCard id="EXP-001" title="Token-driven vs hardcoded CSS" hypothesis="Token systems reduce bugs faster than hardcoded values." method="Split test, n=24 components, 6 months." results="Token group had 73% fewer style regressions." conclusion="Hypothesis confirmed with high confidence." outcome="confirmed" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-experiment-card</span>
+        <span class="ds-tile__name">Experiment Card</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-paper-summary">
+      <div class="ds-tile__preview">
+        <PaperSummary title="Atomic Design as a Methodology" authors={["Brad Frost"]} year={2016} venue="A List Apart" abstract="We introduce atomic design as a methodology for creating design systems." claims={["Atoms compose into molecules","Molecules compose into organisms","Templates provide context","Pages are specific instances"]} limitations={["Limited empirical study","Original web-only context"]} citationCount={2847} doi="10.1234/alistapart.2016.001" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-paper-summary</span>
+        <span class="ds-tile__name">Paper Summary</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-dataset-spec">
+      <div class="ds-tile__preview">
+        <DatasetSpec name="Hearth-Code Components" version="2026.09.26" size="64 components" format="Astro" license="MIT" schema={[{"name":"id","type":"string","description":"Unique component ID"},{"name":"layer","type":"enum","description":"atom | composite | template | knowledge"},{"name":"props","type":"Props","description":"Component props schema"}]} ethicalNotes={["No PII included","Synthetic data only","MIT license"]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-dataset-spec</span>
+        <span class="ds-tile__name">Dataset Spec</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-model-card">
+      <div class="ds-tile__preview">
+        <ModelCard name="Ember-Circuit-Doc" version="2026.09.26" purpose="Documentation generation for the Ember Circuit design system." trainingData="Curated corpus of design system docs and patterns." evalResults={[{"benchmark":"Token accuracy","score":"94%"},{"benchmark":"Style consistency","score":"88%"}]} knownLimits={["Limited to English","Best with short prompts"]} intendedUse="Internal documentation generation." outOfScope={["Production code generation","User-facing content"]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-model-card</span>
+        <span class="ds-tile__name">Model Card</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile" id="k-prompt-pattern">
+      <div class="ds-tile__preview">
+        <PromptPattern name="Evidence-Weighted Summary" category="synthesis" template="Summarize the following sources. For each claim, list the source and confidence.\n\n{{sources}}" variables={[{"name":"sources","description":"Source documents to summarize"}]} example={{"input":"[Source A]: ... [Source B]: ...","output":"• Claim X [A: 0.85, B: 0.72]\n• Claim Y [A: 0.65]"}} author="Rallya" />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-prompt-pattern</span>
+        <span class="ds-tile__name">Prompt Pattern</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <h3 class="ds-subsection__title">Templates <span class="ds-subsection__count">16</span></h3>
+  <div class="ds-tiles ds-tiles--wide">
+<figure class="ds-tile ds-tile--wide" id="k-knowledge-base-browser">
+      <div class="ds-tile__preview">
+        <KnowledgeBaseBrowser taxonomy={[{"label":"atoms","active":true},{"label":"composites"},{"label":"templates"}]} sections={[{"id":"atoms","title":"Atoms","body":"Single-purpose elements. Buttons, inputs, icons, badges.","tags":["foundation"]},{"id":"composites","title":"Composites","body":"Composed elements combining atoms into functional units.","tags":["composed"]},{"id":"templates","title":"Templates","body":"Page-level compositions using atoms, composites, and sections.","tags":["page"]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-knowledge-base-browser</span>
+        <span class="ds-tile__name">Knowledge Base Browser</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-adr-index">
+      <div class="ds-tile__preview">
+        <ADRIndex adrs={[{"number":"0042","title":"Adopt token-driven design system","status":"accepted","date":"2026-09-15","context":"Consistent visual language needed.","decision":"Token system with 64 components.","consequences":["Higher upfront cost"]},{"number":"0043","title":"Use Astro for landing page","status":"proposed","date":"2026-09-25","context":"Need a static-first framework.","decision":"Astro.","consequences":["No SPA features"]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-adr-index</span>
+        <span class="ds-tile__name">ADR Index</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-evidence-package">
+      <div class="ds-tile__preview">
+        <EvidencePackage title="Source provenance for charter claim" claim="The studio has been operating since 2026." sealedBy="SR" sealedAt="2026-09-26" receipts={[{"id":"EV-001","type":"document","description":"Original signed charter","hash":"7d4f8e2a1b9c5d6e3f8a2b1c9d4e5f8a2b1c9d4e5f8a2b1c9d4e5f8a2b1c9d4e","timestamp":"2026-01-15T12:00:00Z","witness":"SR","locator":"vault://charter.pdf"},{"id":"EV-002","type":"observation","description":"Witness signed the charter at founding event","hash":"8e5a9f3b2c0d7e4a9b3c2d0e5f9a3b2c0d4e5f8a2b1c9d4e5f8a2b1c9d4e5f8a","timestamp":"2026-01-15T11:30:00Z","witness":"witness-001"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-evidence-package</span>
+        <span class="ds-tile__name">Evidence Package</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-audit-report">
+      <div class="ds-tile__preview">
+        <AuditReport title="Q3 2026 Studio Audit" scope="All published content" auditor="SR" auditedEntity="Hearth & Code Studio" period="2026-07-01 to 2026-09-30" status="conditional" findings={[{"id":"F-01","severity":"success","title":"All citations present","description":"100% of claims have sources."},{"id":"F-02","severity":"caution","title":"Some tokens missing","description":"3 components lack semantic tokens."}]} auditTrail={[{"id":"e1","timestamp":"2026-09-26 10:00","actor":"SR","action":"started audit","target":"studio","outcome":"success"},{"id":"e2","timestamp":"2026-09-26 11:30","actor":"SR","action":"reviewed citations","target":"32 claims","outcome":"success"}]} compliance={[{"id":"C-01","name":"Source citation","status":"pass","evidence":"auto-check"},{"id":"C-02","name":"Token usage","status":"pending","evidence":"manual"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-audit-report</span>
+        <span class="ds-tile__name">Audit Report</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-policy-document">
+      <div class="ds-tile__preview">
+        <PolicyDocument id="POL-001" title="Studio Charter" effectiveDate="2026-01-01" reviewDate="2027-01-01" owner="Studio" sections={[{"id":"purpose","title":"Purpose","body":"Establish the principles, governance, and operating norms of the studio."},{"id":"principles","title":"Principles","body":"Every claim has a source. Every artifact has provenance. Every action has a gate."}]} gates={[{"id":"G-001","name":"Charter approval","description":"Initial approval of charter.","reviewer":"SR","decision":"approved","sealedAt":"2026-01-01"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-policy-document</span>
+        <span class="ds-tile__name">Policy Document</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-compliance-dashboard">
+      <div class="ds-tile__preview">
+        <ComplianceDashboard frameworks={[{"name":"Studio Charter","controls":[{"id":"C-01","name":"Source citation","status":"pass"},{"id":"C-02","name":"Token usage","status":"pending"}]},{"name":"WCAG 2.1 AA","controls":[{"id":"A-01","name":"Color contrast","status":"pass"},{"id":"A-02","name":"Keyboard nav","status":"pass"}]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-compliance-dashboard</span>
+        <span class="ds-tile__name">Compliance Dashboard</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-research-brief">
+      <div class="ds-tile__preview">
+        <ResearchBrief paper={{"title":"Design Systems as Knowledge Infrastructure","authors":["Rallya, S."],"year":2026,"venue":"Studio Working Papers","abstract":"We argue that design systems function as a form of knowledge infrastructure that encodes conventions, decisions, and rationales.","claims":["Design systems are knowledge bases","Token names are a vocabulary"],"limitations":["Limited to web contexts","No empirical study"],"citationCount":4,"doi":"10.1234/working.2026.001"}} related={[{"title":"Atomic Design as Methodology","authors":["Frost, B."],"year":2016}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-research-brief</span>
+        <span class="ds-tile__name">Research Brief</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-experiment-notebook">
+      <div class="ds-tile__preview">
+        <ExperimentNotebook title="Design System Wave Studies" experiments={[{"id":"EXP-01","title":"Token reduction","hypothesis":"Tokens reduce LOC","method":"Compare token vs hardcoded","results":"38% reduction","conclusion":"Confirmed","outcome":"confirmed"},{"id":"EXP-02","title":"Component reuse","hypothesis":"Reuse increases over time","method":"Track usage","results":"12% reuse","conclusion":"Below target","outcome":"refuted"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-experiment-notebook</span>
+        <span class="ds-tile__name">Experiment Notebook</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-decision-workspace">
+      <div class="ds-tile__preview">
+        <DecisionWorkspace initialADR={{"number":"0042","title":"Adopt token-driven design system","status":"proposed","date":"2026-09-26","context":"We need consistent visual language across surfaces.","decision":"Build a token-driven system with 64 components.","consequences":["Higher upfront cost","Faster iteration"]}} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-decision-workspace</span>
+        <span class="ds-tile__name">Decision Workspace</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-code-playground">
+      <div class="ds-tile__preview">
+        <CodePlayground
+          title="Token-driven component example"
+          code={"const Button = ({ variant = 'primary', children }) =>\n  <button class={`btn btn--${variant}`}>{children}</button>"}
+          language="typescript"
+          output="✓ Compiled · 142 bytes"
+          explanation="A simple token-driven button. The variant prop maps to a class name that pulls styles from CSS custom properties."
+        />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-code-playground</span>
+        <span class="ds-tile__name">Code Playground</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-api-documentation-page">
+      <div class="ds-tile__preview">
+        <APIDocumentationPage apiName="Hearth & Code API" version="2026.09.26" baseUrl="https://api.hearthandcode.dev" sections={[{"id":"claims","title":"Claims","description":"Manage claims and their evidence.","endpoints":[{"method":"GET","path":"/v1/claims","description":"List claims","response":{"status":200,"description":"Array of claims"}},{"method":"POST","path":"/v1/claims","description":"Create a claim","params":[{"name":"text","in":"body","type":"string","required":true,"description":"Claim text"}],"response":{"status":201,"description":"Created claim"}}]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-api-documentation-page</span>
+        <span class="ds-tile__name">API Documentation Page</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-system-architecture-doc">
+      <div class="ds-tile__preview">
+        <SystemArchitectureDoc title="Ember Circuit System Architecture" version="2026.09.26" sections={[{"id":"web","title":"Web layer","description":"Browser-based rendering of components.","diagram":{"nodes":[{"id":"web","label":"Web client","type":"user"},{"id":"astro","label":"Astro build","type":"service"},{"id":"tokens","label":"Tokens CSS","type":"data"}],"edges":[{"from":"web","to":"astro","label":"request"},{"from":"astro","to":"tokens","label":"inject"}]}}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-system-architecture-doc</span>
+        <span class="ds-tile__name">System Architecture Doc</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-knowledge-graph-view">
+      <div class="ds-tile__preview">
+        <KnowledgeGraphView nodes={[{"id":"a","label":"Tokens","type":"concept","x":100,"y":100},{"id":"b","label":"Claim","type":"claim","x":300,"y":100},{"id":"c","label":"Source","type":"source","x":500,"y":100},{"id":"d","label":"Audit","type":"task","x":300,"y":250}]} edges={[{"from":"a","to":"b","label":"enables"},{"from":"b","to":"c","label":"cites"},{"from":"d","to":"b","label":"verifies"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-knowledge-graph-view</span>
+        <span class="ds-tile__name">Knowledge Graph View</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-release-notes">
+      <div class="ds-tile__preview">
+        <ReleaseNotes product="Ember Circuit Design System" releases={[{"version":"2026.09.26","date":"2026-09-26","type":"major","changes":[{"kind":"added","text":"64 new knowledge-work components"},{"kind":"added","text":"New /design-system showcase page"},{"kind":"fixed","text":"UTF-8 encoding in gallery"}]},{"version":"2026.09.20","date":"2026-09-20","type":"minor","changes":[{"kind":"added","text":"32 composite components"}]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-release-notes</span>
+        <span class="ds-tile__name">Release Notes</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-creative-project-brief">
+      <div class="ds-tile__preview">
+        <CreativeProjectBrief title="The Studio Story" premise="A small studio building design systems for knowledge work." characters={[{"name":"Architect","role":"Protagonist","description":"Builds the system."},{"name":"Reviewer","role":"Gatekeeper","description":"Seals decisions."}]} arc={[{"label":"Setup","description":"A studio forms","intensity":30},{"label":"Build","description":"Tokens and components","intensity":70},{"label":"Seal","description":"First system ships","intensity":95},{"label":"After","description":"What next?","intensity":50}]} sampleDialogue={[{"id":"n1","speaker":"Architect:","text":"Should we ship v1 today?","choices":[{"id":"c1","text":"Yes","next":"n2"},{"id":"c2","text":"Wait","next":null}]},{"id":"n2","speaker":"Reviewer:","text":"All gates sealed. Ship it.","choices":[{"id":"c3","text":"Done","next":null}]}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-creative-project-brief</span>
+        <span class="ds-tile__name">Creative Project Brief</span>
+      </figcaption>
+    </figure>
+    <figure class="ds-tile ds-tile--wide" id="k-operations-runbook">
+      <div class="ds-tile__preview">
+        <OperationsRunbook title="Deploy to Production" oncall="SR" procedure={[{"order":1,"action":"Verify all tests pass","expected":"exit 0"},{"order":2,"action":"Run token validation","expected":"no errors"},{"order":3,"action":"Deploy to staging","expected":"2 min"},{"order":4,"action":"Approve production gate","expected":"human approval"},{"order":5,"action":"Deploy to production","expected":"5 min"}]} recentLogs={[{"timestamp":"10:30:01","severity":"success","source":"deploy","message":"Staging deploy complete"},{"timestamp":"10:32:15","severity":"info","source":"monitor","message":"Health checks passing"},{"timestamp":"10:45:00","severity":"success","source":"gate","message":"Production gate approved by SR"}]} />
+      </div>
+      <figcaption class="ds-tile__meta">
+        <span class="ds-tile__id">k-operations-runbook</span>
+        <span class="ds-tile__name">Operations Runbook</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+
 <!-- FOOTER -->
 <footer class="ds-footer">
   <p class="ds-footer__text">
-    Ember Circuit Design System · 64 components · Token-driven · <a href="/gallery">View Gallery →</a>
+    Ember Circuit Design System · 128 components · Token-driven · <a href="/gallery">View Gallery →</a>
   </p>
 </footer>
 
@@ -1198,6 +1876,28 @@ import TabsLayout from '../../components/templates/TabsLayout.astro';
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-display);
+  }
+
+  /* === SUBSECTION === */
+  .ds-subsection__title {
+    margin: var(--space-7) 0 var(--space-3) 0;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--color-surface-rule);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-signal);
+    font-weight: var(--font-weight-bold);
+  }
+  .ds-subsection__count {
+    margin-left: 0.5em;
+    font-size: 0.625rem;
+    background: rgba(31, 182, 168, 0.15);
+    color: var(--color-accent-signal);
+    padding: 0.1em 0.5em;
+    border-radius: 999px;
+    font-weight: var(--font-weight-medium);
   }
 
   /* === FOOTER === */
