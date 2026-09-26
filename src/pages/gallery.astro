@@ -5,6 +5,7 @@
  */
 
 import HearthCodeToggle from '../components/HearthCodeToggle.astro';
+import Layout from '../layouts/Layout.astro';
 import HeroCentered from '../components/templates/HeroCentered.astro';
 import SectionContent from '../components/templates/SectionContent.astro';
 import SectionFeatures from '../components/templates/SectionFeatures.astro';
@@ -69,7 +70,7 @@ import Timeline from '../components/composites/Timeline.astro';
 import Toc from '../components/composites/Toc.astro';
 ---
 
-<title>Component Gallery · Hearth & Code</title>
+<Layout title="Component Gallery · Hearth & Code" description="A showcase of every component in the Hearth and Code design system. Primitives, composites, and templates — all token-driven, all accessible, all composition-ready.">
 
 <NavHeader
   logo="Hearth & Code"
@@ -453,3 +454,5 @@ import Toc from '../components/composites/Toc.astro';
     background: var(--color-surface-primary);
   }
 </style>
+
+</Layout>
