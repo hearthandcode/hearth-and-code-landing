@@ -1,0 +1,180 @@
+---
+/**
+ * Button primitive
+ * id: p-button
+ *
+ * Standard clickable button with variants and sizes.
+ * Token-driven styling via existing Hearth & Code design system.
+ */
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  loading?: boolean;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  loading = false,
+  href,
+  type = 'button',
+  ariaLabel,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+const buttonClass = [
+  'ec-button',
+  `ec-button--${variant}`,
+  `ec-button--${size}`,
+  loading && 'is-loading',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class={buttonClass}
+  disabled={!href ? (disabled || loading) : undefined}
+  aria-label={ariaLabel}
+  aria-busy={loading ? 'true' : undefined}
+  {...rest}
+>
+  {loading && <span class="ec-button__spinner" aria-hidden="true"></span>}
+  <span class="ec-button__content"><slot /></span>
+</Tag>
+
+<style>
+  .ec-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-5);
+    height: var(--size-control-md);
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-body);
+    line-height: 1;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--motion-duration-fast) var(--motion-easing-default);
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* Sizes */
+  .ec-button--sm {
+    height: var(--size-control-sm);
+    padding: 0 var(--space-3);
+    font-size: var(--font-size-small);
+  }
+
+  .ec-button--lg {
+    height: var(--size-control-lg);
+    padding: 0 var(--space-6);
+    font-size: 1.125rem;
+  }
+
+  /* Variants */
+  .ec-button--primary {
+    background: var(--color-accent-ember);
+    color: var(--color-text-display);
+  }
+
+  .ec-button--primary:hover:not(:disabled):not(.is-loading) {
+    background: var(--color-accent-forge);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-glow-ember);
+  }
+
+  .ec-button--secondary {
+    background: transparent;
+    color: var(--color-text-primary);
+    border-color: var(--color-surface-rule-strong);
+  }
+
+  .ec-button--secondary:hover:not(:disabled):not(.is-loading) {
+    background: var(--color-surface-raised);
+    border-color: var(--color-accent-ember);
+  }
+
+  .ec-button--ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+  }
+
+  .ec-button--ghost:hover:not(:disabled):not(.is-loading) {
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
+  }
+
+  .ec-button--danger {
+    background: var(--color-state-error);
+    color: var(--color-text-display);
+  }
+
+  .ec-button--danger:hover:not(:disabled):not(.is-loading) {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  /* States */
+  .ec-button:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  .ec-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Loading state */
+  .ec-button.is-loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .ec-button.is-loading .ec-button__content {
+    visibility: hidden;
+  }
+
+  .ec-button__spinner {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: ec-button-spin 0.6s linear infinite;
+  }
+
+  @keyframes ec-button-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .ec-button {
+      transition: none;
+    }
+    .ec-button:hover:not(:disabled):not(.is-loading) {
+      transform: none;
+    }
+    .ec-button__spinner {
+      animation: none;
+    }
+  }
+</style>

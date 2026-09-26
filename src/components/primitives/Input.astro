@@ -1,0 +1,126 @@
+---
+/**
+ * Input primitive
+ * id: p-input
+ *
+ * Single-line text input with validation states.
+ */
+
+interface Props {
+  type?: 'text' | 'email' | 'password' | 'number' | 'url' | 'search' | 'tel';
+  value?: string;
+  placeholder?: string;
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  error?: boolean;
+  success?: boolean;
+  required?: boolean;
+  ariaLabel?: string;
+  id?: string;
+  name?: string;
+  class?: string;
+}
+
+const {
+  type = 'text',
+  value,
+  placeholder,
+  size = 'md',
+  disabled = false,
+  error = false,
+  success = false,
+  required = false,
+  ariaLabel,
+  id,
+  name,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const inputClass = [
+  'ec-input',
+  `ec-input--${size}`,
+  error && 'is-error',
+  success && 'is-success',
+  disabled && 'is-disabled',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<input
+  type={type}
+  id={id}
+  name={name}
+  value={value}
+  placeholder={placeholder}
+  disabled={disabled}
+  required={required}
+  aria-label={ariaLabel}
+  aria-invalid={error ? 'true' : undefined}
+  aria-describedby={ariaLabel ? `${id}-help` : undefined}
+  class={inputClass}
+  {...rest}
+/>
+
+<style>
+  .ec-input {
+    width: 100%;
+    padding: 0 var(--space-4);
+    height: var(--size-control-md);
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    color: var(--color-text-primary);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    transition: border-color var(--motion-duration-fast) var(--motion-easing-default),
+                box-shadow var(--motion-duration-fast) var(--motion-easing-default);
+  }
+
+  .ec-input::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.6;
+  }
+
+  .ec-input--sm {
+    height: var(--size-control-sm);
+    padding: 0 var(--space-3);
+    font-size: var(--font-size-small);
+  }
+
+  .ec-input--lg {
+    height: var(--size-control-lg);
+    padding: 0 var(--space-5);
+    font-size: 1.125rem;
+  }
+
+  .ec-input:focus {
+    outline: none;
+    border-color: var(--color-accent-signal);
+    box-shadow: 0 0 0 3px rgba(31, 182, 168, 0.15);
+  }
+
+  .ec-input.is-error {
+    border-color: var(--color-state-error);
+  }
+
+  .ec-input.is-error:focus {
+    border-color: var(--color-state-error);
+    box-shadow: 0 0 0 3px rgba(194, 90, 42, 0.15);
+  }
+
+  .ec-input.is-success {
+    border-color: var(--color-state-success);
+  }
+
+  .ec-input.is-success:focus {
+    border-color: var(--color-state-success);
+    box-shadow: 0 0 0 3px rgba(143, 163, 149, 0.15);
+  }
+
+  .ec-input.is-disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    background: var(--color-surface-recessed);
+  }
+</style>
