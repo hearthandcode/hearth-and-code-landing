@@ -1,0 +1,138 @@
+---
+/**
+ * Chart Bar composite
+ * id: c-chart-bar
+ *
+ * Vertical or horizontal bar chart.
+ */
+
+interface BarItem {
+  label: string;
+  value: number;
+  color?: string;
+}
+
+interface Props {
+  data: BarItem[];
+  orientation?: 'vertical' | 'horizontal';
+  max?: number;
+  showValues?: boolean;
+  height?: string;
+  class?: string;
+}
+
+const {
+  data,
+  orientation = 'vertical',
+  max,
+  showValues = true,
+  height = '16rem',
+  class: className = '',
+} = Astro.props;
+
+const maxValue = max ?? Math.max(...data.map((d) => d.value), 1);
+const defaultColors = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-plasma)', 'var(--color-accent-violet)', 'var(--color-accent-gold)'];
+---
+
+<div
+  class={`ec-chart ec-chart-bar ec-chart-bar--${orientation} ${className}`}
+  style={`height: ${height}`}
+  role="img"
+  aria-label="Bar chart"
+>
+  <div class="ec-chart-bar__track">
+    {data.map((item, idx) => {
+      const pct = Math.max(2, (item.value / maxValue) * 100);
+      const color = item.color || defaultColors[idx % defaultColors.length];
+      return (
+        <div class="ec-chart-bar__row" data-label={item.label}>
+          <div class="ec-chart-bar__label">{item.label}</div>
+          <div class="ec-chart-bar__bar-wrap">
+            <div
+              class="ec-chart-bar__bar"
+              style={`width: ${pct}%; background: ${color};`}
+            ></div>
+            {showValues && (
+              <span class="ec-chart-bar__value">{item.value}</span>
+            )}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .ec-chart-bar {
+    width: 100%;
+  }
+  .ec-chart-bar__track {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+  }
+  .ec-chart-bar--horizontal .ec-chart-bar__track {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+  }
+  .ec-chart-bar__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-small);
+    color: var(--color-text-primary);
+  }
+  .ec-chart-bar--horizontal .ec-chart-bar__row {
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+    flex: 1;
+    text-align: center;
+  }
+  .ec-chart-bar__label {
+    width: 8rem;
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+  }
+  .ec-chart-bar--horizontal .ec-chart-bar__label {
+    width: auto;
+  }
+  .ec-chart-bar__bar-wrap {
+    flex: 1;
+    height: 1.25rem;
+    background: var(--color-surface-recessed);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .ec-chart-bar--horizontal .ec-chart-bar__bar-wrap {
+    width: 100%;
+    height: 100%;
+  }
+  .ec-chart-bar__bar {
+    height: 100%;
+    border-radius: var(--radius-sm);
+    transition: width var(--motion-duration-normal) var(--motion-easing-default);
+  }
+  .ec-chart-bar--horizontal .ec-chart-bar__bar {
+    width: 100% !important;
+    height: var(--pct, 0%) !important;
+    transition: height var(--motion-duration-normal) var(--motion-easing-default);
+  }
+  .ec-chart-bar__value {
+    position: absolute;
+    right: var(--space-2);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--color-text-display);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .ec-chart-bar--horizontal .ec-chart-bar__value {
+    position: static;
+    transform: none;
+    color: var(--color-text-secondary);
+    text-shadow: none;
+  }
+</style>

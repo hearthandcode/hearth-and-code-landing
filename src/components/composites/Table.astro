@@ -1,0 +1,112 @@
+---
+/**
+ * Table (Basic) composite
+ * id: c-table-basic
+ *
+ * Standard data table with sortable and hoverable options.
+ */
+
+interface Column {
+  key: string;
+  label: string;
+  align?: 'left' | 'center' | 'right';
+  width?: string;
+}
+
+interface Props {
+  columns: Column[];
+  data: Record<string, unknown>[];
+  striped?: boolean;
+  hoverable?: boolean;
+  caption?: string;
+  class?: string;
+}
+
+const {
+  columns,
+  data,
+  striped = false,
+  hoverable = true,
+  caption,
+  class: className = '',
+} = Astro.props;
+---
+
+<table class={`ec-table ${striped ? 'is-striped' : ''} ${hoverable ? 'is-hoverable' : ''} ${className}`}>
+  {caption && <caption class="ec-table__caption">{caption}</caption>}
+  <thead>
+    <tr>
+      {columns.map((col) => (
+        <th
+          class={`ec-table__th ec-table__th--${col.align || 'left'}`}
+          style={col.width ? `width: ${col.width}` : undefined}
+          scope="col"
+        >
+          {col.label}
+        </th>
+      ))}
+    </tr>
+  </thead>
+  <tbody>
+    {data.map((row, idx) => (
+      <tr>
+        {columns.map((col) => (
+          <td class={`ec-table__td ec-table__td--${col.align || 'left'}`}>
+            {String(row[col.key] ?? '')}
+          </td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<style>
+  .ec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: var(--font-size-small);
+    color: var(--color-text-primary);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .ec-table__caption {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    caption-side: top;
+  }
+  .ec-table__th,
+  .ec-table__td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-surface-rule);
+  }
+  .ec-table__th {
+    background: var(--color-surface-recessed);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+  .ec-table__td--center { text-align: center; }
+  .ec-table__td--right { text-align: right; }
+  .ec-table__th--center { text-align: center; }
+  .ec-table__th--right { text-align: right; }
+  .ec-table.is-striped tbody tr:nth-child(odd) {
+    background: var(--color-surface-recessed);
+  }
+  .ec-table.is-hoverable tbody tr {
+    transition: background-color var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-table.is-hoverable tbody tr:hover {
+    background: var(--color-surface-recessed);
+  }
+  .ec-table tbody tr:last-child .ec-table__td {
+    border-bottom: none;
+  }
+</style>
