@@ -6,11 +6,10 @@
  *  - The component itself rendered with current args
  *  - A code display showing the current JSX
  *
- * Uses a static registry of all components instead of dynamic imports
- * (Vite tree-shakes dynamic imports based on template literal patterns,
- * making them unreliable for this use case).
+ * Uses a static registry of all components instead of dynamic imports.
  */
 import * as React from 'react';
+import { EMBER_CIRCUIT_COMPONENT_CSS } from './componentStyles';
 import { CitationRef } from '../ports/react/knowledge/atoms/CitationRef';
 import { ConceptTerm } from '../ports/react/knowledge/atoms/ConceptTerm';
 import { SeverityDot } from '../ports/react/knowledge/atoms/SeverityDot';
@@ -27,6 +26,8 @@ import { ReviewerChip } from '../ports/react/knowledge/atoms/ReviewerChip';
 import { EvidenceStrength } from '../ports/react/knowledge/atoms/EvidenceStrength';
 import { ClaimMarker } from '../ports/react/knowledge/atoms/ClaimMarker';
 import { RelationVerb } from '../ports/react/knowledge/atoms/RelationVerb';
+import { Icon } from '../ports/react/knowledge/atoms/Icon';
+import { Avatar } from '../ports/react/knowledge/atoms/Avatar';
 import { Button } from '../ports/react/knowledge/composites/Button';
 import { Alert } from '../ports/react/knowledge/composites/Alert';
 import { EvidenceReceipt } from '../ports/react/knowledge/composites/EvidenceReceipt';
@@ -102,14 +103,11 @@ export interface LivePreviewProps {
   propMeta?: PropMeta[];
 }
 
-// Static registry — maps component name → component reference.
-// All imports are at the top of the file (Vite tree-shakes unused ones).
 const REGISTRY: Record<string, React.ComponentType<any>> = {
-  // Atoms
   CitationRef, ConceptTerm, SeverityDot, ProvenanceMarker, TimestampAtom,
   StatusPill, LicenseIcon, DOILink, HashDigest, PathBreadcrumb, ConfidenceBar,
   LanguageTag, ReviewerChip, EvidenceStrength, ClaimMarker, RelationVerb,
-  // Composites
+  Icon, Avatar,
   Button, Alert, EvidenceReceipt, CitationChain, ConceptCard, SynthesisSummary,
   ADRCard, WorkflowState, HumanGate, QuoteCard, ProfileCard, PricingCard,
   ProductCard, TestimonialCard, Card, SearchBar, DialogueTree, Pagination,
@@ -117,12 +115,39 @@ const REGISTRY: Record<string, React.ComponentType<any>> = {
   EmptyState, Toast, FormField, Select, Textarea, DeploymentStatus,
   TaxonomyTree, OntologyRelation, GlossaryIndex, SourceChain, AuditTrail,
   Progress, PolicyCardC, ProjectStatusC, StatCard, FeatureCard,
-  // Templates
   HeroCentered, HeroSplit, SectionContent, SectionFeatures, SectionCTA,
   SectionPricing, SectionTestimonials, PageHeader, PageFooter, LayoutGrid,
   LayoutStack, LayoutSidebar, HeaderLayout, TabsLayout, StepperLayout,
   Dashboard, Modal,
 };
+
+/**
+ * Inject the component CSS once on first render. The CSS string is
+ * large (~10KB) so we only inject if it's not already present.
+ */
+function ensureCssInjected() {
+  if (typeof document === 'undefined') return;
+  if (document.getElementById('ec-component-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'ec-component-styles';
+  style.appendChild(document.createTextNode(EMBER_CIRCUIT_COMPONENT_CSS));
+  document.head.appendChild(style);
+}
+
+/**
+ * ComponentCssTag - rendered as a React element so it appears in SSR'd HTML.
+ * Astro will render this as an actual <style> tag in the head.
+ */
+function ComponentCssTag() {
+  if (typeof document !== 'undefined') {
+    // Client-side: inject as before for the React hydration boundary
+    React.useEffect(() => ensureCssInjected(), []);
+    return null;
+  }
+  // SSR: return an actual style element so it appears in the static HTML
+  // This is rendered once per LivePreview instance (deduped by browser)
+  return <style id="ec-component-styles" dangerouslySetInnerHTML={{ __html: EMBER_CIRCUIT_COMPONENT_CSS }} />;
+}
 
 export function LivePreview({
   componentName,
@@ -130,14 +155,16 @@ export function LivePreview({
   propMeta = [],
 }: LivePreviewProps) {
   const [values, setValues] = React.useState<Record<string, any>>(initialProps);
-
   const Component = REGISTRY[componentName];
 
   if (!Component) {
     return (
-      <div className="ec-live-preview__loading">
-        Component "{componentName}" not found in registry. Available: {Object.keys(REGISTRY).length} components.
-      </div>
+      <>
+        <ComponentCssTag />
+        <div className="ec-live-preview__loading">
+          Component "{componentName}" not found in registry.
+        </div>
+      </>
     );
   }
 
@@ -147,7 +174,6 @@ export function LivePreview({
 
   const reset = () => setValues(initialProps);
 
-  // Build the code snippet
   const codeLines = Object.entries(values)
     .map(([k, v]) => {
       const valStr = typeof v === 'string' ? `"${v}"` : JSON.stringify(v);
@@ -157,66 +183,69 @@ export function LivePreview({
   const codeStr = `<${componentName}\n${codeLines}\n/>`;
 
   return (
-    <div className="ec-live-preview">
-      <div className="ec-live-preview__panel">
-        <h4 className="ec-live-preview__name">{componentName}</h4>
-        {propMeta.length > 0 ? (
-          <div className="ec-live-preview__controls">
-            {propMeta.map((meta) => (
-              <label key={meta.name} className="ec-live-preview__control">
-                <span className="ec-live-preview__control-label">{meta.name}</span>
-                {meta.type === 'select' && (
-                  <select
-                    value={values[meta.name] ?? ''}
-                    onChange={(e) => updateValue(meta.name, e.target.value)}
-                  >
-                    {meta.options?.map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </select>
-                )}
-                {meta.type === 'boolean' && (
-                  <label className="ec-toggle">
+    <>
+      <ComponentCssTag />
+      <div className="ec-live-preview">
+        <div className="ec-live-preview__panel">
+          <h4 className="ec-live-preview__name">{componentName}</h4>
+          {propMeta.length > 0 ? (
+            <div className="ec-live-preview__controls">
+              {propMeta.map((meta) => (
+                <label key={meta.name} className="ec-live-preview__control">
+                  <span className="ec-live-preview__control-label">{meta.name}</span>
+                  {meta.type === 'select' && (
+                    <select
+                      value={values[meta.name] ?? ''}
+                      onChange={(e) => updateValue(meta.name, e.target.value)}
+                    >
+                      {meta.options?.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  )}
+                  {meta.type === 'boolean' && (
+                    <label className="ec-toggle">
+                      <input
+                        type="checkbox"
+                        checked={!!values[meta.name]}
+                        onChange={(e) => updateValue(meta.name, e.target.checked)}
+                      />
+                      <span>{values[meta.name] ? 'true' : 'false'}</span>
+                    </label>
+                  )}
+                  {meta.type === 'number' && (
                     <input
-                      type="checkbox"
-                      checked={!!values[meta.name]}
-                      onChange={(e) => updateValue(meta.name, e.target.checked)}
+                      type="number"
+                      value={values[meta.name] ?? 0}
+                      onChange={(e) => updateValue(meta.name, Number(e.target.value))}
                     />
-                    <span>{values[meta.name] ? 'true' : 'false'}</span>
-                  </label>
-                )}
-                {meta.type === 'number' && (
-                  <input
-                    type="number"
-                    value={values[meta.name] ?? 0}
-                    onChange={(e) => updateValue(meta.name, Number(e.target.value))}
-                  />
-                )}
-                {meta.type === 'text' && (
-                  <input
-                    type="text"
-                    value={values[meta.name] ?? ''}
-                    onChange={(e) => updateValue(meta.name, e.target.value)}
-                  />
-                )}
-              </label>
-            ))}
-          </div>
-        ) : (
-          <p className="ec-live-preview__no-props">No controls (stateless component)</p>
-        )}
-        <button className="ec-live-preview__reset" onClick={reset}>
-          Reset
-        </button>
-      </div>
-      <div className="ec-live-preview__render">
-        <div className="ec-live-preview__component">
-          <Component {...values} />
+                  )}
+                  {meta.type === 'text' && (
+                    <input
+                      type="text"
+                      value={values[meta.name] ?? ''}
+                      onChange={(e) => updateValue(meta.name, e.target.value)}
+                    />
+                  )}
+                </label>
+              ))}
+            </div>
+          ) : (
+            <p className="ec-live-preview__no-props">No controls (stateless component)</p>
+          )}
+          <button className="ec-live-preview__reset" onClick={reset}>
+            Reset
+          </button>
         </div>
-        <pre className="ec-live-preview__code">
-          <code>{codeStr}</code>
-        </pre>
+        <div className="ec-live-preview__render">
+          <div className="ec-live-preview__component">
+            <Component {...values} />
+          </div>
+          <pre className="ec-live-preview__code">
+            <code>{codeStr}</code>
+          </pre>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
