@@ -119,43 +119,51 @@ const segments = [
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggles = document.querySelectorAll('[data-toggle-root]');
+  // ============================================================
+  // HearthCodeToggle - Click handlers only
+  // View state management is handled by the parent page
+  // ============================================================
+
+  function initToggle() {
+    const toggles = document.querySelectorAll<HTMLElement>('[data-toggle-root]');
     toggles.forEach((toggleRoot) => {
-      const segments = toggleRoot.querySelectorAll('[data-segment]');
+      const segments = toggleRoot.querySelectorAll<HTMLElement>('[data-segment]');
       segments.forEach((segment) => {
+        if (segment.dataset.bound === 'true') return; // Prevent duplicate binding
+        segment.dataset.bound = 'true';
         segment.addEventListener('click', () => {
           const view = segment.getAttribute('data-segment');
           if (!view) return;
 
           // Persist to URL
-          const url = new URL(window.location.href);
-          url.searchParams.set('view', view);
-          window.history.pushState({}, '', url);
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.set('view', view);
+            window.history.pushState({}, '', url);
+          } catch (e) {}
 
           // Persist to localStorage
           try {
             localStorage.setItem('hearth-code-view', view);
-          } catch (e) {
-            // localStorage may be disabled
-          }
+          } catch (e) {}
 
-          // Update root data attribute for CSS styling
+          // Update this toggle's visual state
           toggleRoot.setAttribute('data-current', view);
+          segments.forEach((seg) => {
+            const segValue = seg.getAttribute('data-segment');
+            if (segValue === view) {
+              seg.setAttribute('aria-selected', 'true');
+              seg.classList.add('is-active');
+            } else {
+              seg.setAttribute('aria-selected', 'false');
+              seg.classList.remove('is-active');
+            }
+          });
 
-          // Update other toggles on page (if multiple)
+          // Update other toggles on page
           document.querySelectorAll('[data-toggle-root]').forEach((otherToggle) => {
             if (otherToggle !== toggleRoot) {
               otherToggle.setAttribute('data-current', view);
-              otherToggle.querySelectorAll('[data-segment]').forEach((otherSeg) => {
-                if (otherSeg.getAttribute('data-segment') === view) {
-                  otherSeg.setAttribute('aria-selected', 'true');
-                  otherSeg.classList.add('is-active');
-                } else {
-                  otherSeg.setAttribute('aria-selected', 'false');
-                  otherSeg.classList.remove('is-active');
-                }
-              });
             }
           });
 
@@ -164,47 +172,12 @@ const segments = [
         });
       });
     });
-
-    // Listen for popstate (browser back/forward)
-    window.addEventListener('popstate', () => {
-      const url = new URL(window.location.href);
-      const view = url.searchParams.get('view') || getStoredView() || 'balanced';
-      applyView(view);
-    });
-  });
-
-  function getStoredView() {
-    try {
-      return localStorage.getItem('hearth-code-view');
-    } catch (e) {
-      return null;
-    }
   }
 
-  function applyView(view: string) {
-    document.querySelectorAll('[data-toggle-root]').forEach((toggleRoot) => {
-      toggleRoot.setAttribute('data-current', view);
-      toggleRoot.querySelectorAll('[data-segment]').forEach((seg) => {
-        if (seg.getAttribute('data-segment') === view) {
-          seg.setAttribute('aria-selected', 'true');
-          seg.classList.add('is-active');
-        } else {
-          seg.setAttribute('aria-selected', 'false');
-          seg.classList.remove('is-active');
-        }
-      });
-    });
+  // Run on DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initToggle);
+  } else {
+    initToggle();
   }
-
-  // Initialize from URL or localStorage on page load
-  (function initView() {
-    const url = new URL(window.location.href);
-    const urlView = url.searchParams.get('view');
-    const storedView = getStoredView();
-    const view = urlView || storedView || 'balanced';
-    if (['hearth', 'code', 'balanced'].includes(view)) {
-      // Apply after DOM ready
-      document.addEventListener('DOMContentLoaded', () => applyView(view));
-    }
-  })();
 </script>

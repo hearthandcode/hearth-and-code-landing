@@ -8,6 +8,28 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  server: {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
+  },
+  preview: {
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
+  },
+  vite: {
+    server: {
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
+    },
+    preview: {
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
+    },
+  },
   markdown: {
     shikiConfig: {
       // Register the canonical HCAN TextMate grammar so any ```hcan fenced block
