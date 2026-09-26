@@ -1,4 +1,190 @@
 ---
-import ResearchLabSurface from '../../components/ResearchLabSurface.astro';
+/** Methods public practice layer. Page composition is owned by methods-page.yaml. */
+import { readFileSync } from 'node:fs';
+import { parse } from 'yaml';
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+import '../../styles/ember-circuit-library.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNavigation from '../../components/StudioNavigation.astro';
+import MethodFieldLibrary from '../../components/ember-circuit/MethodFieldLibrary';
+import { publicMethodCollections } from '../../data/public-method-library';
+
+const contract = parse(readFileSync('./src/data/methods-page.yaml', 'utf-8'));
+const collections = contract.field_library.collection_ids
+  .map((id: string) => publicMethodCollections.find((collection) => collection.id === id))
+  .filter(Boolean);
 ---
-<ResearchLabSurface route="methods" />
+
+<BaseLayout title={contract.page.title} description={contract.page.description}>
+  <StudioNavigation current={contract.page.navigation_current} disposition="Methods · public working instruments and return paths" />
+  <main class="methods" id="page-main">
+    <section class="methods-hero" aria-labelledby="methods-title">
+      <div class="methods-shell">
+        <p class="methods-kicker">{contract.hero.eyebrow}</p>
+        <h1 id="methods-title">{contract.hero.title}</h1>
+        <p class="methods-hero__lede">{contract.hero.lede}</p>
+        <aside class="methods-disposition">
+          <p class="methods-disposition__label">{contract.page.disposition.label}</p>
+          <p>{contract.page.disposition.statement}</p>
+          <p class="methods-disposition__boundary">{contract.page.disposition.boundary}</p>
+        </aside>
+        <div class="methods-entry-paths" aria-label="Methods entry paths">
+          {contract.hero.entry_paths.map((path: any, index: number) => (
+            path.href ? (
+              <a href={path.href}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{path.label}</strong>
+                <small>{path.detail}</small>
+                <i aria-hidden="true">→</i>
+              </a>
+            ) : (
+              <article class="is-held" aria-label={`${path.label}: ${path.state}`}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{path.label}</strong>
+                <small>{path.detail}</small>
+                <em>{path.state.replace('-', ' ')}</em>
+              </article>
+            )
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="methods-section methods-section--recessed" id={contract.core_method.id} aria-labelledby="core-title">
+      <div class="methods-shell">
+        <header class="methods-intro methods-intro--wide">
+          <p class="methods-kicker">{contract.core_method.eyebrow}</p>
+          <h2 id="core-title">{contract.core_method.title}</h2>
+          <p>{contract.core_method.description}</p>
+        </header>
+        <ol class="methods-stations">
+          {contract.core_method.stations.map((station: any) => (
+            <li>
+              <header><span>{station.number}</span><div><h3>{station.title}</h3><p>{station.phrase}</p></div></header>
+              <dl>
+                {station.moves.map((move: any) => <div><dt>{move.label}</dt><dd>{move.detail}</dd></div>)}
+              </dl>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="methods-section" aria-labelledby="instruments-title">
+      <div class="methods-shell">
+        <header class="methods-intro methods-intro--wide">
+          <p class="methods-kicker">{contract.practice_boundaries.eyebrow}</p>
+          <h2 id="instruments-title">{contract.practice_boundaries.title}</h2>
+          <p>{contract.practice_boundaries.description}</p>
+        </header>
+        <div class="methods-instruments">
+          {contract.practice_boundaries.instruments.map((instrument: any, index: number) => (
+            <article><span>{String(index + 1).padStart(2, '0')}</span><h3>{instrument.title}</h3><p>{instrument.detail}</p></article>
+          ))}
+        </div>
+        <aside class="methods-human-boundary">
+          <div><p>Agent contribution</p><strong>{contract.practice_boundaries.human_boundary.agent_contribution}</strong></div>
+          <div><p>Human-held gate</p><strong>{contract.practice_boundaries.human_boundary.human_gate}</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="methods-section methods-section--library" id={contract.field_library.id} aria-labelledby="library-title">
+      <div class="methods-shell">
+        <header class="methods-intro methods-intro--wide">
+          <p class="methods-kicker">{contract.field_library.eyebrow}</p>
+          <h2 id="library-title">{contract.field_library.title}</h2>
+          <p>{contract.field_library.description}</p>
+        </header>
+        <aside class="methods-library-boundary"><strong>Collection boundary</strong><p>{contract.field_library.source_boundary}</p></aside>
+        <div class="methods-collections">
+          {collections.map((collection: any, index: number) => (
+            <section class="methods-collection" aria-labelledby={`collection-${collection.id}`}>
+              <header>
+                <div><span>{String(index + 1).padStart(2, '0')}</span><p>{collection.source}</p></div>
+                <h3 id={`collection-${collection.id}`}>{collection.title}</h3>
+                <p>{collection.framing}</p>
+              </header>
+              <MethodFieldLibrary client:load methods={collection.entries} labelledBy={`collection-${collection.id}`} />
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="methods-next" aria-labelledby="methods-next-title">
+      <div class="methods-shell">
+        <p class="methods-kicker">Next slice</p>
+        <h2 id="methods-next-title">{contract.next_slice.title}</h2>
+        <p>{contract.next_slice.detail}</p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .methods { background: var(--color-surface-primary); color: var(--color-text-primary); }
+  .methods-shell { width: min(100% - 3rem, 76rem); margin-inline: auto; }
+  .methods-kicker { margin: 0 0 0.75rem; color: var(--color-accent-gold); font: 500 0.75rem/1.25 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+  .methods-hero { padding: clamp(5rem, 12vw, 9rem) 0 clamp(4rem, 8vw, 6rem); border-bottom: 1px solid var(--color-surface-rule); background: radial-gradient(60rem 38rem at 82% 2%, rgba(31, 182, 168, 0.14), transparent 60%); }
+  .methods-hero h1 { max-width: 13ch; margin: 0; color: var(--color-text-display); font: 700 clamp(3rem, 7vw, 6.3rem)/0.96 var(--font-display); letter-spacing: -0.055em; }
+  .methods-hero__lede { max-width: 47rem; margin: 1.5rem 0 0; color: var(--color-text-secondary); font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.55; }
+  .methods-disposition { max-width: 54rem; margin-top: 2.5rem; padding: 1.25rem 1.5rem; border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-signal); background: rgba(33, 29, 24, 0.9); }
+  .methods-disposition p { margin: 0; line-height: 1.6; }
+  .methods-disposition__label { margin-bottom: 0.5rem !important; color: var(--color-accent-signal); font: 0.7rem var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+  .methods-disposition__boundary { margin-top: 0.75rem !important; color: var(--color-text-secondary); font-size: 0.9rem; }
+  .methods-entry-paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; max-width: 70rem; margin-top: 2rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-rule); }
+  .methods-entry-paths > * { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 0.3rem 0.75rem; min-height: 9rem; padding: 1.25rem; background: var(--color-surface-raised); color: inherit; text-decoration: none; }
+  .methods-entry-paths a:hover { background: rgba(31, 182, 168, 0.08); }
+  .methods-entry-paths span { grid-row: span 2; color: var(--color-accent-gold); font: 0.7rem var(--font-mono); }
+  .methods-entry-paths strong { color: var(--color-text-display); font: 700 1.25rem/1.1 var(--font-display); }
+  .methods-entry-paths small { grid-column: 2 / 4; color: var(--color-text-secondary); font-size: 0.875rem; line-height: 1.45; }
+  .methods-entry-paths i { align-self: start; color: var(--color-accent-signal); font-size: 1.25rem; font-style: normal; }
+  .methods-entry-paths em { color: var(--color-accent-violet); font: 0.65rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  .methods-entry-paths .is-held { opacity: 0.78; }
+
+  .methods-section { padding: clamp(4rem, 8vw, 7rem) 0; border-bottom: 1px solid var(--color-surface-rule); }
+  .methods-section--recessed, .methods-section--library { background: var(--color-surface-recessed); }
+  .methods-intro { max-width: 42rem; }
+  .methods-intro--wide { max-width: 49rem; }
+  .methods-intro h2, .methods-next h2 { margin: 0; color: var(--color-text-display); font: 700 clamp(2rem, 4vw, 3.4rem)/1.03 var(--font-display); letter-spacing: -0.035em; }
+  .methods-intro > p:last-child { margin: 1rem 0 0; color: var(--color-text-secondary); line-height: 1.6; }
+  .methods-stations { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2.25rem 0 0; padding: 0; list-style: none; }
+  .methods-stations li { padding: 1.25rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-raised); }
+  .methods-stations header { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; }
+  .methods-stations header > span, .methods-instruments > article > span { color: var(--color-accent-gold); font: 0.7rem var(--font-mono); }
+  .methods-stations h3, .methods-instruments h3, .methods-collection h3 { margin: 0; color: var(--color-text-display); font: 700 1.35rem/1.1 var(--font-display); }
+  .methods-stations header p { margin: 0.5rem 0 0; color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.4; }
+  .methods-stations dl { display: grid; gap: 0.8rem; margin: 1.5rem 0 0; }
+  .methods-stations dl div { padding-top: 0.75rem; border-top: 1px solid var(--color-surface-rule); }
+  .methods-stations dt { color: var(--color-accent-signal); font: 0.7rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  .methods-stations dd { margin: 0.35rem 0 0; color: var(--color-text-secondary); font-size: 0.875rem; line-height: 1.45; }
+  .methods-instruments { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 2.25rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-rule); }
+  .methods-instruments article { padding: 1.25rem; background: var(--color-surface-raised); }
+  .methods-instruments h3 { margin-top: 1rem; }
+  .methods-instruments p { margin: 0.75rem 0 0; color: var(--color-text-secondary); line-height: 1.5; }
+  .methods-human-boundary { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 1rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-rule); }
+  .methods-human-boundary div { padding: 1.25rem; background: var(--color-surface-primary); }
+  .methods-human-boundary p { margin: 0; color: var(--color-text-secondary); font: 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .methods-human-boundary strong { display: block; margin-top: 0.5rem; color: var(--color-text-display); line-height: 1.5; }
+
+  .methods-library-boundary { max-width: 62rem; margin-top: 1.5rem; padding: 1rem 1.25rem; border-left: 2px solid var(--color-accent-violet); background: rgba(155, 93, 229, 0.08); }
+  .methods-library-boundary strong { color: var(--color-accent-violet); font: 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .methods-library-boundary p { margin: 0.5rem 0 0; color: var(--color-text-secondary); line-height: 1.55; }
+  .methods-collections { display: grid; gap: 3.5rem; margin-top: 3rem; }
+  .methods-collection { scroll-margin-top: 9rem; }
+  .methods-collection > header { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr); gap: 2rem; align-items: end; padding-bottom: 1rem; border-bottom: 1px solid var(--color-surface-rule); }
+  .methods-collection > header > div { display: flex; align-items: baseline; gap: 0.75rem; }
+  .methods-collection > header span { color: var(--color-accent-gold); font: 0.7rem var(--font-mono); }
+  .methods-collection > header p { margin: 0; color: var(--color-text-secondary); line-height: 1.5; }
+  .methods-collection > header > div p { font: 0.7rem var(--font-mono); letter-spacing: 0.05em; }
+  .methods-collection :global(.ec-method-summary-grid) { margin-top: 1.25rem; }
+  .methods-next { padding: clamp(4rem, 9vw, 7rem) 0; text-align: center; background: linear-gradient(120deg, rgba(31, 182, 168, 0.12), var(--color-surface-primary) 60%, rgba(155, 93, 229, 0.12)); }
+  .methods-next .methods-shell { max-width: 52rem; }
+  .methods-next > .methods-shell > p:not(.methods-kicker) { max-width: 42rem; margin: 1.25rem auto 0; color: var(--color-text-secondary); line-height: 1.65; }
+  .methods-next .methods-kicker { text-align: center; }
+
+  @media (max-width: 62rem) { .methods-stations, .methods-instruments { grid-template-columns: repeat(2, 1fr); } .methods-collection > header { grid-template-columns: 1fr; gap: 0.75rem; } }
+  @media (max-width: 42rem) { .methods-shell { width: min(100% - 2rem, 76rem); } .methods-hero h1 { font-size: clamp(2.75rem, 15vw, 4rem); } .methods-entry-paths, .methods-stations, .methods-instruments, .methods-human-boundary { grid-template-columns: 1fr; } }
+</style>

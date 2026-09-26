@@ -1,0 +1,95 @@
+schema_version: hnc.public-page-contract.v1
+page:
+  id: methods
+  route: /methods/
+  navigation_current: methods
+  title: "Methods · Hearth & Code"
+  description: "Public working instruments for framing work, checking claims, and leaving a responsible return path."
+  disposition:
+    label: "Public practice layer"
+    statement: "Methods is the public practice layer of Hearth & Code: small, inspectable instruments for framing work, selecting context, checking claims, using agents within boundaries, and leaving a responsible return path."
+    boundary: "These are learning and working patterns, not universal prescriptions, efficacy guarantees, or permission to automate consequential decisions."
+  slice_status: "Threshold, core method, boundaries, and field-card library implemented. Prompt Lab, worked case, and evaluation/return sections remain next-slice work."
+hero:
+  eyebrow: "Methods · public practice layer"
+  title: "Methods that leave a way back."
+  lede: "A method earns its place when it makes the next move clearer without hiding sources, uncertainty, authority, or the human judgment still required."
+  entry_paths:
+    - label: "Learn the core method"
+      href: "#core-method"
+      detail: "Four stations and eight working moves for answerable work."
+    - label: "Browse field cards"
+      href: "#field-library"
+      detail: "Thirty-five bounded instruments, organized by practice family."
+    - label: "Prompt Lab"
+      state: "next-slice"
+      detail: "A specialist prompt and context catalogue is being integrated as a separate practice surface."
+core_method:
+  id: core-method
+  eyebrow: "Core method · return-bearing workshop"
+  title: "Make the work inspectable before making it bigger."
+  description: "The workshop is a memorable map, not a magic sequence. Its four stations hold eight working moves that can be scaled down for reversible work and made more explicit when stakes rise."
+  stations:
+    - number: "01"
+      title: "Orient"
+      phrase: "Name the decision and bind the closest sources."
+      moves:
+        - label: "Question"
+          detail: "State the decision, inquiry, or artifact the work should support."
+        - label: "Source"
+          detail: "Name the records, observations, code, and people that can inform it."
+    - number: "02"
+      title: "Bound"
+      phrase: "Set scope, authority, and the no-touch edges."
+      moves:
+        - label: "Scope"
+          detail: "Say what may change, what must not, and what remains outside the attempt."
+        - label: "Context"
+          detail: "Assemble the smallest sufficient context and name meaningful exclusions."
+    - number: "03"
+      title: "Compose & check"
+      phrase: "Make one inspectable artifact and test its named predicate."
+      moves:
+        - label: "Artifact"
+          detail: "Produce a map, comparison, draft, check, or other object another person can inspect."
+        - label: "Counterevidence"
+          detail: "Test the stated predicate, seek failure cases, and separate observation from interpretation."
+    - number: "04"
+      title: "Decide & return"
+      phrase: "Keep disposition human-held and preserve the next way back."
+      moves:
+        - label: "Human gate"
+          detail: "Keep consequential meaning, acceptance, and release with the responsible person."
+        - label: "Return"
+          detail: "Record state, limits, owner, and one reliable next action before stopping."
+practice_boundaries:
+  eyebrow: "Practice boundaries"
+  title: "Four small instruments before scale."
+  description: "These records help a method stay legible. They are not bureaucracy for its own sake; each makes a different uncertainty or responsibility visible."
+  instruments:
+    - title: "Source ledger"
+      detail: "What was consulted, in what role, with what omission or freshness limit."
+    - title: "Claim card"
+      detail: "What is being said, which evidence supports it, and what it does not establish."
+    - title: "Check receipt"
+      detail: "What was tested, on which input, with which outcome, and what remains unproven."
+    - title: "Return record"
+      detail: "Current state, owner, uncertainty, and one reliable way back in."
+  human_boundary:
+    agent_contribution: "Retrieve · compare · draft · implement · test · challenge"
+    human_gate: "Meaning · authorship · consequential choice · public claim · release"
+field_library:
+  id: field-library
+  eyebrow: "Public method field library"
+  title: "Thirty-five methods, each with a boundary."
+  description: "These cards are the primary working collection. Open a card to see when it is useful, a short method walk, costs and cautions, a bounded example, and the evaluation receipt with its limit."
+  dataset: "publicMethodCollections"
+  collection_ids:
+    - semantic-orientation
+    - operational-intelligence
+    - prompt-practice
+    - evaluation-return
+  source_boundary: "Cards are public-safe learning instruments. A prompt, example output, or harness result does not grant capability, establish general effectiveness, or authorize an external effect."
+next_slice:
+  title: "Next on this surface"
+  detail: "The Prompt and Context Practice Lab, a worked teaching case, evaluation posture, agent-role boundary, and cross-surface return routes will be added after this library slice is reviewed."
