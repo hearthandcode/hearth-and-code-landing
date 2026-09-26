@@ -32,7 +32,11 @@ const {
 ---
 
 <Tabs
-  tabs={tabs}
+  tabs={tabs.map((t) => ({
+    id: t.id,
+    label: t.label,
+    content: t.content || '',
+  }))}
   variant={variant}
   orientation={orientation}
   defaultTab={defaultTab}

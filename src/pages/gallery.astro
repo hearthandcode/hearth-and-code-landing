@@ -15,6 +15,13 @@ import LayoutGrid from '../components/templates/LayoutGrid.astro';
 import LayoutStack from '../components/templates/LayoutStack.astro';
 import LayoutSidebar from '../components/templates/LayoutSidebar.astro';
 import Dashboard from '../components/templates/Dashboard.astro';
+import HeroSplit from '../components/templates/HeroSplit.astro';
+import HeroVideo from '../components/templates/HeroVideo.astro';
+import SectionTestimonials from '../components/templates/SectionTestimonials.astro';
+import SectionPricing from '../components/templates/SectionPricing.astro';
+import NavHeader from '../components/templates/NavHeader.astro';
+import NavSidebar from '../components/templates/NavSidebar.astro';
+import Modal from '../components/templates/Modal.astro';
 import Button from '../components/primitives/Button.astro';
 import Input from '../components/primitives/Input.astro';
 import Icon from '../components/primitives/Icon.astro';
@@ -60,7 +67,6 @@ import List from '../components/composites/List.astro';
 import ListGrid from '../components/composites/ListGrid.astro';
 import Timeline from '../components/composites/Timeline.astro';
 import Toc from '../components/composites/Toc.astro';
-import NavHeader from '../components/templates/NavHeader.astro';
 ---
 
 <title>Component Gallery · Hearth & Code</title>
@@ -358,6 +364,36 @@ import NavHeader from '../components/templates/NavHeader.astro';
       />
     </div>
   </LayoutGrid>
+</SectionContent>
+
+<SectionContent eyebrow="Timeline" title="Build Progress">
+
+[57 more lines in file. Use offset=364+1,1
+## Templates Section
+<SectionContent eyebrow="Templates" title="Complete Template Set" lede="All 20 templates from the Hearth and Code design system. Heroes, sections, layouts, and page-level templates — all token-driven, all accessible, all composition-ready.">
+  <LayoutGrid columns={2} gap="normal">
+    <Card title="Hero (Centered)" description="Centered hero with eyebrow, title, lede, and dual CTAs. Used at page tops for primary orientation." interactive />
+    <Card title="Hero (Split)" description="Two-column hero with text and visual. Used for product launches and feature introductions." interactive />
+    <Card title="Hero (Video)" description="Hero with background video and overlay. Cinematic intros and brand storytelling." interactive />
+    <Card title="Section (Content)" description="Generic content section with header and body. The workhorse for most page sections." interactive />
+    <Card title="Section (Features)" description="Grid of feature cards. Used for capability showcases and product tours." interactive />
+    <Card title="Section (Testimonials)" description="Testimonials grid section with quotes and ratings. Social proof and trust signals." interactive />
+    <Card title="Section (Pricing)" description="Pricing tiers comparison section. Conversion-focused with highlighted tiers." interactive />
+    <Card title="Section (CTA)" description="Call-to-action banner section. Conversion endpoints with accent borders." interactive />
+    <Card title="Page Header" description="Standard page header with breadcrumb, title, and actions." interactive />
+    <Card title="Page Footer" description="Multi-column footer with links, copyright, and social links." interactive />
+    <Card title="Nav Header" description="Top navigation with logo, links, CTA, and mobile menu toggle." interactive />
+    <Card title="Nav Sidebar" description="Vertical sidebar navigation with sectioned links and sticky behavior." interactive />
+    <Card title="Layout (Grid)" description="Responsive grid layout with auto-fit or fixed columns." />
+    <Card title="Layout (Stack)" description="Vertical stacked layout with alignment and max-width." />
+    <Card title="Layout (Sidebar)" description="Sidebar + main content with sticky positioning." />
+    <Card title="Layout (Header)" description="Page with sticky header content area." />
+    <Card title="Layout (Tabs)" description="Tabs-organized content with switching panels." />
+    <Card title="Layout (Stepper)" description="Multi-step layout with progress indicator and content slot." />
+    <Card title="Dashboard" description="Sidebar nav with content area for complex applications." />
+    <Card title="Modal" description="Modal overlay with backdrop, close button, and multiple sizes." />
+  </LayoutGrid>
+</SectionContent>
 </SectionContent>
 
 <SectionContent eyebrow="Timeline" title="Build Progress">
