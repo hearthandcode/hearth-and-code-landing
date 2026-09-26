@@ -1,0 +1,133 @@
+---
+/**
+ * Alert composite
+ * id: c-alert
+ *
+ * Inline notification message with variant types.
+ */
+
+import Icon from '../primitives/Icon.astro';
+
+interface Props {
+  variant?: 'info' | 'success' | 'caution' | 'danger';
+  title?: string;
+  dismissible?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'info',
+  title,
+  dismissible = false,
+  class: className = '',
+} = Astro.props;
+
+const iconMap = {
+  info: 'info',
+  success: 'check',
+  caution: 'warning',
+  danger: 'warning',
+};
+---
+
+<div
+  class={`ec-alert ec-alert--${variant} ${className}`}
+  role={variant === 'danger' || variant === 'caution' ? 'alert' : 'status'}
+>
+  <span class="ec-alert__icon" aria-hidden="true">
+    <Icon name={iconMap[variant]} size="md" />
+  </span>
+  <div class="ec-alert__content">
+    {title && <h4 class="ec-alert__title">{title}</h4>}
+    <div class="ec-alert__body"><slot /></div>
+  </div>
+  {dismissible && (
+    <button type="button" class="ec-alert__dismiss" aria-label="Dismiss" data-alert-dismiss>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll('[data-alert-dismiss]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const alert = btn.closest('.ec-alert');
+      if (alert) alert.style.display = 'none';
+    });
+  });
+</script>
+
+<style>
+  .ec-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-left: 3px solid var(--color-text-secondary);
+    border-radius: var(--radius-md);
+  }
+  .ec-alert--info {
+    border-left-color: var(--color-state-info);
+    background: rgba(63, 224, 208, 0.08);
+  }
+  .ec-alert--success {
+    border-left-color: var(--color-state-success);
+    background: rgba(143, 163, 149, 0.08);
+  }
+  .ec-alert--caution {
+    border-left-color: var(--color-state-caution);
+    background: rgba(232, 146, 60, 0.08);
+  }
+  .ec-alert--danger {
+    border-left-color: var(--color-state-error);
+    background: rgba(194, 90, 42, 0.08);
+  }
+  .ec-alert__icon {
+    flex-shrink: 0;
+    color: inherit;
+    display: flex;
+    align-items: center;
+  }
+  .ec-alert--info .ec-alert__icon { color: var(--color-state-info); }
+  .ec-alert--success .ec-alert__icon { color: var(--color-state-success); }
+  .ec-alert--caution .ec-alert__icon { color: var(--color-state-caution); }
+  .ec-alert--danger .ec-alert__icon { color: var(--color-state-error); }
+  .ec-alert__content {
+    flex: 1;
+    color: var(--color-text-primary);
+  }
+  .ec-alert__title {
+    margin: 0 0 var(--space-1) 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    color: inherit;
+  }
+  .ec-alert__body {
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+  }
+  .ec-alert__body :global(p) {
+    margin: 0;
+  }
+  .ec-alert__body :global(*) + :global(*) {
+    margin-top: var(--space-2);
+  }
+  .ec-alert__dismiss {
+    background: transparent;
+    border: none;
+    color: inherit;
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    transition: opacity var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-alert__dismiss:hover {
+    opacity: 1;
+  }
+</style>

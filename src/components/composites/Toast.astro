@@ -1,0 +1,148 @@
+---
+/**
+ * Toast composite
+ * id: c-toast
+ *
+ * Brief notification popup with auto-dismiss.
+ */
+
+import Icon from '../primitives/Icon.astro';
+
+interface Props {
+  variant?: 'info' | 'success' | 'caution' | 'danger';
+  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  duration?: number;
+  visible?: boolean;
+  title?: string;
+  class?: string;
+}
+
+const {
+  variant = 'info',
+  position = 'bottom-right',
+  duration = 5000,
+  visible = true,
+  title,
+  class: className = '',
+} = Astro.props;
+
+const iconMap = {
+  info: 'info',
+  success: 'check',
+  caution: 'warning',
+  danger: 'warning',
+};
+---
+
+<div
+  class={`ec-toast ec-toast--${variant} ec-toast--${position} ${visible ? 'is-visible' : ''} ${className}`}
+  role="status"
+  data-toast
+  data-duration={duration}
+>
+  <span class="ec-toast__icon" aria-hidden="true">
+    <Icon name={iconMap[variant]} size="md" />
+  </span>
+  <div class="ec-toast__content">
+    {title && <div class="ec-toast__title">{title}</div>}
+    <div class="ec-toast__message"><slot /></div>
+  </div>
+  <button type="button" class="ec-toast__dismiss" aria-label="Dismiss" data-toast-dismiss>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('[data-toast]').forEach((toast) => {
+    if (!toast.classList.contains('is-visible')) return;
+    const duration = parseInt(toast.getAttribute('data-duration') || '5000', 10);
+    const dismissBtn = toast.querySelector('[data-toast-dismiss]');
+    const hideToast = () => {
+      toast.classList.remove('is-visible');
+      toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    };
+    const timer = setTimeout(hideToast, duration);
+    dismissBtn?.addEventListener('click', () => {
+      clearTimeout(timer);
+      hideToast();
+    });
+  });
+</script>
+
+<style>
+  .ec-toast {
+    position: fixed;
+    z-index: var(--z-toast, 500);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    min-width: 18rem;
+    max-width: 28rem;
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-surface-rule);
+    border-left: 3px solid var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-overlay, 0 8px 32px rgba(0, 0, 0, 0.5));
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition: opacity var(--motion-duration-normal) var(--motion-easing-default),
+                transform var(--motion-duration-normal) var(--motion-easing-default);
+    pointer-events: none;
+  }
+  .ec-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .ec-toast--top-right { top: var(--space-5); right: var(--space-5); }
+  .ec-toast--top-left { top: var(--space-5); left: var(--space-5); }
+  .ec-toast--bottom-right { bottom: var(--space-5); right: var(--space-5); }
+  .ec-toast--bottom-left { bottom: var(--space-5); left: var(--space-5); }
+  .ec-toast--info { border-left-color: var(--color-state-info); }
+  .ec-toast--success { border-left-color: var(--color-state-success); }
+  .ec-toast--caution { border-left-color: var(--color-state-caution); }
+  .ec-toast--danger { border-left-color: var(--color-state-error); }
+  .ec-toast__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .ec-toast--info .ec-toast__icon { color: var(--color-state-info); }
+  .ec-toast--success .ec-toast__icon { color: var(--color-state-success); }
+  .ec-toast--caution .ec-toast__icon { color: var(--color-state-caution); }
+  .ec-toast--danger .ec-toast__icon { color: var(--color-state-error); }
+  .ec-toast__content {
+    flex: 1;
+    color: var(--color-text-primary);
+  }
+  .ec-toast__title {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.125rem;
+  }
+  .ec-toast__message {
+    font-size: var(--font-size-small);
+    line-height: 1.5;
+  }
+  .ec-toast__dismiss {
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    transition: opacity var(--motion-duration-fast) var(--motion-easing-default);
+  }
+  .ec-toast__dismiss:hover {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ec-toast {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
