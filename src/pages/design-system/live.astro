@@ -80,7 +80,7 @@ function groupByName(comps: ComponentConfig[]): Map<string, ComponentConfig[]> {
       return (
         <div class="ec-live-layer">
           <h2 class="ec-live-layer__title">
-            {layer.charAt(0).toUpperCase() + layer.slice(1)}s
+            {layer === 'atoms' ? 'Atoms' : layer === 'composites' ? 'Composites' : 'Templates'}
             <span class="ec-live-layer__count">({items.length})</span>
           </h2>
           {Array.from(grouped.entries()).map(([name, comps]) => (
@@ -102,7 +102,7 @@ function groupByName(comps: ComponentConfig[]): Map<string, ComponentConfig[]> {
   </section>
 </Layout>
 
-<style>
+<style is:global>
   .ec-live-hero { padding: 3rem 1.5rem 2rem; background: var(--color-surface-primary); border-bottom: 1px solid var(--color-surface-rule); position: relative; overflow: hidden; }
   .ec-live-hero::before { content: ''; pointer-events: none; background: radial-gradient(900px 540px at 10% -5%, rgba(53, 34, 93, 0.5) 0, transparent 65%), radial-gradient(700px 540px at 94% 10%, rgba(11, 80, 96, 0.5) 0, transparent 68%); position: absolute; inset: 0; }
   .ec-live-hero__inner { position: relative; max-width: 64rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
@@ -119,4 +119,27 @@ function groupByName(comps: ComponentConfig[]): Map<string, ComponentConfig[]> {
   .ec-live-layer__count { font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-accent-signal); font-weight: normal; }
   .ec-live-component-group { display: flex; flex-direction: column; gap: 0.75rem; }
   .ec-live-component-group__title { margin: 0.5rem 0 0 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-text-secondary); padding-left: 0.25rem; }
+
+  /* LivePreview component styling (restored from earlier working version) */
+  .ec-live-preview { display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 1rem; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.375rem; overflow: hidden; min-width: 0; }
+  .ec-live-preview__panel { padding: 1rem; background: var(--color-surface-raised); border-right: 1px solid var(--color-surface-rule); display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+  .ec-live-preview__name { margin: 0 0 0.5rem 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-accent-signal); padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-surface-rule); }
+  .ec-live-preview__controls { display: flex; flex-direction: column; gap: 0.5rem; }
+  .ec-live-preview__control { display: flex; flex-direction: column; gap: 0.2em; font-family: var(--font-mono); font-size: 0.75rem; }
+  .ec-live-preview__control-label { color: var(--color-text-secondary); }
+  .ec-live-preview__control input,
+  .ec-live-preview__control select { padding: 0.3em 0.5em; background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; color: var(--color-text-display); font-family: var(--font-mono); font-size: 0.75rem; width: 100%; box-sizing: border-box; }
+  .ec-live-preview__control input:focus,
+  .ec-live-preview__control select:focus { outline: 1px solid var(--color-accent-signal); border-color: var(--color-accent-signal); }
+  .ec-toggle { display: flex; align-items: center; gap: 0.3em; cursor: pointer; color: var(--color-text-secondary); }
+  .ec-toggle input { width: 1rem; height: 1rem; }
+  .ec-toggle span { font-size: 0.75rem; }
+  .ec-live-preview__reset { padding: 0.3em 0.6em; background: transparent; border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; color: var(--color-text-secondary); font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer; margin-top: auto; }
+  .ec-live-preview__reset:hover { color: var(--color-accent-signal); border-color: var(--color-accent-signal); }
+  .ec-live-preview__no-props { font-family: var(--font-mono); color: var(--color-text-secondary); margin: 0; font-size: 0.75rem; font-style: italic; }
+  .ec-live-preview__render { display: flex; flex-direction: column; gap: 0.5rem; min-height: 8rem; padding: 1rem; overflow: hidden; min-width: 0; }
+  .ec-live-preview__component { flex: 1; padding: 1rem; background: var(--color-surface-primary); border: 1px solid var(--color-surface-rule); border-radius: 0.25rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; min-width: 0; max-width: 100%; overflow: hidden; }
+  .ec-live-preview__loading { font-family: var(--font-mono); color: var(--color-text-secondary); font-size: 0.75rem; font-style: italic; }
+  .ec-live-preview__code { background: var(--color-surface-recessed); border: 1px solid var(--color-surface-rule); font-family: var(--font-mono); color: var(--color-text-display); white-space: pre; border-radius: 0.25rem; margin: 0; padding: 0.75rem; font-size: 0.75rem; line-height: 1.5; overflow-x: auto; }
+  @media (max-width: 60rem) { .ec-live-preview { grid-template-columns: 1fr; } }
 </style>
