@@ -1,0 +1,112 @@
+schema_version: hnc.prompt-technique-process.v1
+artifact_class: public-editorial-composition-contract
+status: candidate
+review_status: review-required
+verified: false
+owner_decision: required_before_provider_execution_or_public_replacement
+scope:
+  collection: public Prompt Technique Atlas
+  source_authority: existing source candidate record and vendored atlas entry
+  first_batch_positions: [2, 3, 4, 5, 6, 7, 8, 9]
+  batch_size: 8
+  canonical_record_writeback: false
+  field_card_extension: same editorial and audit gates apply to the 35 method field cards; existing Codex examples retain their original provenance
+reference_exemplar:
+  technique: 01-dynamic-context-assembly
+  prompt_ladder: src/data/dca-skill-ladder-v2.yaml
+  prompt_ladder_sha256: fbc1326494ebce831fdfdde9347e68a67c84dd287308694d1bfdc64e19f6e9dc
+  clean_provider_receipt: src/data/dca-skill-ladder-v2-runs.json
+  clean_provider_receipt_sha256: 47664a6d52c45787d65f35543ed92acd2c359dc267065bde88edb72833b43dab
+  qualitative_audit: src/data/dca-skill-ladder-v2-analysis.yaml
+  qualitative_audit_sha256: a167c9e002275a841da44886533841d9818e80b615f5623f8ea3fd45d77ad666
+  source_identity: src/data/prompt-technique-identities.yaml#01-dynamic-context-assembly
+  review_note: docs/dca-clean-isolation-review.md
+  evidence_limit: four single responses in a synthetic task, no causal efficacy finding
+
+technique_sections:
+  - id: identity
+    order: 1
+    required_fields: [what, distinguishes, mechanism, not_this]
+    check: Explain the actual operation, why it may affect the output, what distinguishes it from neighbors, and what it cannot establish. Do not treat the title or candidate source as evidence of efficacy.
+  - id: applied_process
+    order: 2
+    count: 4
+    check: Four complete and technique-specific moves, including inputs, transformation, artifact and local check. Domain examples illustrate but do not define the technique.
+  - id: when_to_use
+    order: 3
+    count: 4
+    check: Trigger, prerequisites, situation where the mechanism changes the decision, and a technique-specific anti-trigger.
+  - id: limitations
+    order: 4
+    count: 4
+    check: Specific failure modes, evidence/freshness/transfer limits, and the missing authority or human gate; not interchangeable warning boilerplate.
+  - id: demonstration
+    order: 5
+    check: One synthetic professional task, four independently authored complete prompts, captured responses, criterion-level briefing and honest non-effect boundary.
+
+prompt_ladder:
+  same_underlying_scenario: true
+  identical_prompt_wrapper: prohibited
+  identical_source_packet_in_all_four_prompts: prohibited
+  facts_shared_verbatim_only_when_needed_for_task_identity: true
+  no_internal_names_or_private_paths: true
+  conditions:
+    - id: casual
+      order: 1
+      voice: natural, short, partial recollection or informal pasted notes
+      source_coverage: partial; mark rubric criteria not observable when a fact was not supplied
+      forbidden: synthetic source ledger, formal agent contract, method name, hidden safety guarantees
+    - id: power
+      order: 2
+      voice: purpose-built working note and explicit deliverables
+      source_coverage: practical summary of available facts without field-level provenance compiler
+      forbidden: identical engineer scaffold, invented completed checks or external effects
+    - id: engineer
+      order: 3
+      voice: bounded task contract with separated source records and review predicates
+      source_coverage: complete declared source corpus
+      forbidden: studied technique's explicit selection or stage operation
+    - id: engineer_technique
+      order: 4
+      voice: independently authored end-to-end task prompt with the named mechanism operationalized at every material seam
+      source_coverage: complete corpus represented in a task-appropriate source drawer
+      required_operations: [intake, selection, source_role_and_precedence, exclusions_or_unknowns, artifact_construction, independent_check]
+      forbidden: technique name as sole instruction, pre-filled answer, fabricated source authority
+  contrast_boundary: These are prompting-style illustrations, not controlled user-skill trials. Changes in source coverage, system context and prompt construction confound causal attribution. One output per tier cannot establish reliable improvement.
+
+draft_admission:
+  input: existing source candidates and public-safe synthetic facts
+  required_per_entry: [catalog_position, slug, source_identity, scenario, decision_question, source_ref_or_facts, input_coverage_by_tier, four_full_prompts, proposed_rubric, non_claim]
+  predicates:
+    - exactly eight entries in vendored catalog order
+    - four non-identical complete prompts per entry, with the fourth showing operational mechanism rather than name-dropping
+    - no tier copies a common fact block or common task wrapper verbatim
+    - prompt facts trace to supplied source_facts, and missing facts are recorded
+    - criteria are task-specific and include input coverage, claim accuracy, consequential effects and technique-specific failure
+    - no raw credentials, private paths, internal project names or fabricated provider results
+  outcome: reviewable_prompt_draft_only
+  provider_calls: held_until_owner_reviews_draft
+
+execution_after_draft_review:
+  route: scripts/pi-clean-isolated.mjs
+  provider: minimax-oauth
+  model: MiniMax-M3
+  runtime: pi-ember-exocore image via one-shot pi-auth Compose service
+  isolation: fresh per-turn PI_CODING_AGENT_DIR; no Hub/plugin mount, AGENTS, APPEND_SYSTEM, explicit extension, skill, template, tool or saved session
+  allowlisted_effect: four separately authorized provider turns per entry; no effect in the website browser
+  capture: exact prompt, final answer only, provider/model from Pi JSON, timestamp, tool event count, system/prompt/response SHA-256
+  collision: create-only; previous evidence preserved separately; never silently overwrite or relabel a shared-home run as clean
+  hold_on: [wrong_model, missing_answer, tool_event, prompt_mismatch, internal_name_leak, provider_error]
+
+review_after_execution:
+  passes:
+    - pass: adversarial
+      checks: [invented facts, arithmetic, unsupported actions, omitted risk, unsafe inference, contamination, incomplete response]
+    - pass: source_alignment
+      checks: [source mechanism, distinctive operation, four authored sections, prompt weaving, support and authority limits]
+    - pass: comparison_audit
+      checks: [same underlying scenario, actual information provided per tier, not_observable criteria, task-specific counterfactual, no single-run efficacy claim]
+    - pass: browser
+      checks: [five sections, criterion matrix, full prompt and rendered response, mobile and desktop scrolling, keyboard focus, escape, no overflow]
+  finding_binding: every finding records the exact response SHA-256; any rerun invalidates old findings
+  release_gate: owner dispositions each batch as accept_for_review, revise, or hold; no automatic next batch or publication

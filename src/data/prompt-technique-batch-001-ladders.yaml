@@ -1,0 +1,260 @@
+schema_version: hnc.prompt-technique-ladder-draft.v1
+process_ref: src/data/prompt-technique-process.yaml
+batch_id: PTA-PUBLIC-B01
+catalog_positions: [2, 3, 4, 5, 6, 7, 8, 9]
+review_status: prompt-draft-review-required
+provider_runs: not_started
+response_analysis: not_started
+shared_boundary: These are distinct candidate prompting styles over one synthetic scenario per technique. Different information coverage and wording prevent causal efficacy or user-skill claims. No prompt has been sent for this draft batch.
+entries:
+  - catalog_position: 2
+    slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+    source_identity: PTA-001-006
+    source_ref: src/data/prompt-technique-batch-001.yaml#06-contrastive-fork-instruction-hierarchy-and-precedence/example/source_packet
+    scenario: Customer support lead drafting a workshop refund response
+    decision_question: Which reply can be drafted under the published refund policy, and what would require manager approval?
+    rubric:
+      - policy precedence over informal chat
+      - no invented no-fee transfer or issued refund
+      - two routes differ in mechanism with real disqualifiers
+      - draft versus send and manager approval are separate
+    conditions:
+      - id: casual
+        input_fact_ids: [1, 3]
+        prompt: |-
+          Someone bought a seat in our workshop five days ago and now wants a refund because their plans changed. A coworker said in chat that we usually refund unhappy people. What should I write back? I haven't checked the official policy yet, so please don't tell them I've refunded anything.
+      - id: power
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Help me draft a customer-support reply for review. The customer bought a workshop seat five days ago and requests a full refund. Our current policy gives full refunds only within 48 hours and allows a future-session transfer afterward. A colleague said in chat that we usually refund unhappy customers, but there's no policy amendment. The support lead can draft; only a manager approves exceptions, and no refund was issued. Give me a short reply plus a list of facts to double-check. Don't promise a fee-free transfer, a refund, or a sent message.
+      - id: engineer
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Prepare a candidate response artifact; do not contact the customer or payment provider.
+          Inputs: CUST/Tue — request for a full refund, purchase five days old, changed plans. POLICY/effective this month — full refund within 48 hours; afterward transfer to a future session may be offered. CHAT/Mon — colleague says 'usually refund unhappy customers' without approval or amendment. LEAD — may draft a reply; manager alone may approve an exception; no refund issued.
+          Output a policy-grounded draft, identify any unsupported sentence, and record what the lead must decide before sending. Treat lower-authority chat as evidence of a suggestion, not a policy change. Check that nothing in the output says the seat is booked, the transfer is free, the refund is issued, or the reply was sent.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Decision desk: a five-day-old workshop purchase is outside the published 48-hour refund period. The customer wants cash back. A Monday team chat suggests routinely refunding unhappy customers, but it has no approval or policy amendment. The effective policy permits a future-session transfer after 48 hours. The lead can draft only; a manager can approve exceptions; nothing has been refunded or sent.
+          First classify the authority of each input. Then fork the work into TWO routes with different mechanisms: A is a policy-compatible transfer offer drafted for lead review, with transfer fee and seat availability unknown; B is a request for a manager to consider an exception, with no promise to the customer. For each route name governing authority, customer benefit, administrative cost as a hypothesis, and evidence that would truly make THAT route unavailable (not merely make the other attractive). State why the chat cannot override policy. Recommend only a draft path supported now, write the review-only customer reply, and list distinct lead-send and manager-refund gates. Do not enact either route.
+    non_claim: Comparing drafts cannot grant refund or send authority; this fixture has no manager decision.
+  - catalog_position: 3
+    slug: 09-emotion-prompting
+    source_identity: PTA-002-001
+    source_ref: src/data/prompt-technique-batch-001.yaml#09-emotion-prompting/example/source_packet
+    scenario: Public library invitation to a digital-skills clinic
+    decision_question: Can a model-directed affective salience cue improve the factual, respectful invitation without pressuring patrons or changing the task?
+    rubric:
+      - free drop-in time and Meeting Room B are correct
+      - password-manager and suspicious-message practice are stated
+      - no personal-account sharing or short-stay promise invented
+      - audience concern acknowledged without shame or urgency
+    conditions:
+      - id: casual
+        input_fact_ids: [1]
+        prompt: |-
+          Can you write a friendly little notice for our free digital-skills clinic on Saturday from 10 to 11:30? It's in Meeting Room B, and people can drop in without signing up. I want beginners to feel welcome.
+      - id: power
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Please give me a public invitation of about 100 words. The clinic is free, Saturday 10:00–11:30, Meeting Room B, drop-in with no registration. Staff demonstrate password managers and help people practice spotting suspicious messages; nobody needs to share a personal account. Front-desk staff have heard that some patrons feel embarrassed asking basic questions in a group. Write warmly without shaming them, promising results, making up patron stories, or implying people can stay for only part of the session.
+      - id: engineer
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Content drafting contract. Output one candidate invitation near 100 words plus a separate factual check list; no posting or outreach.
+          FACT-EVENT: free drop-in Digital Skills Clinic, Saturday 10:00–11:30, Meeting Room B, no registration. FACT-SCOPE: staff demonstrate password managers and practice identifying suspicious messages; personal account sharing is not required. FACT-AUDIENCE: several patrons reported embarrassment about asking basic questions in a group.
+          Preserve every event detail, voluntary participation and a welcoming voice. Do not invent attendance, testimonials, short-stay options, guarantees, individual support or urgent consequences. Compare the draft against these facts before returning it.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Write a roughly 100-word invitation to this no-registration Saturday 10:00–11:30 free drop-in clinic in Meeting Room B. Staff will demonstrate password managers and practice identifying suspicious messages. Nobody must share a personal account. Several prospective patrons worry that asking a basic question in a group will be embarrassing. Attendance is voluntary and no outcome has been measured.
+          A real person may decide whether to enter the room based on whether this information is clear and non-shaming. Let that human significance focus your attention to the exact logistics and dignity of the reader; it does not license fear, invented urgency, promises of improvement, extra access options, or claims that you feel concern. Keep the same factual, beginner-friendly assignment. Return the invitation and a brief check against the stated facts, separating any drafting choice from an observed fact. Do not post it.
+    non_claim: A salience cue addresses model prompt framing, not model emotion or a proven gain from a single response.
+  - catalog_position: 4
+    slug: 16-staged-composition-task-framing-and-intent-normalization
+    source_identity: PTA-002-008
+    source_ref: src/data/prompt-technique-batch-001.yaml#16-staged-composition-task-framing-and-intent-normalization/example/source_packet
+    scenario: First-day volunteer onboarding at a nonprofit
+    decision_question: Can staged construction keep missing access and training authority visible before a checklist becomes a procedure?
+    rubric:
+      - confirmed greeting, sorting and attendance-location tasks are distinguished
+      - no volunteer database access or invented trainer
+      - attendance-log medium is unknown
+      - draft is not adopted and each consequential transition has a stop
+    conditions:
+      - id: casual
+        input_fact_ids: [1, 3]
+        prompt: |-
+          We have new volunteers coming Monday for a 45-minute orientation. They'll welcome visitors, sort donated books and find out where attendance gets logged. Could you make a simple first-day checklist for me to show our supervisor Mara on Friday? I don't know yet who will teach every part.
+      - id: power
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Turn my notes into a first-day volunteer checklist, not a final procedure. Confirmed work is greeting visitors, sorting donated books and learning where attendance is logged. Monday orientation is 45 minutes; Mara reviews the draft Friday. Volunteers haven't received approval for member-database access, and no one is assigned to teach donation-lifting safety. Organize a useful sequence with open questions, but don't invent a training owner, imply database access, or assume the attendance log is the database.
+      - id: engineer
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Return a review-only volunteer-onboarding artifact. No access provisioning or schedule booking.
+          Source A / coordinator: new volunteers greet visitors, sort donated books, learn where to log attendance. Source B / operations: member database requires staff approval; volunteer approval absent. Source C / schedule: Monday 45-minute first-day orientation; Mara reviews Friday. Source D / open item: donation-lifting safety trainer not named.
+          Trace every checklist entry to one source. Mark the log medium, task owner, sorting rules and lifting-training owner unknown where unstated. Keep database work out of the draft. Output checklist plus questions for Mara and a no-effect note. Do not fabricate a minute-by-minute agenda or claim adoption.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Prepare a volunteer orientation candidate through five bounded handoffs, not as a single fluent checklist. Intake records: coordinator names visitor greeting, donated-book sorting and learning the attendance-log location; operations has NOT approved volunteer member-database access; Monday orientation lasts 45 minutes; Mara may review on Friday; a lifting-safety trainer is not assigned. The log medium is not identified as the member database.
+          Stage 1 ORIENT: normalize the goals and unknown roles; stop if scope is missing. Stage 2 CONSTRUCT: add only note-supported first-day items with provisional order, leaving unknown owners blank; stop before assigning a trainer or credentials. Stage 3 CHALLENGE: look for any item that smuggles database access, lifting without training, or log-entry permission; hold it. Stage 4 VERIFY: trace each retained item to the intake record and state what was not checked; do not manufacture timings or locations. Stage 5 HANDOFF: return the draft, blocked items and exact questions Mara must answer before adoption. State the input, output and stop condition of each stage. Nothing is approved or executed here.
+    non_claim: A staged draft cannot authorize a volunteer or establish that an onboarding workflow is effective.
+  - catalog_position: 5
+    slug: 17-outcome-first-contract
+    source_identity: PTA-003-001
+    source_ref: src/data/prompt-technique-batch-001.yaml#17-outcome-first-contract/example/source_packet
+    scenario: Help-center search discoverability
+    decision_question: Can an observable owner-reviewed outcome be specified without pretending a proposed rank target or ranking change is already real?
+    rubric:
+      - all three named queries and current positions are handled correctly when supplied
+      - top-three is proposed rather than owner-approved or tested
+      - synonyms and weights remain candidate mechanisms
+      - unrelated queries and rollback are open non-goals
+    conditions:
+      - id: casual
+        input_fact_ids: [1, 2]
+        prompt: |-
+          People can't find our help article about updating a shipping address. They search things like “change address” or “new mailing location.” Could you give the search team a short note about what might help? I haven't run any tests.
+      - id: power
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Write a practical brief for our help-center search team. Our approved “Update your shipping address” article is current, but it ranks 9th for “change address,” 11th for “new mailing location,” and 7th for “update delivery details.” A developer suggested title synonyms or changed ranking weights; neither was tried. Suggest a top-three target across those three queries as a proposal for the owner to confirm, then outline options, what to measure, and possible collateral effects on other searches. Don't say anything shipped.
+      - id: engineer
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Produce a no-effect search-improvement review packet, not a configuration change. SOURCE Q: three user queries are “change address,” “new mailing location,” “update delivery details.” SOURCE A: current approved article “Update your shipping address,” confirmed by its owner this week. OBSERVED SNAPSHOT: rankings 9, 11, 7 in Q order. CANDIDATES: title synonyms or ranking-weight changes, neither tested or deployed.
+          Distinguish snapshot from a reproducible test corpus. Describe candidate changes, one isolated fixture per candidate, an unrelated-query regression check and rollback questions. The top-three target is only a proposed criterion awaiting owner agreement, not a passed test or known user-success measure. Return options and unresolved decisions; do not imply live deployment.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3, 4]
+        prompt: |-
+          Begin with a proposed achieved state for owner approval: for three address-change queries, a current approved article appears among the first three results in a repeatable test WITHOUT worsening an owner-chosen set of unrelated queries. Current snapshot shows positions 9 (“change address”), 11 (“new mailing location”), 7 (“update delivery details”) for “Update your shipping address”; its content owner confirmed the article this week. The only named candidate levers are title synonyms and ranking weights; neither has been tested or deployed.
+          Before proposing implementation, define the observable result, input scope, fixture required to reproduce rankings and failure evidence that would reject this target. Make the owner choose or revise top-three and the neighbor-query tolerance. Then compare synonyms and weight changes as methods under the SAME proposed success predicate, describing checks that would distinguish them. A positions-only snapshot is not an index corpus. Return one review brief with non-goals, unrun checks, rollback and a human decision seam. No index or article changes are authorized.
+    non_claim: A proposed achieved-state test is not a passed result or proof of reader success.
+  - catalog_position: 6
+    slug: 24-receipt-bound-achieved-state-and-outcome-specification
+    source_identity: PTA-003-008
+    source_ref: src/data/prompt-technique-batch-001.yaml#24-receipt-bound-achieved-state-and-outcome-specification/example/source_packet
+    scenario: Booking-page copy review
+    decision_question: Which text-only requirements can be checked from an excerpt, and which accessibility claims remain untested?
+    rubric:
+      - heading, action and cancellation wording are quoted accurately
+      - no claim of DOM order or comprehension from three strings
+      - browser, keyboard, mobile and screen-reader checks are marked not run
+      - receipt reports inputs, observations, unknowns, non-effects and owner gate
+    conditions:
+      - id: casual
+        input_fact_ids: [1]
+        prompt: |-
+          I'm working on a booking page. It says “Book an appointment,” the button says “Choose a time,” and there's a note saying “Cancel up to 24 hours beforehand.” Does that sound clear to you? What would you change? I don't have a screenshot.
+      - id: power
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Please review this booking-page copy against the goal that readers understand the action and cancellation terms before selecting a time. The excerpt includes heading “Book an appointment,” action “Choose a time,” and note “Cancel up to 24 hours beforehand.” We haven't tested the browser, keyboard, mobile or screen reader and owner approval is pending. Give me a concise copy assessment, suggested checks and any ambiguous wording; don't claim the page passed accessibility testing.
+      - id: engineer
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Review scope: three supplied strings only; no rendered page or accessibility test environment. Draft heading = “Book an appointment”; action label = “Choose a time”; cancellation note = “Cancel up to 24 hours beforehand.” Brief requires comprehension of action and cancellation terms before time selection. Test history: browser, keyboard, mobile and screen-reader passes absent; owner sign-off pending.
+          Compare literal wording with the brief. Mark visual placement, DOM/tab order, reference time for the 24-hour window and accessible control semantics unknown. Propose a targeted test plan, distinguishing text observation from unrun checks. No approval, publication or change to page copy has occurred.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Desired state for owner review: readers can identify a booking action and understand cancellation terms BEFORE committing to a time. Input is only a draft copy excerpt: heading “Book an appointment”; control text “Choose a time”; note “Cancel up to 24 hours beforehand.” No markup, layout, device or assistive-technology evidence exists. The owner has not approved the page.
+          Work backward from the desired state. Check what the three strings actually establish (literal presence), then name what they cannot establish (reader comprehension, note ordering, button semantics, meaning of “beforehand”). End with a receipt whose fields are exact excerpt inputs, text checks actually performed and observations, browser/keyboard/mobile/screen-reader checks NOT run, changes made (none), remaining unknowns, effects NOT authorized and the editor's next decision. Do not upgrade copy presence into accessibility conformance or a release.
+    non_claim: A text receipt cannot prove page usability, accessibility or publication readiness.
+  - catalog_position: 7
+    slug: 25-bounded-receipt-with-non-effects
+    source_identity: PTA-004-001
+    source_ref: src/data/prompt-technique-batch-001.yaml#25-bounded-receipt-with-non-effects/example/source_packet
+    scenario: Museum collection import preview
+    decision_question: How should a dry-run log be returned without implying any catalog record changed?
+    rubric:
+      - 40 rows, duplicate IDs and missing descriptions remain source-bound
+      - no claim the assistant ran the parser or imported records
+      - non-effects are scoped to this exercise
+      - curator disposition and fresh validation precede production import
+    conditions:
+      - id: casual
+        input_fact_ids: [1]
+        prompt: |-
+          I have a spreadsheet of museum objects. A preview said there were 40 rows, two rows with the same ID, and three missing descriptions. Can you tell me what needs fixing before we upload it? Please don't upload anything.
+      - id: power
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Make a handoff note for our curator. Monday's 14:00 synthetic dry-run parsed 40 rows; rows 12 and 30 share an object ID, and descriptions are missing in rows 7, 18, 21. A real import would create or update records, but we haven't invoked it. IDs must be unique and the curator reviews changes before import. Summarize what the preview actually says, what to resolve and what must be checked again; don't report any record as changed.
+      - id: engineer
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Prepare an import-readiness candidate from supplied data only. LOG/Mon14:00 synthetic parse result: 40 sample rows, duplicate object ID in rows 12 and 30, descriptions absent at 7, 18, 21. PLAN: production import would create/update collection entries, but no import was invoked. CURATOR: unique IDs required; approval before any production effect.
+          State observed diagnostics versus missing validation evidence; do not infer the full row schema or what a production import would do with duplicates. Propose specific curator questions and a corrected-file dry-run predicate. This assistant has no catalog access and has not run the parser. Leave release as a distinct human decision.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          This is a receipt about an EXISTING synthetic preview, not a receipt for work you performed. Source unit: Monday 14:00 dry-run log, 40 rows parsed, duplicate object ID in rows 12 and 30, missing descriptions in rows 7, 18 and 21. Production plan would create/update collection records but was not invoked; curator requires unique IDs and review.
+          Return fields in this order: exact supplied input and time; observations present in that log; checks the log does NOT report (other malformed fields, unique-object count, catalog compatibility); unresolved curator decisions; explicit non-effects of THIS exercise (no new parser run, no import, no create/update/delete, no repairs); recheck needed on a corrected file; separate curator release required for production. Keep “not reported” different from “passed.” Do not widen non-effects into a claim about other operators or systems.
+    non_claim: A receipt about a preview is not evidence that a production import was run or prevented elsewhere.
+  - catalog_position: 8
+    slug: 30-contrastive-fork-constraint-and-non-action-contracts
+    source_identity: PTA-004-006
+    source_ref: src/data/prompt-technique-batch-001.yaml#30-contrastive-fork-constraint-and-non-action-contracts/example/source_packet
+    scenario: Garden tour announcement preparation
+    decision_question: Which preparation route preserves separate website/email approvals without publishing?
+    rubric:
+      - east gate and Friday weather decision are stated accurately
+      - private draft and inert request differ in mechanism
+      - website and subscriber email remain separately held
+      - no invented scheduler, publication or approved poster correction
+    conditions:
+      - id: casual
+        input_fact_ids: [1, 3]
+        prompt: |-
+          Our free Saturday garden tour is 10 to 11 and people should meet at the east gate, but an old poster draft says west gate. There's a weather call Friday at 5. Could you write a corrected announcement for us to look at? Don't put it online yet.
+      - id: power
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Draft two short review-only versions of the garden tour notice, one suitable for a website and one for subscriber email. The tour is free Saturday 10:00–11:00 at the east gate; Friday 17:00 is the weather-cancellation decision. An existing poster draft wrongly says west gate and has not been corrected or approved. Drafting is allowed, but both website publication and subscriber email need coordinator approval. Mark the poster discrepancy and leave any cancellation channel unspecified. Don't schedule, post or send either version.
+      - id: engineer
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Produce an inert communication packet. SOURCE E: Saturday garden tour 10:00–11:00, free, east gate; weather decision Friday 17:00. SOURCE A: drafting permitted, website posting and subscriber email each require coordinator approval. SOURCE P: existing poster draft says west gate; correction not approved.
+          Output verified source facts, a private corrected wording candidate, the unresolved poster correction and weather decision, then two separate approval questions for web and email. No scheduler/tool capability is declared. Treat 'can draft' as separate from 'can queue'; record no publish, send, scheduling or poster edit. Do not claim any release has been granted.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Preparation only: a free Saturday 10:00–11:00 garden tour meets at EAST gate. The volunteer poster draft still says WEST gate with no approved correction. Weather-cancellation decision is Friday 17:00. Coordinator permits drafting but holds both website posting and subscriber email behind separate approvals. No publication scheduler or hold mechanism is established.
+          Compare two materially different preparation routes without performing either effect. Route A drafts corrected private copy and waits for the weather decision before requesting approvals. Route B assembles an inert approval-request document now with east-gate correction visibly marked, a Friday weather checkpoint and two separate approvals to seek later, but it is not queued. For EACH route state purpose, source authority, benefit, cost, a hypothetical failure signal and evidence that truly makes that route impractical (not a dependency shared by both). Recommend a reversible next review move and draft only private text. Explicitly list website publication, email send, scheduler queue and poster correction as NOT performed.
+    non_claim: Comparing routes does not authorize any public message or prove that a scheduling tool can hold work inert.
+  - catalog_position: 9
+    slug: 33-provenance-carrying-chunk
+    source_identity: PTA-005-001
+    source_ref: src/data/prompt-technique-batch-001.yaml#33-provenance-carrying-chunk/example/source_packet
+    scenario: Library-hours desk reading guide
+    decision_question: Can a desk guide carry exact source-unit provenance rather than laundering a summary into authority?
+    rubric:
+      - regular hours taken from the later official bulletin
+      - older community blog is historical, not current authority
+      - digest absent and issuing authority not invented
+      - quotations, paraphrases and holiday unknown remain distinct
+    conditions:
+      - id: casual
+        input_fact_ids: [1, 2]
+        prompt: |-
+          A neighbor told me the library used to close at five and wasn't open Saturdays, but I found a notice saying it's open till six on weekdays and on Saturdays from ten to two starting June 1. Could you write a quick hours note for our desk? I don't have anything about holidays.
+      - id: power
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Please draft a short regular-hours guide. Official library notice N-24 dated May 10, paragraph 2, says that from June 1 weekdays are 9:00–18:00 and Saturdays 10:00–14:00. A September 2024 community blog B-19, paragraph 1, listed weekdays 9:00–17:00 and Saturdays closed. We have no holiday notice. Cite the later official notice for current regular hours, identify the blog as historical, and say holiday hours are unknown. Don't suggest you've checked a live website.
+      - id: engineer
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Candidate desk reference, no website or signage change. Input N-24: official library bulletin, 2026-05-10, paragraph 2, exact wording “From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00.” Input B-19: community blog, 2024-09-05, paragraph 1, exact wording “Weekdays 9:00–17:00 and Saturdays closed.” Request asks for regular and holiday hours; no holiday notice provided.
+          Reconcile the conflict by date and stated authority. For each public statement include a source ID and locator, mark whether it is a quotation or inference, and leave holidays unknown. Never infer an end date for N-24 or a current live-site status. Return a review draft only.
+      - id: engineer_technique
+        input_fact_ids: [1, 2, 3]
+        prompt: |-
+          Build a provenance-bearing reading guide from two retrieved source units, not from an unattributed summary. Unit A: N-24, official library bulletin, dated 2026-05-10, paragraph 2, exact text “From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00.” Unit B: B-19, community blog, dated 2024-09-05, paragraph 1, exact text “Weekdays 9:00–17:00 and Saturdays closed.” No full document bytes or digest are provided, and there is no holiday notice. No live website was checked.
+          FIRST attach to EACH unit its source ID, paragraph locator, exact quote, date, authority stated here, digest status 'unavailable', and the transformation you will make when summarizing. THEN resolve the two schedules: use N-24's stated regular hours from June 1, label B-19 historical and never invent a bulletin end date. Finally write a concise desk guide with a source card beside each material claim and a clear distinction among exact quotation, paraphrase and unknown holiday hours. Hold any claim not supported by one of the two source units.
+    non_claim: A source card makes lineage inspectable but does not independently verify current operating hours or holiday schedules.

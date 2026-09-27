@@ -1,0 +1,53 @@
+---
+/** Prompt drafts for owner review. Static, no-index, no provider effect. */
+import { readFileSync } from 'node:fs';
+import { parse } from 'yaml';
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+const draft = parse(readFileSync('./src/data/prompt-technique-batch-001-ladders.yaml', 'utf8'));
+const source = parse(readFileSync('./src/data/prompt-technique-batch-001.yaml', 'utf8'));
+const factsBySlug = new Map(source.entries.map((entry: any) => [entry.slug, entry.example.source_packet]));
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Prompt Batch 1 · Draft Review · Hearth &amp; Code</title>
+  </head>
+  <body class="batch-review">
+    <a class="batch-skip" href="#batch-main">Skip to batch</a>
+    <header class="batch-header"><a href="/methods/">← Methods</a><span>Hearth &amp; Code · editorial review</span></header>
+    <main id="batch-main" class="batch-main">
+      <header class="batch-hero">
+        <p class="batch-kicker">Candidate prompt drafts · no provider runs</p>
+        <h1>Eight techniques. Four complete prompts each.</h1>
+        <p>The prompts below represent different information coverage and prompting styles. They have not been sent to a model for this draft batch. Review the complete prompts and source facts before deciding whether to run them through the isolated Pi route.</p>
+        <nav aria-label="Jump to technique"><ol>{draft.entries.map((entry: any) => <li><a href={`#tech-${entry.catalog_position}`}>#{String(entry.catalog_position).padStart(3, '0')} · {entry.slug.replace(/^\d+-/, '').replaceAll('-', ' ')}</a></li>)}</ol></nav>
+      </header>
+      {draft.entries.map((entry: any) => <section class="batch-tech" id={`tech-${entry.catalog_position}`} aria-labelledby={`title-${entry.catalog_position}`}>
+        <header><p class="batch-kicker">#{String(entry.catalog_position).padStart(3, '0')} · {entry.source_identity} · prompt-draft-review-required</p><h2 id={`title-${entry.catalog_position}`}>{entry.slug.replace(/^\d+-/, '').replaceAll('-', ' ')}</h2><p><strong>Decision:</strong> {entry.decision_question}</p><p><strong>Scenario:</strong> {entry.scenario}</p></header>
+        <details class="batch-facts"><summary>Source facts used to author the four prompts</summary><ol>{(factsBySlug.get(entry.slug) as string[]).map((fact) => <li>{fact}</li>)}</ol></details>
+        <div class="batch-prompts">{entry.conditions.map((condition: any, index: number) => <details class="batch-prompt" open={index === 0}>
+          <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{condition.id.replaceAll('_', ' ')}</strong><small>Source facts represented: {condition.input_fact_ids.join(', ')}</small><b aria-hidden="true">⌄</b></summary>
+          <div><pre>{condition.prompt}</pre></div>
+        </details>)}</div>
+        <div class="batch-rubric"><h3>Proposed evaluation questions</h3><ul>{entry.rubric.map((item: string) => <li>{item}</li>)}</ul><p>{entry.non_claim}</p></div>
+      </section>)}
+      <footer class="batch-footer"><p>Draft-only composition. No model execution, evidence claim, approval, deployment or next-batch authorization follows from this page.</p><a href="/methods/">Return to Methods →</a></footer>
+    </main>
+  </body>
+</html>
+<style>
+  .batch-review{background:var(--color-surface-primary);color:var(--color-text-primary)}
+  .batch-skip{position:fixed;top:-4rem;left:1rem;z-index:10;padding:.7rem;background:var(--color-surface-recessed)}.batch-skip:focus{top:1rem}
+  .batch-header{display:flex;justify-content:space-between;gap:1rem;padding:1rem max(1rem,calc((100vw - 80rem)/2));border-bottom:1px solid var(--color-surface-rule);font:.72rem var(--font-mono);color:var(--color-text-secondary)}.batch-header a{color:var(--color-accent-signal);text-decoration:none}
+  .batch-main{max-width:80rem;margin:auto;padding:0 1.25rem}.batch-hero{padding:clamp(3rem,7vw,6rem) 0 3rem}.batch-kicker{font:.7rem var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-gold)}
+  .batch-hero h1{max-width:18ch;margin:.7rem 0 1.3rem;font:700 clamp(2.5rem,6vw,5rem)/1 var(--font-display);color:var(--color-text-display)}.batch-hero>p:not(.batch-kicker){max-width:65ch;color:var(--color-text-secondary);line-height:1.65}.batch-hero nav ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin:2rem 0 0;padding:0;list-style:none}.batch-hero nav a{display:block;padding:.7rem;border:1px solid var(--color-surface-rule);color:var(--color-text-primary);text-decoration:none;font:.8rem/1.4 var(--font-mono)}.batch-hero nav a:hover{border-color:var(--color-accent-signal)}
+  .batch-tech{padding:3rem 0;border-top:1px solid var(--color-surface-rule);scroll-margin-top:1rem}.batch-tech h2{margin:.5rem 0;font:700 clamp(1.8rem,3.4vw,3rem)/1.1 var(--font-display);text-transform:capitalize}.batch-tech header>p:not(.batch-kicker){color:var(--color-text-secondary);line-height:1.5}.batch-tech header strong{color:var(--color-text-display)}
+  .batch-facts{margin:1.5rem 0;border:1px solid var(--color-surface-rule);background:var(--color-surface-recessed)}.batch-facts summary{padding:1rem;color:var(--color-accent-signal);cursor:pointer;font:.8rem var(--font-mono)}.batch-facts ol{margin:0;padding:0 1.5rem 1rem 3rem;color:var(--color-text-secondary);line-height:1.6}.batch-facts li+li{margin-top:.6rem}
+  .batch-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.batch-prompt{min-width:0;border:1px solid var(--color-surface-rule);background:var(--color-surface-raised)}.batch-prompt summary{display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .7rem;padding:1rem;cursor:pointer;list-style:none}.batch-prompt summary::-webkit-details-marker{display:none}.batch-prompt summary span{color:var(--color-accent-gold);font:.7rem var(--font-mono)}.batch-prompt summary strong{font:700 1.15rem var(--font-display);text-transform:capitalize}.batch-prompt summary small{grid-column:2;color:var(--color-text-secondary);font:.7rem var(--font-mono)}.batch-prompt summary b{grid-column:3;grid-row:1;color:var(--color-accent-signal)}.batch-prompt>div{padding:1rem;border-top:1px solid var(--color-surface-rule)}.batch-prompt pre{margin:0;color:var(--color-text-primary);font:.78rem/1.6 var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere}
+  .batch-rubric{margin-top:1.5rem;padding:1rem;border-left:3px solid var(--color-accent-violet);background:var(--color-surface-recessed)}.batch-rubric h3{margin:0;font:700 1.2rem var(--font-display)}.batch-rubric ul{color:var(--color-text-secondary);line-height:1.65}.batch-rubric>p{color:var(--color-accent-gold);font-size:.85rem}.batch-footer{padding:3rem 0 5rem;color:var(--color-text-secondary)}.batch-footer a{color:var(--color-accent-signal)}
+  @media(max-width:48rem){.batch-prompts,.batch-hero nav ol{grid-template-columns:1fr}}
+</style>
