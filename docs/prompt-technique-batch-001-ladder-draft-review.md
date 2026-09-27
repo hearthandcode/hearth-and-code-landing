@@ -1,6 +1,6 @@
 # Batch 1 · four-prompt draft review
 
-Status: **historical prompt draft**. The owner subsequently authorized 32 clean-route provider turns; their current audit and responses are at `docs/prompt-technique-batch-001-ladder-execution-review.md` and `/review/prompt-batch-001/`. This document remains the frozen authoring orientation, not an efficacy study or a replacement for the public Methods cards. Machine-readable process: `src/data/prompt-technique-process.yaml`. The eight complete ladders are in `src/data/prompt-technique-batch-001-ladders.yaml`. Read them in catalogue order #002–#009, immediately after the Dynamic Context Assembly exemplar. The deterministic draft audit is `node scripts/audit-prompt-ladder-draft.mjs` (read-only; reports prompt digests and source-fact coverage).
+Status: **historical prompt draft**. The owner subsequently authorized 32 clean-route provider turns; their current audit is at `docs/prompt-technique-batch-001-ladder-execution-review.md` and their technique surfaces are integrated at `/methods/#prompt-lab`. This document remains the frozen authoring orientation, not an efficacy study or a replacement for the public Methods cards. Machine-readable process: `src/data/prompt-technique-process.yaml`. The eight complete ladders are in `src/data/prompt-technique-batch-001-ladders.yaml`. Read them in catalogue order #002–#009, immediately after the Dynamic Context Assembly exemplar. The deterministic draft audit is `node scripts/audit-prompt-ladder-draft.mjs` (read-only; reports prompt digests and source-fact coverage).
 
 ## What changed from the earlier two-arm batch
 
@@ -27,4 +27,4 @@ Every item has four independently authored *whole prompts*: an informal request 
 
 ## Held next stage
 
-The owner authorized that clean run in the next turn. The 32 captured turns, adversarial/source-alignment assessment and no-index review page are now the successor surfaces. The older Batch 1 two-arm receipts remain historical, isolation-limited candidates; the four-tier execution has not been accepted or substituted into public Methods cards.
+The owner authorized that clean run in the next turn. The 32 captured turns and adversarial/source-alignment assessment are now presented within the Methods technique sheets; the separate no-index page was removed at the owner's direction. The older Batch 1 two-arm receipts remain historical, isolation-limited candidates; the four-tier execution has not been accepted or substituted into public Methods cards.

@@ -124,7 +124,7 @@ const collections = contract.field_library.collection_ids
           <p>{contract.prompt_lab.description}</p>
         </header>
         <aside class="methods-library-boundary methods-prompt-boundary"><strong>Atlas boundary</strong><p>{contract.prompt_lab.boundary}</p></aside>
-        <aside class="methods-candidate-review"><div><strong>Current review candidate</strong><p>{contract.prompt_lab.candidate_review.boundary}</p></div><a href={contract.prompt_lab.candidate_review.href}>{contract.prompt_lab.candidate_review.label} <span aria-hidden="true">→</span></a></aside>
+        <aside class="methods-candidate-review"><div><strong>Batch 1 in this Methods surface</strong><p>{contract.prompt_lab.batch_note}</p></div></aside>
         <div class="methods-prompt-tree"><PromptCategoryTree client:load /></div>
       </div>
     </section>
@@ -203,8 +203,6 @@ const collections = contract.field_library.collection_ids
   .methods-candidate-review { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-top: 1rem; padding: 1rem 1.25rem; border: 1px solid var(--color-surface-rule); background: var(--color-surface-raised); }
   .methods-candidate-review strong { color: var(--color-accent-gold); font: 0.7rem var(--font-mono); text-transform: uppercase; }
   .methods-candidate-review p { max-width: 46rem; margin: .45rem 0 0; color: var(--color-text-secondary); line-height: 1.5; }
-  .methods-candidate-review a { flex: none; color: var(--color-accent-signal); font: .76rem/1.4 var(--font-mono); text-decoration: none; }
-  .methods-candidate-review a:hover { text-decoration: underline; }
   @media (max-width: 56rem) { .methods-candidate-review { align-items: start; flex-direction: column; } }
   .methods-next { padding: clamp(4rem, 9vw, 7rem) 0; text-align: center; background: linear-gradient(120deg, rgba(31, 182, 168, 0.12), var(--color-surface-primary) 60%, rgba(155, 93, 229, 0.12)); }
   .methods-next .methods-shell { max-width: 52rem; }

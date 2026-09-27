@@ -35,7 +35,9 @@ test('the Prompt Lab is category-first and bound to the actual atlas taxonomy', 
   assert.equal(new Set(promptAtlas.map((entry) => entry.document)).size, 16);
   assert.equal(new Set(promptAtlas.map((entry) => `${entry.document}::${entry.category}`)).size, 64);
   assert.ok(promptAtlas.every((entry) => entry.document && entry.category && entry.sections.length === 8));
-  assert.match(contract.prompt_lab.description, /four-section technique dispositions/);
+  assert.match(contract.prompt_lab.description, /five-section sheet/);
+  assert.match(contract.prompt_lab.batch_note, /integrated here/);
+  assert.doesNotMatch(JSON.stringify(contract.prompt_lab), /\/review\/prompt-batch-001\//);
 });
 
 test('the revised technique and field-card workflow enforces one authored exemplar and a matched two-run receipt', () => {

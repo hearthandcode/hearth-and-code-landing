@@ -384,3 +384,10 @@
 .ec-prompt-sheet__identity-grid strong{color:var(--ec-plasma-500);font:700 .69rem var(--ec-mono);letter-spacing:.05em;text-transform:uppercase}
 .ec-prompt-sheet__identity-grid p{margin:.5rem 0 0;color:var(--ec-paper-300);font-size:.89rem;line-height:1.6}
 @media(max-width:760px){.ec-prompt-sheet__identity-grid{grid-template-columns:1fr}.ec-prompt-sheet__section-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Candidate Batch 1 comparison is integrated into the existing technique sheet. */
+.ec-batch-candidate{color:var(--ec-gold-500)!important;font:700 .67rem/1.4 var(--ec-mono)!important;letter-spacing:.05em;text-transform:uppercase}
+.ec-batch-source-facts{border:1px solid var(--ec-line-500);background:var(--ec-field-950)}
+.ec-batch-source-facts summary{padding:.85rem 1rem;color:var(--ec-plasma-500);font:700 .68rem var(--ec-mono);cursor:pointer}
+.ec-batch-source-facts ol{margin:0;padding:0 1.25rem 1rem 2.5rem;color:var(--ec-paper-300);font-size:.82rem;line-height:1.55}
+.ec-batch-source-facts li+li{margin-top:.5rem}
+.ec-batch-output-hold{margin:.5rem 1rem;padding:.7rem .85rem;border-left:3px solid var(--ec-danger-500);background:rgba(194,90,58,.12);color:var(--ec-paper-100);font-size:.82rem;line-height:1.5}

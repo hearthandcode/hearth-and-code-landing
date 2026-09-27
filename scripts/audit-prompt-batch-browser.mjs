@@ -29,19 +29,30 @@ try {
         role: element.getAttribute('role'),
       }));
       if (data.title !== source.title || data.sections !== 5 || data.identity !== 4 || data.role !== 'dialog' || data.details.flat().some((n) => n < 35)) throw new Error(`position ${position}: ${JSON.stringify(data)}`);
-      await dialog.getByRole('tab', { name: 'Technique response' }).click();
-      const response = dialog.locator('.ec-prompt-sheet__rendered-response');
-      const scroll = await response.evaluate((el) => ({ height: el.clientHeight, scroll: el.scrollHeight }));
-      if (scroll.height !== scroll.scroll) throw new Error(`position ${position}: response has hidden nested scroll`);
-      await dialog.locator('.ec-prompt-sheet__comparison-receipt').scrollIntoViewIfNeeded();
-      if (!(await dialog.locator('.ec-prompt-sheet__comparison-receipt').isVisible())) throw new Error(`position ${position}: receipt unreachable`);
-      if ((position === 3 && width === 1600) || (position === 9 && width === 390)) await page.screenshot({ path: `/tmp/prompt-batch-001-repaired-${position}-${width}.png` });
+      const comparison = dialog.locator('[data-ec-component="PromptBatchSkillLadder"]');
+      const summary = await comparison.evaluate((el) => ({ slug: el.getAttribute('data-slug'), levels: el.querySelectorAll('.ec-skill-ladder__level').length, criteria: el.querySelectorAll('.ec-skill-ladder__matrix tbody tr').length }));
+      if (summary.slug !== source.slug || summary.levels !== 4 || summary.criteria !== 4) throw new Error(`position ${position}: missing integrated batch comparison ${JSON.stringify(summary)}`);
+      await dialog.getByRole('button', { name: /05 · Demonstration/ }).click();
+      for (let tier = 0; tier < 4; tier++) {
+        const level = comparison.locator('.ec-skill-ladder__level').nth(tier);
+        await level.locator('summary').click();
+        const pair = await level.evaluate((el) => ({ prompt: el.querySelector('pre')?.textContent?.length, response: el.querySelector('.ec-skill-ladder__response')?.textContent?.length }));
+        if (!pair.prompt || pair.prompt < 180 || !pair.response || pair.response < 100) throw new Error(`position ${position}/tier ${tier}: response or prompt missing`);
+        await level.locator('summary').click();
+      }
+      if (position === 7 && await comparison.locator('.ec-batch-output-hold').count() !== 1) {
+        await comparison.locator('.ec-skill-ladder__level').first().locator('summary').click();
+        if (await comparison.locator('.ec-batch-output-hold').count() !== 1) throw new Error('museum pseudo-tool output warning missing');
+      }
+      await comparison.locator('.ec-skill-ladder__boundary').scrollIntoViewIfNeeded();
+      if (!(await comparison.locator('.ec-skill-ladder__boundary').isVisible())) throw new Error(`position ${position}: final boundary unreachable`);
+      if ((position === 3 && width === 1600) || (position === 9 && width === 390)) await page.screenshot({ path: `/tmp/prompt-batch-001-integrated-${position}-${width}.png` });
       await page.keyboard.press('Escape');
       if (!(await card.evaluate((el) => document.activeElement === el))) throw new Error(`position ${position}: focus not returned`);
     }
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error(`${width}: horizontal overflow`);
     if (errors.length) throw new Error(`${width}: ${errors.join('; ')}`);
-    console.log(`${width}px: eight ordered cards, full responses, reachable receipts, focus return, no overflow or page errors`);
+    console.log(`${width}px: eight Methods cards with 32 full prompts/responses, four-tier audits, focus return, no overflow or page errors`);
     await page.close();
   }
 } finally { await browser.close(); }

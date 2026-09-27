@@ -8,12 +8,16 @@ const source = await readFile(new URL('../src/data/prompt-technique-batch-001-la
 const draft = parse(source.toString('utf8'));
 const runs = JSON.parse(await readFile(new URL('../src/data/prompt-technique-batch-001-ladder-runs.json', import.meta.url), 'utf8'));
 const audit = parse(await readFile(new URL('../src/data/prompt-technique-batch-001-ladder-analysis.yaml', import.meta.url), 'utf8'));
+const projection = JSON.parse(await readFile(new URL('../src/data/prompt-technique-batch-001-review.json', import.meta.url), 'utf8'));
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 
 test('eight ordered prompt ladders have 32 clean-route results', () => {
   assert.equal(draft.entries.length, 8);
   assert.deepEqual(draft.entries.map((entry) => entry.catalog_position), [2, 3, 4, 5, 6, 7, 8, 9]);
   assert.equal(runs.batch_sha256, sha(source));
+  assert.equal(projection.batch_sha256, sha(source));
+  assert.equal(projection.entries.length, 8);
+  assert.equal(projection.entries.flatMap((entry) => entry.levels).length, 32);
   assert.equal(runs.records.length, 32);
   assert.equal(runs.provider, 'minimax-oauth');
   assert.equal(runs.model, 'MiniMax-M3');

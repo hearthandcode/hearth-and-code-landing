@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import type { CatalogEntry, TemplateTech } from '../../data/vendored-data';
 import exemplars from '../../data/prompt-technique-exemplars.json';
-import comparisons from '../../data/prompt-technique-comparisons.json';
-import batchOneComparisons from '../../data/prompt-technique-comparisons.batch-001.json';
-import { renderResponseMarkdown } from './response-markdown';
 import { DcaSkillLadder } from './DcaSkillLadder';
+import { PromptBatchSkillLadder } from './PromptBatchSkillLadder';
 
 const TYPE_COLORS: Record<string, { tint: string; ink: string; label: string }> = {
   core: { tint: 'rgba(244,184,96,0.10)', ink: 'var(--ec-gold-500)', label: 'Core' },
@@ -84,16 +82,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
   }, []);
 
   const color = colorFor(entry.type);
-  const [activeTab, setActiveTab] = useState(0);
   const exemplar = exemplars.entries.find((item) => item.slug === entry.slug);
-  const comparison = [...comparisons.comparisons, ...batchOneComparisons.comparisons].find((item) => item.slug === entry.slug);
-  const samples = comparison?.samples ?? [];
-  const tabs = [
-    { label: 'Baseline prompt', text: samples.find((s) => s.condition === 'baseline')?.submitted_prompt },
-    { label: 'Baseline response', text: samples.find((s) => s.condition === 'baseline')?.response },
-    { label: 'Technique prompt', text: samples.find((s) => s.condition === 'applied')?.submitted_prompt },
-    { label: 'Technique response', text: samples.find((s) => s.condition === 'applied')?.response },
-  ];
   if (typeof document === 'undefined') return null;
 
   return createPortal(
@@ -152,34 +141,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
           </section>
           <section id="tech-section-5" className="ec-prompt-sheet__section ec-prompt-sheet__section--05">
             <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">05</span><h3 className="ec-prompt-sheet__section-title">Demonstration and observed results</h3></header>
-            {entry.slug === '01-dynamic-context-assembly' ? <DcaSkillLadder /> : <>
-            <p className="ec-prompt-sheet__mechanism">{exemplar.example.scenario}. Same source packet and model route for both prompts; the instruction framing changes.</p>
-            <p className="ec-prompt-sheet__mechanism"><strong>Comparison question:</strong> {exemplar.example.comparison_predicate}</p>
-            {comparison ? <div className="ec-prompt-sheet__comparison">
-              {batchOneComparisons.comparisons.some((item) => item.slug === entry.slug) && <p className="ec-prompt-sheet__redaction"><strong>Isolation limit:</strong> This historical run used a shared Pi home with an appended Cognitectus system instruction. The provider output may reflect that vocabulary; this is not a clean prompt-only comparison. A fresh-home rerun is required before accepting the example.</p>}
-              <p className="ec-prompt-sheet__delta"><strong>What changed in the prompt:</strong> {comparison.editorial_delta}</p>
-              <div className="ec-prompt-sheet__tabs" role="tablist" aria-label={`${entry.title} demonstration`} onKeyDown={(event) => {
-                const next = event.key === 'ArrowRight' ? (activeTab + 1) % 4 : event.key === 'ArrowLeft' ? (activeTab + 3) % 4 : event.key === 'Home' ? 0 : event.key === 'End' ? 3 : null;
-                if (next === null) return;
-                event.preventDefault(); setActiveTab(next);
-                (event.currentTarget.querySelectorAll('button')[next] as HTMLButtonElement)?.focus();
-              }}>
-                {tabs.map((tab, index) => <button key={tab.label} type="button" role="tab" id={`demo-tab-${entry.slug}-${index}`} aria-controls={`demo-panel-${entry.slug}`} aria-selected={activeTab === index} tabIndex={activeTab === index ? 0 : -1} onClick={() => setActiveTab(index)}>{tab.label}</button>)}
-              </div>
-              <div role="tabpanel" id={`demo-panel-${entry.slug}`} aria-labelledby={`demo-tab-${entry.slug}-${activeTab}`} className="ec-prompt-sheet__comparison-panel">
-                <h4>{tabs[activeTab].label}</h4>
-                {activeTab % 2 === 1 && 'public_redaction' in samples[activeTab === 1 ? 0 : 1] && <p className="ec-prompt-sheet__redaction">{samples[activeTab === 1 ? 0 : 1].public_redaction}</p>}
-                {activeTab % 2 === 0
-                  ? <pre className="ec-prompt-sheet__submitted-prompt">{tabs[activeTab].text}</pre>
-                  : <div className="ec-prompt-sheet__rendered-response" dangerouslySetInnerHTML={{ __html: renderResponseMarkdown(tabs[activeTab].text ?? '') }} />
-                }
-              </div>
-              <aside className="ec-prompt-sheet__comparison-receipt"><strong>Observed limitations · {comparison.review_status}</strong>
-                <ul>{comparison.observed_limits.map((limit) => <li key={limit}>{limit}</li>)}</ul>
-                <p>{comparison.boundary}</p><small>{comparison.provider}/{comparison.model} · 0 tool events · prompt/response digests retained in the comparison receipt.</small>
-              </aside>
-            </div> : <p>Matched execution pair pending. No model output has been captured for this technique.</p>}
-            </>}
+            {entry.slug === '01-dynamic-context-assembly' ? <DcaSkillLadder /> : <PromptBatchSkillLadder slug={entry.slug} />}
           </section>
         </div> : <div className="ec-prompt-sheet__editorial-hold"><strong>Technique-specific editorial review pending</strong><p>This technique has not yet received its own applied steps, use criteria, limitations and matched provider-backed example. The older source projection is withheld rather than presented as tailored instruction.</p></div>}
       </article>

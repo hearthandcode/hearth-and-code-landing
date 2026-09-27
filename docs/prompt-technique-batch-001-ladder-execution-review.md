@@ -1,6 +1,6 @@
 # Batch 1 four-tier execution: adversarial and alignment review
 
-**Disposition:** candidate-needs-revision, owner decision pending. Scope: atlas entries #002–#009, 32 distinct full prompts and 32 observed `minimax-oauth/MiniMax-M3` responses. The underlying prompt source, provider receipt and qualitative matrix are `src/data/prompt-technique-batch-001-ladders.yaml`, `src/data/prompt-technique-batch-001-ladder-runs.json`, and `src/data/prompt-technique-batch-001-ladder-analysis.yaml`. The no-index browser view is `/review/prompt-batch-001/`. It is review-only, not access-controlled. No live Methods card was replaced.
+**Disposition:** candidate-needs-revision, owner decision pending. Scope: atlas entries #002–#009, 32 distinct full prompts and 32 observed `minimax-oauth/MiniMax-M3` responses. The underlying prompt source, provider receipt and qualitative matrix are `src/data/prompt-technique-batch-001-ladders.yaml`, `src/data/prompt-technique-batch-001-ladder-runs.json`, and `src/data/prompt-technique-batch-001-ladder-analysis.yaml`. The candidate comparison is integrated into each technique's section 05 at `/methods/#prompt-lab`; select catalogue positions #002–#009 from the category tree. The separate review route was removed after owner correction. The five-section Methods sheet retains a candidate-needs-revision posture; no model output is accepted professional advice.
 
 ## Evidence and execution audit
 
@@ -29,7 +29,7 @@
 3. **Arithmetic and factual precision:** Search acceptance logic (#005), volunteer-role reversal (#004), no-fee or exception assumptions (#002), short-stay promise (#003), and attribution/quotation fidelity (#009) are distinct errors. No aggregate score would capture their different consequences.
 4. **Privacy/security/non-effect:** No credential or private file was sent in task prompts. The model-generated pseudo-tool output (#007) is escaped and shown as text only; no tool event or file read happened. Output language about refund, import, or publication is a candidate, not an action.
 5. **Comparative validity:** Different source coverage per tier makes casual-to-engineer differences unfit for causal ranking; even the fourth tier is a wholly re-authored prompt. Highlight observed mechanism and counterexamples together.
-6. **Browser:** At 1600px and 390px, `/methods/` links to the no-index review page; it renders eight techniques, 32 disclosure pairs, 32 rubric rows, and the #007 tool-text warning with no browser page error or horizontal overflow. This is not full accessibility conformance.
+6. **Browser:** The former separate no-index page was removed. The actual Methods section 05 now renders each candidate's four prompt/response disclosures, rubric, and #007 tool-text warning inside the existing five-section technique sheet. Re-run desktop/mobile checks on those Methods cards before claiming this integration verified; it is not full accessibility conformance.
 
 ## Required disposition before public replacement
 
