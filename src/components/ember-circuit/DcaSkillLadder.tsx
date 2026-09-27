@@ -1,11 +1,11 @@
-import ladderProjection from '../../data/dca-skill-ladder-projection.json';
-import runs from '../../data/dca-skill-ladder-runs.json';
+import ladderProjection from '../../data/dca-skill-ladder-v2-projection.json';
+import runs from '../../data/dca-skill-ladder-v2-runs.json';
 import { renderResponseMarkdown } from './response-markdown';
 
 const { ladder, analysis } = ladderProjection;
 const assessments = new Map(analysis.assessments.map((entry) => [entry.id, entry]));
 const responses = new Map(runs.records.map((entry) => [entry.id, entry]));
-const resultLabel: Record<string, string> = { met: 'Met here', partly_met: 'Partly met', not_met: 'Not met' };
+const resultLabel: Record<string, string> = { met: 'Met here', partly_met: 'Partly met', not_met: 'Not met', not_observable: 'Not observable' };
 
 export function DcaSkillLadder() {
   return <div className="ec-skill-ladder">
@@ -35,7 +35,7 @@ export function DcaSkillLadder() {
         const record = responses.get(condition.id);
         return <details key={condition.id} className="ec-skill-ladder__level">
           <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{condition.label}</strong><small>{assessment?.headline}</small><b aria-hidden="true">⌄</b></summary>
-          <p>{condition.framing} {assessment?.summary}</p>
+          <p><strong>Information supplied:</strong> {condition.source_coverage}. {condition.framing} {assessment?.summary}</p>
           {record ? <div className="ec-skill-ladder__pair">
             <section><h5>Submitted prompt</h5><pre>{record.prompt}</pre></section>
             <section><h5>MiniMax-M3 response · observed</h5><div className="ec-skill-ladder__response" dangerouslySetInnerHTML={{ __html: renderResponseMarkdown(record.response) }} /></section>

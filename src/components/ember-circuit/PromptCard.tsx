@@ -125,24 +125,33 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
         </header>
 
         {exemplar && <nav className="ec-prompt-sheet__section-nav" aria-label="Technique sections">
-          {['How it works', 'When to use it', 'Limitations', 'Matched example'].map((label, index) => <button type="button" key={label} onClick={() => sheetRef.current?.querySelector(`#tech-section-${index + 1}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>{String(index + 1).padStart(2, '0')} · {label}</button>)}
+          {['What it is', 'How it works', 'When to use it', 'Limitations', 'Demonstration'].map((label, index) => <button type="button" key={label} onClick={() => sheetRef.current?.querySelector(`#tech-section-${index + 1}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>{String(index + 1).padStart(2, '0')} · {label}</button>)}
         </nav>}
-        {exemplar ? <div className="ec-prompt-sheet__body ec-prompt-sheet__body--four">
-          <section id="tech-section-1" className="ec-prompt-sheet__section ec-prompt-sheet__section--01">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">How it works · {exemplar.setting}</h3></header>
+        {exemplar ? <div className="ec-prompt-sheet__body ec-prompt-sheet__body--five">
+          <section id="tech-section-1" className="ec-prompt-sheet__section ec-prompt-sheet__section--01 ec-prompt-sheet__identity">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">What this technique is</h3></header>
+            <div className="ec-prompt-sheet__identity-grid">
+              <div><strong>Definition</strong><p>{exemplar.definition.what}</p></div>
+              <div><strong>Distinctive move</strong><p>{exemplar.definition.distinguishes}</p></div>
+              <div><strong>Why it may work</strong><p>{exemplar.definition.mechanism}</p></div>
+              <div><strong>What it is not</strong><p>{exemplar.definition.not_this}</p></div>
+            </div>
+          </section>
+          <section id="tech-section-2" className="ec-prompt-sheet__section ec-prompt-sheet__section--02">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">How it works · {exemplar.setting}</h3></header>
             <p className="ec-prompt-sheet__mechanism">{exemplar.mechanism}</p>
             <ol className="ec-prompt-sheet__steps">{exemplar.applied_process.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
           </section>
-          <section id="tech-section-2" className="ec-prompt-sheet__section ec-prompt-sheet__section--02">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">When and why to use it</h3></header>
+          <section id="tech-section-3" className="ec-prompt-sheet__section ec-prompt-sheet__section--03">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">When and why to use it</h3></header>
             <ol className="ec-prompt-sheet__steps">{exemplar.when_to_use.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
           </section>
-          <section id="tech-section-3" className="ec-prompt-sheet__section ec-prompt-sheet__section--03">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">Specific limitations</h3></header>
+          <section id="tech-section-4" className="ec-prompt-sheet__section ec-prompt-sheet__section--04">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">Specific limitations</h3></header>
             <ul className="ec-prompt-sheet__limits">{exemplar.limitations.map((limit) => <li key={limit.title}><strong>{limit.title}</strong><p>{limit.detail}</p></li>)}</ul>
           </section>
-          <section id="tech-section-4" className="ec-prompt-sheet__section ec-prompt-sheet__section--04">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">A matched, isolated task</h3></header>
+          <section id="tech-section-5" className="ec-prompt-sheet__section ec-prompt-sheet__section--05">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">05</span><h3 className="ec-prompt-sheet__section-title">Demonstration and observed results</h3></header>
             {entry.slug === '01-dynamic-context-assembly' ? <DcaSkillLadder /> : <>
             <p className="ec-prompt-sheet__mechanism">{exemplar.example.scenario}. Same source packet and model route for both prompts; the instruction framing changes.</p>
             <p className="ec-prompt-sheet__mechanism"><strong>Comparison question:</strong> {exemplar.example.comparison_predicate}</p>

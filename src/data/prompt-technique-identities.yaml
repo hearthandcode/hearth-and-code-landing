@@ -1,0 +1,47 @@
+schema_version: hnc.prompt-technique-identities.v1
+entries:
+  - slug: 01-dynamic-context-assembly
+    what: A task-time method for turning a changing collection of records into the smallest traceable brief needed for one decision. The prompt asks the assistant to choose relevant facts, not just consume everything it was given.
+    distinguishes: Unlike a long context dump or ordinary summarization, it resolves conflicts one field at a time, preserves the source and date beside each selected fact, and lists excluded or unknown facts before drafting.
+    mechanism: Selection narrows irrelevant context; source-role and freshness checks can expose an obsolete count or low-authority message before it is used as current. An output check compares the draft with the assembled brief rather than trusting fluent wording.
+    not_this: It does not retrieve missing evidence, prove a source is accurate, or make the resulting plan safe to execute. Compression can hide counterevidence if the selection check is weak.
+  - slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+    what: A structured comparison of two materially different ways to resolve a conflict between instructions or records with different authority.
+    distinguishes: It does not merely write two differently worded answers. Each route names the governing rule, who may act, a real rejection condition, and the cost of choosing that route.
+    mechanism: The fork exposes where a lower-trust chat or note would have to cross an authority boundary; comparing disqualifiers makes a tempting unauthorized exception visible before a reply is drafted.
+    not_this: A comparison cannot grant the permission missing from either route. A manager-approved exception does not retroactively change the published rule.
+  - slug: 09-emotion-prompting
+    what: A controlled prompt-time experiment that adds an affective salience cue to an otherwise fixed model task. The cue addresses the model's attention to the human stakes, not the emotional state of the model.
+    distinguishes: It is not simply a request to make user-facing copy more emotional. The task facts, required output and audience tone stay constant so the additional cue can be inspected as a distinct framing change.
+    mechanism: Importance framing may influence which constraints the model attends to during generation; the response still needs the same factual and non-coercion checks as the ordinary prompt.
+    not_this: It does not establish that a model feels concern or that an affective cue improves outcomes across tasks or providers. Fear, guilt and invented urgency are anti-patterns.
+  - slug: 16-staged-composition-task-framing-and-intent-normalization
+    what: A way to turn a vague request into a sequence of distinct artifacts—orientation, construction, challenge, verification and handoff—with a stop at consequential transitions.
+    distinguishes: A checklist of phases is insufficient; each phase must expose what entered, what was produced, and what condition blocks the next phase.
+    mechanism: Separating drafting from challenge and verification prevents an attractive candidate from silently becoming an approved procedure when permission, ownership or evidence remains unknown.
+    not_this: More stages do not fill missing facts, authorize volunteers, or prove that the eventual workflow has been tested in use.
+  - slug: 17-outcome-first-contract
+    what: A task contract that starts from an observable desired result and its scope before listing possible methods for achieving it.
+    distinguishes: Instead of opening with activities such as “add synonyms,” it defines what a reader or tester should observe, how to check that state, and which adjacent outcomes must not regress.
+    mechanism: Multiple candidate implementations can be compared against the same proposed acceptance condition; an owner must agree to that condition before it becomes a release gate.
+    not_this: A proxy such as top-three search ranking is not the whole user outcome. A proposed target or test fixture is not a passed test.
+  - slug: 24-receipt-bound-achieved-state-and-outcome-specification
+    what: An outcome-first contract paired with a receipt that names the exact input and separates checks actually performed from checks proposed or impossible on that input.
+    distinguishes: It makes the proof boundary part of the deliverable rather than letting the presence of required words imply that a whole interface or workflow is complete.
+    mechanism: Input, observation, unknown, non-effect and owner decision travel together, making it harder for a text-only review to masquerade as browser or accessibility validation.
+    not_this: A formatted receipt does not substitute for a keyboard pass, screen-reader test, owner approval or publication authorization.
+  - slug: 25-bounded-receipt-with-non-effects
+    what: A handoff record that says what was observed, from which input and time, and which consequential actions did not occur within that exact exercise.
+    distinguishes: Unlike a success summary, it lists non-effects such as “no import” beside the findings and distinguishes a supplied dry-run log from a check executed by the assistant.
+    mechanism: Scoping positive observations and negative effects to one run helps the next reviewer avoid treating a preview as a production change or assuming silence means validation.
+    not_this: The absence of an effect in this exercise is not a global claim about other operators, systems or later work.
+  - slug: 30-contrastive-fork-constraint-and-non-action-contracts
+    what: A comparison of distinct preparation workflows in which actions like publishing or emailing are held outside the authorized drafting task.
+    distinguishes: One route stays a private corrected draft; the other prepares an inert request for later approval. Neither is a mere variant of the announcement copy or a disguised queued action.
+    mechanism: Each route names its effect boundary, separate release decisions, failure signal and disqualifier before any public channel is used.
+    not_this: Describing a hold state does not prove a scheduling tool supports one, and an approved website post would not automatically approve subscriber email.
+  - slug: 33-provenance-carrying-chunk
+    what: A retrieval unit that keeps its source identity, locator, date, stated authority, digest status and transformation history attached to the quoted passage.
+    distinguishes: It is more than a citation at the end of an answer; provenance travels with each selected chunk so quotation, paraphrase and synthesis can be distinguished.
+    mechanism: When sources conflict, the reader can see which unit supplied each claim and what was changed in condensation rather than inheriting the authority of an unattributed summary.
+    not_this: Metadata does not make a source correct or current. If no digest or authoritative issuer is supplied, leave it unavailable rather than inventing one.

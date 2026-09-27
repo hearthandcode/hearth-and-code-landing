@@ -24,10 +24,11 @@ try {
       const data = await dialog.evaluate((element) => ({
         title: element.querySelector('h2')?.textContent?.trim(),
         sections: element.querySelectorAll('.ec-prompt-sheet__section').length,
-        details: ['1', '2', '3'].map((n) => [...element.querySelectorAll(`#tech-section-${n} .ec-prompt-sheet__steps p,#tech-section-${n} .ec-prompt-sheet__limits p`)].map((p) => p.textContent?.length ?? 0)),
+        identity: element.querySelectorAll('#tech-section-1 .ec-prompt-sheet__identity-grid p').length,
+        details: ['2', '3', '4'].map((n) => [...element.querySelectorAll(`#tech-section-${n} .ec-prompt-sheet__steps p,#tech-section-${n} .ec-prompt-sheet__limits p`)].map((p) => p.textContent?.length ?? 0)),
         role: element.getAttribute('role'),
       }));
-      if (data.title !== source.title || data.sections !== 4 || data.role !== 'dialog' || data.details.flat().some((n) => n < 35)) throw new Error(`position ${position}: ${JSON.stringify(data)}`);
+      if (data.title !== source.title || data.sections !== 5 || data.identity !== 4 || data.role !== 'dialog' || data.details.flat().some((n) => n < 35)) throw new Error(`position ${position}: ${JSON.stringify(data)}`);
       await dialog.getByRole('tab', { name: 'Technique response' }).click();
       const response = dialog.locator('.ec-prompt-sheet__rendered-response');
       const scroll = await response.evaluate((el) => ({ height: el.clientHeight, scroll: el.scrollHeight }));

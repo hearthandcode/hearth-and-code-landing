@@ -3,6 +3,7 @@ scope: public Prompt Technique Atlas and 35 public method field cards
 status: review-required
 workflow:
   - inspect the source technique, distinguish its mechanism from the category label, and check external references when useful; record source identity and what those references do not establish
+  - author a unique first section for every technique: what it is, its distinctive operation, a bounded explanation of why that operation may affect output, and a concrete non-example; never rely on the title as a definition
   - author four technique-specific applied steps using one concrete professional setting; show how inputs are selected, transformed, checked, and used, without boilerplate or internal project names
   - author four specific use-decision steps: trigger, prerequisites, fit to task, and anti-trigger; state why the technique changes the task rather than merely restating its name
   - author concrete limitations: information loss, staleness, failure modes, human review or professional boundary when applicable; remove repeated generic legalistic prose from the reading body
@@ -13,10 +14,13 @@ workflow:
   - inspect every subsection for complete question, mechanism, output, check and anti-trigger; a four-item count is not evidence that an item is fully answered
   - build and visually inspect desktop and mobile; scroll to the end of every section and response, test keyboard/focus/escape/return, response labeling, pending and redacted states, and source limits; submit the frozen batch to the owner for revision or acceptance
 rules:
-  - one editorial record per technique; no mass-generated near-duplicate copy masquerading as tailored instruction
+  - one editorial identity and one applied record per technique; no mass-generated near-duplicate copy masquerading as tailored instruction
+  - a fifth technique-identity section is required before how/when/limits/demonstration; source candidate status and a plausible mechanism are not proof of efficacy
   - examples may span practical, engineering, creative and research settings; choose the setting where the mechanism is useful, not a mandatory four-domain checklist
   - prompts and public responses contain no internal project names, repositories, private paths, credentials, personal data or fabricated external actions
-  - baseline and applied prompts must share the same task facts and model route; only the operational technique framing differs; name-dropping the technique is not a substitute for operational instructions; preserve any other difference in the receipt
+  - for a controlled matched pair, hold task facts and model route fixed and vary only the operational technique framing; name-dropping is not implementation
+  - for a four-level teaching ladder, author four entire prompts independently with experience-appropriate information selection, task framing and output contract; never paste an identical shared packet or boilerplate wrapper into all four
+  - record which source facts each level actually receives and use not_observable when a criterion cannot be assessed from that level's prompt; do not attribute differences causally to skill or technique when prompts and inputs both change
   - render model responses as safely escaped Markdown including headings, lists, and tables; keep submitted prompts verbatim as copyable text, not rendered prose
   - no live model invocation in the public browser; a pending receipt is visibly pending, never simulated or copied from another technique
   - external research citations must be verified and distinguish support for a mechanism from evidence of general effectiveness
@@ -26,11 +30,11 @@ rules:
 comparison_modes:
   paired_default: one ordinary baseline and one technique-applied prompt; do not describe the baseline as a novice prompt unless it is genuinely novice-written
   four_level_candidate:
-    - casual user: short natural request with task facts, minimal prompt structure
-    - AI power user: named output and constraints, without a formal agent work contract
-    - experienced agentic engineer: source, scope and checks made explicit without invoking the studied technique
-    - experienced engineer plus technique: hold the engineer task, facts and constraints fixed, adding only the technique's operational mechanism
-  assessment: use one declared task rubric and report criterion-level observations, unknowns and counterexamples; never infer a skill ranking or causal effectiveness from one output per tier
+    - casual user: natural partial recollection, no synthetic source ledger or formal scaffolding
+    - AI power user: purpose-built working note, deliverables and basic checks without an agent work contract
+    - experienced agentic engineer: bounded task contract, typed evidence and review predicates without an explicit context-assembly stage
+    - experienced engineer plus technique: independently authored full prompt with technique operations at source intake, selection, precedence, omission, draft and validation seams
+  assessment: use one declared task rubric with met/partly_met/not_met/not_observable observations, note input-coverage confounds, preserve failures, and never infer a skill ranking or causal effectiveness from one output per tier
   display: one comparative briefing and criterion matrix with optional expandable prompt/response pairs, not eight disconnected prompt/result tiles
 batching:
   size: 8

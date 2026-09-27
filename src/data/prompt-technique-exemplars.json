@@ -73,6 +73,12 @@
         "task": "Draft a feasible provisional lunch plan and a short customer reply; do not place an order. State any facts needing confirmation before a binding quote.",
         "baseline_instruction": "Use the supplied facts to answer the task. Keep the reply concise.",
         "applied_instruction": "Before drafting, build a decision-sized working brief from the source packet—not a summary of every line.\n1. Set four slots for this order: dietary constraints, Friday item availability, delivery timing, and cost ceiling. For each slot, select only the facts that could change the proposed quantities or whether we may promise a meal; keep its source and timestamp beside it.\n2. Reconcile facts that address the same slot. Use Thursday's supplier update instead of Monday's stock counts for Friday quantities. Keep the Monday counts only as an explicitly superseded record. Treat the menu as evidence of price and listed ingredients, not evidence of Friday stock or allergen clearance. Do not convert an open delivery slot into a held reservation.\n3. Mark absent confirmations as unknown, especially sesame ingredients and kitchen cross-contact. Keep tomato pasta outside the priced allocation because no Friday quantity is confirmed. Use at most 18 rice-and-bean bowls and 12 additional chickpea bowls. The customer explicitly says no guest has more than one special meal; do not ask whether dietary groups overlap.\n4. Draft a provisional 24-meal quantity mix and arithmetic from the working brief, then a short customer reply. Show which meal cannot be promised for the severe-allergy guest until ingredient and handling checks clear. If no verified sesame-safe meal exists, do not claim the complete order is feasible or send a binding quote. State what the person must confirm; do not place or reserve anything.\nCheck the draft against all four slots and the excluded/superseded records before returning it."
+      },
+      "definition": {
+        "what": "A task-time method for turning a changing collection of records into the smallest traceable brief needed for one decision. The prompt asks the assistant to choose relevant facts, not just consume everything it was given.",
+        "distinguishes": "Unlike a long context dump or ordinary summarization, it resolves conflicts one field at a time, preserves the source and date beside each selected fact, and lists excluded or unknown facts before drafting.",
+        "mechanism": "Selection narrows irrelevant context; source-role and freshness checks can expose an obsolete count or low-authority message before it is used as current. An output check compares the draft with the assembled brief rather than trusting fluent wording.",
+        "not_this": "It does not retrieve missing evidence, prove a source is accurate, or make the resulting plan safe to execute. Compression can hide counterevidence if the selection check is weak."
       }
     },
     {
@@ -146,6 +152,12 @@
         "task": "Draft a reply for lead review; do not send it or grant a refund.",
         "baseline_instruction": "Use the supplied facts to propose a helpful reply to the customer.",
         "applied_instruction": "Separate the published rule, customer request, informal chat and lead's authority. Compare two genuinely different routes: (A) draft a policy-compatible future-session transfer offer for lead review, without promising that it is free or booked; (B) prepare a request for a manager-approved one-time refund exception without promising a refund. For each route name the governing input, customer benefit, operational cost, and a condition that actually rules out that route (not merely evidence favoring the alternative). The chat is not policy. Recommend a draft route but do not say the lead may send the reply or grant a refund without a distinct authorization; identify the next human decision."
+      },
+      "definition": {
+        "what": "A structured comparison of two materially different ways to resolve a conflict between instructions or records with different authority.",
+        "distinguishes": "It does not merely write two differently worded answers. Each route names the governing rule, who may act, a real rejection condition, and the cost of choosing that route.",
+        "mechanism": "The fork exposes where a lower-trust chat or note would have to cross an authority boundary; comparing disqualifiers makes a tempting unauthorized exception visible before a reply is drafted.",
+        "not_this": "A comparison cannot grant the permission missing from either route. A manager-approved exception does not retroactively change the published rule."
       }
     },
     {
@@ -218,6 +230,12 @@
         "task": "Draft a roughly 100-word beginner-friendly, factual invitation. Include time, room, free drop-in status, no registration, topics and the no-personal-account-sharing rule. Acknowledge that asking basic questions may feel awkward without shaming anyone; attendance remains optional. Do not invent outcomes, testimonials, urgency, individual support or a short-stay policy.",
         "baseline_instruction": "Write the invitation from these facts, retaining every stated constraint.",
         "applied_instruction": "This invitation matters to patrons who may hesitate to ask basic questions. Treat that human significance as a cue to check every stated logistical fact and to avoid shaming or pressuring a reader; it does not permit exaggeration, invented urgency, or any change to the requested task. Write the invitation from these facts, retaining every stated constraint."
+      },
+      "definition": {
+        "what": "A controlled prompt-time experiment that adds an affective salience cue to an otherwise fixed model task. The cue addresses the model's attention to the human stakes, not the emotional state of the model.",
+        "distinguishes": "It is not simply a request to make user-facing copy more emotional. The task facts, required output and audience tone stay constant so the additional cue can be inspected as a distinct framing change.",
+        "mechanism": "Importance framing may influence which constraints the model attends to during generation; the response still needs the same factual and non-coercion checks as the ordinary prompt.",
+        "not_this": "It does not establish that a model feels concern or that an affective cue improves outcomes across tasks or providers. Fear, guilt and invented urgency are anti-patterns."
       }
     },
     {
@@ -291,6 +309,12 @@
         "task": "Draft a first-day checklist for supervisor review; do not grant database access or assign an unconfirmed trainer.",
         "baseline_instruction": "Make a practical onboarding checklist from the notes.",
         "applied_instruction": "Use five distinct stages, with a visible stop between consequential transitions. Orient: list confirmed goals, source notes and unknown permissions; stop if the scope is missing. Construct: draft only note-supported tasks, order and known owners; stop before assigning an unknown trainer. Challenge: identify database and lifting restrictions, and mark the attendance-log medium unknown rather than assuming it is the member database; stop restricted tasks. Verify: trace each checklist item back to one supplied note, removing unsupported timings, locations and authorizations. Hand off: return a draft and precise questions for Mara's Friday review; adoption and execution are not authorized."
+      },
+      "definition": {
+        "what": "A way to turn a vague request into a sequence of distinct artifacts—orientation, construction, challenge, verification and handoff—with a stop at consequential transitions.",
+        "distinguishes": "A checklist of phases is insufficient; each phase must expose what entered, what was produced, and what condition blocks the next phase.",
+        "mechanism": "Separating drafting from challenge and verification prevents an attractive candidate from silently becoming an approved procedure when permission, ownership or evidence remains unknown.",
+        "not_this": "More stages do not fill missing facts, authorize volunteers, or prove that the eventual workflow has been tested in use."
       }
     },
     {
@@ -364,6 +388,12 @@
         "task": "Draft a short implementation brief for the search team, not a claim that search is fixed. Treat top-three placement for all three named queries as a proposed target awaiting owner agreement; do not claim it was tested. Note effects on unrelated queries as an unknown.",
         "baseline_instruction": "Suggest how to improve search from these notes, using the proposed target and stating what remains untested.",
         "applied_instruction": "Open with the proposed achieved state for owner agreement: for each of the three named queries, the approved address article appears in the first three results in a repeatable test. State the starting positions, the fixture, and a non-goal check for unrelated queries. Compare title synonyms and ranking weights as hypotheses only; do not assert that owner-confirmation freshness is an existing ranking signal. Give a failure signal for each candidate. Keep the target proposed until the owner agrees, and do not say any code was changed, tested or deployed."
+      },
+      "definition": {
+        "what": "A task contract that starts from an observable desired result and its scope before listing possible methods for achieving it.",
+        "distinguishes": "Instead of opening with activities such as “add synonyms,” it defines what a reader or tester should observe, how to check that state, and which adjacent outcomes must not regress.",
+        "mechanism": "Multiple candidate implementations can be compared against the same proposed acceptance condition; an owner must agree to that condition before it becomes a release gate.",
+        "not_this": "A proxy such as top-three search ranking is not the whole user outcome. A proposed target or test fixture is not a passed test."
       }
     },
     {
@@ -436,6 +466,12 @@
         "task": "Prepare a copy-review result and next-check list; do not claim the booking page is accessible or published.",
         "baseline_instruction": "Review the draft against the brief.",
         "applied_instruction": "Open with the observable text-only target: the supplied excerpt contains the heading, booking action wording and cancellation note. Do NOT infer their visual or DOM order or that the rule is understood before time selection; no page markup is supplied. End with a receipt listing exact inputs, excerpt-only checks and results, checks NOT run, changes made (none), unknowns, non-effects, and the editor's next decision. Treat proposed browser tests as unrun proposals. Do not claim accessibility approval or publication."
+      },
+      "definition": {
+        "what": "An outcome-first contract paired with a receipt that names the exact input and separates checks actually performed from checks proposed or impossible on that input.",
+        "distinguishes": "It makes the proof boundary part of the deliverable rather than letting the presence of required words imply that a whole interface or workflow is complete.",
+        "mechanism": "Input, observation, unknown, non-effect and owner decision travel together, making it harder for a text-only review to masquerade as browser or accessibility validation.",
+        "not_this": "A formatted receipt does not substitute for a keyboard pass, screen-reader test, owner approval or publication authorization."
       }
     },
     {
@@ -508,6 +544,12 @@
         "task": "Draft a review handoff for the curator; do not alter catalog records.",
         "baseline_instruction": "Summarize the import preview and next steps.",
         "applied_instruction": "Produce a review receipt *about the supplied Monday 14:00 dry-run log*, not a receipt for a parser run you performed. List the exact input, the 40-row observation, duplicate and missing-description diagnostics; separate checks not reported in the log. Record non-effects scoped to this exercise only: no production import, updates, deletion or repair. Name the curator's required dispositions, a new dry-run after correction, and a separately authorized import. Do not claim that the assistant ran a parser or changed a catalog."
+      },
+      "definition": {
+        "what": "A handoff record that says what was observed, from which input and time, and which consequential actions did not occur within that exact exercise.",
+        "distinguishes": "Unlike a success summary, it lists non-effects such as “no import” beside the findings and distinguishes a supplied dry-run log from a check executed by the assistant.",
+        "mechanism": "Scoping positive observations and negative effects to one run helps the next reviewer avoid treating a preview as a production change or assuming silence means validation.",
+        "not_this": "The absence of an effect in this exercise is not a global claim about other operators, systems or later work."
       }
     },
     {
@@ -580,6 +622,12 @@
         "task": "Recommend an announcement preparation route and draft text for review; do not publish or send anything.",
         "baseline_instruction": "Draft a useful announcement plan from these facts.",
         "applied_instruction": "Treat website posting and subscriber email as separately held effects; drafting alone is allowed. Compare two distinct mechanisms: (A) correct the east-gate detail in a private draft and wait for Friday's weather decision before requesting either approval; (B) write an inert, unscheduled publication-request draft with a weather-check reminder and two explicit approval questions, without assuming the team has scheduling or hold software. For each route give benefit, cost, hypothetical failure signal and a real disqualifier. Recommend the safer review step, provide only draft text, and list actions NOT performed. Do not promise where a cancellation notice will appear."
+      },
+      "definition": {
+        "what": "A comparison of distinct preparation workflows in which actions like publishing or emailing are held outside the authorized drafting task.",
+        "distinguishes": "One route stays a private corrected draft; the other prepares an inert request for later approval. Neither is a mere variant of the announcement copy or a disguised queued action.",
+        "mechanism": "Each route names its effect boundary, separate release decisions, failure signal and disqualifier before any public channel is used.",
+        "not_this": "Describing a hold state does not prove a scheduling tool supports one, and an approved website post would not automatically approve subscriber email."
       }
     },
     {
@@ -652,6 +700,12 @@
         "task": "Draft a short reading guide for the desk; do not claim to have checked the live website.",
         "baseline_instruction": "Summarize the current opening hours from the packet.",
         "applied_instruction": "Before drafting, create a source card for EACH excerpt with ID, paragraph locator, date, exact wording, authority exactly as stated (official library bulletin or community post), digest: unavailable (no bytes or digest supplied), and any transformation into the final guide. Use the later official bulletin for the stated regular hours from June 1; label the older community post historical. For each guide sentence identify its supporting card and mark direct quote versus paraphrase versus synthesis correctly. Do not infer a bulletin end date or unchanged future hours. Holiday hours are unknown without a notice; no live verification occurred."
+      },
+      "definition": {
+        "what": "A retrieval unit that keeps its source identity, locator, date, stated authority, digest status and transformation history attached to the quoted passage.",
+        "distinguishes": "It is more than a citation at the end of an answer; provenance travels with each selected chunk so quotation, paraphrase and synthesis can be distinguished.",
+        "mechanism": "When sources conflict, the reader can see which unit supplied each claim and what was changed in condensation rather than inheriting the authority of an unattributed summary.",
+        "not_this": "Metadata does not make a source correct or current. If no digest or authoritative issuer is supplied, leave it unavailable rather than inventing one."
       }
     }
   ]

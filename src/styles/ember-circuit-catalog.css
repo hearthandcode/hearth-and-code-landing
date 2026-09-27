@@ -185,7 +185,7 @@
   white-space:pre-wrap;
 }
 .ec-prompt-sheet__prose a{color:var(--ec-gold-500);text-decoration:underline;text-underline-offset:3px}
-.ec-prompt-sheet__body--four{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ec-prompt-sheet__body--five{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ec-prompt-sheet__steps{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
 .ec-prompt-sheet__steps li{display:grid;grid-template-columns:1.7rem 1fr;gap:.65rem;padding-bottom:.75rem;border-bottom:1px solid color-mix(in srgb,var(--ec-line-500) 65%,transparent)}
 .ec-prompt-sheet__steps li:last-child{padding-bottom:0;border-bottom:0}
@@ -329,13 +329,13 @@
 .ec-prompt-sheet__delta strong{color:var(--ec-plasma-500)}
 .ec-prompt-sheet__redaction{margin:.4rem 0 .8rem;padding:.6rem .8rem;border-left:2px solid var(--ec-violet-300);background:rgba(185,148,237,.08);color:var(--ec-paper-300);font-size:.78rem;line-height:1.45}
 /* One reader scroll: no nested response/prompt scroll that can look truncated. */
-.ec-prompt-sheet__section-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;border-bottom:1px solid var(--ec-line-500);background:var(--ec-line-500)}
+.ec-prompt-sheet__section-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;border-bottom:1px solid var(--ec-line-500);background:var(--ec-line-500)}
 .ec-prompt-sheet__section-nav button{min-height:2.6rem;padding:.45rem .6rem;border:0;background:var(--ec-field-950);color:var(--ec-paper-300);font:600 .65rem/1.3 var(--ec-mono);cursor:pointer}
 .ec-prompt-sheet__section-nav button:hover,.ec-prompt-sheet__section-nav button:focus-visible{color:var(--ec-plasma-500);outline:2px solid var(--ec-plasma-500);outline-offset:-2px}
-.ec-prompt-sheet__body--four>.ec-prompt-sheet__section--03,.ec-prompt-sheet__body--four>.ec-prompt-sheet__section--04{grid-column:1/-1}
-.ec-prompt-sheet__body--four .ec-prompt-sheet__section{min-width:0;scroll-margin-top:.75rem}
-.ec-prompt-sheet__body--four .ec-prompt-sheet__rendered-response,.ec-prompt-sheet__body--four .ec-prompt-sheet__comparison-panel pre{max-height:none;overflow:visible}
-.ec-prompt-sheet__body--four .ec-prompt-sheet__comparison-panel{min-width:0}
+.ec-prompt-sheet__body--five>.ec-prompt-sheet__section--01,.ec-prompt-sheet__body--five>.ec-prompt-sheet__section--04,.ec-prompt-sheet__body--five>.ec-prompt-sheet__section--05{grid-column:1/-1}
+.ec-prompt-sheet__body--five .ec-prompt-sheet__section{min-width:0;scroll-margin-top:.75rem}
+.ec-prompt-sheet__body--five .ec-prompt-sheet__rendered-response,.ec-prompt-sheet__body--five .ec-prompt-sheet__comparison-panel pre{max-height:none;overflow:visible}
+.ec-prompt-sheet__body--five .ec-prompt-sheet__comparison-panel{min-width:0}
 @media(max-width:760px){.ec-prompt-sheet__section-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* Four prompting styles, one task: criterion briefing plus expandable paired artifacts. */
 .ec-skill-ladder{display:grid;gap:1.25rem;min-width:0}
@@ -379,3 +379,8 @@
 .ec-skill-ladder__level footer{padding:.75rem 1rem;border-top:1px solid var(--ec-line-500);color:var(--ec-ash-500);font:.62rem/1.55 var(--ec-mono);overflow-wrap:anywhere}
 .ec-skill-ladder__boundary{margin:0;padding:.9rem;border-left:2px solid var(--ec-violet-300);color:var(--ec-paper-300);font-size:.82rem;line-height:1.5}
 @media(max-width:760px){.ec-skill-ladder__pair{grid-template-columns:1fr}.ec-skill-ladder__level summary{grid-template-columns:2rem 1fr auto}.ec-skill-ladder__level summary small{grid-column:2/3}}
+.ec-prompt-sheet__identity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;border:1px solid var(--ec-line-500);background:var(--ec-line-500)}
+.ec-prompt-sheet__identity-grid>div{min-width:0;padding:1rem;background:var(--ec-field-900)}
+.ec-prompt-sheet__identity-grid strong{color:var(--ec-plasma-500);font:700 .69rem var(--ec-mono);letter-spacing:.05em;text-transform:uppercase}
+.ec-prompt-sheet__identity-grid p{margin:.5rem 0 0;color:var(--ec-paper-300);font-size:.89rem;line-height:1.6}
+@media(max-width:760px){.ec-prompt-sheet__identity-grid{grid-template-columns:1fr}.ec-prompt-sheet__section-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}

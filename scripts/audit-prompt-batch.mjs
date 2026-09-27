@@ -6,6 +6,7 @@ const [batchPath, receiptPath] = process.argv.slice(2);
 if (!batchPath || !receiptPath) throw new Error('Usage: node scripts/audit-prompt-batch.mjs <batch.yaml> <comparisons.json>');
 const atlas = JSON.parse(readFileSync('src/data/vendored/prompt-catalog.json', 'utf8'));
 const batch = parse(readFileSync(batchPath, 'utf8'));
+const identities = parse(readFileSync('src/data/prompt-technique-identities.yaml', 'utf8')).entries;
 const comparisons = JSON.parse(readFileSync(receiptPath, 'utf8')).comparisons;
 const sha = (s) => createHash('sha256').update(s).digest('hex');
 const check = (condition, message) => { if (!condition) throw new Error(message); };
@@ -14,6 +15,8 @@ check(new Set(batch.atlas_positions).size === 8, 'positions must be unique');
 for (let i = 0; i < 8; i++) {
   const entry = batch.entries[i], receipt = comparisons[i], source = atlas[batch.atlas_positions[i] - 1];
   check(source?.slug === entry.slug && receipt.slug === entry.slug, `source/receipt mismatch at position ${batch.atlas_positions[i]}`);
+  const identity = identities.find((item) => item.slug === entry.slug);
+  check(identity && ['what', 'distinguishes', 'mechanism', 'not_this'].every((field) => identity[field]?.length > 75), `${entry.slug}: incomplete unique technique identity`);
   for (const field of ['applied_process', 'when_to_use', 'limitations']) {
     check(entry[field]?.length === 4, `${entry.slug}: ${field} must contain four items`);
     for (const item of entry[field]) {

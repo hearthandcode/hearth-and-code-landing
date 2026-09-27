@@ -1,6 +1,6 @@
 # Dynamic Context Assembly · four-level prompting review
 
-Status: candidate, not an efficacy study or a ranking of people. Four isolated no-tool `minimax-oauth/MiniMax-M3` turns used the same synthetic catering source packet and system instruction. Prompt identities, response digests, timestamps and the exact four prompts/responses are in `src/data/dca-skill-ladder-runs.json`. The authored levels and common rubric live in `src/data/dca-skill-ladder.yaml`; digest-bound criterion judgments live in `src/data/dca-skill-ladder-analysis.yaml`.
+Status: **superseded first pass**, candidate evidence only; not an efficacy study or a ranking of people. Four isolated no-tool `minimax-oauth/MiniMax-M3` turns used the same synthetic catering source packet and system instruction. Prompt identities, response digests, timestamps and exact prompts/responses are preserved at `docs/evidence/prompt-technique/dca-ladder-v1/runs.json`; the original ladder, analysis, projection and runner are preserved beside it. The active fully authored prompt design is `src/data/dca-skill-ladder-v2.yaml` with its own new receipts and analysis.
 
 ## What the earlier baseline meant
 
