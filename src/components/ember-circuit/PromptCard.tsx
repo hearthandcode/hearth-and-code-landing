@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import type { CatalogEntry, TemplateTech } from '../../data/vendored-data';
 import exemplars from '../../data/prompt-technique-exemplars.json';
 import comparisons from '../../data/prompt-technique-comparisons.json';
+import batchOneComparisons from '../../data/prompt-technique-comparisons.batch-001.json';
 import { renderResponseMarkdown } from './response-markdown';
 
 const TYPE_COLORS: Record<string, { tint: string; ink: string; label: string }> = {
@@ -72,7 +73,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
   const color = colorFor(entry.type);
   const [activeTab, setActiveTab] = useState(0);
   const exemplar = exemplars.entries.find((item) => item.slug === entry.slug);
-  const comparison = comparisons.comparisons.find((item) => item.slug === entry.slug);
+  const comparison = [...comparisons.comparisons, ...batchOneComparisons.comparisons].find((item) => item.slug === entry.slug);
   const samples = comparison?.samples ?? [];
   const tabs = [
     { label: 'Baseline prompt', text: samples.find((s) => s.condition === 'baseline')?.submitted_prompt },
@@ -137,6 +138,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
               </div>
               <div role="tabpanel" id={`demo-panel-${entry.slug}`} aria-labelledby={`demo-tab-${entry.slug}-${activeTab}`} className="ec-prompt-sheet__comparison-panel">
                 <h4>{tabs[activeTab].label}</h4>
+                {activeTab % 2 === 1 && 'public_redaction' in samples[activeTab === 1 ? 0 : 1] && <p className="ec-prompt-sheet__redaction">{samples[activeTab === 1 ? 0 : 1].public_redaction}</p>}
                 {activeTab % 2 === 0
                   ? <pre className="ec-prompt-sheet__submitted-prompt">{tabs[activeTab].text}</pre>
                   : <div className="ec-prompt-sheet__rendered-response" dangerouslySetInnerHTML={{ __html: renderResponseMarkdown(tabs[activeTab].text ?? '') }} />

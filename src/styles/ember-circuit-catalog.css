@@ -327,3 +327,4 @@
 .ec-prompt-sheet__rendered-response h1{max-width:none;font-size:1.35rem;line-height:1.22;letter-spacing:-.01em}
 .ec-prompt-sheet__delta{margin:.85rem 0;color:var(--ec-paper-300);font-size:.82rem;line-height:1.5}
 .ec-prompt-sheet__delta strong{color:var(--ec-plasma-500)}
+.ec-prompt-sheet__redaction{margin:.4rem 0 .8rem;padding:.6rem .8rem;border-left:2px solid var(--ec-violet-300);background:rgba(185,148,237,.08);color:var(--ec-paper-300);font-size:.78rem;line-height:1.45}

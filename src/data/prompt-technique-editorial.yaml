@@ -19,4 +19,9 @@ rules:
   - external research citations must be verified and distinguish support for a mechanism from evidence of general effectiveness
   - model response is an observation, not a proof of effectiveness or approval; retain failure cases and do not publish hidden reasoning traces
   - apply these gates equally to the public method field cards, including their existing Codex examples; do not relabel those examples as MiniMax runs
+batching:
+  size: 8
+  order: vendored atlas catalogue order, not slug sort
+  first_batch_positions: [2, 3, 4, 5, 6, 7, 8, 9]
+  pause_after_batch: owner review before the next batch; no automatic 128-entry rewrite
 review_exemplar: 01-dynamic-context-assembly

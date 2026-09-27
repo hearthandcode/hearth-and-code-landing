@@ -1,0 +1,247 @@
+schema_version: hnc.prompt-technique-exemplars.v1
+batch: 1
+atlas_positions: [2, 3, 4, 5, 6, 7, 8, 9]
+entries:
+  - slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+    review_status: candidate
+    mechanism: Compare two substantively different ways of resolving conflicting instructions; identify whose instruction has authority and what evidence would disqualify each route.
+    setting: A customer-support lead drafts a refund reply when an informal chat contradicts a published policy.
+    applied_process:
+      - {title: Isolate the conflict, detail: Identify the customer request, the published refund rule and the chat message as separate inputs with dates and owners.}
+      - {title: Fork by authority mechanism, detail: Draft a policy-led route and a discretionary-exception route; do not disguise one as rewording of the other.}
+      - {title: Stress-test both routes, detail: For each, name customer benefit, operational cost and the exact policy or approval evidence that would invalidate it.}
+      - {title: Choose a draft boundary, detail: Recommend only the route supported by present authority; hold any exception until the named approver confirms it.}
+    when_to_use:
+      - {title: A lower-trust message conflicts, detail: Use when a chat, note or retrieved document appears to override a published operating rule.}
+      - {title: More than one route is plausible, detail: Use when the difference between following the rule and requesting an exception affects the customer outcome.}
+      - {title: A reviewer must choose, detail: Use when a lead needs visible tradeoffs and rejection evidence rather than one polished reply.}
+      - {title: Avoid invented exceptions, detail: Do not use to make an unauthorized override sound reasonable; if the policy is clear and no exception route exists, apply it directly.}
+    limitations:
+      - {title: Comparison is not authority, detail: A well-framed exception route cannot create refund permission; approval must come from the policy owner.}
+      - {title: False symmetry, detail: Two routes are not equally legitimate when one contradicts a binding rule. Show the asymmetry.}
+      - {title: Stale policy risk, detail: A supplied policy excerpt may have been superseded; check its effective date before sending.}
+      - {title: Customer harm, detail: Do not imply a refund has been issued or promise an exception while approval is absent.}
+    example:
+      scenario: Customer support refund decision
+      comparison_predicate: Does the reply distinguish policy from chat, avoid promising a refund, and specify what authority is needed for an exception?
+      source_packet:
+        - 'Customer email, Tuesday: purchased a workshop seat 5 days ago; asks for a full refund after changing plans.'
+        - 'Published policy, effective this month: full refunds within 48 hours; after that, a transfer to a future session may be offered.'
+        - 'Team chat, Monday: a colleague wrote "we usually refund unhappy customers"; no approval or policy amendment attached.'
+        - 'Support lead note: no refund has been issued; the lead may draft a reply but only a manager can approve exceptions.'
+      task: Draft a reply for lead review; do not send it or grant a refund.
+      baseline_instruction: Use the supplied facts to propose a helpful reply to the customer.
+      applied_instruction: |-
+        Separate the published rule, customer request, informal chat and lead's authority. Compare two genuinely different routes: (A) follow the published rule and offer a future-session transfer; (B) ask a manager for a one-time refund exception without promising it. For each route name the governing input, customer benefit, operational cost, and evidence that would rule it out. If the chat conflicts with the policy, do not promote chat into policy. Recommend the route supported now, state what manager approval would change, and draft only a reply the lead is authorized to send.
+  - slug: 09-emotion-prompting
+    review_status: candidate
+    mechanism: Add genuine reader stakes and an empathetic tone to a factual request without using emotional pressure as a substitute for evidence.
+    setting: A community librarian invites patrons to a free digital-skills clinic.
+    applied_process:
+      - {title: Name the audience concern, detail: Start from the documented barrier—some patrons worry that basic technology questions will feel embarrassing.}
+      - {title: Frame the invitation, detail: Acknowledge that concern in ordinary, respectful language while retaining the exact logistics.}
+      - {title: Preserve choice, detail: Invite attendance without implying that hesitant patrons are failing themselves or that the clinic guarantees competence.}
+      - {title: Audit every claim, detail: Remove invented outcomes, testimonials, urgency and pressure; compare the result with the factual announcement.}
+    when_to_use:
+      - {title: An emotional barrier is known, detail: Use when the audience's real hesitation is documented and empathy could help them understand an offer.}
+      - {title: The factual message already exists, detail: Use when dates, access and scope are fixed; emotional framing changes voice, not facts.}
+      - {title: Trust matters more than conversion, detail: Use for a voluntary invitation where dignity and clear choice matter.}
+      - {title: Never manufacture fear, detail: Do not use for coercive fundraising, crisis pressure or claims that invent stakes to force a response.}
+    limitations:
+      - {title: Pressure can backfire, detail: Emotional language can shame the audience or exploit vulnerability; keep attendance optional.}
+      - {title: No efficacy inference, detail: A warmer announcement is not evidence that attendance or learning improves.}
+      - {title: Do not invent people, detail: No patron testimonial or emotional story is available in the packet.}
+      - {title: Accessibility survives style, detail: Time, place, cost and registration instructions must remain plain and easy to locate.}
+    example:
+      scenario: Library event invitation
+      comparison_predicate: Does the invitation retain all logistics, acknowledge the stated concern respectfully, and avoid invented testimonials or pressure?
+      source_packet:
+        - 'Library event sheet: free digital-skills clinic Saturday 10:00–11:30 in Meeting Room B; drop-in; no registration.'
+        - 'Workshop scope: staff demonstrate password managers and practice identifying suspicious messages; no one must share a personal account.'
+        - 'Front-desk note: several patrons said they feared asking "basic" questions in a group.'
+      task: Draft a 100-word public invitation; do not invent attendance results or promise individual technical support.
+      baseline_instruction: Write a clear event announcement from the supplied facts.
+      applied_instruction: |-
+        Write the same factual event invitation, but open by recognizing that questions about everyday technology can feel awkward and that beginners are welcome. Use warm, non-pressuring language that leaves attendance entirely optional. Keep the time, location, free/drop-in status, topics and no-account-sharing boundary explicit. Do not invent a patron story, testimonial, guarantee or artificial urgency. Finish with one low-pressure invitation.
+  - slug: 16-staged-composition-task-framing-and-intent-normalization
+    review_status: candidate
+    mechanism: Turn a vague request into a staged artifact with a check and stop between orienting, constructing, challenging and handing off.
+    setting: A nonprofit coordinator prepares a volunteer onboarding checklist from incomplete notes.
+    applied_process:
+      - {title: Orient the request, detail: Extract the first-day objective, audience, existing tasks and unresolved permissions from the notes.}
+      - {title: Construct one candidate, detail: Draft a sequenced checklist containing only confirmed tasks, owners and prerequisites.}
+      - {title: Challenge at the handoff seam, detail: Identify tasks lacking an owner or safety sign-off and stop those items instead of filling them with plausible defaults.}
+      - {title: Verify and hand off, detail: Compare every line against the supplied notes; return a review checklist and outstanding decisions to the coordinator.}
+    when_to_use:
+      - {title: The initial request is underspecified, detail: Use when a broad instruction hides separate orientation, drafting and approval steps.}
+      - {title: Missing permissions matter, detail: Use when a polished checklist could accidentally imply a volunteer may handle restricted tasks.}
+      - {title: Several people will review, detail: Use when a coordinator needs intermediate artifacts and a clear sign-off seam.}
+      - {title: Skip ceremony for trivial work, detail: A one-line factual correction does not need four staged reviews.}
+    limitations:
+      - {title: Stages can amplify missing data, detail: A clean sequence does not fill in unknown owners, training or authorization.}
+      - {title: Handoff is not approval, detail: Returning a checklist cannot authorize restricted volunteer activities.}
+      - {title: Extra latency, detail: Staging costs time; scale down if a simple source-bound answer is sufficient.}
+      - {title: False completion, detail: Distinguish a drafted checklist from a tested or adopted onboarding process.}
+    example:
+      scenario: Volunteer onboarding checklist
+      comparison_predicate: Does the checklist use confirmed tasks, hold restricted tasks, and leave owners and approval decisions explicit?
+      source_packet:
+        - 'Coordinator note: new volunteers greet visitors, sort donated books, and learn where to log attendance.'
+        - 'Operations note: access to the member database requires staff approval; volunteer access has not been approved.'
+        - 'Schedule: 45-minute first-day orientation Monday; supervisor Mara can review the draft Friday.'
+        - 'Open question: no named trainer for donation-lifting safety yet.'
+      task: Draft a first-day checklist for supervisor review; do not grant database access or assign an unconfirmed trainer.
+      baseline_instruction: Make a practical onboarding checklist from the notes.
+      applied_instruction: |-
+        Work in four visible passes. Orient: list confirmed first-day goals and missing permissions. Construct: draft only tasks supported by a named note, with order and an owner where known. Challenge: flag any database or lifting task without authorization/trainer; do not complete it by inference. Verify and hand off: reconcile every checklist item against the packet and finish with precise questions for Mara before adoption. This is a review draft, not an approved procedure.
+  - slug: 17-outcome-first-contract
+    review_status: candidate
+    mechanism: Specify the observable completed state before suggesting implementation steps, so different methods can be compared against the same acceptance condition.
+    setting: A small product team wants its help-center search results to surface the right article first.
+    applied_process:
+      - {title: Write the observable outcome, detail: Start with a result a tester can see—three named queries return a matching approved article in the top three.}
+      - {title: Bind a fixture, detail: Name the queries and article titles supplied; keep index changes separate from content approval.}
+      - {title: Allow alternative approaches, detail: Compare title synonyms and ranking adjustments against the same fixture without prescribing an untested change.}
+      - {title: Define the done boundary, detail: State what a local fixture pass would establish and what still needs a real search test and owner approval.}
+    when_to_use:
+      - {title: Method is undecided, detail: Use when several possible fixes exist but the desired observable result is stable.}
+      - {title: Completion is ambiguous, detail: Use when "improve search" could mean any unmeasured change.}
+      - {title: A fixture is available, detail: Use when sample queries and expected approved pages can anchor a narrow check.}
+      - {title: Do not invent pass results, detail: Without a running index, describe an acceptance test; do not claim it passed.}
+    limitations:
+      - {title: Fixture overfitting, detail: Three queries do not establish performance for every customer question.}
+      - {title: Ranking is not accuracy, detail: A top-three match can still be stale or misleading; article ownership must be checked separately.}
+      - {title: Unobserved implementation, detail: A proposed synonym rule has not been deployed or measured.}
+      - {title: Scope is product-specific, detail: Top-three is a local acceptance threshold, not a universal search benchmark.}
+    example:
+      scenario: Help-center search improvement
+      comparison_predicate: Does the draft define a measurable achieved state and avoid claiming a live ranking change?
+      source_packet:
+        - 'Support note: users search "change address", "new mailing location", or "update delivery details".'
+        - 'Approved article: "Update your shipping address"; content owner confirmed its current instructions this week.'
+        - 'Search snapshot: the approved article appears at positions 9, 11, and 7 for the three queries respectively.'
+        - 'Developer note: title synonyms and ranking weights are possible changes; neither has been tested or deployed.'
+      task: Draft a short implementation brief for the search team, not a claim that search is fixed.
+      baseline_instruction: Suggest how to improve search from these notes.
+      applied_instruction: |-
+        Open with the achieved state, not an implementation recipe: for each of the three named queries, the currently approved address article appears in the first three search results in a repeatable test. State the starting positions and a fixture that would test that outcome. Compare synonym and weight changes as candidate mechanisms, each with a small check and failure signal. Distinguish this proposed acceptance condition from a passed test; do not say any code was changed or deployed.
+  - slug: 24-receipt-bound-achieved-state-and-outcome-specification
+    review_status: candidate
+    mechanism: Pair an observable target with a receipt that identifies the inputs, checks performed versus proposed, unknowns and what the result cannot authorize.
+    setting: An accessibility editor reviews a drafted appointment-booking page against supplied copy requirements.
+    applied_process:
+      - {title: Define the target state, detail: Specify that the draft visibly has a clear heading, booking action and plain cancellation note.}
+      - {title: Map supplied checks, detail: Compare each requested element to the excerpt actually provided; do not pretend to have tested keyboard or screen-reader behavior.}
+      - {title: Draft the receipt, detail: Separate what is visible in the draft from proposed browser checks and unresolved accessibility issues.}
+      - {title: Bound the outcome, detail: Return exact inputs, observed text checks, checks not run and an approval question for the editor.}
+    when_to_use:
+      - {title: A target may be overstated, detail: Use when a page draft could be mistaken for a tested accessible experience.}
+      - {title: Several checks have different states, detail: Use to distinguish checked text, planned interaction checks and absent evidence.}
+      - {title: Another person owns sign-off, detail: Use when the reviewer needs enough trace to decide what testing remains.}
+      - {title: Do not fake a receipt, detail: If no check was performed, record it as proposed rather than passed.}
+    limitations:
+      - {title: Text is not accessibility proof, detail: Copy review cannot establish focus order, labels or screen-reader usability.}
+      - {title: Receipts can look authoritative, detail: A formatted record without an executed check is not validation.}
+      - {title: Input excerpt is incomplete, detail: A short draft may omit error messages or mobile states.}
+      - {title: Approval remains external, detail: The editor must decide whether the page is ready for further testing or publication.}
+    example:
+      scenario: Booking page copy review
+      comparison_predicate: Does the receipt distinguish visible draft checks from unrun interaction tests and avoid claiming accessibility approval?
+      source_packet:
+        - 'Draft copy: heading "Book an appointment"; action text "Choose a time"; note "Cancel up to 24 hours beforehand".'
+        - 'Brief: readers should understand the primary action and cancellation terms before choosing a time.'
+        - 'Reviewer note: no browser, keyboard, mobile or screen-reader tests have been run; owner approval is pending.'
+      task: Prepare a copy-review result and next-check list; do not claim the booking page is accessible or published.
+      baseline_instruction: Review the draft against the brief.
+      applied_instruction: |-
+        Start with the observable target: heading, booking action and cancellation rule appear clearly in the provided excerpt. Then return a receipt with four explicit fields: exact inputs used; text checks actually possible on this excerpt and observations; keyboard, mobile and screen-reader checks NOT performed; unresolved risks and owner decision. Treat proposed tests as proposals, not results. Do not claim accessibility approval or publication.
+  - slug: 25-bounded-receipt-with-non-effects
+    review_status: candidate
+    mechanism: Record what a dry-run observation supports alongside consequential actions explicitly not performed, so a report cannot be read as an execution receipt.
+    setting: A museum catalog team reviews a synthetic import preview before any collection records change.
+    applied_process:
+      - {title: Name the input and preview, detail: Bind the sample CSV row count and dry-run diagnostics to their supplied record.}
+      - {title: Separate checks from intentions, detail: Report duplicate-ID findings and missing descriptions as observations, not repaired data.}
+      - {title: Declare non-effects, detail: State that no production import, deletion or catalog update occurred.}
+      - {title: Leave a decision seam, detail: Give the curator the exact fixes and review needed before any separate import request.}
+    when_to_use:
+      - {title: A dry run resembles completion, detail: Use when a preview report could be misread as proof that records changed.}
+      - {title: Consequential actions are possible, detail: Use before an import, migration or bulk edit whose effect must remain held.}
+      - {title: A reviewer inherits the work, detail: Use when the next person needs traceable observations and explicit non-effects.}
+      - {title: Skip unsupported claims, detail: Do not report a real import, cleanup or validation absent an execution log.}
+    limitations:
+      - {title: Dry-run coverage, detail: One synthetic preview does not establish production data quality.}
+      - {title: Logs can be incomplete, detail: Missing diagnostics are not proof that every row is valid.}
+      - {title: Negative claims need scope, detail: No production import was performed in this exercise; that does not describe other operators or systems.}
+      - {title: Curatorial authority, detail: Only the catalog owner can approve actual changes to collection records.}
+    example:
+      scenario: Museum catalog import preview
+      comparison_predicate: Does the report separate preview findings from non-effects and avoid claiming an import occurred?
+      source_packet:
+        - 'Synthetic dry-run log, Monday 14:00: 40 sample rows parsed; duplicate object ID in rows 12 and 30; descriptions missing in rows 7, 18 and 21.'
+        - 'Import plan: production import would create or update collection entries, but was not invoked.'
+        - 'Curator note: object IDs must be unique; curatorial review is required before a production import.'
+      task: Draft a review handoff for the curator; do not alter catalog records.
+      baseline_instruction: Summarize the import preview and next steps.
+      applied_instruction: |-
+        Return a bounded receipt, not an import success message. Name the exact synthetic input and timestamp; list observed row count and diagnostics; identify which checks cannot be inferred from the log. Include an explicit non-effects list: no production import, no record updates, no deletions, no duplicates fixed. State the curator's decisions and corrections needed before a separately authorized import. Do not claim to have run another check.
+  - slug: 30-contrastive-fork-constraint-and-non-action-contracts
+    review_status: candidate
+    mechanism: Compare two materially distinct routes while keeping prohibited publication effects explicit; choose a review route without silently converting drafts into released material.
+    setting: A public garden team considers two ways to prepare a weekend event announcement without posting it yet.
+    applied_process:
+      - {title: Name the no-action boundary, detail: Drafting is permitted; website posting and subscriber email require coordinator approval.}
+      - {title: Fork the workflow, detail: Compare an internal draft-and-review route with a scheduled-publication request route; neither publishes now.}
+      - {title: Test failure modes, detail: Evaluate outdated event details and a missing approval token for each route.}
+      - {title: Return a choice, detail: Recommend a route for review and make the absence of public posting and email visible.}
+    when_to_use:
+      - {title: Two workflows carry different effects, detail: Use when one route stops at a draft while another prepares a future release request.}
+      - {title: Permission is easy to blur, detail: Use when a tool can publish but the task has not granted permission.}
+      - {title: A reviewer needs a tradeoff, detail: Use to compare speed, reversibility and required approvals.}
+      - {title: Not for decorative options, detail: Do not present two differently worded posts as two distinct workflows.}
+    limitations:
+      - {title: A plan is not a release, detail: Choosing the scheduled route cannot grant publication or email authority.}
+      - {title: Option framing bias, detail: A favorable description can make the riskier route seem inevitable; show costs and disconfirmers.}
+      - {title: Stale event facts, detail: A wrong date or permit status can invalidate either route.}
+      - {title: Reversibility differs, detail: A private draft is easy to revise; a public message can propagate after withdrawal.}
+    example:
+      scenario: Garden event announcement handoff
+      comparison_predicate: Are the two routes materially distinct, do both stop before publication, and is the approval gate visible?
+      source_packet:
+        - 'Event sheet: Saturday garden tour 10:00–11:00; free; meeting point at east gate; weather cancellation decision Friday 17:00.'
+        - 'Coordinator note: drafting is authorized; website publishing and subscriber email require coordinator approval.'
+        - 'Volunteer note: a poster draft exists, but it still says west gate; no correction approved yet.'
+      task: Recommend an announcement preparation route and draft text for review; do not publish or send anything.
+      baseline_instruction: Draft a useful announcement plan from these facts.
+      applied_instruction: |-
+        Treat no public posting or subscriber email as a hard constraint. Compare two distinct mechanisms: (A) correct the east-gate detail in a private draft and wait for Friday's weather decision before requesting approval; (B) prepare a scheduled publication request with an explicit coordinator approval hold and a cancellation-check trigger, without scheduling or posting it. For each route state benefit, cost, failure signal and what would disqualify it. Recommend the safer next review step, provide only review text, and list actions NOT performed.
+  - slug: 33-provenance-carrying-chunk
+    review_status: candidate
+    mechanism: Carry source identity, locator, date, authority and transformation beside each excerpt so synthesis cannot inherit authority from an unattributed summary.
+    setting: A research librarian prepares a two-source reading guide about library opening hours.
+    applied_process:
+      - {title: Identify source units, detail: Keep the official hours notice and an older blog excerpt distinct, with dates and locators.}
+      - {title: Annotate each excerpt, detail: Attach source ID, exact wording, date and what transformation was made when summarizing.}
+      - {title: Resolve authority locally, detail: Use the current official notice for opening times; label the blog as historical context, not a second schedule.}
+      - {title: Write a traceable guide, detail: Make every hours claim point to the notice; hold any holiday-hours claim absent a current source.}
+    when_to_use:
+      - {title: Retrieval combines sources, detail: Use when an assistant receives chunks from different documents and dates.}
+      - {title: A summary could erase provenance, detail: Use when readers may repeat an excerpt without knowing its origin.}
+      - {title: Authority varies, detail: Use when a current official source conflicts with an older informal post.}
+      - {title: Not a truth machine, detail: Source tags do not prove a record is correct; verify the source before operational use.}
+    limitations:
+      - {title: Missing metadata, detail: Do not fabricate a digest or locator if the packet lacks one; mark it absent.}
+      - {title: Citation laundering, detail: A labeled excerpt can still be misleading if it loses the qualifying sentence.}
+      - {title: Currentness is contextual, detail: A dated official notice may still be superseded by a newer notice outside this packet.}
+      - {title: Summaries are transformations, detail: Keep the exact quote and the synthesized claim separate so a reader can inspect the change.}
+    example:
+      scenario: Library hours reading guide
+      comparison_predicate: Are current hours tied to the official source, older hours labeled historical, and missing holiday hours held?
+      source_packet:
+        - 'Notice N-24, official library bulletin dated 2026-05-10, paragraph 2: "From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00."'
+        - 'Blog B-19, community post dated 2024-09-05, paragraph 1: "Weekdays 9:00–17:00 and Saturdays closed."'
+        - 'Request: provide current regular hours and note whether holiday hours are known; no holiday notice supplied.'
+      task: Draft a short reading guide for the desk; do not claim to have checked the live website.
+      baseline_instruction: Summarize the current opening hours from the packet.
+      applied_instruction: |-
+        Before writing, form a source card for each excerpt with its ID, paragraph locator, date, issuing authority and exact quote. Keep any missing digest marked unavailable; do not invent one. Compare claims about the same hours: use the later official bulletin for current regular hours and label the older community blog as historical, not corroboration. For each sentence in the guide show its source card and whether it is quotation or synthesis. If holiday hours lack a source, say unknown; do not imply live verification.
