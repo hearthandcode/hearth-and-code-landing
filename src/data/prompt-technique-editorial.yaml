@@ -1,0 +1,21 @@
+schema_version: hnc.prompt-technique-editorial.v1
+scope: public Prompt Technique Atlas and 35 public method field cards
+status: review-required
+workflow:
+  - inspect the source technique, distinguish its mechanism from the category label, and check external references when useful; record source identity and what those references do not establish
+  - author four technique-specific applied steps using one concrete professional setting; show how inputs are selected, transformed, checked, and used, without boilerplate or internal project names
+  - author four specific use-decision steps: trigger, prerequisites, fit to task, and anti-trigger; state why the technique changes the task rather than merely restating its name
+  - author concrete limitations: information loss, staleness, failure modes, human review or professional boundary when applicable; remove repeated generic legalistic prose from the reading body
+  - design one public-safe everyday professional task with fixed inputs and acceptance criteria; run both a baseline prompt and a technique-applied prompt through isolated pi-ember-exocore using the same provider/model and settings, separately capture exact submitted prompts, final responses, hashes, tool-event counts and timestamps
+  - compare the two responses against the same task criteria without asserting efficacy from a single example; correct misleading or unhelpful editorial prose before review
+  - build and visually inspect desktop and mobile; check keyboard navigation, response labeling, empty/pending states and source limits; submit to owner for revision or acceptance
+rules:
+  - one editorial record per technique; no mass-generated near-duplicate copy masquerading as tailored instruction
+  - examples may span practical, engineering, creative and research settings; choose the setting where the mechanism is useful, not a mandatory four-domain checklist
+  - prompts and public responses contain no internal project names, repositories, private paths, credentials, personal data or fabricated external actions
+  - baseline and applied prompts must share the same task facts and model route; only the technique framing differs; preserve any other difference in the receipt
+  - no live model invocation in the public browser; a pending receipt is visibly pending, never simulated or copied from another technique
+  - external research citations must be verified and distinguish support for a mechanism from evidence of general effectiveness
+  - model response is an observation, not a proof of effectiveness or approval; retain failure cases and do not publish hidden reasoning traces
+  - apply these gates equally to the public method field cards, including their existing Codex examples; do not relabel those examples as MiniMax runs
+review_exemplar: 01-dynamic-context-assembly

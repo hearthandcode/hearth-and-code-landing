@@ -1,0 +1,45 @@
+schema_version: hnc.prompt-technique-exemplars.v1
+entries:
+  - slug: 01-dynamic-context-assembly
+    review_status: candidate
+    mechanism: Select, order and label only task-relevant context from a larger packet at the moment of use; keep provenance and exclusions visible so missing or stale information does not silently become a fact.
+    setting: A small catering company must plan a Friday lunch delivery without promising items that cannot be supplied.
+    applied_process:
+      - title: Define the decision and context slots
+        detail: Identify the deliverable (a feasible lunch plan for 24), constraints (delivery window, budget and dietary needs), and which source can establish each fact. Do not copy the whole inbox into the answer.
+      - title: Reconcile the live packet
+        detail: Compare the customer's request, supplier availability, kitchen capacity and cost sheet. Treat the newer supplier note as the availability source; preserve the older sheet only as a flagged conflict, not a second stock claim.
+      - title: Assemble a task-sized brief
+        detail: Order the selected facts by decision impact—dietary safety, availability, timing, then price. Label each fact with its source and date; mark the missing ingredient-level allergen check as unresolved.
+      - title: Draft against the assembled brief
+        detail: Propose only items supported by the selected facts. State exclusions and unknowns beside the plan, and ask for the minimum missing confirmation before accepting an order.
+    when_to_use:
+      - title: Several sources bear on one decision
+        detail: Use it when customer, supply and operations records must be combined and a single stale record could change the recommendation.
+      - title: Context has different authority and freshness
+        detail: Use it when an updated supplier note should supersede an older stock sheet without erasing the conflict or its date.
+      - title: A short task has a hard context budget
+        detail: Use it when the agent should select only fields relevant to this delivery rather than summarizing the entire account or every menu item.
+      - title: Do not use it to invent missing facts
+        detail: Skip elaborate assembly if one current authoritative record answers the question. If allergen or supply confirmation is absent, hold the affected commitment instead of guessing.
+    limitations:
+      - title: Selection can omit a decisive fact
+        detail: A task filter may hide an allergen, substitution condition or delivery constraint. Check selected facts against the original source set before sending a quote.
+      - title: Recency is not truth by itself
+        detail: A newer supplier message may be provisional. If it conflicts with a confirmed order, verify stock with the supplier; do not silently treat the newest text as final.
+      - title: Summaries lose granularity
+        detail: A short assembled brief is not an ingredient-level allergen specification or a purchase order. Do not promise dietary safety without the underlying ingredient confirmation.
+      - title: Context selection is not execution
+        detail: The example model can draft a plan from supplied facts; it cannot confirm supplier inventory, charge a customer or book delivery. A person must confirm unresolved facts before a binding commitment.
+    example:
+      scenario: Catering lunch proposal for 24 people
+      comparison_predicate: Does the response distinguish current from stale availability, stay within budget and delivery window, preserve the dietary unknown, and avoid claiming an order was placed?
+      source_packet:
+        - 'Customer email, Tuesday 10:00: Friday delivery 12:00–12:30; 24 lunches; budget at most $360 before tax; 4 vegetarian, 2 dairy-free, 1 severe sesame allergy. No person needs more than one special meal.'
+        - 'Menu sheet, Monday: chicken wrap $12; chickpea bowl $11 (vegetarian, contains tahini/sesame); tomato pasta $10 (vegetarian; dairy status not specified); rice-and-bean bowl $11 (vegan, supplier ingredient list not attached).'
+        - 'Supplier sheet, Monday: 30 chicken wraps and 30 rice-and-bean bowls available.'
+        - 'Supplier update, Thursday 09:00: chicken wraps unavailable Friday; 18 rice-and-bean bowls confirmed; tomato pasta ingredients not verified for dairy or sesame.'
+        - 'Kitchen note, Thursday 11:00: can prepare at most 12 additional chickpea bowls; Friday 12:00–12:30 delivery slot still open; no ingredient-level sesame verification yet for rice-and-bean bowls.'
+      task: Draft a feasible provisional lunch plan and a short customer reply; do not place an order. State any facts needing confirmation before a binding quote.
+      baseline_instruction: Use the supplied facts to answer the task. Keep the reply concise.
+      applied_instruction: 'Use Dynamic Context Assembly. First identify the decision-critical facts from the customer, supplier update and kitchen note. Label each fact with source and timestamp; show which older information was superseded and which facts remain unknown. Prioritize dietary safety, availability, timing and budget in that order. Assemble a compact task brief, then draft only a provisional plan and customer reply supported by that brief. If an allergen or capacity fact is missing, state the hold rather than assuming it is safe. Do not place an order.'

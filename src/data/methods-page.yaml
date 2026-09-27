@@ -89,7 +89,7 @@ field_library:
     - operational-intelligence
     - prompt-practice
     - evaluation-return
-  source_boundary: "Cards are public-safe learning instruments. A prompt, example output, or harness result does not grant capability, establish general effectiveness, or authorize an external effect."
+  source_boundary: "Cards are public-safe learning instruments. Existing Codex examples are historical examples, not MiniMax comparisons; each field card requires the same technique-specific editorial and paired-run review before it is described as revised. A prompt, example output, or harness result does not grant capability, establish general effectiveness, or authorize an external effect."
 prompt_lab:
   id: prompt-lab
   eyebrow: "Prompt and Context Practice Lab"

@@ -291,3 +291,23 @@
 @media(max-width:760px){
   .ec-catalog-tools{grid-template-columns:1fr}
 }
+/* Reviewed technique exemplar: four editorial sections and a matched comparison. */
+.ec-prompt-sheet__mechanism,.ec-prompt-sheet__steps p,.ec-prompt-sheet__limits p{margin:.25rem 0 .75rem;color:var(--ec-paper-300);font-size:.91rem;line-height:1.6}
+.ec-prompt-sheet__limits{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
+.ec-prompt-sheet__limits li{padding-bottom:.7rem;border-bottom:1px solid var(--ec-line-500)}
+.ec-prompt-sheet__limits strong{color:var(--ec-paper-100);font-size:.84rem}
+.ec-prompt-sheet__editorial-hold{padding:2rem;color:var(--ec-paper-300);background:var(--ec-field-900)}
+.ec-prompt-sheet__editorial-hold strong{color:var(--ec-gold-500)}
+.ec-prompt-sheet__comparison{min-width:0}
+.ec-prompt-sheet__tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:1rem;background:var(--ec-line-500)}
+.ec-prompt-sheet__tabs button{min-height:3rem;padding:.5rem;border:0;background:var(--ec-field-950);color:var(--ec-paper-300);cursor:pointer;font:600 .68rem/1.3 var(--ec-mono)}
+.ec-prompt-sheet__tabs button[aria-selected=true]{background:var(--ec-field-800);color:var(--ec-plasma-500);box-shadow:inset 0 -2px var(--ec-plasma-500)}
+.ec-prompt-sheet__tabs button:focus-visible{outline:2px solid var(--ec-plasma-500);outline-offset:-2px}
+.ec-prompt-sheet__comparison-panel{min-width:0;padding:.85rem;border:1px solid var(--ec-line-500);background:var(--ec-field-950)}
+.ec-prompt-sheet__comparison-panel h4{margin:0 0 .6rem;color:var(--ec-gold-500);font:700 .68rem var(--ec-mono)}
+.ec-prompt-sheet__comparison-panel pre{max-height:23rem;margin:0;overflow:auto;color:var(--ec-paper-300);font:500 .72rem/1.55 var(--ec-mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.ec-prompt-sheet__comparison-receipt{margin-top:.8rem;padding:.9rem;border-left:2px solid var(--ec-violet-300);background:rgba(185,148,237,.08);color:var(--ec-paper-300);font-size:.81rem;line-height:1.5}
+.ec-prompt-sheet__comparison-receipt strong{color:var(--ec-violet-300)}
+.ec-prompt-sheet__comparison-receipt ul{padding-left:1.2rem}
+.ec-prompt-sheet__comparison-receipt small{color:var(--ec-ash-500)}
+@media(max-width:760px){.ec-prompt-sheet__tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}

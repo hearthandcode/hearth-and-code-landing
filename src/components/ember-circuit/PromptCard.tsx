@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { promptAtlasExecutionBySlug } from '../../data/vendored-data';
 import type { CatalogEntry, TemplateTech } from '../../data/vendored-data';
-import { renderMarkdown } from './markdown';
+import exemplars from '../../data/prompt-technique-exemplars.json';
+import comparisons from '../../data/prompt-technique-comparisons.json';
 
 const TYPE_COLORS: Record<string, { tint: string; ink: string; label: string }> = {
   core: { tint: 'rgba(244,184,96,0.10)', ink: 'var(--ec-gold-500)', label: 'Core' },
@@ -22,8 +22,7 @@ function colorFor(t: string) {
 }
 
 function firstSeam(entry: CatalogEntry): string {
-  const first = entry.sections?.[0]?.title || 'Technique';
-  return first.toLowerCase();
+  return exemplars.entries.some((item) => item.slug === entry.slug) ? 'Editorial exemplar' : 'Editorial review pending';
 }
 
 export interface PromptCardProps {
@@ -70,19 +69,15 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
   }, [onClose]);
 
   const color = colorFor(entry.type);
-  const sourceSection = (title: string) => entry.sections?.find((section) => section.title === title)?.body || '';
-  const execution = promptAtlasExecutionBySlug.get(entry.slug);
-  const appliedSteps = [
-    ['Frame the task', `Name the practical, engineering, creative, or research task and declare the inputs, constraint, and intended artifact before applying ${entry.title}.`],
-    ['Apply the mechanism', sourceSection('How it works') || `Apply ${entry.title} only to the declared task and context.`],
-    ['Compare the result', `Inspect the result against a simpler baseline or named acceptance predicate; preserve material differences instead of treating fluency as success.`],
-    ['Return with limits', `Record what the technique changed, what was not tested, and the next human-held decision or review step.`],
-  ];
-  const useSteps = [
-    ['Match', sourceSection('When to use it') || `Use ${entry.title} only when its mechanism materially changes the task.`],
-    ['Bound', 'Confirm that the task has named inputs, a proportionate consequence level, and no missing human gate.'],
-    ['Try', 'Apply the technique to one bounded artifact rather than an undifferentiated request.'],
-    ['Stop or revise', 'Do not use it when a direct source settles the task, added structure outweighs the uncertainty, or the required evidence is absent.'],
+  const [activeTab, setActiveTab] = useState(0);
+  const exemplar = exemplars.entries.find((item) => item.slug === entry.slug);
+  const comparison = comparisons.comparisons.find((item) => item.slug === entry.slug);
+  const samples = comparison?.samples ?? [];
+  const tabs = [
+    { label: 'Baseline prompt', text: samples.find((s) => s.condition === 'baseline')?.submitted_prompt },
+    { label: 'Baseline response', text: samples.find((s) => s.condition === 'baseline')?.response },
+    { label: 'Technique prompt', text: samples.find((s) => s.condition === 'applied')?.submitted_prompt },
+    { label: 'Technique response', text: samples.find((s) => s.condition === 'applied')?.response },
   ];
   if (typeof document === 'undefined') return null;
 
@@ -98,7 +93,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
           <div className="ec-prompt-sheet__meta">
             <span className="ec-prompt-sheet__type">{color.label}</span>
             <span className="ec-prompt-sheet__num">№{String(entry.number).padStart(3, '0')}</span>
-            {tech?.template && <span className="ec-prompt-sheet__pill">template ready</span>}
+            {tech?.template && <span className="ec-prompt-sheet__pill">source template available</span>}
           </div>
           <h2 id={`prompt-sheet-${entry.slug}`} className="ec-prompt-sheet__title">{entry.title}</h2>
           <div className="ec-prompt-sheet__actions">
@@ -111,35 +106,43 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
           </div>
         </header>
 
-        <div className="ec-prompt-sheet__body ec-prompt-sheet__body--four">
+        {exemplar ? <div className="ec-prompt-sheet__body ec-prompt-sheet__body--four">
           <section className="ec-prompt-sheet__section ec-prompt-sheet__section--01">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">Applied four-step process</h3></header>
-            <ol className="ec-prompt-sheet__steps">
-              {appliedSteps.map(([title, detail], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{title}</strong><div className="ec-prompt-sheet__prose ec-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(detail) }} /></div></li>)}
-            </ol>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">How it works · {exemplar.setting}</h3></header>
+            <p className="ec-prompt-sheet__mechanism">{exemplar.mechanism}</p>
+            <ol className="ec-prompt-sheet__steps">{exemplar.applied_process.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
           </section>
           <section className="ec-prompt-sheet__section ec-prompt-sheet__section--02">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">When to use it</h3></header>
-            <ol className="ec-prompt-sheet__steps">
-              {useSteps.map(([title, detail], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{title}</strong><div className="ec-prompt-sheet__prose ec-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(detail) }} /></div></li>)}
-            </ol>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">When and why to use it</h3></header>
+            <ol className="ec-prompt-sheet__steps">{exemplar.when_to_use.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
           </section>
           <section className="ec-prompt-sheet__section ec-prompt-sheet__section--03">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">Limitations and boundary</h3></header>
-            <div className="ec-prompt-sheet__prose ec-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(sourceSection('Limitations')) }} />
-            <aside className="ec-prompt-sheet__limit"><strong>Public boundary</strong><p>This technique is a public learning projection. It does not grant capability, prove general effectiveness, or authorize an external effect.</p></aside>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">Specific limitations</h3></header>
+            <ul className="ec-prompt-sheet__limits">{exemplar.limitations.map((limit) => <li key={limit.title}><strong>{limit.title}</strong><p>{limit.detail}</p></li>)}</ul>
           </section>
           <section className="ec-prompt-sheet__section ec-prompt-sheet__section--04">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">Demonstrated isolated task</h3></header>
-            {execution ? <div className="ec-prompt-sheet__execution">
-              <p><strong>{execution.provider}/{execution.model}</strong> · isolated Pi execution · {execution.tool_events} tool events</p>
-              <h4>{execution.task_class}</h4>
-              <details><summary>Submitted execution prompt</summary><pre>{execution.submitted_prompt}</pre></details>
-              <details open><summary>Captured model response</summary><pre>{execution.response}</pre></details>
-              <aside><strong>Receipt boundary</strong><p>{execution.receipt_boundary}</p><small>Prompt SHA-256: {execution.prompt_sha256}<br />Response SHA-256: {execution.response_sha256}</small></aside>
-            </div> : <aside className="ec-prompt-sheet__execution-pending"><strong>Execution receipt pending</strong><p>No isolated MiniMax-M3 execution has been captured for this technique yet. This surface does not substitute a fictional response for an actual model receipt.</p></aside>}
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">A matched, isolated task</h3></header>
+            <p className="ec-prompt-sheet__mechanism">{exemplar.example.scenario}. Same source packet and model route for both prompts; the instruction framing changes.</p>
+            <p className="ec-prompt-sheet__mechanism"><strong>Comparison question:</strong> {exemplar.example.comparison_predicate}</p>
+            {comparison ? <div className="ec-prompt-sheet__comparison">
+              <div className="ec-prompt-sheet__tabs" role="tablist" aria-label={`${entry.title} demonstration`} onKeyDown={(event) => {
+                const next = event.key === 'ArrowRight' ? (activeTab + 1) % 4 : event.key === 'ArrowLeft' ? (activeTab + 3) % 4 : event.key === 'Home' ? 0 : event.key === 'End' ? 3 : null;
+                if (next === null) return;
+                event.preventDefault(); setActiveTab(next);
+                (event.currentTarget.querySelectorAll('button')[next] as HTMLButtonElement)?.focus();
+              }}>
+                {tabs.map((tab, index) => <button key={tab.label} type="button" role="tab" id={`demo-tab-${entry.slug}-${index}`} aria-controls={`demo-panel-${entry.slug}`} aria-selected={activeTab === index} tabIndex={activeTab === index ? 0 : -1} onClick={() => setActiveTab(index)}>{tab.label}</button>)}
+              </div>
+              <div role="tabpanel" id={`demo-panel-${entry.slug}`} aria-labelledby={`demo-tab-${entry.slug}-${activeTab}`} className="ec-prompt-sheet__comparison-panel">
+                <h4>{tabs[activeTab].label}</h4><pre>{tabs[activeTab].text}</pre>
+              </div>
+              <aside className="ec-prompt-sheet__comparison-receipt"><strong>Observed limitations · {comparison.review_status}</strong>
+                <ul>{comparison.observed_limits.map((limit) => <li key={limit}>{limit}</li>)}</ul>
+                <p>{comparison.boundary}</p><small>{comparison.provider}/{comparison.model} · 0 tool events · prompt/response digests retained in the comparison receipt.</small>
+              </aside>
+            </div> : <p>Matched execution pair pending. No model output has been captured for this technique.</p>}
           </section>
-        </div>
+        </div> : <div className="ec-prompt-sheet__editorial-hold"><strong>Technique-specific editorial review pending</strong><p>This technique has not yet received its own applied steps, use criteria, limitations and matched provider-backed example. The older source projection is withheld rather than presented as tailored instruction.</p></div>}
       </article>
     </div>,
     document.body

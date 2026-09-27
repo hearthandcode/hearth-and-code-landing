@@ -1,11 +1,15 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { parse } from 'yaml';
 
 const contract = parse(await readFile(new URL('../src/data/methods-page.yaml', import.meta.url), 'utf8'));
 const promptAtlas = JSON.parse(await readFile(new URL('../src/data/vendored/prompt-catalog.json', import.meta.url), 'utf8'));
-const executions = JSON.parse(await readFile(new URL('../src/data/prompt-atlas-executions.json', import.meta.url), 'utf8'));
+const editorial = parse(await readFile(new URL('../src/data/prompt-technique-editorial.yaml', import.meta.url), 'utf8'));
+const exemplars = parse(await readFile(new URL('../src/data/prompt-technique-exemplars.yaml', import.meta.url), 'utf8'));
+const renderedExemplars = JSON.parse(await readFile(new URL('../src/data/prompt-technique-exemplars.json', import.meta.url), 'utf8'));
+const comparison = JSON.parse(await readFile(new URL('../src/data/prompt-technique-comparisons.json', import.meta.url), 'utf8')).comparisons[0];
 
 test('the Methods composition contract defines the approved first slice', () => {
   assert.equal(contract.schema_version, 'hnc.public-page-contract.v1');
@@ -27,13 +31,24 @@ test('the Prompt Lab is category-first and bound to the actual atlas taxonomy', 
   assert.match(contract.prompt_lab.description, /four-section technique dispositions/);
 });
 
-test('captured execution receipts retain a provider/model identity and no tool effect', () => {
-  const receipt = executions.executions.find((entry) => entry.slug === '01-dynamic-context-assembly');
-  assert.equal(receipt?.provider, 'minimax-oauth');
-  assert.equal(receipt?.model, 'MiniMax-M3');
-  assert.equal(receipt?.tool_events, 0);
-  assert.match(receipt?.response ?? '', /^1\. Selected context/m);
-  assert.match(receipt?.receipt_boundary ?? '', /does not establish technique efficacy/i);
+test('the revised technique and field-card workflow enforces one authored exemplar and a matched two-run receipt', () => {
+  assert.match(editorial.scope, /35 public method field cards/);
+  const exemplar = exemplars.entries[0];
+  assert.deepEqual(renderedExemplars, exemplars, 'rendered JSON must match the YAML authoring contract');
+  assert.equal(exemplar.slug, '01-dynamic-context-assembly');
+  for (const field of ['applied_process', 'when_to_use', 'limitations']) assert.equal(exemplar[field].length, 4);
+  assert.equal(comparison.slug, exemplar.slug);
+  assert.equal(comparison.review_status, 'candidate-needs-revision');
+  assert.deepEqual(comparison.samples.map((sample) => sample.condition), ['baseline', 'applied']);
+  for (const sample of comparison.samples) {
+    assert.equal(sample.tool_events, 0);
+    assert.equal(createHash('sha256').update(sample.submitted_prompt).digest('hex'), sample.prompt_sha256);
+    assert.equal(createHash('sha256').update(sample.response).digest('hex'), sample.response_sha256);
+    assert.doesNotMatch(sample.submitted_prompt, /Hearth|Code|Exocore|Astro|Hub|pi-ember/i);
+  }
+  assert.ok(comparison.observed_limits.length >= 2);
+  assert.match(comparison.observed_limits.join(' '), /tomato pastas|dietary-overlap/);
+  assert.match(contract.field_library.source_boundary, /same technique-specific editorial and paired-run review/);
 });
 
 test('the contract preserves the public method and authority boundaries', () => {
