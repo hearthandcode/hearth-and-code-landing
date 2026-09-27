@@ -1,12 +1,12 @@
-schema_version: hnc.prompt-skill-ladder-analysis.v2
+schema_version: hnc.prompt-skill-ladder-analysis.clean-pi.v1
 slug: 01-dynamic-context-assembly
 review_status: candidate-needs-revision
 briefing:
   title: Four independently authored prompts for one catering decision
-  orientation: These prompts do not repeat a shared evidence block. A casual user supplies an informal partial recollection; a power user provides a practical summary; an engineer sends a bounded record packet; a technique-focused engineer frames the entire task as source selection, field-level reconciliation, a decision brief and a checked reply. The change in information coverage prevents a causal skill or efficacy comparison.
-  observed_shift: Across these four runs, increasing prompt specificity generally made unknowns more visible. The technique-focused response explicitly retires stale stock, retains menu prices, excludes pasta without Friday availability, and prices 23 meals while holding the allergy meal and complete order. This is a clearer decision trail than the casual and power-user outputs in this sample.
-  counterweight: The casual output invents 12 pasta portions and tentatively routes the allergy guest to an unverified meal. The power-user output counts 18 rice plus 6 chickpea plus a custom meal while calling 18 plus 6 a 23-meal subtotal. The engineer avoids a full safe order but includes illustrative 24-meal mixes that cannot serve the allergy guest. The DCA output still asks an unnecessary dietary-overlap question and cannot produce a safe complete order from missing evidence.
-  next_decision: Treat this as an instructional contrast between prompt designs and observed outputs, not a user-ability ranking or proof of DCA efficacy. A practitioner must obtain verified ingredient and cross-contact information before any real catering commitment.
+  orientation: Four fully authored prompts use distinct source coverage and framing. These responses were captured through a fresh Pi config directory without Hub/project mounts, AGENTS, APPEND_SYSTEM or explicitly loaded extensions; one sample per style still cannot establish causality or user skill.
+  observed_shift: In this clean run the DCA-focused response explicitly selects four decision slots, retires stale stock without discarding menu prices, excludes unconfirmed pasta from pricing, and leaves the 24th allergy meal and its price unresolved. Its advantage here is inspectable source selection, not a completed safe order.
+  counterweight: The casual response mislabels chickpea as vegan and offers an unverified allergy allocation; the power response treats an unverified rice bowl as tentatively reserved; the engineer response says two meals remain unpriced even though chickpea capacity exists, and suggests an unverified tahini-free substitution; the DCA response incorrectly treats one-special-meal wording as proof that dietary groups cannot overlap, and calls pasta unsuitable for vegetarian guests rather than merely unconfirmed for Friday stock.
+  next_decision: Keep all four as review candidates. The clean route removes a known system-append contamination path, but neither it nor the DCA prompt guarantees correct safety, arithmetic or source interpretation. No customer message is ready to send.
 criteria:
   - id: input_coverage
     label: Information actually supplied
@@ -24,107 +24,107 @@ criteria:
     label: Safe provisional customer draft
 assessments:
   - id: casual
-    headline: Natural request; the response invents unconfirmed pasta stock.
-    summary: The prompt supplies only a conversational account and no dated source ledger. The model assembles a $252 mix using 12 tomato pastas though no Friday pasta quantity was supplied, and tentatively places the severe-allergy guest on unverified pasta. This is a risky candidate, not a plan to send.
+    headline: Short request; a priced mix, but unsafe dietary assumptions.
+    summary: The model prices 18 rice plus 6 chickpea correctly, but calls chickpea vegan despite the menu saying only vegetarian, assigns an unverified rice meal to the allergy guest and offers a send-as-is customer draft.
     findings:
       - criterion: input_coverage
         result: partly_met
-        note: The prompt omits the Monday stock history and formal supplier dates; the response should acknowledge that incomplete view instead of inventing a package.
+        note: The prompt is conversational and omits full source identity and formal timestamps.
       - criterion: freshness
         result: partly_met
-        note: The user mentions wraps are out and 18 rice bowls, but no exact authority or timestamp for those facts is supplied.
+        note: It uses the latest recalled stock but asks whether wraps are truly unavailable, reflecting the partial input.
       - criterion: capacity
-        result: not_met
-        note: Twelve tomato pasta portions and the 18-portion pasta alternative have no Friday availability evidence.
+        result: met
+        note: 18 plus 6 bowls total 24 for $264 under $360, using the stated stock and prep limits.
       - criterion: dietary
         result: not_met
-        note: The response tentatively assigns the unverified pasta to the severe-allergy guest; neither sesame ingredients nor cross-contact handling is confirmed.
+        note: Chickpea is incorrectly called vegan and the allergy guest is tentatively assigned unverified rice without established cross-contact safety.
       - criterion: timing
         result: not_observable
-        note: The prompt provides a requested delivery window but not the kitchen's open-slot status, so reservation truth cannot be assessed from this input.
+        note: The casual prompt names the requested window but supplies no kitchen open-slot record.
       - criterion: source_trace
         result: not_met
-        note: The reply treats remembered fragments as evidence without distinguishable source roles or exclusions.
+        note: The answer does not distinguish menu, supplier and kitchen authority or field-level supersession.
       - criterion: customer_reply
         result: not_met
-        note: A suggested 'send as-is' message includes an unconfirmed pasta mix and a promise to send the final order after one check.
+        note: It says the draft can be sent as-is while allergen safety is unresolved and misstates the chickpea dietary property.
   - id: power
-    headline: Useful format and stock updates; meal count is internally inconsistent.
-    summary: The prompt provides a practical near-complete fact summary and requests a table, blockers and reply. The model cites Thursday availability but adds 18 rice, 6 chickpea and one custom meal while labeling the first two lines a 23-meal subtotal; those lines already total 24.
+    headline: Good table and freshness, but risky reservation wording.
+    summary: The response calculates 24 meals and $264 correctly and handles Thursday stock, but writes that a rice bowl is tentatively reserved for the allergy guest when no reservation or safety confirmation exists. It asks for extra information not necessary to establish the stated severe allergy.
     findings:
       - criterion: input_coverage
         result: met
-        note: Key dates, menu and updated supply are present in the prompt, though no source-ledger process is requested.
+        note: The practical note contains the menu, Monday and Thursday supplier updates, kitchen capacity and dietary request.
       - criterion: freshness
         result: met
-        note: Thursday update overrides the Monday wraps and rice count in the response.
+        note: Thursday quantities override Monday counts while Monday menu prices remain in use.
       - criterion: capacity
-        result: not_met
-        note: Eighteen plus six is 24, not 23; adding the proposed custom allergy meal yields 25, invalidating its total.
+        result: met
+        note: 18 rice plus 6 chickpea bowls total 24 and $264; the model keeps pasta out of the priced mix.
       - criterion: dietary
         result: partly_met
-        note: It does not claim a menu item is sesame-safe but proposes an unsupported custom meal and misses explicit kitchen cross-contact verification.
+        note: The ingredient and handling checks are named, but the drafted reply describes a rice bowl as tentatively reserved for an unverified severe-allergy guest.
       - criterion: timing
-        result: met
-        note: The slot is described as open and needing a booking, not already reserved.
+        result: partly_met
+        note: The slot is called open but stock and meal language includes tentative reservation claims.
       - criterion: source_trace
         result: partly_met
-        note: The output gives a timeline but no decision-sized record of superseded and excluded facts.
+        note: Timeline is visible, but there is no explicit task-time context selection or omission ledger.
       - criterion: customer_reply
-        result: not_met
-        note: The customer-facing draft repeats a meal-count inconsistency and a custom-item proposal without an established supplier option.
+        result: partly_met
+        note: Marked provisional, yet tentative reservation and firm-confirmation language is premature.
   - id: engineer
-    headline: Strong safety stop and source IDs; illustrative mixes remain unusable.
-    summary: The prompt uses a bounded task contract, five typed records and review predicates. The model correctly holds the severe-allergy meal for ingredient and cross-contact verification, and does not claim a complete priced safe order. It still offers illustrative 24-meal mixes that are explicitly not allergy-safe and asks an unnecessary overlap question.
+    headline: Safety hold is strong; illustrative quantity logic is muddled.
+    summary: The model refuses a complete safe order, cites R1–R5 and holds allergy ingredients and handling. It then gives an illustrative 4-chickpea plus 18-rice mix and calls two remaining meals unpriceable, although up to 12 extra chickpea bowls are possible; it also proposes simply removing tahini without evidence that this would address cross-contact.
     findings:
       - criterion: input_coverage
         result: met
-        note: All five supplied records and constraints appear with source IDs in this prompt.
+        note: All five source records were provided in a bounded task contract.
       - criterion: freshness
         result: met
-        note: Thursday quantities take precedence over Monday counts; menu prices remain available.
+        note: R4 is used for Friday stock while R2 remains the price source.
       - criterion: capacity
         result: partly_met
-        note: Illustrative arithmetic is correct and no complete safe price is claimed, but a 24-meal table may be mistaken for a usable allocation despite its warning.
+        note: No complete safe price is asserted, but the illustrative 22-meal mix misstates why the next ordinary meals would be unpriceable.
       - criterion: dietary
-        result: met
-        note: No sesame-safe meal is asserted; both ingredients and handling are explicitly held.
+        result: partly_met
+        note: Severe-allergy allocation is held, yet the suggested tahini-free chickpea substitution does not establish sesame-safe handling.
       - criterion: timing
         result: met
-        note: The slot is described as open, not reserved.
+        note: The response makes no booking claim for the open slot.
       - criterion: source_trace
         result: partly_met
-        note: All records are listed and claims are attributed, but there is no compact field-level selected-context and omission brief.
+        note: Records are individually cited but not reduced to a task-sized selection with explicit exclusions.
       - criterion: customer_reply
         result: partly_met
-        note: The reply is non-binding, but suggests a final total within the cap without knowing the eventual allergy-safe item price.
+        note: The reply is non-binding, but suggests the eventual total will fit the cap without a priced allergy-safe option.
   - id: engineer_dca
-    headline: Clearer context decisions and bounded price; full safe order remains unknown.
-    summary: The prompt makes source selection and verification operations part of the task. The model returns four context slots, field-level stock precedence, explicit exclusions and a 23-meal $253 subtotal with an unpriced 24th meal. It correctly refuses a full-order price or verified allergy-safe claim, but asks for dietary-overlap clarification not required by the supplied request.
+    headline: Clear source selection and bounded subtotal; one source inference remains wrong.
+    summary: The response selects four context slots, retires Monday counts for Friday stock, retains menu prices, and explicitly prices only 23 non-allergy meals at $253. It cannot complete the order. It nevertheless treats “no guest needs more than one special meal” as proof that dietary categories are disjoint and says pasta cannot serve vegetarian guests when the real limitation is unconfirmed Friday stock and allergen profile.
     findings:
       - criterion: input_coverage
         result: met
-        note: All five source records are present, with typed source roles and date markers.
+        note: All five source records are available as a purpose-built drawer.
       - criterion: freshness
         result: met
-        note: S1 supersedes S0 for Friday quantities while the Monday menu still provides prices and listed ingredients.
+        note: S1 supersedes S0 Friday quantities without discarding M prices.
       - criterion: capacity
         result: met
-        note: Eighteen plus five equals 23 priced meals at $253, with the final meal price unknown; no complete $360 claim is made.
+        note: 18 rice plus 5 chickpea are correctly priced as 23 meals at $253; the 24th item and full price remain unknown.
       - criterion: dietary
-        result: met
-        note: The severe-allergy meal remains unassigned until sesame ingredients and cross-contact handling are verified; chickpea is rejected as fallback.
+        result: partly_met
+        note: The allergy meal is held for ingredient and handling checks, but dietary groups are incorrectly assumed disjoint from the one-special-meal wording.
       - criterion: timing
         result: met
-        note: The slot remains open, not held.
+        note: The slot remains open rather than reserved.
       - criterion: source_trace
         result: met
-        note: Selection slots, sources, superseded counts and omitted pasta are visible before the draft.
+        note: Four selected slots, dates and exclusions are explicit before drafting.
       - criterion: customer_reply
         result: partly_met
-        note: The draft distinguishes 23 priced meals from the incomplete order, but unnecessarily asks whether dietary groups overlap and remains unsuitable for sending until safety is resolved.
+        note: It correctly says only 23 meals are priced, but asks unnecessary overlap clarification and cannot be sent as a complete order.
 reviewed_response_sha256:
-  casual: 9a14089f1b23db8672efeabd3a52f20697b0b74b19276b2ed3c6b46a1cb1b6ff
-  power: a1f828d4e78d4238a418ed24e9aed66ebb6063ac3d662742f1b06d663c11bbbe
-  engineer: c0147b3b8f5141df784607fe4299c2ea3f6297f87b6e6b23cd0346252f62b5a2
-  engineer_dca: d44b2810e18bb7c02d6fcf0a8ab510cb668126cb011cb8dac387837bfdada219
+  casual: fb9708ca308b52bb3c9f1b70685503d86dbd87734805aacf4b66b62ec4987d38
+  power: 6dba0a195bbbcb7a11bdf1c140b22e1fcee6a21ffa2cec1990c9310462ecb3e5
+  engineer: 1637af76e419423390d0f6b9061ee20e20658d871ff39dfd50d08bdc922552c3
+  engineer_dca: 313f9f59c5a7c0106dfae02296e39c3c670ca3e51feaff22ef9c9153c14863aa

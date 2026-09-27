@@ -156,6 +156,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
             <p className="ec-prompt-sheet__mechanism">{exemplar.example.scenario}. Same source packet and model route for both prompts; the instruction framing changes.</p>
             <p className="ec-prompt-sheet__mechanism"><strong>Comparison question:</strong> {exemplar.example.comparison_predicate}</p>
             {comparison ? <div className="ec-prompt-sheet__comparison">
+              {batchOneComparisons.comparisons.some((item) => item.slug === entry.slug) && <p className="ec-prompt-sheet__redaction"><strong>Isolation limit:</strong> This historical run used a shared Pi home with an appended Cognitectus system instruction. The provider output may reflect that vocabulary; this is not a clean prompt-only comparison. A fresh-home rerun is required before accepting the example.</p>}
               <p className="ec-prompt-sheet__delta"><strong>What changed in the prompt:</strong> {comparison.editorial_delta}</p>
               <div className="ec-prompt-sheet__tabs" role="tablist" aria-label={`${entry.title} demonstration`} onKeyDown={(event) => {
                 const next = event.key === 'ArrowRight' ? (activeTab + 1) % 4 : event.key === 'ArrowLeft' ? (activeTab + 3) % 4 : event.key === 'Home' ? 0 : event.key === 'End' ? 3 : null;

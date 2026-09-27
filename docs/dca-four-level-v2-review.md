@@ -1,6 +1,6 @@
 # Dynamic Context Assembly · independently authored four-prompt review
 
-Status: candidate for owner review, **not** an effectiveness or user-ability ranking. Supersedes `docs/dca-four-level-review.md` for the live Methods reader. The previous identical-packet design remains separately archived at `docs/evidence/prompt-technique/dca-ladder-v1/`.
+Status: **superseded shared-home run**, candidate evidence only. These four outputs were produced in a Pi container whose shared agent home included `APPEND_SYSTEM.md` with Cognitectus bounded-vocabulary instructions, despite `--system-prompt` and `--no-context-files`. The old responses and analysis are retained at `docs/evidence/prompt-technique/dca-ladder-v2-shared-home/`; the clean-home successor is `docs/dca-clean-isolation-review.md`. Neither pass is an effectiveness or user-ability ranking. The earlier identical-packet design remains archived at `docs/evidence/prompt-technique/dca-ladder-v1/`.
 
 ## Design correction
 

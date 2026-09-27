@@ -97,8 +97,15 @@ test('DCA skill ladder has four fully authored MiniMax turns and a digest-bound,
     assert.equal(ladderAnalysis.assessments[i].findings.length, 7);
     for (const finding of ladderAnalysis.assessments[i].findings) assert.ok(ladder.evaluation.result_values.includes(finding.result));
   }
-  assert.equal(ladderAnalysis.assessments[0].findings.find((finding) => finding.criterion === 'capacity').result, 'not_met');
-  assert.equal(ladderAnalysis.assessments[1].findings.find((finding) => finding.criterion === 'capacity').result, 'not_met');
+  assert.match(ladderRuns.isolation, /no Hub\/plugin mount.*no APPEND_SYSTEM/);
+  assert.match(ladderRuns.system_prompt_sha256, /^[a-f0-9]{64}$/);
+  for (const record of ladderRuns.records) {
+    assert.equal(record.provider, 'minimax-oauth');
+    assert.equal(record.model, 'MiniMax-M3');
+  }
+  assert.doesNotMatch(ladderRuns.records[1].response, /Status labels used:.*source.*evidence.*inference/s);
+  assert.equal(ladderAnalysis.assessments[0].findings.find((finding) => finding.criterion === 'dietary').result, 'not_met');
+  assert.equal(ladderAnalysis.assessments[1].findings.find((finding) => finding.criterion === 'capacity').result, 'met');
   assert.equal(ladderAnalysis.assessments[3].findings.find((finding) => finding.criterion === 'capacity').result, 'met');
 });
 
