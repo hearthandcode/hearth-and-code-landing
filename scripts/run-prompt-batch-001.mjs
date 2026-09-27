@@ -8,20 +8,17 @@ const batch = parse(readFileSync('src/data/prompt-technique-batch-001.yaml', 'ut
 if (batch.entries.length !== 8) throw new Error('Batch must contain exactly eight entries');
 const sha = (s) => createHash('sha256').update(s).digest('hex');
 const route = '/home/cosmatrexis/devel/hearthandcode/internal/pi-ember-exocore/docker/pi-codex-container/bin/pi-container';
-const repair = process.argv.includes('--repair');
-const system = repair
+const revision2 = process.argv.includes('--revision-2');
+const system = revision2
   ? 'You are a tool-free assistant preparing a candidate response to a synthetic professional scenario. Use only supplied facts. Do not include any self-identifier, persona, organization name, title or role label not explicitly present in the supplied facts. Do not include Latin titles, software project names, proprietary framework vocabulary, or claims of browsing, testing, changing files, contacting anyone, approving decisions or taking external action. Answer the task directly; no hidden reasoning.'
   : 'You are a tool-free assistant preparing a candidate response to a synthetic professional scenario. Use only supplied facts. Do not claim that you browsed, verified external facts, changed a file, contacted anyone, approved a decision, or performed an external action. Avoid project names and proprietary vocabulary. Answer the delegated task directly; no hidden reasoning.';
 const flags = ['--provider', 'minimax-oauth', '--model', 'MiniMax-M3', '--thinking', 'off', '--mode', 'json', '--print', '--no-session', '--no-tools', '--no-extensions', '--no-skills', '--no-prompt-templates', '--no-context-files', '--system-prompt', system];
 const output = 'src/data/prompt-technique-comparisons.batch-001.json';
-const stage = repair ? '/tmp/prompt-technique-batch-001-repair-stage.json' : '/tmp/prompt-technique-batch-001-stage.json';
+const stage = revision2 ? '/tmp/prompt-technique-batch-001-revision2-stage.json' : '/tmp/prompt-technique-batch-001-stage.json';
 if (existsSync(output)) throw new Error('Batch output already exists; refusing overwrite.');
-const retrySlugs = new Set(['17-outcome-first-contract', '24-receipt-bound-achieved-state-and-outcome-specification']);
-const records = existsSync(stage) ? JSON.parse(readFileSync(stage, 'utf8')).comparisons
-  : repair ? JSON.parse(readFileSync('docs/evidence/prompt-technique/batch-001-first-pass.json', 'utf8')).comparisons.filter((record) => !retrySlugs.has(record.slug)) : [];
+const records = existsSync(stage) ? JSON.parse(readFileSync(stage, 'utf8')).comparisons : [];
 for (const entry of batch.entries) {
   if (records.some((item) => item.slug === entry.slug)) continue;
-  if (repair && !retrySlugs.has(entry.slug)) throw new Error('Repair attempted an undeclared slug');
   const packet = entry.example.source_packet.map((fact, index) => `${index + 1}. ${fact}`).join('\n');
   const samples = [];
   for (const condition of ['baseline', 'applied']) {

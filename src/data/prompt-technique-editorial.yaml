@@ -8,7 +8,10 @@ workflow:
   - author concrete limitations: information loss, staleness, failure modes, human review or professional boundary when applicable; remove repeated generic legalistic prose from the reading body
   - design one public-safe everyday professional task with fixed inputs and acceptance criteria; weave the actual selection, ordering, conflict-resolution, omission, and checking operations into the applied instruction without relying on the technique name as an instruction; run baseline and applied prompts through isolated pi-ember-exocore with the same facts, provider/model, system instruction and settings, separately capture exact prompts, final responses, hashes, tool-event counts and timestamps
   - compare the two responses against the same task criteria without asserting efficacy from a single example; correct misleading or unhelpful editorial prose before review
-  - build and visually inspect desktop and mobile; check keyboard navigation, response labeling, empty/pending states and source limits; submit to owner for revision or acceptance
+  - freeze both response digests, then run two independent passes (adversarial response reading and source-mechanism alignment); they may run in parallel only after source and response identities are bound, and their findings must be reconciled before rendering or disposition
+  - bind every finding to the exact baseline and applied response hashes it assesses; a rerun invalidates old findings and requires both passes again
+  - inspect every subsection for complete question, mechanism, output, check and anti-trigger; a four-item count is not evidence that an item is fully answered
+  - build and visually inspect desktop and mobile; scroll to the end of every section and response, test keyboard/focus/escape/return, response labeling, pending and redacted states, and source limits; submit the frozen batch to the owner for revision or acceptance
 rules:
   - one editorial record per technique; no mass-generated near-duplicate copy masquerading as tailored instruction
   - examples may span practical, engineering, creative and research settings; choose the setting where the mechanism is useful, not a mandatory four-domain checklist
@@ -19,6 +22,7 @@ rules:
   - external research citations must be verified and distinguish support for a mechanism from evidence of general effectiveness
   - model response is an observation, not a proof of effectiveness or approval; retain failure cases and do not publish hidden reasoning traces
   - apply these gates equally to the public method field cards, including their existing Codex examples; do not relabel those examples as MiniMax runs
+  - do not begin the next eight or promote a source candidate because structural tests or one model response passed; owner review follows the reconciled audit
 batching:
   size: 8
   order: vendored atlas catalogue order, not slug sort

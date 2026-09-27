@@ -1,0 +1,36 @@
+# Prompt Technique Atlas · Batch 1 repair and second review
+
+Status: **candidate-needs-revision, owner disposition pending**. Successor to `prompt-technique-batch-001-adversarial-audit.md`; the earlier findings are historical, not current verdicts. Covers catalogue positions #002–#009. Source technique records remain candidate, unreviewed and unverified; this public editorial pass does not promote them.
+
+## Root-cause repair: the cut-off subsections
+
+The first audit's count check accepted four items per section but did not check parsed item *shape*. All 96 Batch 1 `title/detail` items were flow-style YAML (`{title: ..., detail: ...}`); unquoted commas in `detail` were parsed as new keys, silently shortening some reader text. Batch 1 is now block-style YAML with quoted scalar values. The audit script and tests reject extra keys and short details; the JSON client projection is checked byte-for-byte against its YAML source. This was a **content truncation defect**, not merely a scrolling problem.
+
+The reader also previously nested a 27rem model-response scroll inside the sheet scroll. It now has one scroll surface, a four-section jump rail, a modal role, initial focus on Close, Escape, focus containment and return to the originating card. Prompts and responses are fully reachable. Markdown model responses remain escaped and rendered; exact prompts remain verbatim.
+
+## Second adversarial pass (on current response digests)
+
+| Entry | Repaired source alignment | Current model limitation still displayed |
+| --- | --- | --- |
+| #002 Contrastive-Fork Instruction Hierarchy | Both routes now identify genuinely ruling-out conditions; draft/send distinction and transfer fee unknown are explicit. | Baseline still invents a no-fee transfer. Applied cost imagines a future seat hold, not evidenced by the packet. |
+| #003 Emotion Prompting | Now a **model-directed affective salience cue**, not a request for a warmer audience tone. Both arms share facts and output constraints. The source defines affective stimulus at prompt time; no claim of model emotion or efficacy. | Applied response invents a short-stay option; baseline invents use of demonstration materials. A single pair cannot establish effect. |
+| #004 Staged Composition | Four teaching blocks now name the five source stages and stops; attendance-log medium is unknown rather than equated with the member database. | Baseline invents a timed agenda and a log-entry task; applied response assigns Mara an on-site role although only her Friday review role is supplied. |
+| #005 Outcome-First Contract | Top-three target is shared and labeled **proposed**, with metric-gaming and neighboring-query non-goals visible. | Applied response treats a positions-only snapshot like a repeatable test corpus. Baseline invents a release policy not in the task packet. No search test ran. |
+| #006 Receipt-Bound Achieved State | Excerpt checks versus unrun browser/accessibility checks are separate; order remains unknown. The stale criticism from the first audit has been removed and current notes bind to current response digests. | Applied response calls the 24-hour wording unambiguous without a reference event/timezone. Text presence is not comprehension or accessibility. |
+| #007 Bounded Receipt with Non-Effects | Exact synthetic log time, observations, checks not reported, scoped non-effects and curator handoff are explicit. | Baseline predicts import collisions/blank-field behavior absent production semantics; applied response infers a full row schema from partial diagnostics. |
+| #008 Contrastive-Fork Non-Action | Website posting and subscriber email are separately held; Route B is an inert request draft without assumed scheduler tooling. | Applied Route A calls the separately held poster correction a disqualifier, though it is a dependent issue rather than proof the private-draft route is impossible. |
+| #009 Provenance-Carrying Chunk | Both source cards now include ID, locator, date, stated authority, exact quotation, **digest unavailable** and transformation; invented bulletin end date removed. | Baseline already handles most facts; the matched pair establishes no general benefit. Currentness outside the packet remains unverified. |
+
+Each item's notes are stored with `reviewed_response_sha256` for both arms. A future rerun changes the hash and fails the structural gate until both adversarial and source-alignment passes are repeated. The two responses per item are model observations, **not accepted instructions or proof of professional correctness**. No hidden reasoning is published. Prior public archival copies and pre-repair receipts remain separate evidence; the new receipt is not presented as a continuation of the old run.
+
+## Alignment and interface audit
+
+- **Source identity:** #003 is now aligned with its Hub source definition (append affective stimulus to ordinary task prompt). #004 preserves five-stage stops in a four-block teaching layout. #009 names all required source-unit fields, including digest unavailable. The remaining source mechanisms align as candidate editorial interpretations; no external primary-study or cross-model effectiveness review is claimed.
+- **Structural gate:** `node scripts/audit-prompt-batch.mjs src/data/prompt-technique-batch-001.yaml src/data/prompt-technique-comparisons.batch-001.json` passed: eight ordered entries, four complete items in each authored section, two matched receipts each, current response hashes and current review notes. This gate does **not** judge prose truth.
+- **Project checks:** `node --test scripts/methods-contract.test.mjs scripts/prompt-response-markdown.test.mjs` passed 7/7; `npx astro build` built 54 pages. No full `npm run build`/Astro typecheck success is claimed.
+- **Browser review:** `node scripts/audit-prompt-batch-browser.mjs` passed at 1600px and 390px for the exact eight catalogue positions. All 4 sections and 4 tabs rendered; every authored item exceeded the short-detail threshold; the response had no nested clipping; receipt was reachable; Escape restored focus; no page error or horizontal overflow. This is a visibility check, not an accessibility conformance audit.
+- **Next-batch rule:** after authoring and freezing eight ordered entries and matched runs, run an adversarial output pass and a separate source-mechanism alignment pass. They may run in parallel **only after** source and response identities are bound. Reconcile findings, bind them to the exact response digests, repair and rerun affected prompts, repeat both passes, then run full-scroll desktop/mobile checks and ask the owner. Do not start the next batch on a structural green signal alone.
+
+## Owner review seam
+
+The repair resolves the silent truncation and the main source-mechanism mismatch. The eight examples are still **candidate-needs-revision** because model outputs retain the item-level errors above. Suggested owner sampling: #003 for the revised emotion-prompt mechanism; #004 for complete staged steps; #006 for corrected receipt limits; #009 for source-card fidelity. Decide whether to keep real model mistakes visible as teaching counterexamples, rerun selected pairs with tighter fixed-input constraints, or change the editorial standard before Batch 2.

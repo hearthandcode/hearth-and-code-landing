@@ -73,11 +73,20 @@ test('Batch 1 has eight ordered, tailored techniques and two honest provider rec
   assert.deepEqual(batchOne.entries.map((item) => item.slug), slugs);
   assert.deepEqual(batchReceipts.map((item) => item.slug), slugs);
   for (const [index, entry] of batchOne.entries.entries()) {
-    for (const key of ['applied_process', 'when_to_use', 'limitations']) assert.equal(entry[key].length, 4, `${entry.slug}/${key}`);
+    for (const key of ['applied_process', 'when_to_use', 'limitations']) {
+      assert.equal(entry[key].length, 4, `${entry.slug}/${key}`);
+      for (const item of entry[key]) {
+        assert.deepEqual(Object.keys(item).sort(), ['detail', 'title'], `${entry.slug}/${key}: reject YAML comma-truncated extra keys`);
+        assert.ok(item.detail.length >= 35, `${entry.slug}/${key}: detail incomplete`);
+      }
+    }
     assert.doesNotMatch(entry.example.applied_instruction, new RegExp(promptAtlas[index + 1].title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
     const receipt = batchReceipts[index];
     assert.equal(receipt.provider, 'minimax-oauth'); assert.equal(receipt.model, 'MiniMax-M3');
     assert.equal(receipt.review_status, 'candidate-needs-revision');
+    assert.equal(receipt.review_passes.adversarial, 'completed-on-bound-digests');
+    assert.equal(receipt.review_passes.source_alignment, 'completed-on-bound-digests');
+    assert.equal(receipt.review_passes.owner_disposition, 'pending');
     assert.equal(receipt.samples.length, 2);
     assert.ok(receipt.observed_limits.length >= 2);
     const facts = entry.example.source_packet.map((fact, i) => `${i + 1}. ${fact}`).join('\n');
@@ -86,8 +95,10 @@ test('Batch 1 has eight ordered, tailored techniques and two honest provider rec
       assert.equal(sample.tool_events, 0);
       assert.equal(createHash('sha256').update(sample.submitted_prompt).digest('hex'), sample.prompt_sha256);
       assert.equal(createHash('sha256').update(sample.response).digest('hex'), sample.response_sha256);
+      assert.equal(receipt.reviewed_response_sha256[sample.condition], sample.response_sha256, 'review note must match the current response');
       assert.doesNotMatch(sample.submitted_prompt, /Hearth|Exocore|Cognitectus|pi-ember|Hub/);
       for (const fact of entry.example.source_packet) assert.ok(sample.submitted_prompt.includes(fact));
+      assert.ok(sample.submitted_prompt.includes(entry.example[`${sample.condition}_instruction`]), `${entry.slug}: authored prompt drift`);
       assert.doesNotMatch(sample.response, /Cognitectus|Hearth|Exocore|hub\.review_packet|magister memoriae/i);
     }
   }
