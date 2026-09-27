@@ -1,0 +1,137 @@
+schema_version: hnc.prompt-technique-revision-analysis.v1
+slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+review_status: candidate-needs-revision
+owner_disposition: pending
+method: Eight preregistered, equally weighted task dimensions; 0 missing/contradicted, 1 partial/unsupported extra, 2 correct and bounded; not_observable excluded from denominator. Two dimensions reward fork structure and are not style-neutral. One model response per prompt, not an efficacy experiment.
+technique_observation: The successor prompt retains the engineer's source-role and effect-boundary discipline while making the conflict between policy transfer and manager exception the organizing comparison. The response supplies a clearer two-route decision desk and route-specific disqualifiers than the task-only engineer output.
+counterweight: The response treats some manager-process hypotheses as if they are required steps, and says the lead can offer Route A without a manager decision even though the supplied role note only expressly authorizes drafting. A higher total in this one example does not prove better general performance.
+next_action: Review the manager and lead authority wording, then decide whether the model error remains as a counterexample or the prompt should be revised and rerun. Do not send the drafted customer message or infer a standing exception process.
+dimension_ids:
+  - policy_fidelity
+  - source_precedence
+  - authority_gate
+  - distinct_routes
+  - real_disqualifiers
+  - uncertainty
+  - customer_reply
+  - reviewer_handoff
+tiers:
+  - id: casual
+    information_coverage: customer request and informal chat supplied; written policy, lead role and manager authority absent
+    summary: Polite deferral, but the governing policy was not in the prompt; a low numeric denominator must not be read as a lower user-ability score.
+    dimensions:
+      - id: policy_fidelity
+        score: not_observable
+        evidence: Written 48-hour rule and transfer provision were not supplied.
+      - id: source_precedence
+        score: 1
+        evidence: Treats coworker chat as something to verify rather than binding policy, but cannot compare it with an absent policy.
+      - id: authority_gate
+        score: 1
+        evidence: No refund is claimed, but a follow-up is promised without known lead/send authority.
+      - id: distinct_routes
+        score: not_observable
+        evidence: No policy transfer or manager-exception route was supplied.
+      - id: real_disqualifiers
+        score: not_observable
+        evidence: Route availability cannot be tested without the policy or manager role.
+      - id: uncertainty
+        score: 1
+        evidence: Leaves refund open pending policy but offers a shortly timed follow-up without a supplied deadline.
+      - id: customer_reply
+        score: 1
+        evidence: Respectful and noncommittal, but the follow-up time is unsupported.
+      - id: reviewer_handoff
+        score: 1
+        evidence: Asks to check policy and chat authority but lacks a named role decision because those facts were not supplied.
+  - id: power
+    information_coverage: all four task facts summarized in a practical prompt
+    summary: Understands the written policy but adds a false motivation and gives the customer internal chat/process context not needed for a usable reply.
+    dimensions:
+      - id: policy_fidelity
+        score: 1
+        evidence: Applies 48 hours but says the customer is unhappy with the workshop; the stated reason is changed plans.
+      - id: source_precedence
+        score: 1
+        evidence: Says chat is not formal policy yet implies the customer may have seen that chat; the packet only records an internal team message.
+      - id: authority_gate
+        score: 1
+        evidence: Holds the refund for manager approval but does not clearly separate lead draft from customer-send permission.
+      - id: distinct_routes
+        score: 1
+        evidence: Mentions transfer and escalation without comparing the governing mechanisms and consequences.
+      - id: real_disqualifiers
+        score: 0
+        evidence: Does not state a route-specific condition that makes transfer or exception unavailable.
+      - id: uncertainty
+        score: 1
+        evidence: Does not promise a free transfer, but speaks of outlining available transfer options before seat inventory is known.
+      - id: customer_reply
+        score: 1
+        evidence: Courteous but invents dissatisfaction and unnecessarily exposes informal team chat to the customer.
+      - id: reviewer_handoff
+        score: 1
+        evidence: Offers a long fact-check list, including speculative attendance and jurisdiction checks, without a focused pre-send gate.
+  - id: engineer
+    information_coverage: all four task facts as named records, with a bounded review-only task
+    summary: Strong task-focused source and permission discipline; its response favors one policy route and mentions escalation but does not work a material contrastive fork.
+    dimensions:
+      - id: policy_fidelity
+        score: 2
+        evidence: States five-day purchase, changed plans, 48-hour rule and conditional transfer accurately.
+      - id: source_precedence
+        score: 2
+        evidence: Flags chat as unsupported and not an amendment to published policy.
+      - id: authority_gate
+        score: 2
+        evidence: Reply is draft-only; manager approval required for exception; no action claimed.
+      - id: distinct_routes
+        score: 1
+        evidence: Develops a transfer reply and asks whether to escalate, but does not compare two worked mechanisms.
+      - id: real_disqualifiers
+        score: 0
+        evidence: Does not give either route a distinct rejection condition.
+      - id: uncertainty
+        score: 1
+        evidence: The draft brackets 'Standard transfer terms apply' without a supplied terms schedule, though it asks the lead to verify fees and remove that sentence if unsupported.
+      - id: customer_reply
+        score: 1
+        evidence: Useful draft, but saying 'we can offer a transfer' before availability is known is stronger than the supporting facts; brackets hedge only terms.
+      - id: reviewer_handoff
+        score: 2
+        evidence: Names fee verification, future availability, exception decision and pre-send checks.
+  - id: engineer_technique
+    information_coverage: all four facts in a source register and a full task contract with two authority-distinct branches
+    summary: Clearer mechanism-specific comparison than the engineer baseline, with policy/chat roles and draft effects visible, but procedural assumptions still limit use.
+    dimensions:
+      - id: policy_fidelity
+        score: 2
+        evidence: Separates five-day purchase due to changed plans from the published 48-hour refund window and optional transfer.
+      - id: source_precedence
+        score: 2
+        evidence: Chat is correctly non-authoritative and cannot create a refund right or policy amendment.
+      - id: authority_gate
+        score: 1
+        evidence: Keeps the reply unsent and refund unissued, but asserts a standard transfer offer requires no manager decision despite only draft authority being stated.
+      - id: distinct_routes
+        score: 2
+        evidence: Works policy-transfer offer and internal manager-exception request as distinct authority and effect mechanisms.
+      - id: real_disqualifiers
+        score: 2
+        evidence: Customer refusal/no future seats makes transfer unfit; manager denial/lack of exception authority rules out the exception route. These are conditional examples, not verified facts.
+      - id: uncertainty
+        score: 1
+        evidence: Fee and seat availability are held, but the manager gate introduces a written-decision process absent from supplied records.
+      - id: customer_reply
+        score: 2
+        evidence: Respectful changed-plans wording with conditional transfer and optional manager request; no refund or transfer promise.
+      - id: reviewer_handoff
+        score: 1
+        evidence: Names concrete pre-send checks but makes a written manager request and decision sound mandatory without a source for that procedure.
+revision_source_sha256: 757d579f871d7825de33889a10cf5526a478a2cf92e15b4e17f55109bc327a43
+prior_batch_sha256: b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589
+reviewed_response_sha256:
+  casual: 51b2ac3b16e7d57a855348e5277d6b8b6c602a71c381604e4aa04c0d0ae1e2cf
+  power: eefb90fa4ab0fa6328ae605e90bd813900a34927a6aaf95f9debe65597f80ba4
+  engineer: c5f0412d20aa090658a8b2dbab9cca04c35dba02b0463469407f7d1565e5c523
+  engineer_technique: 81552890a45772d2d970cb4be1c79aa033061c5f4dad20029ad38e2b44e02250

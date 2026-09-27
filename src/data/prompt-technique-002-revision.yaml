@@ -1,0 +1,57 @@
+schema_version: hnc.prompt-technique-revision.v1
+catalog_position: 2
+slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+source_identity: PTA-001-006
+status: candidate-rewrite
+owner_disposition: pending
+revision_scope: Replace only the engineer_technique condition. Preserve casual, power and engineer prompts and responses from the frozen Batch 1 receipt; do not rewrite observed history.
+source_ref: src/data/prompt-technique-batch-001.yaml#06-contrastive-fork-instruction-hierarchy-and-precedence/example/source_packet
+comparison_boundary: One revised response versus three existing single responses. The fourth prompt is independently authored with task-evidence scaffolding and a contrastive-fork mechanism throughout; result differences cannot prove general technique efficacy.
+scoring:
+  values:
+    0: Missing or materially contradicted by an invented claim.
+    1: Partially addressed with an omission, unsupported assumption or weak check.
+    2: Correct, complete for the given facts and bounded to the task.
+    not_observable: Criterion depends on a source fact absent from this prompt; exclude from the numeric denominator and show coverage separately.
+  aggregation: Equal-weight sum of observable dimension points divided by two times the number of observable dimensions. Show raw points, denominator and coverage; no cross-user ability ranking, causal efficacy or acceptance inferred from a higher sum.
+  dimensions:
+    - id: policy_fidelity
+      title: Policy and request fidelity
+      check: Purchase five days old and changed plans, 48-hour refund rule and conditional transfer option stated accurately; no invented customer dissatisfaction.
+    - id: source_precedence
+      title: Source roles and precedence
+      check: Published policy governs standard terms; informal chat is not an amendment; lead note governs current role.
+    - id: authority_gate
+      title: Draft, send and exception boundaries
+      check: Lead may draft, manager approves exceptions, no refund or message sent; sending is distinct from drafting, but asking a manager is not falsely forbidden.
+    - id: distinct_routes
+      title: Materially different routes
+      check: Policy-compatible transfer draft and manager-exception request are compared as different mechanisms, not wording variants.
+    - id: real_disqualifiers
+      title: Route-specific disconfirmers
+      check: Each route has a condition that genuinely makes it unavailable or unfit for this customer rather than merely favoring the other route.
+    - id: uncertainty
+      title: Fee, seat and exception uncertainty
+      check: No fee waiver, future-seat availability, manager rule or refund entitlement is invented; operational costs remain hypotheses.
+    - id: customer_reply
+      title: Usable customer reply
+      check: Clear, respectful review-only draft reflecting changed plans, offering a conditional transfer and optional manager review without unsupported commitments.
+    - id: reviewer_handoff
+      title: Check and decision handoff
+      check: Names specific pre-send checks, who decides, what remains unknown and which effects did not occur.
+engineer_technique_prompt: |-
+  CUSTOMER-SUPPORT DECISION WORKBENCH — candidate reply for lead review only. Do not send a message, book a seat, process a refund, contact finance or claim approval.
+
+  Source register:
+  C/Tue — customer purchased a workshop seat five days ago and asks for a full refund because plans changed. No dissatisfaction with the workshop was stated.
+  P/effective this month — the published policy grants a full refund within 48 hours of purchase; afterward a transfer to a future session MAY be offered. It says nothing about transfer fees or a guaranteed available seat.
+  I/Mon — a colleague wrote in team chat that the team “usually refunds unhappy customers.” There is no approval or published amendment; this is neither customer evidence nor governing policy.
+  L/current — no refund has been issued. The lead can draft a reply. Only a manager may APPROVE an exception. The note does not say that the lead is barred from asking a manager to consider one.
+
+  First classify what each record establishes and what it cannot establish. Then create two routes that differ in AUTHORITY and EFFECT, not just tone:
+  A. A policy-compatible future-session transfer OFFER for lead review. Keep fee and seat availability unresolved; do not promise a free transfer, completed booking or send authorization.
+  B. An internal REQUEST for manager review of a possible refund exception. Do not portray this as an existing entitlement or a refund promise; the lead may prepare the request, while the manager holds the decision.
+
+  For EACH route provide governing source, customer benefit, operational cost labelled as a hypothesis, required preconditions, and a route-specific disqualifier. For A distinguish customer refusal of any later session or proven absence of future places from a mere preference for cash. For B distinguish manager denial or lack of exception authority from the 48-hour standard rule itself. Do not invent manager criteria, exceptions policy, seat inventory, fees or customer motivations. Show that chat cannot promote either route into policy.
+
+  Decide which route supports a review-only reply NOW and which is contingent on a manager decision. Draft a concise customer message that is accurate even if no future seat or fee terms have been verified. Finish with a source-to-claim check, a list of facts to confirm before the lead sends, a separate manager decision gate, and exact non-effects (no send, refund, transfer, seat hold or approval). Keep the two routes live as alternatives until a human reviewer decides; do not treat your recommendation as authorization.

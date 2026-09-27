@@ -31,7 +31,11 @@ try {
       if (data.title !== source.title || data.sections !== 5 || data.identity !== 4 || data.role !== 'dialog' || data.details.flat().some((n) => n < 35)) throw new Error(`position ${position}: ${JSON.stringify(data)}`);
       const comparison = dialog.locator('[data-ec-component="PromptBatchSkillLadder"]');
       const summary = await comparison.evaluate((el) => ({ slug: el.getAttribute('data-slug'), levels: el.querySelectorAll('.ec-skill-ladder__level').length, criteria: el.querySelectorAll('.ec-skill-ladder__matrix tbody tr').length }));
-      if (summary.slug !== source.slug || summary.levels !== 4 || summary.criteria !== 4) throw new Error(`position ${position}: missing integrated batch comparison ${JSON.stringify(summary)}`);
+      if (summary.slug !== source.slug || summary.levels !== 4 || summary.criteria !== (position === 2 ? 8 : 4)) throw new Error(`position ${position}: missing integrated batch comparison ${JSON.stringify(summary)}`);
+      if (position === 2) {
+        const review = await comparison.evaluate((el) => ({ scores: [...el.querySelectorAll('.ec-skill-ladder__level summary small')].map((item) => item.textContent), evidence: [...el.querySelectorAll('.ec-batch-score-evidence ol')].map((item) => item.children.length), warning: el.querySelector('.is-caution')?.textContent }));
+        if (review.scores?.join('|') !== ['5/10 observed points · 5/8 criteria assessable', '7/16 observed points · 8/8 criteria assessable', '11/16 observed points · 8/8 criteria assessable', '13/16 observed points · 8/8 criteria assessable'].join('|') || review.evidence?.join(',') !== '8,8,8,8' || !review.warning?.includes('manager-process hypotheses')) throw new Error(`position 2: missing eight-dimensional score, evidence or counterweight ${JSON.stringify(review)}`);
+      }
       await dialog.getByRole('button', { name: /05 · Demonstration/ }).click();
       for (let tier = 0; tier < 4; tier++) {
         const level = comparison.locator('.ec-skill-ladder__level').nth(tier);

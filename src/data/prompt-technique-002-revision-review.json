@@ -1,0 +1,189 @@
+{
+  "schema_version": "hnc.prompt-technique-revision-reader.v1",
+  "slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+  "catalog_position": 2,
+  "status": "candidate-needs-revision",
+  "owner_disposition": "pending",
+  "rubric": [
+    "Policy and request fidelity",
+    "Source roles and precedence",
+    "Draft, send and exception boundaries",
+    "Materially different routes",
+    "Route-specific disconfirmers",
+    "Fee, seat and exception uncertainty",
+    "Usable customer reply",
+    "Check and decision handoff"
+  ],
+  "technique_observation": "The successor prompt retains the engineer's source-role and effect-boundary discipline while making the conflict between policy transfer and manager exception the organizing comparison. The response supplies a clearer two-route decision desk and route-specific disqualifiers than the task-only engineer output.",
+  "counterweight": "The response treats some manager-process hypotheses as if they are required steps, and says the lead can offer Route A without a manager decision even though the supplied role note only expressly authorizes drafting. A higher total in this one example does not prove better general performance.",
+  "next_action": "Review the manager and lead authority wording, then decide whether the model error remains as a counterexample or the prompt should be revised and rerun. Do not send the drafted customer message or infer a standing exception process.",
+  "non_claim": "One revised response versus three existing single responses. The fourth prompt is independently authored with task-evidence scaffolding and a contrastive-fork mechanism throughout; result differences cannot prove general technique efficacy.",
+  "levels": [
+    {
+      "id": "casual",
+      "prompt": "Someone bought a seat in our workshop five days ago and now wants a refund because their plans changed. A coworker said in chat that we usually refund unhappy people. What should I write back? I haven't checked the official policy yet, so please don't tell them I've refunded anything.",
+      "prompt_sha256": "44b055e873faf4b9034ed398828353c83ae1fe14e0e296ca4b98b35c2ddefc59",
+      "response": "Here's a draft reply you could send while you verify the actual policy:\n\n---\n\n**Subject:** Re: Workshop refund request\n\nHi [name],\n\nThanks for letting me know about the change in your plans. I'm sorry to hear it. I'd like to look into what options are available for your registration and get back to you with details as soon as I can.\n\nI'll follow up shortly.\n\nBest,\n[your name]\n\n---\n\nA few notes on the framing:\n\n- **Empathetic but noncommittal.** It acknowledges their situation without implying a refund is approved or denied.\n- **Doesn't reference the coworker's chat comment.** That's internal information and not something to put in writing to the customer.\n- **Doesn't claim a refund has been issued.** Once you confirm what your policy actually allows, you can send a concrete next step (e.g., \"I'll process the refund today\" or \"per our policy, registrations are non-refundable after X days, but here's what I can do\").\n- **Promises a follow-up.** Only send once you're confident you can deliver on that next response promptly.\n\nBefore you reply, I'd suggest double-checking your written refund/cancellation policy, any terms they agreed to at purchase, and what (if anything) your coworker actually has authority to approve informally — those three things don't always line up, and it's worth knowing where you stand.",
+      "response_sha256": "51b2ac3b16e7d57a855348e5277d6b8b6c602a71c381604e4aa04c0d0ae1e2cf",
+      "tool_events": 0,
+      "input_fact_ids": [
+        1,
+        3
+      ],
+      "finding": "Polite deferral, but the governing policy was not in the prompt; a low numeric denominator must not be read as a lower user-ability score.",
+      "information_coverage": "customer request and informal chat supplied; written policy, lead role and manager authority absent",
+      "observations": [
+        "not_observable",
+        1,
+        1,
+        "not_observable",
+        "not_observable",
+        1,
+        1,
+        1
+      ],
+      "score": {
+        "points": 5,
+        "maximum": 10,
+        "observable_dimensions": 5,
+        "total_dimensions": 8
+      },
+      "evidence": [
+        "Written 48-hour rule and transfer provision were not supplied.",
+        "Treats coworker chat as something to verify rather than binding policy, but cannot compare it with an absent policy.",
+        "No refund is claimed, but a follow-up is promised without known lead/send authority.",
+        "No policy transfer or manager-exception route was supplied.",
+        "Route availability cannot be tested without the policy or manager role.",
+        "Leaves refund open pending policy but offers a shortly timed follow-up without a supplied deadline.",
+        "Respectful and noncommittal, but the follow-up time is unsupported.",
+        "Asks to check policy and chat authority but lacks a named role decision because those facts were not supplied."
+      ]
+    },
+    {
+      "id": "power",
+      "prompt": "Help me draft a customer-support reply for review. The customer bought a workshop seat five days ago and requests a full refund. Our current policy gives full refunds only within 48 hours and allows a future-session transfer afterward. A colleague said in chat that we usually refund unhappy customers, but there's no policy amendment. The support lead can draft; only a manager approves exceptions, and no refund was issued. Give me a short reply plus a list of facts to double-check. Don't promise a fee-free transfer, a refund, or a sent message.",
+      "prompt_sha256": "c207ce7e8b7e34efdef9fc5e7becdb1320a9995f4a3e9326c3adeb8b1f9fd97e",
+      "response": "**Draft reply**\n\nHi [Customer Name],\n\nThank you for reaching out, and I'm sorry the workshop hasn't been what you hoped for.\n\nA quick note on our policy: full refunds are available within 48 hours of purchase. After that window, the standard option is a transfer to a future session. Because your request falls outside the 48-hour window, I want to be upfront that I cannot confirm a refund at this stage.\n\nI also want to mention that a colleague may have suggested in an earlier chat that we sometimes refund unhappy customers. I want to be transparent: that's not part of our formal policy, so I can't treat it as a commitment.\n\nI'll bring your case to the support lead for review. If an exception is to be considered, it would require manager approval — I'll write back as soon as I have an update.\n\nIn the meantime, if it's helpful, I can outline what transfer options are currently available.\n\nBest regards,\n[Your name], Customer Support\n\n---\n\n**Facts to double-check before sending**\n\n- Order timestamp and time zone used to calculate the 48-hour window.\n- Exact wording of the colleague's earlier chat message and whether it was with this same customer.\n- Whether the policy document on file matches what's quoted above (48-hour refund, post-window transfer).\n- Whether the customer attended the workshop at all, in part, or not yet.\n- Workshop date relative to today's date (past vs. upcoming changes the transfer framing).\n- Whether any fee is normally attached to a transfer (so we don't accidentally imply it is free).\n- Whether this customer already has an open ticket, prior correspondence, or a previously approved exception.\n- Who the approving manager is and the current routing procedure to escalate.\n- Whether anything in the customer's jurisdiction (e.g., consumer protection rules) overrides our standard policy.\n- Confirmation that no refund or credit has already been issued on this order.",
+      "response_sha256": "eefb90fa4ab0fa6328ae605e90bd813900a34927a6aaf95f9debe65597f80ba4",
+      "tool_events": 0,
+      "input_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "finding": "Understands the written policy but adds a false motivation and gives the customer internal chat/process context not needed for a usable reply.",
+      "information_coverage": "all four task facts summarized in a practical prompt",
+      "observations": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "score": {
+        "points": 7,
+        "maximum": 16,
+        "observable_dimensions": 8,
+        "total_dimensions": 8
+      },
+      "evidence": [
+        "Applies 48 hours but says the customer is unhappy with the workshop; the stated reason is changed plans.",
+        "Says chat is not formal policy yet implies the customer may have seen that chat; the packet only records an internal team message.",
+        "Holds the refund for manager approval but does not clearly separate lead draft from customer-send permission.",
+        "Mentions transfer and escalation without comparing the governing mechanisms and consequences.",
+        "Does not state a route-specific condition that makes transfer or exception unavailable.",
+        "Does not promise a free transfer, but speaks of outlining available transfer options before seat inventory is known.",
+        "Courteous but invents dissatisfaction and unnecessarily exposes informal team chat to the customer.",
+        "Offers a long fact-check list, including speculative attendance and jurisdiction checks, without a focused pre-send gate."
+      ]
+    },
+    {
+      "id": "engineer",
+      "prompt": "Prepare a candidate response artifact; do not contact the customer or payment provider.\nInputs: CUST/Tue — request for a full refund, purchase five days old, changed plans. POLICY/effective this month — full refund within 48 hours; afterward transfer to a future session may be offered. CHAT/Mon — colleague says 'usually refund unhappy customers' without approval or amendment. LEAD — may draft a reply; manager alone may approve an exception; no refund issued.\nOutput a policy-grounded draft, identify any unsupported sentence, and record what the lead must decide before sending. Treat lower-authority chat as evidence of a suggestion, not a policy change. Check that nothing in the output says the seat is booked, the transfer is free, the refund is issued, or the reply was sent.",
+      "prompt_sha256": "66aae3ae8380533edfab8d1a0a2fc2ff2f6f310c4b1609a8ff5d1d87cffc160e",
+      "response": "**Artifact: Candidate Response Draft — Refund Request (Policy-Grounded)**\n\n---\n\n**Draft reply to customer (for lead review):**\n\n> Thank you for reaching out about your purchase from [date]. I understand your plans have changed.\n>\n> Our refund policy, effective this month, provides a full refund only within 48 hours of purchase. Because your purchase is now five days old, a full refund is no longer available under policy.\n>\n> As an alternative, we can offer a transfer of your purchase to a future session. [Standard transfer terms apply — any associated fees or conditions should be confirmed per the current schedule.] Please let me know if you would like to proceed with a transfer, or if there is anything else I can help with.\n\n---\n\n**Unsupported sentence (flagged):**\n\n- *\"Colleague note from Monday: 'usually refund unhappy customers.'\"* — This is a colleague's informal practice suggestion. It is **not** an approved amendment to POLICY and carries no authority. It should not be cited to the customer and does not override the 48-hour rule.\n\n---\n\n**Decisions the lead must make before sending:**\n\n1. **Confirm transfer terms** (whether standard fees/conditions apply) so the draft does not unintentionally imply a free transfer.\n2. **Determine whether to escalate for a manager-approved exception** (only a manager may approve a refund outside the 48-hour window); if escalation is sought, route to the manager before any commitment is made.\n3. **Remove or leave the bracketed transfer-terms sentence** based on verified policy language.\n4. **Confirm nothing in the final reply states or implies that a refund has been issued, a seat is booked, a transfer is free, or the message has been sent** — the draft currently contains none of these claims, and the lead must preserve that on send.\n\n---\n\n**Status checks (per instructions):**\n\n- Seat booked? — No (not stated).\n- Transfer free? — Not confirmed (terms to be verified).\n- Refund issued? — No (not stated; none has been issued per LEAD notes).\n- Reply sent? — No (draft only; lead has not sent).",
+      "response_sha256": "c5f0412d20aa090658a8b2dbab9cca04c35dba02b0463469407f7d1565e5c523",
+      "tool_events": 0,
+      "input_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "finding": "Strong task-focused source and permission discipline; its response favors one policy route and mentions escalation but does not work a material contrastive fork.",
+      "information_coverage": "all four task facts as named records, with a bounded review-only task",
+      "observations": [
+        2,
+        2,
+        2,
+        1,
+        0,
+        1,
+        1,
+        2
+      ],
+      "score": {
+        "points": 11,
+        "maximum": 16,
+        "observable_dimensions": 8,
+        "total_dimensions": 8
+      },
+      "evidence": [
+        "States five-day purchase, changed plans, 48-hour rule and conditional transfer accurately.",
+        "Flags chat as unsupported and not an amendment to published policy.",
+        "Reply is draft-only; manager approval required for exception; no action claimed.",
+        "Develops a transfer reply and asks whether to escalate, but does not compare two worked mechanisms.",
+        "Does not give either route a distinct rejection condition.",
+        "The draft brackets 'Standard transfer terms apply' without a supplied terms schedule, though it asks the lead to verify fees and remove that sentence if unsupported.",
+        "Useful draft, but saying 'we can offer a transfer' before availability is known is stronger than the supporting facts; brackets hedge only terms.",
+        "Names fee verification, future availability, exception decision and pre-send checks."
+      ]
+    },
+    {
+      "id": "engineer_technique",
+      "prompt": "CUSTOMER-SUPPORT DECISION WORKBENCH — candidate reply for lead review only. Do not send a message, book a seat, process a refund, contact finance or claim approval.\n\nSource register:\nC/Tue — customer purchased a workshop seat five days ago and asks for a full refund because plans changed. No dissatisfaction with the workshop was stated.\nP/effective this month — the published policy grants a full refund within 48 hours of purchase; afterward a transfer to a future session MAY be offered. It says nothing about transfer fees or a guaranteed available seat.\nI/Mon — a colleague wrote in team chat that the team “usually refunds unhappy customers.” There is no approval or published amendment; this is neither customer evidence nor governing policy.\nL/current — no refund has been issued. The lead can draft a reply. Only a manager may APPROVE an exception. The note does not say that the lead is barred from asking a manager to consider one.\n\nFirst classify what each record establishes and what it cannot establish. Then create two routes that differ in AUTHORITY and EFFECT, not just tone:\nA. A policy-compatible future-session transfer OFFER for lead review. Keep fee and seat availability unresolved; do not promise a free transfer, completed booking or send authorization.\nB. An internal REQUEST for manager review of a possible refund exception. Do not portray this as an existing entitlement or a refund promise; the lead may prepare the request, while the manager holds the decision.\n\nFor EACH route provide governing source, customer benefit, operational cost labelled as a hypothesis, required preconditions, and a route-specific disqualifier. For A distinguish customer refusal of any later session or proven absence of future places from a mere preference for cash. For B distinguish manager denial or lack of exception authority from the 48-hour standard rule itself. Do not invent manager criteria, exceptions policy, seat inventory, fees or customer motivations. Show that chat cannot promote either route into policy.\n\nDecide which route supports a review-only reply NOW and which is contingent on a manager decision. Draft a concise customer message that is accurate even if no future seat or fee terms have been verified. Finish with a source-to-claim check, a list of facts to confirm before the lead sends, a separate manager decision gate, and exact non-effects (no send, refund, transfer, seat hold or approval). Keep the two routes live as alternatives until a human reviewer decides; do not treat your recommendation as authorization.",
+      "prompt_sha256": "e456b6ca1fc629e2e7d4e1c73fb9603373a7181f7fe50515e2dbab8ea3f9c522",
+      "response": "-Support Decision Workbench — Review-Only Draft\n\n## 1. Record Classification\n\n**C/Tue — Customer fact pattern**\n- Establishes: purchase occurred 5 days ago; customer requests full refund; stated reason is changed plans; no dissatisfaction with the workshop itself.\n- Cannot establish: customer's entitlement to a refund; validity of \"plans changed\" as grounds; willingness to accept alternatives; future availability.\n\n**P/effective — Published policy (current month)**\n- Establishes: full refund available only within 48 hours of purchase; after 48 hours, a transfer to a future session MAY be offered.\n- Cannot establish: any transfer fee; guaranteed seat availability; obligation (vs. discretion) to offer transfer; manager exception criteria; any amendment to the 48-hour rule.\n\n**I/Mon — Informal team chat**\n- Establishes: a colleague's recollection that the team \"usually refunds unhappy customers.\"\n- Cannot establish: policy amendment; manager approval; binding precedent; applicability to a non-dissatisfied customer; authority to override P/effective.\n\n**L/current — Operational status**\n- Establishes: no refund issued yet; lead may draft a reply; only a manager may APPROVE an exception; lead is not barred from asking a manager to consider one.\n- Cannot establish: that an exception will be granted; that a manager has authority in a particular case; any predetermined outcome.\n\n**Chat cannot promote either route into policy.** I/Mon is unapproved, informal, and neither customer evidence nor governing text. It cannot convert P/effective's discretionary \"MAY be offered\" into an entitlement, nor create a refund right outside the 48-hour window, nor substitute for manager authority.\n\n---\n\n## 2. Two Routes — Differ in Authority and Effect\n\n### Route A — Future-session transfer OFFER (for lead review)\n\n- **Governing source:** P/effective (post-48-hour \"MAY be offered\" clause) and L/current (lead may draft; no manager decision required to OFFER).\n- **Customer benefit:** Retains enrollment value; rescheduling flexibility.\n- **Operational cost (labelled as a hypothesis):** Administrative time to coordinate a transfer; potential temporary seat hold on a future session; possible fee revenue depending on terms; opportunity cost if a seat could otherwise be resold. **None of this is verified.**\n- **Required preconditions:** Lead has not yet confirmed (i) whether any future session has capacity, (ii) whether a fee applies, (iii) whether the customer will accept any future date. The offer can be made without these being settled, but it cannot be presented as completed.\n- **Route-specific disqualifier:** Customer explicitly refuses any later session, OR a verified absence of future places within a reasonable horizon. A mere preference for cash is NOT a disqualifier for A — it makes the offer unappealing to the customer, but the offer itself remains available and policy-compatible.\n\n### Route B — Internal REQUEST for manager review of a refund exception\n\n- **Governing source:** L/current (lead may prepare a request; manager holds the decision). P/effective supplies the baseline that the request asks the manager to deviate from.\n- **Customer benefit:** If approved, a cash outcome matching the customer's stated preference.\n- **Operational cost (labelled as a hypothesis):** Manager review time; if approved, revenue loss on the seat; potential precedent signal for similar cases. **None of this is confirmed.**\n- **Required preconditions:** A manager with documented exception authority exists; the request is escalated through whatever internal channel applies; no conflicting rule prohibits exceptions. **The lead does not have verified knowledge of any of these.**\n- **Route-specific disqualifier:** Manager denial, OR the relevant manager lacks exception authority. The 48-hour rule itself is NOT a disqualifier for B — it is precisely the condition B asks the manager to override. B's viability depends on the manager's discretion, not on the customer's eligibility under P/effective.\n\n---\n\n## 3. Which Route Supports a Review-Only Reply NOW\n\n- **Route A supports a review-only reply NOW.** The lead can offer to explore a transfer without committing to one, without quoting a fee, and without holding a seat. The message is accurate as long as it offers, does not promise completion, and signals that specifics are pending.\n- **Route B is contingent on a manager decision.** It cannot be communicated to the customer as an entitlement, an expectation, or a pending refund. If surfaced to the customer at all, it must be framed neutrally (e.g., \"I can ask a manager to review\") and must not imply an outcome.\n\n---\n\n## 4. Draft Customer Message (for lead review; NOT sent)\n\n> Thanks for getting in touch, [name]. I understand your plans have shifted. Our standard policy provides a full refund within 48 hours of purchase, and your purchase falls outside that window. What we can do is look into transferring your seat to a future workshop. I have not yet confirmed whether a seat is available in an upcoming session or whether any fee would apply, so I want to be upfront that I cannot promise either way yet. If you would like me to check what's available — or if you'd prefer me to ask a manager to review your case for any other option — please let me know and I'll follow up.\n\nThis draft is accurate under three readings: no seat confirmed, no fee confirmed, no manager outcome implied. The phrase \"ask a manager to review\" is a request, not a refund.\n\n---\n\n## 5. Source-to-Claim Check\n\n| Claim in draft | Source | Status |\n|---|---|---|\n| 48-hour refund window exists | P/effective | Verified by source |\n| Purchase falls outside window | C/Tue (5 days ago) + P/effective | Verified |\n| Transfer to a future session is something the team can look into | P/effective (MAY be offered) + L/current | Verified as a possibility, not as a commitment |\n| Seat availability unknown | Not stated in any record | Accurately framed as unconfirmed |\n| Fee terms unknown | P/effective is silent; no other source | Accurately framed as unconfirmed |\n| Manager can be asked to review | L/current | Verified |\n| Manager outcome | No record | Not claimed |\n\n---\n\n## 6. Facts to Confirm Before the Lead Sends\n\n- Customer's full name, purchase date, and workshop session (to verify the 48-hour calculation).\n- Whether any future sessions are scheduled within a reasonable horizon.\n- Whether a fee or transfer policy exists in any document not yet reviewed.\n- Internal channel and recipient for a manager exception request, if Route B is pursued.\n- Any prior exceptions in similar cases (for context only — not as binding precedent).\n\n---\n\n## 7. Manager Decision Gate (separate from Route A)\n\nA manager exception is only live if:\n1. A manager with exception authority is identified.\n2. The lead submits a written request stating the customer facts, the policy baseline, and the request.\n3. The manager responds with an explicit decision.\n4. The decision is documented before any customer-facing action beyond the offer in Route A.\n\nUntil all four conditions are met, Route B is a request in preparation, not a refund outcome.\n\n---\n\n## 8. Exact Non-Effects (what does NOT happen here)\n\n- No message is sent to the customer.\n- No refund is processed.\n- No transfer is booked or promised as completed.\n- No seat is held on any future session.\n- No approval — refund, exception, or otherwise — is granted or implied.\n\n---\n\n## 9. Recommendation Posture\n\nBoth routes remain live as alternatives until a human reviewer decides. This workbench output is a draft and a structure for decision-making; it is not authorization. The lead should select Route A, Route B, both, or neither based on their own judgment and any additional facts they verify — and should not treat this analysis as a substitute for that judgment.",
+      "response_sha256": "81552890a45772d2d970cb4be1c79aa033061c5f4dad20029ad38e2b44e02250",
+      "tool_events": 0,
+      "input_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "finding": "Clearer mechanism-specific comparison than the engineer baseline, with policy/chat roles and draft effects visible, but procedural assumptions still limit use.",
+      "information_coverage": "all four facts in a source register and a full task contract with two authority-distinct branches",
+      "observations": [
+        2,
+        2,
+        1,
+        2,
+        2,
+        1,
+        2,
+        1
+      ],
+      "score": {
+        "points": 13,
+        "maximum": 16,
+        "observable_dimensions": 8,
+        "total_dimensions": 8
+      },
+      "evidence": [
+        "Separates five-day purchase due to changed plans from the published 48-hour refund window and optional transfer.",
+        "Chat is correctly non-authoritative and cannot create a refund right or policy amendment.",
+        "Keeps the reply unsent and refund unissued, but asserts a standard transfer offer requires no manager decision despite only draft authority being stated.",
+        "Works policy-transfer offer and internal manager-exception request as distinct authority and effect mechanisms.",
+        "Customer refusal/no future seats makes transfer unfit; manager denial/lack of exception authority rules out the exception route. These are conditional examples, not verified facts.",
+        "Fee and seat availability are held, but the manager gate introduces a written-decision process absent from supplied records.",
+        "Respectful changed-plans wording with conditional transfer and optional manager request; no refund or transfer promise.",
+        "Names concrete pre-send checks but makes a written manager request and decision sound mandatory without a source for that procedure."
+      ]
+    }
+  ]
+}

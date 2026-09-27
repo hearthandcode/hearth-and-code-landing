@@ -16,16 +16,18 @@ export function PromptBatchSkillLadder({ slug }: { slug: string }) {
       <div><strong>Observed technique contribution</strong><p>{entry.technique_observation}</p></div>
       <div className="is-caution"><strong>Adversarial counterweight</strong><p>{entry.counterweight}</p></div>
       <p className="ec-skill-ladder__decision">{entry.non_claim}</p>
+      {'score_basis' in entry && <p className="ec-skill-ladder__decision"><strong>Score interpretation:</strong> {entry.score_basis}</p>}
     </header>
     <details className="ec-batch-source-facts"><summary>Source fixture · inspect the facts behind the prompts</summary><ol>{entry.source_facts.map((fact) => <li key={fact}>{fact}</li>)}</ol></details>
     <div className="ec-skill-ladder__matrix-scroll"><table className="ec-skill-ladder__matrix"><caption>One observed response per prompting style · no aggregate score</caption>
       <thead><tr><th scope="col">Criterion</th>{entry.levels.map((level) => <th scope="col" key={level.id}>{tierLabel[level.id]}</th>)}</tr></thead>
-      <tbody>{entry.rubric.map((criterion, index) => <tr key={criterion}><th scope="row">{criterion}</th>{entry.levels.map((level) => <td key={level.id} data-result={level.observations[index]}><strong>{labels[level.observations[index]] || 'Not reviewed'}</strong></td>)}</tr>)}</tbody>
+      <tbody>{entry.rubric.map((criterion, index) => <tr key={criterion}><th scope="row">{criterion}</th>{entry.levels.map((level) => { const value = level.observations[index]; return <td key={level.id} data-result={typeof value === 'number' ? ['not_met', 'partly_met', 'met'][value] : value}><strong>{typeof value === 'number' ? `${value}/2` : labels[value] || 'Not reviewed'}</strong></td>; })}</tr>)}</tbody>
     </table></div>
     <div className="ec-skill-ladder__levels">
       {entry.levels.map((level, index) => <details key={level.id} className="ec-skill-ladder__level">
-        <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{tierLabel[level.id]}</strong><small>Source facts represented: {level.input_fact_ids.join(', ')}</small><b aria-hidden="true">⌄</b></summary>
+        <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{tierLabel[level.id]}</strong><small>{'score' in level ? `${level.score.points}/${level.score.maximum} observed points · ${level.score.observable_dimensions}/${level.score.total_dimensions} criteria assessable` : `Source facts represented: ${level.input_fact_ids.join(', ')}`}</small><b aria-hidden="true">⌄</b></summary>
         <p><strong>Response audit:</strong> {level.finding}</p>
+        {'evidence' in level && <div className="ec-batch-score-evidence"><h5>Eight dimension findings · {level.information_coverage}</h5><ol>{entry.rubric.map((criterion, criterionIndex) => <li key={criterion}><strong>{criterion}:</strong> {level.evidence[criterionIndex]}</li>)}</ol></div>}
         {/<tool_call>|\[<tool_call>/i.test(level.response) && <p className="ec-batch-output-hold"><strong>HOLD:</strong> Model-generated tool-call syntax appears as final text. No Pi tool event executed; this is not a completed handoff.</p>}
         <div className="ec-skill-ladder__pair"><section><h5>Submitted prompt</h5><pre>{level.prompt}</pre></section><section><h5>Observed {review.model} response</h5><div className="ec-skill-ladder__response" dangerouslySetInnerHTML={{ __html: renderResponseMarkdown(level.response) }} /></section></div>
         <footer>Isolated Pi · {level.tool_events} tool events · Prompt SHA-256: {level.prompt_sha256} · Response SHA-256: {level.response_sha256}</footer>
