@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import type { CatalogEntry, TemplateTech } from '../../data/vendored-data';
 import exemplars from '../../data/prompt-technique-exemplars.json';
 import comparisons from '../../data/prompt-technique-comparisons.json';
+import { renderResponseMarkdown } from './response-markdown';
 
 const TYPE_COLORS: Record<string, { tint: string; ink: string; label: string }> = {
   core: { tint: 'rgba(244,184,96,0.10)', ink: 'var(--ec-gold-500)', label: 'Core' },
@@ -125,6 +126,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
             <p className="ec-prompt-sheet__mechanism">{exemplar.example.scenario}. Same source packet and model route for both prompts; the instruction framing changes.</p>
             <p className="ec-prompt-sheet__mechanism"><strong>Comparison question:</strong> {exemplar.example.comparison_predicate}</p>
             {comparison ? <div className="ec-prompt-sheet__comparison">
+              <p className="ec-prompt-sheet__delta"><strong>What changed in the prompt:</strong> {comparison.editorial_delta}</p>
               <div className="ec-prompt-sheet__tabs" role="tablist" aria-label={`${entry.title} demonstration`} onKeyDown={(event) => {
                 const next = event.key === 'ArrowRight' ? (activeTab + 1) % 4 : event.key === 'ArrowLeft' ? (activeTab + 3) % 4 : event.key === 'Home' ? 0 : event.key === 'End' ? 3 : null;
                 if (next === null) return;
@@ -134,7 +136,11 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
                 {tabs.map((tab, index) => <button key={tab.label} type="button" role="tab" id={`demo-tab-${entry.slug}-${index}`} aria-controls={`demo-panel-${entry.slug}`} aria-selected={activeTab === index} tabIndex={activeTab === index ? 0 : -1} onClick={() => setActiveTab(index)}>{tab.label}</button>)}
               </div>
               <div role="tabpanel" id={`demo-panel-${entry.slug}`} aria-labelledby={`demo-tab-${entry.slug}-${activeTab}`} className="ec-prompt-sheet__comparison-panel">
-                <h4>{tabs[activeTab].label}</h4><pre>{tabs[activeTab].text}</pre>
+                <h4>{tabs[activeTab].label}</h4>
+                {activeTab % 2 === 0
+                  ? <pre className="ec-prompt-sheet__submitted-prompt">{tabs[activeTab].text}</pre>
+                  : <div className="ec-prompt-sheet__rendered-response" dangerouslySetInnerHTML={{ __html: renderResponseMarkdown(tabs[activeTab].text ?? '') }} />
+                }
               </div>
               <aside className="ec-prompt-sheet__comparison-receipt"><strong>Observed limitations · {comparison.review_status}</strong>
                 <ul>{comparison.observed_limits.map((limit) => <li key={limit}>{limit}</li>)}</ul>

@@ -311,3 +311,19 @@
 .ec-prompt-sheet__comparison-receipt ul{padding-left:1.2rem}
 .ec-prompt-sheet__comparison-receipt small{color:var(--ec-ash-500)}
 @media(max-width:760px){.ec-prompt-sheet__tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Response tabs render a restricted Markdown subset; prompts remain verbatim. */
+.ec-prompt-sheet__rendered-response{max-height:27rem;overflow:auto;color:var(--ec-paper-300);font:.86rem/1.55 var(--ec-body);overflow-wrap:anywhere}
+.ec-prompt-sheet__rendered-response :is(h1,h2,h3,h4){margin:1rem 0 .5rem;color:var(--ec-paper-100);font-family:var(--ec-display);line-height:1.2;letter-spacing:-.015em}
+.ec-prompt-sheet__rendered-response h1{font-size:1.45rem}.ec-prompt-sheet__rendered-response h2{font-size:1.22rem}.ec-prompt-sheet__rendered-response h3{font-size:1.04rem}
+.ec-prompt-sheet__rendered-response p{margin:.5rem 0 .85rem}.ec-prompt-sheet__rendered-response :is(ul,ol){margin:.5rem 0 1rem;padding-left:1.5rem}
+.ec-prompt-sheet__rendered-response li{margin:.35rem 0}.ec-prompt-sheet__rendered-response strong{color:var(--ec-paper-100)}
+.ec-prompt-sheet__rendered-response hr{border:0;border-top:1px solid var(--ec-line-500);margin:1rem 0}
+.ec-prompt-sheet__rendered-response blockquote{margin:.8rem 0;padding:.6rem 1rem;border-left:2px solid var(--ec-plasma-500);background:var(--ec-field-800)}
+.ec-prompt-sheet__rendered-response code{padding:.1rem .25rem;background:var(--ec-field-800);font:.78rem var(--ec-mono)}
+.ec-prompt-sheet__rendered-response pre{padding:.7rem;overflow:auto;background:var(--ec-field-800)}
+.ec-response-table-wrap{max-width:100%;overflow-x:auto;margin:1rem 0}.ec-prompt-sheet__rendered-response table{width:100%;border-collapse:collapse;min-width:28rem;font-size:.77rem}
+.ec-prompt-sheet__rendered-response :is(th,td){padding:.55rem .65rem;border:1px solid var(--ec-line-500);text-align:left;vertical-align:top}
+.ec-prompt-sheet__rendered-response th{color:var(--ec-plasma-500);background:var(--ec-field-800)}
+.ec-prompt-sheet__rendered-response h1{max-width:none;font-size:1.35rem;line-height:1.22;letter-spacing:-.01em}
+.ec-prompt-sheet__delta{margin:.85rem 0;color:var(--ec-paper-300);font-size:.82rem;line-height:1.5}
+.ec-prompt-sheet__delta strong{color:var(--ec-plasma-500)}

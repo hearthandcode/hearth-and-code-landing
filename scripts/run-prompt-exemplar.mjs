@@ -1,4 +1,4 @@
-// Deliberate one-exemplar offline authoring harness. Explicit --run is a paid provider action.
+// Deliberate one-exemplar provider-backed authoring harness. Explicit --run is a paid provider action.
 // Run from the landing repository root; no live provider call is made by the website.
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
@@ -31,6 +31,8 @@ const receipt = {
   slug: exemplar.slug,
   provider: 'minimax-oauth', model: 'MiniMax-M3',
   execution_mode: 'pi-container --print --no-session --no-tools --no-extensions --no-skills --no-prompt-templates --no-context-files --thinking off',
+  system_prompt_sha256: sha256(system),
+  source_packet_sha256: sha256(facts),
   comparison_predicate: exemplar.example.comparison_predicate,
   task_class: exemplar.example.scenario,
   samples: results,

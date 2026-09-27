@@ -47,7 +47,19 @@ test('the revised technique and field-card workflow enforces one authored exempl
     assert.doesNotMatch(sample.submitted_prompt, /Hearth|Code|Exocore|Astro|Hub|pi-ember/i);
   }
   assert.ok(comparison.observed_limits.length >= 2);
-  assert.match(comparison.observed_limits.join(' '), /tomato pastas|dietary-overlap/);
+  assert.match(comparison.observed_limits.join(' '), /Monday stock|tomato pasta/);
+  assert.doesNotMatch(exemplar.example.applied_instruction, /Dynamic Context Assembly/i);
+  for (const mechanism of ['Reconcile', 'superseded', 'source and timestamp', 'ingredient', 'Check the draft']) {
+    assert.match(exemplar.example.applied_instruction, new RegExp(mechanism, 'i'));
+  }
+  const [baseline, applied] = comparison.samples.map((sample) => sample.submitted_prompt);
+  const sharedPacket = exemplar.example.source_packet.map((fact, index) => `${index + 1}. ${fact}`).join('\n');
+  assert.equal(createHash('sha256').update(sharedPacket).digest('hex'), comparison.source_packet_sha256);
+  assert.match(comparison.system_prompt_sha256, /^[a-f0-9]{64}$/);
+  for (const fact of exemplar.example.source_packet) {
+    assert.ok(baseline.includes(fact) && applied.includes(fact), `same source fact: ${fact.slice(0, 30)}`);
+  }
+  assert.ok(sharedPacket.length > 400);
   assert.match(contract.field_library.source_boundary, /same technique-specific editorial and paired-run review/);
 });
 
