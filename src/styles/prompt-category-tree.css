@@ -1,0 +1,29 @@
+/* Prompt Technique Atlas: document → category → technique navigator. */
+.ec-prompt-tree{display:grid;grid-template-columns:minmax(17rem,.72fr) minmax(0,1.28fr);gap:1px;border:1px solid var(--ec-line-500);background:var(--ec-line-500);color:var(--ec-paper-100)}
+.ec-prompt-tree__navigator{max-height:52rem;overflow:auto;background:var(--ec-field-950)}
+.ec-prompt-tree__navigator>header{position:sticky;top:0;z-index:2;padding:1.15rem 1.2rem;border-bottom:1px solid var(--ec-line-500);background:var(--ec-field-950)}
+.ec-prompt-tree__navigator>header p{margin:0;color:var(--ec-gold-500);font:700 .62rem var(--ec-mono);letter-spacing:.08em;text-transform:uppercase}
+.ec-prompt-tree__navigator>header strong{display:block;margin-top:.55rem;color:var(--ec-paper-100);font:500 1rem/1.2 var(--ec-display)}
+.ec-prompt-tree__navigator>header small{display:block;margin-top:.45rem;color:var(--ec-ash-500);font:.77rem/1.45 var(--ec-body)}
+.ec-prompt-tree__documents{padding:.45rem}
+.ec-prompt-tree details{border-bottom:1px solid color-mix(in srgb,var(--ec-line-500) 70%,transparent)}
+.ec-prompt-tree summary{display:grid;grid-template-columns:auto 1fr auto;gap:.6rem;align-items:start;padding:.8rem .7rem;cursor:pointer;list-style:none}
+.ec-prompt-tree summary::-webkit-details-marker{display:none}
+.ec-prompt-tree summary>span{color:var(--ec-gold-500);font:.62rem var(--ec-mono)}
+.ec-prompt-tree summary strong{color:var(--ec-paper-200);font:600 .78rem/1.3 var(--ec-body)}
+.ec-prompt-tree summary small{color:var(--ec-ash-500);font:.6rem var(--ec-mono);white-space:nowrap}
+.ec-prompt-tree details[open]>summary{background:rgba(244,184,96,.06)}
+.ec-prompt-tree ol{display:grid;gap:.25rem;margin:0 0 .65rem;padding:0 .45rem .45rem 1.65rem;list-style:none}
+.ec-prompt-tree li button{display:grid;grid-template-columns:1fr auto;gap:.5rem;width:100%;padding:.52rem .6rem;border:1px solid transparent;border-radius:.25rem;background:transparent;color:var(--ec-paper-300);font:.71rem/1.35 var(--ec-body);text-align:left;cursor:pointer}
+.ec-prompt-tree li button:hover{border-color:var(--ec-line-500);background:rgba(63,224,208,.06);color:var(--ec-paper-100)}
+.ec-prompt-tree li button[aria-current="true"]{border-color:color-mix(in srgb,var(--ec-plasma-500) 55%,transparent);background:rgba(63,224,208,.1);color:var(--ec-paper-100)}
+.ec-prompt-tree li button b{align-self:center;color:var(--ec-plasma-500);font:.62rem var(--ec-mono)}
+.ec-prompt-tree__selection{min-width:0;padding:clamp(1.2rem,3vw,2.25rem);background:var(--ec-field-900)}
+.ec-prompt-tree__selection-head{padding-bottom:1.25rem;margin-bottom:1.25rem;border-bottom:1px solid var(--ec-line-500)}
+.ec-prompt-tree__selection-head p{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;color:var(--ec-ash-500);font:.67rem/1.4 var(--ec-mono)}
+.ec-prompt-tree__selection-head p span:last-child{color:var(--ec-plasma-500)}
+.ec-prompt-tree__selection-head p i{color:var(--ec-line-500);font-style:normal}
+.ec-prompt-tree__selection-head h3{margin:.65rem 0 0;color:var(--ec-paper-50);font:500 clamp(1.65rem,3vw,2.5rem)/1.05 var(--ec-display);letter-spacing:-.025em}
+.ec-prompt-tree__selection-head>div{display:flex;gap:.75rem 1rem;flex-wrap:wrap;margin-top:.8rem;color:var(--ec-paper-300);font:.72rem/1.4 var(--ec-mono)}
+.ec-prompt-tree__selection-head>div span:first-child{color:var(--ec-gold-500)}
+@media(max-width:760px){.ec-prompt-tree{grid-template-columns:1fr}.ec-prompt-tree__navigator{max-height:24rem}.ec-prompt-tree__selection{padding:1rem}.ec-prompt-tree ol{padding-left:.8rem}.ec-prompt-card-grid{grid-template-columns:1fr}}

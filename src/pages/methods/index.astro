@@ -5,9 +5,12 @@ import { parse } from 'yaml';
 import '../../styles/tokens.css';
 import '../../styles/global.css';
 import '../../styles/ember-circuit-library.css';
+import '../../styles/ember-circuit-catalog.css';
+import '../../styles/prompt-category-tree.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StudioNavigation from '../../components/StudioNavigation.astro';
 import MethodFieldLibrary from '../../components/ember-circuit/MethodFieldLibrary';
+import PromptCategoryTree from '../../components/ember-circuit/PromptCategoryTree';
 import { publicMethodCollections } from '../../data/public-method-library';
 
 const contract = parse(readFileSync('./src/data/methods-page.yaml', 'utf-8'));
@@ -113,6 +116,18 @@ const collections = contract.field_library.collection_ids
       </div>
     </section>
 
+    <section class="methods-section methods-section--prompt-lab" id={contract.prompt_lab.id} aria-labelledby="prompt-lab-title">
+      <div class="methods-shell">
+        <header class="methods-intro methods-intro--wide">
+          <p class="methods-kicker">{contract.prompt_lab.eyebrow}</p>
+          <h2 id="prompt-lab-title">{contract.prompt_lab.title}</h2>
+          <p>{contract.prompt_lab.description}</p>
+        </header>
+        <aside class="methods-library-boundary methods-prompt-boundary"><strong>Atlas boundary</strong><p>{contract.prompt_lab.boundary}</p></aside>
+        <div class="methods-prompt-tree"><PromptCategoryTree client:load /></div>
+      </div>
+    </section>
+
     <section class="methods-next" aria-labelledby="methods-next-title">
       <div class="methods-shell">
         <p class="methods-kicker">Next slice</p>
@@ -180,6 +195,10 @@ const collections = contract.field_library.collection_ids
   .methods-collection > header p { margin: 0; color: var(--color-text-secondary); line-height: 1.5; }
   .methods-collection > header > div p { font: 0.7rem var(--font-mono); letter-spacing: 0.05em; }
   .methods-collection :global(.ec-method-summary-grid) { margin-top: 1.25rem; }
+  .methods-section--prompt-lab { background: var(--color-surface-primary); }
+  .methods-prompt-boundary { border-left-color: var(--color-accent-plasma); background: rgba(63, 224, 208, 0.06); }
+  .methods-prompt-boundary strong { color: var(--color-accent-plasma); }
+  .methods-prompt-tree { margin-top: 2rem; }
   .methods-next { padding: clamp(4rem, 9vw, 7rem) 0; text-align: center; background: linear-gradient(120deg, rgba(31, 182, 168, 0.12), var(--color-surface-primary) 60%, rgba(155, 93, 229, 0.12)); }
   .methods-next .methods-shell { max-width: 52rem; }
   .methods-next > .methods-shell > p:not(.methods-kicker) { max-width: 42rem; margin: 1.25rem auto 0; color: var(--color-text-secondary); line-height: 1.65; }

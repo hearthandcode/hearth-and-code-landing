@@ -22,8 +22,8 @@ hero:
       href: "#field-library"
       detail: "Thirty-five bounded instruments, organized by practice family."
     - label: "Prompt Lab"
-      state: "next-slice"
-      detail: "A specialist prompt and context catalogue is being integrated as a separate practice surface."
+      href: "#prompt-lab"
+      detail: "Navigate the Prompt Technique Atlas by document, category, and bounded technique disposition."
 core_method:
   id: core-method
   eyebrow: "Core method · return-bearing workshop"
@@ -90,6 +90,12 @@ field_library:
     - prompt-practice
     - evaluation-return
   source_boundary: "Cards are public-safe learning instruments. A prompt, example output, or harness result does not grant capability, establish general effectiveness, or authorize an external effect."
+prompt_lab:
+  id: prompt-lab
+  eyebrow: "Prompt and Context Practice Lab"
+  title: "Navigate the technique atlas by category."
+  description: "The atlas is a public-safe projection of 128 techniques organized as sixteen documents, sixty-four categories, and bounded technique dispositions. The tree makes the category context visible before a technique is opened."
+  boundary: "Atlas entries are synthesized public projections with stated source and evidence limits. A technique sheet or prompt template is not a capability grant, a production-efficacy claim, or authority to perform an external effect."
 next_slice:
   title: "Next on this surface"
-  detail: "The Prompt and Context Practice Lab, a worked teaching case, evaluation posture, agent-role boundary, and cross-surface return routes will be added after this library slice is reviewed."
+  detail: "A worked teaching case, fuller evaluation posture, agent-role boundary, and cross-surface return routes will be added after the Prompt Lab slice is reviewed."

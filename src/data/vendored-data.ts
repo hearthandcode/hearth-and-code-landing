@@ -7,6 +7,10 @@ import templateFile from './vendored/prompt-templates.json';
 export interface CatalogSection { title: string; body_html?: string; body?: string; }
 export interface CatalogEntry {
   slug: string; title: string; type: string; number: number;
+  status: string;
+  /** Atlas hierarchy: document → category → technique. */
+  document: string;
+  category: string;
   sections: CatalogSection[];
 }
 export interface TemplateField { key: string; label: string; sample?: string; kind?: string; }

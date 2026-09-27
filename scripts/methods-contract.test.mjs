@@ -4,6 +4,7 @@ import test from 'node:test';
 import { parse } from 'yaml';
 
 const contract = parse(await readFile(new URL('../src/data/methods-page.yaml', import.meta.url), 'utf8'));
+const promptAtlas = JSON.parse(await readFile(new URL('../src/data/vendored/prompt-catalog.json', import.meta.url), 'utf8'));
 
 test('the Methods composition contract defines the approved first slice', () => {
   assert.equal(contract.schema_version, 'hnc.public-page-contract.v1');
@@ -14,11 +15,14 @@ test('the Methods composition contract defines the approved first slice', () => 
   assert.equal(contract.field_library.collection_ids.length, 4);
 });
 
-test('the first Methods slice keeps the prompt lab held until its dedicated section', () => {
+test('the Prompt Lab is category-first and bound to the actual atlas taxonomy', () => {
   const promptLab = contract.hero.entry_paths.find((path) => path.label === 'Prompt Lab');
-  assert.equal(promptLab.state, 'next-slice');
-  assert.equal(promptLab.href, undefined);
-  assert.match(contract.next_slice.detail, /Prompt and Context Practice Lab/);
+  assert.equal(promptLab.href, '#prompt-lab');
+  assert.equal(contract.prompt_lab.id, 'prompt-lab');
+  assert.equal(promptAtlas.length, 128);
+  assert.equal(new Set(promptAtlas.map((entry) => entry.document)).size, 16);
+  assert.equal(new Set(promptAtlas.map((entry) => `${entry.document}::${entry.category}`)).size, 64);
+  assert.ok(promptAtlas.every((entry) => entry.document && entry.category && entry.sections.length === 8));
 });
 
 test('the contract preserves the public method and authority boundaries', () => {
