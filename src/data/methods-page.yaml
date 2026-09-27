@@ -94,7 +94,7 @@ prompt_lab:
   id: prompt-lab
   eyebrow: "Prompt and Context Practice Lab"
   title: "Navigate the technique atlas by category."
-  description: "The atlas is a public-safe projection of 128 techniques organized as sixteen documents, sixty-four categories, and bounded technique dispositions. The tree makes the category context visible before a technique is opened."
+  description: "The atlas is a public-safe projection of 128 techniques organized as sixteen documents, sixty-four categories, and four-section technique dispositions. The tree makes the category context visible before a technique is opened."
   boundary: "Atlas entries are synthesized public projections with stated source and evidence limits. A technique sheet or prompt template is not a capability grant, a production-efficacy claim, or authority to perform an external effect."
 next_slice:
   title: "Next on this surface"

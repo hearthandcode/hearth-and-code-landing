@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { promptAtlasExecutionBySlug } from '../../data/vendored-data';
 import type { CatalogEntry, TemplateTech } from '../../data/vendored-data';
 import { renderMarkdown } from './markdown';
 
@@ -69,7 +70,20 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
   }, [onClose]);
 
   const color = colorFor(entry.type);
-  const sections = (entry.sections || []).slice(0, 8);
+  const sourceSection = (title: string) => entry.sections?.find((section) => section.title === title)?.body || '';
+  const execution = promptAtlasExecutionBySlug.get(entry.slug);
+  const appliedSteps = [
+    ['Frame the task', `Name the practical, engineering, creative, or research task and declare the inputs, constraint, and intended artifact before applying ${entry.title}.`],
+    ['Apply the mechanism', sourceSection('How it works') || `Apply ${entry.title} only to the declared task and context.`],
+    ['Compare the result', `Inspect the result against a simpler baseline or named acceptance predicate; preserve material differences instead of treating fluency as success.`],
+    ['Return with limits', `Record what the technique changed, what was not tested, and the next human-held decision or review step.`],
+  ];
+  const useSteps = [
+    ['Match', sourceSection('When to use it') || `Use ${entry.title} only when its mechanism materially changes the task.`],
+    ['Bound', 'Confirm that the task has named inputs, a proportionate consequence level, and no missing human gate.'],
+    ['Try', 'Apply the technique to one bounded artifact rather than an undifferentiated request.'],
+    ['Stop or revise', 'Do not use it when a direct source settles the task, added structure outweighs the uncertainty, or the required evidence is absent.'],
+  ];
   if (typeof document === 'undefined') return null;
 
   return createPortal(
@@ -97,22 +111,34 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
           </div>
         </header>
 
-        <div className="ec-prompt-sheet__body">
-          {sections.map((section, index) => (
-            <section
-              key={section.title}
-              className={`ec-prompt-sheet__section ec-prompt-sheet__section--${String(index + 1).padStart(2, '0')}`}
-            >
-              <header className="ec-prompt-sheet__section-head">
-                <span className="ec-prompt-sheet__section-num">{String(index + 1).padStart(2, '0')}</span>
-                <h3 className="ec-prompt-sheet__section-title">{section.title}</h3>
-              </header>
-              <div
-                className="ec-prompt-sheet__prose ec-md"
-                dangerouslySetInnerHTML={{ __html: renderMarkdown(section.body || '') }}
-              />
-            </section>
-          ))}
+        <div className="ec-prompt-sheet__body ec-prompt-sheet__body--four">
+          <section className="ec-prompt-sheet__section ec-prompt-sheet__section--01">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">Applied four-step process</h3></header>
+            <ol className="ec-prompt-sheet__steps">
+              {appliedSteps.map(([title, detail], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{title}</strong><div className="ec-prompt-sheet__prose ec-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(detail) }} /></div></li>)}
+            </ol>
+          </section>
+          <section className="ec-prompt-sheet__section ec-prompt-sheet__section--02">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">When to use it</h3></header>
+            <ol className="ec-prompt-sheet__steps">
+              {useSteps.map(([title, detail], index) => <li key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{title}</strong><div className="ec-prompt-sheet__prose ec-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(detail) }} /></div></li>)}
+            </ol>
+          </section>
+          <section className="ec-prompt-sheet__section ec-prompt-sheet__section--03">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">Limitations and boundary</h3></header>
+            <div className="ec-prompt-sheet__prose ec-md" dangerouslySetInnerHTML={{ __html: renderMarkdown(sourceSection('Limitations')) }} />
+            <aside className="ec-prompt-sheet__limit"><strong>Public boundary</strong><p>This technique is a public learning projection. It does not grant capability, prove general effectiveness, or authorize an external effect.</p></aside>
+          </section>
+          <section className="ec-prompt-sheet__section ec-prompt-sheet__section--04">
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">Demonstrated isolated task</h3></header>
+            {execution ? <div className="ec-prompt-sheet__execution">
+              <p><strong>{execution.provider}/{execution.model}</strong> · isolated Pi execution · {execution.tool_events} tool events</p>
+              <h4>{execution.task_class}</h4>
+              <details><summary>Submitted execution prompt</summary><pre>{execution.submitted_prompt}</pre></details>
+              <details open><summary>Captured model response</summary><pre>{execution.response}</pre></details>
+              <aside><strong>Receipt boundary</strong><p>{execution.receipt_boundary}</p><small>Prompt SHA-256: {execution.prompt_sha256}<br />Response SHA-256: {execution.response_sha256}</small></aside>
+            </div> : <aside className="ec-prompt-sheet__execution-pending"><strong>Execution receipt pending</strong><p>No isolated MiniMax-M3 execution has been captured for this technique yet. This surface does not substitute a fictional response for an actual model receipt.</p></aside>}
+          </section>
         </div>
       </article>
     </div>,

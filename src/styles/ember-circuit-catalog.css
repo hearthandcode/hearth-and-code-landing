@@ -185,6 +185,24 @@
   white-space:pre-wrap;
 }
 .ec-prompt-sheet__prose a{color:var(--ec-gold-500);text-decoration:underline;text-underline-offset:3px}
+.ec-prompt-sheet__body--four{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ec-prompt-sheet__steps{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
+.ec-prompt-sheet__steps li{display:grid;grid-template-columns:1.7rem 1fr;gap:.65rem;padding-bottom:.75rem;border-bottom:1px solid color-mix(in srgb,var(--ec-line-500) 65%,transparent)}
+.ec-prompt-sheet__steps li:last-child{padding-bottom:0;border-bottom:0}
+.ec-prompt-sheet__steps>li>span{color:var(--section-ink,var(--ec-gold-500));font:700 .64rem var(--ec-mono)}
+.ec-prompt-sheet__steps strong{display:block;margin-bottom:.25rem;color:var(--ec-paper-100);font:600 .76rem/1.3 var(--ec-mono);letter-spacing:.03em;text-transform:uppercase}
+.ec-prompt-sheet__limit,.ec-prompt-sheet__execution-pending{margin-top:1rem;padding:.9rem 1rem;border-left:2px solid var(--ec-violet-300);background:rgba(185,148,237,.08)}
+.ec-prompt-sheet__limit strong,.ec-prompt-sheet__execution-pending strong,.ec-prompt-sheet__execution aside strong{color:var(--ec-violet-300);font:700 .62rem var(--ec-mono);letter-spacing:.06em;text-transform:uppercase}
+.ec-prompt-sheet__limit p,.ec-prompt-sheet__execution-pending p{margin:.45rem 0 0;color:var(--ec-paper-300);font-size:.85rem;line-height:1.5}
+.ec-prompt-sheet__execution{display:grid;gap:.8rem}
+.ec-prompt-sheet__execution>p{margin:0;color:var(--ec-plasma-500);font:.68rem/1.4 var(--ec-mono)}
+.ec-prompt-sheet__execution h4{margin:0;color:var(--ec-paper-100);font:500 1rem/1.35 var(--ec-display)}
+.ec-prompt-sheet__execution details{border:1px solid var(--ec-line-500);background:var(--ec-field-950)}
+.ec-prompt-sheet__execution summary{padding:.7rem .8rem;color:var(--ec-gold-500);cursor:pointer;font:700 .62rem var(--ec-mono);letter-spacing:.05em;text-transform:uppercase}
+.ec-prompt-sheet__execution pre{max-height:21rem;margin:0;padding:.9rem;overflow:auto;border-top:1px solid var(--ec-line-500);color:var(--ec-paper-300);font:500 .75rem/1.6 var(--ec-mono);white-space:pre-wrap}
+.ec-prompt-sheet__execution aside{padding:.85rem .95rem;border-left:2px solid var(--ec-plasma-500);background:rgba(63,224,208,.07)}
+.ec-prompt-sheet__execution aside p{margin:.45rem 0 0;color:var(--ec-paper-300);font-size:.84rem;line-height:1.5}
+.ec-prompt-sheet__execution aside small{display:block;margin-top:.75rem;color:var(--ec-ash-500);font:.6rem/1.55 var(--ec-mono);word-break:break-all}
 
 /* ----- Prompt Lab inside the sheet ------------------------- */
 .ec-prompt-sheet--lab{max-width:62rem}

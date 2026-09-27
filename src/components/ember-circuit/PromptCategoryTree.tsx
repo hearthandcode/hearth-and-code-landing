@@ -93,7 +93,7 @@ export default function PromptCategoryTree() {
           <h3 id="prompt-category-title">{selected.category}</h3>
           <div>
             <span>{selected.entries.length} techniques in this category</span>
-            <span>Each opens an eight-section disposition.</span>
+            <span>Each opens a four-section disposition.</span>
           </div>
         </header>
         <div className="ec-prompt-card-grid">
