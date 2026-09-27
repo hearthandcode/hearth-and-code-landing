@@ -1,12 +1,22 @@
 ---
 /** Prompt drafts for owner review. Static, no-index, no provider effect. */
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { parse } from 'yaml';
+import { renderResponseMarkdown } from '../../components/ember-circuit/response-markdown';
 import '../../styles/tokens.css';
 import '../../styles/global.css';
 const draft = parse(readFileSync('./src/data/prompt-technique-batch-001-ladders.yaml', 'utf8'));
 const source = parse(readFileSync('./src/data/prompt-technique-batch-001.yaml', 'utf8'));
 const factsBySlug = new Map(source.entries.map((entry: any) => [entry.slug, entry.example.source_packet]));
+const frozen = readFileSync('./src/data/prompt-technique-batch-001-ladders.yaml');
+const runs = JSON.parse(readFileSync('./src/data/prompt-technique-batch-001-ladder-runs.json', 'utf8'));
+const analysis = parse(readFileSync('./src/data/prompt-technique-batch-001-ladder-analysis.yaml', 'utf8'));
+const digest = createHash('sha256').update(frozen).digest('hex');
+if (runs.batch_sha256 !== digest || analysis.batch_sha256 !== digest || runs.records.length !== 32 || analysis.entries.length !== 8) throw new Error('Batch 1 review inputs are stale or incomplete');
+const runByKey = new Map(runs.records.map((record: any) => [`${record.slug}:${record.id}`, record]));
+const auditBySlug = new Map(analysis.entries.map((entry: any) => [entry.slug, entry]));
+const labels: Record<string, string> = { met: 'Met here', partly_met: 'Partly met', not_met: 'Not met', not_observable: 'Not observable' };
 ---
 <!doctype html>
 <html lang="en">
@@ -14,28 +24,36 @@ const factsBySlug = new Map(source.entries.map((entry: any) => [entry.slug, entr
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
-    <title>Prompt Batch 1 · Draft Review · Hearth &amp; Code</title>
+    <title>Prompt Batch 1 · Comparison Review · Hearth &amp; Code</title>
   </head>
   <body class="batch-review">
     <a class="batch-skip" href="#batch-main">Skip to batch</a>
     <header class="batch-header"><a href="/methods/">← Methods</a><span>Hearth &amp; Code · editorial review</span></header>
     <main id="batch-main" class="batch-main">
       <header class="batch-hero">
-        <p class="batch-kicker">Candidate prompt drafts · no provider runs</p>
-        <h1>Eight techniques. Four complete prompts each.</h1>
-        <p>The prompts below represent different information coverage and prompting styles. They have not been sent to a model for this draft batch. Review the complete prompts and source facts before deciding whether to run them through the isolated Pi route.</p>
+        <p class="batch-kicker">Clean Pi comparisons · candidate-needs-revision · owner review pending</p>
+        <h1>Eight techniques. Thirty-two observed responses.</h1>
+        <p>Each technique has four fully authored prompts and four captured MiniMax-M3 responses from a fresh-home, no-Hub, no-tool Pi route. The criterion matrix and adversarial notes are review judgments, not model grades or proof that a technique works. One response per style cannot establish reliable improvement.</p>
         <nav aria-label="Jump to technique"><ol>{draft.entries.map((entry: any) => <li><a href={`#tech-${entry.catalog_position}`}>#{String(entry.catalog_position).padStart(3, '0')} · {entry.slug.replace(/^\d+-/, '').replaceAll('-', ' ')}</a></li>)}</ol></nav>
       </header>
-      {draft.entries.map((entry: any) => <section class="batch-tech" id={`tech-${entry.catalog_position}`} aria-labelledby={`title-${entry.catalog_position}`}>
-        <header><p class="batch-kicker">#{String(entry.catalog_position).padStart(3, '0')} · {entry.source_identity} · prompt-draft-review-required</p><h2 id={`title-${entry.catalog_position}`}>{entry.slug.replace(/^\d+-/, '').replaceAll('-', ' ')}</h2><p><strong>Decision:</strong> {entry.decision_question}</p><p><strong>Scenario:</strong> {entry.scenario}</p></header>
+      {draft.entries.map((entry: any) => {
+        const audit = auditBySlug.get(entry.slug) as any;
+        return <section class="batch-tech" id={`tech-${entry.catalog_position}`} aria-labelledby={`title-${entry.catalog_position}`}>
+        <header><p class="batch-kicker">#{String(entry.catalog_position).padStart(3, '0')} · {entry.source_identity} · {audit.status}</p><h2 id={`title-${entry.catalog_position}`}>{entry.slug.replace(/^\d+-/, '').replaceAll('-', ' ')}</h2><p><strong>Decision:</strong> {entry.decision_question}</p><p><strong>Scenario:</strong> {entry.scenario}</p></header>
+        <aside class="batch-observation"><p><strong>Technique observation:</strong> {audit.technique_observation}</p><p><strong>Adversarial counterweight:</strong> {audit.counterweight}</p></aside>
+        <div class="batch-matrix-scroll"><table class="batch-matrix"><caption>Criterion-level observations · no aggregate score</caption><thead><tr><th scope="col">Criterion</th>{entry.conditions.map((condition: any) => <th scope="col">{condition.id.replaceAll('_', ' ')}</th>)}</tr></thead><tbody>{entry.rubric.map((criterion: string, index: number) => <tr><th scope="row">{criterion}</th>{audit.tiers.map((tier: any) => <td data-result={tier.observations[index]}>{labels[tier.observations[index]]}</td>)}</tr>)}</tbody></table></div>
         <details class="batch-facts"><summary>Source facts used to author the four prompts</summary><ol>{(factsBySlug.get(entry.slug) as string[]).map((fact) => <li>{fact}</li>)}</ol></details>
-        <div class="batch-prompts">{entry.conditions.map((condition: any, index: number) => <details class="batch-prompt" open={index === 0}>
-          <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{condition.id.replaceAll('_', ' ')}</strong><small>Source facts represented: {condition.input_fact_ids.join(', ')}</small><b aria-hidden="true">⌄</b></summary>
-          <div><pre>{condition.prompt}</pre></div>
-        </details>)}</div>
-        <div class="batch-rubric"><h3>Proposed evaluation questions</h3><ul>{entry.rubric.map((item: string) => <li>{item}</li>)}</ul><p>{entry.non_claim}</p></div>
-      </section>)}
-      <footer class="batch-footer"><p>Draft-only composition. No model execution, evidence claim, approval, deployment or next-batch authorization follows from this page.</p><a href="/methods/">Return to Methods →</a></footer>
+        <div class="batch-prompts">{entry.conditions.map((condition: any, index: number) => {
+          const run = runByKey.get(`${entry.slug}:${condition.id}`) as any;
+          const finding = audit.tiers[index];
+          return <details class="batch-prompt">
+          <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{condition.id.replaceAll('_', ' ')}</strong><small>Source facts represented: {condition.input_fact_ids.join(', ')} · {finding.finding}</small><b aria-hidden="true">⌄</b></summary>
+          <div class="batch-pair"><section><h3>Submitted prompt</h3><pre>{condition.prompt}</pre></section><section><h3>Observed MiniMax-M3 response</h3>{/<tool_call>|\[<tool_call>/i.test(run.response) && <p class="batch-hold">HOLD: the model printed tool-call syntax as text. No Pi tool event occurred; do not treat this as a completed handoff.</p>}<div class="batch-rendered" set:html={renderResponseMarkdown(run.response)} /></section></div>
+          <footer>Isolated Pi · {run.tool_events} tool events · Prompt SHA-256 {run.prompt_sha256} · Response SHA-256 {run.response_sha256}</footer>
+        </details>})}</div>
+        <div class="batch-rubric"><h3>Interpretation boundary</h3><p>{entry.non_claim}</p><p>Model response findings are bound to the current response digests. A rerun invalidates the audit until reviewed again.</p></div>
+      </section>})}
+      <footer class="batch-footer"><p>Review-only candidate. No model response on this page is accepted professional advice, general efficacy evidence, approval, publication, deployment or authorization to begin Batch 2.</p><a href="/methods/">Return to Methods →</a></footer>
     </main>
   </body>
 </html>
@@ -50,4 +68,28 @@ const factsBySlug = new Map(source.entries.map((entry: any) => [entry.slug, entr
   .batch-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.batch-prompt{min-width:0;border:1px solid var(--color-surface-rule);background:var(--color-surface-raised)}.batch-prompt summary{display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .7rem;padding:1rem;cursor:pointer;list-style:none}.batch-prompt summary::-webkit-details-marker{display:none}.batch-prompt summary span{color:var(--color-accent-gold);font:.7rem var(--font-mono)}.batch-prompt summary strong{font:700 1.15rem var(--font-display);text-transform:capitalize}.batch-prompt summary small{grid-column:2;color:var(--color-text-secondary);font:.7rem var(--font-mono)}.batch-prompt summary b{grid-column:3;grid-row:1;color:var(--color-accent-signal)}.batch-prompt>div{padding:1rem;border-top:1px solid var(--color-surface-rule)}.batch-prompt pre{margin:0;color:var(--color-text-primary);font:.78rem/1.6 var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere}
   .batch-rubric{margin-top:1.5rem;padding:1rem;border-left:3px solid var(--color-accent-violet);background:var(--color-surface-recessed)}.batch-rubric h3{margin:0;font:700 1.2rem var(--font-display)}.batch-rubric ul{color:var(--color-text-secondary);line-height:1.65}.batch-rubric>p{color:var(--color-accent-gold);font-size:.85rem}.batch-footer{padding:3rem 0 5rem;color:var(--color-text-secondary)}.batch-footer a{color:var(--color-accent-signal)}
   @media(max-width:48rem){.batch-prompts,.batch-hero nav ol{grid-template-columns:1fr}}
+</style>
+<style>
+  .batch-observation{margin:1.4rem 0;padding:1.2rem;border-left:3px solid var(--color-accent-signal);background:var(--color-surface-recessed)}
+  .batch-observation p{margin:.35rem 0;color:var(--color-text-secondary);line-height:1.6}.batch-observation strong{color:var(--color-text-display)}
+  .batch-matrix-scroll{max-width:100%;overflow-x:auto;margin:1.5rem 0;border:1px solid var(--color-surface-rule)}
+  .batch-matrix{min-width:57rem;width:100%;border-collapse:collapse;background:var(--color-surface-recessed)}
+  .batch-matrix caption{padding:.75rem;color:var(--color-text-secondary);font:.7rem var(--font-mono);text-align:left}
+  .batch-matrix :is(th,td){width:20%;padding:.65rem;border-top:1px solid var(--color-surface-rule);border-right:1px solid var(--color-surface-rule);vertical-align:top;text-align:left;font-size:.78rem}
+  .batch-matrix thead th{color:var(--color-accent-gold);font:.68rem var(--font-mono);text-transform:capitalize}
+  .batch-matrix td[data-result="met"]{color:var(--color-accent-signal)}
+  .batch-matrix td[data-result="partly_met"],.batch-matrix td[data-result="not_observable"]{color:var(--color-accent-gold)}
+  .batch-matrix td[data-result="not_met"]{color:var(--color-accent-ember)}
+  .batch-prompts{grid-template-columns:1fr}
+  .batch-pair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--color-surface-rule);min-width:0}
+  .batch-pair section{min-width:0;padding:1rem;background:var(--color-surface-raised)}
+  .batch-pair h3{margin:0 0 .8rem;color:var(--color-accent-signal);font:.72rem var(--font-mono);text-transform:uppercase}
+  .batch-prompt>div.batch-pair{padding:0}.batch-prompt>footer{padding:.7rem 1rem;color:var(--color-text-secondary);font:.62rem/1.55 var(--font-mono);overflow-wrap:anywhere;border-top:1px solid var(--color-surface-rule)}
+  .batch-rendered{color:var(--color-text-primary);font:.88rem/1.6 var(--font-body);overflow-wrap:anywhere}
+  .batch-rendered :is(h1,h2,h3,h4){max-width:none;margin:1rem 0 .45rem;color:var(--color-text-display);font:700 1.12rem/1.25 var(--font-display)}
+  .batch-rendered p{margin:.45rem 0 .85rem}.batch-rendered :is(ul,ol){padding-left:1.3rem}.batch-rendered li{margin:.3rem 0}
+  .batch-rendered .ec-response-table-wrap{max-width:100%;overflow-x:auto}.batch-rendered table{min-width:28rem;border-collapse:collapse;font-size:.77rem}.batch-rendered :is(th,td){padding:.45rem;border:1px solid var(--color-surface-rule);text-align:left}
+  .batch-rendered blockquote{margin:.75rem 0;padding:.6rem 1rem;border-left:2px solid var(--color-accent-violet);background:var(--color-surface-recessed)}
+  .batch-hold{padding:.7rem;border-left:3px solid var(--color-accent-ember);color:var(--color-text-display);background:rgba(232,91,78,.1);font-size:.85rem}
+  @media(max-width:48rem){.batch-pair{grid-template-columns:1fr}}
 </style>

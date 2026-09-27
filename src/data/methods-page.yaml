@@ -96,6 +96,10 @@ prompt_lab:
   title: "Navigate the technique atlas by category."
   description: "The atlas is a public-safe projection of 128 techniques organized as sixteen documents, sixty-four categories, and four-section technique dispositions. The tree makes the category context visible before a technique is opened."
   boundary: "Atlas entries are synthesized public projections with stated source and evidence limits. A technique sheet or prompt template is not a capability grant, a production-efficacy claim, or authority to perform an external effect."
+  candidate_review:
+    href: /review/prompt-batch-001/
+    label: "Review Batch 1 · four prompting styles and observed responses"
+    boundary: "No-index candidate: eight techniques, 32 clean-route responses and digest-bound adversarial notes; owner disposition pending. This does not replace the current public cards."
 next_slice:
   title: "Next on this surface"
   detail: "A worked teaching case, fuller evaluation posture, agent-role boundary, and cross-surface return routes will be added after the Prompt Lab slice is reviewed."

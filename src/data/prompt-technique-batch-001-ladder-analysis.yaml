@@ -1,0 +1,371 @@
+schema_version: hnc.prompt-technique-batch-ladder-analysis.v1
+batch_id: PTA-PUBLIC-B01
+review_status: candidate-needs-revision
+owner_disposition: pending
+source_candidate_verified: false
+methodology:
+  evidence: 32 distinct final MiniMax-M3 responses from fresh-home, no-Hub, no-tool Pi turns; one response per tier and technique
+  interpretation: descriptive contrast of prompting styles with different information coverage, not a controlled causal experiment or a ranking of users
+  review_passes:
+    - adversarial_facts_and_effects
+    - source_mechanism_alignment
+    - task_rubric
+    - cross_tier_confounds
+    - public_safety
+    - response_completeness
+    - browser_readability
+  non_claim: No aggregate score, reliability estimate, general efficacy result, publication approval or permission to use any generated professional advice follows from these observations.
+entries:
+  - catalog_position: 2
+    slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+    status: revise_before_teaching
+    technique_observation: The fourth response visibly classifies policy above chat and compares transfer versus manager exception with route-specific rejection conditions. That structure is more inspectable than the casual reply, which lacks the policy in its prompt.
+    counterweight: The applied answer invents possible manager criteria and incorrectly says the lead cannot trigger a manager request; the supplied note only limits who may approve an exception. The power response says the customer is unhappy with the workshop, while the email says plans changed.
+    rubric_ids:
+      - precedence
+      - no_invented_transfer_or_refund
+      - material_routes
+      - authority_gates
+    tiers:
+      - id: casual
+        observations:
+          - not_observable
+          - met
+          - not_observable
+          - partly_met
+        finding: With no policy supplied, the draft appropriately defers the refund decision but promises a follow-up without a known response time. Policy precedence and a two-route comparison cannot be fairly judged from this prompt.
+      - id: power
+        observations:
+          - met
+          - met
+          - partly_met
+          - partly_met
+        finding: Applies the 48-hour policy but adds that the customer was dissatisfied with the workshop, an invented reason for the request; manager review is held, but sending authority is not cleanly established.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - partly_met
+          - met
+        finding: Separates draft and send, flags unknown transfer fees and rejects chat as policy. Produces one preferred route rather than two materially contrasted mechanisms.
+      - id: engineer_technique
+        observations:
+          - met
+          - partly_met
+          - met
+          - partly_met
+        finding: Compares distinct routes and checks their own disqualifiers, but adds hypothetical manager rules as if relevant and overstates the lead's inability to request escalation. Review the customer draft before use.
+    reviewed_response_sha256:
+      casual: 51b2ac3b16e7d57a855348e5277d6b8b6c602a71c381604e4aa04c0d0ae1e2cf
+      power: eefb90fa4ab0fa6328ae605e90bd813900a34927a6aaf95f9debe65597f80ba4
+      engineer: c5f0412d20aa090658a8b2dbab9cca04c35dba02b0463469407f7d1565e5c523
+      engineer_technique: cc13a529e7632da5c0d65c2f8a610f6eb160ff1ccb685245f698e5a5ec2281ca
+  - catalog_position: 3
+    slug: 09-emotion-prompting
+    status: revise_before_teaching
+    technique_observation: The fourth prompt adds a model-directed affective salience cue rather than merely requesting warmer audience copy. Its output keeps most event facts and a non-shaming tone.
+    counterweight: The applied invitation invents a ten-minute stay option, explicitly calls it a drafting choice, and still omits the prohibition's point. Engineer baseline is at least as accurate on logistics. One pair cannot show affective framing improves output.
+    rubric_ids:
+      - logistics
+      - topics
+      - no_invented_access_options
+      - respectful_voluntary_tone
+    tiers:
+      - id: casual
+        observations:
+          - met
+          - not_observable
+          - not_met
+          - met
+        finding: Saturday time, room and free drop-in appear; workshop topics and account boundary were absent from the prompt, while the response invents extra topics, helpers and optional device bringing.
+      - id: power
+        observations:
+          - met
+          - met
+          - met
+          - met
+        finding: Preserves event facts, no-account rule and invitation tone without a made-up short-stay policy or measured outcome.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - partly_met
+          - met
+        finding: Strong factual checklist, but response adds bringing devices and demonstration materials not stated in the facts; the no-account rule remains clear.
+      - id: engineer_technique
+        observations:
+          - met
+          - met
+          - not_met
+          - met
+        finding: Affective cue is model-directed, but response says patrons may stay ten minutes despite no source supporting a short visit; no general effect can be inferred.
+    reviewed_response_sha256:
+      casual: f624314ade77782f6f2c5ddfe75a28440d3291fe117b7a20128b8aca317ad992
+      power: f7f0dfb4bf789029d13f47cfbcfd5977577b8ce51ccd9e156ee81a5854c07ef6
+      engineer: 0af5f7a100233dee9bc7a49d4b2bde07e83556726717850a7ac796df39f70998
+      engineer_technique: b387ea31ee8085628b3e88f2a1273f46e549c05da886678451fc15fa77ce4980
+  - catalog_position: 4
+    slug: 16-staged-composition-task-framing-and-intent-normalization
+    status: revise_before_teaching
+    technique_observation: The applied output uses five stages with input, output and stop conditions; it holds database access and lists unknown log medium rather than silently granting access.
+    counterweight: It changes who performs greeting—coordinator greets the volunteer instead of volunteers greeting visitors—and removes book sorting from the retained checklist solely because lifting training is unresolved, although sorting need not entail lifting.
+    rubric_ids:
+      - confirmed_tasks
+      - database_and_trainer
+      - log_medium
+      - stage_stops
+    tiers:
+      - id: casual
+        observations:
+          - partly_met
+          - not_observable
+          - partly_met
+          - not_observable
+        finding: Invents a timed agenda, greeting script, sorting categories and paperwork; database prohibition and trainer gap were not supplied at this tier.
+      - id: power
+        observations:
+          - partly_met
+          - met
+          - met
+          - not_observable
+        finding: Holds database permission and asks about trainer, but invents shadowing, badge and venue logistics; it is not a staged-composition prompt.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - met
+          - not_observable
+        finding: Compact source-traced checklist with unknown owners and log medium; no invented access, but no explicit five-stage stop sequence.
+      - id: engineer_technique
+        observations:
+          - not_met
+          - met
+          - met
+          - met
+        finding: Five-stage structure is visible, but a core task's actor is reversed and book sorting is over-held. Stage conformance cannot substitute for source-fact fidelity.
+    reviewed_response_sha256:
+      casual: 2e034b4ffb76febbfe93fb404ba84c6d9d660fe7b40981ad3d7c5f9733fbfe12
+      power: dc0a95f239b4d6acd9d4d5f747df341920199e625946e0d3b70a2e266801b2ae
+      engineer: 0f02fe23230a8c470c51bf31e4ad4644a1f64d4f3fa74ce5b2cb43dd06ea2074
+      engineer_technique: c9e607fda774b66a93695a43266b834b3ed35e63c29f484f7caf2b733016fff8
+  - catalog_position: 5
+    slug: 17-outcome-first-contract
+    status: block_example_until_revised
+    technique_observation: The fourth response opens with a proposed measurable result, separates a positions snapshot from a reproducible fixture and names owner-chosen guardrails before comparing synonyms and weights.
+    counterweight: It includes a logically invalid rejection rule—reject the target if a null baseline does not already meet it on at least one query—although all three supplied ranks fail the target by design. It also invents testing architecture and owner policy beyond the packet. The generated brief cannot teach a correct acceptance gate as-is.
+    rubric_ids:
+      - named_queries_and_ranks
+      - proposed_target
+      - untested_levers
+      - regression_and_rollback
+    tiers:
+      - id: casual
+        observations:
+          - not_observable
+          - not_observable
+          - partly_met
+          - not_observable
+        finding: Suggests search synonyms and content changes without a rank snapshot or target in the prompt; cannot be graded on ranks or guardrails.
+      - id: power
+        observations:
+          - met
+          - met
+          - partly_met
+          - met
+        finding: Uses given ranks and calls top-three proposed, but invents extra levers, a multiweek measurement plan and confidence about which change is likely to help.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - met
+          - met
+        finding: Recognizes snapshot limits and proposes fixtures, guardrail queries and rollback questions without claiming execution; some scoring-signal examples remain hypothetical.
+      - id: engineer_technique
+        observations:
+          - met
+          - partly_met
+          - met
+          - partly_met
+        finding: Outcome-first form is strong, but the invalid null-baseline rejection rule undermines the central mechanism and requires correction before public teaching use.
+    reviewed_response_sha256:
+      casual: d4aae140e52178ec42fb85c14269e3158b82b62541b9fef3644a59644a939ddc
+      power: 0c173853e5adfe4de9bccc5ab996d79f26a312addd97048c98325f2eb49fdd89
+      engineer: 2805ee89a411ceec52f0cf003165e3fdf91d4624d276bb4e18bed6a836f430b2
+      engineer_technique: 51d054ee880708468620a278b6bdf05685daa71252801f49d3ff1543effd0bc9
+  - catalog_position: 6
+    slug: 24-receipt-bound-achieved-state-and-outcome-specification
+    status: reviewable_with_cautions
+    technique_observation: The applied answer separates literal copy presence from comprehension and DOM order, records unrun browser checks, names no changes and leaves owner approval pending.
+    counterweight: Some other tiers recommend fees, time-zone wording or copy changes without the owner policy; those are proposals only. The applied excerpt quotes the cancellation note with a period that was not present in the supplied string, so its claim of verbatim identity needs a character-level correction.
+    rubric_ids:
+      - exact_strings
+      - ordering_unknown
+      - unrun_accessibility
+      - bounded_receipt
+    tiers:
+      - id: casual
+        observations:
+          - partly_met
+          - not_observable
+          - not_observable
+          - not_observable
+        finding: Spots cancellation ambiguity but suggests fee-based rewrites without a policy; no page layout or test history was supplied.
+      - id: power
+        observations:
+          - met
+          - met
+          - met
+          - partly_met
+        finding: Flags ordering and access checks as unrun; extra policy and service assumptions appear only as proposed copy alternatives.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - met
+          - partly_met
+        finding: Source-bound text check and test plan are clear; it calls the ambiguity a brief defect rather than automatically a copy defect without enough design context.
+      - id: engineer_technique
+        observations:
+          - partly_met
+          - met
+          - met
+          - met
+        finding: Receipt is explicit and honestly limited, but literal-character check is not exact because it adds punctuation to the supplied cancellation note.
+    reviewed_response_sha256:
+      casual: 5ab604bdc24695cbca5b542327268a80900076437fef29199d5e9e69abc6bf7d
+      power: 2d4e75106de5c5722342947797c1c802d60f29c5330057cb0588971c2371f3f0
+      engineer: 095c83a0af7b1c4975b25a102669e97e95b8d781b8440712132e0c210b0b40d6
+      engineer_technique: 50ffc87a5b0995d6df6ebd52a896c0e1bb704fea48d40b6e23b11a9d1a523b74
+  - catalog_position: 7
+    slug: 25-bounded-receipt-with-non-effects
+    status: reviewable_with_cautions
+    technique_observation: The applied response is a compact receipt about the supplied log, lists diagnostics and unknown checks, and distinguishes no import from no parser run by the assistant.
+    counterweight: Casual response printed pseudo tool-call syntax as final text; the Pi JSON has zero tool events, but this is an output-contamination hold. Power and engineer outputs infer import/parser semantics that the synthetic log does not establish.
+    rubric_ids:
+      - log_facts
+      - no_claimed_parser_or_import
+      - scoped_non_effects
+      - curator_gate
+    tiers:
+      - id: casual
+        observations:
+          - partly_met
+          - not_met
+          - partly_met
+          - not_observable
+        finding: Does not deliver a useful handoff and emits a bash tool-call-shaped string as final text. No tool was actually executed; curator rule was absent from this prompt.
+      - id: power
+        observations:
+          - met
+          - partly_met
+          - met
+          - met
+        finding: Lists diagnostics but claims all rows were staged and predicts duplicate import behavior not supplied by the log or import plan.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - met
+          - met
+        finding: Explicitly avoids running parser/import but proposes a corrected-file predicate with full schema checks that remain undefined until the curator supplies a schema.
+      - id: engineer_technique
+        observations:
+          - met
+          - met
+          - met
+          - met
+        finding: Distinguishes supplied-log observation, checks not reported, scoped non-effects and separate curator release. No external-effect claim appears in the output.
+    reviewed_response_sha256:
+      casual: 232c847aac176473ee5f976300c2d9aa2b6aacfe423548f675541e53e5cfcaa0
+      power: f9410d1e9241500f8005930656528997470b8d1626012774b0f42cf5ec80b1ac
+      engineer: 7abf6ef468735a99d54ccbdbda233d04b6b4d2d8877bcf6bda4c41ee5678e85f
+      engineer_technique: e964daafe5aea1a50a1a9e1516b5101d438510a0a9f89e533b662d2ccbf61da0
+  - catalog_position: 8
+    slug: 30-contrastive-fork-constraint-and-non-action-contracts
+    status: revise_before_teaching
+    technique_observation: The applied answer distinguishes a private corrected draft from an inert request packet and keeps website and subscriber-email approvals separate.
+    counterweight: It treats the absence of an established scheduler as proof none exists, and asserts that two approvals cannot fit the overnight interval without timing evidence. Those are risk hypotheses, not route-disqualifying facts.
+    rubric_ids:
+      - east_gate_and_weather
+      - material_routes
+      - separate_approvals
+      - no_invented_effects
+    tiers:
+      - id: casual
+        observations:
+          - met
+          - not_observable
+          - partly_met
+          - partly_met
+        finding: Uses east gate but promises weather updates at an unspecified channel; coordinator approval rules were not supplied at this tier.
+      - id: power
+        observations:
+          - met
+          - partly_met
+          - met
+          - met
+        finding: Creates two channel-specific draft texts with separate holds, not two materially different preparation workflows; does not publish.
+      - id: engineer
+        observations:
+          - met
+          - partly_met
+          - met
+          - met
+        finding: Source-bound private packet and two approval questions; no contrastive fork, but no publication effect claimed.
+      - id: engineer_technique
+        observations:
+          - met
+          - met
+          - met
+          - partly_met
+        finding: Two workflows are materially distinct, but assumed scheduler absence and inferred timing impossibility weaken its claimed disqualifiers.
+    reviewed_response_sha256:
+      casual: c39c3b416fc390db80db63bd5fd84cad90f83f09496730c6c14b5302e725b424
+      power: 665250a45cdd6faebf12a4e3347bcad61875129e0b441cb2a02d75fa8d60a535
+      engineer: 8f1b5a0caf0f5a7d24683994e234fdda8e3a16c251115ce7f7bae048f739d9a8
+      engineer_technique: 9d0279758fc1fb41105340d8de42cca05a6c6f91c154039d573ce66b286d7664
+  - catalog_position: 9
+    slug: 33-provenance-carrying-chunk
+    status: reviewable_with_cautions
+    technique_observation: The applied answer attaches ID, locator, date, stated authority, unavailable digest and transformation to each unit, then distinguishes exact quotes from historical paraphrase.
+    counterweight: The engineer answer already reconciles current and prior hours; this one fixture cannot establish a gain in answer accuracy. Some applied bullet labels call extracted hour fragments exact quotations although the complete quoted source sentence is longer.
+    rubric_ids:
+      - official_hours
+      - historical_blog
+      - digest_and_authority
+      - quote_paraphrase_unknown
+    tiers:
+      - id: casual
+        observations:
+          - partly_met
+          - partly_met
+          - not_observable
+          - met
+        finding: Provides approximate hours but has no source ID, exact quote or official document date in the prompt, so those fields cannot be expected.
+      - id: power
+        observations:
+          - met
+          - met
+          - partly_met
+          - met
+        finding: Uses the later official notice and historical blog; digest was not supplied, but the output does not explicitly mark it unavailable.
+      - id: engineer
+        observations:
+          - met
+          - met
+          - partly_met
+          - met
+        finding: Strong source IDs and locators, no invented end date; digest status is absent because the prompt did not request a chunk attachment.
+      - id: engineer_technique
+        observations:
+          - met
+          - met
+          - met
+          - partly_met
+        finding: Provenance unit fields are present; some abbreviated hours bullets are labeled exact quotation despite not reproducing the full source sentence verbatim.
+    reviewed_response_sha256:
+      casual: 7d64ee778fbdd1968da5ed1267696ed9df967780d29126381fe390ca9b0295b8
+      power: 60d22382d94d27aa79e135477eeb2176510d98efa919af649719b6b7b59158fb
+      engineer: 7c965500e09d519849226875e2e26485a066ef28e7a24314b97e02ebd97b83be
+      engineer_technique: af9e16027c06490cea07522ccf525d3f7789647480bfa0309f4a9d14b5c296b3
+batch_sha256: b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589

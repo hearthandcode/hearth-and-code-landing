@@ -1,0 +1,650 @@
+{
+  "schema_version": "hnc.prompt-technique-batch-ladder-runs.v1",
+  "batch_id": "PTA-PUBLIC-B01",
+  "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+  "provider": "minimax-oauth",
+  "model": "MiniMax-M3",
+  "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a",
+  "isolation": "fresh per-turn PI_CODING_AGENT_DIR through one-shot pi-auth; no Hub/plugin mount, AGENTS, APPEND_SYSTEM, explicit extensions, tools or saved sessions",
+  "limitation": "Provider/model and tool-event status observed in Pi JSON. System prompt serialization at provider boundary is not independently attested. Single-turn responses are observations, not efficacy or approval.",
+  "records": [
+    {
+      "slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+      "catalog_position": 2,
+      "id": "casual",
+      "source_fact_ids": [
+        1,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Someone bought a seat in our workshop five days ago and now wants a refund because their plans changed. A coworker said in chat that we usually refund unhappy people. What should I write back? I haven't checked the official policy yet, so please don't tell them I've refunded anything.",
+      "prompt_sha256": "44b055e873faf4b9034ed398828353c83ae1fe14e0e296ca4b98b35c2ddefc59",
+      "response": "Here's a draft reply you could send while you verify the actual policy:\n\n---\n\n**Subject:** Re: Workshop refund request\n\nHi [name],\n\nThanks for letting me know about the change in your plans. I'm sorry to hear it. I'd like to look into what options are available for your registration and get back to you with details as soon as I can.\n\nI'll follow up shortly.\n\nBest,\n[your name]\n\n---\n\nA few notes on the framing:\n\n- **Empathetic but noncommittal.** It acknowledges their situation without implying a refund is approved or denied.\n- **Doesn't reference the coworker's chat comment.** That's internal information and not something to put in writing to the customer.\n- **Doesn't claim a refund has been issued.** Once you confirm what your policy actually allows, you can send a concrete next step (e.g., \"I'll process the refund today\" or \"per our policy, registrations are non-refundable after X days, but here's what I can do\").\n- **Promises a follow-up.** Only send once you're confident you can deliver on that next response promptly.\n\nBefore you reply, I'd suggest double-checking your written refund/cancellation policy, any terms they agreed to at purchase, and what (if anything) your coworker actually has authority to approve informally — those three things don't always line up, and it's worth knowing where you stand.",
+      "response_sha256": "51b2ac3b16e7d57a855348e5277d6b8b6c602a71c381604e4aa04c0d0ae1e2cf",
+      "executed_at": "2026-09-27T06:39:52.322Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+      "catalog_position": 2,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Help me draft a customer-support reply for review. The customer bought a workshop seat five days ago and requests a full refund. Our current policy gives full refunds only within 48 hours and allows a future-session transfer afterward. A colleague said in chat that we usually refund unhappy customers, but there's no policy amendment. The support lead can draft; only a manager approves exceptions, and no refund was issued. Give me a short reply plus a list of facts to double-check. Don't promise a fee-free transfer, a refund, or a sent message.",
+      "prompt_sha256": "c207ce7e8b7e34efdef9fc5e7becdb1320a9995f4a3e9326c3adeb8b1f9fd97e",
+      "response": "**Draft reply**\n\nHi [Customer Name],\n\nThank you for reaching out, and I'm sorry the workshop hasn't been what you hoped for.\n\nA quick note on our policy: full refunds are available within 48 hours of purchase. After that window, the standard option is a transfer to a future session. Because your request falls outside the 48-hour window, I want to be upfront that I cannot confirm a refund at this stage.\n\nI also want to mention that a colleague may have suggested in an earlier chat that we sometimes refund unhappy customers. I want to be transparent: that's not part of our formal policy, so I can't treat it as a commitment.\n\nI'll bring your case to the support lead for review. If an exception is to be considered, it would require manager approval — I'll write back as soon as I have an update.\n\nIn the meantime, if it's helpful, I can outline what transfer options are currently available.\n\nBest regards,\n[Your name], Customer Support\n\n---\n\n**Facts to double-check before sending**\n\n- Order timestamp and time zone used to calculate the 48-hour window.\n- Exact wording of the colleague's earlier chat message and whether it was with this same customer.\n- Whether the policy document on file matches what's quoted above (48-hour refund, post-window transfer).\n- Whether the customer attended the workshop at all, in part, or not yet.\n- Workshop date relative to today's date (past vs. upcoming changes the transfer framing).\n- Whether any fee is normally attached to a transfer (so we don't accidentally imply it is free).\n- Whether this customer already has an open ticket, prior correspondence, or a previously approved exception.\n- Who the approving manager is and the current routing procedure to escalate.\n- Whether anything in the customer's jurisdiction (e.g., consumer protection rules) overrides our standard policy.\n- Confirmation that no refund or credit has already been issued on this order.",
+      "response_sha256": "eefb90fa4ab0fa6328ae605e90bd813900a34927a6aaf95f9debe65597f80ba4",
+      "executed_at": "2026-09-27T06:39:58.576Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+      "catalog_position": 2,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Prepare a candidate response artifact; do not contact the customer or payment provider.\nInputs: CUST/Tue — request for a full refund, purchase five days old, changed plans. POLICY/effective this month — full refund within 48 hours; afterward transfer to a future session may be offered. CHAT/Mon — colleague says 'usually refund unhappy customers' without approval or amendment. LEAD — may draft a reply; manager alone may approve an exception; no refund issued.\nOutput a policy-grounded draft, identify any unsupported sentence, and record what the lead must decide before sending. Treat lower-authority chat as evidence of a suggestion, not a policy change. Check that nothing in the output says the seat is booked, the transfer is free, the refund is issued, or the reply was sent.",
+      "prompt_sha256": "66aae3ae8380533edfab8d1a0a2fc2ff2f6f310c4b1609a8ff5d1d87cffc160e",
+      "response": "**Artifact: Candidate Response Draft — Refund Request (Policy-Grounded)**\n\n---\n\n**Draft reply to customer (for lead review):**\n\n> Thank you for reaching out about your purchase from [date]. I understand your plans have changed.\n>\n> Our refund policy, effective this month, provides a full refund only within 48 hours of purchase. Because your purchase is now five days old, a full refund is no longer available under policy.\n>\n> As an alternative, we can offer a transfer of your purchase to a future session. [Standard transfer terms apply — any associated fees or conditions should be confirmed per the current schedule.] Please let me know if you would like to proceed with a transfer, or if there is anything else I can help with.\n\n---\n\n**Unsupported sentence (flagged):**\n\n- *\"Colleague note from Monday: 'usually refund unhappy customers.'\"* — This is a colleague's informal practice suggestion. It is **not** an approved amendment to POLICY and carries no authority. It should not be cited to the customer and does not override the 48-hour rule.\n\n---\n\n**Decisions the lead must make before sending:**\n\n1. **Confirm transfer terms** (whether standard fees/conditions apply) so the draft does not unintentionally imply a free transfer.\n2. **Determine whether to escalate for a manager-approved exception** (only a manager may approve a refund outside the 48-hour window); if escalation is sought, route to the manager before any commitment is made.\n3. **Remove or leave the bracketed transfer-terms sentence** based on verified policy language.\n4. **Confirm nothing in the final reply states or implies that a refund has been issued, a seat is booked, a transfer is free, or the message has been sent** — the draft currently contains none of these claims, and the lead must preserve that on send.\n\n---\n\n**Status checks (per instructions):**\n\n- Seat booked? — No (not stated).\n- Transfer free? — Not confirmed (terms to be verified).\n- Refund issued? — No (not stated; none has been issued per LEAD notes).\n- Reply sent? — No (draft only; lead has not sent).",
+      "response_sha256": "c5f0412d20aa090658a8b2dbab9cca04c35dba02b0463469407f7d1565e5c523",
+      "executed_at": "2026-09-27T06:40:06.674Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+      "catalog_position": 2,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Decision desk: a five-day-old workshop purchase is outside the published 48-hour refund period. The customer wants cash back. A Monday team chat suggests routinely refunding unhappy customers, but it has no approval or policy amendment. The effective policy permits a future-session transfer after 48 hours. The lead can draft only; a manager can approve exceptions; nothing has been refunded or sent.\nFirst classify the authority of each input. Then fork the work into TWO routes with different mechanisms: A is a policy-compatible transfer offer drafted for lead review, with transfer fee and seat availability unknown; B is a request for a manager to consider an exception, with no promise to the customer. For each route name governing authority, customer benefit, administrative cost as a hypothesis, and evidence that would truly make THAT route unavailable (not merely make the other attractive). State why the chat cannot override policy. Recommend only a draft path supported now, write the review-only customer reply, and list distinct lead-send and manager-refund gates. Do not enact either route.",
+      "prompt_sha256": "abec1e9fd2eade5a873813ba2a0bb54610088f1ca3dda600a053b62e712fe6b6",
+      "response": "# Decision Desk Analysis: Workshop Refund Request\n\n## 1. Input Authority Classification\n\n| Input | Authority Status | Binding? |\n|---|---|---|\n| Published 48-hour refund policy | **Authoritative** — formal, documented, published | Yes |\n| Effective policy: transfer after 48h | **Authoritative** — governs current scenario | Yes |\n| Monday team chat re: refunding unhappy customers | **Non-authoritative** — informal, no sign-off, no amendment process | No |\n| Lead (drafts only) | **Limited authority** — preparatory role | Partial |\n| Manager (approves exceptions) | **Authoritative for exceptions only** — delegated, bounded | Conditional |\n\nThe purchase (5 days old) falls **outside** the refund window. The chat cannot bind because no policy owner, legal reviewer, or formal amendment process is recorded.\n\n---\n\n## 2. Two Routes (Forked Mechanisms)\n\n### Route A — Policy-Compatible Transfer Offer (Lead-Draftable Now)\n\n- **Governing authority:** Published transfer-after-48h policy\n- **Customer benefit:** Retains workshop value via future session; partial relief\n- **Admin cost hypothesis:** **Low–moderate** — session lookup, transfer processing, possible fee handling, no refund ledger entry, no precedent set\n- **Evidence that would make THIS route unavailable** (not merely Route B attractive):\n  - Workshop is a one-off/terminal event with no future offering\n  - All future sessions sold out with no waitlist mechanism\n  - System technically cannot process transfers for this SKU\n  - Policy explicitly excludes transfers for this product class\n  - Customer has pre-communicated refusal of any non-cash remedy\n\n### Route B — Manager Exception Request (Internal Only)\n\n- **Governing authority:** Manager's delegated exception discretion, within policy framework\n- **Customer benefit:** Full cash refund (original ask satisfied)\n- **Admin cost hypothesis:** **Higher** — manager review time, precedent documentation, ledger entry, possible policy-erosion audit trail, finance processing, future-setting effect\n- **Evidence that would make THIS route unavailable** (not merely Route A attractive):\n  - Manager exception authority formally rescinded for this category\n  - No qualified manager available in approval chain\n  - Documented criteria (e.g., goodwill threshold, tenure) clearly fail this case\n  - Regulatory/contractual constraint bars refund beyond 48h\n  - Policy explicitly forbids manager override of the 48h rule\n\n---\n\n## 3. Why the Chat Cannot Override Policy\n\nThe Monday chat is a non-authoritative artifact: (a) no policy owner approved it, (b) no amendment workflow was followed, (c) it was not published or trained on, (d) it contains no scope, criteria, or accountability, and (e) \"routinely refunding unhappy customers\" is the opposite of a documented exception standard. Informal norms do not modify binding financial policy.\n\n---\n\n## 4. Recommendation: Draft-Only Path Supported Now\n\n**Route A is the only path the lead can advance unilaterally in draft form.** Route B requires manager action the lead cannot trigger on the customer's behalf and must not be promised.\n\n- Lead drafts → routes A\n- Manager evaluates → routes B (if/when escalated internally)\n\nNo route is enacted. Nothing has been refunded or sent.\n\n---\n\n## 5. Review-Only Customer Reply (Draft for Lead Review)\n\n> *Hello [Customer],*\n>\n> *Thank you for reaching out about your workshop purchase. Our published policy permits refunds within 48 hours of purchase; as your purchase is outside that window, a cash refund is not available under standard terms.*\n>\n> *What we can offer, per policy, is a transfer of your registration to a future session at [location/date TBD — to confirm]. If a transfer fee applies, we will disclose it before you decide. If a transfer does not meet your needs, please let us know and we can ask a manager to review whether any exception applies; any exception decision is at the manager's discretion and is not something we can guarantee.*\n>\n> *Please let us know how you'd like to proceed.*\n>\n> *[Lead name] — drafted, pending review*\n\nThis reply **does not promise** a refund, **does not promise** an exception, and **does not commit** to transfer terms it hasn't confirmed.\n\n---\n\n## 6. Distinct Gates\n\n### Lead-Send Gates (Route A — Transfer Draft)\n1. Draft reviewed by lead's supervisor or policy owner\n2. Future-session **availability confirmed** (not assumed)\n3. Transfer **fee status confirmed** and disclosed\n4. Message reviewed against current policy language\n5. Lead authorized to send (not enact)\n\n### Manager-Refund Gates (Route B — Exception)\n1. Customer formally requests exception (or lead escalates with documented reason)\n2. Manager confirms exception authority is active for this category\n3. Manager applies documented exception criteria\n4. Manager makes **written** approve/deny decision\n5. If approved, finance processes refund and audit log updated\n6. Customer communicated **only after** decision — never promised in advance\n\n---\n\n**Bottom line:** Only Route A is draftable now. Route B exists as an internal option only. The chat is disregarded as authority. No customer-facing commitment beyond the reviewed draft transfer offer is supported by current evidence.",
+      "response_sha256": "cc13a529e7632da5c0d65c2f8a610f6eb160ff1ccb685245f698e5a5ec2281ca",
+      "executed_at": "2026-09-27T06:40:11.856Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "09-emotion-prompting",
+      "catalog_position": 3,
+      "id": "casual",
+      "source_fact_ids": [
+        1
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Can you write a friendly little notice for our free digital-skills clinic on Saturday from 10 to 11:30? It's in Meeting Room B, and people can drop in without signing up. I want beginners to feel welcome.",
+      "prompt_sha256": "73b66a080ccf555e5bda4444fbc3027fb466bccc77e500ec8a1f6252de1d4048",
+      "response": "a friendly draft:\n\n---\n\n🌟 **Free Digital Skills Clinic** 🌟\n**Saturday | 10:00 – 11:30 AM | Meeting Room B**\n\nCurious about your phone, tablet, or laptop? Want to feel more confident with email, apps, or browsing the web? Just pop in!\n\nThis is a **drop-in clinic** — no sign-up, no appointment, no question too small. Whether you're just getting started or would simply like a little extra help, our friendly helpers will sit down with you and go at your pace.\n\n**Beginners absolutely welcome.** That's exactly who we're here for.\n\nJust bring yourself (and your device, if you'd like). See you Saturday! 💻📱\n\n---\n\nFeel free to tweak the tone, add an organizer name, or mention any specific topics you want to highlight — let me know if you'd like a shorter version too.",
+      "response_sha256": "f624314ade77782f6f2c5ddfe75a28440d3291fe117b7a20128b8aca317ad992",
+      "executed_at": "2026-09-27T06:40:33.198Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "09-emotion-prompting",
+      "catalog_position": 3,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Please give me a public invitation of about 100 words. The clinic is free, Saturday 10:00–11:30, Meeting Room B, drop-in with no registration. Staff demonstrate password managers and help people practice spotting suspicious messages; nobody needs to share a personal account. Front-desk staff have heard that some patrons feel embarrassed asking basic questions in a group. Write warmly without shaming them, promising results, making up patron stories, or implying people can stay for only part of the session.",
+      "prompt_sha256": "6979b96f6048a43157c2f415bd0745e030919cb3a17d413a9da710ccc8986e7f",
+      "response": "Join us for a free Drop-in Tech Clinic this Saturday from 10:00 to 11:30 in Meeting Room B. No registration needed—just come by! Our staff will demonstrate password managers and walk through how to spot suspicious messages, with plenty of time to practice alongside others in a relaxed setting. No one will ask you to share a personal account, and questions of every kind are welcome—asking is how we all learn. Whether you're new to these topics or just looking for a refresher, we invite you to join us for a friendly morning of practical digital safety.",
+      "response_sha256": "f7f0dfb4bf789029d13f47cfbcfd5977577b8ce51ccd9e156ee81a5854c07ef6",
+      "executed_at": "2026-09-27T06:40:41.526Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "09-emotion-prompting",
+      "catalog_position": 3,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Content drafting contract. Output one candidate invitation near 100 words plus a separate factual check list; no posting or outreach.\nFACT-EVENT: free drop-in Digital Skills Clinic, Saturday 10:00–11:30, Meeting Room B, no registration. FACT-SCOPE: staff demonstrate password managers and practice identifying suspicious messages; personal account sharing is not required. FACT-AUDIENCE: several patrons reported embarrassment about asking basic questions in a group.\nPreserve every event detail, voluntary participation and a welcoming voice. Do not invent attendance, testimonials, short-stay options, guarantees, individual support or urgent consequences. Compare the draft against these facts before returning it.",
+      "prompt_sha256": "d606390001fba3996f242a5d57a520f3e7d3af0cf78df2ad3d2d2c0ffc57a1b2",
+      "response": "**Candidate invitation (≈91 words)**\n\nCurious about password managers or how to recognize suspicious messages? Drop in to our free Digital Skills Clinic this Saturday, 10:00 to 11:30 in Meeting Room B. Library staff will demonstrate how password managers work and walk through practice examples of common scam messages together. No registration is needed, and bringing or sharing personal accounts is not required. You are welcome to attend, observe, or join the conversation at whatever pace feels comfortable. All questions are welcome here, no matter your starting point.\n\n---\n\n**Factual check list**\n\nEvent details (FACT-EVENT):\n- Free drop-in Digital Skills Clinic — ✓ \"free\" and \"Drop in\" present.\n- Saturday — ✓ \"this Saturday\" present.\n- 10:00–11:30 — ✓ time range stated exactly.\n- Meeting Room B — ✓ room named exactly.\n- No registration — ✓ \"No registration is needed\" stated.\n\nScope (FACT-SCOPE):\n- Staff demonstrate password managers — ✓ \"demonstrate how password managers work.\"\n- Practice identifying suspicious messages — ✓ \"walk through practice examples of common scam messages together.\"\n- Personal account sharing not required — ✓ \"bringing or sharing personal accounts is not required.\"\n\nAudience sensitivity (FACT-AUDIENCE):\n- Welcoming tone for patrons embarrassed about basic questions in a group — ✓ \"All questions are welcome here, no matter your starting point\" plus a permissive, non-judgmental frame.\n\nVoice and constraint guardrails:\n- Voluntary participation preserved — ✓ \"attend, observe, or join… at whatever pace.\"\n- No invented attendance numbers — ✓ none stated.\n- No invented testimonials — ✓ none stated.\n- No invented short-stay options — ✓ not promoted as a feature.\n- No guarantees — ✓ none claimed.\n- No individual support invented — ✓ framed as group demonstration/practice only.\n- No urgent consequences — ✓ no scare language used.",
+      "response_sha256": "0af5f7a100233dee9bc7a49d4b2bde07e83556726717850a7ac796df39f70998",
+      "executed_at": "2026-09-27T06:40:58.682Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "09-emotion-prompting",
+      "catalog_position": 3,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Write a roughly 100-word invitation to this no-registration Saturday 10:00–11:30 free drop-in clinic in Meeting Room B. Staff will demonstrate password managers and practice identifying suspicious messages. Nobody must share a personal account. Several prospective patrons worry that asking a basic question in a group will be embarrassing. Attendance is voluntary and no outcome has been measured.\nA real person may decide whether to enter the room based on whether this information is clear and non-shaming. Let that human significance focus your attention to the exact logistics and dignity of the reader; it does not license fear, invented urgency, promises of improvement, extra access options, or claims that you feel concern. Keep the same factual, beginner-friendly assignment. Return the invitation and a brief check against the stated facts, separating any drafting choice from an observed fact. Do not post it.",
+      "prompt_sha256": "f010e3bb122bcb384e1dc52f65e3a925c36cd32a0c3393665fe8e77a97f6ceda",
+      "response": "Invitation**\n\nYou're invited to a free, no-registration drop-in clinic this Saturday, 10:00–11:30 in Meeting Room B. Staff will demonstrate password managers, and we'll practice spotting suspicious messages together. No one will be asked to share a personal account. Beginners are the intended audience, and every question is welcome—asking something basic is exactly what the session is for. Attendance is voluntary; stay for ten minutes or the whole time. Feel free to stop by in Meeting Room B.\n\n**Check against the stated facts**\n\nObserved from the prompt:\n- Saturday, 10:00–11:30, Meeting Room B, free, no registration, drop-in format.\n- Staff demonstrate password managers; practice identifying suspicious messages.\n- No requirement to share a personal account.\n- Attendance is voluntary; no measured outcome claimed.\n\nDrafting choices (not in the prompt, added to address the stated concern about embarrassment):\n- Framing beginners as \"the intended audience.\"\n- The line \"asking something basic is exactly what the session is for.\"\n- \"Stay for ten minutes or the whole time\" to reinforce the voluntary drop-in nature.",
+      "response_sha256": "b387ea31ee8085628b3e88f2a1273f46e549c05da886678451fc15fa77ce4980",
+      "executed_at": "2026-09-27T06:41:13.592Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "16-staged-composition-task-framing-and-intent-normalization",
+      "catalog_position": 4,
+      "id": "casual",
+      "source_fact_ids": [
+        1,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "We have new volunteers coming Monday for a 45-minute orientation. They'll welcome visitors, sort donated books and find out where attendance gets logged. Could you make a simple first-day checklist for me to show our supervisor Mara on Friday? I don't know yet who will teach every part.",
+      "prompt_sha256": "a87543838e804a20c8d0a3ad310880d6d6bcb2a740d2a511bc0c14a56a909fd4",
+      "response": "Here's a simple first-day volunteer orientation checklist you can bring to Mara on Friday:\n\n**First-Day Volunteer Orientation Checklist (45 minutes)**\n*Monday | Lead: [TBD]*\n\n**1. Welcome & Introductions** (5 min) — Lead: _____\n- Greet volunteers, introduce staff\n- Quick overview of the day\n\n**2. Welcoming Visitors** (~10 min) — Lead: _____\n- Greeting script / what to say\n- Where to direct people (front desk? specific rooms?)\n- How to handle common questions\n\n**3. Sorting Donated Books** (~15 min) — Lead: _____\n- Where books go upon arrival\n- Sorting categories (genre? age? condition?)\n- Where sorted books are shelved/stored\n- What to do with damaged or out-of-scope books\n\n**4. Logging Attendance** (~5 min) — Lead: _____\n- Find out where attendance is recorded (sign-in sheet? digital system?)\n- Who has access / how to use it\n- When to log (arrival? end of shift? both?)\n\n**5. Wrap-Up & Questions** (~5–10 min) — Lead: _____\n- Schedule for the week\n- Who to contact with questions (Mara? specific staff?)\n- Collect any paperwork\n\n**Notes for Mara:**\n- Need to confirm lead for each section before Monday\n- Confirm exact location of attendance log\n- Confirm book sort categories with whoever handles donations\n\n---\n\nA few quick thoughts: since you don't yet know who teaches each part, the blanks make it easy for Mara to fill in names at a glance. The times are estimates — if Mara wants a different balance (e.g., more time for the book sort since it's the most hands-on), it's easy to adjust. Want me to tighten it up into a one-page version, or add space for Mara's notes next to each item?",
+      "response_sha256": "2e034b4ffb76febbfe93fb404ba84c6d9d660fe7b40981ad3d7c5f9733fbfe12",
+      "executed_at": "2026-09-27T06:41:26.622Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "16-staged-composition-task-framing-and-intent-normalization",
+      "catalog_position": 4,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Turn my notes into a first-day volunteer checklist, not a final procedure. Confirmed work is greeting visitors, sorting donated books and learning where attendance is logged. Monday orientation is 45 minutes; Mara reviews the draft Friday. Volunteers haven't received approval for member-database access, and no one is assigned to teach donation-lifting safety. Organize a useful sequence with open questions, but don't invent a training owner, imply database access, or assume the attendance log is the database.",
+      "prompt_sha256": "7abd6b6d0565a98cf9207e2155810019def67e25f9271cbe1cfaa3bd0b225d12",
+      "response": "# First-Day Volunteer Checklist — DRAFT (for Mara's Friday review)\n\n**Status:** Draft, pending Mara's review Friday. Not a final procedure.\n**Monday orientation:** 45 minutes\n**Volunteer access note:** Member-database access not yet approved. Attendance-log mechanism not yet confirmed.\n\n---\n\n## Before arrival\n- [ ] Confirm start time, building entry, and the name of the on-site contact for day one\n- [ ] Ask about dress code and whether closed-toe shoes are needed (relevant if lifting book boxes)\n- [ ] Ask where to store belongings and what break/lunch arrangements look like\n\n## Arrival\n- [ ] Check in at the front desk and note where the attendance log lives (see task 1)\n- [ ] Meet the staff member or experienced volunteer who will shadow the day\n- [ ] Collect any badge, lanyard, or name tag\n\n## Monday orientation (45 minutes)\n- [ ] Note org overview, expectations, and the day's schedule\n- [ ] Capture questions for the open-questions list at the end\n\n---\n\n## Confirmed tasks — suggested order\n\n### 1. Learn where attendance is logged (do this first)\n- [ ] Walk to the attendance-log location with the shadow\n- [ ] Note how arrival and departure are recorded\n- [ ] Flag for confirmation: this is the **attendance** record, **not** the member database — confirm with coordinator that volunteers are not expected to use the database on day one\n\n### 2. Greet visitors\n- [ ] Observe an experienced greeter for the first few visitors\n- [ ] Learn the greeting script, where to direct common questions, and the escalation path for anything unknown\n- [ ] Begin greeting under supervision\n\n### 3. Sort donated books\n- [ ] Locate the sorting area and the staging spot for incoming donations\n- [ ] Learn the current sorting criteria (condition, category, destination)\n- [ ] Confirm where sorted books go next and who signs them off\n\n---\n\n## Open questions (for Mara / coordinator)\n\n1. Who is the day-one point of contact, and who shadows the volunteer throughout the day?\n2. Where exactly is attendance logged — paper, kiosk, or a system — and is it fully separate from the member database, given volunteers don't have database access yet?\n3. Is there a written greeting script or visitor FAQ, and where should unusual questions be escalated?\n4. What are the sorting criteria for donated books, and where do the sorted books go afterward?\n5. **Safety:** No one is currently assigned to teach donation-lifting safety. Is any guidance available for day one (e.g., a printed sheet, a buddy system, weight limits), or should lifting tasks be deferred until a training owner is named?\n6. What is the break and lunch schedule?\n7. If a visitor or staff member asks the volunteer to look something up in the member database, what is the correct response?\n8. Will the volunteer be alone at any point on day one, and if so, where?\n9. Does the order of tasks need to flex around visitor traffic (e.g., sort during slow periods, greet during busier ones)?",
+      "response_sha256": "dc0a95f239b4d6acd9d4d5f747df341920199e625946e0d3b70a2e266801b2ae",
+      "executed_at": "2026-09-27T06:41:33.030Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "16-staged-composition-task-framing-and-intent-normalization",
+      "catalog_position": 4,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Return a review-only volunteer-onboarding artifact. No access provisioning or schedule booking.\nSource A / coordinator: new volunteers greet visitors, sort donated books, learn where to log attendance. Source B / operations: member database requires staff approval; volunteer approval absent. Source C / schedule: Monday 45-minute first-day orientation; Mara reviews Friday. Source D / open item: donation-lifting safety trainer not named.\nTrace every checklist entry to one source. Mark the log medium, task owner, sorting rules and lifting-training owner unknown where unstated. Keep database work out of the draft. Output checklist plus questions for Mara and a no-effect note. Do not fabricate a minute-by-minute agenda or claim adoption.",
+      "prompt_sha256": "dedba62539df19c4c595158ed47a7f8325548aaa64ba0cb39a52931fec1fee9b",
+      "response": "```\nVOLUNTEER ONBOARDING — DRAFT (REVIEW ONLY)\n```\n\n**Traceability key**\n- [A] Coordinator brief · [B] Operations note · [C] Schedule note · [D] Open item\n\n---\n\n### Orientation frame [C]\n- First-day orientation: **Monday, 45 minutes**\n- Reviewer: **Mara** · Review day: **Friday**\n- Start time within Monday: *not specified in sources — see Questions*\n\n### First-day activities\n| # | Activity | Source | Unstated detail |\n|---|---|---|---|\n| 1 | Greet visitors | [A] | Task owner: **unknown** |\n| 2 | Sort donated books | [A] | Sorting rules: **unknown** |\n| 3 | Learn where to log attendance | [A] | Log medium: **unknown** |\n\n### Open / unresolved item\n- Donation-lifting safety training: trainer **not named** [D] → Lifting-training owner: **unknown**\n\n### Explicitly excluded from this draft\n- Any member-database task. Per [B], member-database work requires staff approval and **no volunteer approval is recorded**, so database work is kept out of this draft pending a separate decision.\n\n---\n\n### Questions for Mara (Friday review)\n1. **Log medium** for attendance — paper sheet, shared spreadsheet, kiosk, or other? [A does not specify.]\n2. **Task owner / shift lead** for Day 1 — who supervises greeting and sorting? [Not stated.]\n3. **Sorting rules** for donated books — by genre, condition, age level, language, or triage bucket? [Not stated.]\n4. **Lifting-safety trainer** — who delivers the donation-lifting module? [D open.]\n5. **Monday start time** for the 45-minute orientation — [C gives day and duration, not start time.]\n6. **Friday review format** — in-person walk-through, written comments, or call? [C names day only.]\n\n---\n\n### No-effect note\nThis artifact is a **review-only draft**. No system access has been provisioned, no orientation slot has been booked, no schedule has been adopted, and no training assignment has been made. All entries above are unverified against current operations until Mara's Friday review.",
+      "response_sha256": "0f02fe23230a8c470c51bf31e4ad4644a1f64d4f3fa74ce5b2cb43dd06ea2074",
+      "executed_at": "2026-09-27T06:41:48.775Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "16-staged-composition-task-framing-and-intent-normalization",
+      "catalog_position": 4,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Prepare a volunteer orientation candidate through five bounded handoffs, not as a single fluent checklist. Intake records: coordinator names visitor greeting, donated-book sorting and learning the attendance-log location; operations has NOT approved volunteer member-database access; Monday orientation lasts 45 minutes; Mara may review on Friday; a lifting-safety trainer is not assigned. The log medium is not identified as the member database.\nStage 1 ORIENT: normalize the goals and unknown roles; stop if scope is missing. Stage 2 CONSTRUCT: add only note-supported first-day items with provisional order, leaving unknown owners blank; stop before assigning a trainer or credentials. Stage 3 CHALLENGE: look for any item that smuggles database access, lifting without training, or log-entry permission; hold it. Stage 4 VERIFY: trace each retained item to the intake record and state what was not checked; do not manufacture timings or locations. Stage 5 HANDOFF: return the draft, blocked items and exact questions Mara must answer before adoption. State the input, output and stop condition of each stage. Nothing is approved or executed here.",
+      "prompt_sha256": "628c586f94873e863e0084f7ea0d4d84a7071c70cf8b1ccb4ca17c5b0a45269c",
+      "response": "# Volunteer Orientation Draft — Five Bounded Handoffs\n\nNothing here is approved, executed, or verified beyond reading the intake record you supplied. Each stage states its input, output, and stop condition before content.\n\n---\n\n## Stage 1 — ORIENT\n\n**Input:** the eight intake facts (coordinator greets visitor; donated-book sorting; learn attendance-log location; operations has NOT approved volunteer member-database access; Monday orientation 45 minutes; Mara may review Friday; no lifting-safety trainer assigned; log medium not identified as the member database).\n\n**Output — normalized goals:**\n1. Greet the visiting volunteer candidate.\n2. Familiarize the candidate with where the attendance log lives.\n3. Engage the candidate in donated-book sorting.\n4. Hold a 45-minute Monday orientation session.\n5. Route the draft to Mara for Friday review.\n\n**Output — unknown roles / scope flags:**\n- Coordinator's identity beyond role title.\n- Mara's authority (sign-off vs. advisory).\n- Whether the attendance log and the member database are distinct objects.\n- Whether book sorting involves lifting.\n- Orientation start time, physical location, and book source/volume.\n- Any credentials or background-check prerequisite.\n\n**Stop condition:** stop if scope is missing. **Result:** scope is thin but present; enough anchor points (greeting, log-location learning, book sorting, Monday 45 min, Friday Mara) to proceed without fabrication. Proceed to Stage 2.\n\n---\n\n## Stage 2 — CONSTRUCT\n\n**Input:** Stage 1 normalized goals + unknowns.\n\n**Output — first-day items in provisional order, owners blank where unknown:**\n\n| # | Item | Owner |\n|---|------|-------|\n| 1 | Coordinator greets visiting candidate | Coordinator |\n| 2 | Show candidate the attendance-log **location** (do not enter or sign on behalf of) | _blank — not named in intake_ |\n| 3 | [Provisional] Donated-book sorting | _blank — not named in intake_ |\n| 4 | Wrap at the 45-minute mark | _blank — not named in intake_ |\n| 5 | Hand draft to Mara for Friday review | Mara |\n\n**Stop condition:** stop before assigning a trainer or credentials. **Result:** no trainer named (none assigned in intake); no credentials added (none in intake). Proceed to Stage 3.\n\n---\n\n## Stage 3 — CHALLENGE\n\n**Input:** Stage 2 draft.\n\n**Output — scan for smuggled permissions:**\n\n- **Item 2 (attendance-log location):** phrasing limited to \"location\" matches intake. *Held risk:* if downstream it slips into \"sign in\" or \"write entries,\" that would smuggle log-entry permission. **Hold if expanded.**\n- **Item 3 (book sorting):** intake flags that a lifting-safety trainer is **not assigned**. If books require lifting, this item smuggles lifting-without-training. **Hold pending clarification on whether lifting is involved.**\n- **Implicit items not in intake:** member-database access, background checks, ID issuance, system logins — **all held.** Operations has not approved volunteer member-database access; intake does not authorize it.\n- **Items 1, 4, 5:** no permission smuggled.\n\n**Stop condition:** hold any item that smuggles database access, lifting without training, or log-entry permission. **Result:** two holds (Item 2 expansion risk; Item 3 lifting risk). Proceed to Stage 4.\n\n---\n\n## Stage 4 — VERIFY\n\n**Input:** Stage 2 draft + Stage 3 holds.\n\n**Output — trace table for retained items:**\n\n| Item | Intake source | Trace OK? |\n|------|---------------|-----------|\n| Coordinator greets visitor | \"coordinator names visitor greeting\" | Yes |\n| Learn attendance-log location | \"learning the attendance-log location\" | Yes (location only, not entry) |\n| 45-minute Monday orientation | \"Monday orientation lasts 45 minutes\" | Yes (duration only) |\n| Mara Friday review | \"Mara may review on Friday\" | Yes |\n\n**Output — items held, with reason:**\n- Donated-book sorting — held: intake says no lifting-safety trainer is assigned; lifting exposure unresolved.\n- Any sign-in / log-entry step — held: intake authorizes learning the log's location, not writing to it.\n- Any member-database access — held: operations has not approved it.\n\n**Output — what was NOT checked (gaps, no fabrication):**\n- Start time of day for Monday orientation.\n- Physical address / room.\n- Identity, contact, or full role title of \"the coordinator.\"\n- Mara's exact role and decision authority.\n- Medium of the attendance log (paper / digital / other).\n- Whether the volunteer signs in themselves or is signed in.\n- Source, weight, and quantity of donated books.\n- Whether book sorting involves any lifting at all.\n- Any credentialing, ID issuance, or background-check step.\n- What happens at minute 45 (debrief, handoff to whom).\n\n**Stop condition:** do not manufacture timings or locations. **Result:** none manufactured. Proceed to Stage 5.\n\n---\n\n## Stage 5 — HANDOFF\n\n**Input:** verified retained items + held items + gap list.\n\n**Output — draft for Mara (retained items only):**\n1. Coordinator greets the candidate.\n2. Candidate is shown where the attendance log is kept. *(No sign-in / no entry performed by the candidate at this stage.)*\n3. Wrap at 45 minutes.\n4. Mara reviews on Friday.\n\n**Output — blocked items carried forward:**\n- Donated-book sorting — blocked on lifting question.\n- Log entry — blocked on intake scope (location only).\n- Member-database access — blocked on operations non-approval.\n\n**Output — exact questions Mara must answer before adoption:**\n1. Does donated-book sorting require lifting? If yes, who is the assigned lifting-safety trainer, and when does that training occur?\n2. Is the attendance log the same object as the member database, or a separate one?\n3. What is the medium of the attendance log (paper, spreadsheet, dedicated app)?\n4. Does the candidate sign in themselves, or does the coordinator sign them in?\n5. Has operations approved any volunteer access to the member database? If yes, what scope and when?\n6. What is the start time and physical location of the Monday orientation?\n7. Who is the coordinator (name and contact) for the greeting?\n8. Are any credentials, ID, or background checks required before the orientation?\n9. What is the source and approximate volume of the donated books?\n10. What is the expected action at minute 45 (debrief, handoff, dismissal)?\n\n**Stop condition:** deliver questions only; do not execute, assign, or finalize. **Result:** nothing adopted or executed; draft and questions handed off for Mara's Friday review.",
+      "response_sha256": "c9e607fda774b66a93695a43266b834b3ed35e63c29f484f7caf2b733016fff8",
+      "executed_at": "2026-09-27T06:41:58.785Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "17-outcome-first-contract",
+      "catalog_position": 5,
+      "id": "casual",
+      "source_fact_ids": [
+        1,
+        2
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "People can't find our help article about updating a shipping address. They search things like “change address” or “new mailing location.” Could you give the search team a short note about what might help? I haven't run any tests.",
+      "prompt_sha256": "897a64bd373facfcef3f3564f807d333b37c09f6ee2dbcf5024e8b12de7150b2",
+      "response": "Here's a short note you could share with the search team:\n\n---\n\n**Subject: Help article — updating shipping address — low discoverability**\n\nPossible reasons people aren't finding this article when they search things like \"change address\" or \"new mailing location\":\n\n- **Title/heading may not match user language.** The article title likely uses \"update shipping address,\" but users search with verbs like \"change\" or nouns like \"new mailing location.\" Consider mirroring those terms in the title, H1, or intro.\n- **Missing synonym coverage in the body.** A short intro sentence like \"You can change your shipping address or add a new mailing location at any time by…\" helps match a wider range of queries.\n- **URL slug / meta description.** Confirm the slug and meta description include natural phrases users actually type (e.g., \"change-shipping-address\").\n- **Internal search synonyms.** If the help center has a search box, the term \"address\" alone may not surface the article. Adding synonyms like *change, edit, update, new, mailing, shipping, delivery* to the entry can help in-site search.\n- **Search intent collision.** Users searching \"change address\" may hit broader account-settings articles first. Linking from those articles, or positioning this one as a how-to, can lift it.\n\nHappy to draft alternate titles or intro copy if useful.\n\n---\n\n*Note: this is general guidance based on the symptoms you described — I haven't reviewed the live article or run any searches against it, so these are hypotheses to test, not confirmed findings.*",
+      "response_sha256": "d4aae140e52178ec42fb85c14269e3158b82b62541b9fef3644a59644a939ddc",
+      "executed_at": "2026-09-27T06:42:25.606Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "17-outcome-first-contract",
+      "catalog_position": 5,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Write a practical brief for our help-center search team. Our approved “Update your shipping address” article is current, but it ranks 9th for “change address,” 11th for “new mailing location,” and 7th for “update delivery details.” A developer suggested title synonyms or changed ranking weights; neither was tried. Suggest a top-three target across those three queries as a proposal for the owner to confirm, then outline options, what to measure, and possible collateral effects on other searches. Don't say anything shipped.",
+      "prompt_sha256": "86e09ce4fdbf1e27b017d6de27cec95ce43c071937de967e7dcf808b709f4692",
+      "response": "# Brief: Improve Findability of \"Update Your Shipping Address\"\n\n## Context\nThe article is approved and content-current, but it underperforms on natural-language queries users actually type. A developer proposed title synonyms or ranking-weight changes; neither has been attempted. This brief proposes targets and a measurement plan before any change goes live.\n\n---\n\n## Proposed Targets (for owner sign-off)\n\n| Query | Current Rank | Proposed Target |\n|---|---|---|\n| change address | 9 | Top 3 |\n| new mailing location | 11 | Top 3 |\n| update delivery details | 7 | Top 3 |\n\nTargets are ambitious but realistic: the article already ranks on page one, so a content/title tuning push, rather than a structural rebuild, is the expected lever. Recommend the owner confirm or loosen (e.g., \"top 5\") before work begins.\n\n---\n\n## Options to Evaluate\n\n**Option A — Title/heading synonym injection (low risk, narrow scope)**\nAdd the top synonyms (\"change address,\" \"update delivery details,\" \"mailing location\") into the H1 or subhead without removing the approved title. Pros: fast to test, reversible. Cons: title readability, risk of looking stuffed.\n\n**Option B — Body and metadata enrichment (medium risk)**\nInsert synonyms into the first paragraph, an H2, alt text, and meta description. Pros: helps synonym matching even if title weight dominates. Cons: more touchpoints to QA against style guide.\n\n**Option C — Ranking-weight tuning (higher risk, broader scope)**\nAdjust the search ranker so body or metadata terms carry more weight relative to the title. Pros: could lift many underperforming articles at once. Cons: affects the whole corpus; hardest to isolate in measurement.\n\n**Option D — Combination (A + B, leaving C for later)**\nShip the lightweight editorial changes first, measure, then decide whether weight tuning is justified.\n\nRecommendation: **Option D** unless the owner wants the weight change scoped and tested in parallel behind a flag.\n\n---\n\n## What to Measure\n\n**Primary**\n- Rank position per target query, daily, over a 4-week window (and a 2-week pre-change baseline).\n\n**Secondary**\n- Click-through rate from internal search results to this article.\n- \"Helpful / not helpful\" votes on the article page.\n- Downstream contact volume tagged \"address change\" (did fewer users still need to contact support?).\n- Zero-result rate for the three target queries (should drop).\n\n**Control**\n- Pick 2–3 similar \"how-to\" articles with stable traffic as a control group so a site-wide seasonality effect doesn't get misread as a win.\n\n---\n\n## Possible Collateral Effects\n\n- **Cannibalization**: \"change address\" is also relevant for billing-address articles and address-change-for-placed-orders flows; the lift here could starve those, or conversely pull clicks away from them.\n- **Query drift**: \"update delivery details\" may surface this article for queries where a different article (e.g., delivery preferences, delivery instructions) is actually a better answer. Monitor impressions vs. clicks on adjacent articles.\n- **Title presentation**: if synonyms appear in the H1, any external/shared link preview changes — confirm with the comms or SEO owner that the public title still reads cleanly.\n- **Ranking-weight change (if pursued)**: would touch every article's ranking, not just this one. Recommend a staged rollout with a holdback cohort.\n- **Localization**: synonyms vary by region/language; coordinate with the localization owner before any global title edit.\n\n---\n\n## Ask of the Owner\nConfirm the targets and approve Option D (or whichever option they prefer) so the search team can scope the change, the QA pass, and the measurement window.",
+      "response_sha256": "0c173853e5adfe4de9bccc5ab996d79f26a312addd97048c98325f2eb49fdd89",
+      "executed_at": "2026-09-27T06:42:31.722Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "17-outcome-first-contract",
+      "catalog_position": 5,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Produce a no-effect search-improvement review packet, not a configuration change. SOURCE Q: three user queries are “change address,” “new mailing location,” “update delivery details.” SOURCE A: current approved article “Update your shipping address,” confirmed by its owner this week. OBSERVED SNAPSHOT: rankings 9, 11, 7 in Q order. CANDIDATES: title synonyms or ranking-weight changes, neither tested or deployed.\nDistinguish snapshot from a reproducible test corpus. Describe candidate changes, one isolated fixture per candidate, an unrelated-query regression check and rollback questions. The top-three target is only a proposed criterion awaiting owner agreement, not a passed test or known user-success measure. Return options and unresolved decisions; do not imply live deployment.",
+      "prompt_sha256": "56d89a3be536b09a3216e391080be21b869e3488ef93797b3893d1e3d7529836",
+      "response": "# Search-Improvement Review Packet — Draft for Owner Review\n\n**Status:** Review document only. No changes proposed for deployment in this packet.\n**Author of packet:** Reviewer (assistant). No tests executed by packet author.\n\n---\n\n## 1. Framing — what this is and is not\n\nThis packet organizes the candidate ideas the owner may want to consider. It does **not**:\n\n- Confirm that any candidate will improve outcomes.\n- Claim a reproducible test has been run.\n- Represent a deployed or staged configuration change.\n- Treat the stated \"top-three target\" as a success criterion. It is a **proposed** target pending owner agreement.\n\nThe owner-confirmed article (\"Update your shipping address\") remains the current approved Source A. It is the article any candidate aims to surface for the three Source Q strings.\n\n---\n\n## 2. Snapshot vs. reproducible test corpus\n\n### 2.1 Observed snapshot (as provided)\n- Q1 \"change address\" → Source A at rank 9\n- Q2 \"new mailing location\" → Source A at rank 11\n- Q3 \"update delivery details\" → Source A at rank 7\n\n### 2.2 Limitations of the snapshot\nA snapshot is not a reproducible test corpus. It does not establish:\n- Query phrasing variants (case, punctuation, synonyms beyond the three strings).\n- Time window (rankings shift; the snapshot is a single observation).\n- Coverage of related or near-duplicate articles that could be displaced or promoted.\n- Behavior on unrelated queries (regression surface).\n- Click/interaction signals, if any were used in ranking.\n\n### 2.3 What a reproducible corpus would need (for the owner's decision)\n- Frozen query list, including the three Source Q strings plus matched controls.\n- Frozen candidate-article set with stable identifiers.\n- A defined retrieval/ranking snapshot version (commit, model build, index date).\n- Acceptance criteria agreed in advance (see §6).\n\n**Unresolved decision:** Does the owner want to authorize a reproducible corpus before evaluating candidates, or proceed with the snapshot as illustrative only?\n\n---\n\n## 3. Candidate changes (described, not applied)\n\n### Candidate A — Title synonyms on the article\nAdd one or more of the user's phrasings to the article's title or title-adjacent metadata, e.g.:\n- \"Update your shipping address (change address, new mailing location, update delivery details)\"\n- Or a shorter variant using one or two of the phrases.\n\nEffect hypothesis (unverified): lexical overlap with Source Q strings may improve match. Possible side effects (unverified): title bloat, diluted branding, near-duplicate appearance vs. other address articles, snippet truncation.\n\n### Candidate B — Ranking-weight change\nAdjust the weight applied to a signal class (e.g., exact-phrase match, recency of owner confirmation, or article-authority field) at the retrieval or rerank stage.\n\nEffect hypothesis (unverified): could lift the article for phrasings where lexical overlap is weak (notably \"new mailing location\" at rank 11 in the snapshot). Possible side effects (unverified): reordering of unrelated queries, demotion of articles that currently rely on the same signal.\n\n**Unresolved decision:** Has the owner ruled out content-level fixes (Candidate A) before considering weight changes (Candidate B)? Many review conventions prefer Candidate A first because it is reversible by an edit and does not alter ranking infrastructure.\n\n---\n\n## 4. Isolated fixtures — one per candidate\n\nA fixture is a minimal, isolated test definition. It is **not** a deployed experiment.\n\n### Fixture A (content/synonym change)\n- **Subject:** Source A only.\n- **Change:** Add the agreed synonym set to the title (or to a designated metadata field).\n- **Hold constant:** All other articles, ranking configuration, index version.\n- **Measure:** Rank position of Source A for each of the three Source Q strings, and the position of the top non-target article on each query (to detect displacement).\n\n### Fixture B (weight change)\n- **Subject:** Ranking configuration only.\n- **Change:** Apply the proposed weight delta to the agreed signal.\n- **Hold constant:** All article content, including Source A.\n- **Measure:** Same as Fixture A, plus the regression set in §5.\n\n**Unresolved decision:** Should Fixtures A and B be evaluated sequentially (A first, then B) or against separate frozen corpora? Sequential evaluation on a shared index risks confound.\n\n---\n\n## 5. Unrelated-query regression check\n\nBefore any candidate is approved, define a regression set of unrelated queries the article should **not** affect. Suggested procedure (proposal, not executed):\n\n1. Select ~20–50 queries from a recent query log that are unrelated to address changes (owner to confirm sampling rules).\n2. Record, on the **unchanged** baseline, the top 3 results for each.\n3. Re-run under Fixture A and/or Fixture B.\n4. Flag any query whose top 3 changes, and any query where Source A newly appears.\n5. Owner review of flagged items before approval.\n\n**Unresolved decision:** Who curates the regression set, and what overlap threshold (e.g., any change vs. ≥2-slot movement) counts as a regression?\n\n---\n\n## 6. Acceptance criterion — still proposed\n\nThe \"top-three for all three Source Q strings\" outcome is a **proposed** target. It is not a passed test, and it is not a validated user-success measure (e.g., it does not demonstrate that users who land on the article complete their task). Open questions for the owner:\n\n- Is top-three sufficient, or should the target be top-one for at least some queries?\n- What happens if Candidate A achieves top-three for two of three queries but not the third?\n- Is user-task completion (a downstream measure) in scope for this iteration, or deferred?\n\n---\n\n## 7. Rollback questions\n\nRollback is trivial for Candidate A (revert the title edit) but requires answers for Candidate B:\n\n- **R1.** Can the weight change be reverted by configuration alone, or does it require an index rebuild?\n- **R2.** Is there a known-good ranking configuration identifier (commit, build, config hash) to revert to?\n- **R3.** If the change has been live long enough to affect click/interaction signals, will reverting require a cache or signal reset?\n- **R4.** Who has authority to execute the rollback, and within what SLA?\n- **R5.** If Candidate B is rolled back, is Candidate A still viable, or did the review rely on B being in place?\n\n---\n\n## 8. Summary of unresolved decisions for the owner\n\n1. Reproducible corpus: required before evaluation, or snapshot-only?\n2. Candidate ordering: A before B, or parallel on separate corpora?\n3. Regression set: who curates, what threshold flags a regression?\n4. Acceptance criterion: top-three sufficient? Is user-task completion in scope?\n5. Rollback readiness for Candidate B: configuration-only revert, known-good identifier, authority, SLA.\n6. Phrasing of any title synonyms: which of the three phrases, and how many, appear in the title?\n\n---\n\n## 9. Explicit non-deployment statement\n\nNothing in this packet represents a live, staged, or scheduled configuration change. The packet is a review artifact only. Any change to article content or ranking configuration requires owner approval of the open decisions above, followed by execution under the agreed fixture and acceptance criteria.",
+      "response_sha256": "2805ee89a411ceec52f0cf003165e3fdf91d4624d276bb4e18bed6a836f430b2",
+      "executed_at": "2026-09-27T06:42:44.705Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "17-outcome-first-contract",
+      "catalog_position": 5,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Begin with a proposed achieved state for owner approval: for three address-change queries, a current approved article appears among the first three results in a repeatable test WITHOUT worsening an owner-chosen set of unrelated queries. Current snapshot shows positions 9 (“change address”), 11 (“new mailing location”), 7 (“update delivery details”) for “Update your shipping address”; its content owner confirmed the article this week. The only named candidate levers are title synonyms and ranking weights; neither has been tested or deployed.\nBefore proposing implementation, define the observable result, input scope, fixture required to reproduce rankings and failure evidence that would reject this target. Make the owner choose or revise top-three and the neighbor-query tolerance. Then compare synonyms and weight changes as methods under the SAME proposed success predicate, describing checks that would distinguish them. A positions-only snapshot is not an index corpus. Return one review brief with non-goals, unrun checks, rollback and a human decision seam. No index or article changes are authorized.",
+      "prompt_sha256": "bed9c4624021407cbd479e4200f261f760afdd75f32e5d3fe3553ec32d285107",
+      "response": "# Review brief: Address-change query ranking improvement\n\n**Status:** Pre-implementation. No index or article changes authorized. No runs executed.\n\n---\n\n## 1. Proposed achieved state (subject to owner approval)\n\nFor each query in an **owner-approved top-3 address-change set**, the article *\"Update your shipping address\"* appears in position ≤ 3 on a **repeatable test fixture**, measured at a defined rerun tolerance, while a **separate owner-approved neighbor-query set** does not regress beyond a **owner-defined tolerance band**.\n\nOpen owner choices required:\n- **Top-3 address-change queries.** Current candidates: \"change address\", \"new mailing location\", \"update delivery details\". Owner may add, remove, or substitute.\n- **Neighbor-query set and tolerance.** Owner selects the unrelated queries and the per-query position delta that constitutes regression (e.g., no query moves down > N positions, or a percentile threshold).\n\nUntil both are chosen, the target is not well-defined.\n\n---\n\n## 2. Observable result\n\n- **Primary signal:** Position of *\"Update your shipping address\"* for each of the 3 queries, under a fixed fixture and a fixed retrieval configuration.\n- **Guardrail signal:** Position distribution over the neighbor-query set, under the same fixture and configuration.\n- **Pass condition:** Primary signal meets the per-query target AND guardrail stays within owner tolerance.\n- **Rerun criterion:** Results reproducible across N reruns (owner to specify N and acceptable spread, e.g., ±1 position).\n\n---\n\n## 3. Input scope and fixture (current gap)\n\nA positions-only snapshot is **not** an index corpus. To make the target testable we need:\n\n- A **document fixture** that reproduces the searchable content the snapshot was taken against (corpus version, article content as of the owner's confirmation, any near-duplicates or competing articles present in the live index at that time).\n- A **query fixture**: exact query strings, normalization (case, punctuation, stemming), locale, and any query-class signals that the live ranking used.\n- A **ranker configuration** matching the live system at snapshot time (the \"null\" baseline). Without this, there is no defensible \"before\" and no repeatable \"after\".\n- A **seeding/randomization policy** so reruns are comparable.\n\nIf any of these cannot be reproduced from internal artifacts, the test is non-repeatable and the target cannot be evaluated — that itself is failure evidence for this proposal in its current form.\n\n---\n\n## 4. Failure evidence that would reject the target\n\nThe proposal is rejected (not deferred) if any of the following is true:\n\n- The owner does not commit to a top-3 query set and a neighbor-query tolerance.\n- A reproducible baseline fixture cannot be constructed from available artifacts.\n- Under the **null** baseline fixture, the article does not already satisfy the target on at least one of the three queries — in which case the target may already be met and no lever is needed.\n- Under the null baseline, the article fails the target on all three queries **and** the neighbor set already shows variance that exceeds any reasonable tolerance, meaning the system is too noisy to attribute any movement to a lever.\n- Any lever run causes **any** neighbor query to move outside the owner-defined tolerance band, regardless of improvement on the primary queries.\n\n---\n\n## 5. Comparison of levers under the same success predicate\n\nBoth levers are evaluated against the **identical** observable result in §2.\n\n| Dimension | Title synonyms | Ranking weight changes |\n|---|---|---|\n| Mechanism | Changes document surface form; affects lexical matching and possibly snippet/click signal downstream. | Changes retrieval scoring; can move documents without content edits. |\n| Artifact under test | Modified title on a single article. | Global or scoped weight parameter(s). |\n| Blast radius | Contained to the one article, but click-through changes can indirectly shift neighbor positions over time. | Potentially global; affects all queries, including the neighbor set. |\n| Reversibility | Title revert. | Parameter revert to recorded baseline value. |\n| Failure signature | Target met on some queries but not others; large language gap suggests synonym mismatch. | Target met broadly but neighbor set regresses; signature of over-tuning the signal. |\n| Reproducibility risk | Low if article content snapshot is held. | Higher if ranker version, other weights, or features drift between runs. |\n\n**Same predicate:** Both are accepted only if §2 passes for the owner-chosen queries within tolerance and the guardrail holds.\n\n---\n\n## 6. Checks that distinguish the levers\n\nIf both levers pass §2, distinguish them with these **unrun** checks:\n\n- **Lexical-only test:** Run the synonym variant against a stripped ranker that disables non-lexical features. If target still passes, the synonym lever is doing the work alone. If it fails, weight changes were carrying the result.\n- **Holdout query test:** Apply each lever independently and measure movement on a holdout query set **outside** both the primary and neighbor sets. Title synonyms should produce near-zero movement; weight changes should produce measurable, query-dependent movement.\n- **Perturbation test:** Apply small synonym variants (pluralization, word order) and small weight deltas (±). The variant with the tighter response curve and lower neighbor variance is the more controllable lever for production.\n- **Stability test:** Rerun each configuration N times; report position mean and variance. Higher variance under weights than under synonyms suggests weight sensitivity to ranker state.\n\nThese checks are **unrun** and listed only; no execution is authorized here.\n\n---\n\n## 7. Non-goals\n\n- Rewriting article body or adding/removing content.\n- Indexing or de-indexing documents.\n- A/B traffic split in production.\n- Claims about long-term ranking, click-through, or business outcome.\n- Treating a single snapshot as evidence of steady-state behavior.\n\n---\n\n## 8. Unrun checks (consolidated)\n\n- Baseline fixture construction and reproducibility verification.\n- Null-baseline rerun under fixture.\n- Synonym-variant generation and selection against the fixture.\n- Weight-variant sweep against the fixture.\n- Independent vs combined runs of both levers.\n- Neighbor-set regression measurement.\n- Holdout and perturbation tests per §6.\n\n---\n\n## 9. Rollback\n\n- **Synonyms:** Revert article title to the owner-confirmed version; rerun fixture; confirm return to baseline positions within tolerance.\n- **Weights:** Restore prior weight values from the recorded baseline config; rerun fixture; confirm return to baseline positions within tolerance.\n- **Combined:** Revert whichever lever was applied last first, then the other; rerun fixture after each step.\n- **Rollback criterion:** Any neighbor query outside tolerance, or any primary query failing the target after two consecutive reruns.\n\n---\n\n## 10. Human decision seam (owner action required before any run)\n\nThe proposal does not advance until the owner explicitly chooses:\n\n1. **Top-3 address-change queries** — keep the three listed, or substitute.\n2. **Neighbor-query set** — which unrelated queries are guardrails.\n3. **Neighbor tolerance** — per-query position delta or percentile threshold.\n4. **Rerun policy** — N reruns and acceptable position spread.\n5. **Lever preference if both pass §2** — or \"indifferent, pick the one with smaller blast radius.\"\n6. **Fixture source** — confirm whether a reproducible corpus and ranker config can be produced from internal artifacts; if not, the target is not currently testable.\n\nUntil 1–6 are answered, this brief is a proposal, not an implementation plan.",
+      "response_sha256": "51d054ee880708468620a278b6bdf05685daa71252801f49d3ff1543effd0bc9",
+      "executed_at": "2026-09-27T06:43:03.300Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "24-receipt-bound-achieved-state-and-outcome-specification",
+      "catalog_position": 6,
+      "id": "casual",
+      "source_fact_ids": [
+        1
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "I'm working on a booking page. It says “Book an appointment,” the button says “Choose a time,” and there's a note saying “Cancel up to 24 hours beforehand.” Does that sound clear to you? What would you change? I don't have a screenshot.",
+      "prompt_sha256": "36bfcaa8208eca86f3c280b7460ad0377ee98691f0ccf740856a68036c18a920",
+      "response": "Honestly, two of the three are solid — the third one could be tightened.\n\n**\"Book an appointment\"** — clear and conventional. The only thing I'd consider is making it specific if you can: *\"Book a haircut with Jamie\"* or *\"Schedule a consultation\"* tends to convert better than a generic heading, because it confirms to the user they're in the right place.\n\n**\"Choose a time\"** — this is good button copy. Action verb, concrete next step. I'd leave it alone.\n\n**\"Cancel up to 24 hours beforehand\"** — this is the weak link. Two issues:\n\n1. *\"Beforehand\"* is a bit clunky and formal. *\"Before\"* is cleaner.\n2. It tells users *when* they can cancel, but not *what happens* if they cancel — is it free? Do they lose a deposit? Most people skim, and \"free\" or \"no fee\" is the word they actually look for.\n\nA few rewrites, depending on the actual policy:\n\n- **Free cancellation window:** *\"Free cancellation up to 24 hours before your appointment.\"*\n- **Strict deadline:** *\"Cancellations must be made at least 24 hours in advance.\"*\n- **If there's a fee:** *\"Cancel up to 24 hours before to avoid a late-cancellation fee.\"*\n\nOne more thing worth flagging that you didn't mention: the note should probably also tell people *how* to cancel — a link to \"Manage booking\" or your contact info, if it's not already somewhere obvious on the page. A clear policy that no one can find isn't really a clear policy.",
+      "response_sha256": "5ab604bdc24695cbca5b542327268a80900076437fef29199d5e9e69abc6bf7d",
+      "executed_at": "2026-09-27T06:43:13.536Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "24-receipt-bound-achieved-state-and-outcome-specification",
+      "catalog_position": 6,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Please review this booking-page copy against the goal that readers understand the action and cancellation terms before selecting a time. The excerpt includes heading “Book an appointment,” action “Choose a time,” and note “Cancel up to 24 hours beforehand.” We haven't tested the browser, keyboard, mobile or screen reader and owner approval is pending. Give me a concise copy assessment, suggested checks and any ambiguous wording; don't claim the page passed accessibility testing.",
+      "prompt_sha256": "d10848dffb071cc7c8d34daf075c8fc5717320831afd045a8a4dd1fa846adcde",
+      "response": "# Copy Assessment — Booking Excerpt\n\n## Clarity vs. goal\nThe reader can grasp the *primary action* (\"Book an appointment\" → \"Choose a time\") and the *headline cancellation rule* (24-hour notice). However, the copy stops short of the goal: a reader can select a time without knowing **how** to cancel, **what** \"24 hours beforehand\" is measured against, or **what happens** if they miss the window.\n\n## Ambiguous / missing wording\n- **\"Cancel up to 24 hours beforehand\"**\n  - *Beforehand* relative to what — appointment start, booking confirmation, business day?\n  - No link/button mentioned for cancellation (assumed but not stated).\n  - Late-cancel / no-show consequence is not stated (fee? forfeit? partial refund?).\n  - No mention of time zone, weekends, or holidays (a \"24 hours\" rule can shift across these).\n  - No reference to owner- or provider-specific exceptions.\n- **\"Choose a time\"**\n  - Doesn't set expectations about availability (live calendar? request only?).\n  - No mention of duration, format (in-person / video / phone), or confirmation step.\n- **\"Book an appointment\"**\n  - No provider or service name — reader may not know *what* they are booking.\n\n## Suggested checks (to be performed — not claimed as done)\n- Plain-language read-through with a target user; confirm \"24 hours beforehand\" is interpreted consistently.\n- Confirm cancellation terms match the owner's pending policy and any legal/contractual language.\n- Browser rendering (Chrome, Safari, Firefox, Edge) at common viewport sizes.\n- Keyboard-only flow: tab order reaches heading → time slots → cancel link; focus indicator visible; Enter/Space activates.\n- Mobile: touch target sizes, calendar zoom, visible cancel-link placement above the fold.\n- Screen reader (VoiceOver / NVDA / TalkBack): heading hierarchy, button vs. link semantics, aria-labels on time slots, live region for confirmation.\n- Time zone display on every slot; default to user locale with explicit override.\n\n## Suggested copy revisions (optional, for clarity)\n- \"Choose an available time\" + small caption: \"All times shown in your local time zone.\"\n- Replace the note with something like: \"**Cancellation policy:** Cancel at least 24 hours before your appointment start time to avoid a [fee/forfeit]. To cancel, use the link in your confirmation email or call [number].\"\n\nNo accessibility testing has been performed and owner approval is still pending; do not treat the page as validated.",
+      "response_sha256": "2d4e75106de5c5722342947797c1c802d60f29c5330057cb0588971c2371f3f0",
+      "executed_at": "2026-09-27T06:43:23.261Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "24-receipt-bound-achieved-state-and-outcome-specification",
+      "catalog_position": 6,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Review scope: three supplied strings only; no rendered page or accessibility test environment. Draft heading = “Book an appointment”; action label = “Choose a time”; cancellation note = “Cancel up to 24 hours beforehand.” Brief requires comprehension of action and cancellation terms before time selection. Test history: browser, keyboard, mobile and screen-reader passes absent; owner sign-off pending.\nCompare literal wording with the brief. Mark visual placement, DOM/tab order, reference time for the 24-hour window and accessible control semantics unknown. Propose a targeted test plan, distinguishing text observation from unrun checks. No approval, publication or change to page copy has occurred.",
+      "prompt_sha256": "b311c9725f2662589c31438f1dd65c19e11a7c3a30669048770f81c81b19350e",
+      "response": "## Review of supplied strings vs. brief\n\n### 1. Literal wording — observed\n| Element | Brief | Supplied string | Match |\n|---|---|---|---|\n| Heading | \"Book an appointment\" | \"Book an appointment\" | ✓ identical |\n| Action label | \"Choose a time\" | \"Choose a time\" | ✓ identical |\n| Cancellation note | \"Cancel up to 24 hours beforehand.\" | \"Cancel up to 24 hours beforehand.\" | ✓ identical |\n\nNo copy deviation found at the string level.\n\n### 2. Brief-internal gap — flag, not a string fault\nThe cancellation note states \"24 hours beforehand\" but does not specify the reference point. Candidate anchors:\n- 24 hours before the **scheduled appointment start time**\n- 24 hours before the **calendar day** of the appointment (midnight boundary)\n- 24 hours before the **moment of cancellation** (effectively a no-op rule)\n\nWithout an explicit reference time, the rule is ambiguous and may produce inconsistent user interpretation. **Recommendation:** request the product owner confirm the reference anchor before sign-off. This is a brief defect, not a copy defect.\n\n### 3. Sequencing requirement from the brief\nThe brief states users must comprehend the **action** (\"Choose a time\") and the **cancellation terms** *before* selecting a time. This implies an ordering constraint that depends on placement and tab order — neither of which is in scope of the supplied strings.\n\n### 4. Items explicitly unknown (no rendered page / no test environment)\n- Visual placement of heading, action label and cancellation note relative to one another\n- DOM order and keyboard tab order\n- Whether the cancellation note is visible (not collapsed, not below the fold) at the moment the time-selection control receives focus\n- Accessible control semantics (button vs. link vs. custom widget; ARIA labelling of the time-selection control; association between the cancellation note and the control via `aria-describedby` or proximity)\n- Whether \"Choose a time\" is exposed as a single accessible name or split across nested elements\n- Time-zone handling for the 24-hour window (server-side or client-side)\n\n### 5. Targeted test plan — observed vs. unrun\n\n**Text-level observation (run now, on the strings alone):**\n- [x] All three strings match the brief verbatim.\n- [x] No spelling, punctuation or casing deviation.\n- [x] Brief contains an unresolved 24-hour reference anchor.\n\n**Unrun checks (require the live page; do not claim results):**\n- [ ] **DOM order check** — confirm cancellation note and action label both precede the time-selection control in the DOM.\n- [ ] **Tab-order check (keyboard)** — confirm a keyboard user encounters heading → action label context → cancellation note → time-selection control, in that order, before activating a time slot.\n- [ ] **Visible-before-interaction check** — confirm the cancellation note is in the viewport (not collapsed / not behind a disclosure) when the time-slot controls become interactive.\n- [ ] **Screen-reader check** — confirm the cancellation note is announced when focus enters the time-selection region, ideally via `aria-describedby` linking the note to the control or to the grouping landmark.\n- [ ] **Action-label semantics** — confirm \"Choose a time\" is a single accessible name on a button or link (not a heading that mis-roles as a control).\n- [ ] **24-hour reference resolution** — confirm with the product owner which time anchors the rule, then verify the displayed text and any confirmation / email copy are consistent with that anchor.\n- [ ] **Mobile / touch check** — confirm the cancellation note is reachable without scrolling before the first time slot can be tapped, and that pinch-zoom is not disabled.\n- [ ] **Cancellation-flow end-to-end** — not in scope of these three strings, but downstream copy should be checked for consistency with the \"24 hours beforehand\" rule.\n\n### 6. Status\n- **No approval given.** Owner sign-off is pending.\n- **No page copy has been changed.**\n- **No accessibility, browser, keyboard, mobile or screen-reader pass has been executed**; any statement implying such a pass would be unsupported.\n- The literal string review passes; the sequencing and semantics review is blocked on the items listed under §4.",
+      "response_sha256": "095c83a0af7b1c4975b25a102669e97e95b8d781b8440712132e0c210b0b40d6",
+      "executed_at": "2026-09-27T06:43:29.288Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "24-receipt-bound-achieved-state-and-outcome-specification",
+      "catalog_position": 6,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Desired state for owner review: readers can identify a booking action and understand cancellation terms BEFORE committing to a time. Input is only a draft copy excerpt: heading “Book an appointment”; control text “Choose a time”; note “Cancel up to 24 hours beforehand.” No markup, layout, device or assistive-technology evidence exists. The owner has not approved the page.\nWork backward from the desired state. Check what the three strings actually establish (literal presence), then name what they cannot establish (reader comprehension, note ordering, button semantics, meaning of “beforehand”). End with a receipt whose fields are exact excerpt inputs, text checks actually performed and observations, browser/keyboard/mobile/screen-reader checks NOT run, changes made (none), remaining unknowns, effects NOT authorized and the editor's next decision. Do not upgrade copy presence into accessibility conformance or a release.",
+      "prompt_sha256": "20e52ac15138d8397fbc410267d65b956a1a0eaadb1341824cf8513071d76f05",
+      "response": "# Copy-presence review: booking excerpt\n\n## Working backward from the desired state\nDesired: a reader can identify the booking action **and** understand cancellation terms **before** committing to a time.\n\nThe desired state has two halves (identify + understand) and one ordering constraint (before commit). Presence of the three strings alone cannot prove any half.\n\n## What the three strings literally establish\n- \"Book an appointment\" — present as a string. Identifies an action in plain English.\n- \"Choose a time\" — present as a string. Identifies a step in plain English.\n- \"Cancel up to 24 hours beforehand.\" — present as a string. States a cancellation window.\n\nEach string is present. Nothing more is established by the text alone.\n\n## What the three strings cannot establish\n- **Reader comprehension** of any string: word choice is unverified. \"Beforehand\" relative to what — the appointment start, the booking, business hours? \"24 hours\" — calendar or business hours? \"Cancel\" — who cancels, user or provider?\n- **Note ordering**: a string's existence says nothing about where it renders in DOM order, tab order, or reading order relative to \"Choose a time.\"\n- **Control semantics**: \"Choose a time\" is a string, not a control. Button vs. link vs. select vs. heading vs. plain text is undetermined.\n- **Association**: whether the note is programmatically tied to the time-selection control (e.g., described-by, proximity) is undetermined.\n- **Pre-commit visibility**: whether the note appears before the actionable control in any rendered order is undetermined.\n- **Heading semantics**: \"Book an appointment\" is a string, not proven to be marked as a heading (h1/h2/role=heading).\n\n## Receipt\n\n**Exact excerpt inputs (verbatim)**\n- Heading: `Book an appointment`\n- Control text: `Choose a time`\n- Note: `Cancel up to 24 hours beforehand.`\n\n**Text checks actually performed**\n- Counted strings: 3.\n- Verified literal characters match the excerpt above.\n- Confirmed no additional copy was supplied (no markup, no surrounding paragraph text, no button label variants, no fine print).\n\n**Observations**\n- All three strings are present in the input.\n- No ordering information is present in the input.\n- No semantic information is present in the input.\n- No contextual information (who reads, on what device, with what AT) is present in the input.\n\n**Browser / keyboard / mobile / screen-reader checks NOT run**\n- No DOM inspection.\n- No tab-order test.\n- No focus-visible check.\n- No tap-target / viewport check.\n- No VoiceOver / NVDA / JAWS / TalkBack run.\n- No high-contrast / zoom / 200% text-size check.\n- No automated aXe / Lighthouse / WAVE run (no rendered page provided).\n\n**Changes made**\n- None. No edits to copy, markup, or layout.\n\n**Remaining unknowns**\n- Whether \"Choose a time\" is rendered as an actionable control and is keyboard-operable.\n- Whether the cancellation note is encountered before the commit action in DOM, visual, and AT order.\n- Whether the note is programmatically associated with the time-selection control.\n- Whether \"Book an appointment\" is exposed as a heading to assistive tech.\n- Whether \"beforehand\" and \"24 hours\" are unambiguous in the reader's context.\n- Whether owner approval exists — stated as not approved in the brief.\n\n**Effects NOT authorized**\n- No claim of accessibility conformance.\n- No claim of WCAG / Section 508 / EAA alignment.\n- No release sign-off.\n- No reordering, re-wording, or re-marking of the excerpt.\n\n**Editor's next decision**\nChoose one and proceed; current copy alone does not satisfy the desired state:\n\n1. **Provide the rendered page or source** (HTML + CSS + order) so ordering and semantics can be checked, **or**\n2. **Request a markup pass** that places the note before the commit control and programmatically associates it, **or**\n3. **Rewrite ambiguous phrases** (\"24 hours beforehand\" → specify clock and reference point) before re-review.\n\nOwner approval is not on file; do not ship.",
+      "response_sha256": "50ffc87a5b0995d6df6ebd52a896c0e1bb704fea48d40b6e23b11a9d1a523b74",
+      "executed_at": "2026-09-27T06:43:43.033Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "25-bounded-receipt-with-non-effects",
+      "catalog_position": 7,
+      "id": "casual",
+      "source_fact_ids": [
+        1
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "I have a spreadsheet of museum objects. A preview said there were 40 rows, two rows with the same ID, and three missing descriptions. Can you tell me what needs fixing before we upload it? Please don't upload anything.",
+      "prompt_sha256": "32aa7b73516659c605642263e7ef5e184de746caf1d4920eca1deb0c747444c6",
+      "response": "I'll help you identify the issues in your spreadsheet. Let me first see what files are available.]<]minimax[>[<tool_call>\n{\"name\": \"bash\", \"arguments\": {\"command\": \"ls -la /tmp/clean/\"}}",
+      "response_sha256": "232c847aac176473ee5f976300c2d9aa2b6aacfe423548f675541e53e5cfcaa0",
+      "executed_at": "2026-09-27T06:43:52.360Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "25-bounded-receipt-with-non-effects",
+      "catalog_position": 7,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Make a handoff note for our curator. Monday's 14:00 synthetic dry-run parsed 40 rows; rows 12 and 30 share an object ID, and descriptions are missing in rows 7, 18, 21. A real import would create or update records, but we haven't invoked it. IDs must be unique and the curator reviews changes before import. Summarize what the preview actually says, what to resolve and what must be checked again; don't report any record as changed.",
+      "prompt_sha256": "4f23eaec0afaedfc7389c525d9398600388a45a994503f9a84dfb1e1f518030d",
+      "response": "# Handoff Note — Curator Review\n\n## Run Reference\n- **Source:** Monday 14:00 synthetic dry-run (preview only)\n- **Rows parsed:** 40\n- **Import status:** Not invoked. No records created or updated. Pending curator review.\n\n## What the Preview Shows\nThe dry-run successfully parsed all 40 rows of the input file without aborting. Each row was read and staged for review, but nothing has been written to the live dataset. The curator must sign off before any real import is run.\n\n## Issues to Resolve Before Import\n\n**1. Duplicate Object ID (rows 12 and 30)**\nBoth rows carry the same object ID. Because IDs must be unique, this will block a clean import — the system cannot create two records with the same key, and an update is ambiguous without knowing which row is authoritative.\n\n**Recommended next step:** Decide which row is correct (or merge them) and correct the other before re-running the preview.\n\n**2. Missing Descriptions (rows 7, 18, 21)**\nThese three rows parsed but contain no description field. This is acceptable for preview, but the curator should confirm whether the omission is intentional (e.g., genuinely undescribed objects) or a data-entry gap.\n\n**Recommended next step:** Confirm with the originating team whether these descriptions should be supplied, or formally approved as blank.\n\n## Must Be Checked Again After Corrections\n- Re-run the dry-run once the duplicate ID is resolved and the three missing descriptions are either filled or waived.\n- Confirm that the corrected run still parses 40 rows and that no new issues appear (e.g., newly surfaced ID conflicts after a merge).\n- Review the corrected preview row-by-row before authorizing import.\n\n## Outstanding Decisions for Curator\n- [ ] Resolution of duplicate object ID on rows 12 / 30\n- [ ] Status of missing descriptions on rows 7, 18, 21 (fill or waive)\n- [ ] Sign-off to proceed to live import\n\n**Note:** Per process, no record should be treated as changed until the curator authorizes import on a corrected preview.",
+      "response_sha256": "f9410d1e9241500f8005930656528997470b8d1626012774b0f42cf5ec80b1ac",
+      "executed_at": "2026-09-27T06:43:55.473Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "25-bounded-receipt-with-non-effects",
+      "catalog_position": 7,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Prepare an import-readiness candidate from supplied data only. LOG/Mon14:00 synthetic parse result: 40 sample rows, duplicate object ID in rows 12 and 30, descriptions absent at 7, 18, 21. PLAN: production import would create/update collection entries, but no import was invoked. CURATOR: unique IDs required; approval before any production effect.\nState observed diagnostics versus missing validation evidence; do not infer the full row schema or what a production import would do with duplicates. Propose specific curator questions and a corrected-file dry-run predicate. This assistant has no catalog access and has not run the parser. Leave release as a distinct human decision.",
+      "prompt_sha256": "4b86f7c19d768ad776398b1903747f0c0d37bc10b3e2a795fc95505e479c514a",
+      "response": "# Import-Readiness Candidate: Diagnostics Report\n\n## Observed Diagnostics (from supplied synthetic parse)\n\n| Diagnostic | Location | Source |\n|---|---|---|\n| Duplicate object ID | Rows 12 and 30 | Parse result |\n| Missing description | Rows 7, 18, 21 | Parse result |\n| Row count | 40 total | Parse result |\n\n## Missing Validation Evidence (not supplied, not inferred)\n\n- Full row schema (columns, types, required fields beyond what diagnostics touched)\n- Whether row 12's ID exactly equals row 30's ID, or whether they share a partial key\n- Whether the rows missing descriptions are otherwise structurally complete\n- Whether other validation rules apply (e.g., date formats, controlled vocabulary, references)\n- Actual behavior of any production import routine with duplicate IDs — **explicitly not inferred**\n- Catalog-side uniqueness constraints beyond \"unique IDs required\"\n\n## Proposed Curator Questions\n\n1. **Duplicate resolution:** Between row 12 and row 30 (same object ID), which row is authoritative, or should both be retained with a merged/derived ID? What is the tie-break rule?\n2. **Description requirement:** Are descriptions mandatory for *all* objects, or only certain classes/types? If mandatory, what default or placeholder is acceptable for rows 7, 18, 21?\n3. **Scope check:** Beyond the two diagnostics flagged, do rows 12 and 30 differ in any other field (so a curator can decide merge vs. replace)?\n4. **ID origin:** Is the object ID source-supplied or system-assigned? If source-supplied, is there a documented convention for correction?\n5. **Adjacent risk:** Are there any rows *adjacent* to 7, 18, 21, or to 12/30, that exhibit near-duplicates (off-by-one IDs, truncated descriptions) not flagged by this parse?\n6. **Acceptance criteria for \"ready\":** What is the exact predicate (machine-checkable) the corrected file must satisfy before curator approval?\n\n## Proposed Corrected-File Dry-Run Predicate\n\nA dry-run check that does **not** mutate the catalog, executable against a corrected file before human release:\n\n```\nFor candidate file F:\n  PASS iff all of the following hold:\n\n  1. COUNT(F.rows) = 40\n  2. For every row r in F:\n       r.object_id is non-null\n  3. UNIQUE(F.object_id)   // no two rows share an object_id\n  4. For every row r in F where r.row_index in {7, 18, 21}:\n       r.description is non-null AND length(r.description) > 0\n  5. Every row r in F satisfies the schema (column set, types)\n     [SCHEMA NOT YET SUPPLIED — block until curator confirms]\n```\n\nIf predicate (5) cannot be evaluated, the dry-run is **incomplete** and should not be treated as a green light.\n\n## Explicit Boundaries\n\n- **No catalog access held** — uniqueness of IDs at the catalog level is unverified.\n- **Parser not executed by this assistant** — diagnostics above are taken verbatim from the supplied synthetic parse result only.\n- **No production import invoked** — per PLAN note.\n- **Release remains a distinct human decision.** This document is a candidate, not an authorization.\n\n## Recommendation for Next Step\n\nCurator answers to questions 1–6 above are required before the dry-run predicate can be finalized and run. Until then, status: **blocked on curator input**, not approved, not rejected.",
+      "response_sha256": "7abf6ef468735a99d54ccbdbda233d04b6b4d2d8877bcf6bda4c41ee5678e85f",
+      "executed_at": "2026-09-27T06:43:59.893Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "25-bounded-receipt-with-non-effects",
+      "catalog_position": 7,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "This is a receipt about an EXISTING synthetic preview, not a receipt for work you performed. Source unit: Monday 14:00 dry-run log, 40 rows parsed, duplicate object ID in rows 12 and 30, missing descriptions in rows 7, 18 and 21. Production plan would create/update collection records but was not invoked; curator requires unique IDs and review.\nReturn fields in this order: exact supplied input and time; observations present in that log; checks the log does NOT report (other malformed fields, unique-object count, catalog compatibility); unresolved curator decisions; explicit non-effects of THIS exercise (no new parser run, no import, no create/update/delete, no repairs); recheck needed on a corrected file; separate curator release required for production. Keep “not reported” different from “passed.” Do not widen non-effects into a claim about other operators or systems.",
+      "prompt_sha256": "666e77c8269ebc59b80fbb1df55fd4ffe7e2504e41f1ebb69dca81d40993d28d",
+      "response": "Receipt — synthetic dry-run preview (no work performed by this receipt)\n\n1. Exact supplied input and time\n- Input: \"Monday 14:00 dry-run log, 40 rows parsed, duplicate object ID in rows 12 and 30, missing descriptions in rows 7, 18 and 21.\"\n- Time stamp on the log: Monday 14:00.\n\n2. Observations present in that log\n- Row count: 40 rows parsed.\n- Duplicate object ID: present in rows 12 and 30.\n- Missing descriptions: rows 7, 18, and 21.\n- Production plan noted as available to create/update collection records; not invoked.\n- Curator constraint stated: unique IDs required; review required.\n\n3. Checks the log does NOT report (kept distinct from \"passed\")\n- Other malformed fields beyond the duplicate ID and missing descriptions: not reported in this log.\n- Unique-object count (total distinct IDs across the 40 rows): not reported in this log.\n- Catalog compatibility / schema fit against target collection: not reported in this log.\n\n4. Unresolved curator decisions\n- Resolution of the duplicate object ID between rows 12 and 30 (e.g., merge, discard one, reassign ID).\n- Treatment of missing descriptions in rows 7, 18, 21 (supply, leave blank, or exclude from production).\n- Whether additional review beyond ID uniqueness and description presence is required prior to release.\n- Scope of acceptable fixes vs. acceptable rejection (which rows may be corrected vs. returned).\n\n5. Explicit non-effects of THIS exercise\n- No new parser run was initiated.\n- No import was executed.\n- No create, update, or delete was issued against the collection.\n- No repairs, normalizations, or ID reassignments were applied.\n- No claims made about other operators, queues, systems, or downstream caches.\n\n6. Recheck needed on a corrected file\n- Yes. Once the curator's decisions (rows 12/30 duplicate; rows 7, 18, 21 descriptions; any other flagged items) are applied to the source file, the dry-run must be re-executed and a fresh log reviewed before any production step.\n\n7. Separate curator release required for production\n- Yes. A distinct, explicit curator release decision is required before any production invocation; the dry-run itself is non-authoritative and does not authorize create/update of collection records.",
+      "response_sha256": "e964daafe5aea1a50a1a9e1516b5101d438510a0a9f89e533b662d2ccbf61da0",
+      "executed_at": "2026-09-27T06:44:06.470Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "30-contrastive-fork-constraint-and-non-action-contracts",
+      "catalog_position": 8,
+      "id": "casual",
+      "source_fact_ids": [
+        1,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Our free Saturday garden tour is 10 to 11 and people should meet at the east gate, but an old poster draft says west gate. There's a weather call Friday at 5. Could you write a corrected announcement for us to look at? Don't put it online yet.",
+      "prompt_sha256": "6c816a1b6357c0be8ef7b4c596086ccc907f22c0ede25bc0f0087f5cc5904500",
+      "response": "Here's a draft for your review:\n\n---\n\n**Saturday Garden Tour**\n\nJoin us this Saturday for a free guided garden tour from **10:00 to 11:00 AM**. We'll meet at the **east gate** — please note this is a correction from earlier materials that listed the west gate.\n\nA weather call will be made on **Friday at 5:00 PM** to confirm conditions. If the tour needs to be postponed, updates will be shared at that time.\n\nEveryone is welcome — we hope to see you there!\n\n---\n\nLet me know if you'd like the tone adjusted (more formal, more casual), if the weather call wording should be clearer about *where* updates will be posted, or if you'd like to add any other details (parking, what to bring, contact info, etc.) before this goes out.",
+      "response_sha256": "c39c3b416fc390db80db63bd5fd84cad90f83f09496730c6c14b5302e725b424",
+      "executed_at": "2026-09-27T06:44:16.359Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "30-contrastive-fork-constraint-and-non-action-contracts",
+      "catalog_position": 8,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Draft two short review-only versions of the garden tour notice, one suitable for a website and one for subscriber email. The tour is free Saturday 10:00–11:00 at the east gate; Friday 17:00 is the weather-cancellation decision. An existing poster draft wrongly says west gate and has not been corrected or approved. Drafting is allowed, but both website publication and subscriber email need coordinator approval. Mark the poster discrepancy and leave any cancellation channel unspecified. Don't schedule, post or send either version.",
+      "prompt_sha256": "f81660856a50ed466d0252f23daf26e6389bdd7de1384044459540ee6a3207db",
+      "response": "**Website Version (Draft — Review Only, Pending Coordinator Approval)**\n\n> **Community Garden Tour**\n> Free guided tour — Saturday, 10:00–11:00\n> Meet at the **east gate**.\n> In case of poor weather, a cancellation decision will be made by Friday at 17:00. Cancellation channel to be confirmed.\n> *(Do not publish pending coordinator approval.)*\n\n---\n\n**Subscriber Email Version (Draft — Review Only, Pending Coordinator Approval)**\n\n> **Subject: Community Garden Tour — Saturday Morning**\n>\n> Hi everyone,\n>\n> You're invited to a free guided tour of the community garden on Saturday, 10:00–11:00. We'll meet at the **east gate**.\n>\n> If the weather doesn't cooperate, a decision will be made by Friday at 17:00. Details of how the cancellation will be communicated are still to be confirmed.\n>\n> *(Do not send pending coordinator approval.)*\n\n---\n\n**Note on existing poster:** The poster draft currently in circulation states **\"west gate,\"** which is incorrect. The correct location is the **east gate**. The poster has not yet been corrected or approved and should not be displayed in its current form.",
+      "response_sha256": "665250a45cdd6faebf12a4e3347bcad61875129e0b441cb2a02d75fa8d60a535",
+      "executed_at": "2026-09-27T06:44:21.776Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "30-contrastive-fork-constraint-and-non-action-contracts",
+      "catalog_position": 8,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Produce an inert communication packet. SOURCE E: Saturday garden tour 10:00–11:00, free, east gate; weather decision Friday 17:00. SOURCE A: drafting permitted, website posting and subscriber email each require coordinator approval. SOURCE P: existing poster draft says west gate; correction not approved.\nOutput verified source facts, a private corrected wording candidate, the unresolved poster correction and weather decision, then two separate approval questions for web and email. No scheduler/tool capability is declared. Treat 'can draft' as separate from 'can queue'; record no publish, send, scheduling or poster edit. Do not claim any release has been granted.",
+      "prompt_sha256": "37ae220b55a1d14f84962201e77f0fc01385ff96fc023f8e3129e69d4011ea62",
+      "response": "# Inert Communication Packet\n\n## Verified Source Facts\n\n**SOURCE E — Event details**\n- Saturday garden tour\n- Time: 10:00–11:00\n- Admission: free\n- Location/entry: east gate\n- Weather call: pending until Friday 17:00\n\n**SOURCE A — Authority/approval rules**\n- Drafting of communications is permitted.\n- Posting to website requires coordinator approval.\n- Sending to subscriber email list requires coordinator approval.\n- Drafting authority does not equal queue/release authority.\n\n**SOURCE P — Poster status**\n- Existing poster draft states: west gate.\n- No correction has been approved.\n\n---\n\n## Private Corrected Wording Candidate (drafting only; not queued)\n\n> \"Saturday garden tour, 10:00–11:00, free entry at the east gate. Weather-dependent; final go/no-go Friday at 17:00.\"\n\n*Status: drafted only. No publish, send, schedule, or poster edit has been performed or authorized.*\n\n---\n\n## Unresolved Items\n\n1. **Poster correction (west gate → east gate)** — discrepancy identified; correction **not approved**.\n2. **Weather decision** — to be determined Friday 17:00; **no go/no-go currently on record**.\n\n---\n\n## Approval Questions\n\n**Question 1 — Website posting:**\nDoes the coordinator approve posting the drafted wording to the website, including the east-gate reference and the Friday 17:00 weather contingency note?\n\n**Question 2 — Subscriber email:**\nDoes the coordinator approve sending the drafted wording to the subscriber email list, including the east-gate reference and the Friday 17:00 weather contingency note?\n\n---\n\n*No scheduler, tool call, publish, send, queue, or poster edit capability is declared or executed in this packet. Drafting is recorded; release is not.*",
+      "response_sha256": "8f1b5a0caf0f5a7d24683994e234fdda8e3a16c251115ce7f7bae048f739d9a8",
+      "executed_at": "2026-09-27T06:44:25.164Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "30-contrastive-fork-constraint-and-non-action-contracts",
+      "catalog_position": 8,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Preparation only: a free Saturday 10:00–11:00 garden tour meets at EAST gate. The volunteer poster draft still says WEST gate with no approved correction. Weather-cancellation decision is Friday 17:00. Coordinator permits drafting but holds both website posting and subscriber email behind separate approvals. No publication scheduler or hold mechanism is established.\nCompare two materially different preparation routes without performing either effect. Route A drafts corrected private copy and waits for the weather decision before requesting approvals. Route B assembles an inert approval-request document now with east-gate correction visibly marked, a Friday weather checkpoint and two separate approvals to seek later, but it is not queued. For EACH route state purpose, source authority, benefit, cost, a hypothetical failure signal and evidence that truly makes that route impractical (not a dependency shared by both). Recommend a reversible next review move and draft only private text. Explicitly list website publication, email send, scheduler queue and poster correction as NOT performed.",
+      "prompt_sha256": "05d2f5f98e48fe2f563611a7d6b8454ce81cc051cb301a89b43d77745aa60ae3",
+      "response": "Route A — Draft corrected copy, wait for Friday 17:00 weather call, then request approvals\n\n- **Purpose:** Hold corrected private copy until the go/cancel decision removes one axis of uncertainty, so the approval request is single-mode (either \"publish\" or \"cancel\") rather than conditional.\n- **Source authority:** Coordinator's drafting permit. The Friday 17:00 weather-cancellation decision is the gate; approvals are downstream of it.\n- **Benefit:** No risk of requesting approvals for a tour that gets canceled; one clean request, not two.\n- **Cost:** Idle window between draft completion and Friday 17:00; if the decision slips or approvers are slow Saturday morning, there is no buffer because nothing has been pre-staged.\n- **Hypothetical failure signal:** Friday 17:00 weather decision arrives on time, but the first approver does not respond until Saturday morning — too late for a 10:00 start.\n- **Evidence that truly makes Route A impractical (route-specific):** The interval from Friday 17:00 to Saturday 10:00 is roughly 17 hours and crosses an overnight; two separate approvals plus website posting plus email send cannot reliably fit in that window with human approvers. Route B sidesteps this because its request packet is already assembled — so the overnight gap only has to carry *submission and response*, not assembly plus submission.\n\n## Route B — Assemble an inert approval-request packet now (corrected, weather-checkpointed, two approvals marked), not queued\n\n- **Purpose:** Pre-build the entire request artifact in inert form so that the moment Friday 17:00 resolves, the packet can be submitted/activated in one step rather than assembled under time pressure.\n- **Source authority:** Coordinator's drafting permit — \"not queued\" keeps the artifact within drafting scope; no scheduler activation, no submission.\n- **Benefit:** Parallelizes preparation with the wait; Saturday-morning execution collapses to a short, mechanical sequence; canceled scenario still benefits because the packet is shelved, not destroyed.\n- **Cost:** \"Inert\" status is enforced only by convention, not by a system mechanism; depends on the artifact being kept out of any queue, shared-drive auto-pull, or approver inbox until intended.\n- **Hypothetical failure signal:** The inert packet is filed into a location that an automated process or a well-meaning colleague treats as live — e.g., dropped into the web team's shared folder that gets processed Friday afternoon.\n- **Evidence that truly makes Route B impractical (route-specific):** The premise states no publication scheduler and no hold mechanism exist. Without those, \"not queued\" is a social contract, not a control. The poster still says WEST gate with no approved correction, so the corrected packet is the *only* up-to-date source — any premature auto-ingestion propagates an unreviewed correction. Route A has no equivalent exposure because it produces only corrected text, which is inert by default.\n\n## Reversible next review move (recommended)\n\nStage the corrected copy as **private working text only** — in a location clearly marked draft, not in any shared, automated, or approval-routed space — and **stop**. Friday morning, choose between activating Route A's request sequence or finalizing Route B's pre-built packet. This step is reversible (deletion of a private draft) and commits to neither route.\n\n### Private draft text (corrected, not for publication)\n\n> Free Saturday garden tour, 10:00–11:00. Meet at the **EAST gate**. A weather-cancellation decision will be made Friday at 17:00; please check for an update before traveling.\n\n## Explicitly NOT performed\n\n- Website publication — **not performed.**\n- Subscriber email send — **not performed.**\n- Scheduler queue placement — **not performed.**\n- Poster correction (volunteer poster still reads WEST gate) — **not performed.**",
+      "response_sha256": "9d0279758fc1fb41105340d8de42cca05a6c6f91c154039d573ce66b286d7664",
+      "executed_at": "2026-09-27T06:44:30.046Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "33-provenance-carrying-chunk",
+      "catalog_position": 9,
+      "id": "casual",
+      "source_fact_ids": [
+        1,
+        2
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "A neighbor told me the library used to close at five and wasn't open Saturdays, but I found a notice saying it's open till six on weekdays and on Saturdays from ten to two starting June 1. Could you write a quick hours note for our desk? I don't have anything about holidays.",
+      "prompt_sha256": "c0c8721d69362f3b05be613bf85a9691dbc77e17e06510157e427fb089a9ec98",
+      "response": "**Library Hours**\n\n- **Weekdays:** Open until 6:00 PM\n- **Saturdays:** 10:00 AM – 2:00 PM *(effective June 1)*\n\n*Holiday hours: not yet available — please check back.*\n\nLet me know if you'd like it adjusted (e.g., adding \"closed Sundays\" or a phone number for confirmation).",
+      "response_sha256": "7d64ee778fbdd1968da5ed1267696ed9df967780d29126381fe390ca9b0295b8",
+      "executed_at": "2026-09-27T06:45:00.460Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "33-provenance-carrying-chunk",
+      "catalog_position": 9,
+      "id": "power",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Please draft a short regular-hours guide. Official library notice N-24 dated May 10, paragraph 2, says that from June 1 weekdays are 9:00–18:00 and Saturdays 10:00–14:00. A September 2024 community blog B-19, paragraph 1, listed weekdays 9:00–17:00 and Saturdays closed. We have no holiday notice. Cite the later official notice for current regular hours, identify the blog as historical, and say holiday hours are unknown. Don't suggest you've checked a live website.",
+      "prompt_sha256": "7bd33676ce2440a6f05fb84262c2dc96096788e1a4cf8c4e61e3c43da1966655",
+      "response": "**Regular Library Hours**\n\n**Current Schedule (effective June 1, per official notice N-24, May 10):**\n- **Weekdays (Monday–Friday):** 9:00–18:00\n- **Saturdays:** 10:00–14:00\n\n**Note:** Earlier hours listed in community blog B-19 (September 2024)—weekdays 9:00–17:00, Saturdays closed—are historical and have been superseded by notice N-24.\n\n**Holiday Hours:** Not currently available; please contact the library for information on holiday scheduling.",
+      "response_sha256": "60d22382d94d27aa79e135477eeb2176510d98efa919af649719b6b7b59158fb",
+      "executed_at": "2026-09-27T06:45:05.983Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "33-provenance-carrying-chunk",
+      "catalog_position": 9,
+      "id": "engineer",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Candidate desk reference, no website or signage change. Input N-24: official library bulletin, 2026-05-10, paragraph 2, exact wording “From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00.” Input B-19: community blog, 2024-09-05, paragraph 1, exact wording “Weekdays 9:00–17:00 and Saturdays closed.” Request asks for regular and holiday hours; no holiday notice provided.\nReconcile the conflict by date and stated authority. For each public statement include a source ID and locator, mark whether it is a quotation or inference, and leave holidays unknown. Never infer an end date for N-24 or a current live-site status. Return a review draft only.",
+      "prompt_sha256": "fe20fc5d611b7df65d420180179269cd7e43a163e4d42eb7f3fe148e33e5679f",
+      "response": "Review Draft: Library Hours Reconciliation\n\n## Sources Provided\n\n**N-24** — Official library bulletin, 2026-05-10, paragraph 2\n- Status: Quotation\n- Exact wording: \"From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00.\"\n\n**B-19** — Community blog, 2024-09-05, paragraph 1\n- Status: Quotation\n- Exact wording: \"Weekdays 9:00–17:00 and Saturdays closed.\"\n\n## Conflict Identified\n\n| Day | N-24 (2026-05-10) | B-19 (2024-09-05) |\n|---|---|---|\n| Weekdays | 9:00–18:00 | 9:00–17:00 |\n| Saturdays | 10:00–14:00 | Closed |\n\n## Reconciliation\n\nThe two statements are inconsistent on both weekday and Saturday hours. Reconciling by date and stated authority:\n\n- **Date**: N-24 (2026-05-10) is the more recent of the two statements.\n- **Authority**: N-24 is attributed to the official library bulletin, a higher-authority source than the community blog (B-19).\n\nOn both criteria, **N-24 is the controlling public statement** for regular hours.\n\n## Regular Hours (per controlling statement)\n\n- Weekdays: 9:00–18:00\n- Saturdays: 10:00–14:00\n\n## Holiday Hours\n\nUnknown. Neither N-24 nor B-19 addresses holiday hours. Per instructions, no inference is made.\n\n## Explicit Non-Inferences\n\n- No end date is inferred for N-24.\n- No current live-site status is claimed.",
+      "response_sha256": "7c965500e09d519849226875e2e26485a066ef28e7a24314b97e02ebd97b83be",
+      "executed_at": "2026-09-27T06:45:11.661Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    },
+    {
+      "slug": "33-provenance-carrying-chunk",
+      "catalog_position": 9,
+      "id": "engineer_technique",
+      "source_fact_ids": [
+        1,
+        2,
+        3
+      ],
+      "batch_sha256": "b06664034a17f9ebc411bfb573f281c063dc6016fc77a1c06d761231130bb589",
+      "prompt": "Build a provenance-bearing reading guide from two retrieved source units, not from an unattributed summary. Unit A: N-24, official library bulletin, dated 2026-05-10, paragraph 2, exact text “From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00.” Unit B: B-19, community blog, dated 2024-09-05, paragraph 1, exact text “Weekdays 9:00–17:00 and Saturdays closed.” No full document bytes or digest are provided, and there is no holiday notice. No live website was checked.\nFIRST attach to EACH unit its source ID, paragraph locator, exact quote, date, authority stated here, digest status 'unavailable', and the transformation you will make when summarizing. THEN resolve the two schedules: use N-24's stated regular hours from June 1, label B-19 historical and never invent a bulletin end date. Finally write a concise desk guide with a source card beside each material claim and a clear distinction among exact quotation, paraphrase and unknown holiday hours. Hold any claim not supported by one of the two source units.",
+      "prompt_sha256": "ed4b773d1d70dc2a1610e3d719b3ae886bd9c8a807db8d6886116e15e4925e36",
+      "response": "# Provenance-Bearing Reading Guide\n\n## Unit Attachments\n\n**Unit A — N-24**\n- Source ID: N-24\n- Paragraph locator: paragraph 2\n- Exact quote: \"From June 1, weekday hours are 9:00–18:00 and Saturday hours are 10:00–14:00.\"\n- Date: 2026-05-10\n- Authority stated here: official library bulletin\n- Digest status: unavailable\n- Transformation on summarization: retain both the effective date (\"From June 1\") and the hours as exact quotation; do not convert times to prose paraphrase because the figures are the material claim.\n\n**Unit B — B-19**\n- Source ID: B-19\n- Paragraph locator: paragraph 1\n- Exact quote: \"Weekdays 9:00–17:00 and Saturdays closed.\"\n- Date: 2024-09-05\n- Authority stated here: community blog\n- Digest status: unavailable\n- Transformation on summarization: frame as a historical snapshot only; convert \"Saturdays closed\" into the explicit paraphrase \"Saturdays: closed\" with quotation marks retained for the source phrase; do not promote to a current schedule.\n\n## Conflict Resolution\n\n- N-24's stated regular hours take precedence for the period \"From June 1\" because it is the later-dated bulletin (2026-05-10) and the only unit carrying an effective date.\n- B-19 (2024-09-05) is labeled **historical** and is not used to describe any current period.\n- No bulletin end date is invented. Neither unit supplies one; the question of how long N-24's June-1 hours remain in force is **held** as unsupported.\n\n## Desk Guide\n\n**Current regular hours — effective from June 1 (per N-24):**\n- Weekdays: 9:00–18:00 — *exact quotation* [Source card: **N-24**, official library bulletin, 2026-05-10, ¶2]\n- Saturday: 10:00–14:00 — *exact quotation* [Source card: **N-24**, official library bulletin, 2026-05-10, ¶2]\n- Sunday: not stated — *unknown* [Source card: none; held — neither unit addresses Sunday hours]\n\n**Historical record (do not use as current):**\n- As of 2024-09-05, weekdays 9:00–17:00 and Saturdays closed — *exact quotation* [Source card: **B-19**, community blog, 2024-09-05, ¶1]\n- Use only when a caller asks what the schedule previously looked like; never as a present-tense answer.\n\n**Status flags:**\n- Holiday hours: **unknown**. Neither unit mentions holidays; do not assert closures or special openings. [Held — no source]\n- Duration / end date of N-24's June-1 hours: **unknown**. The bulletin specifies a start date only; do not extrapolate a termination date. [Held — no source]\n- Authority hierarchy note: N-24 (official library bulletin) outranks B-19 (community blog) on current schedule questions; B-19 is retained solely as a dated historical reference.\n\n**Quotation / paraphrase / unknown key:**\n- *Exact quotation* = the words inside quotation marks are taken verbatim from the cited unit.\n- *Paraphrase* = a restatement in plain English of material from a unit (used here only for \"Saturdays: closed\" derived from B-19's \"Saturdays closed\").\n- *Unknown* = no statement in either N-24 or B-19 supports the claim; the desk should respond \"I don't have that information\" rather than fill the gap.",
+      "response_sha256": "af9e16027c06490cea07522ccf525d3f7789647480bfa0309f4a9d14b5c296b3",
+      "executed_at": "2026-09-27T06:45:21.037Z",
+      "tool_events": 0,
+      "provider": "minimax-oauth",
+      "model": "MiniMax-M3",
+      "system_prompt_sha256": "aba8b97302f3ca30be1b3191b14a4921caba91f12d8ff128bfb3b858ed851c5a"
+    }
+  ]
+}
