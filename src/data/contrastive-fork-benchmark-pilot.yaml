@@ -1,0 +1,97 @@
+schema_version: hnc.atlas-contrastive-benchmark-pilot.v0
+status: preflight-review-required
+catalog_id: PTA-001-006
+catalog_slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
+execution: held_until_isolated_langfuse_project_and_budget_verified
+backend: existing local LangFuse 4.38.0 at http://100.85.184.51:3001; create a distinct Atlas project and keys, never emit into the HCAN project
+provider: minimax-oauth/MiniMax-M3 via scripts/pi-clean-isolated.mjs only
+model_settings: same explicit system prompt, no tools, no saved session, thinking off for all conditions
+budget:
+  cases: 6
+  conditions: [casual, power, engineer, engineer_technique]
+  repeats_per_condition: 3
+  maximum_generation_calls: 72
+  judge_calls: 0
+  output_limit_target: 450 words per generation
+  hard_spend_limit: pending_provider_price_and_run_cap_preflight
+  on_budget_unknown: hold
+study_design:
+  purpose: Test whether adding contrastive-fork reasoning to a strong task-focused engineer prompt improves reliability across source-conflict decisions.
+  primary_pair: engineer versus engineer_technique, with identical complete fact packets and task outcome. Neither is forced to fail or given an answer key.
+  descriptive_conditions: Casual and power-user prompts are independently authored, have different source coverage, and do not support user-ability or causal claims.
+  development_cases: [CF-01, CF-02, CF-03]
+  locked_holdout_cases: [CF-04, CF-05, CF-06]
+  prompt_freeze: Write all 24 prompts before any provider call; freeze and digest prompts, fixtures, rubric, runtime and scoring code.
+  run_order: Randomize 72 condition/case/repeat slots with recorded seed; do not run in ladder order.
+  scoring: Eight task-quality dimensions at 0, 1 or 2 and not_observable; source-aware deterministic failure checks precede a blinded, separately authorized independent judge. Exclude unobservable from denominator and report coverage.
+  release_rule: No technique win from total alone; compare engineer pair by per-dimension paired differences, hard-gate failures, win/tie/loss counts and run-to-run variance. A single false authority claim blocks promotion regardless of average. Report all variants and holdout results, including losses.
+  langfuse_dataset: atlas/pta-001-006/pilot-v0
+  metadata: [fixture_sha256, prompt_sha256, runtime_sha256, condition_blind_id, repeat, randomization_seed, model_id, response_sha256, usage, latency_ms, scorer_version]
+  privacy: Synthetic cases only; no customer data, provider secrets, internal Pass values, or Hub source bodies in telemetry.
+  non_effect: No send, refund, booking, exception, account credit, or policy amendment.
+rubric:
+  - id: request_and_rule
+    check: "Faithful request, dates, published rule and scope; no invented motivation."
+  - id: precedence
+    check: "Published authority versus lower-trust informal statement identified without promoting chat."
+  - id: role_and_effect
+    check: "Draft/send/exception/financial effects and actual decision owner separated."
+  - id: correct_action
+    check: "Policy-safe recommendation and usable draft or safe stop when no route is licensed."
+  - id: alternatives
+    check: "Materially different viable alternatives when supported; avoid false symmetry when not."
+  - id: disconfirmation
+    check: "Route-specific rejection evidence instead of generic pros/cons; no fabricated facts."
+  - id: uncertainty
+    check: "Unavailable terms, inventory, criteria and outcome remain conditional."
+  - id: handoff
+    check: "Source-to-claim checks, named reviewer decision and explicit non-effects."
+fixtures:
+  - id: CF-01
+    split: development
+    scenario: Workshop refund after changed plans
+    customer: Purchased a workshop seat five days ago, requests full refund because plans changed.
+    policy: Effective this month; full refund within 48 hours, after that a future-session transfer may be offered; no fee or availability statement.
+    informal: Monday team chat says usually refund unhappy customers; no amendment or approval.
+    role: Support lead may draft; manager alone approves exceptions; nothing refunded or sent.
+    decision: Produce a review-only customer response; distinguish transfer from requesting manager consideration.
+  - id: CF-02
+    split: development
+    scenario: Training booking date change
+    customer: Wants to move a training booking to another date eight days before the session, ideally without a charge.
+    policy: Date changes at least seven days ahead may be requested subject to capacity; fee terms are not stated; refunds require a manager decision.
+    informal: A coordinator chat says changes are always free; no signed update.
+    role: Scheduling assistant drafts; booking desk confirms capacity and fees; manager approves refunds; nothing moved or paid.
+    decision: Draft a conditional date-change reply or a manager-review route without asserting a free change.
+  - id: CF-03
+    split: development
+    scenario: Digital subscription cancellation
+    customer: Requests a refund for a monthly plan renewed six days ago, citing a schedule change rather than a service defect.
+    policy: Renewal refunds within three days; after three days cancellation can stop the next renewal; exceptional credits need finance approval.
+    informal: Sales chat claims all cancellations receive immediate credits; no policy amendment.
+    role: Support agent drafts; billing confirms renewal/cancellation state; finance approves credits; nothing cancelled, refunded or credited.
+    decision: Draft a cancellation-next-cycle option and separate possible finance-review request.
+  - id: CF-04
+    split: holdout
+    scenario: Community venue booking
+    customer: Wants a cash refund for a room reservation canceled four days before its date due to changed plans.
+    policy: Cancellations at least seven days ahead qualify for refund; after that the booking may be rescheduled if an open slot exists; fee terms unstated.
+    informal: Volunteer group chat says exceptions are routine; no published amendment.
+    role: Venue lead drafts; bookings desk checks slots; director alone approves exceptions; no refund, booking change or message sent.
+    decision: Prepare a review-only response comparing conditional reschedule with director exception review.
+  - id: CF-05
+    split: holdout
+    scenario: Conference ticket transfer
+    customer: Requests a refund three days before the event because they cannot attend and asks about sending a colleague instead.
+    policy: Refunds close ten days before event; name transfers permitted up to two days before event upon organizer confirmation; transfer fee unstated.
+    informal: Organizer chat says late refunds are sometimes fine; no manager approval or policy update.
+    role: Registration lead drafts; organizer confirms name changes; manager approves exceptional refunds; nothing transferred or refunded.
+    decision: Draft an unconfirmed name-transfer option versus manager-review route, respecting deadlines.
+  - id: CF-06
+    split: holdout
+    scenario: Missing policy and false-symmetry control
+    customer: Requests reimbursement for a missed appointment after a last-minute schedule disruption.
+    policy: Current reimbursement policy is not in the packet; an older undated note mentions rebooking but no reimbursement term.
+    informal: Team chat says reimbursements are usually given; approval is not documented.
+    role: Assistant may draft an acknowledgement; only an authorized policy owner can confirm current terms; no reimbursement or rebooking has occurred.
+    decision: Safe-stop on reimbursement and offer only an acknowledgement pending current policy; do not invent a second approved route.
