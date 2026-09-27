@@ -12,6 +12,10 @@ const renderedExemplars = JSON.parse(await readFile(new URL('../src/data/prompt-
 const batchOne = parse(await readFile(new URL('../src/data/prompt-technique-batch-001.yaml', import.meta.url), 'utf8'));
 const batchReceipts = JSON.parse(await readFile(new URL('../src/data/prompt-technique-comparisons.batch-001.json', import.meta.url), 'utf8')).comparisons;
 const comparison = JSON.parse(await readFile(new URL('../src/data/prompt-technique-comparisons.json', import.meta.url), 'utf8')).comparisons[0];
+const ladder = parse(await readFile(new URL('../src/data/dca-skill-ladder.yaml', import.meta.url), 'utf8'));
+const ladderAnalysis = parse(await readFile(new URL('../src/data/dca-skill-ladder-analysis.yaml', import.meta.url), 'utf8'));
+const ladderRuns = JSON.parse(await readFile(new URL('../src/data/dca-skill-ladder-runs.json', import.meta.url), 'utf8'));
+const ladderProjection = JSON.parse(await readFile(new URL('../src/data/dca-skill-ladder-projection.json', import.meta.url), 'utf8'));
 
 test('the Methods composition contract defines the approved first slice', () => {
   assert.equal(contract.schema_version, 'hnc.public-page-contract.v1');
@@ -63,6 +67,33 @@ test('the revised technique and field-card workflow enforces one authored exempl
   }
   assert.ok(sharedPacket.length > 400);
   assert.match(contract.field_library.source_boundary, /same technique-specific editorial and paired-run review/);
+});
+
+test('DCA skill ladder has four fixed-packet MiniMax turns and a digest-bound, non-ranking analysis', () => {
+  const ids = ['casual', 'power', 'engineer', 'engineer_dca'];
+  assert.deepEqual(ladder.conditions.map((condition) => condition.id), ids);
+  assert.deepEqual(ladderRuns.records.map((record) => record.id), ids);
+  assert.deepEqual(ladderProjection, { ladder, analysis: ladderAnalysis });
+  assert.deepEqual(ladderAnalysis.assessments.map((assessment) => assessment.id), ids);
+  assert.equal(ladderAnalysis.criteria.length, 6);
+  assert.ok(ladder.conditions[3].instruction.startsWith(ladder.conditions[2].instruction));
+  assert.doesNotMatch(ladder.conditions[2].instruction, /decision-sized context brief/i);
+  assert.match(ladder.conditions[3].instruction, /decision-sized context brief/i);
+  assert.match(ladder.evaluation.non_claim, /not.*general efficacy|Neither contrast proves general efficacy/i);
+  const packet = exemplars.entries[0].example.source_packet.map((fact, index) => `${index + 1}. ${fact}`).join('\n');
+  assert.equal(createHash('sha256').update(packet).digest('hex'), ladderRuns.source_packet_sha256);
+  for (let i = 0; i < 4; i++) {
+    const record = ladderRuns.records[i];
+    assert.equal(record.tool_events, 0);
+    assert.equal(createHash('sha256').update(record.prompt).digest('hex'), record.prompt_sha256);
+    assert.equal(createHash('sha256').update(record.response).digest('hex'), record.response_sha256);
+    assert.equal(ladderAnalysis.reviewed_response_sha256[record.id], record.response_sha256);
+    assert.ok(record.prompt.includes(ladder.conditions[i].instruction));
+    for (const fact of exemplars.entries[0].example.source_packet) assert.ok(record.prompt.includes(fact));
+    assert.equal(ladderAnalysis.assessments[i].findings.length, 6);
+    for (const finding of ladderAnalysis.assessments[i].findings) assert.ok(ladder.evaluation.result_values.includes(finding.result));
+  }
+  assert.equal(ladderAnalysis.assessments[3].findings.find((finding) => finding.criterion === 'capacity').result, 'not_met');
 });
 
 test('Batch 1 has eight ordered, tailored techniques and two honest provider receipts per technique', () => {

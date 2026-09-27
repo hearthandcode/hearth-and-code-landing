@@ -1,0 +1,116 @@
+schema_version: hnc.prompt-skill-ladder-analysis.v1
+slug: 01-dynamic-context-assembly
+review_status: candidate-needs-revision
+briefing:
+  title: Four ways to ask for one lunch plan
+  orientation: Every run used the same synthetic facts, tool-free Pi route and MiniMax-M3 model. The first three prompts vary in overall user skill and specificity; only the last contrast adds a deliberate context-assembly stage to an otherwise identical engineer instruction. One response per condition cannot establish general effectiveness.
+  observed_shift: The technique-applied response assembled four source-labeled decision slots, explicitly retired Monday stock quantities while retaining Monday prices, excluded unconfirmed tomato pasta and left the severe-allergy meal unresolved. That made source selection and omission more inspectable than the experienced-engineer response.
+  counterweight: It also produced a flawed budget conclusion for an unpriced 24th meal and compared that meal to remaining chickpea capacity despite chickpea containing sesame. Better context traceability did not make the plan safe or complete.
+  next_decision: Keep the technique as a candidate teaching example with its failure visible. Do not present this four-run ladder as a ranking, proof of efficacy, verified dietary advice, or a ready-to-send customer reply.
+criteria:
+  - id: freshness
+    label: Freshness and source precedence
+  - id: capacity
+    label: Quantity and budget arithmetic
+  - id: dietary
+    label: Allergy and handling boundary
+  - id: timing
+    label: Delivery-slot truthfulness
+  - id: source_trace
+    label: Inspectable source selection
+  - id: customer_reply
+    label: Provisional customer reply
+assessments:
+  - id: casual
+    summary: The model produced a workable 18-plus-6 priced mix and held the sesame decision, even from a brief request. It nevertheless mislabeled the Tuesday customer email as Monday and asked about tomato pasta despite excluding it from the proposed mix.
+    findings:
+      - criterion: freshness
+        result: partly_met
+        note: Uses Thursday stock but gives the customer email the wrong day.
+      - criterion: capacity
+        result: met
+        note: 18 rice-and-bean plus 6 chickpea bowls cost $264 under the $360 cap.
+      - criterion: dietary
+        result: partly_met
+        note: Holds ingredient-level sesame verification but does not explicitly require kitchen cross-contact handling.
+      - criterion: timing
+        result: met
+        note: Calls the slot open and does not claim a reservation.
+      - criterion: source_trace
+        result: partly_met
+        note: Names source notes but does not field-reconcile Monday and Thursday stock.
+      - criterion: customer_reply
+        result: partly_met
+        note: Clearly provisional, but asks for optional tomato checks instead of prioritizing only the blocking allergy evidence.
+    headline: Useful draft from minimal framing; source-date and allergy-handling gaps remain.
+  - id: power
+    summary: Added a clear quantity table and dietary allocation, while retaining the open sesame question. The reply treats the proposed allergy meal as 'held', which could be confused with a reserved item, and calls for stock and slot holds that no one has performed.
+    findings:
+      - criterion: freshness
+        result: partly_met
+        note: Uses Thursday availability but does not explicitly retire the Monday counts.
+      - criterion: capacity
+        result: met
+        note: 18 plus 6 bowls, $264 total, and both quantity ceilings are respected.
+      - criterion: dietary
+        result: partly_met
+        note: Ingredient-level sesame remains open; cross-contact handling is not checked.
+      - criterion: timing
+        result: partly_met
+        note: Says the slot must be booked, but some 'held' language is ambiguous.
+      - criterion: source_trace
+        result: partly_met
+        note: Cites sources but does not explain which old facts were superseded.
+      - criterion: customer_reply
+        result: partly_met
+        note: Provisional status is explicit; proposed holds and a likely confirmation time remain unsupported.
+    headline: Clear allocation; allergen handling and reservation language remain imprecise.
+  - id: engineer
+    summary: The response separates sourced facts, hypotheses and an allergy hold, including ingredient and cross-contact checks. It makes a $10 budget-headroom arithmetic mistake ($360 minus $264 is $96), and spends space on unsupported interpretations of dietary overlap and 'additional' kitchen capacity.
+    findings:
+      - criterion: freshness
+        result: met
+        note: Dates Monday and Thursday records and uses Thursday stock values.
+      - criterion: capacity
+        result: partly_met
+        note: Meal mix and $264 total are correct, but headroom is incorrectly given as $86 in one section.
+      - criterion: dietary
+        result: met
+        note: Explicitly holds the allergy meal for ingredient and cross-contact verification.
+      - criterion: timing
+        result: met
+        note: Open delivery slot is not treated as reserved.
+      - criterion: source_trace
+        result: partly_met
+        note: Lists all records but does not assemble a short field-level decision brief with exclusions.
+      - criterion: customer_reply
+        result: partly_met
+        note: Clearly a draft, but offers a 24-meal mix before a verified allergy meal exists.
+    headline: Stronger allergy boundary; one arithmetic error and excess speculative detail.
+  - id: engineer_dca
+    summary: The model builds four context slots with explicit source/date precedence and exclusions, then refuses to assign a sesame-safe meal. It prices only 23 meals, however, and incorrectly treats the unknown 24th meal as fitting the budget and remaining chickpea capacity.
+    findings:
+      - criterion: freshness
+        result: met
+        note: Thursday stock supersedes Monday quantities while menu prices remain available.
+      - criterion: capacity
+        result: not_met
+        note: $253 is only the subtotal of 23 priced meals; the unpriced 24th item has unknown cost, so the complete order cannot be certified under $360. The remaining chickpea capacity cannot serve the sesame-allergic guest.
+      - criterion: dietary
+        result: partly_met
+        note: Holds the allergy meal and names both checks, but the capacity self-check incorrectly treats unsafe chickpea stock as headroom for it.
+      - criterion: timing
+        result: met
+        note: Explicitly distinguishes open from held.
+      - criterion: source_trace
+        result: met
+        note: Four slots preserve source dates, field-level precedence and excluded/superseded facts.
+      - criterion: customer_reply
+        result: partly_met
+        note: Says only 23 priced meals and one pending, but describes the $253 subtotal as comfortably within the full-order budget.
+    headline: Traceable context brief; an unpriced 24th meal undermines the budget conclusion.
+reviewed_response_sha256:
+  casual: 3752822566f45f9deb9302cae92e42e7f218dc696eb563b733d449d01123644b
+  power: 6c46fe7e3d36a1ddcee7ac60bc8b78a0e8a9a0c0449cc4f073b6e879c4512369
+  engineer: bdcbf5ea8a145bc00024f17ef09c16620d2a88fa7e6ad70c8229db141e48ddfc
+  engineer_dca: a27e4b25795b81404a6f5f39158cce1e15547857233fe0a2ba8cb78cc7162dfe

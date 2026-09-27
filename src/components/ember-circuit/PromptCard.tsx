@@ -5,6 +5,7 @@ import exemplars from '../../data/prompt-technique-exemplars.json';
 import comparisons from '../../data/prompt-technique-comparisons.json';
 import batchOneComparisons from '../../data/prompt-technique-comparisons.batch-001.json';
 import { renderResponseMarkdown } from './response-markdown';
+import { DcaSkillLadder } from './DcaSkillLadder';
 
 const TYPE_COLORS: Record<string, { tint: string; ink: string; label: string }> = {
   core: { tint: 'rgba(244,184,96,0.10)', ink: 'var(--ec-gold-500)', label: 'Core' },
@@ -142,6 +143,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
           </section>
           <section id="tech-section-4" className="ec-prompt-sheet__section ec-prompt-sheet__section--04">
             <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">A matched, isolated task</h3></header>
+            {entry.slug === '01-dynamic-context-assembly' ? <DcaSkillLadder /> : <>
             <p className="ec-prompt-sheet__mechanism">{exemplar.example.scenario}. Same source packet and model route for both prompts; the instruction framing changes.</p>
             <p className="ec-prompt-sheet__mechanism"><strong>Comparison question:</strong> {exemplar.example.comparison_predicate}</p>
             {comparison ? <div className="ec-prompt-sheet__comparison">
@@ -167,6 +169,7 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
                 <p>{comparison.boundary}</p><small>{comparison.provider}/{comparison.model} · 0 tool events · prompt/response digests retained in the comparison receipt.</small>
               </aside>
             </div> : <p>Matched execution pair pending. No model output has been captured for this technique.</p>}
+            </>}
           </section>
         </div> : <div className="ec-prompt-sheet__editorial-hold"><strong>Technique-specific editorial review pending</strong><p>This technique has not yet received its own applied steps, use criteria, limitations and matched provider-backed example. The older source projection is withheld rather than presented as tailored instruction.</p></div>}
       </article>

@@ -4,60 +4,60 @@
     {
       "slug": "01-dynamic-context-assembly",
       "review_status": "candidate",
-      "mechanism": "Select, order and label only task-relevant context from a larger packet at the moment of use; keep provenance and exclusions visible so missing or stale information does not silently become a fact.",
-      "setting": "A small catering company must plan a Friday lunch delivery without promising items that cannot be supplied.",
+      "mechanism": "Assemble only decision-relevant source units at task time, resolve field-level freshness and authority, carry exclusions and unknowns, then use a traceable working brief to constrain the answer.",
+      "setting": "A reusable pattern for operations, engineering, research and creative production when several changing inputs bear on one decision.",
       "applied_process": [
         {
           "title": "Define the decision and context slots",
-          "detail": "Identify the deliverable (a feasible lunch plan for 24), constraints (delivery window, budget and dietary needs), and which source can establish each fact. Do not copy the whole inbox into the answer."
+          "detail": "Name the intended output and which facts could change it. In operations this might be capacity and timing; in engineering compatibility and rollback; in research source quality and uncertainty; in creative production audience and format constraints."
         },
         {
-          "title": "Reconcile the live packet",
-          "detail": "Compare the customer's request, supplier availability, kitchen capacity and cost sheet. Treat the newer supplier note as the availability source; preserve the older sheet only as a flagged conflict, not a second stock claim."
+          "title": "Retrieve and reconcile source units",
+          "detail": "Select relevant records with dates, authority and scope. Resolve conflicting claims field by field rather than letting one newer note replace all older facts; mark superseded claims and unresolved conflicts."
         },
         {
-          "title": "Assemble a task-sized brief",
-          "detail": "Order the selected facts by decision impact—dietary safety, availability, timing, then price. Label each fact with its source and date; mark the missing ingredient-level allergen check as unresolved."
+          "title": "Assemble a bounded working brief",
+          "detail": "Order facts by decision impact, retain their source locators and list material omissions. Include enough context for the task without dumping an entire archive or erasing provenance in a summary."
         },
         {
-          "title": "Draft against the assembled brief",
-          "detail": "Propose only items supported by the selected facts. State exclusions and unknowns beside the plan, and ask for the minimum missing confirmation before accepting an order."
+          "title": "Draft and check against the brief",
+          "detail": "Produce the requested artifact from the selected facts; test consequential claims against sources, arithmetic and dependencies. If a required fact is absent, stop the affected claim and ask the narrowest useful question."
         }
       ],
       "when_to_use": [
         {
-          "title": "Several sources bear on one decision",
-          "detail": "Use it when customer, supply and operations records must be combined and a single stale record could change the recommendation."
+          "title": "Context varies by task",
+          "detail": "Use when one collection serves several decisions and each needs a different source subset, ordering or budget; a fixed giant prompt would obscure the facts that decide this task."
         },
         {
-          "title": "Context has different authority and freshness",
-          "detail": "Use it when an updated supplier note should supersede an older stock sheet without erasing the conflict or its date."
+          "title": "Sources disagree or age differently",
+          "detail": "Use when a current operations update supersedes part of an older plan, or when primary evidence and commentary have different roles; keep conflicts visible rather than averaging them."
         },
         {
-          "title": "A short task has a hard context budget",
-          "detail": "Use it when the agent should select only fields relevant to this delivery rather than summarizing the entire account or every menu item."
+          "title": "The output needs traceable inputs",
+          "detail": "Use when a reviewer must identify which sources support a specification, recommendation, creative constraint or research synthesis and which facts were intentionally omitted."
         },
         {
-          "title": "Do not use it to invent missing facts",
-          "detail": "Skip elaborate assembly if one current authoritative record answers the question. If allergen or supply confirmation is absent, hold the affected commitment instead of guessing."
+          "title": "A direct source suffices",
+          "detail": "Skip elaborate assembly for a low-stakes question answered by one current authoritative record. If the essential source is missing, no amount of context formatting makes the answer reliable."
         }
       ],
       "limitations": [
         {
-          "title": "Selection can omit a decisive fact",
-          "detail": "A task filter may hide an allergen, substitution condition or delivery constraint. Check selected facts against the original source set before sending a quote."
+          "title": "Selection can hide counterevidence",
+          "detail": "A relevance filter can omit a safety constraint, dissenting study, breaking API change or creative requirement. Cross-check the assembled brief against the original source inventory before acting."
         },
         {
-          "title": "Recency is not truth by itself",
-          "detail": "A newer supplier message may be provisional. If it conflicts with a confirmed order, verify stock with the supplier; do not silently treat the newest text as final."
+          "title": "Freshness does not confer authority",
+          "detail": "A recent chat may be provisional or less authoritative than an approved rule. Reconcile claims by effective date and source role; hold conflicts if those are unknown."
         },
         {
-          "title": "Summaries lose granularity",
-          "detail": "A short assembled brief is not an ingredient-level allergen specification or a purchase order. Do not promise dietary safety without the underlying ingredient confirmation."
+          "title": "Compression loses granularity",
+          "detail": "A short brief does not replace an ingredient list, technical test log or primary research article. Keep locators and omissions so a person can reopen the originals."
         },
         {
-          "title": "Context selection is not execution",
-          "detail": "The example model can draft a plan from supplied facts; it cannot confirm supplier inventory, charge a customer or book delivery. A person must confirm unresolved facts before a binding commitment."
+          "title": "A brief does not perform work",
+          "detail": "Context selection supports a draft, not verification, deployment, purchase, diagnosis or release. The model may still invent specifics; review output against the source packet and retain the responsible human decision."
         }
       ],
       "example": {

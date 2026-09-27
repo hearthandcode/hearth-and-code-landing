@@ -23,6 +23,15 @@ rules:
   - model response is an observation, not a proof of effectiveness or approval; retain failure cases and do not publish hidden reasoning traces
   - apply these gates equally to the public method field cards, including their existing Codex examples; do not relabel those examples as MiniMax runs
   - do not begin the next eight or promote a source candidate because structural tests or one model response passed; owner review follows the reconciled audit
+comparison_modes:
+  paired_default: one ordinary baseline and one technique-applied prompt; do not describe the baseline as a novice prompt unless it is genuinely novice-written
+  four_level_candidate:
+    - casual user: short natural request with task facts, minimal prompt structure
+    - AI power user: named output and constraints, without a formal agent work contract
+    - experienced agentic engineer: source, scope and checks made explicit without invoking the studied technique
+    - experienced engineer plus technique: hold the engineer task, facts and constraints fixed, adding only the technique's operational mechanism
+  assessment: use one declared task rubric and report criterion-level observations, unknowns and counterexamples; never infer a skill ranking or causal effectiveness from one output per tier
+  display: one comparative briefing and criterion matrix with optional expandable prompt/response pairs, not eight disconnected prompt/result tiles
 batching:
   size: 8
   order: vendored atlas catalogue order, not slug sort
