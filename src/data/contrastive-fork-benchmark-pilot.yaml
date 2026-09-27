@@ -2,9 +2,11 @@ schema_version: hnc.atlas-contrastive-benchmark-pilot.v0
 status: preflight-review-required
 catalog_id: PTA-001-006
 catalog_slug: 06-contrastive-fork-instruction-hierarchy-and-precedence
-execution: held_until_isolated_langfuse_project_and_budget_verified
-backend: existing local LangFuse 4.38.0 at http://100.85.184.51:3001; create a distinct Atlas project and keys, never emit into the HCAN project
+execution: held_until_24_prompts_and_budget_verified
+backend: local LangFuse 4.38.0 at http://100.85.184.51:3001; isolated Prompt Technique Atlas Pilot project cmujwhs9c0007qo07ee3axoks, separate from HCAN Local Evaluation
+backend_pass_item: Hearth & Code Infrastructure / Prompt Technique Atlas Pilot LangFuse API
 provider: minimax-oauth/MiniMax-M3 via scripts/pi-clean-isolated.mjs only
+model_observability: MiniMax-M3 is configured in the clean Pi route, not the LangFuse model-price registry. LangFuse can ingest model-labelled traces; do not record zero-priced inference or call LangFuse a provider runner.
 model_settings: same explicit system prompt, no tools, no saved session, thinking off for all conditions
 budget:
   cases: 6

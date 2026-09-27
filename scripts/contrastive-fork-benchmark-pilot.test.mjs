@@ -22,7 +22,8 @@ test('rubric and effect boundaries do not mistake infrastructure or comparison f
   assert.equal(new Set(packet.rubric.map((item) => item.id)).size, 8);
   assert.ok(packet.rubric.every((item) => Object.keys(item).length === 2 && item.check.length > 45));
   assert.match(packet.execution, /^held_/);
-  assert.match(packet.backend, /distinct Atlas project/);
+  assert.match(packet.backend, /isolated Prompt Technique Atlas Pilot project cmujwhs9c0007qo07ee3axoks/);
+  assert.match(packet.model_observability, /not the LangFuse model-price registry/);
   assert.match(packet.budget.on_budget_unknown, /hold/);
   assert.match(packet.study_design.release_rule, /false authority claim blocks/);
 });
