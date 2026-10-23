@@ -253,8 +253,9 @@ body.glow-static #hearth-embers {
 /* ── Navigation ──────────────────────────────────────────── */
 nav {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 14px;
   padding: 28px 0 0;
 }
 
@@ -269,6 +270,7 @@ nav {
 .wordmark .amp { color: var(--amber); font-style: italic; }
 
 .nav-links {
+  justify-content: center;
   list-style: none;
   display: flex;
   gap: 24px;
@@ -736,7 +738,8 @@ input:focus-visible,
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .nav-links { display: none; }
+  .nav-links {
+  justify-content: center; display: none; }
   .props { grid-template-columns: 1fr; }
   .founder-note { margin-left: 0; margin-right: 0; padding: 18px 16px; }
   .page-header { padding: 52px 0 40px; }

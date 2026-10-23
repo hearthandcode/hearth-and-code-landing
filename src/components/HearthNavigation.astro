@@ -1,57 +1,98 @@
 ---
 interface Props {
-  // Accept any string; validate against canonical values internally.
-  // Legacy values are accepted and mapped to canonical values via aliasMap.
   current?: string;
-  context: string;
+  context?: string;
 }
 
-const { current, context } = Astro.props;
+const { current = '', context = '' } = Astro.props;
 
-// Map legacy aliases to nearest current value
-const aliasMap: Record<string, string> = {
-  builder: 'questions',
-  exocore: 'portfolio',
-  workbench: 'practice',
-  library: 'portfolio',
-  atlas: 'research',
-  method: 'dossier',
-  return: 'contact',
-};
-
-// Accept legacy `current` values by mapping through aliasMap
-const resolvedCurrent = current ? (aliasMap[current] || current) : undefined;
-
-const routes = [
-  ['01', 'orientation', 'Studio',         '/'],
-  ['02', 'practice',    'Methods',         '/methods/'],
-  ['03', 'philosophy',  'Philosophy',      '/philosophy/'],
-  ['04', 'research',    'Research',        '/research/'],
-  ['05', 'portfolio',   'Portfolio',       '/portfolio/'],
-  ['06', 'dossier',     'Dossier',         '/dossier/'],
-  ['07', 'questions',   'Questions',       '/questions/'],
-  ['08', 'contact',     'Contact',         '/correspondence/'],
-] as const;
+const links = [
+  { label: 'Studio', href: '/', key: 'studio' },
+  { label: 'About', href: '/about/', key: 'about' },
+  { label: 'Mission', href: '/mission/', key: 'mission' },
+  { label: 'Library', href: '/library/', key: 'library' },
+  { label: 'Portfolio', href: '/portfolio/', key: 'portfolio' },
+  { label: 'Dossier', href: '/dossier/', key: 'dossier' },
+  { label: 'Research', href: '/research/', key: 'research' },
+  { label: 'Commons', href: 'https://sacred.hearthandcode.dev', key: 'commons' },
+];
 ---
 
-<header class="orientation-header">
-  <div class="orientation-brand-row">
-    <a class="orientation-wordmark" href="/" aria-label="Hearth and Code, return to Orientation">Hearth <em>&amp;</em> Code</a>
-    <p>{context}</p>
-    <a class="orientation-journal" href="/journal/">
-      Field Journal <span aria-hidden="true">→</span>
+<header class="unified-nav" aria-label="Hearth and Code">
+  <nav class="unified-nav__inner">
+    <a class="unified-nav__wordmark" href="/">
+      Hearth <em>&amp;</em> Code
     </a>
-  </div>
-  <nav class="hearth-navigation" aria-label="Hearth and Code rooms">
-    <ol>
-      {routes.map(([number, key, label, href]) => (
+    {context && <p class="unified-nav__context">{context}</p>}
+    <ul class="unified-nav__links">
+      {links.map((l) => (
         <li>
-          <a href={href} aria-current={resolvedCurrent === key ? 'page' : undefined}>
-            <span aria-hidden="true">{number}</span>
-            <strong>{label}</strong>
+          <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>
+            {l.label}
           </a>
         </li>
       ))}
-    </ol>
+    </ul>
   </nav>
 </header>
+
+<style is:global>
+  .unified-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(75,66,55,.5);
+    background: rgba(22,20,17,.88);
+    backdrop-filter: blur(8px);
+    padding: 0.75rem 1.5rem;
+  }
+  .unified-nav__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .unified-nav__wordmark {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #f1e7d2;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .unified-nav__wordmark em {
+    color: #E85B4E;
+    font-style: italic;
+  }
+  .unified-nav__context {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(207,193,171,.6);
+    margin: 0;
+  }
+  .unified-nav__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+  .unified-nav__links a {
+    color: rgba(207,193,171,.8);
+    text-decoration: none;
+    transition: color .2s ease;
+  }
+  .unified-nav__links a:hover,
+  .unified-nav__links a[aria-current='page'] {
+    color: #F4B860;
+  }
+  @media(max-width:640px) {
+    .unified-nav__links { gap: 0.75rem; font-size: 0.75rem; }
+  }
+</style>

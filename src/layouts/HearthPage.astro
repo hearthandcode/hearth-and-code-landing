@@ -23,11 +23,14 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
     <nav class="hp-nav">
       <a class="hp-wordmark" href="/">Hearth <span class="hp-amp">&amp;</span> Code</a>
       <ul class="hp-nav-links">
-        <li><a href="/building/" class={current === 'building' ? 'hp-active' : ''}>How it works</a></li>
         <li><a href="/about/" class={current === 'about' ? 'hp-active' : ''}>About</a></li>
+        <li><a href="/building/" class={current === 'building' ? 'hp-active' : ''}>How it works</a></li>
         <li><a href="/mission/" class={current === 'mission' ? 'hp-active' : ''}>Mission</a></li>
         <li><a href="/library/">Library</a></li>
         <li><a href="/portfolio/">Portfolio</a></li>
+        <li><a href="/dossier/">Dossier</a></li>
+        <li><a href="/research/">Research</a></li>
+        <li><a href="https://sacred.hearthandcode.dev">Commons</a></li>
       </ul>
     </nav>
     <main id="main-content" class="hp-main">
@@ -94,7 +97,7 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
   /* Navigation */
   .hp-nav {
     position: sticky; top: 0; z-index: 50;
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; flex-direction: column; align-items: center; gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
     border-bottom: 1px solid var(--color-surface-rule);
     background: rgba(22,20,17,.85);
@@ -119,7 +122,7 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
   }
   .hp-nav-links a:hover, .hp-nav-links a.hp-active { color: var(--color-accent-gold); }
   @media(max-width:768px) {
-    .hp-nav { flex-direction: column; gap: var(--space-3); }
+    /* nav is always centered now */
     .hp-nav-links { flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
   }
   /* Main content */
