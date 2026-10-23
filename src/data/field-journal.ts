@@ -15,7 +15,7 @@ export interface FieldJournalFeed {
   items: FieldJournalItem[];
 }
 
-const journalOrigin = 'https://blog.hearthandcode.dev';
+const journalOrigin = '/library/';
 const defaultFeedUrl = `${journalOrigin}/journal-feed.json`;
 
 // This snapshot mirrors the published-only journal source at the named source revision.
