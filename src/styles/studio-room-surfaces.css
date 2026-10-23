@@ -25,7 +25,7 @@
 
 * { box-sizing: border-box; }
 html { background: var(--room-graphite); scroll-behavior: smooth; }
-.studio-room-body { --route-signal: var(--room-cyan); min-width: 20rem; margin: 0; overflow-x: clip; background: var(--room-graphite); color: var(--room-light); font: 400 1rem/1.65 var(--font-body); }
+.studio-room-body { --route-signal: var(--room-cyan); min-width: 20rem; margin: 0; overflow-x: clip; background: #161411; color: var(--room-light); font: 400 1rem/1.65 var(--font-body); }
 .studio-room-body--portfolio, .studio-room-body--dossier { --route-signal: var(--room-green); }
 .studio-room-body--programs, .studio-room-body--workbench { --route-signal: var(--room-orange); }
 .studio-room-body--methods { --route-signal: var(--room-amber); }
