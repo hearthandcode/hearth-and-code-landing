@@ -146,7 +146,7 @@ connections:
   items:
     - title: "Methods"
       detail: "See how philosophical commitments become practical instruments and working records."
-      href: /methods/
+      href: /workbench/
       action_label: "Open the methods"
     - title: "Research"
       detail: "Inspect the systems and research programs these positions help constrain and orient."

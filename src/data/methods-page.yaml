@@ -1,7 +1,7 @@
 schema_version: hnc.public-page-contract.v1
 page:
   id: methods
-  route: /methods/
+  route: /workbench/
   navigation_current: methods
   title: "Methods · Hearth & Code"
   description: "Public working instruments for framing work, checking claims, and leaving a responsible return path."
