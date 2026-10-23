@@ -23,8 +23,7 @@ const links = [
     <a class="unified-nav__wordmark" href="/">
       Hearth <em>&amp;</em> Code
     </a>
-    <p class="unified-nav__sub">THE SLOWER WEB, BUILT SLOWLY</p>
-    {context && <p class="unified-nav__context">{context}</p>}
+    {context ? <p class="unified-nav__context">{context}</p> : <p class="unified-nav__sub">THE SLOWER WEB, BUILT SLOWLY</p>}
     <ul class="unified-nav__links">
       {links.map((l) => (
         <li>
