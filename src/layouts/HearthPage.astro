@@ -21,8 +21,12 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
   <body>
     <div class="hp-glow" aria-hidden="true"></div>
     <nav class="hp-nav">
-      <a class="hp-wordmark" href="/">Hearth <span class="hp-amp">&amp;</span> Code</a>
+      <div class="hp-nav-brand">
+        <a class="hp-wordmark" href="/">Hearth <span class="hp-amp">&amp;</span> Code</a>
+        <div class="hp-nav-sub">THE SLOWER WEB, BUILT SLOWLY</div>
+      </div>
       <ul class="hp-nav-links">
+        <li><a href="/" class={current === 'home' ? 'hp-active' : ''}>Home</a></li>
         <li><a href="/about/" class={current === 'about' ? 'hp-active' : ''}>About</a></li>
         <li><a href="/building/" class={current === 'building' ? 'hp-active' : ''}>How it works</a></li>
         <li><a href="/mission/" class={current === 'mission' ? 'hp-active' : ''}>Mission</a></li>
@@ -195,6 +199,8 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
     background: var(--color-surface-raised);
   }
   .hp-card > h3 { margin-top: 0; }
+  .hp-nav-brand { display: flex; flex-direction: column; gap: 4px; }
+  .hp-nav-sub { font: 600 0.62rem/1 var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent-gold, #c9a84c); opacity: 0.85; }
   /* Hero section */
   .hp-hero__eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-accent-gold); opacity: 0.75; margin-bottom: var(--space-3); }
   .hp-hero__lead { font-size: 1.05rem; color: var(--color-text-secondary); line-height: 1.75; max-width: 620px; margin: 0 auto var(--space-2); }

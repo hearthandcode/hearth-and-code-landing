@@ -8,8 +8,9 @@ interface Props {
 const { current = '', disposition = '' } = Astro.props;
 
 const links = [
-  { label: 'Studio', href: '/', key: 'studio' },
+  { label: 'Home', href: '/', key: 'home' },
   { label: 'About', href: '/about/', key: 'about' },
+  { label: 'How it works', href: '/building/', key: 'building' },
   { label: 'Mission', href: '/mission/', key: 'mission' },
   { label: 'Library', href: '/library/', key: 'library' },
   { label: 'Portfolio', href: '/portfolio/', key: 'portfolio' },
@@ -23,6 +24,7 @@ const links = [
     <a class="unified-nav__wordmark" href="/">
       Hearth <em>&amp;</em> Code
     </a>
+    <p class="unified-nav__sub">THE SLOWER WEB, BUILT SLOWLY</p>
     {disposition && <p class="unified-nav__context">{disposition}</p>}
     <ul class="unified-nav__links">
       {links.map((l) => (
