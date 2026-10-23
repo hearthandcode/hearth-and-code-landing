@@ -235,6 +235,249 @@ import HearthPage from '../layouts/HearthPage.astro';
   --font-body:    'Inter', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
 }
+
+.fp h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+.fp h1 .glow {
+      color: var(--amber);
+      text-shadow:
+        0 0 40px rgba(232, 146, 60, 0.4),
+        0 0 80px rgba(232, 146, 60, 0.15);
+    }
+.fp .hero {
+      text-align: center;
+      padding: 88px 0 60px;
+    }
+.fp .hero-sub {
+      font-size: clamp(1rem, 2.4vw, 1.125rem);
+      color: var(--ash);
+      font-weight: 400;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+.fp .hero-refrain {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--cream);
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+.fp .hero-honest {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ash);
+      opacity: 0.55;
+      margin: 28px auto 0;
+    }
+.fp .subscribe-wrap {
+      max-width: 440px;
+      margin: 0 auto;
+    }
+.fp .subscribe-panel {
+      padding: 22px 20px 18px;
+      text-align: left;
+    }
+.fp .subscribe-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+.fp .subscribe-panel .subscribe-lead {
+      font-size: 0.8rem;
+      color: var(--ash);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+.fp .subscribe-form {
+      display: flex;
+      gap: 0;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--wood-dark);
+      background: var(--bg);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+.fp .subscribe-form input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 13px 14px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--cream);
+    }
+.fp .subscribe-form input::placeholder { color: var(--ash); opacity: 0.55; }
+.fp .subscribe-form a {
+      border: none;
+      background: var(--amber);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 13px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+.fp .subscribe-form a:hover { background: var(--gold); }
+.fp .subscribe-note {
+      font-size: 0.72rem;
+      color: var(--ash);
+      opacity: 0.6;
+      margin-top: 10px;
+      text-align: center;
+    }
+.fp .closing-cta {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 64px 0 24px;
+    }
+.fp .closing-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4.2vw, 2.3rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+.fp .closing-cta p {
+      color: var(--ash);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin: 0 auto 28px;
+      max-width: 480px;
+    }
+.fp .bip {
+      text-align: center;
+      padding-bottom: 88px;
+    }
+.fp .bip > h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+.fp .bip > p {
+      color: var(--ash);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      max-width: 460px;
+      margin: 0 auto 28px;
+    }
+.fp .build-log {
+      max-width: 520px;
+      margin: 0 auto 20px;
+      text-align: left;
+    }
+.fp .build-log-inner {
+      padding: 18px 18px 14px;
+    }
+.fp .build-log-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 0 rgba(255, 220, 180, 0.05);
+    }
+.fp .build-log-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+.fp .build-log-header span {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      opacity: 0.85;
+    }
+.fp .build-log-list {
+      list-style: none;
+    }
+.fp .build-log-list li + li {
+      margin-top: 2px;
+    }
+.fp .build-log-list a {
+      display: block;
+      padding: 12px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+.fp .build-log-list a:hover {
+      background: rgba(0, 0, 0, 0.18);
+      border-color: rgba(232, 146, 60, 0.25);
+      box-shadow: inset 0 0 20px rgba(232, 146, 60, 0.06);
+    }
+.fp .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+.fp .post-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--forge);
+      opacity: 0.9;
+    }
+.fp .post-date {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--ash);
+      opacity: 0.7;
+    }
+.fp .post-title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+.fp .post-sub {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--ash);
+      line-height: 1.45;
+      opacity: 0.85;
+    }
+@media (max-width: 600px) {
+.fp h1 { font-size: 2.4rem; }
+.fp .subscribe-form { flex-direction: column; }
+.fp .subscribe-form button, .fp .subscribe-form a { border-radius: 0 0 3px 3px; }
+.fp .cta-row .btn { width: 100%; justify-content: center; }
+}
 </style>
 
 <style>
