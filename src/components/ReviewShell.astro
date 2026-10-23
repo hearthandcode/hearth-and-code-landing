@@ -47,7 +47,7 @@ const navigation = [
     <a class="research-skip" href="#main-content">Skip to content</a>
     <HearthNavigation current={publicCurrent} context={publicSite ? 'Hearth & Code / independent research studio' : `${title} / local review candidate`} />
     <div class="review-shell">
-      <header class="review-context-header">
+      <div class="review-context-header" role="region" aria-label="Review context and navigation">
         <div class="review-status-rail">
           <span>{publicSite ? 'Hearth & Code / independent studio' : 'Hearth & Code / local review proof'}</span>
           <span><i aria-hidden="true"></i> {publicSite ? 'research, making, and public record' : 'full site composition'}</span>
@@ -67,7 +67,7 @@ const navigation = [
             )
           ))}
         </nav>
-      </header>
+      </div>
 
       <main id="main-content" class="research-main review-main">
         <slot />

@@ -59,26 +59,25 @@ export const grammarPrimitives = canonicalGrammar.map((g) => ({
   nonExample: g.non_example,
 }));
 
-/** Protocol summaries per the brief's "Final benchmark numbers" block.
- * Per-dimension bars render from the article YAML (v3 rows); these headline
- * numbers carry the v4.2 final benchmark the brief specifies. */
+/** Attributed summaries from two distinct candidate project records.
+ * The versioned results are reported, not independently reconciled here. */
 export const protocolSummaries = {
   analytical: {
     version: 'v4.2',
     wins: '15/16',
     tiers: '10 S · 5 A · 1 B',
-    preference: 'unanimous (5-0)',
+    preference: 'reported unanimous (5-0)',
     avg: '4.71',
     loss: 'brevity 4.0 B vs 4.6 A (accepted structural trade)',
-    note: 'progression: v3 3.58 B \u2192 b1 4.36 A \u2192 b2 4.01 (reverted) \u2192 b3 4.65 A \u2192 v4.2 4.71 A',
+    note: 'Separate rendering-brief summary; detailed bars below show the v3 article matrix, not these v4.2 rows.',
   },
   generative: {
     version: '13-dim panel',
     wins: '13/13',
     tiers: '3 S · 4 A',
-    preference: '8\u20131 hcan (3 judges \u00d7 3 fixtures)',
+    preference: 'reported 8\u20131 preference (3 judges, 3 fixtures)',
     avg: '4.3 vs 3.1',
-    loss: 'on harder creative tasks both arms scored D/F (model ceiling, not notation)',
-    note: 'easier-fixture control flipped generative to 13/13 \u2014 model ceiling confirmed',
+    loss: 'human evaluator preferred the information shape but found the one-line cards difficult to read',
+    note: 'Project record reports 13/13 dimensions on three within-capability fixtures; not a general efficacy result.',
   },
 };

@@ -76,6 +76,19 @@ export function PortfolioApp() {
           padding: '0 clamp(1rem, 4vw, 3rem) 3rem',
         }}
       >
+        <h2
+          style={{
+            margin: '0 0 1.5rem',
+            color: 'var(--color-text-display)',
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+            fontWeight: 400,
+            lineHeight: 1,
+            letterSpacing: '-0.03em',
+          }}
+        >
+          Project surfaces
+        </h2>
         <div
           style={{
             display: 'grid',
@@ -93,6 +106,8 @@ export function PortfolioApp() {
       <section
         className="portfolio-processes"
         style={{
+          width: 'min(100%, 82rem)',
+          marginInline: 'auto',
           padding: '0 clamp(1rem, 4vw, 3rem) 3rem',
         }}
       >
@@ -105,6 +120,7 @@ export function PortfolioApp() {
             fontWeight: 400,
             lineHeight: 1,
             letterSpacing: '-0.03em',
+            textAlign: 'center',
           }}
         >
           Bounded processes
@@ -112,7 +128,8 @@ export function PortfolioApp() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 400px), 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 30rem), 34rem))',
+            justifyContent: 'center',
             gap: 'clamp(0.75rem, 2vw, 1.25rem)',
           }}
         >
@@ -255,7 +272,7 @@ export function PortfolioApp() {
           <a
             href="/"
             style={{
-              color: 'var(--color-accent-ember)',
+              color: 'var(--color-accent-gold)',
               textDecoration: 'none',
             }}
           >
@@ -265,7 +282,7 @@ export function PortfolioApp() {
           <a
             href="/hcan/"
             style={{
-              color: 'var(--color-accent-ember)',
+              color: 'var(--color-accent-gold)',
               textDecoration: 'none',
             }}
           >

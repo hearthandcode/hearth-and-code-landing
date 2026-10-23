@@ -4,7 +4,6 @@ import '../styles/journal-reading.css';
 import '../styles/studio-room-surfaces.css';
 import '../styles/ember-circuit-library.css';
 import HearthNavigation from './HearthNavigation.astro';
-import HearthsideFieldExpansion from './HearthsideFieldExpansion.astro';
 
 interface Heading { depth: number; slug: string; text: string; }
 interface Claim { claim: string; label: string; source: string; }
@@ -20,6 +19,7 @@ interface Props {
   featuredImage?: string;
   featuredImageAlt?: string;
   readingTimeMinutes?: number;
+  publicationNote?: string;
   slug: string;
 }
 
@@ -35,11 +35,25 @@ const {
   featuredImage,
   featuredImageAlt,
   readingTimeMinutes,
+  publicationNote,
   slug,
 } = Astro.props;
 
 const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric',
+});
+const sourceEntries = sources.map((source) => {
+  const match = source.match(/https?:\/\/[^\s)]+/);
+  if (!match) return { label: source, href: undefined };
+  const href = match[0].replace(/[.,;]+$/, '');
+  const label = source.replace(match[0], '').replace(/[:\s]+$/, '').trim();
+  try {
+    const url = new URL(href);
+    if (!['https:', 'http:'].includes(url.protocol)) return { label: source, href: undefined };
+    return { label: label || new URL(href).hostname, href };
+  } catch {
+    return { label: source, href: undefined };
+  }
 });
 ---
 
@@ -54,17 +68,18 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
   </head>
   <body class="studio-room-body studio-room-body--notes studio-article-body">
     <a class="research-skip" href="#journal-article">Skip to article</a>
-    <HearthNavigation current="library" context="Field Journal / published research record" />
+    <HearthNavigation current="library" context="Field Journal / local review candidate" />
     <main id="journal-article" class="journal-article-shell">
       <article class:list={['journal-article', { 'journal-article--hcan': slug === 'hcan-condensed-symbolic-language' }]}>
         <header class="journal-article__header">
-          <p class="research-eyebrow">Field Journal / published record</p>
+          <p class="research-eyebrow">Field Journal / local revision candidate</p>
           <h1>{title}</h1>
           <p class="journal-article__deck">{description}</p>
+          <p class="journal-article__review-notice" role="note">This locally revised copy is a candidate and remains review-required. It has not been approved or republished. {publicationNote ?? 'The date below is the earlier publication date.'}</p>
           <dl class="journal-article__meta">
-            <div><dt>Published</dt><dd><time datetime={date}>{displayDate}</time></dd></div>
+            <div><dt>{publicationNote ? 'Source publication state' : 'Earlier publication'}</dt><dd>{publicationNote ? 'Conflicting records · unresolved' : <time datetime={date}>{displayDate}</time>}</dd></div>
             {readingTimeMinutes && <div><dt>Reading time</dt><dd>{readingTimeMinutes} minutes</dd></div>}
-            <div><dt>Review posture</dt><dd>Published public record</dd></div>
+            <div><dt>Current revision</dt><dd>Local candidate · review required</dd></div>
           </dl>
         </header>
 
@@ -73,16 +88,16 @@ const displayDate = new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
         <section class="studio-article-reading-field">
           {headings.length > 1 && <nav class="journal-article__guide" aria-label="On this page"><p>On this page</p><ol>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>}
 
-          <div class={slug === 'hcan-condensed-symbolic-language' ? 'hcan-reading-body' : 'journal-article__body'}><slot /><HearthsideFieldExpansion slug={slug} /></div>
+          <div class={slug === 'hcan-condensed-symbolic-language' ? 'hcan-reading-body' : 'journal-article__body'}><slot /></div>
 
           <footer class="journal-article__evidence">
           <section>
-            <p class="research-eyebrow">Claim labels</p>
+            <p class="research-eyebrow">Article labels</p>
             <ul class="journal-article__labels">{labels.map((label) => <li>{label.replace('-', ' ')}</li>)}</ul>
             {tags.length > 0 && <ul class="journal-article__labels journal-article__labels--tags">{tags.map((tag) => <li>{tag}</li>)}</ul>}
           </section>
-          {claims.length > 0 && <section class="journal-article__claims"><p class="research-eyebrow">Claim map</p><ol>{claims.map((claim) => <li><strong>{claim.label.replace('-', ' ')}</strong><span>{claim.claim}</span><small>{claim.source}</small></li>)}</ol></section>}
-          <section class="journal-article__sources"><p class="research-eyebrow">Named source context</p><ul>{sources.map((source) => <li>{source}</li>)}</ul></section>
+          {claims.length > 0 && <section class="journal-article__claims"><p class="research-eyebrow">Claim map · eight epistemic classes</p><ol>{claims.map((claim) => <li><strong>{claim.label.replace('-', ' ')}</strong><span>{claim.claim}</span><small>{claim.source}</small></li>)}</ol></section>}
+          <section class="journal-article__sources"><p class="research-eyebrow">Named source context</p><ul>{sourceEntries.map((source) => <li>{source.label}{source.href && <> · <a href={source.href} rel="external noopener noreferrer" aria-label={`Open source: ${source.label}`}>Open source</a></>}</li>)}</ul></section>
           </footer>
         </section>
       </article>

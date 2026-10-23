@@ -16,6 +16,8 @@ interface Props {
   variant?: 'compact' | 'expanded';
   value?: string;
   name?: string;
+  inputId?: string;
+  ariaLabel?: string;
   class?: string;
 }
 
@@ -25,6 +27,8 @@ const {
   variant = 'compact',
   value,
   name = 'search',
+  inputId,
+  ariaLabel = 'Search',
   class: className = '',
 } = Astro.props;
 
@@ -42,10 +46,12 @@ const sizeMap = { sm: 'sm' as const, md: 'md' as const, lg: 'lg' as const };
     </span>
     <Input
       type="search"
+      id={inputId}
       name={name}
       placeholder={placeholder}
       size={size}
       value={value}
+      ariaLabel={ariaLabel}
       class="ec-search-bar__input"
     />
   </div>

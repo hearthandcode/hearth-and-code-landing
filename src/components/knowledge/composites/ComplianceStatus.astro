@@ -84,7 +84,7 @@ const counts = {
     border-radius: var(--radius-sm);
   }
   .kc-compliance__count--pass { color: var(--color-state-success); background: rgba(143, 163, 149, 0.12); }
-  .kc-compliance__count--fail { color: var(--color-state-error); background: rgba(194, 90, 42, 0.12); }
+  .kc-compliance__count--fail { color: #f08a68; background: rgba(194, 90, 42, 0.12); }
   .kc-compliance__count--pending { color: var(--color-accent-gold); background: rgba(244, 184, 96, 0.12); }
   .kc-compliance__count--waived { color: var(--color-text-secondary); background: rgba(207, 193, 171, 0.08); }
   .kc-compliance__list {
@@ -139,5 +139,10 @@ const counts = {
     background: currentColor;
     color: var(--color-surface-primary);
     text-align: center;
+  }
+  @media (max-width: 30rem) {
+    .kc-compliance__control { grid-template-columns: 3rem minmax(0, 1fr) auto; }
+    .kc-compliance__evidence { grid-column: 2 / 4; white-space: normal; overflow-wrap: anywhere; }
+    .kc-compliance__checked { grid-column: 2; }
   }
 </style>

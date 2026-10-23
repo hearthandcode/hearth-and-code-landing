@@ -1,4 +1,36 @@
 ---
-import ResearchLabSurface from '../../components/ResearchLabSurface.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNavigation from '../../components/StudioNavigation.astro';
+import ResearchProjectFrame from '../../components/ResearchProjectFrame.astro';
+import ResearchCollections from '../../components/ResearchCollections.astro';
+import TechnicalReportShelf from '../../components/TechnicalReportShelf.astro';
+import ProgramDossier from '../../components/ProgramDossier.astro';
+import { researchPrograms } from '../../data/research-programs';
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+import '../../styles/research-programs.css';
+import '../../styles/research-collections.css';
+const projects = [...researchPrograms.map(p => ({title:p.title, summary:p.summary, status:p.status, href:`/programs/${p.slug}/`})),
+ {title:'HCAN',summary:'Human-agent communication notation with grammar, examples, evaluation context, and explicit limits.',status:'Candidate · review required',href:'/hcan/'},
+ {title:'Exocore',summary:'A systems ecology around agents, knowledge, governance, tools, and human return.',status:'Implementation-separated',href:'/review/exocore/'},
+ {title:'Ember Circuit',summary:'A design system for layered, navigable public surfaces and reliable return paths.',status:'Public design projection',href:'/review/ember-circuit/'}];
 ---
-<ResearchLabSurface route="programs" />
+<BaseLayout title="Research Programs · Hearth & Code" description="Focused research studies with a shared project frame, source boundaries, maturity, and return paths.">
+ <StudioNavigation current="research" disposition="Research Programs / choose a focused study" />
+ <main id="page-main"><ResearchProjectFrame eyebrow="Research / program directory" title="Choose a program. Follow its question." summary="Each study uses the same project frame: purpose, current posture, evidence boundary, section map, and a return path. Open one program to inspect its particular research objects." status="Mixed maturity · inspect each study" facts={[{label:'Studies',value:'Seven public orientations'},{label:'Audience',value:'Agentic engineers & researchers'},{label:'Format',value:'Shared HCAN project frame'},{label:'Boundary',value:'Explanatory public projections'}]} sections={[{id:'program-ledger',label:'Programs'},{id:'report-shelf',label:'Report shelf'},{id:'program-modules',label:'Learning modules'},{id:'source-dossiers',label:'Source dossiers'}]}>
+ <section class="program-directory-grid" id="program-ledger" aria-label="Research programs">{projects.map(p=><a href={p.href}><small>{p.status}</small><h2>{p.title}</h2><p>{p.summary}</p><span>Open study →</span></a>)}</section>
+ <details class="program-directory-details" id="report-shelf"><summary>Technical report shelf / six orientations</summary><div><TechnicalReportShelf /></div></details>
+ <details class="program-directory-details" id="program-modules"><summary>Learning modules / 32 bounded instruments</summary><div><ResearchCollections route="programs" /></div></details>
+ <details class="program-directory-details" id="source-dossiers"><summary>Original public dossiers / three studies</summary><div><ProgramDossier /></div></details>
+ </ResearchProjectFrame></main>
+</BaseLayout>
+
+<script>
+ const reveal = () => {
+   const hash = location.hash.slice(1);
+   const target = document.getElementById(hash);
+   const panel = target?.closest('details');
+   if (panel) panel.open = true;
+ };
+ reveal();window.addEventListener('hashchange',reveal);
+</script>

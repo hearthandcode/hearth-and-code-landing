@@ -1,0 +1,54 @@
+---
+import { ecosystemProposals, featureDispatches } from '../data/feature-changelog';
+import '../styles/feature-dispatch-feed.css';
+---
+
+<section class="dispatch-feed" id="field-dispatches" aria-labelledby="dispatch-title">
+  <div class="dispatch-feed__intro">
+    <p class="studio-kicker">Field dispatch · repository history</p>
+    <h2 id="dispatch-title">Work in motion, recorded as it takes shape.</h2>
+    <p>Recent implementation and research threads, read from their own repository histories. Each item marks a recorded change window; the larger program may still be in progress. A commit records changed source and any local checks, not deployment, independent acceptance, or universal effectiveness.</p>
+  </div>
+
+  <ol class="dispatch-list" aria-label="Feature changelog, newest first">
+    {featureDispatches.map((entry, index) => (
+      <li class="dispatch-card" id={`dispatch-${index + 1}`}>
+        <article>
+          <header class="dispatch-card__header">
+            {entry.date.split(' → ').map((date, dateIndex) => <>
+              {dateIndex > 0 && <span aria-hidden="true"> → </span>}
+              <time datetime={date}>{date}</time>
+            </>)}
+            <span>{entry.repository}</span>
+          </header>
+          <h3>{entry.title}</h3>
+          <p class="dispatch-card__summary">{entry.summary}</p>
+          <ul class="dispatch-card__details">
+            {entry.details.map((detail) => <li>{detail}</li>)}
+          </ul>
+          <footer class="dispatch-card__footer">
+            <span>Local history refs: <code>{entry.evidence.join(' · ')}</code></span>
+            <a href={entry.href}>Explore the related surface <span aria-hidden="true">→</span></a>
+          </footer>
+        </article>
+      </li>
+    ))}
+  </ol>
+
+  <div class="dispatch-feed__ideas" aria-labelledby="dispatch-ideas-title">
+    <p class="studio-kicker">Possible next instruments · proposals</p>
+    <h3 id="dispatch-ideas-title">Twelve experiments for the wider workbench.</h3>
+    <p>These are candidate directions, not an approved roadmap. Each starts with a small probe that could show whether the idea earns more scope.</p>
+    <div class="dispatch-ideas-grid">
+      {ecosystemProposals.map((proposal, index) => (
+        <details class="dispatch-idea">
+          <summary><span class="dispatch-idea__number">{String(index + 1).padStart(2, '0')}</span>{proposal.name}</summary>
+          <p>{proposal.idea}</p>
+          <p><strong>First probe:</strong> {proposal.firstProbe}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <p class="dispatch-feed__boundary">Source note: commit IDs identify local history reviewed for this draft and are not links to private code. This public-facing summary omits internal task details; repository state and acceptance may have moved since each record.</p>
+</section>

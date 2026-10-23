@@ -266,9 +266,3 @@ export const fieldJournalExpansions: Record<string, FieldJournalExpansionSection
     }
   ]
 };
-
-export const fieldJournalReadingMinutes = (slug: string, baseMinutes?: number) => {
-  const expansion = fieldJournalExpansions[slug] ?? [];
-  const words = expansion.flatMap((section) => [section.heading, ...section.paragraphs]).join(' ').trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, baseMinutes ?? 0) + Math.ceil(words / 210);
-};

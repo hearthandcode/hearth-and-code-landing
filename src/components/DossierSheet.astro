@@ -1,4 +1,5 @@
 ---
+import CharacterSheet from './ember-circuit/CharacterSheet';
 const chapters = [
   { id: 'dossier-orientation', code: 'I', title: 'Orientation', note: 'How the Hearthside Meta-Architect meets a question.', entries: [
     ['D-01', 'Builder of structures behind structures', 'I look beneath visible artifacts for the protocols, permissions, and contexts that shaped them.', 'Ask what conditions made this object possible.'],
@@ -25,53 +26,14 @@ const chapters = [
     ['D-16', 'Integrated archetype', 'I try to hold forge and hearth together: rigor around imagination without extinguishing it.', 'Make imagination answerable, not smaller.'],
   ] },
 ] as const;
+
+const features = [
+  { kind: 'Feats', title: 'The Return Thread', text: 'Can frame an interrupted system task with its current state, evidence, open gate, and one re-entry move.' },
+  { kind: 'Talent', title: 'Map Before Machine', text: 'Can expose a source-to-consumer route before choosing a stronger representation or adding a new layer.' },
+  { kind: 'Skill', title: 'Constraint Weaving', text: 'Can combine context, interfaces, and review conditions into a task that remains inspectable.' },
+  { kind: 'Disposition', title: 'Warm Precision', text: 'Pairs an inviting surface with explicit claims, boundaries, and correction paths.' },
+  { kind: 'Signature move', title: 'Forge / Hearth', text: 'Turns a technical structure into a place people can enter, question, and leave safely.' },
+  { kind: 'Watch condition', title: 'Infinite Architecture', text: 'When map-making outruns a useful artifact, return to the smallest terrain-facing slice.' },
+] as const;
 ---
-
-<section id="dossier-file" class="dossier-sheet" aria-labelledby="dossier-title">
-  <header class="dossier-sheet__masthead">
-    <div>
-      <p class="research-eyebrow">Hearth &amp; Code / case file HMA-16</p>
-      <h2 id="dossier-title">Hearthside Meta-Architect</h2>
-      <p>My public working archetype for the practice behind this studio: a creative orientation, not a diagnosis, credential, or autonomous persona.</p>
-    </div>
-    <aside>
-      <span>Classification</span><strong>Self-authored working profile</strong>
-      <span>Reading mode</span><strong>Character sheet / public practice</strong>
-      <span>Release posture</span><strong>Public-facing practice</strong>
-    </aside>
-  </header>
-
-  <section class="dossier-sheet__profile" aria-label="Character profile">
-    <div class="dossier-identity"><p class="research-eyebrow">Role</p><strong>Creative systems steward</strong><span>Forge + hearth / field research + working craft</span></div>
-    <dl>
-      <div><dt>Central question</dt><dd>What is the smallest structure that preserves what matters?</dd></div>
-      <div><dt>Core loop</dt><dd>Orient · bound · compose · check · decide · return</dd></div>
-      <div><dt>Instruments</dt><dd>Ledger · atlas · protocol · notebook · correction path</dd></div>
-      <div><dt>Party role</dt><dd>I turn complexity into a shared, reviewable working surface.</dd></div>
-    </dl>
-  </section>
-
-  <nav id="dossier-index" class="dossier-sheet__index" aria-label="Dossier chapters">
-    {chapters.map(chapter => <a href={`#${chapter.id}`}><span>{chapter.code}</span><strong>{chapter.title}</strong><small>{chapter.entries[0][0]}–{chapter.entries[3][0]}</small></a>)}
-  </nav>
-
-  <section id="dossier-guide" class="dossier-sheet__guide" aria-labelledby="dossier-guide-title">
-    <p class="research-eyebrow">How to use this file</p>
-    <h3 id="dossier-guide-title">Read it as a field guide to working posture.</h3>
-    <p>Each entry has a tendency to notice and a practical move to test. Follow a chapter for a particular kind of question, or use the case-file codes to move directly to a card. The sheet names habits of practice; it does not diagnose a person or confer professional authority.</p>
-  </section>
-
-  <div class="dossier-sheet__chapters">
-    {chapters.map(chapter => <section id={chapter.id} class="dossier-chapter" aria-labelledby={`${chapter.id}-title`}>
-      <header><p class="research-eyebrow">Chapter {chapter.code} / {chapter.entries[0][0]}–{chapter.entries[3][0]}</p><h3 id={`${chapter.id}-title`}>{chapter.title}</h3><p>{chapter.note}</p></header>
-      <ol>
-        {chapter.entries.map(([id, title, reading, move]) => <li id={id.toLowerCase()}>
-          <span>{id}</span><h4>{title}</h4><p>{reading}</p><strong><b>At the table</b>{move}</strong>
-        </li>)}
-      </ol>
-      <a class="dossier-chapter__return" href="#dossier-index">Return to case-file index ↑</a>
-    </section>)}
-  </div>
-
-  <footer class="dossier-sheet__footer"><p>I offer this as a creative working projection. It does not make claims about private biography, health, credentials, or a system possessing its own authority.</p><a href="/notes/#essays">Read my Hearthside essays →</a></footer>
-</section>
+<CharacterSheet client:load chapters={chapters} features={features} />

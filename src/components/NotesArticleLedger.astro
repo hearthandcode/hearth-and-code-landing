@@ -14,10 +14,10 @@ const collections = [
   </header>
 
   <div class="notes-article-ledger__collections">
-    {collections.map((collection, collectionIndex) => <section class="notes-article-ledger__collection" id={collection.id} aria-labelledby={`${collection.id}-title`}>
+    {collections.map((collection, collectionIndex) => <div class="notes-article-ledger__collection" id={collection.id}>
       <header><p class="research-eyebrow">Collection {String(collectionIndex + 1).padStart(2, '0')} / {collection.articles.length} articles</p><h3 id={`${collection.id}-title`}>{collection.label}</h3><p>{collection.description}</p></header>
       <ol>{collection.articles.map((article, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><p>{article.code} · {article.readTime}</p><h4><button type="button" data-studio-article-open={article.slug} aria-haspopup="dialog">{article.title}</button></h4><p>{article.dek}</p></div><button type="button" data-studio-article-open={article.slug} aria-haspopup="dialog" aria-label={`Read ${article.title}`}>Read <span aria-hidden="true">→</span></button></li>)}</ol>
-    </section>)}
+    </div>)}
   </div>
 </section>
 

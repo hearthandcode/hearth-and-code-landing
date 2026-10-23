@@ -172,6 +172,7 @@ import D3Charts from '../../components/D3Charts.astro';
 ---
 
 <Layout title="Design System · Ember Circuit" description="Storybook-style gallery of all 64 Hearth & Code components. Atoms, molecules, organisms — isolated, token-driven, accessible.">
+<main id="design-system-content">
 
 <!-- HERO -->
 <header class="ds-hero">
@@ -216,7 +217,7 @@ import D3Charts from '../../components/D3Charts.astro';
 </header>
 
 <!-- STICKY NAV -->
-<nav class="ds-nav">
+<nav class="ds-nav" aria-label="Component sections">
   <div class="ds-nav__inner">
     <a href="#atoms" class="ds-nav__link">Atoms</a>
     <a href="#composites" class="ds-nav__link">Composites</a>
@@ -635,7 +636,7 @@ import D3Charts from '../../components/D3Charts.astro';
           { value: 'option1', label: 'Option 1' },
           { value: 'option2', label: 'Option 2' },
           { value: 'option3', label: 'Option 3' },
-        ]} placeholder="Select option" />
+        ]} placeholder="Select option" ariaLabel="Example option" />
       </div>
       <figcaption class="ds-tile__meta">
         <span class="ds-tile__id">c-select</span>
@@ -975,7 +976,7 @@ import D3Charts from '../../components/D3Charts.astro';
 
     <figure class="ds-tile ds-tile--wide">
       <div class="ds-tile__preview" style="padding: var(--space-3); min-height: 14rem;">
-        <LayoutSidebar sidebarPosition="left" sidebarWidth="10rem">
+        <LayoutSidebar sidebarPosition="left" sidebarWidth="10rem" mainLandmark={false}>
           <p slot="sidebar" style="margin:0;font-size:0.875rem;">Sidebar content</p>
           <p>Main content area.</p>
         </LayoutSidebar>
@@ -1949,6 +1950,7 @@ import D3Charts from '../../components/D3Charts.astro';
   </p>
 </footer>
 
+</main>
 </Layout>
 
 <style>
@@ -2063,9 +2065,11 @@ import D3Charts from '../../components/D3Charts.astro';
     z-index: 50;
     background: var(--color-surface-recessed);
     border-bottom: 1px solid var(--color-surface-rule);
+    overflow-x: auto;
   }
   .ds-nav__inner {
     max-width: 80rem;
+    min-width: max-content;
     margin: 0 auto;
     padding: 0 var(--space-5);
     display: flex;
@@ -2124,13 +2128,16 @@ import D3Charts from '../../components/D3Charts.astro';
   /* === TILES === */
   .ds-tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
     gap: var(--space-4);
   }
   .ds-tiles--wide {
     grid-template-columns: 1fr;
   }
   .ds-tile {
+    min-width: 0;
     margin: 0;
     background: var(--color-surface-raised);
     border: 1px solid var(--color-surface-rule);
@@ -2179,6 +2186,7 @@ import D3Charts from '../../components/D3Charts.astro';
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-display);
+    overflow-wrap: anywhere;
   }
 
   /* === SUBSECTION === */
@@ -2217,7 +2225,7 @@ import D3Charts from '../../components/D3Charts.astro';
   }
   .ds-footer__text a {
     color: var(--color-accent-signal);
-    text-decoration: none;
+    text-decoration: underline;
   }
   .ds-footer__text a:hover {
     text-decoration: underline;

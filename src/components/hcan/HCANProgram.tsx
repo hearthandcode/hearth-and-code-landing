@@ -36,7 +36,7 @@ export default function HCANProgram({ code, compact = false, className }: HCANPr
           {copied ? 'copied' : 'copy'}
         </button>
       )}
-      <pre className="hcan-program__frame">
+      <pre className="hcan-program__frame" tabIndex={0}>
         {showLineNumbers && (
           <span className="hcan-program__gutter" aria-hidden="true">
             {lines.map((_, i) => <span key={i}>{i + 1}</span>)}

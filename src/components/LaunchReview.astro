@@ -1,85 +1,27 @@
 ---
-import '../styles/launch-review.css';
-import '../styles/research-lab.css';
-import '../styles/ember-research-system.css';
-import '../styles/ember-surface-framework.css';
-import HearthNavigation from './HearthNavigation.astro';
-
-const routes = [
-  ['01', 'Studio', '/', 'The Research Studio front door and complete public reading map.'],
-  ['02', 'Questions', '/questions/', 'Open questions, working tensions, and a bounded inquiry guide.'],
-  ['03', 'Portfolio', '/portfolio/', 'Selected research and systems work with explicit posture.'],
-  ['04', 'Programs', '/programs/', 'Program dossiers and technical report orientations.'],
-  ['05', 'Methods', '/methods/', 'The method loop, instruments, and thirty-five field cards.'],
-  ['06', 'Published', '/notes/', 'Field Journal entries, essays, and technical articles.'],
-  ['07', 'Artifacts', '/evidence/', 'Claim grammar, evidence records, and correction paths.'],
-  ['08', 'Dossier', '/dossier/', 'The working archetype and sixteen-part practice dossier.'],
-  ['09', 'Workbench', '/workbench/', 'The public/private and Rust/TypeScript technical boundary.'],
-  ['10', 'Contact', '/correspondence/', 'A bounded route for discussion and correction.'],
-];
-
-const gates = [
-  ['Pass / Navigability', 'One workshop rail connects every public page to all eight rooms, marks the current room, and completes Atlas → Library → Exocore transitions at desktop and mobile widths.'],
-  ['Pass / Accessibility', 'Every route has a skip link, one main landmark, one H1, 48-pixel navigation targets, keyboard access, safe external-link cues, reduced-motion support, and a usable forced-colors state.'],
-  ['Pass / Voice & Brand', 'Scott Rallya, cosmatrexis, the Hearthside Meta-Architect posture, practical systems craft, public learning, and human responsibility remain legible without borrowed corporate language or invented biography.'],
-  ['Pass / Hearthside Coherence', 'The Ember Circuit palette, workshop grid, typography, coined vocabulary, plain-language glosses, and literal evidence and authority boundaries remain coherent across all eight routes.'],
-  ['Pass / Build', 'Astro reported zero diagnostics and produced all static routes.'],
-  ['Pass / Interaction', 'The Library keyboard path opens a guide, moves focus into it, and returns with Escape.'],
-  ['Pass / Privacy', 'The scoped surface contains no private intake text, invented contact details, availability promises, or detected secret patterns.'],
-  ['Partial / Performance', 'The Exocore study is reduced from 1.7 MB to 121 KB; Core Web Vitals still require the unavailable DevTools bridge.'],
-  ['Ready / Promotion', 'Scott approved the overall direction on 21 August 2026. Git incorporation, remote push, and production deployment still require an exact release action and post-deploy check.'],
+import StudioNavigation from './StudioNavigation.astro';
+import ResearchProjectFrame from './ResearchProjectFrame.astro';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/research-programs.css';
+const privateLocalReview = import.meta.env.MODE === 'local-review';
+const routes=[
+ ['Methods','/methods/','Practice, technique sheets, applied prompts, and four independent case-report tabs.'],
+ ['Dossier','/dossier/','A complete Ember Circuit character sheet with eight hypothetical attributes, feats, dispositions, and loadout.'],
+ ['Questions','/questions/','A selectable inquiry ledger, four tensions, and a compact worked question guide.'],
+ ['Programs','/programs/','Seven focused studies using HCAN’s shared project frame. Longer source collections remain expandable.'],
+ ['Typed Context for Real Work','/journal/typed-context-for-real-work/','Centered, single-column reading surface with expandable contents.'],
+ ['Knowledge Representation Without a Black Box','/journal/knowledge-representation-without-a-black-box/','Centered, single-column reading surface with expandable contents.'],
+ ['TCCP','/programs/tccp/','Eight-section research disposition.'],['EKRP','/programs/ekrp/','Eight-section research disposition.'],
+ ['Core32','/programs/core32/','Eight-section evaluation-research disposition.'],['ESS','/programs/ess/','Eight-section standards-program disposition.'],
+ ['HCAN','/hcan/','Reference project frame with grammar, examples, evaluation context, and limits.'],
+ ['Exocore','/review/exocore/','System study using the shared project frame.'],['Ember Circuit','/review/ember-circuit/','Design-system study using the shared project frame.'],
+ ['Studio','/','Hearth and Code front door.'],['Research','/research/','Research directory and cross-references.'],
 ];
 ---
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#1c1714" />
-    <title>Local Launch Review · Hearth &amp; Code</title>
-  </head>
-  <body class="research-body research-body--review orientation-body launch-body ember-surface">
-    <a class="research-skip" href="#main-content">Skip to content</a>
-    <HearthNavigation context="Launch review / local candidate" />
-
-    <main id="main-content" class="research-main">
-      <section class="launch-hero" aria-labelledby="launch-title">
-        <p class="orientation-kicker">Approved local projection</p>
-        <h1 id="launch-title">The whole house, assembled.</h1>
-        <p class="orientation-lede">This private console opens every intended Hearth &amp; Code route as a visitor will encounter it and preserves the four final audits behind the promotion recommendation.</p>
-        <div class="orientation-actions"><a class="orientation-action orientation-action--primary" href="/review/methods-directions/">Compare eight Methods directions →</a></div>
-        <div class="launch-summary" aria-label="Projection summary">
-          <div><strong>10</strong><span>visitor routes</span></div>
-          <div><strong>01</strong><span>connected visual system</span></div>
-          <div><strong>04</strong><span>final audit lenses</span></div>
-        </div>
-      </section>
-
-      <section class="launch-routes" aria-labelledby="launch-routes-title">
-        <div class="launch-heading"><p class="orientation-kicker">Review route</p><h2 id="launch-routes-title">Walk the site in sequence.</h2></div>
-        <ol>
-          {routes.map(([number, label, href, description]) => (
-            <li><a href={href}><span>{number}</span><h3>{label}</h3><p>{description}</p><i aria-hidden="true">Open →</i></a></li>
-          ))}
-        </ol>
-      </section>
-
-      <section class="launch-gates" aria-labelledby="launch-gates-title">
-        <div class="launch-heading"><p class="orientation-kicker">Final audit / 21 August 2026</p><h2 id="launch-gates-title">What passed and what the promotion action must still prove.</h2></div>
-        <ul>
-          {gates.map(([label, description]) => (
-            <li><span aria-hidden="true">◇</span><div><strong>{label}</strong><p>{description}</p></div></li>
-          ))}
-        </ul>
-      </section>
-
-      <section class="launch-release" aria-labelledby="launch-release-title">
-        <div><p class="orientation-kicker">Scott’s direction / approved to promote</p><h2 id="launch-release-title">Carry the reviewed surface intact into release.</h2></div>
-        <p>The remaining work is operational: preserve the exact reviewed paths in Git, publish through the established production route, and inspect the deployed pages directly. The approval does not add analytics, forms, new claims, or capabilities beyond this reviewed surface.</p>
-      </section>
-    </main>
-    <footer class="research-footer"><span>Hearth &amp; Code · local launch review</span><span>No external release yet</span><a href="/">Begin the review ↑</a></footer>
-  </body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><title>Modular Surface Review · Hearth &amp; Code</title></head><body>
+<StudioNavigation current="research" disposition="Local review / modular reconciliation · 2 October 2026" />
+<main id="page-main"><ResearchProjectFrame eyebrow="Local review / 2 October 2026" title="A smaller surface. More ways into the work." summary="Review the modular reconciliation pass: repaired article reading fields, interactive Methods layers, a new character sheet, focused Research Program studies, and consistent Questions typography." status="Review candidate · goal active" facts={[{label:'Scope',value:'Local landing candidate'},{label:'Layout checks',value:'1440 / 390 / 320 pixels'},{label:'Interactions',value:'Tabs, keyboard, selectors, section links'},{label:'Release',value:'No production publication'}]} sections={[{id:'updated-surfaces',label:'Updated surfaces'},{id:'review-boundaries',label:'Limits & next review'}]} returnHref="/" returnLabel="Return to Studio">
+<section class="program-directory-grid" id="updated-surfaces" aria-label="Updated review surfaces">{routes.map(([title,href,note])=><a href={href}><h2>{title}</h2><p>{note}</p><span>Review surface →</span></a>)}</section>
+<section class="program-study-related" id="review-boundaries"><h2>Evidence and remaining boundaries</h2><p>All 25 browser checks passed, including audience journeys, visible keyboard focus, method-sheet deep links, article families, and source-status boundaries. An additional scoped check exercised all seven program frames, both repaired articles, Methods, Questions, and Dossier at 1440, 390, and 320 pixels, including arrow-key tab navigation and legacy anchors, with no client runtime errors. These checks establish the specified layout and interactions; human review of clarity and design remains open.</p><p>The 128 technique demonstrations retain their exact prompt-bound receipts: 113 validated records and 15 review holds. No new model evaluations were run for this layout pass.</p><p>{privateLocalReview ? "Finalized for private local review: the separate 512-template catalog is available under Methods → Prompt Catalog → Task templates, with search, declared inputs, local previews, and provenance. Its data stays outside the public repository and ordinary build." : "The separate internal 512-template catalog stays private. This build contains the 128 applied technique prompts; the private local review provides the separate task-template browser."}</p><p>Research dispositions remain public explanatory projections. Hypothetical character-sheet scores are design values. Fieldcraft’s Lean-style proof claims remain unverified. Publication and Git release remain separate actions.</p></section>
+</ResearchProjectFrame></main></body></html>

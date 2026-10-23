@@ -3,7 +3,7 @@ title: "Every Claim Needs a Trail Back Home"
 date: "2026-08-12"
 labels: [evidence, inference, proposal, open-question]
 sources:
-  - "Reviewed internal research artifact: public-safe Governance Lab mechanism and synthetic-fixture documentation"
+  - "Hearth & Code Field Journal canonical revision 7 (2026-08-13): Governance Lab version 0.0.26, exercised in a synthetic disposable Obsidian vault. Its review packet explicitly says it does not establish usability, accessibility, effectiveness, public release, live Hub connection, runtime integration, provider safety, or human approval."
   - "W3C PROV-O, https://www.w3.org/TR/prov-o/"
   - "W3C Web Annotation Data Model, https://www.w3.org/TR/annotation-model/"
   - "Obsidian Developer Documentation, https://docs.obsidian.md/"
@@ -11,7 +11,7 @@ status: published
 pilot: false
 reviewGate: true
 slug: "every-claim-needs-a-return-route"
-description: "A working tour of an Obsidian governance plugin and a design argument for keeping sources, projections, human decisions, effects, and correction trails distinct in AI-assisted systems."
+description: "A dated case study of the Governance Lab 0.0.26 Obsidian prototype, its source and effect boundaries, and what that historical account does not establish about current runtime status."
 author: "Scott Rallya"
 tags: [field-journal, governance-lab, obsidian, provenance, agentic-engineering, human-gates, correction]
 published_date: "2026-08-13"
@@ -20,7 +20,10 @@ reading_time_minutes: 10
 claim_map:
   - claim: "The documented plugin prototype separates bounded projections, proposal-only workflow transitions, immutable packet operations, and a manual provider-neutral exchange."
     label: evidence
-    source: "Reviewed public-safe Governance Lab mechanism and synthetic-fixture documentation."
+    source: "Field Journal revision 7's direct source review of Governance Lab 0.0.26 and its synthetic-vault fixtures; bounded to the documented prototype at that revision."
+  - claim: "This August 2026 account of version 0.0.26 does not establish the prototype's current runtime status, usability, accessibility, or effectiveness."
+    label: inference
+    source: "Field Journal revision 7 source-review packet's non-proofs plus the account's dated, version-bound scope."
   - claim: "Provenance can make reasoning inspectable but cannot establish truth, wisdom, authorization, or effectiveness."
     label: inference
     source: "Interpretation of the documented mechanism boundaries and current evidence limits."
@@ -28,7 +31,7 @@ claim_map:
     label: proposal
     source: "Scott-led design proposition developed through the Governance Lab prototype."
   - claim: "When does returnability become supportive structure, and when does it become burdensome ceremony?"
-    label: open-question
+    label: unknown
     source: "Unresolved design question; no current usability or scale study."
 ---
 
@@ -46,7 +49,7 @@ Agentic systems intensify that experience. They can retrieve, compare, transform
 
 That is where the old questions return. What supports this? What changed between source and answer? Who is responsible for the meaning? What happens when the evidence changes next Tuesday?
 
-The current Hearth & Code Governance Lab is my attempt to make those questions operational inside a familiar tool: Obsidian. It is a local plugin prototype, tested against a synthetic disposable vault. Its most important feature is not that it renders forms, dashboards, schemas, or workflows. Its important feature is that each of those surfaces is constrained to say what kind of thing it is and what it is not allowed to do.
+In this August 2026 field note, I use the Hearth & Code Governance Lab prototype—version 0.0.26 at the time—to explore those questions inside a familiar tool: Obsidian. It was tested against a synthetic disposable vault. The point is not the forms, dashboards, schemas, or workflows themselves; it is whether each surface says what kind of thing it is and what it may do. This versioned account does not establish current runtime status, usability, accessibility, or effectiveness.
 
 The design begins with a modest proposition:
 
@@ -143,25 +146,25 @@ The symbols are not decorative warnings. They are type boundaries for human and 
 
 ## Bench: opening the provenance joints
 
-The native governance dashboard begins from one explicitly selected Markdown note. It reads that note's body once to compute a SHA-256 digest, then follows only declared one-hop relationship fields, with a ceiling of twelve relationships. It does not search the vault, crawl every link, infer a hidden graph, read linked note bodies, or build a second index behind the user's back.
+In the reviewed v0.0.26 design, the native governance dashboard began from one explicitly selected Markdown note. The reviewed implementation read that note's body once to compute a SHA-256 digest, then followed only declared one-hop relationship fields, with a ceiling of twelve relationships. It was scoped not to search the vault, crawl every link, infer a hidden graph, read linked note bodies, or build a second index behind the user's back. These are claims about the inspected version, not a current runtime check.
 
-From those bounded sources, it can render seven small projections: program status, active lanes, pending seals, review queue, programs, threads, and handoffs. Each view exposes the selected source, digest, admitted scope, provenance stages, diagnostics, and prohibited effects.
+The reviewed version was designed to render seven small projections from those bounded sources: program status, active lanes, pending seals, review queue, programs, threads, and handoffs. Each view was specified to expose the selected source, digest, admitted scope, provenance stages, diagnostics, and prohibited effects.
 
 There is a useful design lesson hiding here. A dashboard usually tries to become omniscient. This one tries to remain accountable.
 
 If a recognized field is absent, the selector produces no row rather than inventing a default. If a linked record is restricted, confidential, or secret, the projection excludes its content and emits a content-free diagnostic. If a relationship is not explicitly declared, the resolver does not infer it because the screen would look better with more data.
 
-The projection can be copied as deterministic JSON. The copied report is still a projection. It carries the route that produced it and a list of effects it cannot perform.
+The reviewed prototype included a deterministic JSON copy route. The copied report remained a projection and carried the route that produced it and a list of effects it could not perform.
 
-This boundedness is not yet evidence that the dashboard helps people make better decisions. It is evidence of a narrower claim: the current contract and tests are designed so that one selected source can produce a small, inspectable view without granting a vault scan, source mutation, Hub write, network call, or publication effect.
+This boundedness is not evidence that the dashboard helps people make better decisions. The narrower, version-bound claim is that the v0.0.26 contract and cited tests were designed so one selected source could produce a small, inspectable view without granting a vault scan, source mutation, Hub write, network call, or publication effect.
 
 That may sound humble. In agentic engineering, humble boundaries are load-bearing.
 
 ## Grain: grammar before motion
 
-The Schema and Workflow Studio takes the next step. An `hcc-studio` fence in Markdown can describe a governed record schema and a fail-closed workflow: record types, fields, vocabularies, invariants, migrations, states, actors, guards, proposal-only effects, recoveries, HumanGates, transitions, and receipts.
+In that prototype account, the Schema and Workflow Studio was the next described surface. An `hcc-studio` fence in Markdown could describe a governed record schema and a fail-closed workflow: record types, fields, vocabularies, invariants, migrations, states, actors, guards, proposal-only effects, recoveries, HumanGates, transitions, and receipts.
 
-The rendered design can be opened and inspected in layers. The source remains visible and editable. Unknown fields fail closed. Power-of-two ceilings constrain the size of collections without demanding that every design fill all the available slots.
+The review describes a rendering that exposed the design in inspectable layers while keeping its source visible and editable. The v0.0.26 contract specified fail-closed handling for unknown fields and power-of-two ceilings for collection sizes; this article review does not establish that a current installation still behaves that way.
 
 A transition might declare:
 
@@ -179,7 +182,7 @@ recovery: fail-closed
 
 The important line is not the arrow from `candidate` to `awaiting-review`. It is the separation among the actor, the guard, the proposed effect, the recovery path, and the HumanGate.
 
-The current Studio can validate that these references form a coherent graph. Its transition inspection still reports `advancement: prohibited`. There is no “execute transition” button hiding at the bottom of the card. The map can be exact without pretending it has walked the territory.
+The reviewed v0.0.26 Studio contract and fixtures described validation of these references as a coherent graph. Its transition inspection reported `advancement: prohibited`, with no transition-execution control in the reviewed surface. That version's map could be exact without pretending it had walked the territory; the cited review does not establish current runtime behavior.
 
 <HumanGateCircuit
   title="A transition can be valid and still remain still"
@@ -194,9 +197,9 @@ This is where type theory, governance, and interface design meet over the same p
 
 ## Forge: building the return before the goal
 
-The most tangible return trail in the prototype is a create-only response-packet canary. A person answers a governed worksheet, previews the exact target path, digest, byte count, and YAML bytes, then confirms a new immutable packet. The plugin reads the created file back and compares it with the preview.
+The reviewed v0.0.26 account centers its return trail on a create-only response-packet canary. A person answered a governed worksheet, previewed the exact target path, digest, byte count, and YAML bytes, then confirmed a new immutable packet. The reviewed implementation read the created file back and compared it with the preview.
 
-It can create a successor packet for an amendment. It cannot overwrite the first packet, append to it, rename it, delete it, alter the worksheet, scan the vault, or route the answer into the canonical Hearth & Code Hub.
+The operation described for that version could create a successor packet for an amendment. It was scoped not to overwrite the first packet, append to it, rename it, delete it, alter the worksheet, scan the vault, or route the answer into the canonical Hearth & Code Hub.
 
 That design resembles a blacksmith leaving each heat visible in the metal rather than grinding the earlier shape away. The literal mechanism is an immutable revision chain:
 
@@ -239,9 +242,9 @@ This is a small local experiment, not a complete provenance architecture. It doe
 
 Sooner or later, a knowledge workbench needs to converse with a model. The tempting route is to bolt a provider call directly into the interface and let convenience settle the architecture.
 
-The Governance Lab currently takes the slower, more revealing route. Its provider-neutral exchange assembles a fixed prompt packet from explicitly embedded, digest-verified source data. The human presses a button to copy that packet, chooses whether and where to send it, then may paste raw YAML back for bounded validation in memory.
+The reviewed v0.0.26 design took the slower, more revealing route. Its provider-neutral exchange assembled a fixed prompt packet from explicitly embedded, digest-verified source data. The human copied that packet, chose whether and where to send it, then could paste raw YAML back for bounded validation in memory.
 
-There is no provider binding, credential store, network call, automatic source read, or persistent import. The exchange records that the destination is user-selected and provider retention is unknown. Restricted data is not admitted. A valid returned candidate remains proposal-only.
+The reviewed exchange was specified without a provider binding, credential store, network call, automatic source read, or persistent import. Its record identified the destination as user-selected and provider retention as unknown. Restricted data was excluded; a valid returned candidate remained proposal-only. These are documented v0.0.26 boundaries, not claims about the current runtime.
 
 This manual bridge is not the final architecture. It is a calibration instrument. It lets us examine instruction/data separation, disclosure, source-set digests, output contracts, import validation, and human responsibility before automation hides those questions behind a spinner.
 
@@ -324,3 +327,8 @@ The horizon keeps moving. Good. There is more work to do.
 - W3C, [PROV-O: The PROV Ontology](https://www.w3.org/TR/prov-o/).
 - W3C, [Web Annotation Data Model](https://www.w3.org/TR/annotation-model/).
 - Obsidian, [Developer documentation](https://docs.obsidian.md/).
+## A claim-to-artifact trace for working engineers
+
+Take a benchmark statement such as “the planner completes multi-step tasks more reliably.” An agentic researcher needs the benchmark version, task sampling, scoring rule, model and tool configuration, exclusions, and uncertainty before treating the sentence as evidence. An agentic engineer needs the executable revision, environment, run command, raw result location, and known failure set before using it to justify a product choice. A plot or summary is a projection of those records, never their replacement.
+
+A practical return route links each public claim to its originating artifact and each artifact to the check that can falsify it. The project can propose that graph; it has not yet established that the graph improves review efficiency. A useful pilot asks independent reviewers to recover the basis for a small set of claims and compares accuracy, time, and unresolved ambiguity with an ordinary citation list.

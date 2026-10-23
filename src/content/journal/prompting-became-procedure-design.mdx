@@ -9,11 +9,12 @@ sources:
   - "Internal record: project consolidation markers (one deprecation, one rescope)"
   - "Internal record: the answered fifty-three-question shaping workbook for this article"
   - "Internal record: prompting techniques and agent workflows research brief"
+  - "Internal source inventory (draft, unreviewed): it repeats the reported count and identifies an itemized working directory; neither independently verifies the count for this article. The internal locator and underlying records are not included in this public-facing source list."
 status: published
 pilot: true
 reviewGate: true
 slug: "prompting-became-procedure-design"
-description: "An N=1 field note on how prompting moved from clever phrasing to procedure design: stored goal-prompt contracts, numbered bounded seams, agent-drafted charters, workbooks, and the contracts that become an intelligence layer."
+description: "An N=1 field note on how prompting moved from clever phrasing toward procedure design: stored contracts, bounded tasks, reviewable handoffs, and one practitioner's account of keeping context across sessions."
 author: "Scott Rallya"
 tags: [field-journal, prompting, context-engineering, agent-workflows, governance, exocore, human-agency, build-in-public]
 published_date: "2026-08-08"
@@ -23,18 +24,27 @@ claim_map:
   - claim: "Prompting did not get less important in this practice; it changed shape from phrasing to procedure design."
     label: inference
     source: "First-person field observation of one governed practice over several months; N=1, self-reported."
-  - claim: "Seventeen goal-prompt contracts were stored in one week, most executed in some form."
-    label: evidence
-    source: "Internal artifact listing; an artifact-class claim about stored files, not a productivity claim."
-  - claim: "A contract joins the intelligence layer when it persists across sessions, constrains the next agent without re-prompting, and can be inspected and revised as an object."
+  - claim: "The article reports that seventeen goal-prompt contracts were stored during one week in August 2026, most used in some form."
+    label: source
+    source: "Scott's first-person account in this article; this records what the author reports, not an independently verified count."
+  - claim: "The underlying itemized prompt list and execution records were not available in the Hub checkout used for this review, so the count and execution status remain independently unverified."
+    label: unknown
+    source: "The article names an internal goal-prompt listing, but no such directory or itemized register is present in the checked Hub source tree."
+  - claim: "The article uses 'intelligence layer' as an author-defined design term for persistent contracts and related records; its practical claim is improved task-context continuity, not that the records are literally intelligent or improve every model."
     label: inference
     source: "Interpretation of the practice; offered as the article's central defensible claim."
+  - claim: "The eight claim labels are source, evidence, inference, hypothesis, proposal, projection, receipt, and unknown; Plan is a distinct artifact kind."
+    label: source
+    source: "Hearth & Code Knowledge Hub root AGENTS.compact.md §3 and CTP catalog record kinds; local article projection."
   - claim: "Write one goal as a stored contract with outcome, boundaries, and a stop condition, then review what it caught."
     label: proposal
     source: "Suggested smallest honest experiment for readers; not a validated method."
-  - claim: "Whether these principles transfer beyond one practice remains open."
-    label: open-question
-    source: "N=1 boundary; convergence with other practitioners is anecdotal."
+  - claim: "No evidence is presented that the specific approach transfers to other agentic systems; similar concerns heard from peers are anecdotal."
+    label: unknown
+    source: "N=1 boundary; no systematic comparison or independent study is presented."
+  - claim: "The draft-comparison miniature shows one way to express a bounded prompting contract; it is fictional and was not run or evaluated."
+    label: projection
+    source: "Editorial teaching example added to this local article projection; no prompt execution or reader study is claimed."
 ---
 
 import FieldStudyFrame from '../../components/journal/FieldStudyFrame.astro';
@@ -47,6 +57,7 @@ A while back, in a voice chat I was half-listening to, somebody made a claim I h
 The problem that forced the change was not productivity. I work with AI-assisted artifacts constantly: plans, specs, drafts, reviews. Returning to one of those artifacts a week later, the hard part is not its fluency. The hard part is provenance. Which parts came from a source I had approved? Which parts were the model's interpretation? Did that first-person sentence have any basis in something I actually said? A fluent artifact hides those seams, and I underestimated how expensive it is to reconstruct them after the fact.
 
 <FieldStudyFrame
+  idPrefix="procedure-design-field-study"
   title="How I am reading my own practice"
   framing="First-person field note (N=1)"
   unit="One practitioner, one governed agent practice, several months"
@@ -60,7 +71,7 @@ The problem that forced the change was not productivity. I work with AI-assisted
 
 So I rebuilt the practice around contracts instead of messages. The pieces, each in short:
 
-**Goal prompts as stored contracts.** A goal prompt in my system names the outcome, the sources to read first, the paths the agent owns, the paths it must not touch, the human gates, the stop conditions, and the definition of done. Some target a single artifact; others coordinate twelve or fifteen waves of work across weeks. They have evolved into real documents: five hundred to fifteen hundred lines, broken into discrete sections an agent can navigate, and I stored seventeen of them in one week this month. Most have been executed in one form or another, which matters; a contract library that never fires is just paperwork.
+**Goal prompts as stored contracts.** A goal prompt in my system names the outcome, the sources to read first, the paths the agent owns, the paths it must not touch, the human gates, the stop conditions, and the definition of done. Some target a single artifact; others coordinate twelve or fifteen waves of work across weeks. They have evolved into real documents: five hundred to fifteen hundred lines, broken into discrete sections an agent can navigate. In one week in August 2026, I recorded seventeen of them, most used in some form. This is my first-person account; the itemized list is not included here, so readers should treat the count and execution status as unverified rather than as an independently audited result. A contract library that never fires is just paperwork.
 
 <TermNote
   term="Goal prompt"
@@ -87,6 +98,7 @@ And the newest piece, also the most meta: **workbooks**. A workbook, in my pract
 />
 
 <GovernedFlow
+  idPrefix="procedure-design-governed-flow"
   title="What one governed run looks like"
   introduction="The loop every contract-driven run follows, whether it lasts an hour or a month."
   steps={[
@@ -101,20 +113,26 @@ And the newest piece, also the most meta: **workbooks**. A workbook, in my pract
 
 ## The library that grew from the prompts
 
-The part I did not expect: once prompts became files, the files started behaving like a library. My hub has thirteen wings, each with a local charter an agent must read before writing there. It has a governance grammar that defines what kind of thing an artifact is:
+The part I did not expect: once prompts became files, the files started behaving like a library. My Hub is organized into wings, each with a local charter that guides work in that area. Its governance grammar separates the evidentiary role of a claim from the kind of record that carries it. These are the eight claim labels I use:
 
-| Class | What it means here |
-| --- | --- |
-| Source | the current canonical record |
-| Evidence | a checkable observation |
-| Inference | a conclusion with its assumptions visible |
-| Hypothesis | a testable explanation, never settled fact |
-| Proposal | a candidate action awaiting its gate |
-| Plan | a bounded coordination record |
-| Projection | a derived view that can never replace its source |
-| Receipt | process history with stated limits |
+<table tabIndex={0} aria-label="Eight epistemic claim labels and their meanings">
+  <caption>Eight epistemic claim labels and their meanings</caption>
+  <thead>
+    <tr><th scope="col">Class</th><th scope="col">What it means here</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">Source</th><td>the current canonical record</td></tr>
+    <tr><th scope="row">Evidence</th><td>a checkable observation</td></tr>
+    <tr><th scope="row">Inference</th><td>a conclusion with its assumptions visible</td></tr>
+    <tr><th scope="row">Hypothesis</th><td>a testable explanation, never settled fact</td></tr>
+    <tr><th scope="row">Proposal</th><td>a candidate action awaiting its gate</td></tr>
+    <tr><th scope="row">Projection</th><td>a derived view that can never replace its source</td></tr>
+    <tr><th scope="row">Receipt</th><td>process history with stated limits</td></tr>
+    <tr><th scope="row">Unknown</th><td>an explicit gap, not permission to guess</td></tr>
+  </tbody>
+</table>
 
-It has decision records; one project carries nine numbered architecture decisions, including a rule that a projection layer never gets write-back authority over its sources. It has consolidation records that let the system say no: this month I deprecated one planned application and re-scoped another, and both decisions survive as first-class records instead of vanishing into a chat scroll. And it has operational charters for the work itself: workflows, skills, agent profiles, and the per-directory charter files that tell an agent how to behave in each room of the library.
+A Plan is a separate artifact kind in the catalog, not a ninth claim label. Other record types include decision records and consolidation records that preserve choices such as deprecating a planned application or re-scoping a project. The Hub also has operational charters for workflows, skills, agent profiles, and the per-directory guidance for work in different parts of the library.
 
 ## Two failure modes
 
@@ -129,7 +147,7 @@ Two failure modes taught me the shape of the thing. The first is the contract th
 
 ## The claim I want to defend
 
-Which brings me to the claim I actually want to defend. The intelligence layer in my system is not the model. Models are interchangeable; I route between several. The intelligence layer is the accumulated contracts around the model, and I can tell you exactly when a contract joins that layer: when it persists outside any single session, when the next agent can read it and be constrained by it without being re-prompted, and when I can inspect and revise it as an object rather than reconstruct it from memory. A rule you have to repeat is a prompt. A rule the system carries is infrastructure. Charters, decision records, review states, knowledge labels, no-touch boundaries: that is what makes the next session smarter than a fresh start.
+Which brings me to the claim I actually want to defend. I use “intelligence layer” as a design term for the persistent material around a model in my system: contracts, charters, decision records, review states, knowledge labels, and no-touch boundaries. I route between several models, so those records help keep task context available when the model or session changes. I count a contract as part of that layer when it persists outside one session, the next agent can read and follow it without my repeating it, and I can inspect and revise it as an artifact. This is a claim about how I organize my system, not evidence that records are themselves intelligent or that they improve every model. Their practical value is that a later session can start with more of the task's context visible.
 
 ## Three objections, met on their feet
 
@@ -139,10 +157,28 @@ I expect three objections, and I want to meet them on their feet. First: prompti
 
 If you want to test this yourself, here is the smallest honest version: before your next significant run, write the goal down as a stored contract with the outcome, the boundaries, and the stop condition named; keep it where you can find it next week; and when the run ends, note what the contract caught and what it missed. That is the whole seed. Everything in my system grew from repeating that motion and keeping the receipts.
 
+### A fictional example
+
+Suppose you have two drafts of an onboarding note and want to know whether a new engineer can tell what an agent may do and where a person must decide. A loose request might be: “Which draft is better?” A small contract makes the comparison inspectable:
+
+- **Task:** Compare the two supplied drafts on that one reader question.
+- **Use:** Only the text provided; do not infer what a live system or policy does.
+- **Return:** For each draft, quote the wording that answers the question. Separate what the text states from your interpretation, then list any missing information.
+- **Boundary:** Do not edit either draft or decide which one to publish.
+- **Stop:** End after the comparison and name one question the author could resolve.
+
+This is a fictional teaching example, not a prompt run or an evaluated result. The contract makes the requested comparison and its limits visible; it does not make the comparison correct by itself.
+
 ## Limits, held loosely
 
-I want to be plain about the limits. This is a build-in-public field journal about one person's practice, not a validated method; nothing here comes with productivity deltas or outside validation. Hearth & Code is also a special case in some respects; it grew around how I think. But the principles, centralized routing, structured artifacts, governing grammars in the orchestration layer, are things I hear other practitioners converging on independently, and my working theory is that they transfer to agentic systems generally. Held loosely, like everything here.
+I want to be plain about the limits. This is a field journal about one person's practice, not a validated method; it comes with no productivity comparison or independent validation. Hearth & Code is also a special case in some respects; it grew around how I think. I have heard similar concerns from other practitioners, but I have not collected evidence that the specific approach here transfers to other agentic systems. Treat it as a candidate to inspect and adapt, not a recipe with demonstrated general results. Held loosely, like everything here.
 
-So, back to the voice chat. Prompting as clever phrasing is dying, and good riddance; the models outgrew it. Prompting as procedure design is the actual skill, and autonomous agents raise its value, because an agent that does more on its own can also fail at greater scale, with more confidence, further from your attention. The contract is what you build for exactly that case. I will keep reporting what mine catch, and what they cost.
+So, back to the voice chat. In my practice, prompting has been shifting from clever phrasing toward procedure design. I expect that balance to keep changing as models and agent workflows change. When an agent works across tools or sessions, I still need ways to state boundaries and inspect what happened. A contract is one candidate for that job, not a requirement for every task. This is a position from my own practice, not evidence that agents always fail at greater scale or that contracts prevent those failures. I will keep reporting what mine catch, and what they cost.
+
+## A procedure-design case for a consequential task
+
+Imagine an agent asked to update a data migration. The contract should name the source schema and target revision, the invariants that must survive, prohibited data changes, the tests that qualify the candidate, and the exact return format. The agent may draft a migration and run released local checks; a database write or production rollout remains a separate transition requiring its own scope and operator. For research, the same structure binds corpus, inclusion rules, extraction fields, uncertainty, and a return that distinguishes source statements from synthesis.
+
+The engineering question is not whether more specification is always safer. Compare a concise instruction and a structured brief on matched tasks. Record omitted constraints, invalid outputs, repair effort, time-to-review, and any case where form encouraged false confidence. **Hypothesis:** explicit interfaces help when handoffs or correction costs are material; the article does not report a controlled comparison proving that claim.
 
 *AI assistance disclosure: AI assisted with research, drafting, and the language-pattern audit of this post. The practice described, the workbook questions and answers, the review judgments, and the posting decision are mine.*

@@ -19,7 +19,7 @@ const { title, introduction, volumes } = Astro.props;
     <h3 id="volume-atlas-title">{title}</h3>
     <p class="volume-atlas-intro">{introduction}</p>
   </figcaption>
-  <ol class="volume-atlas-spine" role="list">
+  <ol class="volume-atlas-spine" role="list" tabindex="0" aria-label="Volume navigation">
     {
       volumes.map((v, i) => (
         <li class="volume-atlas-entry">

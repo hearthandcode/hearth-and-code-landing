@@ -1,0 +1,42 @@
+{
+  "schema_version": "hc.prompt-technique-subagent-run.v1",
+  "status": "contains-superseded-and-current-records",
+  "note": "The first run was superseded because its prompt did not match the current task packet. The second run is retained as superseded. The third run is the current response to the fixture-bearing prompt and was independently reviewed for relevance. None is general efficacy evidence.",
+  "runs": [
+    {
+      "technique_slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+      "technique_number": 2,
+      "runner": "Codex child agent; model identity not recorded",
+      "run_date": "2026-10-02",
+      "prompt_sha256": "04d9e4f51a236fc60035b8afaa8fb5469499df5f4c9a27f747ba2297a517ddbe",
+      "response_sha256": "f2df83e6f433552ce72bbe95e6521d53e6dba048d78d2d6a1f3c0bdf1363a73e",
+      "prompt": "Task: Reconcile a proposed knowledge-graph change with its named schema and source records; return the change set, unresolved conflicts, and a review gate.\n\nUse this operating principle: For Instruction Hierarchy and Precedence, it constructs alternatives that differ in mechanism, not wording, and requires a local comparison of benefits, costs, and disconfirming evidence; the response must keep source, evidence, inference, proposal, and receipt roles distinct.\n\nKeep supplied sources, assumptions, and observations distinguishable. Do not invent missing facts, claim unperformed checks, or take external actions.\n\nGenerate two materially different routes, their benefits and costs, and a route-specific observation that would rule each one out.\n\nReturn the requested artifact, the most important check and its result, material uncertainty, and the next human decision. If required inputs are missing, hold only the dependent conclusion and name the smallest useful question.",
+      "response": "**Source:** The supplied task requests reconciling a proposed knowledge-graph change with a named schema and source records. It provides no proposal, schema, or source records.\n\n**Change set:** Held. Without those inputs, I cannot identify graph edits or determine whether the proposal conflicts with the schema or source records.\n\n**Routes**\n\n1. **Direct field reconciliation:** Compare each proposed field change with the named schema and corresponding source records, then return supported edits and conflicts. Benefit: produces a concrete, traceable change set in one pass. Cost: depends on having complete, identifiable inputs. **Disconfirming observation:** a required source record is missing or does not identify the affected field.\n2. **Staged reconciliation docket:** First bind the proposal’s affected fields to schema and source locators; then classify each as supported, conflicting, or unresolved for review. Benefit: exposes gaps and provenance before proposing edits. Cost: adds a step and may defer the change set. **Disconfirming observation:** the supplied proposal and records already provide complete, unambiguous field-to-source bindings, making the staged step redundant.\n\n**Unresolved conflicts:** Unknown. No comparison was possible with the supplied information.\n\n**Most important check:** Whether each proposed field change can be matched to its schema definition and supporting source record. **Result:** Not performed; the required inputs were not supplied.\n\n**Assumptions:** None used to fill missing facts. **Inference:** The requested reconciliation cannot yet establish a supported change set. **Proposal:** Supply the proposal, named schema version, and relevant source records. **Receipt:** No external action or check was performed.\n\n**Review gate:** Keep the graph change pending until a reviewer can inspect the field-level comparison and resolve any conflicts.\n\n**Next human decision:** Which proposed change, schema version, and source records should be reconciled?",
+      "source_facts_supplied": false,
+      "external_effects": [],
+      "status": "superseded",
+      "superseded_reason": "Prompt had no supplied graph proposal, schema, or source records; replaced by the matched synthetic-mathematics fixture prompt."
+    },
+    {
+      "technique_slug": "06-contrastive-fork-instruction-hierarchy-and-precedence",
+      "technique_number": 2,
+      "source_id": "PTA-001-006",
+      "runner": "Codex child agent: technique_runs_001; model identity not recorded",
+      "run_date": "2026-10-02",
+      "status": "current-sample",
+      "prompt_sha256": "8cba1f11756ed65c7aa2c7e0b7033d21bc1b0f152109f3fbcf7840f0b1bf324e",
+      "response_sha256": "b40ceb94e1e30ceb99c9b96e377968215daf8b0a4e31359262267ffe0cc72702",
+      "prompt": "Task: Fictional mathematics fixture. Claim: n²+n is even for every integer n. A draft proof says n²+n=n(n+1), and one of two consecutive integers is even. Check the argument, state its assumptions, and identify a counterexample or explain why the claimed search cannot find one.\n\nUse this operating principle: For Instruction Hierarchy and Precedence, it constructs alternatives that differ in mechanism, not wording, and requires a local comparison of benefits, costs, and disconfirming evidence; the response must keep source, evidence, inference, proposal, and receipt roles distinct.\n\nThe fixture is fictional and supplied only for this demonstration. Keep source facts, assumptions, and observations distinguishable. Do not invent facts, claim unperformed checks, or take external actions.\n\nGenerate two materially different routes, their benefits and costs, and a route-specific observation that would rule each one out.\n\nReturn the requested artifact, the most important check and its result, material uncertainty, and the next human decision. If required inputs are missing, hold only the dependent conclusion and name the smallest useful question.",
+      "response": "Source: The fictional prompt states n²+n is even for every integer n and supplies the rewrite n²+n=n(n+1), together with the fact that one of two consecutive integers is even. The domain assumption is n∈ℤ.\n\nRoute A — Factor and use adjacency. From n²+n=n(n+1), the factors differ by one, so one is even; their product is even. Benefit: one short argument handles every integer, including negative integers. Cost: it relies on the consecutive-integer parity fact. A route-specific disconfirmation would be an integer n for which n and n+1 are both odd; that cannot occur for integers. A verified odd value of n²+n would also contradict the route’s conclusion.\n\nRoute B — Split by parity. If n=2k, then n²+n=2k(2k+1), which is even. If n=2k+1, then n²+n=(2k+1)(2k+2)=2(2k+1)(k+1), also even. Benefit: the parity cases are explicit and do not rely on the adjacency lemma as a named step. Cost: it is longer and still uses the exhaustive even/odd classification of integers. A route-specific disconfirmation would be an integer k in either case producing an odd result; the displayed factorizations show neither case does.\n\nInference: both routes establish the claim under n∈ℤ. There is no integer counterexample, so a search over integers cannot find one; a finite search would not itself prove universality. Most important check: verify each factorization and that the factor 2 is present in each relevant product; both checks succeed by algebra. Material uncertainty: none within the stated domain; no computation or external check was performed. Next human decision: choose the shorter adjacency proof or the explicit case split for presentation, or request formal verification if needed.",
+      "source_facts_supplied": true,
+      "fixture_group": 1,
+      "external_effects": [],
+      "efficacy_claim": "none",
+      "semantic_status": "responsive",
+      "execution_mode": "subagent_batch_member",
+      "semantic_review": "Prompt-response relevance reviewed independently against exact current packet; algebra and route requirements pass.",
+      "semantic_reviewed_by": "prompt_atlas subagent",
+      "semantic_reviewed_at": "2026-10-02"
+    }
+  ]
+}

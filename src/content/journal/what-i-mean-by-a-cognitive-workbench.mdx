@@ -4,7 +4,7 @@ date: "2026-07-15"
 labels: [proposal, inference, open-question]
 sources:
   - "Field Journal Editorial Contract, Sections 1, 4, and 5"
-  - "Human-reviewed Hub editorial source: What I Mean by a Cognitive Workbench"
+  - "Scott-approved Hub article: What I Mean by a Cognitive Workbench; its separate source-boundary and claim-label verification remains pending."
 status: published
 pilot: true
 reviewGate: true
@@ -17,18 +17,18 @@ published_order: 1
 claim_map:
   - claim: "Cognitive workbench is my working name for an evolving practice. It has not settled into a software category."
     label: proposal
-    source: "Human-reviewed Hub editorial source: What I Mean by a Cognitive Workbench"
+    source: "Scott-approved first-person Hub article; source-boundary and claim-label verification remains pending."
   - claim: "A tool harness may move tasks along without keeping the reasons, evidence, and rules around them in view."
     label: inference
-    source: "Human-reviewed Hub editorial source: What I Mean by a Cognitive Workbench"
+    source: "Scott-approved first-person Hub article; source-boundary and claim-label verification remains pending."
   - claim: "A person should stay visible in decisions that change a durable record, make a public claim, speak outward, or delete work."
     label: proposal
     source: "Field Journal Editorial Contract, Sections 1, 4, and 5"
-  - claim: "What would you need to see, control, and keep before you trusted a system to carry some of your work?"
-    label: open-question
-    source: "Human-reviewed Hub editorial source: What I Mean by a Cognitive Workbench"
+  - claim: "What a reader needs to see, control, and keep before trusting a system with some of their work remains unknown."
+    label: unknown
+    source: "Scott-approved first-person Hub article; source-boundary and claim-label verification remains pending."
 reading_time_minutes: 6
-featured_image: "/images/posts/exocore-workbench.png"
+featured_image: "/images/exocore-workbench.png"
 featured_image_alt: "A pair of hands working at a wooden bench with a map, hand tools, and small mechanical devices set aside as bounded aids."
 ---
 
@@ -40,7 +40,7 @@ By a cognitive workbench, I mean a place a person owns where notes, evidence, de
 
 That definition is deliberately provisional. It is working language for an experiment, offered for inspection rather than as a category anyone else needs to adopt.
 
-### More than a tool harness
+## More than a tool harness
 
 A tool harness can coordinate useful work. It can call services, pass work between steps, run a bounded task, and return an output. I want those capabilities. A harness is part of what makes a workbench useful.
 
@@ -50,7 +50,7 @@ A second-brain metaphor names another valuable practice: gathering, connecting, 
 
 For this project, the workbench is where those concerns meet. Knowledge organization and governance can sit beside knowledge synthesis, without either one standing in for the person's judgment.
 
-### The work around the work
+## The work around the work
 
 A surprising amount of effort goes into the work around the work. It goes into finding the relevant note, reconstructing a decision, checking whether a claim is ready to carry forward, remembering which project room is active, and deciding whether a new idea belongs in the current task or somewhere safe to wait.
 
@@ -60,7 +60,7 @@ The proposal behind Exocore is that some of this coordination can be scaffolded.
 
 The test is whether a system helps the person stay oriented and able to exercise judgment.
 
-### Where authority stays human
+## Where authority stays human
 
 I want tools and agents to carry bounded work. I also want a visible path back to the person when a result might affect a durable record, a public claim, an outward-facing message, or the conditions for returning to work later.
 
@@ -70,13 +70,13 @@ Some actions deserve a different kind of pause. Publishing something in a person
 
 That is a practical boundary around agency. If the system routed a piece of work, delegated a task, recommended a change, or held something for review, the person should be able to see enough of that trail to correct the rule next time. A visible record can turn a vague sense that something went wrong into a question that can actually be answered.
 
-### Ownership is a trade-off
+## Ownership is a trade-off
 
 The workbench I am exploring is local-first because I value a durable copy of my own work and some continuity when a connection or hosted service is unavailable, while also knowing that this direction has costs in syncing, backups, storage, recovery, and redundancy, and that a hosted service may be the better choice when it provides a recovery path I cannot sustain or when tending the infrastructure costs more than local control gives back.
 
 Local ownership is a design trade-off. It earns its place when it makes the work more returnable, more durable, and more available to the person doing it.
 
-### An experiment in the Forge
+## An experiment in the Forge
 
 The first Journal entry describes the Hearth: a record I can return to without mistaking private material for public evidence. This entry turns toward the Forge: the place where an idea gets shaped, checked, and reshaped.
 
@@ -85,3 +85,8 @@ Exocore is still an experiment in that forge. I am making assumptions, learning 
 That uncertainty matters. A cognitive workbench offers no promise that thinking becomes easy. It is a proposal to make the work around thinking more visible, more governable, and less likely to pull the person away from the work they actually care about.
 
 What would you need to see, control, and keep before you trusted a system to carry some of your work?
+## A concrete workbench interface for a mixed research build
+
+Suppose a team is testing a retrieval-augmented research assistant. The workbench should expose the corpus revision and admission rule, retrieval configuration, source spans returned, synthesis candidate, evaluation fixture, observed score, and reviewer disposition. Those are separate artifacts because each can change independently. A dashboard that shows only the aggregate score hides whether a change came from the data, retrieval, prompt, model, or evaluator.
+
+A useful pilot measures whether an operator can reproduce the reported result and identify its limitations after a handoff, while accounting for the cost of maintaining the records. **Proposal:** add a field only when it helps reproduce, review, correct, or retire a decision. The article’s local-first preference is a personal design trade-off; it does not imply that local deployment is safer or more reliable for every team.

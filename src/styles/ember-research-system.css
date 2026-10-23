@@ -41,6 +41,7 @@
 .research-body .orientation-brand-row > p, .research-body .orientation-journal { font-family: var(--ec-mono); font-size: .75rem; }
 .research-body .orientation-journal { color: var(--ec-cyan); }
 .research-body .hearth-navigation ol { min-width: 800px; }
+.research-body .hearth-navigation { max-width: 100%; overflow-x: auto; }
 .research-body .hearth-navigation a { min-height: auto; padding: .82rem .55rem; font: 500 .75rem var(--ec-mono); }
 .research-body .hearth-navigation a[aria-current=page] { color: var(--ec-dark-text); background: var(--ec-ember-surface); box-shadow: inset 0 -2px var(--route-signal); }
 .research-body .hearth-navigation span { color: var(--route-signal); }

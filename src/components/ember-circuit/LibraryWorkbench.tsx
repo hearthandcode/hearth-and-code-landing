@@ -26,13 +26,13 @@ export default function LibraryWorkbench({ articles, fieldcraft = [] }: Props) {
     <AnchorBar label="Library views" items={tabs.map((tab) => ({ ...tab }))} active={active} onSelect={(id) => setActive(id as typeof active)} />
 
     {active === 'reading' && <div className="ec-library-panel" role="tabpanel">
-      <CollectionView eyebrow="Reading room" title="Articles, essays, and Field Journal entries" description="Browse the published record by title, theme, or concern. Each piece keeps its form and reading time visible.">
+      <CollectionView eyebrow="Reading room" title="Articles, essays, and Field Journal entries" description="Browse these reading projections by title, theme, or concern. Earlier publication and current local review status remain distinct; revised copy has not been republished.">
         <div className="ec-article-grid">{visibleArticles.map((article) => <ArticleCard key={article.href} {...article} />)}</div>
       </CollectionView>
     </div>}
 
     {active === 'fieldcraft' && <div className="ec-library-panel" role="tabpanel">
-      <CollectionView eyebrow="Fieldcraft" title="32 runnable field notes" description="Practical techniques with working examples, counterexamples, and source references. Each note is testable rather than merely described.">
+      <CollectionView eyebrow="Fieldcraft" title="32 mathematical design dispositions" description="Review-candidate notes derived from the available index metadata. Each frames a formalization, its proposed evidence and limits, and illustrative TypeScript witnesses; those fixtures do not validate a general law, and the Lean-style shells have not been checked by Lean.">
         <div className="ec-article-grid">{visibleFieldcraft.map((article) => <ArticleCard key={article.href} {...article} />)}</div>
       </CollectionView>
     </div>}

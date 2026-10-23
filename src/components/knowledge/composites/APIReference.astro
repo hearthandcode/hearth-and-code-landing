@@ -31,7 +31,7 @@ const methodColors: Record<string, string> = {
   <p class="kc-api-ref__desc">{endpoint.description}</p>
   {endpoint.params && endpoint.params.length > 0 && (
     <section class="kc-api-ref__section">
-      <h5 class="kc-api-ref__label">Parameters</h5>
+      <p class="kc-api-ref__label">Parameters</p>
       <table class="kc-api-ref__table">
         <thead>
           <tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr>
@@ -54,7 +54,7 @@ const methodColors: Record<string, string> = {
   )}
   {endpoint.response && (
     <section class="kc-api-ref__section">
-      <h5 class="kc-api-ref__label">Response</h5>
+      <p class="kc-api-ref__label">Response</p>
       <div class="kc-api-ref__response">
         <span class="kc-api-ref__status">{endpoint.response.status}</span>
         <span>{endpoint.response.description}</span>

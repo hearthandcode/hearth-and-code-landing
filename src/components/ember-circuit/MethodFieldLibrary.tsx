@@ -28,7 +28,7 @@ export default function MethodFieldLibrary({ methods, labelledBy }: Props) {
   const close = () => dialogRef.current?.close();
 
   return <>
-    <div className="ec-method-summary-grid" role="list" aria-labelledby={labelledBy}>
+    <div className="ec-method-summary-grid" role="group" aria-labelledby={labelledBy}>
       {methods.map((method) => <MethodSummary key={method.id} method={method} onOpen={() => setSelected(method)} />)}
     </div>
     <dialog ref={dialogRef} className="ec-method-sheet" onClose={() => setSelected(null)} onCancel={() => setSelected(null)}>

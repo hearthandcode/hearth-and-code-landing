@@ -1,38 +1,44 @@
 ---
-import HearthNavigation from '../../components/HearthNavigation.astro';
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+import '../../styles/ember-circuit-library.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNavigation from '../../components/StudioNavigation.astro';
 
+import { researchPrograms } from '../../data/research-programs';
 const researchAreas = [
+  ...researchPrograms.filter(p => p.slug !== 'ess').map(p => ({ id:p.slug, title:p.title, description:p.summary, status:'in-development', type:p.kind, href:`/programs/${p.slug}/`, domains:['research','agentic-systems'] })),
   {
     id: 'exocore',
     title: 'Exocore / pi-ember-exocore',
-    description: 'A local-first workbench for agents, knowledge, governance, and return. The Exocore platform provides structured environment for human-AI collaboration.',
+    description: 'A local-first workbench for agent-supported research, source-linked knowledge, governance, and return. The Workbench page explains its current scope and boundaries.',
     status: 'active',
     type: 'software',
-    href: '/exocore',
+    href: '/review/exocore/',
     domains: ['agentic-os', 'knowledge-governance', 'local-first']
   },
   {
     id: 'hcan',
     title: 'HCAN (Human Communication Agent Notation)',
-    description: 'A bounded communication medium for agents and humans. Eight primitives compose into programs that are inspectable, correctable, and returnable.',
+    description: 'A notation for describing messages and bounded effects in human-agent work. Its grammar and validators make a description inspectable; they do not grant permission or prove the described workflow worked.',
     status: 'in-development',
     type: 'specification',
-    href: '/hcan',
+    href: '/hcan/',
     domains: ['communication', 'agents', 'notation']
   },
   {
     id: 'ess',
-    title: 'ESS (Exocore Standard System)',
-    description: 'Standardization work for the agentic OS. Versioned artifacts, conformance profiles, and public-safe reference surfaces.',
-    status: 'active',
+    title: 'ESS (Exocore-Sigil Standard)',
+    description: 'A candidate framework for governed information, representation, symbolic expression, and execution in AI-mediated knowledge work. Its accepted architectural proposal remains distinct from standard adoption and implementation.',
+    status: 'in-development',
     type: 'standard',
-    href: '/programs/',
+    href: '/programs/ess/',
     domains: ['standards', 'conformance', 'public-surface']
   },
   {
     id: 'ember-circuit',
     title: 'Ember Circuit',
-    description: 'A public-facing design language and surface system. Eight layered surfaces with navigable tree structure, supporting multiple audiences.',
+    description: 'A public-facing design system exploring how layered, navigable surfaces can support different readers and return paths.',
     status: 'active',
     type: 'design-system',
     href: '/review/ember-circuit/',
@@ -41,53 +47,53 @@ const researchAreas = [
 ];
 
 const researchMethods = [
-  { name: 'Typed Context & Control Protocol (TCCP)', count: 149 },
-  { name: 'Knowledge Representation Profile (EKRP)', count: 185 },
-  { name: 'Methodological INtelligence Compact (MINC)', count: 150 },
-  { name: 'Sigil (exocore programming language)', count: 179 }
+  { name: 'Typed Context & Control Protocol (TCCP)', detail: 'Frame context, boundaries, and decisions for a bounded task.', href: '/journal/typed-context-for-real-work/', link: 'Read a practical introduction' },
+  { name: 'Knowledge Representation Profile (EKRP)', detail: 'Describe knowledge artifacts, their meaning, and their source relations.', href: '/journal/knowledge-representation-without-a-black-box/', link: 'Read a practical introduction' },
+  { name: 'Methodological Intelligence Compact (MINC)', detail: 'Explore structured notation for inspecting relationships across systems.', href: '/journal/ess-the-thread-between-thought-and-action/', link: 'See it discussed in an ESS proposal' },
+  { name: 'Sigil', detail: 'Explore a candidate notation for expressing constrained operations and their effects.', href: '/journal/ess-the-thread-between-thought-and-action/', link: 'See it discussed in an ESS proposal' }
 ];
 
 const domains = [
-  { name: 'agentic-os', count: 1 },
-  { name: 'knowledge-governance', count: 1 },
-  { name: 'local-first', count: 1 },
-  { name: 'communication', count: 1 },
-  { name: 'agents', count: 1 },
-  { name: 'notation', count: 1 },
-  { name: 'standards', count: 1 },
-  { name: 'conformance', count: 1 },
-  { name: 'public-surface', count: 2 },
-  { name: 'design', count: 1 },
-  { name: 'architecture', count: 1 }
+  { name: 'Agentic systems' },
+  { name: 'Knowledge governance' },
+  { name: 'Local-first design' },
+  { name: 'Communication' },
+  { name: 'Agents' },
+  { name: 'Notation' },
+  { name: 'Standards' },
+  { name: 'Conformance' },
+  { name: 'Public surfaces' },
+  { name: 'Design' },
+  { name: 'Architecture' }
 ];
 ---
 
-<HearthNavigation current="research" context="Research · technical work and methods" />
-
-  <main class="ec-page ec-research-index">
+<BaseLayout title="Research · Hearth & Code" description="Technical projects and research programs, explained with their current scope and limits.">
+  <StudioNavigation current="research" disposition="Technical programs, methods, and evidence boundaries" />
+  <main class="ec-page ec-research-index" id="page-main">
     <header class="ec-page-header">
       <p class="ec-eyebrow">Research</p>
       <h1>Research</h1>
       <p class="ec-subtitle">
-        Technical work, research programs, and methods. Each area is source-grounded,
-        version-controlled, and designed to be reviewed, revised, and built upon.
+        Technical projects and research programs, explained with their current scope and limits.
+        Start with a reader-friendly map, then follow the sources and methods that interest you.
       </p>
     </header>
 
     <section class="ec-section">
-      <h2>By Domain</h2>
+      <h2>Areas of work</h2>
       <div class="ec-domain-tree">
         {domains.map(domain => (
-          <a href={`/research/#${domain.name}`} class="ec-domain-tag">
+          <span class="ec-domain-tag">
             <span class="ec-domain-name">{domain.name}</span>
-            <span class="ec-domain-count">{domain.count}</span>
-          </a>
+          </span>
         ))}
       </div>
     </section>
 
     <section class="ec-section">
-      <h2>Research Programs</h2>
+      <h2>Research programs and systems</h2>
+      <p>These cards are orientation points. A program label describes the public-facing area; follow the linked project surface for implementation status and evidence.</p>
       <div class="ec-research-grid">
         {researchAreas.map(area => (
           <article class="ec-research-card" id={area.id}>
@@ -108,14 +114,14 @@ const domains = [
     </section>
 
     <section class="ec-section">
-      <h2>Research Methods</h2>
+      <h2>Method families</h2>
+      <p>These are distinct lines of method work. The links lead to public introductions or proposals, not complete specifications or evidence of effectiveness.</p>
       <div class="ec-methods-list">
         {researchMethods.map(method => (
           <article class="ec-method-item">
             <h3>{method.name}</h3>
-            <p class="ec-method-meta">
-              <span class="ec-method-count">{method.count} features</span>
-            </p>
+            <p class="ec-method-meta">{method.detail}</p>
+            <a class="ec-method-link" href={method.href}>{method.link} <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
@@ -129,208 +135,94 @@ const domains = [
           <p class="ec-cross-ref-title">Philosophy</p>
           <p class="ec-cross-ref-desc">The philosophical positions that inform this research</p>
         </a>
-        <a href="/practice/" class="ec-cross-ref-card">
+        <a href="/workbench/" class="ec-cross-ref-card">
           <p class="ec-cross-ref-label">Related</p>
-          <p class="ec-cross-ref-title">Practice</p>
+          <p class="ec-cross-ref-title">Methods</p>
           <p class="ec-cross-ref-desc">The methods and artifacts that operationalize this research</p>
         </a>
       </div>
     </section>
   </main>
+</BaseLayout>
 
 <style>
+  .ec-research-index {
+    width: min(100% - 2rem, 82rem);
+    margin-inline: auto;
+    padding: clamp(2rem, 5vw, 4rem) 0 clamp(4rem, 8vw, 7rem);
+  }
+
   .ec-research-index .ec-page-header {
-    background: linear-gradient(135deg, #cffafe 0%, #ffffff 100%);
-    padding: var(--space-xl) var(--space-lg);
-    margin: calc(var(--space-lg) * -1) calc(var(--space-lg) * -1) var(--space-xl);
-    border-radius: 8px;
-    border-bottom: 3px solid var(--signal-cyan);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    border: 1px solid var(--color-surface-rule);
+    border-bottom: 3px solid var(--color-accent-signal);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--color-surface-raised), var(--color-surface-recessed));
+    color: var(--color-text-primary);
   }
 
-  .ec-domain-tree {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-  }
-
-  .ec-domain-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    background: #f3f4f6;
-    border-left: 3px solid var(--signal-cyan);
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-
-  .ec-domain-tag:hover {
-    background: #e5e7eb;
-  }
-
-  .ec-domain-name {
-    font-family: var(--font-mono);
-    font-size: var(--font-caption);
-  }
-
-  .ec-domain-count {
-    background: rgba(0,0,0,0.1);
-    padding: 0.125rem 0.5rem;
-    border-radius: 10px;
-    font-size: var(--font-caption);
-    font-weight: 600;
-  }
-
-  .ec-research-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-md);
-  }
-
-  .ec-research-card {
-    background: var(--surface-elevated);
-    padding: var(--space-lg);
-    border-radius: 8px;
-    border-left: 4px solid var(--signal-cyan);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .ec-research-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .ec-research-type {
-    display: inline-block;
-    background: #f0f9ff;
-    color: #1e40af;
-    padding: 0.125rem 0.5rem;
-    border-radius: 3px;
-    font-size: var(--font-caption);
+  .ec-research-index .ec-eyebrow,
+  .ec-research-index .ec-cross-ref-label {
+    color: var(--color-accent-plasma);
+    font: 600 .72rem/1.4 var(--font-mono);
+    letter-spacing: .08em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-sm);
   }
 
-  .ec-research-header h3 {
-    margin: var(--space-sm) 0;
-    font-size: var(--font-h3);
+  .ec-research-index h1 {
+    max-width: 12ch;
+    margin: .5rem 0 1rem;
+    color: var(--color-text-display);
+    font: 400 clamp(2.6rem, 7vw, 5rem)/1 var(--font-display);
+    text-wrap: balance;
   }
 
-  .ec-research-header h3 a {
-    color: inherit;
-    text-decoration: none;
+  .ec-research-index .ec-subtitle {
+    max-width: 68ch;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.7;
   }
 
-  .ec-research-header h3 a:hover {
-    color: var(--signal-cyan);
-  }
+  .ec-research-index .ec-section { margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .ec-research-index .ec-section > h2 { margin: 0 0 .75rem; color: var(--color-text-primary); font: 400 clamp(1.5rem, 3vw, 2rem)/1.2 var(--font-display); }
+  .ec-research-index .ec-section > p { max-width: 75ch; color: var(--color-text-secondary); }
 
-  .ec-status {
-    display: inline-block;
-    padding: 0.125rem 0.5rem;
-    border-radius: 3px;
-    font-size: var(--font-caption);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-left: var(--space-sm);
-  }
+  .ec-domain-tree { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+  .ec-domain-tag { display: inline-flex; align-items: center; padding: .45rem .75rem; border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-signal); border-radius: 999px; background: var(--color-surface-raised); color: var(--color-text-secondary); }
+  .ec-domain-name { font: 500 .78rem/1.4 var(--font-mono); }
 
-  .ec-status-active {
-    background: #d1fae5;
-    color: #065f46;
-  }
+  .ec-research-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; margin-top: 1.25rem; }
+  .ec-research-card { padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-signal); border-radius: var(--radius-md); background: var(--color-surface-raised); color: var(--color-text-primary); }
+  .ec-research-card:hover { border-color: var(--color-surface-rule-strong); }
+  .ec-research-type { display: inline-block; margin: 0 0 .5rem; color: var(--color-accent-plasma); font: 600 .68rem/1.4 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .ec-research-header h3 { margin: .4rem 0 .65rem; color: var(--color-text-primary); font: 500 1.12rem/1.3 var(--font-body); }
+  .ec-research-header h3 a { color: inherit; text-decoration-thickness: .08em; text-underline-offset: .18em; }
+  .ec-research-header h3 a:hover { color: var(--color-accent-plasma); }
+  .ec-status { display: inline-block; padding: .2rem .5rem; border: 1px solid currentColor; border-radius: 999px; font: 600 .64rem/1.4 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
+  .ec-status-active { color: #a8d5b5; background: #1d3028; }
+  .ec-status-indevelopment { color: #f3c47b; background: #392b1b; }
+  .ec-research-description { margin: 1rem 0; color: var(--color-text-secondary); line-height: 1.65; }
+  .ec-research-domains { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .ec-domain-mini { padding: .15rem .45rem; border: 1px solid var(--color-surface-rule); border-radius: 999px; color: var(--color-text-secondary); font: 500 .65rem/1.4 var(--font-mono); }
 
-  .ec-status-indevelopment {
-    background: #fef3c7;
-    color: #92400e;
-  }
+  .ec-methods-list, .ec-cross-refs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: .75rem; margin-top: 1.25rem; }
+  .ec-method-item { padding: 1rem 1.15rem; border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-gold); border-radius: var(--radius-md); background: var(--color-surface-raised); color: var(--color-text-primary); }
+  .ec-method-item h3 { margin: 0 0 .35rem; color: var(--color-text-primary); font: 500 1rem/1.4 var(--font-body); }
+  .ec-method-meta { margin: 0; color: var(--color-text-secondary); font-size: .9rem; }
+  .ec-method-link { display: inline-block; margin-top: .75rem; color: var(--color-accent-plasma); font-size: .88rem; text-decoration-thickness: .08em; text-underline-offset: .18em; }
+  .ec-method-link:focus-visible { outline: 2px solid var(--color-accent-signal); outline-offset: 3px; border-radius: 2px; }
+  .ec-cross-ref-card { display: block; min-height: 9rem; padding: 1.1rem; border: 1px solid var(--color-surface-rule); border-left: 3px solid var(--color-accent-plasma); border-radius: var(--radius-md); background: var(--color-surface-raised); color: var(--color-text-primary); text-decoration: none; }
+  .ec-cross-ref-card:hover { background: var(--color-surface-recessed); }
+  .ec-cross-ref-label { margin: 0 0 .35rem; }
+  .ec-cross-ref-title { margin: 0 0 .35rem; color: var(--color-text-primary); font-weight: 600; }
+  .ec-cross-ref-desc { margin: 0; color: var(--color-text-secondary); font-size: .9rem; }
 
-  .ec-research-description {
-    margin: var(--space-md) 0;
-    line-height: 1.6;
-  }
-
-  .ec-research-domains {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .ec-domain-mini {
-    background: #f3f4f6;
-    padding: 0.125rem 0.5rem;
-    border-radius: 3px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--signal-gray);
-  }
-
-  .ec-methods-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-md);
-  }
-
-  .ec-method-item {
-    padding: var(--space-md);
-    background: #f9fafb;
-    border-left: 3px solid var(--signal-gray);
-    border-radius: 4px;
-  }
-
-  .ec-method-item h3 {
-    margin: 0 0 0.25rem 0;
-    font-size: 1rem;
-  }
-
-  .ec-method-count {
-    color: var(--signal-gray);
-    font-size: var(--font-caption);
-    font-family: var(--font-mono);
-  }
-
-  .ec-cross-refs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-md);
-  }
-
-  .ec-cross-ref-card {
-    display: block;
-    padding: var(--space-md);
-    background: #f9fafb;
-    border-left: 3px solid var(--signal-cyan);
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .ec-cross-ref-card:hover {
-    background: #f3f4f6;
-  }
-
-  .ec-cross-ref-label {
-    color: var(--signal-gray);
-    font-size: var(--font-caption);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.25rem;
-  }
-
-  .ec-cross-ref-title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .ec-cross-ref-desc {
-    color: var(--signal-gray);
-    font-size: var(--font-caption);
+  @media (max-width: 36rem) {
+    .ec-research-index { width: min(100% - 1.5rem, 82rem); }
+    .ec-research-index .ec-page-header { padding: 1.25rem; }
+    .ec-research-index h1 { font-size: clamp(2.5rem, 12vw, 3.5rem); }
   }
 </style>

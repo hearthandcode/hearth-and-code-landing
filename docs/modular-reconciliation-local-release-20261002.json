@@ -1,0 +1,102 @@
+{
+  "artifact_class": "receipt",
+  "status": "finalized-locally",
+  "verified": false,
+  "non_self_authorizing": true,
+  "recorded_at": "2026-10-02T23:17:16.131548+00:00",
+  "owner_instruction": "Finalize locally for now please.",
+  "scope": "Approved modular reconciliation and private localhost review; no Git or production publication.",
+  "predecessors": [
+    {
+      "path": "docs/modular-reconciliation-20261002-browser.receipt.json",
+      "sha256": "4fbe70309f4a0929cee3c0a868bb584c0ec5dcc609bc6eee0f6804b4331aad15"
+    },
+    {
+      "path": "docs/modular-reconciliation-approval-20261002.json",
+      "sha256": "6e3fb43a7df341a974918be2ccf7e795f61140c66a6d137e88b022070cd982e3"
+    },
+    {
+      "path": "docs/task-template-browser-preparation-20261002.receipt.json",
+      "sha256": "ff75c51902d16a4e2626fac7cdca3aee05173c66179166461bd2652dbf48d3a7"
+    }
+  ],
+  "changed_files": [
+    {
+      "path": "src/pages/methods/index.astro",
+      "sha256": "40db52b7d36e8a6dd54fc5a26955b41af5cb2432024d1ac4bb184790c3615ae8"
+    },
+    {
+      "path": "src/components/ember-circuit/MethodsWorkbench.tsx",
+      "sha256": "c27083dea5a24c4b8a6097d974abec493061551e60783870b10740c44eeef3b3"
+    },
+    {
+      "path": "src/components/ember-circuit/TaskTemplateBrowser.tsx",
+      "sha256": "2b468a8340ace5b6a88d560a0e6c667a34fee95ec0ff260e1c5d1f05083b320c"
+    },
+    {
+      "path": "src/styles/methods-workbench.css",
+      "sha256": "bb7aecfc146ab68ed2b7952f090fbc9bdbfd15a8ca649d1813bf572337ae4077"
+    },
+    {
+      "path": "src/components/LaunchReview.astro",
+      "sha256": "b6c51abd6763ef6a9d7346f253049cae575bbbd8e681bd9eee04f52c834d0dba"
+    }
+  ],
+  "private_catalog": {
+    "path": "/tmp/hc-private-local-release-20261002/task-templates.json",
+    "sha256": "c16bf3158ca8811573371965f0d50fe702ca2e60915c790e23ce1a21bcac1fe4",
+    "source_manifest_sha256": "ea86aab2c017f3be79a0d37934913bb84b2ad8fe0e645bfe7fedaea2991d8228",
+    "records": 512,
+    "categories": 64,
+    "families": 8,
+    "handling": "Owner-only directory outside repository; ordinary build serializes an empty taskTemplates array."
+  },
+  "review_url": "http://127.0.0.1:4380/review/",
+  "private_build": "/tmp/hc-private-local-release-20261002/dist",
+  "checks": {
+    "astro": "0 errors, 0 warnings, 115 hints",
+    "build": "67 pages",
+    "audience_browser": "25 passed, 0 failed",
+    "modular": "1440/390/320px passed",
+    "catalog": "512 records, filters, four sections, required-input holds, local preview, keyboard, no overflow and no client errors at three widths",
+    "privacy": "Ordinary build private data array empty; public catalog export absent.",
+    "diff": "git diff --check passed"
+  },
+  "evidence_logs": [
+    {
+      "path": "/tmp/hc-private-local-release-20261002/check.log",
+      "sha256": "d78cd2be308b088200b6bc9fd7d1e1877060991e9223d520d08b59cc6d09bfdf"
+    },
+    {
+      "path": "/tmp/hc-private-local-release-20261002/build-final.log",
+      "sha256": "94bd225ce716b43e16c5fc700210faa155a294251244b22884878ab2b8276f74"
+    },
+    {
+      "path": "/tmp/hc-private-local-release-20261002/public-build.log",
+      "sha256": "a93cfb22dad3433173073993ba5ec196d6099f5f8e697bd946ee7e0c8daa0ef4"
+    },
+    {
+      "path": "/tmp/hc-private-local-release-20261002/browser.log",
+      "sha256": "142c1c69cd36b177f1d6c42fefef1da24ac000db6ee10d20bad56d0a9bce8006"
+    },
+    {
+      "path": "/tmp/hc-private-local-release-20261002/modular.log",
+      "sha256": "69492a4b8e27159bd7b4689234672bebbc56c772c28ded4c6c06864d729a26f6"
+    },
+    {
+      "path": "/tmp/hc-private-local-release-20261002/catalog-browser-final.log",
+      "sha256": "f11e30ed796ea4681395379dbfd833020919a82de78500beacb3c2abb0084dda"
+    },
+    {
+      "path": "/tmp/hc-private-local-release-20261002/catalog-browser.log",
+      "sha256": "7aba2ac0534db1ed6160a14cefbef72fb6fd4e43a1ca93d1520185885084c457"
+    }
+  ],
+  "limits": [
+    "113 validated technique records and 15 review holds remain unchanged.",
+    "Fieldcraft Lean-style proof claims remain unverified.",
+    "Character-sheet statistics remain hypothetical.",
+    "No new model calls; no commit, push, publication, or deployment.",
+    "Private bundle is ephemeral in /tmp; source implementation and this receipt are retained locally."
+  ]
+}

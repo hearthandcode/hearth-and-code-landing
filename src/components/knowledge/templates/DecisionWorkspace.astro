@@ -25,16 +25,16 @@ const initial = initialADR || {
   <div class="kc-decision-ws__pane kc-decision-ws__pane--form">
     <h3 class="kc-decision-ws__pane-title">Author</h3>
     <div class="kc-decision-ws__field">
-      <label>Number</label>
-      <input type="text" data-bind="number" value={initial.number} />
+      <label for={`${wsId}-number`}>Number</label>
+      <input id={`${wsId}-number`} type="text" data-bind="number" value={initial.number} />
     </div>
     <div class="kc-decision-ws__field">
-      <label>Title</label>
-      <input type="text" data-bind="title" value={initial.title} />
+      <label for={`${wsId}-title`}>Title</label>
+      <input id={`${wsId}-title`} type="text" data-bind="title" value={initial.title} />
     </div>
     <div class="kc-decision-ws__field">
-      <label>Status</label>
-      <select data-bind="status">
+      <label for={`${wsId}-status`}>Status</label>
+      <select id={`${wsId}-status`} data-bind="status">
         <option value="proposed" selected={initial.status === 'proposed'}>proposed</option>
         <option value="accepted" selected={initial.status === 'accepted'}>accepted</option>
         <option value="rejected" selected={initial.status === 'rejected'}>rejected</option>
@@ -42,20 +42,20 @@ const initial = initialADR || {
       </select>
     </div>
     <div class="kc-decision-ws__field">
-      <label>Date</label>
-      <input type="date" data-bind="date" value={initial.date} />
+      <label for={`${wsId}-date`}>Date</label>
+      <input id={`${wsId}-date`} type="date" data-bind="date" value={initial.date} />
     </div>
     <div class="kc-decision-ws__field">
-      <label>Context</label>
-      <textarea data-bind="context" rows="3" placeholder="What is the context?">{initial.context}</textarea>
+      <label for={`${wsId}-context`}>Context</label>
+      <textarea id={`${wsId}-context`} data-bind="context" rows="3" placeholder="What is the context?">{initial.context}</textarea>
     </div>
     <div class="kc-decision-ws__field">
-      <label>Decision</label>
-      <textarea data-bind="decision" rows="2" placeholder="What was decided?">{initial.decision}</textarea>
+      <label for={`${wsId}-decision`}>Decision</label>
+      <textarea id={`${wsId}-decision`} data-bind="decision" rows="2" placeholder="What was decided?">{initial.decision}</textarea>
     </div>
     <div class="kc-decision-ws__field">
-      <label>Consequences (one per line)</label>
-      <textarea data-bind="consequences" rows="3" placeholder="Trade-offs and consequences">{(initial.consequences || []).join('\n')}</textarea>
+      <label for={`${wsId}-consequences`}>Consequences (one per line)</label>
+      <textarea id={`${wsId}-consequences`} data-bind="consequences" rows="3" placeholder="Trade-offs and consequences">{(initial.consequences || []).join('\n')}</textarea>
     </div>
   </div>
   <div class="kc-decision-ws__pane kc-decision-ws__pane--preview">

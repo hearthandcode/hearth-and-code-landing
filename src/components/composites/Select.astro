@@ -21,6 +21,7 @@ interface Props {
   error?: boolean;
   success?: boolean;
   id?: string;
+  ariaLabel?: string;
   name?: string;
   size?: 'sm' | 'md' | 'lg';
   class?: string;
@@ -35,6 +36,7 @@ const {
   error = false,
   success = false,
   id,
+  ariaLabel,
   name,
   size = 'md',
   class: className = '',
@@ -53,6 +55,7 @@ const cls = [
 <div class={`ec-select__wrapper ${cls}`}>
   <select
     id={id}
+    aria-label={ariaLabel}
     name={name}
     disabled={disabled}
     required={required}

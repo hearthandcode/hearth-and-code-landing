@@ -161,6 +161,7 @@ export function LivePreview({
   propMeta = [],
 }: LivePreviewProps) {
   const [values, setValues] = React.useState<Record<string, any>>(initialProps);
+  const controlIdPrefix = React.useId();
   const Component = REGISTRY[componentName];
 
   if (!Component) {
@@ -203,10 +204,15 @@ export function LivePreview({
           {propMeta.length > 0 ? (
             <div className="ec-live-preview__controls">
               {propMeta.map((meta) => (
-                <label key={meta.name} className="ec-live-preview__control">
-                  <span className="ec-live-preview__control-label">{meta.name}</span>
+                <div key={meta.name} className="ec-live-preview__control">
+                  {meta.type !== 'boolean' && (
+                    <label className="ec-live-preview__control-label" htmlFor={`${controlIdPrefix}-${meta.name}`}>
+                      {meta.name}
+                    </label>
+                  )}
                   {meta.type === 'select' && (
                     <select
+                      id={`${controlIdPrefix}-${meta.name}`}
                       value={values[meta.name] ?? ''}
                       onChange={(e) => updateValue(meta.name, e.target.value)}
                     >
@@ -218,6 +224,7 @@ export function LivePreview({
                   {meta.type === 'boolean' && (
                     <label className="ec-toggle">
                       <input
+                        aria-label={meta.name}
                         type="checkbox"
                         checked={!!values[meta.name]}
                         onChange={(e) => updateValue(meta.name, e.target.checked)}
@@ -227,6 +234,7 @@ export function LivePreview({
                   )}
                   {meta.type === 'number' && (
                     <input
+                      id={`${controlIdPrefix}-${meta.name}`}
                       type="number"
                       value={values[meta.name] ?? 0}
                       onChange={(e) => updateValue(meta.name, Number(e.target.value))}
@@ -234,18 +242,19 @@ export function LivePreview({
                   )}
                   {meta.type === 'text' && (
                     <input
+                      id={`${controlIdPrefix}-${meta.name}`}
                       type="text"
                       value={values[meta.name] ?? ''}
                       onChange={(e) => updateValue(meta.name, e.target.value)}
                     />
                   )}
-                </label>
+                </div>
               ))}
             </div>
           ) : (
             <p className="ec-live-preview__no-props">No controls (stateless component)</p>
           )}
-          <button className="ec-live-preview__reset" onClick={reset}>
+          <button type="button" className="ec-live-preview__reset" onClick={reset}>
             Reset
           </button>
         </div>
@@ -253,7 +262,7 @@ export function LivePreview({
           <div className="ec-live-preview__component">
             <Component {...componentProps} />
           </div>
-          <pre className="ec-live-preview__code">
+          <pre tabIndex={0} className="ec-live-preview__code">
             <code>{codeStr}</code>
           </pre>
         </div>

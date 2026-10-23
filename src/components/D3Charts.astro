@@ -15,6 +15,13 @@
   // === Chart type registry ===
   const REGISTRY: Record<string, (el: HTMLElement, props: any) => void> = {};
   const PALETTE = ['var(--color-accent-ember)', 'var(--color-accent-signal)', 'var(--color-accent-violet)', 'var(--color-accent-gold)', 'var(--color-accent-plasma)'];
+  const numericDomain = (values: number[]): [number, number] => {
+    const finite = values.filter(Number.isFinite);
+    if (finite.length === 0) return [0, 1];
+    const min = Math.min(...finite);
+    const max = Math.max(...finite);
+    return [min, max];
+  };
 
   // === Bar Chart ===
   REGISTRY['kc-bar'] = REGISTRY['kc-chart-bar'] = (el, p) => {
@@ -104,8 +111,8 @@
   // === Grouped Bar ===
   REGISTRY['kc-gbar'] = REGISTRY['kc-chart-grouped-bar'] = (el, p) => {
     const data = p.data || [];
-    const series = p.seriesNames || Array.from(new Set(data.map((d: any) => d.series)));
-    const categories = Array.from(new Set(data.map((d: any) => d.category)));
+    const series: string[] = p.seriesNames || Array.from(new Set<string>(data.map((d: any) => String(d.series))));
+    const categories: string[] = Array.from(new Set<string>(data.map((d: any) => String(d.category))));
     const height = p.height || 240;
     const width = 320;
     const margin = { top: 16, right: 12, bottom: 36, left: 36 };
@@ -141,8 +148,8 @@
   // === Stacked Bar ===
   REGISTRY['kc-sbar'] = REGISTRY['kc-chart-stacked-bar'] = (el, p) => {
     const data = p.data || [];
-    const series = p.seriesNames || Array.from(new Set(data.map((d: any) => d.series)));
-    const categories = Array.from(new Set(data.map((d: any) => d.category)));
+    const series: string[] = p.seriesNames || Array.from(new Set<string>(data.map((d: any) => String(d.series))));
+    const categories: string[] = Array.from(new Set<string>(data.map((d: any) => String(d.category))));
     const height = p.height || 240;
     const width = 320;
     const margin = { top: 16, right: 12, bottom: 36, left: 36 };
@@ -189,9 +196,13 @@
     svg.selectAll('*').remove();
     svg.attr('viewBox', `0 0 ${width} ${height}`);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const xDomain = xIsNumeric ? d3.extent(allPoints, (d: any) => d.x) as [number, number] : Array.from(new Set(allPoints.map((d: any) => d.x))) as any;
-    const x: any = xIsNumeric ? d3.scaleLinear().domain(xDomain).range([0, innerW]) : d3.scalePoint().domain(xDomain).range([0, innerW]);
-    const y = d3.scaleLinear().domain([0, d3.max(allPoints, (d: any) => d.y) || 1]).nice().range([innerH, 0]);
+    const xDomain = xIsNumeric
+      ? numericDomain(allPoints.map((d: any) => Number(d.x)))
+      : Array.from(new Set<string>(allPoints.map((d: any) => String(d.x))));
+    const x: any = xIsNumeric
+      ? d3.scaleLinear().domain(xDomain as [number, number]).range([0, innerW])
+      : d3.scalePoint().domain(xDomain as string[]).range([0, innerW]);
+    const y = d3.scaleLinear().domain([0, d3.max(allPoints, (d: any) => Number(d.y)) || 1]).nice().range([innerH, 0]);
     const lineGen: any = smooth
       ? d3.line().x((d: any) => (x(d.x) || 0) + (xIsNumeric ? 0 : (x.bandwidth?.() || 0) / 2)).y((d: any) => y(d.y)).curve(d3.curveMonotoneX)
       : d3.line().x((d: any) => (x(d.x) || 0) + (xIsNumeric ? 0 : (x.bandwidth?.() || 0) / 2)).y((d: any) => y(d.y));
@@ -232,7 +243,7 @@
     grad.append('stop').attr('offset', '0%').attr('stop-color', color).attr('stop-opacity', 0.6);
     grad.append('stop').attr('offset', '100%').attr('stop-color', color).attr('stop-opacity', 0.05);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const x = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.x) as [number, number]).range([0, innerW]);
+    const x = d3.scaleLinear().domain(numericDomain(data.map((d: any) => Number(d.x)))).range([0, innerW]);
     const y = d3.scaleLinear().domain([0, max * 1.1]).range([innerH, 0]);
     const area: any = d3.area().x((d: any) => x(d.x)).y0(innerH).y1((d: any) => y(d.y)).curve(d3.curveMonotoneX);
     const line: any = d3.line().x((d: any) => x(d.x)).y((d: any) => y(d.y)).curve(d3.curveMonotoneX);
@@ -258,7 +269,7 @@
     svg.selectAll('*').remove();
     svg.attr('viewBox', `0 0 ${width} ${height}`);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const x = d3.scaleLinear().domain(d3.extent(allData, (d: any) => d.x) as [number, number]).range([0, innerW]);
+    const x = d3.scaleLinear().domain(numericDomain(allData.map((d: any) => Number(d.x)))).range([0, innerW]);
     const stack = d3.stack().keys(series.map((s: any) => s.name))(allData);
     const y = d3.scaleLinear().domain([0, d3.max(stack[stack.length - 1], (d: any) => d[1]) || 1]).nice().range([innerH, 0]);
     const area: any = d3.area().x((d: any) => x(d.data.x)).y0((d: any) => y(d[0])).y1((d: any) => y(d[1])).curve(d3.curveMonotoneX);
@@ -338,8 +349,8 @@
     svg.selectAll('*').remove();
     svg.attr('viewBox', `0 0 ${width} ${height}`);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const x = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.x) as [number, number]).nice().range([0, innerW]);
-    const y = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.y) as [number, number]).nice().range([innerH, 0]);
+    const x = d3.scaleLinear().domain(numericDomain(data.map((d: any) => Number(d.x)))).nice().range([0, innerW]);
+    const y = d3.scaleLinear().domain(numericDomain(data.map((d: any) => Number(d.y)))).nice().range([innerH, 0]);
     g.selectAll('circle').data(data).enter().append('circle')
       .attr('cx', (d: any) => x(d.x)).attr('cy', (d: any) => y(d.y)).attr('r', 4)
       .attr('fill', (d: any) => d.color || 'var(--color-accent-signal)')
@@ -374,9 +385,9 @@
     svg.selectAll('*').remove();
     svg.attr('viewBox', `0 0 ${width} ${height}`);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const x = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.x) as [number, number]).nice().range([0, innerW]);
-    const y = d3.scaleLinear().domain(d3.extent(data, (d: any) => d.y) as [number, number]).nice().range([innerH, 0]);
-    const r = d3.scaleSqrt().domain([0, d3.max(data, (d: any) => d.r) || 1]).range([4, 32]);
+    const x = d3.scaleLinear().domain(numericDomain(data.map((d: any) => Number(d.x)))).nice().range([0, innerW]);
+    const y = d3.scaleLinear().domain(numericDomain(data.map((d: any) => Number(d.y)))).nice().range([innerH, 0]);
+    const r = d3.scaleSqrt().domain([0, d3.max(data, (d: any) => Number(d.r)) || 1]).range([4, 32]);
     g.selectAll('circle').data(data).enter().append('circle')
       .attr('cx', (d: any) => x(d.x)).attr('cy', (d: any) => y(d.y)).attr('r', (d: any) => r(d.r))
       .attr('fill', (d: any) => d.color || 'var(--color-accent-signal)')

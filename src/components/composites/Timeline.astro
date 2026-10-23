@@ -30,7 +30,7 @@ const { events, orientation = 'vertical', class: className = '' } = Astro.props;
       </div>
       <div class="ec-timeline__content">
         <time class="ec-timeline__date">{event.date}</time>
-        <h4 class="ec-timeline__title">{event.title}</h4>
+        <h3 class="ec-timeline__title">{event.title}</h3>
         {event.description && <p class="ec-timeline__description">{event.description}</p>}
       </div>
     </li>

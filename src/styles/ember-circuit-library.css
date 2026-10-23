@@ -44,6 +44,7 @@ body.studio-article-body .studio-article-reading-field :where(.journal-article__
 body.studio-article-body .studio-article-reading-field :where(.journal-article__body,.reading-article__body,.reading-article__footer,.journal-article__guide) a{color:#c4b5fd}
 body.studio-article-body .studio-article-reading-field :where(.reading-article__boundary strong,.journal-article__labels li){color:#f07a37}
 body.studio-article-body .studio-article-reading-field .journal-article__claims strong{color:#82c4c3}
+body.studio-article-body :where(a,button):focus-visible{outline-color:#f4b860;outline-style:solid;outline-width:3px;outline-offset:3px;border-radius:.15rem}
 .studio-room-field :where(.research-technique-open,.research-essay-link,.field-journal-latest__read,.program-dossier__tabs span,.program-dossier__tabs small,.program-dossier__boundary strong){color:var(--field-signal)}
 .studio-room-field .research-collection-grid>li,.studio-room-field .field-journal-latest__list>li,.studio-room-field .program-dossier__panel,.studio-room-journal-index .journal-index>ol>li{background:var(--ec-field-900);color:var(--ec-paper-100)}
 .studio-room-field :where(.field-journal-latest__index,.field-journal-latest__meta,.research-collection-grid small){color:var(--ec-paper-300)}

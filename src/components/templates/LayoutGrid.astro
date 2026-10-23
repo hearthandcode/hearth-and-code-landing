@@ -27,8 +27,8 @@ const gaps = {
 };
 
 const gridTemplate = columns === 'auto'
-  ? `repeat(auto-fit, minmax(${minColumnWidth}, 1fr))`
-  : `repeat(${columns}, 1fr)`;
+  ? `repeat(auto-fit, minmax(min(${minColumnWidth}, 100%), 1fr))`
+  : `repeat(${columns}, minmax(0, 1fr))`;
 ---
 
 <div
@@ -41,5 +41,9 @@ const gridTemplate = columns === 'auto'
 <style>
   .ec-layout-grid {
     width: 100%;
+    min-width: 0;
+  }
+  @media (max-width: 42rem) {
+    .ec-layout-grid { grid-template-columns: minmax(0, 1fr) !important; }
   }
 </style>

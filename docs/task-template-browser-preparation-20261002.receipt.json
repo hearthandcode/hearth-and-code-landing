@@ -1,0 +1,44 @@
+{
+  "schema": "hnc.local-review-receipt.v1",
+  "recorded_at": "2026-10-02T23:06:16.054815+00:00",
+  "verified": false,
+  "non_self_authorizing": true,
+  "status": "partial",
+  "scope": "Prepare the separate task-template browser without internal data export",
+  "artifact": {
+    "path": "src/components/ember-circuit/TaskTemplateBrowser.tsx",
+    "sha256": "8ffd001bc43deea4d553f6ead111ecdc233889b60e54a3e369784be4b5b3b4bd"
+  },
+  "authored": [
+    "Search and family navigation over caller-supplied records",
+    "Four keyboard-navigable sections: overview, declared input contract, prompt, provenance",
+    "Local composition preview with required-value holds and no model invocation",
+    "Empty-data state that preserves the internal-catalog disclosure hold"
+  ],
+  "checks": [
+    {
+      "predicate": "Astro source and type check",
+      "result": "ok",
+      "errors": 0,
+      "warnings": 0,
+      "evidence": "/tmp/hc-modular-pass-20261002/catalog-component-check.log"
+    },
+    {
+      "predicate": "Git diff whitespace check",
+      "result": "ok"
+    },
+    {
+      "predicate": "No internal catalog export file exists",
+      "result": "ok"
+    }
+  ],
+  "limits": [
+    "Component is prepared but is not bound to the approved live Methods surface.",
+    "Runtime/browser checks over the real catalog remain pending data-release authorization and integration.",
+    "No private template bodies, provider invocation, Git publication, or deployment were performed."
+  ],
+  "pending": [
+    "Production publication versus local-review finalization",
+    "Exact 512 internal template bodies and declared inputs: public release versus private retention"
+  ]
+}

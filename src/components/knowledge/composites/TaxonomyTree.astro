@@ -30,7 +30,7 @@ function renderNode(node: Node, depth: number, expandedDepth: number): string {
   const toggleHtml = hasChildren ? `<span class="kc-taxonomy-tree__toggle" aria-hidden="true"></span>` : '<span class="kc-taxonomy-tree__toggle" aria-hidden="true"></span>';
   return `<li class="kc-taxonomy-tree__item ${hasChildren ? 'has-children' : ''} ${isExpanded ? 'is-expanded' : ''}"><div class="kc-taxonomy-tree__row">${toggleHtml}<span class="kc-taxonomy-tree__label">${node.label}</span>${desc}</div>${childrenHtml}</li>`;
 }
-const treeHtml = renderNode(root, 0, initiallyExpanded);
+const treeHtml = `<ul>${renderNode(root, 0, initiallyExpanded)}</ul>`;
 ---
 <div class:list={['kc-taxonomy-tree', className]} data-tree-id={treeId} set:html={treeHtml} />
 

@@ -194,11 +194,10 @@ export function PortfolioOrientationCard({ surface }: { surface: SurfaceCardData
       <p
         style={{
           margin: 0,
-          color: 'var(--color-accent-ember)',
+          color: 'var(--color-accent-gold)',
           fontFamily: 'var(--font-mono)',
           fontSize: '0.7rem',
           letterSpacing: '0.04em',
-          opacity: 0.7,
         }}
       >
         {expanded ? '▲ Collapse' : '▼ Expand orientation'}

@@ -1,5 +1,6 @@
 ---
 interface Props {
+  idPrefix: string;
   title: string;
   framing: string;
   unit: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const {
+  idPrefix,
   title,
   framing,
   unit,
@@ -20,10 +22,10 @@ const {
 } = Astro.props;
 ---
 
-<section class="field-study-frame" aria-labelledby="field-study-title">
+<section class="field-study-frame" aria-labelledby={`${idPrefix}-title`}>
   <header class="field-study-frame-header">
     <p class="field-study-frame-kicker">Method boundary</p>
-    <h2 id="field-study-title">{title}</h2>
+    <h2 id={`${idPrefix}-title`}>{title}</h2>
     <p>{framing}</p>
   </header>
 

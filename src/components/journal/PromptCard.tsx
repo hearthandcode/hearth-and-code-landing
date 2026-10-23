@@ -59,10 +59,10 @@ export default function PromptCard({
         ) : null}
 
         {guard ? (
-          <section className="prompt-card__guard" aria-label="Hold condition">
+          <div className="prompt-card__guard">
             <strong>Hold condition</strong>
             <p>{guard}</p>
-          </section>
+          </div>
         ) : null}
       </div>
     </aside>

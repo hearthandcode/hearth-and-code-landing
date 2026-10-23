@@ -26,7 +26,11 @@ const {
 } = Astro.props;
 ---
 
-<ol class={`ec-stepper ec-stepper--${orientation} ${className}`}>
+<ol
+  class={`ec-stepper ec-stepper--${orientation} ${className}`}
+  aria-label={orientation === 'horizontal' ? 'Progress steps' : undefined}
+  tabindex={orientation === 'horizontal' ? 0 : undefined}
+>
   {steps.map((step, idx) => {
     const num = idx + 1;
     const status = num < currentStep ? 'is-complete' : num === currentStep ? 'is-current' : 'is-upcoming';
@@ -56,6 +60,10 @@ const {
     flex-direction: row;
     align-items: flex-start;
     overflow-x: auto;
+  }
+  .ec-stepper--horizontal:focus-visible {
+    outline: 2px solid var(--color-accent-ember);
+    outline-offset: 3px;
   }
   .ec-stepper--vertical {
     flex-direction: column;

@@ -12,6 +12,7 @@ import HearthCodeToggle from './HearthCodeToggle.astro';
 import CircuitBackground from './CircuitBackground.astro';
 import NavigationCard from './NavigationCard.astro';
 import StudioNavigation from './StudioNavigation.astro';
+import FeatureDispatchFeed from './FeatureDispatchFeed.astro';
 import { getNavigationCards } from '../lib/content';
 
 const navigationCards = getNavigationCards('balanced').map((card) => ({
@@ -24,7 +25,7 @@ const navigationCards = getNavigationCards('balanced').map((card) => ({
 // different prose over the same links. Balanced keeps every route visible
 // and foregrounds Portfolio as the synthesis of the studio's work.
 const projectionMembership: Record<string, string[]> = {
-  'Practice': ['code', 'balanced'],
+  'Methods': ['code', 'balanced'],
   'Philosophy': ['hearth', 'balanced'],
   'Research': ['code', 'balanced'],
   'Portfolio': ['balanced'],
@@ -33,28 +34,28 @@ const projectionMembership: Record<string, string[]> = {
   'Field Journal': ['code', 'balanced'],
   'Contact': ['hearth', 'balanced'],
 };
-const projectionOrder = ['Portfolio', 'Practice', 'Philosophy', 'Research', 'Dossier', 'Questions', 'Field Journal', 'Contact'];
+const projectionOrder = ['Portfolio', 'Methods', 'Philosophy', 'Research', 'Dossier', 'Questions', 'Field Journal', 'Contact'];
 const orderedNavigationCards = [...navigationCards].sort(
   (a, b) => projectionOrder.indexOf(a.title) - projectionOrder.indexOf(b.title),
 );
 
 const startPaths = [
   {
-    href: '/philosophy/ai-literacy/',
-    title: 'Understand the position',
-    description: 'Read a grounded entry point into how this studio approaches AI, judgment, and public reasoning.',
+    href: '/workbench/',
+    title: 'For Agentic Engineers',
+    description: 'Inspect the working systems, implementation boundaries, and technical projects.',
     number: '01',
   },
   {
-    href: '/methods/',
-    title: 'Inspect the methods',
-    description: 'Open the practical instruments, prompt techniques, and working records behind the research.',
+    href: '/research/',
+    title: 'For Agentic Researchers',
+    description: 'Follow the questions, methods, source practices, and research programs.',
     number: '02',
   },
   {
-    href: '/research/',
-    title: 'Follow the active work',
-    description: 'See the research programs, systems, and open questions currently being developed in public.',
+    href: '/philosophy/ai-literacy/',
+    title: 'AI Literacy & public reasoning',
+    description: 'Read the studio’s public position on judgment, agency, and working with AI.',
     number: '03',
   },
 ];
@@ -75,8 +76,8 @@ const currentSignals = [
   {
     eyebrow: 'Public method library',
     title: 'Fieldcraft',
-    detail: 'Working methods, field cards, and techniques for research that remains legible and revisable.',
-    href: '/methods/',
+    detail: 'A 32-note candidate series on formalizing agentic work, with explicit evidence and Lean-checking limits.',
+    href: '/fieldcraft/',
   },
 ];
 ---
@@ -100,6 +101,7 @@ const currentSignals = [
           <HearthCodeToggle current="balanced" />
         </div>
         <p class="studio-hero__hint">Choose a projection to change the emphasis, not the underlying work.</p>
+        <a class="studio-hero__path-link" href="#start-title">Find your path into the studio <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
@@ -199,6 +201,8 @@ const currentSignals = [
       </div>
     </section>
 
+    <FeatureDispatchFeed />
+
     <!-- 6. Practice and return boundary -->
     <section class="studio-section studio-section--return" aria-labelledby="return-title">
       <div class="studio-shell studio-return">
@@ -227,6 +231,8 @@ const currentSignals = [
   .studio-hero__lede { max-width: 46rem; margin: 1.5rem 0 0; color: var(--color-text-secondary); font-size: clamp(1.125rem, 2vw, 1.35rem); line-height: 1.55; }
   .studio-hero__toggle { margin-top: 2.25rem; }
   .studio-hero__hint { margin: 0.5rem 0 0; color: var(--color-text-secondary); font: 0.8125rem/1.45 var(--font-mono); }
+  .studio-hero__path-link { display: inline-flex; min-height: 2.75rem; align-items: center; gap: .65rem; margin-top: .55rem; color: var(--color-accent-signal); font: 600 .75rem/1.4 var(--font-mono); text-decoration: underline; text-underline-offset: .25em; }
+  .studio-hero__path-link:hover { color: var(--color-text-display); }
 
   .studio-section { position: relative; padding: clamp(4rem, 8vw, 7rem) 0; border-bottom: 1px solid var(--color-surface-rule); }
   .studio-section--orientation { background: var(--color-surface-recessed); }
@@ -287,7 +293,11 @@ const currentSignals = [
   }
   @media (max-width: 36rem) {
     .studio-shell { width: min(100% - 2rem, 76rem); }
-    .studio-hero h1 { font-size: clamp(2.7rem, 15vw, 4rem); }
+    .studio-hero h1 {
+      font-size: clamp(2.3rem, 11vw, 3rem);
+      letter-spacing: -0.045em;
+      overflow-wrap: anywhere;
+    }
     .studio-map { grid-template-columns: 1fr; }
     .studio-hero__hint { max-width: 28ch; }
   }
@@ -303,13 +313,13 @@ const currentSignals = [
     hearth: {
       hero: 'A public workbench for questions of meaning, judgment, and how to stay human in complex systems.',
       eyebrow: 'Hearth projection',
-      title: 'Meaning and judgment first.',
-      detail: 'This projection foregrounds the working perspective: the questions, values, and public reasoning behind the systems. Begin with the position, understand the working profile, or return with a question or correction.',
+      title: 'Hearthside Meta-Architect: a working name.',
+      detail: 'This name describes the practice behind the studio, not a credential: joining systems architecture, knowledge work, and research with care for the human workshop. Read the working dossier, explore the philosophy, or return with a question.',
       mapTitle: 'Hearth surfaces.',
       mapDetail: 'Philosophy, Dossier, and Contact: the perspective, the person behind the practice, and a clear path back.',
       routes: [
         { href: '/philosophy/', label: 'Read the philosophy' },
-        { href: '/dossier/', label: 'Open the dossier' },
+        { href: '/dossier/', label: 'Read the working dossier' },
         { href: '/correspondence/', label: 'Start a correspondence' },
       ],
     },
@@ -317,7 +327,7 @@ const currentSignals = [
       hero: 'Research, software, knowledge architecture, and policy thinking made legible enough to inspect, question, use, and revise.',
       eyebrow: 'Current projection',
       title: 'The full studio, in one view.',
-      detail: 'Hearth holds the questions of meaning and judgment. Code holds the methods and systems. The balanced view keeps both visible, so a visitor can move from a claim to its working form.',
+      detail: 'Hearth holds the questions of meaning and judgment. Code holds the methods and systems. Hearthside Meta-Architect is the working name for the practice connecting them—not a credential. Follow the dossier, then move from a claim to its working form.',
       mapTitle: 'The full studio map.',
       mapDetail: 'All eight surfaces are available here; Portfolio is the synthesis route across the Hearth and Code seams.',
       routes: [

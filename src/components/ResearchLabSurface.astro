@@ -17,7 +17,6 @@ import ProgramDossier from './ProgramDossier.astro';
 import CorrespondenceIntake from './CorrespondenceIntake.astro';
 import ProductHorizon from './ProductHorizon.astro';
 import TechnicalReportShelf from './TechnicalReportShelf.astro';
-import PromptCatalogWorkbench from './ember-circuit/PromptCatalogWorkbench';
 import { routeContexts, routeVoice } from '../data/research-studio-content';
 import '../styles/ember-circuit-catalog.css';
 
@@ -30,8 +29,8 @@ const routeMeta = {
   questions: { key: 'builder', index: '02', context: 'Research Questions / open inquiry portfolio', lead: 'I begin with', accent: 'questions', tail: 'before claims.', deck: 'I keep a field of live questions around what must remain visible when a system changes, who can revise it, and how its reasoning can be returned to.', action: ['Read my methods', '/methods/'] },
   portfolio: { key: 'exocore', index: '03', context: 'Portfolio / selected research and systems work', lead: 'I use the portfolio as', accent: 'a trail,', tail: 'not a trophy case.', deck: 'This is where research programs, knowledge architecture, software, publication, and design meet without hiding the posture or limits of each body of work.', action: ['Browse selected work', '#selected-work'] },
   programs: { key: 'exocore', index: '04', context: 'Programs & Prototypes / system field guide', lead: 'I give questions somewhere to become', accent: 'working systems.', tail: '', deck: 'A program is a bounded place for turning an inquiry into a map, protocol, prototype, report, or public artifact without pretending that every experiment is already a product.', action: ['Inspect the report shelf', '#technical-reports'] },
-  methods: { key: 'workbench', index: '05', context: 'Methods & Instruments / educational practice', lead: 'I build methods that leave', accent: 'a way back.', tail: '', deck: 'I keep these learning patterns small enough to try, explicit enough to challenge, and structured enough to return an honest account of what happened.', action: ['Open the field cards', '#methods-collections-title'] },
-  notes: { key: 'library', index: '06', context: 'Published Works / Field Journal and essays', lead: 'I write to leave', accent: 'a thread', tail: 'I can return to.', deck: 'Field Journal entries, essays, and technical articles collect research in motion without turning a working observation into a finished conclusion.', action: ['Read the Field Journal', '#field-journal'] },
+  methods: { key: 'workbench', index: '05', context: 'Methods & Instruments / educational practice', lead: 'I build methods that leave', accent: 'a way back.', tail: '', deck: 'I keep these learning patterns small enough to try, explicit enough to challenge, and structured enough to return an honest account of what happened.', action: ['Open the Methods Atlas', '/methods/'] },
+  notes: { key: 'library', index: '06', context: 'Field Journal / local review candidates', lead: 'I write to leave', accent: 'a thread', tail: 'I can return to.', deck: 'This reading room brings earlier Field Journal releases and local essay projections together. Revised copy remains a review candidate; this preview does not approve or republish it.', action: ['Read the Field Journal', '#field-journal'] },
   evidence: { key: 'atlas', index: '07', context: 'Artifacts / evidence and correction', lead: 'I want every claim to carry', accent: 'its way back.', tail: '', deck: 'The Evidence Desk keeps source, claim, check, decision, omission, and correction visible. A check earns only the confidence its named scope can support.', action: ['Inspect the evidence ledger', '#evidence-collections-title'] },
   dossier: { key: 'method', index: '08', context: 'Dossier / Hearthside Meta-Architect', lead: 'I call this working archetype the', accent: 'Hearthside Meta-Architect.', tail: '', deck: 'This self-authored field character sheet describes how I try to join forge and hearth in my work. It is a creative working archetype, not a diagnosis or credential.', action: ['Open the case file', '#dossier-index'] },
   correspondence: { key: 'return', index: '09', context: 'Correspondence / public return path', lead: 'I want the conversation to remain', accent: 'revisable.', tail: '', deck: 'This is my route for reading onward, discussing a real project, or offering a correction with enough context to be useful and enough boundary to remain humane.', action: ['Open correspondence intake', '#intake'] },
@@ -71,7 +70,7 @@ const selectedWork = [
   ['01', 'Research program', 'Typed Context & Control Protocol', 'Typed representations, context conditions, interaction compilation, and explicit proof obligations.', 'Research architecture · public guide · evaluation instruments', '/programs/'],
   ['02', 'Knowledge architecture', 'EKRP', 'A source-governed application profile for human-readable knowledge representation, provenance, and review.', 'Semantic documents · evidence packets · standards crosswalks', '/programs/'],
   ['03', 'Software system', 'Exocore', 'A local-first systems direction connecting agents, knowledge, governance, observability, and human return.', 'Rust services · TypeScript interfaces · operational boundaries', '/workbench/'],
-  ['04', 'Methods practice', 'Prompt & Context Atlas', 'Technique-level practice for prompts, context selection, tool boundaries, evaluation, and revision.', '35 field cards · prompt scaffolds · failure-mode checks', '/methods/'],
+  ['04', 'Methods practice', 'Prompt, Context & Agentic Technique Atlas', 'A public explorer for 128 techniques, alongside a separate prompt-template catalog and practical task demonstrations.', '128 technique records · task fixtures · recorded subagent responses', '/methods/'],
   ['05', 'Publication', 'Field Journal', 'Long-form research notes, essays, and technical writing with visible claim and source context.', 'Research essays · technical articles · correction path', '/notes/'],
   ['06', 'Research communication', 'Ember Circuit', 'A warm technical visual language for making complex system boundaries and evidence states legible.', 'Visual grammar · research figures · interface foundations', '/evidence/'],
 ] as const;
@@ -81,20 +80,6 @@ const programs = [
   ['02', 'EKRP', 'How can knowledge remain human-readable while retaining source and revision identity?', 'Architecture research'],
   ['03', 'Exocore', 'How might agents, knowledge, governance, tools, and return paths remain legible together?', 'Platform direction'],
   ['04', 'Core32', 'How can method and role performance be compared without collapsing into one score?', 'Evaluation research'],
-] as const;
-
-const methodLoop = [
-  ['01', 'Orient', 'Name the decision and closest sources.'], ['02', 'Bound', 'Set scope, authority, and no-touch edges.'],
-  ['03', 'Classify', 'Separate source, evidence, inference, and proposal.'], ['04', 'Compose', 'Build the smallest useful context and artifact.'],
-  ['05', 'Build', 'Make the candidate inspectable.'], ['06', 'Check', 'Test one named predicate and seek counterevidence.'],
-  ['07', 'Decide', 'Keep consequential meaning and release human-held.'], ['08', 'Return', 'Record state, limits, and next responsible action.'],
-] as const;
-
-const instruments = [
-  ['01', 'Source ledger', 'What was consulted, in what role, with what omission or freshness limit.'],
-  ['02', 'Claim card', 'What is being said, which evidence supports it, and what it does not establish.'],
-  ['03', 'Check receipt', 'What was tested, on which input, with which outcome, and what remains unproven.'],
-  ['04', 'Return record', 'Current state, owner, uncertainty, and one reliable way back in.'],
 ] as const;
 
 const relation = [
@@ -138,9 +123,9 @@ const runtime = [
     <a class="studio-skip" href="#main-content">Skip to content</a>
     <HearthNavigation current={meta.key as string} context={meta.context} />
     <main id="main-content" class="studio-room-main">
-      <section class="studio-room-threshold" aria-labelledby="page-title">
+      <section class="studio-room-threshold">
         <div class="studio-room-threshold__copy">
-          <p class="studio-room-kicker"><span>H+C / {meta.index}</span><span>{meta.context.split(' / ')[0]}</span></p>
+          <p class="studio-room-kicker"><span>H+C / {meta.index}</span><span>{route === 'notes' ? 'Field Journal / local review candidates' : meta.context.split(' / ')[0]}</span></p>
           <h1 id="page-title">{meta.lead} <em>{meta.accent}</em>{meta.tail && <> {meta.tail}</>}</h1>
           <p>{meta.deck}</p>
           <a class="studio-room-action" href={meta.action[1]}>{meta.action[0]} <span aria-hidden="true">→</span></a>
@@ -158,11 +143,11 @@ const runtime = [
         <a href="/dossier/">Read the working archetype →</a>
       </section>
 
-      {route === 'lab' && <section class="studio-room-field studio-room-field--paper studio-room-entry" aria-labelledby="lab-entry-title"><header><p class="studio-room-kicker">01 / Ways into the work</p><h2 id="lab-entry-title">Choose the kind of question you are carrying.</h2></header><div class="studio-room-card-grid studio-room-card-grid--four"><a href="/questions/"><span>01</span><h3>Follow a question</h3><p>Start with an open inquiry and its tensions.</p></a><a href="/programs/"><span>02</span><h3>Inspect a program</h3><p>See where an inquiry becomes a bounded system.</p></a><a href="/methods/"><span>03</span><h3>Adapt a method</h3><p>Take one instrument into your own environment.</p></a><a href="/dossier/"><span>04</span><h3>Meet the steward</h3><p>Read the working archetype behind the studio.</p></a></div></section>}
+      {route === 'lab' && <section class="studio-room-field studio-room-field--paper studio-room-entry" aria-labelledby="lab-entry-title"><header><p class="studio-room-kicker">01 / Ways into the work</p><h2 id="lab-entry-title">Choose the kind of question you are carrying.</h2></header><div class="studio-room-card-grid studio-room-card-grid--four"><a href="/notes/"><span>01</span><h3>Follow a question</h3><p>Start with an open inquiry and its tensions.</p></a><a href="/programs/"><span>02</span><h3>Inspect a program</h3><p>See where an inquiry becomes a bounded system.</p></a><a href="/workbench/"><span>03</span><h3>Adapt a method</h3><p>Take one instrument into your own environment.</p></a><a href="/dossier/"><span>04</span><h3>Meet the steward</h3><p>Read the working archetype behind the studio.</p></a></div></section>}
 
       {route === 'questions' && <>
         <section class="studio-room-field studio-room-field--paper" aria-labelledby="question-ledger"><header><p class="studio-room-kicker">01 / Inquiry ledger</p><h2 id="question-ledger">Eight questions I am holding open on purpose.</h2><p>I use this field to orient research, not to manufacture certainty. Each question points toward methods and artifacts that can make it more inspectable.</p></header><ol class="studio-room-ledger">{questions.map(([id, area, question, related]) => <li><span>{id} / {area}</span><h3>{question}</h3><p>{related}</p></li>)}</ol></section>
-        <section class="studio-room-field studio-room-field--dark" aria-labelledby="tension-title"><header><p class="studio-room-kicker">02 / Working tensions</p><h2 id="tension-title">I do not resolve these by slogan.</h2></header><dl class="studio-room-tensions">{tensions.map(([left, right, note]) => <div><dt>{left}</dt><dd>{right}</dd><p>{note}</p></div>)}</dl></section>
+        <section class="studio-room-field studio-room-field--dark" aria-labelledby="tension-title"><header><p class="studio-room-kicker">02 / Working tensions</p><h2 id="tension-title">I do not resolve these by slogan.</h2></header><dl class="studio-room-tensions">{tensions.map(([left, right, note]) => <div><dt>{left}</dt><dd>{right}<p>{note}</p></dd></div>)}</dl></section>
         <section class="studio-room-field studio-room-field--fog" aria-labelledby="question-anatomy">
           <header>
             <p class="studio-room-kicker">03 / Question guide</p>
@@ -196,13 +181,6 @@ const runtime = [
         <section class="studio-room-field studio-room-field--paper"><ResearchCollections route={route} /></section>
       </>}
 
-      {route === 'methods' && <>
-        <section class="studio-room-field studio-room-field--paper" aria-labelledby="loop-title"><header><p class="studio-room-kicker">01 / Method loop</p><h2 id="loop-title">Eight moves for work that remains answerable.</h2><p>The loop is deliberately finite. It begins by orienting and ends by returning enough state for another person to inspect or resume the work.</p></header><ol class="studio-room-loop">{methodLoop.map(([id, title, note]) => <li><span>{id}</span><h3>{title}</h3><p>{note}</p></li>)}</ol></section>
-        <section id="instruments" class="studio-room-field studio-room-field--dark" aria-labelledby="instrument-title"><header><p class="studio-room-kicker">02 / Instrument shelf</p><h2 id="instrument-title">Small tools that clarify before they scale.</h2></header><div class="studio-room-card-grid studio-room-card-grid--four">{instruments.map(([id, title, note]) => <article><span>{id}</span><h3>{title}</h3><p>{note}</p></article>)}</div></section>
-        <section id="prompt-catalog" class="studio-room-field studio-room-field--fog" aria-labelledby="prompt-catalog-title"><header><p class="studio-room-kicker">03 / Prompt Engineering Catalog</p><h2 id="prompt-catalog-title">128 techniques, organized by transformation.</h2><p>Projected from a 512-record atlas across 64 categories. Each card opens into an 8-section breakdown; the Prompt Lab generates a form-driven template you can copy into any agent.</p></header><PromptCatalogWorkbench client:load /></section>
-        <section class="studio-room-field studio-room-field--ember studio-room-return"><p class="studio-room-kicker">04 / Fictional teaching case</p><h2>A small system boundary under review.</h2><p>Should a document-indexing concern become its own module? Bind its imports and failures, define the no-touch storage boundary, draft a port, check isolation, and return the decision for human review. This illustrates a method; it is not a client result or released system.</p></section>
-      </>}
-
       {route === 'notes' && !journal && <>
         <section class="studio-room-field studio-room-field--paper"><FieldJournalLatest /></section>
         <section class="studio-room-field studio-room-field--dark"><NotesArticleLedger /></section>
@@ -231,7 +209,7 @@ const runtime = [
       {route === 'workbench' && <>
         <section id="technical-surface" class="studio-room-field studio-room-field--paper" aria-labelledby="technical-surface-title"><header><p class="studio-room-kicker">01 / Public technical boundary</p><h2 id="technical-surface-title">A narrow service edge. A private operating interior.</h2><p>The public tier reads a small catalog projection. It does not receive private Hub content, retain visitor profiles, expose cluster-internal services, or treat a payment identifier as personal identity.</p></header><dl class="studio-room-boundaries"><div><dt>Public</dt><dd>Static research pages and a TypeScript catalog projection.</dd></div><div><dt>Service</dt><dd>Rust owns validation, readiness, policy, and catalog responses.</dd></div><div><dt>Data</dt><dd>PostgreSQL holds catalog records only in the current candidate.</dd></div><div><dt>Private</dt><dd>Operations, source systems, agents, and dashboards remain network-bounded.</dd></div></dl></section>
         <section id="runtime-map" class="studio-room-field studio-room-field--dark" aria-labelledby="runtime-map-title"><header><p class="studio-room-kicker">02 / Runtime map</p><h2 id="runtime-map-title">Four layers, four responsibilities.</h2><p>The implementation is deliberately small: presentation cannot own native effects, the service cannot infer identity, and the database cannot become a shadow profile store.</p></header><ol class="studio-room-runtime">{runtime.map(([id, title, note, posture]) => <li><span>{id}</span><h3>{title}</h3><p>{note}</p><strong>{posture}</strong></li>)}</ol></section>
-        <section id="delivery-posture" class="studio-room-field studio-room-field--fog studio-room-return"><p class="studio-room-kicker">03 / Delivery posture</p><h2>Built for review before release.</h2><p>The application and deployment sources have local test evidence, but no immutable images have been published and no Argo application, DNS record, or live cluster release has been created. This surface explains the architecture; it is not a production-status claim.</p><nav><a href="/evidence/">Read the evidence posture →</a><a href="/correspondence/">Discuss the system →</a></nav></section>
+        <section id="delivery-posture" class="studio-room-field studio-room-field--fog studio-room-return"><p class="studio-room-kicker">03 / Delivery posture</p><h2>Built for review before release.</h2><p>The application and deployment sources have local test evidence, but no immutable images have been published and no Argo application, DNS record, or live cluster release has been created. This surface explains the architecture; it is not a production-status claim.</p><nav><a href="/journal/">Read the evidence posture →</a><a href="/correspondence/">Discuss the system →</a></nav></section>
       </>}
     </main>
     <footer class="studio-room-footer"><span>Hearth &amp; Code · Hearthside Meta-Architect</span><span>Public research · source-aware · correction-friendly</span></footer>

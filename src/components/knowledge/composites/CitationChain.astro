@@ -20,9 +20,9 @@ interface Props {
 const { citations, label, separator = 'arrow', class: className = '' } = Astro.props;
 const seps = { arrow: '→', pipe: '│', dot: '·' };
 ---
-<ol class:list={['kc-citation-chain', `kc-citation-chain--${separator}`, className]}>
+<div class:list={['kc-citation-chain', `kc-citation-chain--${separator}`, className]}>
   {label && <p class="kc-citation-chain__label">{label}</p>}
-  <div class="kc-citation-chain__list">
+  <ol class="kc-citation-chain__list">
     {citations.map((c, i) => (
       <li class="kc-citation-chain__item">
         <span class="kc-citation-chain__index">{i + 1}</span>
@@ -38,8 +38,8 @@ const seps = { arrow: '→', pipe: '│', dot: '·' };
         )}
       </li>
     ))}
-  </div>
-</ol>
+  </ol>
+</div>
 
 <style>
   .kc-citation-chain {

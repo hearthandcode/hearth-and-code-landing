@@ -27,7 +27,7 @@ const { events, filterable = true, class: className = '' } = Astro.props;
       placeholder="Filter events..."
     />
   )}
-  <ol class="kc-audit-trail__events">
+  <ol class="kc-audit-trail__events" tabindex="0" aria-label="Scrollable audit event history">
     {events.map((e) => (
       <li class:list={['kc-audit-trail__event', `kc-audit-trail__event--${e.outcome || 'success'}`]}>
         <span class="kc-audit-trail__time">{e.timestamp}</span>
@@ -102,6 +102,10 @@ const { events, filterable = true, class: className = '' } = Astro.props;
     font-size: 0.75rem;
     max-height: 20rem;
     overflow-y: auto;
+  }
+  .kc-audit-trail__events:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
   .kc-audit-trail__event {
     display: grid;

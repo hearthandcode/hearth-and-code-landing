@@ -122,7 +122,7 @@ const edgeData = edges.map((e) => ({ ...e }));
       .alpha(0.6)
       .alphaDecay(0.02);
 
-    const drag = d3.drag()
+    const drag = d3.drag<SVGGElement, any, any>()
       .on('start', (event: any, d: any) => {
         if (!event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x; d.fy = d.y;

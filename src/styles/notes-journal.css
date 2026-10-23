@@ -24,7 +24,7 @@
 .field-journal-latest__actions button:focus-visible {
   color: #f7ead2;
   border-color: rgba(244, 184, 96, 0.7);
-  outline: none;
+
 }
 
 .field-journal-latest h3 button {
@@ -37,7 +37,7 @@
 .field-journal-latest h3 button:hover,
 .field-journal-latest h3 button:focus-visible {
   color: #f4b860;
-  outline: none;
+
 }
 
 .field-journal-latest__read {
@@ -52,7 +52,7 @@
 .field-journal-latest__read:hover,
 .field-journal-latest__read:focus-visible {
   color: #f4b860;
-  outline: none;
+
 }
 
 .field-journal-archive {
@@ -132,7 +132,7 @@
 .field-journal-archive__scroll button:hover,
 .field-journal-archive__scroll button:focus-visible {
   color: #9dc8c1;
-  outline: none;
+
 }
 
 .field-journal-archive__scroll small {
@@ -200,7 +200,7 @@
 .field-journal-dialog__close:focus-visible {
   color: #f4b860;
   border-color: #f4b860;
-  outline: none;
+
 }
 
 .field-journal-dialog__permalink {
@@ -214,7 +214,7 @@
 .field-journal-dialog__permalink:hover,
 .field-journal-dialog__permalink:focus-visible {
   color: #f4b860;
-  outline: none;
+
 }
 
 @media (max-width: 780px) {

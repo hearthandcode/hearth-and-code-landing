@@ -13,6 +13,9 @@ interface FieldcraftArticle {
   verified: boolean;
   deck: string;
   source_refs: (string | { title: string; url: string })[];
+  source_filename?: string;
+  master_sha256?: string;
+  export_sha256?: string;
 }
 
 const articles = (fieldcraftPublication.articles as unknown as FieldcraftArticle[]) || [];
@@ -29,7 +32,7 @@ export const fieldcraftLibrary: LibraryArticle[] = articles.map((a) => ({
   dek: a.deck,
   readTime: `${a.reading_minutes} min read`,
   themes: [a.subject, a.category],
-  href: `https://hearthandcode.github.io/${a.slug}.html`,
+  href: `/fieldcraft/#${a.slug}`,
 }));
 
 export const fieldcraftByCategory = (category: string) => articles.filter((a) => a.category === category);

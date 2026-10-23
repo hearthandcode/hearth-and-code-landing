@@ -4,3 +4,8 @@
 .journal-article__body .journal-program figcaption{margin:0;padding:.48rem .95rem;border-bottom:1px solid rgba(216,189,145,.22);color:#f4b860;background:#1b2024;font:600 .68rem/1.5 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
 .journal-article__body .journal-program pre{margin:0;max-width:100%;border:0;border-radius:0;overflow-x:auto;white-space:pre;padding:1rem 1.1rem;line-height:1.65}
 .journal-article__body .journal-program code{font:.82rem/1.65 var(--font-mono)}
+.journal-article__body .journal-program code span[style*="#6A737D" i]{color:#a5adb5!important}
+
+.journal-article__review-notice{margin:1.25rem 0 0;padding:.9rem 1rem;border:1px solid rgba(244,184,96,.42);border-left:3px solid var(--color-ember);background:rgba(244,184,96,.08);color:var(--color-text-muted);line-height:1.6}
+.journal-article__body table:focus-visible{outline:3px solid #f4b860;outline-offset:3px;border-radius:.15rem}
+.journal-article__body table caption{padding:.45rem 0;color:#f1e7d2;font-weight:600;text-align:left;caption-side:top}

@@ -1,4 +1,49 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 import HcanPageIsland from '../components/hcan-astro/HcanPageIsland.astro';
+import ResearchProjectFrame from '../components/ResearchProjectFrame.astro';
+import StudioNavigation from '../components/StudioNavigation.astro';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/research-studio-landing.css';
+import '../styles/studio-room-surfaces.css';
+import '../styles/ember-circuit-library.css';
+
+const sections = [
+  { id: 'what', label: 'Overview' }, { id: 'grammar', label: 'Grammar' },
+  { id: 'examples', label: 'Examples' }, { id: 'protocols', label: 'Protocols' },
+  { id: 'benchmarks', label: 'Evaluation' }, { id: 'methodology', label: 'Methodology' },
+  { id: 'features', label: 'Features' }, { id: 'tooling', label: 'Tooling' },
+  { id: 'envelope', label: 'Envelope' }, { id: 'not', label: 'Limits' },
+  { id: 'getting-started', label: 'Try it' },
+];
 ---
-<HcanPageIsland />
+<BaseLayout title="HCAN · Hearth & Code" description="A source-bounded introduction to HCAN, a proposed human-agent communication notation, with examples, evaluation context, and current limits.">
+  <a class="hcan-skip" href="#page-main">Skip to content</a>
+  <StudioNavigation current="research" disposition="A proposed communication notation with examples, evaluations, and explicit limits" />
+  <main id="page-main">
+    <ResearchProjectFrame
+      eyebrow="Research project / communication notation"
+      title="HCAN"
+      summary="A proposed human-agent communication notation for making intent, scope, uncertainty, and boundaries visible in a reviewable line. Symbols require explanation; notation alone cannot enforce permission or establish that a workflow worked."
+      status="Candidate · review required"
+      facts={[
+        { label: 'Project type', value: 'Human-agent communication notation' },
+        { label: 'Surface', value: 'Explanatory projection' },
+        { label: 'Evidence', value: 'Small, versioned project evaluations' },
+        { label: 'Return', value: 'Compare with plain-language handoffs' },
+      ]}
+      sections={sections}
+      returnHref="/research/"
+      returnLabel="Return to Research"
+    >
+      <HcanPageIsland embedded />
+    </ResearchProjectFrame>
+  </main>
+</BaseLayout>
+
+<style>
+  #page-main { min-width: 0; overflow-x: clip; }
+  .hcan-skip { position: absolute; z-index: 100; top: -5rem; left: 1rem; padding: .75rem 1rem; background: #f1e7d2; color: #161411; }
+  .hcan-skip:focus { top: 1rem; }
+</style>

@@ -33,7 +33,7 @@ const TIER_COLORS: Record<string, string> = {
   S: '#22c55e', A: '#0ea5e9', B: '#eab308', C: '#f97316', D: '#ef4444', F: '#b91c1c',
 };
 const RESULT_COLORS: Record<string, string> = {
-  WIN: '#22c55e', LOSS: '#ef4444', tie: '#8d8579',
+  WIN: '#22c55e', LOSS: '#f87171', tie: '#8d8579',
 };
 
 type SortKey = 'dimension' | 'hcan' | 'prose' | 'tier' | 'result';

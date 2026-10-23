@@ -26,7 +26,17 @@ const articles = [
         <div><p class="ec-label">H+C / Research Library</p><h1 id="library-title">A clear reading room for the work I want to share.</h1><p>Browse my essays, technical articles, Field Journal entries, and practical Methods cards. Search by concern or switch between reading and practice without passing through the machinery behind the site.</p><a href="#library-workbench">Open the library <span aria-hidden="true">↓</span></a></div>
       </section>
       <section id="library-workbench" class="ec-library-field"><LibraryWorkbench client:load articles={articles} fieldcraft={fieldcraftLibrary} /></section>
-    </main>
+        <section class="library-adjacent" aria-labelledby="adjacent-title" style="max-width:1080px;margin:0 auto;padding:24px 24px 72px;">
+      <p class="studio-room-kicker">Adjacent corridors</p>
+      <h2 id="adjacent-title" style="font-family:var(--font-display,'Fraunces',serif);font-weight:500;color:var(--gold,#c9a84c);font-size:1.5rem;margin:6px 0 14px;">From the Sacred Commons &amp; the record</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;">
+        <a href="https://sacred.hearthandcode.dev/ethics" style="border:1px solid rgba(184,145,46,.2);border-radius:10px;padding:16px;color:#cfc6b6;text-decoration:none;"><strong style="color:var(--gold,#c9a84c);display:block;margin-bottom:4px;">The Alignment You Already Have</strong><span style="font-size:.85rem;">The ethics wing — charter, invocation, and the eight-section essay that began the public record.</span></a>
+        <a href="https://sacred.hearthandcode.dev/ethics/alignment" style="border:1px solid rgba(184,145,46,.2);border-radius:10px;padding:16px;color:#cfc6b6;text-decoration:none;"><strong style="color:var(--gold,#c9a84c);display:block;margin-bottom:4px;">The Algorithm Has No Category for Prayer</strong><span style="font-size:.85rem;">Kali, copypasta, and the moderation of sacred repetition — the essay at the heart of the case.</span></a>
+        <a href="https://sacred.hearthandcode.dev/school" style="border:1px solid rgba(184,145,46,.2);border-radius:10px;padding:16px;color:#cfc6b6;text-decoration:none;"><strong style="color:var(--gold,#c9a84c);display:block;margin-bottom:4px;">The Mystery School</strong><span style="font-size:.85rem;">A free-forever school of the science of the sacred — the commons in motion.</span></a>
+        <a href="/dossier/" style="border:1px solid rgba(184,145,46,.2);border-radius:10px;padding:16px;color:#cfc6b6;text-decoration:none;"><strong style="color:var(--gold,#c9a84c);display:block;margin-bottom:4px;">The Extended Mind, Implemented</strong><span style="font-size:.85rem;">TEVV-mapped method paper — the governed scaffold as inspectable instrument (researcher copy on request).</span></a>
+      </div>
+    </section>
+</main>
     <footer class="studio-room-footer"><span>Hearth &amp; Code · Research Library</span><span>Articles · essays · methods</span></footer>
   </body>
 </html>

@@ -212,8 +212,28 @@ const articleWordCount = (article: HearthsideArticle) => [
   ...article.sections.flatMap((section) => [section.heading, ...section.paragraphs]),
 ].join(' ').trim().split(/\s+/).length;
 
+// Expert-facing bridges connect the earlier essays to concrete agentic
+// engineering and research decisions without upgrading proposals into claims.
+const expertBridges: Record<string, string> = {
+  'meaning-before-machinery': 'For an agentic engineering team, I would make this sequence executable as a design review: state the user decision, bind the source corpus and authority boundary, specify the agent-visible tools, then name a falsifiable acceptance predicate and recovery path. For an agentic research task, add source-selection criteria and a record of excluded evidence. This does not prove the system is appropriate; it gives reviewers a stable object to challenge before implementation.',
+  'uncertainty-is-a-room': 'In a research agent pipeline, I would represent missing source coverage, conflicting interpretations, stale evidence, and unrun checks as different states because each calls for a different operation. A useful evaluation fixture should include at least one of each and test whether the agent preserves those distinctions in its return. Passing that fixture establishes only the fixture predicate; it does not establish calibrated uncertainty across tasks.',
+  'a-humane-theory-of-provenance': 'For an agentic system, provenance needs to survive each transformation: source retrieval, extracted passage, normalized claim, generated synthesis, review, and downstream use. I would store stable locators and transformation records beside the claim, then test whether a reviewer can traverse from a conclusion back to its admitted evidence. That is a traceability property of the tested path, not a guarantee that the sources or interpretation are correct.',
+  'tools-in-a-bounded-room': 'In implementation, the room becomes an explicit capability boundary: enumerate tools, allowed operations, input scope, effect targets, stop conditions, and the human disposition point. Test denied operations as deliberately as successful ones, and preserve tool-call receipts with the task return. A prompt describing a boundary cannot enforce it by itself; the harness and host controls must carry the actual restriction.',
+  'typed-context-for-real-work': 'For a research agent, a typed context contract should distinguish source identity, extracted content, claim class, freshness, sensitivity, and permitted use. Validate the contract at the adapter seam and retain the raw source alongside normalized fields. A schema check can establish shape and required-field predicates, while semantic fidelity and whether the chosen context answers the research question still need separate review.',
+  'knowledge-representation-without-a-black-box': 'An agentic knowledge representation is useful when its relations can be traced to source and its consumers can state what they need to decide. I would compare the graph or typed record against a prose-and-table baseline on a small task set, measuring retrieval errors, correction effort, and information loss. A richer representation earns its place only if that comparison reveals a practical distinction; structural elegance alone is not evidence of better research.',
+  'operational-intelligence-as-comparison-practice': 'For an agentic workflow evaluation, freeze the task fixtures, source packet, model/configuration, tool policy, evaluator rubric, and return format before comparing variants. Record deviations and score source fidelity, unsupported claims, repair work, and safe stopping separately. This yields bounded comparative evidence for those fixtures; it cannot establish general effectiveness or production readiness.',
+  'prompting-as-interface-design': 'For an agentic engineering prompt, specify the task object, admitted sources, available tools, expected artifact, checkable predicates, prohibited effects, and return owner. Then test the prompt on both a normal case and an adversarial or incomplete case, preserving the exact prompt and output versions. Compare against a shorter baseline so added structure must demonstrate lower repair burden or clearer control; one successful run remains a demonstration, not a general performance claim.'
+};
+
 export const hearthsideArticles: HearthsideArticle[] = hearthsideArticleBase.map((article) => {
-  const sections = [...article.sections, ...(hearthsideArticleExpansions[article.slug] ?? [])];
+  const sections = [
+    ...article.sections,
+    ...(hearthsideArticleExpansions[article.slug] ?? []),
+    ...(expertBridges[article.slug] ? [{
+      heading: 'An expert practice for agentic work',
+      paragraphs: [expertBridges[article.slug]],
+    }] : []),
+  ];
   const expanded = { ...article, sections };
   return { ...expanded, readTime: `${Math.max(1, Math.ceil(articleWordCount(expanded) / 210))} min read` };
 });

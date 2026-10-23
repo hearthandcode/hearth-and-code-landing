@@ -4,6 +4,7 @@ import '../../styles/research-lab.css';
 import '../../styles/ember-research-system.css';
 import '../../styles/ember-surface-framework.css';
 import HearthNavigation from '../../components/HearthNavigation.astro';
+import ResearchProjectFrame from '../../components/ResearchProjectFrame.astro';
 
 type Mark = [string, string, string, string, string[], number[][]];
 
@@ -32,23 +33,25 @@ const marks: Mark[] = [
   <a class="research-skip" href="#main-content">Skip to the review proof</a>
   <HearthNavigation context="Ember Circuit / local theme review" />
   <main id="main-content" class="research-main ec-review">
+    <ResearchProjectFrame
+      eyebrow="Research project / visualization system"
+      title="Ember Circuit"
+      summary="A candidate Hearth & Code visual language that uses warmth for human ownership and return, and circuitry for named relations among questions, sources, proofs, evidence, and correction. This is a local design study, not a product, scientific credential, final logo, or capability claim."
+      status="Candidate · no direction selected"
+      facts={[
+        { label: 'Project type', value: 'Visualization grammar' },
+        { label: 'Structure', value: '4 families · 8 specimens' },
+        { label: 'Runtime', value: 'Static HTML and CSS' },
+        { label: 'Review state', value: 'Local comparison · not released' },
+      ]}
+      sections={[
+        { id: 'foundation', label: 'Foundation' }, { id: 'interface', label: 'Interface' },
+        { id: 'knowledge', label: 'Knowledge' }, { id: 'identity', label: 'Identity' },
+      ]}
+      returnHref="/research/"
+      returnLabel="Return to Research"
+    >
     <article>
-      <header class="ec-intro">
-        <p class="ec-kicker">Candidate visualization grammar · version 0.1</p>
-        <h1>Ember Circuit turns research structure into a visible reading path.</h1>
-        <p class="ec-lede">This page tests a proposed Hearth &amp; Code theme. Warmth marks human ownership and return; circuitry names literal relations among questions, sources, small proofs, evidence, and correction. It is not a product, scientific credential, final logo, or capability claim.</p>
-        <dl class="ec-meta">
-          <div><dt>Surface</dt><dd>Local review route</dd></div>
-          <div><dt>Structure</dt><dd>4 families · 8 specimens</dd></div>
-          <div><dt>Runtime</dt><dd>Static HTML and CSS</dd></div>
-          <div><dt>Selection</dt><dd>No final direction</dd></div>
-        </dl>
-        <nav class="ec-nav" aria-labelledby="contents-title">
-          <p id="contents-title">Review by family</p>
-          <ol><li><a href="#foundation">01 Foundation</a></li><li><a href="#interface">02 Interface</a></li><li><a href="#knowledge">03 Knowledge</a></li><li><a href="#identity">04 Identity</a></li></ol>
-        </nav>
-      </header>
-
       <section id="foundation" class="ec-family" aria-labelledby="foundation-title">
         <header><p class="ec-index">Family 01 / 04</p><h2 id="foundation-title">Foundation</h2><p>Color and type establish a calm editorial base before circuitry appears.</p></header>
         <div class="ec-grid">
@@ -123,7 +126,13 @@ const marks: Mark[] = [
         </div>
       </section>
     </article>
+    </ResearchProjectFrame>
   </main>
   <footer class="research-footer ec-footer"><span>Hearth &amp; Code · local design review</span><span>Candidate · unselected · not released</span><a href="#main-content">Return to the beginning ↑</a></footer>
+  <style is:global>
+    .ec-review .ec-mark-sample { background: #f2e7d5 !important; color: #1c1714 !important; }
+    .ec-review .ec-mark-sample small { color: #1c1714 !important; }
+    .ec-review .ec-swatches .rejected dt { color: #1c1714 !important; }
+  </style>
 </body>
 </html>

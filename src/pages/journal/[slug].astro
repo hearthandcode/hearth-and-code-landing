@@ -1,29 +1,42 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import JournalArticleLayout from '../../components/JournalArticleLayout.astro';
+import HearthsideArticle from '../../components/HearthsideArticle.astro';
 import ArticleContentHeading from '../../components/ArticleContentHeading.astro';
-import { fieldJournalReadingMinutes } from '../../content/field-journal-expansions';
 import { mdxComponents } from '../../mdx-components';
+import { hearthsideArticles } from '../../content/hearthside-articles';
 
 import type { CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const entries = (await getCollection('journal')) as Array<CollectionEntry<'journal'>>;
-  return entries.map((entry: CollectionEntry<'journal'>) => ({ params: { slug: entry.id }, props: { id: entry.id } }));
+  const paths = entries.map((entry: CollectionEntry<'journal'>) => ({ params: { slug: entry.id }, props: { id: entry.id } }));
+  const journalIds = new Set(entries.map((entry) => entry.id));
+  // The expert-facing Hearthside essays historically live under /notes/. Keep
+  // their already-linked /journal/ addresses working as aliases, while leaving
+  // native Journal collection entries as the owner of any matching slug.
+  const aliases = hearthsideArticles
+    .filter((article) => !journalIds.has(article.slug))
+    .map((article) => ({ params: { slug: article.slug }, props: { aliasArticle: article } }));
+  return [...paths, ...aliases];
 }
 
-const { id } = Astro.props;
-const entry = (await getEntry('journal', id)) as CollectionEntry<'journal'> | undefined;
-if (!entry || entry.data.status !== 'published') return new Response('Not found', { status: 404 });
-const { Content, headings } = await render(entry);
+const { id, aliasArticle } = Astro.props;
+const entry = id ? (await getEntry('journal', id)) as CollectionEntry<'journal'> | undefined : undefined;
+if (id && (!entry || entry.data.status !== 'published')) return new Response('Not found', { status: 404 });
+const rendered = entry ? await render(entry) : undefined;
+const Content = rendered?.Content;
+const headings = rendered?.headings ?? [];
 // Merge journal-specific overrides (h1) with HCAN-specific components so both
 // rendering surfaces (Ember-Circuit components + article chrome) compose.
 const components = { h1: ArticleContentHeading, ...mdxComponents };
 ---
 
+{aliasArticle ? <HearthsideArticle article={aliasArticle} /> : entry && Content && (
 <JournalArticleLayout
   title={entry.data.title}
   date={entry.data.published_date ?? entry.data.date}
+  publicationNote={entry.data.publication_note}
   description={entry.data.description}
   tags={entry.data.tags ?? []}
   sources={entry.data.sources}
@@ -32,6 +45,7 @@ const components = { h1: ArticleContentHeading, ...mdxComponents };
   claims={entry.data.claim_map ?? []}
   featuredImage={entry.data.featured_image}
   featuredImageAlt={entry.data.featured_image_alt}
-  readingTimeMinutes={fieldJournalReadingMinutes(entry.id, entry.data.reading_time_minutes)}
+  readingTimeMinutes={entry.data.reading_time_minutes ?? 1}
   slug={entry.id}
 ><Content components={components} /></JournalArticleLayout>
+)}

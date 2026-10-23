@@ -8,18 +8,19 @@ interface FlowStep {
 }
 
 interface Props {
+  idPrefix: string;
   title: string;
   introduction: string;
   steps: FlowStep[];
 }
 
-const { title, introduction, steps } = Astro.props;
+const { idPrefix, title, introduction, steps } = Astro.props;
 ---
 
-<figure class="governed-flow" aria-labelledby="governed-flow-title">
+<figure class="governed-flow" aria-labelledby={`${idPrefix}-title`}>
   <figcaption>
     <p class="governed-flow-kicker">Governed context route</p>
-    <h2 id="governed-flow-title">{title}</h2>
+    <h2 id={`${idPrefix}-title`}>{title}</h2>
     <p>{introduction}</p>
   </figcaption>
 

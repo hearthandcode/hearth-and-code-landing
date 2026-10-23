@@ -64,7 +64,7 @@ export function PortfolioReviewBrief({ brief }: { brief: ReviewBriefData }) {
       </div>
 
       {/* Title */}
-      <h4
+      <h3
         style={{
           margin: 0,
           color: 'var(--color-text-primary)',
@@ -75,7 +75,7 @@ export function PortfolioReviewBrief({ brief }: { brief: ReviewBriefData }) {
         }}
       >
         {brief.title}
-      </h4>
+      </h3>
 
       {/* Collapsed: overview only */}
       {!expanded && (
@@ -130,11 +130,10 @@ export function PortfolioReviewBrief({ brief }: { brief: ReviewBriefData }) {
       <p
         style={{
           margin: 0,
-          color: 'var(--color-accent-ember)',
+          color: 'var(--color-accent-gold)',
           fontFamily: 'var(--font-mono)',
           fontSize: '0.65rem',
           letterSpacing: '0.04em',
-          opacity: 0.6,
         }}
       >
         {expanded ? '▲ Collapse' : '▼ Expand brief'}

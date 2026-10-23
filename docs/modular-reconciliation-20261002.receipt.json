@@ -1,0 +1,127 @@
+{
+  "schema": "hnc.local-review-receipt.v1",
+  "recorded_at": "2026-10-02T20:54:27.621092+00:00",
+  "verified": false,
+  "non_self_authorizing": true,
+  "status": "partial",
+  "scope": "Local modular surface reconciliation",
+  "artifacts": [
+    {
+      "path": "src/components/HearthsideArticle.astro",
+      "sha256": "3a1dabe0068f60a85b45f25e0232e0f2268537e7e650266fd6ba1a868914bad0"
+    },
+    {
+      "path": "src/styles/reading-articles.css",
+      "sha256": "3a74a2b1874d991c447abf7e8e5a5c3a1ac626ccce3f4476ef99d59169e8d219"
+    },
+    {
+      "path": "src/styles/studio-room-surfaces.css",
+      "sha256": "4c830fd016945f3bd65c7eed88b281a91f02623ac556a02cc9114f672e6e5b98"
+    },
+    {
+      "path": "src/components/ember-circuit/MethodsWorkbench.tsx",
+      "sha256": "f56c52b5dd81e4f321148bb50a8c4712d99ade552285285c5d525a1c1dfdef50"
+    },
+    {
+      "path": "src/styles/methods-workbench.css",
+      "sha256": "28df3162a5c6d6d7589bf004041f83eb463703eef33cf9c4e52fce9fd7daafa9"
+    },
+    {
+      "path": "src/pages/methods/index.astro",
+      "sha256": "06601d06870d4f0a47a35794c311529331435a2efa4aec5026e3e530ad73d2d9"
+    },
+    {
+      "path": "src/components/ember-circuit/CharacterSheet.tsx",
+      "sha256": "715881e454caa9af00eb11fc6d18692f9be226f0741d3a3d045cfad627928883"
+    },
+    {
+      "path": "src/styles/character-sheet.css",
+      "sha256": "f3db6d021bf7abed20bd5ce1068a9a17578b76fb26bd5619a0f81d7076e55595"
+    },
+    {
+      "path": "src/components/DossierSheet.astro",
+      "sha256": "fc7c89790e9bc157d2e421810bf7926f82fb23fc5d60068de318303cc4261f4d"
+    },
+    {
+      "path": "src/pages/dossier/index.astro",
+      "sha256": "8e1e0d0ad0f2f14991a076f6e19ed351e2a2498cb2f8d89bb0f5f15481d43dda"
+    },
+    {
+      "path": "src/data/research-programs.ts",
+      "sha256": "3bb828d96a1bed464dd0628749742d8c260e6a4ce5009b40e112f4d950cf31dc"
+    },
+    {
+      "path": "src/pages/programs/[slug].astro",
+      "sha256": "acb6c99b1275823439cdc354bb134a9ddde555b1275bae1db5bc78d9f4fb9f40"
+    },
+    {
+      "path": "src/styles/research-programs.css",
+      "sha256": "c092fa0d1972ee68b92fabdf0f9333959e1eea67ef99b4edc684887c0005d07a"
+    },
+    {
+      "path": "src/pages/programs/index.astro",
+      "sha256": "7ea052e6300da7257ca1b9a7c6a4339d2d74a49945c56cca3d412e21c4b955ef"
+    },
+    {
+      "path": "src/pages/research/index.astro",
+      "sha256": "d0095ae2372fe061085a7a946b883faf1ecc5dbfd9f63c14be66aeb1fada5b2b"
+    },
+    {
+      "path": "src/components/ember-circuit/QuestionWorkbench.tsx",
+      "sha256": "3d0ab86fa55f6b19923458770143367e798e5186c49b55be9d79612f849ac636"
+    },
+    {
+      "path": "src/styles/question-workbench.css",
+      "sha256": "7561b7fb8f5ba8f348f5690dbf9e5df35ba32cb97b38ad1398873bacdf7547cd"
+    },
+    {
+      "path": "src/pages/questions/index.astro",
+      "sha256": "b797ea346606d1aa647071081124e1c9aff13714c30d2eae0ccf5b87d77e46ba"
+    },
+    {
+      "path": "src/components/LaunchReview.astro",
+      "sha256": "a2b44602c67217d1a21ed081b3fe3ebc39f5b0bc5c81b935f23865ffe9e7a3d7"
+    },
+    {
+      "path": "scripts/modular-surfaces.test.mjs",
+      "sha256": "49e256c6c2cd779807ece6caaa50d9bb6978fc81fdcab47fe02e035d5afb76a8"
+    }
+  ],
+  "checks": [
+    {
+      "predicate": "Astro build and type check",
+      "result": "ok",
+      "evidence": "/tmp/hc-modular-pass-20261002/build-review.log",
+      "static_pages": 67
+    },
+    {
+      "predicate": "Requested modular layouts and interactions at widths 1440,390,320",
+      "result": "ok",
+      "evidence": "/tmp/hc-modular-pass-20261002/modular-tests-final.log"
+    },
+    {
+      "predicate": "Generated-page dark fields and landing navigation",
+      "result": "ok",
+      "evidence": "/tmp/hc-modular-pass-20261002/theme-navigation-tests.log"
+    },
+    {
+      "predicate": "Git diff whitespace check",
+      "result": "ok"
+    }
+  ],
+  "pending": [
+    {
+      "effect": "Export exact 512 internal candidate template bodies and declared inputs",
+      "target": "src/data/prompt-template-public-candidate.json",
+      "state": "hold",
+      "reason": "Automatic approval review rejected potentially public export without exact payload and destination authorization. User clarification requested; no export performed."
+    }
+  ],
+  "limits": [
+    "Full legacy browser suite not rerun; earlier inline-layout assertions require migration.",
+    "Human visual acceptance remains open.",
+    "No new provider runs, Lean validation, Git mutation, or public deployment."
+  ],
+  "review_url": "http://127.0.0.1:4321/review/",
+  "recovery": "Source history and retained local Methods/LaunchReview snapshots; preserve unrelated dirty paths."
+}

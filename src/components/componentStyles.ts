@@ -125,7 +125,7 @@ export const EMBER_CIRCUIT_COMPONENT_CSS = `
   background: currentColor;
   flex-shrink: 0;
 }
-.kc-status-pill--sealed { color: var(--color-accent-violet); }
+.kc-status-pill--sealed { color: #a36fed; }
 .kc-status-pill--approved { color: var(--color-state-success); }
 .kc-status-pill--rejected { color: var(--color-state-error); }
 .kc-status-pill--open { color: var(--color-accent-plasma); }

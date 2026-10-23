@@ -4,14 +4,15 @@ date: "2026-09-16"
 labels: [evidence, inference, proposal, open-question]
 sources:
   - "Hearth & Code Hub: 14-projects-and-program-ledger/01-program-portfolio/0047-hcan-communication-medium-project-home/09-field-journal/0001-hcan-field-journal-article.md (canonical)."
+  - "Hearth & Code Hub: 14-projects-and-program-ledger/01-program-portfolio/0047-hcan-communication-medium-project-home/09-field-journal/0002-hermes-react-goal-prompt-256.md (separate rendering brief; records the v4.2 analytical summary)."
   - "Hub canonical: hcan.tmLanguage.json (project 0047, 08-skill-projection/0007-hcan-syntax-highlighting/) — projection copy at src/data/hcan.tmLanguage.json."
   - "Hub canonical: hcan-highlight.js (same path) — projection copy at src/data/hcan-highlight.ts."
-  - "Hub canonical: evaluation summary (analytical + generative panels); the four canonical benchmarks (analytical 14/16, generative 13/13 within capability; harder-creative D/F for both panels — model ceiling confirmed)."
+  - "The canonical field-journal article's detailed analytical matrix is v3 (14/16); its separate rendering brief records an analytical v4.2 summary (15/16). Keep those revisions distinct. The article's methodology records 52 model calls and one human disposition session."
 status: published
 pilot: true
 reviewGate: true
 slug: "hcan-condensed-symbolic-language"
-description: "A field-journal projection of the canonical HCAN article: condensed symbolic language for human-agent communication. 8 worked examples, 7 data matrices, two protocol benchmarks (analytical 16 dims + generative 13 dims), and the model-agnostic portable envelope."
+description: "A field-journal projection of HCAN: condensed symbolic language for human-agent communication, with worked examples, protocol benchmarks, evaluation context, and the portable envelope."
 author: "Scott Rallya"
 tags: [field-journal, hcan, condensed-symbolic-language, agent-grammar, reproducible-evaluation]
 published_date: "2026-09-16"
@@ -21,24 +22,33 @@ claim_map:
   - claim: "HCAN compresses recurring natural-language requests into a single reviewable line."
     label: proposal
     source: "Hub canonical §‘How to talk to an AI agent the way you talk to a compiler’."
-  - claim: "Every HCAN line requests a specific return shape and binds to an epistemic label."
+  - claim: "The HCAN reference syntax supports explicit return-shape markers and optional epistemic labels; a line need not contain either."
     label: evidence
     source: "Hub canonical §‘The grammar’."
-  - claim: "Analytical panel: HCAN wins 14 of 16 dimensions blind-A/B against equivalent prose requests (boundary discipline 5.0 vs 3.2; verifiability 4.4 vs 3.8; calibrated confidence 4.8 vs 3.4)."
+  - claim: "The field-journal article's detailed v3 analytical matrix records 14 wins, 1 tie, and 1 loss against the compared prose responses."
     label: evidence
     source: "Hub canonical, analytical-scores matrix."
-  - claim: "Generative panel: HCAN wins 13 of 13 dimensions on tasks within model capability, 3-judge consensus (8-to-1 preference, 3 S-tier rows)."
+  - claim: "A separate rendering brief reports an analytical v4.2 summary of 15/16 wins, 10 S-tier, 5 A-tier, 1 B-tier, and 5–0 preference; its detailed rows are not the same version as the v3 article matrix rendered below."
+    label: evidence
+    source: "Hub 0002-hermes-react-goal-prompt-256.md, 'Final benchmark numbers'; implementation brief, not a replacement for the canonical article."
+  - claim: "The candidate generative evaluation record reports 13/13 dimensions on three within-capability fixtures across three judges; its small fixture set does not support a general performance claim."
     label: evidence
     source: "Hub canonical, generative-scores matrix."
+  - claim: "The recorded methodology includes 52 model calls and one human disposition session."
+    label: evidence
+    source: "Hub canonical, methodology matrix."
+  - claim: "These bounded project records do not establish representative user outcomes or current performance across models and settings."
+    label: inference
+    source: "Inference from the Hub methodology matrix's stated fixtures, model-call count, and single human disposition session."
   - claim: "On harder creative tasks outside capability, both HCAN and prose score D/F tier; the notation cannot elevate what the model cannot generate."
     label: evidence
     source: "Hub canonical, generative-scores hard-fixture entries + canonical summary text."
-  - claim: "Easier-fixture controls confirmed generative flipped to 13/13 — the ceiling is the model, not the notation."
-    label: inference
-    source: "Hub canonical, generative-scores easier entries."
-  - claim: "The portable envelope (TITLE → LEGEND → SHAPES → RULES → lines) is the model-agnostic, skill-agnostic distribution format."
+  - claim: "The project record reports 13/13 dimensions on its selected easier, within-capability fixtures; the result does not isolate model capability as the cause."
     label: evidence
-    source: "Hub canonical §‘The portable envelope’."
+    source: "Hub canonical, three-layer generative evaluation record."
+  - claim: "The project proposes a five-part envelope (TITLE → LEGEND → SHAPES → RULES → lines) to help readers interpret HCAN; it does not establish arbitrary model compatibility or execution."
+    label: proposal
+    source: "Hub canonical §‘The portable envelope’; execution and compatibility are not demonstrated by that proposal."
 ---
 
 import HcanPageIsland from '../../components/hcan-astro/HcanPageIsland.astro';

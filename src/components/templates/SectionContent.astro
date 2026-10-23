@@ -7,6 +7,7 @@
  */
 
 interface Props {
+  id?: string;
   eyebrow?: string;
   title?: string;
   lede?: string;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const {
+  id,
   eyebrow,
   title,
   lede,
@@ -34,7 +36,7 @@ const widths = {
 };
 ---
 
-<section class={`ec-section ec-section-content ec-section-content--${accent} ec-section-content--${align} ${className}`}>
+<section id={id} class={`ec-section ec-section-content ec-section-content--${accent} ec-section-content--${align} ${className}`}>
   <div class="ec-section-content__inner" style={`max-width: ${widths[width]}`}>
     {(eyebrow || title || lede) && (
       <header class="ec-section-content__header">
@@ -72,7 +74,7 @@ const widths = {
   }
   .ec-section-content--hearth .ec-section-content__eyebrow { color: var(--color-accent-ember); }
   .ec-section-content--code .ec-section-content__eyebrow { color: var(--color-accent-signal); }
-  .ec-section-content--balanced .ec-section-content__eyebrow { color: var(--color-accent-violet); }
+  .ec-section-content--balanced .ec-section-content__eyebrow { color: #a36fed; }
   .ec-section-content__title {
     margin: 0 0 var(--space-3) 0;
     font-family: var(--font-display);

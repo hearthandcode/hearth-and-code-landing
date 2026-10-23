@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
@@ -62,7 +63,7 @@ test('the review surface stays no-index and outside public navigation', async ()
   assert.match(download, /verified: false/);
 });
 
-test('the public landing is the Ember Circuit research studio index', async () => {
+test('the public landing orients Hearth and Code visitors to the studio', async () => {
   const [index, landing, navigation, portfolio, landingStyles] = await Promise.all([
     readFile(new URL('../src/pages/index.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/ResearchStudioLanding.astro', import.meta.url), 'utf8'),
@@ -73,19 +74,19 @@ test('the public landing is the Ember Circuit research studio index', async () =
 
   assert.match(index, /ResearchStudioLanding/);
   assert.doesNotMatch(index, /ResearchLabSurface/);
-  for (const route of ['/methods/', '/library/', '/programs/', '/evidence/', '/portfolio/', '/dossier/']) {
-    assert.match(landing, new RegExp(route.replaceAll('/', '\\/')));
+  for (const route of ['/workbench/', '/research/', '/philosophy/ai-literacy/']) {
+    assert.ok(landing.includes(route), `landing should link to ${route}`);
   }
-  assert.match(landing, /Prompt engineering/);
-  assert.match(landing, /StudioArchetype/);
-  assert.match(landing, /StudioArchiveIndex/);
-  assert.match(landing, /I build systems that can/);
-  assert.match(navigation, /'Portfolio', '\/portfolio\/'/);
-  assert.match(portfolio, /route="portfolio"/);
-  assert.match(landingStyles, /\.research-studio-landing\.ember-surface\s*\{[^}]*color:\s*var\(--ec-ink\)/s);
-  for (const lightSurface of ['studio-index', 'studio-publications', 'studio-archetype', 'studio-portfolio', 'studio-principles']) {
-    assert.match(landingStyles, new RegExp(`\\.${lightSurface}[^\\{]*\\{[^}]*color:\\s*var\\(--ec-ink\\)`, 's'));
-  }
+  assert.match(landing, /For Agentic Engineers/);
+  assert.match(landing, /For Agentic Researchers/);
+  assert.match(landing, /AI Literacy & public reasoning/);
+  assert.match(landing, /Choose a projection to change the emphasis/);
+  assert.ok(navigation.includes("'portfolio'") && navigation.includes("'/portfolio/'"));
+  assert.match(portfolio, /PortfolioApp/);
+  assert.match(portfolio, /current="exocore"/);
+  assert.match(landing, /\.studio\s*\{/);
+  assert.match(landing, /\.studio-paths\s*\{/);
+  assert.match(landing, /@media\s*\(max-width:\s*36rem\)/);
   assert.match(landingStyles, /--ec-bg-hearth:\s*#0e1114/);
 });
 
@@ -122,20 +123,67 @@ test('the public subpages share one bounded Research Studio system', async () =>
   assert.match(surface, /Source only · not active/);
 });
 
+test('research project surfaces use the shared project frame', async () => {
+  const [frame, hcan, emberCircuit, exocore] = await Promise.all([
+    readFile(new URL('../src/components/ResearchProjectFrame.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/hcan.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/review/ember-circuit.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/review/exocore.astro', import.meta.url), 'utf8'),
+  ]);
+
+  for (const [name, page] of [['HCAN', hcan], ['Ember Circuit', emberCircuit], ['Exocore', exocore]]) {
+    assert.match(page, /ResearchProjectFrame/, `${name} uses the shared project frame`);
+    assert.match(page, /sections=\{/s, `${name} provides a local project map`);
+  }
+  assert.match(frame, /Project map/);
+  assert.match(frame, /Return path/);
+  assert.match(exocore, /private implementation work onto that shell/i);
+  assert.match(exocore, /noindex, nofollow/);
+});
+
 test('the Hearthside voice and archive remain personal, broad, and bounded', async () => {
-  const [content, landing, surface] = await Promise.all([
+  const [content, landing, surface, library, archive] = await Promise.all([
     readFile(new URL('../src/data/research-studio-content.ts', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/ResearchStudioLanding.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/ResearchLabSurface.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/components/ember-circuit/LibraryWorkbench.tsx', import.meta.url), 'utf8'),
+    readFile(new URL('../src/components/StudioArchiveIndex.astro', import.meta.url), 'utf8'),
   ]);
 
   assert.equal((content.match(/number: '0[1-8]', title:/g) ?? []).length, 8);
   assert.equal((content.match(/code: 'IDX-0[1-8]'/g) ?? []).length, 8);
   assert.match(content, /Personal candidate · review before publication/);
   assert.match(content, /not a credential/i);
-  assert.match(landing, /my public workbench/i);
+  assert.match(landing, /Independent research studio/i);
+  assert.match(landing, /Hearthside Meta-Architect/);
   assert.match(surface, /route === 'programs'.*ResearchCollections/s);
   assert.match(surface, /route === 'notes'.*ResearchCollections/s);
+  assert.match(surface, /Field Journal \/ local review candidates/);
+  assert.match(surface, /preview does not approve or republish/i);
+  assert.doesNotMatch(surface, /Published Works/);
+  assert.match(library, /current local review status remain distinct/i);
+  assert.doesNotMatch(library, /published record/i);
+  assert.match(archive, /technical articles share the local Reading Room/i);
+  assert.doesNotMatch(archive, /technical articles belong to Published Works/i);
+});
+
+test('conflicted Field Journal publication metadata stays unresolved across reading surfaces', async () => {
+  const [schema, article, standalone, journalIndex, notesIndex] = await Promise.all([
+    readFile(new URL('../src/content.config.ts', import.meta.url), 'utf8'),
+    readFile(new URL('../src/content/journal/an-extended-mind-needs-a-grammar.mdx', import.meta.url), 'utf8'),
+    readFile(new URL('../src/components/JournalArticleLayout.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/journal/index.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/components/FieldJournalLatest.astro', import.meta.url), 'utf8'),
+  ]);
+
+  assert.match(schema, /publication_note: z\.string\(\)\.optional\(\)/);
+  assert.match(article, /Publication status is unresolved/);
+  assert.match(article, /current Hub canonical index classifies this article as draft/);
+  assert.match(article, /no export or publication was authorized/);
+  assert.match(standalone, /Conflicting records · unresolved/);
+  assert.match(journalIndex, /Source status unresolved/);
+  assert.match(notesIndex, /Source status unresolved/);
+  assert.doesNotMatch(notesIndex, /Earlier public writing, under review/);
 });
 
 test('every page family is bound to the Ember surface framework', async () => {
@@ -198,6 +246,82 @@ test('the 35 method prompts are individually authored and use a public-safe four
   assert.match(publicSigilClarification.boundary, /human-readable gloss/i);
 });
 
+test('the 128 technique prompts are hash-pinned, practical, diverse, and do not name their technique or category', async () => {
+  const [packetText, runResolver] = await Promise.all([
+    readFile(new URL('../src/data/prompt-technique-generated-prompts.json', import.meta.url), 'utf8'),
+    readFile(new URL('../src/data/prompt-technique-run-batches.ts', import.meta.url), 'utf8'),
+  ]);
+  const packet = JSON.parse(packetText);
+  assert.equal(packet.records.length, 128);
+  assert.deepEqual(packet.records.map((item) => item.technique_number).sort((a, b) => a - b), Array.from({ length: 128 }, (_, index) => index + 1));
+  assert.equal(new Set(packet.records.map((item) => item.prompt)).size, 128, 'each technique has a distinct practical instruction');
+
+  const groups = new Map();
+  const domains = new Set();
+  for (const item of packet.records) {
+    const prompt = item.prompt;
+    assert.ok(prompt.startsWith('Task: Fictional '), `technique ${item.technique_number} starts with a bounded work fixture`);
+    assert.match(prompt, /Use this operating principle:/, `technique ${item.technique_number} applies a technique principle`);
+    assert.doesNotMatch(prompt, new RegExp(item.technique_title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `technique ${item.technique_number} omits its title from the prompt`);
+    assert.doesNotMatch(prompt, new RegExp(item.category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `technique ${item.technique_number} omits its category from the prompt`);
+    assert.equal(createHash('sha256').update(prompt).digest('hex'), item.prompt_sha256, `technique ${item.technique_number} prompt digest matches`);
+
+    const task = prompt.split('\n\n')[0];
+    const domain = task.match(/^Task: Fictional ([^.]+)\./)?.[1];
+    assert.ok(domain, `technique ${item.technique_number} has a domain label`);
+    domains.add(domain);
+    if (!groups.has(item.fixture_group)) groups.set(item.fixture_group, []);
+    groups.get(item.fixture_group).push(task);
+
+    if (item.previous_prompt_sha256) {
+      assert.equal(item.execution_status, 'not-run', `revised technique ${item.technique_number} is not misreported as run`);
+      assert.equal(item.response, '', `revised technique ${item.technique_number} has no stale response attached`);
+      assert.equal(item.response_sha256, '', `revised technique ${item.technique_number} has no stale response digest`);
+    }
+    if (item.superseded_prompt_sha256s?.length) {
+      assert.match(prompt, /Technique-specific check: Address this candidate failure in the supplied case:/, `technique ${item.technique_number} uses its source-defined distinguishing failure mode`);
+      assert.ok(item.superseded_prompt_sha256s.includes(item.previous_prompt_sha256), `technique ${item.technique_number} retains its immediate predecessor hash`);
+    }
+  }
+
+  assert.ok(domains.size >= 8, 'the packet spans at least eight fictional work domains');
+  assert.equal(groups.size, 16, 'the packet preserves sixteen matched fixture groups');
+  assert.match(runResolver, /currentPromptHashBySlug/);
+  assert.match(runResolver, /record\.prompt_sha256 === currentPromptHashBySlug\.get\(record\.technique_slug\)/);
+  assert.match(runResolver, /record\.status === 'validated'/);
+  assert.match(runResolver, /runTime\(record\)\.localeCompare\(runTime\(current\)\)/);
+  for (const [group, tasks] of groups) {
+    assert.equal(tasks.length, 8, `fixture group ${group} contains eight matched prompts`);
+    assert.equal(new Set(tasks).size, 1, `fixture group ${group} shares the same task facts`);
+  }
+});
+
+test('the v5.3 runtime batch covers every current technique prompt with a response digest and honest review state', async () => {
+  const [packetText, batchText] = await Promise.all([
+    readFile(new URL('../src/data/prompt-technique-generated-prompts.json', import.meta.url), 'utf8'),
+    readFile(new URL('../src/data/prompt-technique-runs/batch-003.json', import.meta.url), 'utf8'),
+  ]);
+  const packet = JSON.parse(packetText);
+  const batch = JSON.parse(batchText);
+  assert.equal(batch.records.length, 128);
+  assert.deepEqual(batch.audit_summary, { validated: 113, invalid_hold: 15, missing: 0 });
+  assert.equal(new Set(batch.records.map((record) => record.technique_slug)).size, 128);
+  const current = new Map(packet.records.map((record) => [record.technique_slug, record]));
+  for (const record of batch.records) {
+    const prompt = current.get(record.technique_slug);
+    assert.ok(prompt, `${record.technique_slug} maps to a current technique`);
+    assert.equal(record.prompt_sha256, prompt.prompt_sha256, `${record.technique_slug} run matches current prompt`);
+    assert.equal(createHash('sha256').update(record.response).digest('hex'), record.response_sha256, `${record.technique_slug} response digest matches`);
+    assert.equal(record.runtime.kernel_version.includes('5.3'), true, `${record.technique_slug} carries its recorded kernel revision`);
+    assert.equal(record.runtime.model, 'openai-codex/gpt-6-luna');
+    assert.equal(record.runtime.reasoning_effort, 'high');
+    assert.equal(record.receipt_sha256.length, 64);
+    assert.ok(['validated', 'invalid_hold'].includes(record.status));
+    assert.ok(record.semantic_review, `${record.technique_slug} carries its separate response review`);
+    if (record.status === 'invalid_hold') assert.doesNotMatch(record.semantic_review, /^PASS/i);
+  }
+});
+
 test('the Hearthside article families carry substantial personalized review layers', () => {
   assert.equal(hearthsideArticles.length, 8);
   for (const article of hearthsideArticles) {
@@ -219,7 +343,7 @@ test('the Hearthside article families carry substantial personalized review laye
   }
 });
 
-test('the Ember Circuit Research Library has 32 source-mapped primitives and dark semantic fields', async () => {
+test('the Ember Circuit library preserves its 32-component core and one grammar extension', async () => {
   const [page, workbench, methodLibrary, wayfinding, systems, methods, theme, codification, navigation] = await Promise.all([
     readFile(new URL('../src/pages/library/index.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/ember-circuit/LibraryWorkbench.tsx', import.meta.url), 'utf8'),
@@ -232,10 +356,13 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
     readFile(new URL('../src/components/HearthNavigation.astro', import.meta.url), 'utf8'),
   ]);
 
-  assert.equal(emberCircuitComponents.length, 32);
-  assert.equal(new Set(emberCircuitComponents.map((item) => item.id)).size, 32);
-  assert.equal(new Set(emberCircuitComponents.map((item) => item.name)).size, 32);
-  for (const band of componentBands) assert.equal(emberCircuitComponents.filter((item) => item.band === band).length, 8);
+  assert.equal(emberCircuitComponents.length, 33);
+  assert.equal(new Set(emberCircuitComponents.map((item) => item.id)).size, 33);
+  assert.equal(new Set(emberCircuitComponents.map((item) => item.name)).size, 33);
+  for (const band of componentBands) {
+    const expectedCount = band === 'knowledge' ? 9 : 8;
+    assert.equal(emberCircuitComponents.filter((item) => item.band === band).length, expectedCount);
+  }
   assert.equal(emberCircuitComponents.find((item) => item.name === 'ArticleCard')?.sourceName, 'WorkCard');
   assert.equal(emberCircuitComponents.find((item) => item.name === 'FieldCard')?.sourceName, 'PracticeCard');
   assert.equal(emberCircuitTokens.color.field950, '#0e1114');
@@ -275,11 +402,12 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
 
   assert.match(page, /LibraryWorkbench client:load/);
   assert.match(page, /articles=\{articles\}/);
-  assert.match(page, /methods=\{publicMethods\}/);
+  assert.match(page, /fieldcraft=\{fieldcraftLibrary\}/);
   assert.match(wayfinding, /from 'd3'/);
   assert.match(systems, /import\('mermaid'\)/);
   assert.match(workbench, /ArticleCard/);
-  assert.match(workbench, /MethodFieldLibrary/);
+  assert.match(workbench, /fieldcraft/);
+  assert.match(workbench, /CollectionView/);
   assert.match(methodLibrary, /ec-method-sheet__prompt/);
   assert.match(methodLibrary, /ec-method-sheet__output/);
   assert.match(methodLibrary, /A worked model response/);
@@ -290,7 +418,7 @@ test('the Ember Circuit Research Library has 32 source-mapped primitives and dar
   assert.match(methods, /<MethodFieldLibrary client:load/);
   assert.match(methods, /research-sigil-clarification/);
   assert.match(methods, /publicSigilClarification/);
-  assert.match(navigation, /'Library', '\/library\/'/);
+  assert.ok(navigation.includes("library: 'portfolio'"));
   assert.match(theme, /--ec-bg-parchment:var\(--ec-field-800\)/);
   assert.match(theme, /--room-paper:var\(--ec-field-800\)/);
   assert.match(codification, /32 components in four groups of eight/);

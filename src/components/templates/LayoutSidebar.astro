@@ -10,6 +10,7 @@ interface Props {
   sidebarPosition?: 'left' | 'right';
   sidebarWidth?: string;
   collapsible?: boolean;
+  mainLandmark?: boolean;
   class?: string;
 }
 
@@ -17,6 +18,7 @@ const {
   sidebarPosition = 'left',
   sidebarWidth = '16rem',
   collapsible = false,
+  mainLandmark = true,
   class: className = '',
 } = Astro.props;
 ---
@@ -25,9 +27,7 @@ const {
   <aside class="ec-layout-sidebar__sidebar" style={`flex-basis: ${sidebarWidth};`}>
     <slot name="sidebar" />
   </aside>
-  <main class="ec-layout-sidebar__main">
-    <slot />
-  </main>
+  {mainLandmark ? <main class="ec-layout-sidebar__main"><slot /></main> : <div class="ec-layout-sidebar__main"><slot /></div>}
 </div>
 
 <style>

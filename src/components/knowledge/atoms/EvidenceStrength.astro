@@ -14,7 +14,7 @@ const { tier, showLabel = true, class: className = '' } = Astro.props;
 const tierIndex = ['anecdotal', 'weak', 'moderate', 'strong', 'conclusive'].indexOf(tier);
 ---
 <span class:list={['kc-evidence-strength', `kc-evidence-strength--${tier}`, className]}>
-  <span class="kc-evidence-strength__bars" aria-label={`Evidence strength: ${tier}`}>
+  <span class="kc-evidence-strength__bars" role="img" aria-label={`Evidence strength: ${tier}`}>
     {[0, 1, 2, 3, 4].map((i) => (
       <span class:list={['kc-evidence-strength__bar', i <= tierIndex && 'is-filled']} />
     ))}

@@ -26,7 +26,7 @@ const { title, code, language, output, explanation, class: className = '' } = As
       </div>
       <div class="kc-code-playground__panel">
         <h4 class="kc-code-playground__panel-title">Output</h4>
-        <pre class="kc-code-playground__output"><code>{output}</code></pre>
+        <pre class="kc-code-playground__output" tabindex="0" aria-label={`Output for ${title}`}><code>{output}</code></pre>
       </div>
     </div>
     <aside class="kc-code-playground__explanation">
@@ -90,6 +90,10 @@ const { title, code, language, output, explanation, class: className = '' } = As
     color: var(--color-state-success);
     overflow-x: auto;
     white-space: pre-wrap;
+  }
+  .kc-code-playground__output:focus-visible {
+    outline: 2px solid var(--color-accent-ember);
+    outline-offset: 3px;
   }
   .kc-code-playground__explanation {
     background: var(--color-surface-recessed);

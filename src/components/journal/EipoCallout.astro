@@ -6,9 +6,10 @@ interface Props {
   title: string;
   basis: string;
   limit: string;
+  headingLevel?: 2 | 3 | 4;
 }
 
-const { type, title, basis, limit } = Astro.props;
+const { type, title, basis, limit, headingLevel = 3 } = Astro.props;
 
 const typeMeta: Record<ClaimType, { letter: string; label: string; basisLabel: string; limitLabel: string }> = {
   evidence: {
@@ -45,7 +46,7 @@ const meta = typeMeta[type];
     <span class="eipo-callout-mark" aria-hidden="true">{meta.letter}</span>
     <div>
       <p class="eipo-callout-kicker">{meta.label}</p>
-      <h3 id={`eipo-${type}-${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-')}`}>{title}</h3>
+      {headingLevel === 2 ? <h2 id={`eipo-${type}-${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-')}`}>{title}</h2> : headingLevel === 4 ? <h4 id={`eipo-${type}-${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-')}`}>{title}</h4> : <h3 id={`eipo-${type}-${title.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-')}`}>{title}</h3>}
     </div>
   </header>
 

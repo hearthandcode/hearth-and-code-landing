@@ -47,16 +47,16 @@ const sortDir = initialSort?.direction || 'asc';
           class={`ec-table__th ec-table__th--${col.align || 'left'} ec-table__th--sortable`}
           data-sort-key={col.key}
           scope="col"
-          tabindex="0"
-          role="button"
           aria-sort={col.key === sortKey ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
         >
+          <button type="button" class="ec-table__sort-button">
           <span class="ec-table__th-content">
             {col.label}
             <span class="ec-table__sort-indicator" aria-hidden="true">
               {col.key === sortKey ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}
             </span>
           </span>
+          </button>
         </th>
       ))}
     </tr>
@@ -99,7 +99,9 @@ const sortDir = initialSort?.direction || 'asc';
       rows.forEach((row) => tbody.appendChild(row));
     };
     if (currentSort.key) sortTable(currentSort.key, currentSort.dir);
-    table.querySelectorAll<HTMLElement>('.ec-table__th--sortable').forEach((th) => {
+    table.querySelectorAll<HTMLButtonElement>('.ec-table__sort-button').forEach((button) => {
+      const th = button.closest<HTMLElement>('.ec-table__th--sortable');
+      if (!th) return;
       const handler = () => {
         const key = th.getAttribute('data-sort-key');
         if (!key) return;
@@ -108,7 +110,8 @@ const sortDir = initialSort?.direction || 'asc';
         sortTable(key, newDir);
         table.querySelectorAll<HTMLElement>('.ec-table__th--sortable').forEach((otherTh) => {
           const otherKey = otherTh.getAttribute('data-sort-key');
-          otherTh.setAttribute('aria-sort', otherKey === key ? (newDir === 'asc' ? 'ascending' : 'descending') : 'none');
+          if (otherKey === key) otherTh.setAttribute('aria-sort', newDir === 'asc' ? 'ascending' : 'descending');
+          else otherTh.removeAttribute('aria-sort');
           const indicator = otherTh.querySelector('.ec-table__sort-indicator');
           if (indicator) {
             indicator.textContent = otherKey === key ? (newDir === 'asc' ? '↑' : '↓') : '↕';
@@ -117,13 +120,7 @@ const sortDir = initialSort?.direction || 'asc';
         table.setAttribute('data-sort-key', key);
         table.setAttribute('data-sort-dir', newDir);
       };
-      th.addEventListener('click', handler);
-      th.addEventListener('keydown', (e: KeyboardEvent) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handler();
-        }
-      });
+      button.addEventListener('click', handler);
     });
   });
 </script>
@@ -144,6 +141,20 @@ const sortDir = initialSort?.direction || 'asc';
     display: inline-flex;
     align-items: center;
     gap: var(--space-1);
+  }
+  .ec-table__sort-button {
+    width: 100%;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    text-align: inherit;
+    cursor: pointer;
+  }
+  .ec-table__sort-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
   .ec-table__sort-indicator {
     font-size: 0.75rem;

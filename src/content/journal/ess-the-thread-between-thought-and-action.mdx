@@ -3,7 +3,8 @@ title: "ESS: The Thread Between Thought and Action"
 date: "2026-09-07"
 labels: [proposal, inference, open-question]
 sources:
-  - "Exocore-Sigil Standard, Candidate Edition 0.1.0-candidate.1, September 2026"
+  - "Exocore-Sigil Standard, Candidate Edition 0.1.0-candidate.1; its current consolidated charter is candidate, unreviewed, and verified:false, with adoption not requested."
+  - "ESS IR Framework ESS-IR-FRAMEWORK-01: owner-accepted architectural proposal recorded 2026-09-27; proposal and program records remain candidate, review-required, and verified:false."
   - "Hearth & Code Field Journal practice: provenance, human review, and return routes"
   - "This article is a public-safe orientation, not a literature review or a claim of independent validation"
 status: published
@@ -19,22 +20,40 @@ tags: [field-journal, agentic-ai, knowledge-systems, provenance, prompt-engineer
 claim_map:
   - claim: "ESS is a candidate framework for governed information, representation, symbolic expression, and execution in AI-mediated knowledge systems."
     label: proposal
-    source: "Exocore-Sigil Standard, Candidate Edition 0.1.0-candidate.1."
+    source: "Exocore-Sigil Standard, Candidate Edition 0.1.0-candidate.1; the current consolidated charter is unreviewed and not adopted."
   - claim: "Separating capability, permission, source identity, and loss can make important system boundaries easier to inspect."
     label: inference
     source: "ESS design rationale and Hearth & Code Field Journal practice."
   - claim: "Whether ESS improves usefulness, fidelity, transfer, cost, accessibility, or governance remains untested."
-    label: open-question
+    label: unknown
     source: "ESS evaluation and falsification posture; no evaluation results are claimed."
+  - claim: "A later owner-accepted proposal changes the planned successor architecture to a Meta-Cell kernel, seven purpose families, and first-class domain profiles; its records remain candidate and do not establish adoption, implementation, or empirical performance."
+    label: evidence
+    source: "ESS Project 0031, ESS-IR-FRAMEWORK-01 accepted proposal and family/domain map, recorded 2026-09-27; both artifacts are review-required and verified:false."
+  - claim: "Normative words in the essay describe proposed candidate obligations, not observed runtime enforcement."
+    label: proposal
+    source: "Public projection of the unreviewed, unadopted ESS candidate; no runtime implementation or effectiveness evaluation is established here."
 ---
 
 import EssOrientationFigure from '../../components/journal/EssOrientationFigure.astro';
+import EipoCallout from '../../components/journal/EipoCallout.astro';
 
 There is a moment in almost every serious AI workflow when the output looks good enough to invite a dangerous question: *can we just use it?*
 
 Maybe it is a research synthesis. Maybe it is a prompt that has quietly become operational procedure. Maybe it is a coding agent that can make the change, a model that can call the tool, or a dashboard that can turn a draft into an outward-facing act. The answer may be useful. The capability may be real. Neither fact tells us where the material came from, what changed while it moved through the system, who may decide what it means, or whether the next action is actually authorized.
 
 The Exocore-Sigil Standard—ESS—is my candidate answer to that problem. It is not a product announcement, an adopted standard, or evidence that a particular stack works better. It is a proposed set of boundaries for AI-mediated knowledge work: a way to keep a thread between thought and action without mistaking the thread for the person holding it.
+
+The rules below describe what this candidate proposes for conforming artifacts and systems. Words such as “must” and “requires” name proposed design obligations; they do not mean that current software enforces them. The cited source remains unreviewed, with adoption not requested; this article reports no effectiveness evaluation.
+
+<EipoCallout
+  type="proposal"
+  title="ESS design direction since this essay"
+  basis="On 2026-09-27, Scott accepted ESS-IR-FRAMEWORK-01 as an architectural proposal. Its records describe a small Meta-Cell kernel, seven purpose families—Intent & Interaction; Process & Protocol; Knowledge & Meaning; Formal Model; Computational Method & Adaptation; Evidence & Assessment; Context & Presentation—and first-class domain profiles."
+  limit="The proposal and program records remain candidate, review-required, and verified:false. Acceptance records a design direction; it does not adopt ESS, establish implementation or conformance, or demonstrate effectiveness. The earlier TCCP/EKRP/MINC/Sigil materials remain lineage and migration inputs; existing contracts are not silently replaced."
+>
+This essay introduces an earlier candidate framing. The successor proposal updates the planned architecture while leaving detailed decisions and implementation as separate work.
+</EipoCallout>
 
 The Hearthside Meta-Architect is the stance I bring to that work. It is a creative working archetype, not a diagnosis or credential: part builder, part archivist, part translator, trying to make a complex system inhabitable enough that a human can return to it and still know what matters. ESS is one attempt to make that stance concrete.
 
@@ -62,7 +81,7 @@ ESS describes five responsibilities that are often blurred together:
 
 Human meaning, review, and release are not one more software component in this picture. They remain present at consequential boundaries. The distinction matters. A model may help organize an option set; it cannot silently become the owner of interpretation, acceptance, or external action because it produced a plausible response.
 
-The proposed connective tissue is a universal envelope: a small, typed record that travels with an artifact or is explicitly tunneled through a channel that cannot natively carry it. The envelope holds such things as identity, provenance, policy, representation, lifecycle state, channel, and a loss record.
+The candidate specification calls its proposed connective tissue a “universal envelope”: a small, typed record that would travel with an artifact or be explicitly tunneled through a channel that cannot natively carry it. It is designed to hold such things as identity, provenance, policy, representation, lifecycle state, channel, and a loss record.
 
 The vocabulary may sound formal, but the ordinary question is simple: when this document, prompt, answer, or instruction crossed from one place to another, what did we preserve—and what did we lose?
 
@@ -72,7 +91,7 @@ ESS uses precise words because several ordinary words—*context*, *memory*, *ag
 
 An **artifact** is a bounded thing: a note, prompt, dataset slice, model response, plan, page, or receipt. A **source** is what an artifact derives from or points back to. A **projection** is a useful view made for a particular consumer or channel; it can simplify a source without becoming the source.
 
-An **envelope** is the small record that accompanies the artifact across a **crossing**. It can carry identity, provenance, current status, policy, representation, and declared loss. A **loss record** does not merely confess failure. It makes an ordinary design decision inspectable: this field did not fit the destination, this nuance was summarized, this private source was withheld, or this uncertainty cannot be resolved here.
+In this proposal, an **envelope** is the small record intended to accompany an artifact across a **crossing**. It could carry identity, provenance, current status, policy, representation, and declared loss. A **loss record** does not merely confess failure. It makes an ordinary design decision inspectable: this field did not fit the destination, this nuance was summarized, this private source was withheld, or this uncertainty cannot be resolved here.
 
 A **capability** describes what a system can do. A **gate** describes what must be true before it may produce a consequential effect. A **receipt** records a bounded attempt, denial, or execution; it is evidence about a transition, not proof that the transition was wise. Finally, a **sigil** is an experimental compact expression, and its **expansion** is the readable form a person can inspect.
 
@@ -169,14 +188,20 @@ And it has adjacent questions for **research software engineers**, **ML platform
 
 ESS does not claim that its form is useful merely because it is coherent. Its evaluation plan separates six dimensions:
 
-| Dimension | The practical question |
-| --- | --- |
-| Usefulness | Does the method help people complete bounded work, with reviewer judgment in view? |
-| Fidelity | Do required fields survive a transformation better than an ad-hoc alternative? |
-| Transfer | Can one artifact move across several channels without silent semantic drift? |
-| Cost | What does the approach add in tokens, time, and maintenance? |
-| Accessibility | Can a person still read and use the work when its styling or specialized form is stripped away? |
-| Governance | Do proposed gates reduce observed unauthorized transitions, without hiding friction? |
+<table tabIndex={0} aria-label="Six dimensions for evaluating the ESS candidate">
+  <caption>Six dimensions for evaluating the ESS candidate</caption>
+  <thead>
+    <tr><th scope="col">Dimension</th><th scope="col">The practical question</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">Usefulness</th><td>Does the method help people complete bounded work, with reviewer judgment in view?</td></tr>
+    <tr><th scope="row">Fidelity</th><td>Do required fields survive a transformation better than an ad-hoc alternative?</td></tr>
+    <tr><th scope="row">Transfer</th><td>Can one artifact move across several channels without silent semantic drift?</td></tr>
+    <tr><th scope="row">Cost</th><td>What does the approach add in tokens, time, and maintenance?</td></tr>
+    <tr><th scope="row">Accessibility</th><td>Can a person still read and use the work when its styling or specialized form is stripped away?</td></tr>
+    <tr><th scope="row">Governance</th><td>Do proposed gates reduce observed unauthorized transitions, without hiding friction?</td></tr>
+  </tbody>
+</table>
 
 Each dimension needs its own instrument, baseline, sampling plan, and stopping condition. An aggregate score is not enough: a convenient workflow that erases provenance has failed a different test than a slow workflow that remains inspectable. Likewise, a strong local prototype does not establish broad usefulness, and a validator pass does not establish that a human understands the result.
 
@@ -201,3 +226,8 @@ Perhaps the smallest viable contribution is a source-and-loss envelope for a ret
 The useful response is not agreement. It is a specific counterexample: where the boundary is too heavy, where a category is missing, where the proposed distinction is not operational, where a simpler form does the job, or where an evaluation would reveal that the framing adds work without returning clarity.
 
 That is the Hearthside posture in its plainest form. Build a shelter for complex thought, leave the door visible, and do not mistake the shelter for the horizon.
+## Worked crossing for an agentic research pipeline
+
+Suppose a research agent retrieves three papers, extracts a finding, and prepares a paragraph for a review. The pipeline should preserve four different objects: the paper locations, the extracted propositions, the agent’s synthesis, and the paragraph candidate. A schema check can establish that each object has its required fields; a source-span check can establish that the cited text exists; neither check establishes that the synthesis is warranted. A human reviewer still adjudicates interpretation and release.
+
+For an engineering analogue, a code agent can inspect a dependency update and propose a patch. The evidence package should distinguish repository state, advisory source, proposed version change, test results, and deployment decision. This is where ESS’s proposed loss and transition records could be tested: inject a known omitted field or unauthorized transition and ask whether the return identifies exactly what was lost or held. Those are candidate evaluation fixtures, not results reported by this article.

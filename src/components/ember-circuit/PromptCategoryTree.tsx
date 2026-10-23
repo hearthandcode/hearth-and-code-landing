@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { promptCatalogEntries, promptTemplateFile } from '../../data/vendored-data';
 import type { CatalogEntry } from '../../data/vendored-data';
 import { PromptCardSheet, PromptCardTile } from './PromptCard';
@@ -39,6 +39,15 @@ export default function PromptCategoryTree() {
   const [selectedKey, setSelectedKey] = useState(() => `${firstCategory?.document}::${firstCategory?.category}`);
   const [selectedTechnique, setSelectedTechnique] = useState<CatalogEntry | null>(null);
   const templates = useMemo(() => new Map(promptTemplateFile.techniques.map((tech) => [tech.slug, tech])), []);
+
+  useEffect(() => {
+    const requestedSlug = new URLSearchParams(window.location.search).get('technique');
+    if (!requestedSlug) return;
+    const requested = promptCatalogEntries.find((entry) => entry.slug === requestedSlug);
+    if (!requested) return;
+    setSelectedKey(`${requested.document}::${requested.category}`);
+    setSelectedTechnique(requested);
+  }, []);
 
   const selected = tree.flatMap((document) => document.categories)
     .find((category) => `${category.document}::${category.category}` === selectedKey) ?? firstCategory;
@@ -93,7 +102,7 @@ export default function PromptCategoryTree() {
           <h3 id="prompt-category-title">{selected.category}</h3>
           <div>
             <span>{selected.entries.length} techniques in this category</span>
-            <span>Each opens a four-section disposition.</span>
+            <span>Open an entry for an applied example or a clear editorial review hold.</span>
           </div>
         </header>
         <div className="ec-prompt-card-grid">

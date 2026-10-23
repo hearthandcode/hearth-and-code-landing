@@ -1,0 +1,47 @@
+---
+import '../styles/research-project-frame.css';
+
+interface SectionLink { id: string; label: string; }
+interface Fact { label: string; value: string; }
+interface Props {
+  eyebrow: string;
+  title: string;
+  summary: string;
+  status: string;
+  facts: Fact[];
+  sections: SectionLink[];
+  returnHref?: string;
+  returnLabel?: string;
+}
+
+const {
+  eyebrow, title, summary, status, facts, sections,
+  returnHref = '/research/', returnLabel = 'Return to Research',
+} = Astro.props;
+---
+
+<div class="research-project-frame">
+  <header class="research-project-frame__hero">
+    <div class="research-project-frame__eyebrow-row">
+      <p class="research-project-frame__eyebrow">{eyebrow}</p>
+      <span class="research-project-frame__status">{status}</span>
+    </div>
+    <h1>{title}</h1>
+    <p class="research-project-frame__summary">{summary}</p>
+    <dl class="research-project-frame__facts">
+      {facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
+    </dl>
+    <nav class="research-project-frame__map" aria-label="Project sections">
+      <p>Project map <span aria-hidden="true">/</span> {sections.length} sections</p>
+      <ol>{sections.map((section, index) => <li><a href={`#${section.id}`}><span>{String(index + 1).padStart(2, '0')}</span>{section.label}</a></li>)}</ol>
+    </nav>
+  </header>
+  <div class="research-project-frame__content">
+    <slot />
+  </div>
+  <footer class="research-project-frame__return">
+    <span>Return path</span>
+    <p>Use the section map to re-enter this project. Claims remain bounded by the evidence and review state shown on this surface.</p>
+    <a href={returnHref}>{returnLabel} <span aria-hidden="true">→</span></a>
+  </footer>
+</div>

@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNavigation from '../../components/StudioNavigation.astro';
+import ResearchProjectFrame from '../../components/ResearchProjectFrame.astro';
+import { researchPrograms } from '../../data/research-programs';
+import '../../styles/tokens.css';
+import '../../styles/global.css';
+import '../../styles/research-programs.css';
+export function getStaticPaths() { return researchPrograms.map(program => ({ params: { slug: program.slug }, props: { program } })); }
+const { program } = Astro.props;
+---
+<BaseLayout title={`${program.title} · Hearth & Code`} description={program.summary}>
+  <StudioNavigation current="research" disposition={`${program.title} / public research study`} />
+  <main id="page-main">
+    <ResearchProjectFrame eyebrow={`Research program / ${program.kind}`} title={program.title} summary={program.summary} status={program.status}
+      facts={[{ label: 'Project type', value: program.kind }, { label: 'Surface', value: 'Public explanatory projection' }, { label: 'Artifact', value: program.artifact }, { label: 'Source boundary', value: program.source }]}
+      sections={program.sections.map(([label]) => ({id: label.toLowerCase(), label}))} returnHref="/programs/" returnLabel="Return to Programs">
+      <div class="program-study-sections">{program.sections.map(([label, title, text], index) => <section id={label.toLowerCase()} aria-labelledby={`program-${label.toLowerCase()}-title`}><header><span>{String(index+1).padStart(2,'0')} / {label}</span><h2 id={`program-${label.toLowerCase()}-title`}>{title}</h2></header><p>{text}</p></section>)}</div>
+      <aside class="program-study-related"><span>Continue the study</span><a href={program.related[0]}>{program.related[1]} →</a></aside>
+    </ResearchProjectFrame>
+  </main>
+</BaseLayout>

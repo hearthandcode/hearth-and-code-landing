@@ -1,0 +1,147 @@
+{
+  "schema": "hnc.owner-approval-record.v1",
+  "recorded_at": "2026-10-02T23:02:03.642112+00:00",
+  "source_kind": "direct-owner-message",
+  "owner_statement": "Approve the modular reconcilation, if we can approve the final release of that please.",
+  "review_status": "owner-approved",
+  "verified": false,
+  "non_self_authorizing": true,
+  "acceptance_scope": "Modular reconciliation as presented in the local review and referenced browser receipt",
+  "review_url": "http://127.0.0.1:4321/review/",
+  "receipt_binding": {
+    "path": "docs/modular-reconciliation-20261002-browser.receipt.json",
+    "sha256": "4fbe70309f4a0929cee3c0a868bb584c0ec5dcc609bc6eee0f6804b4331aad15"
+  },
+  "current_source_bindings": [
+    {
+      "path": "src/components/HearthsideArticle.astro",
+      "approved_review_sha256": "3a1dabe0068f60a85b45f25e0232e0f2268537e7e650266fd6ba1a868914bad0",
+      "current_sha256": "3a1dabe0068f60a85b45f25e0232e0f2268537e7e650266fd6ba1a868914bad0"
+    },
+    {
+      "path": "src/styles/reading-articles.css",
+      "approved_review_sha256": "3a74a2b1874d991c447abf7e8e5a5c3a1ac626ccce3f4476ef99d59169e8d219",
+      "current_sha256": "3a74a2b1874d991c447abf7e8e5a5c3a1ac626ccce3f4476ef99d59169e8d219"
+    },
+    {
+      "path": "src/styles/studio-room-surfaces.css",
+      "approved_review_sha256": "4c830fd016945f3bd65c7eed88b281a91f02623ac556a02cc9114f672e6e5b98",
+      "current_sha256": "4c830fd016945f3bd65c7eed88b281a91f02623ac556a02cc9114f672e6e5b98"
+    },
+    {
+      "path": "src/components/ember-circuit/MethodsWorkbench.tsx",
+      "approved_review_sha256": "51c8ea3b9462b6acc4b2b9317054985b68b0f6a922585014edacfc37cdb612e3",
+      "current_sha256": "51c8ea3b9462b6acc4b2b9317054985b68b0f6a922585014edacfc37cdb612e3"
+    },
+    {
+      "path": "src/styles/methods-workbench.css",
+      "approved_review_sha256": "28df3162a5c6d6d7589bf004041f83eb463703eef33cf9c4e52fce9fd7daafa9",
+      "current_sha256": "28df3162a5c6d6d7589bf004041f83eb463703eef33cf9c4e52fce9fd7daafa9"
+    },
+    {
+      "path": "src/pages/methods/index.astro",
+      "approved_review_sha256": "06601d06870d4f0a47a35794c311529331435a2efa4aec5026e3e530ad73d2d9",
+      "current_sha256": "06601d06870d4f0a47a35794c311529331435a2efa4aec5026e3e530ad73d2d9"
+    },
+    {
+      "path": "src/components/ember-circuit/CharacterSheet.tsx",
+      "approved_review_sha256": "715881e454caa9af00eb11fc6d18692f9be226f0741d3a3d045cfad627928883",
+      "current_sha256": "715881e454caa9af00eb11fc6d18692f9be226f0741d3a3d045cfad627928883"
+    },
+    {
+      "path": "src/styles/character-sheet.css",
+      "approved_review_sha256": "f3db6d021bf7abed20bd5ce1068a9a17578b76fb26bd5619a0f81d7076e55595",
+      "current_sha256": "f3db6d021bf7abed20bd5ce1068a9a17578b76fb26bd5619a0f81d7076e55595"
+    },
+    {
+      "path": "src/components/DossierSheet.astro",
+      "approved_review_sha256": "fc7c89790e9bc157d2e421810bf7926f82fb23fc5d60068de318303cc4261f4d",
+      "current_sha256": "fc7c89790e9bc157d2e421810bf7926f82fb23fc5d60068de318303cc4261f4d"
+    },
+    {
+      "path": "src/pages/dossier/index.astro",
+      "approved_review_sha256": "8e1e0d0ad0f2f14991a076f6e19ed351e2a2498cb2f8d89bb0f5f15481d43dda",
+      "current_sha256": "8e1e0d0ad0f2f14991a076f6e19ed351e2a2498cb2f8d89bb0f5f15481d43dda"
+    },
+    {
+      "path": "src/data/research-programs.ts",
+      "approved_review_sha256": "7988f9df931c6d9f6de0ef350893d08c4e830b799c11222e1fbace8fea4219a6",
+      "current_sha256": "7988f9df931c6d9f6de0ef350893d08c4e830b799c11222e1fbace8fea4219a6"
+    },
+    {
+      "path": "src/pages/programs/[slug].astro",
+      "approved_review_sha256": "acb6c99b1275823439cdc354bb134a9ddde555b1275bae1db5bc78d9f4fb9f40",
+      "current_sha256": "acb6c99b1275823439cdc354bb134a9ddde555b1275bae1db5bc78d9f4fb9f40"
+    },
+    {
+      "path": "src/styles/research-programs.css",
+      "approved_review_sha256": "c092fa0d1972ee68b92fabdf0f9333959e1eea67ef99b4edc684887c0005d07a",
+      "current_sha256": "c092fa0d1972ee68b92fabdf0f9333959e1eea67ef99b4edc684887c0005d07a"
+    },
+    {
+      "path": "src/pages/programs/index.astro",
+      "approved_review_sha256": "d6e49bf649f6972000feb3fccb1e47423643ad3b269b100d2f675c2fb2acf66a",
+      "current_sha256": "d6e49bf649f6972000feb3fccb1e47423643ad3b269b100d2f675c2fb2acf66a"
+    },
+    {
+      "path": "src/pages/research/index.astro",
+      "approved_review_sha256": "b0f6a6b8f64f27b19267606f12cb5fe1543d9bf7eae7d6e889b779973d735d2e",
+      "current_sha256": "b0f6a6b8f64f27b19267606f12cb5fe1543d9bf7eae7d6e889b779973d735d2e"
+    },
+    {
+      "path": "src/components/ember-circuit/QuestionWorkbench.tsx",
+      "approved_review_sha256": "dc05ac5446bee8db3de582e3bdcdd37a2a045ea56f01da12c509bef0be94b690",
+      "current_sha256": "dc05ac5446bee8db3de582e3bdcdd37a2a045ea56f01da12c509bef0be94b690"
+    },
+    {
+      "path": "src/styles/question-workbench.css",
+      "approved_review_sha256": "7561b7fb8f5ba8f348f5690dbf9e5df35ba32cb97b38ad1398873bacdf7547cd",
+      "current_sha256": "7561b7fb8f5ba8f348f5690dbf9e5df35ba32cb97b38ad1398873bacdf7547cd"
+    },
+    {
+      "path": "src/pages/questions/index.astro",
+      "approved_review_sha256": "b797ea346606d1aa647071081124e1c9aff13714c30d2eae0ccf5b87d77e46ba",
+      "current_sha256": "b797ea346606d1aa647071081124e1c9aff13714c30d2eae0ccf5b87d77e46ba"
+    },
+    {
+      "path": "src/components/LaunchReview.astro",
+      "approved_review_sha256": "28d8754b331f683a954e0c5a7badb9d979560af78bda67d527fd72719a1d3adf",
+      "current_sha256": "28d8754b331f683a954e0c5a7badb9d979560af78bda67d527fd72719a1d3adf"
+    },
+    {
+      "path": "scripts/modular-surfaces.test.mjs",
+      "approved_review_sha256": "0e9dd9d8069824d80532d6cb95201a060f6b9b8e0672de23b195d32c528b8bda",
+      "current_sha256": "0e9dd9d8069824d80532d6cb95201a060f6b9b8e0672de23b195d32c528b8bda"
+    },
+    {
+      "path": "scripts/studio-browser.test.mjs",
+      "approved_review_sha256": "c2da26f07230ba2c2af89484a9500bc37b8e35516b65c4346dabda40f510ad38",
+      "current_sha256": "c2da26f07230ba2c2af89484a9500bc37b8e35516b65c4346dabda40f510ad38"
+    },
+    {
+      "path": "src/data/research-studio-content.ts",
+      "approved_review_sha256": "44ceedae7bf54a3f2a6300d7a21b251d632a0b6fbe35e13c03226ec7066e0e64",
+      "current_sha256": "44ceedae7bf54a3f2a6300d7a21b251d632a0b6fbe35e13c03226ec7066e0e64"
+    }
+  ],
+  "source_drift": [],
+  "release_preparation": {
+    "public_destination": "https://hearthandcode.dev",
+    "established_route": "Existing Cloudflare Pages Git integration; repository README prohibits replacing this with Direct Upload",
+    "working_branch": "feature/landing-redesign",
+    "production_branch": "not yet independently resolved",
+    "destination_decision": "clarification requested: production publication or local review finalization",
+    "catalog_payload_decision": "clarification requested: exact 512 template bodies and declared inputs may become public or remain private"
+  },
+  "effects_completed": [
+    "Read current release instructions and Git state",
+    "Bound owner approval to current source digests",
+    "Recorded this append-only approval artifact"
+  ],
+  "effects_pending": [
+    "Resolve publication destination/scope",
+    "Resolve exact internal catalog export scope",
+    "Prepare an owned-file release candidate and rollback before any authorized Git publication"
+  ],
+  "seal_boundary": "Owner acceptance is recorded; no verified:true seal, deployment success, or release execution is claimed."
+}

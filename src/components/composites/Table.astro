@@ -32,6 +32,7 @@ const {
 } = Astro.props;
 ---
 
+<div class="ec-table-scroll" role="region" aria-label={caption ? `${caption} table` : 'Scrollable data table'} tabindex="0">
 <table class={`ec-table ${striped ? 'is-striped' : ''} ${hoverable ? 'is-hoverable' : ''} ${className}`}>
   {caption && <caption class="ec-table__caption">{caption}</caption>}
   <thead>
@@ -59,6 +60,7 @@ const {
     ))}
   </tbody>
 </table>
+</div>
 
 <style>
   .ec-table {
@@ -72,6 +74,8 @@ const {
     border-radius: var(--radius-md);
     overflow: hidden;
   }
+  .ec-table-scroll { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; }
+  .ec-table-scroll:focus-visible { outline: 2px solid var(--color-accent-signal); outline-offset: 2px; }
   .ec-table__caption {
     padding: var(--space-3) var(--space-4);
     text-align: left;

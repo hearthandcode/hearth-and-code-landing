@@ -1,0 +1,28 @@
+---
+import { codeToHtml } from 'shiki';
+import HearthNavigation from '../components/HearthNavigation.astro';
+import { fieldcraftDispositions } from '../data/fieldcraft-dispositions';
+import '../styles/research-studio-landing.css';
+import '../styles/studio-room-surfaces.css';
+import '../styles/ember-circuit-library.css';
+import '../styles/ember-circuit-fieldcraft.css';
+const proofBlocks = await Promise.all(fieldcraftDispositions.map(async (note) => {
+  try { return await codeToHtml(note.sections.model.leanStyle, { lang: 'lean', theme: 'github-dark' }); }
+  catch { return `<pre><code>${note.sections.model.leanStyle.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`; }
+}));
+---
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content="Review candidate: mathematical formalisms for agentic engineering and research."/><meta name="theme-color" content="#0e1114"/><title>Fieldcraft / Agentic Work · Hearth &amp; Code</title></head>
+<body class="studio-room-body"><a class="studio-skip" href="#main">Skip to Fieldcraft</a><HearthNavigation current="methods" context="Fieldcraft / mathematical agentic-work series"/>
+<main id="main" class="fc-shell ember-surface"><header class="fc-hero"><p class="fc-kicker">EMBER CIRCUIT / FIELDCRAFT SERIES / 32 CANDIDATES</p><h1>Fieldcraft: formal methods for agentic work.</h1><p>Practical research notes recast as inspectable local contracts for Agentic Engineers and Agentic Researchers. Browse by discipline, open a tile for its full disposition, and follow the evidence boundary as carefully as the formal claim.</p><aside><strong>Review candidate</strong><span>Based on the vendored public index; the underlying note manuscripts are not present in this checkout. Lean snippets are illustrative and have not been checked by Lean.</span></aside><nav><a href="#method">How to read this series</a><a href="#notes">Browse all 32</a></nav></header>
+<section id="method"><h2>One disposition, eight seams</h2><p>Intent · Process · Knowledge · Model · Method · Evidence · View · Governance. The TypeScript predicate is executable local evidence; the Lean-style statement is a proof projection awaiting actual Lean validation.</p></section>
+<section id="notes"><div class="fc-index-heading"><div><p class="fc-kicker">THE FIELD INDEX</p><h2>32 candidate dispositions</h2></div><p>Category tint groups the cards; each card also names its specific field. Select a tile to inspect the model, practical case, check, trade-offs, and governance boundary.</p></div><div class="fc-grid">{fieldcraftDispositions.map((note,index)=>{const category=note.sections.intent.category;return <article class="fc-card" id={note.slug} data-category={category}><details><summary><span class="fc-card__top"><b>{note.id}</b><span class="fc-card__category">{category}</span></span><strong class="fc-card__title">{note.title}</strong><span class="fc-card__dek">{note.sections.intent.benefit}</span><span class="fc-card__consumer">{note.sections.intent.subject}</span><span class="fc-card__open"><span>Open disposition</span><span aria-hidden="true">＋</span></span></summary><div class="fc-body">
+<section><h3>01 · Intent</h3><p>{note.sections.intent.purpose}</p><p>Consumer: {note.sections.intent.consumer}</p><p>Field: {note.sections.intent.subject} · {note.sections.intent.category}</p><p>Potential benefit: {note.sections.intent.benefit}</p></section>
+<section><h3>02 · Process</h3><p>{note.sections.process.procedure}</p><p>Boundary: {note.sections.process.boundary}</p></section>
+<section><h3>03 · Knowledge</h3><p>{note.sections.knowledge.theory}</p><p class="formal">{note.sections.knowledge.formalClaim}</p></section>
+<section><h3>04 · Model</h3><p class="formal">{note.sections.model.notation}</p><p class="proof-label">Lean-style proof sketch · not Lean-checked</p><div class="code" set:html={proofBlocks[index]}></div><p class="limit">{note.sections.model.leanStatus}</p></section>
+<section><h3>05 · Method</h3><p>Executable check: <code>{note.sections.method.checkName}</code></p><p>{note.sections.method.implementation}</p></section>
+<section><h3>06 · Evidence</h3><p>{note.sections.evidence.support}</p><ul>{note.validation.fixtures.map(f=><li>{f.label}: expected {String(f.expected)}, observed {String(f.actual)}</li>)}</ul><p>{note.sections.evidence.result}</p></section>
+<section><h3>07 · View</h3><p>Worked case: {note.sections.view.workedCase}</p><p>Counterexample: {note.sections.view.counterexample}</p><p>Trade-off: {note.sections.view.tradeoff}</p></section>
+<section><h3>08 · Governance</h3><p>Model risk: {note.sections.governance.modelRisk}</p><p>Effect boundary: {note.sections.governance.releaseBoundary}</p><p>Next evidence: {note.sections.governance.nextEvidence}</p></section>
+<footer><span>Source file: {note.sourceIdentity.filename}</span><span>Master SHA-256: <code>{note.sourceIdentity.masterSha256}</code></span><span>Export SHA-256: <code>{note.sourceIdentity.exportSha256}</code></span><span>References: {note.sourceRefs.map(r=>typeof r==='string'?r:r.title).join(' · ')}</span></footer>
+</div></details></article>})}</div></section><footer class="fc-return"><a href="/library/">← Research Library</a><a href="#main">Back to top ↑</a></footer></main></body></html>

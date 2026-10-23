@@ -89,7 +89,7 @@ const DISCIPLINE_KEYS = ['relation', 'falsifier', 'verdict', 'uncertainty', 'lab
 export default function HCANExample({ example }: { example: HCANExampleData }) {
   const { output } = example;
   const domainColor = DOMAIN_COLORS[example.domain] ?? '#6b7280';
-  const protocolColor = example.protocol === 'analytical' ? '#6366f1' : '#f59e0b';
+  const protocolColor = example.protocol === 'analytical' ? '#686bff' : '#f59e0b';
 
   const cards = output.cards ?? [];
   const disciplinePairs = cards.map((card) => {

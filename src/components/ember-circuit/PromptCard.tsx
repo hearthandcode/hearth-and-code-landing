@@ -2,8 +2,33 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import type { CatalogEntry, TemplateTech } from '../../data/vendored-data';
 import exemplars from '../../data/prompt-technique-exemplars.json';
+import runPacket from '../../data/prompt-technique-generated-prompts.json';
+import subagentRuns from '../../data/prompt-technique-subagent-runs.json';
+import { promptTechniqueRunBySlug } from '../../data/prompt-technique-run-batches';
+import { editorialForTechnique } from '../../data/prompt-technique-editorial';
 import { DcaSkillLadder } from './DcaSkillLadder';
 import { PromptBatchSkillLadder } from './PromptBatchSkillLadder';
+
+interface PromptDemonstration {
+  source_id: string;
+  runner: string;
+  run_date: string;
+  prompt_sha256: string;
+  response_sha256: string;
+  response: string;
+  source_facts_supplied?: boolean;
+  runtime?: {
+    kernel_version: string;
+    profile: string;
+    provider: string;
+    model: string;
+    reasoning_effort: string;
+    execution_mode: string;
+  };
+  receipt_sha256?: string;
+  semantic_review?: string;
+  semantic_reviewed_by?: string;
+}
 
 const TYPE_COLORS: Record<string, { tint: string; ink: string; label: string }> = {
   core: { tint: 'rgba(244,184,96,0.10)', ink: 'var(--ec-gold-500)', label: 'Core' },
@@ -83,6 +108,23 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
 
   const color = colorFor(entry.type);
   const exemplar = exemplars.entries.find((item) => item.slug === entry.slug);
+  const packetRun = runPacket.records.find((item) => item.technique_slug === entry.slug);
+  const batchRun = promptTechniqueRunBySlug.get(entry.slug);
+  const ledgerRun = subagentRuns.runs.find((item) => item.technique_slug === entry.slug && item.status === 'current-sample');
+  const subagentRun: PromptDemonstration | undefined = batchRun?.status === 'validated' && batchRun.prompt_sha256 === packetRun?.prompt_sha256
+    ? batchRun
+    : packetRun?.response && ledgerRun?.prompt_sha256 === packetRun.prompt_sha256 && ledgerRun.response_sha256 === packetRun.response_sha256
+      ? {
+          source_id: packetRun.source_id,
+          runner: ledgerRun.runner,
+          run_date: ledgerRun.run_date,
+          prompt_sha256: ledgerRun.prompt_sha256,
+          response_sha256: ledgerRun.response_sha256,
+          response: ledgerRun.response,
+          source_facts_supplied: ledgerRun.source_facts_supplied,
+        }
+      : undefined;
+  const editorial = editorialForTechnique(entry, tech);
   if (typeof document === 'undefined') return null;
 
   return createPortal(
@@ -113,37 +155,45 @@ export function PromptCardSheet({ entry, tech, onClose, onOpenLab }: PromptCardP
           </div>
         </header>
 
-        {exemplar && <nav className="ec-prompt-sheet__section-nav" aria-label="Technique sections">
-          {['What it is', 'How it works', 'When to use it', 'Limitations', 'Demonstration'].map((label, index) => <button type="button" key={label} onClick={() => sheetRef.current?.querySelector(`#tech-section-${index + 1}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>{String(index + 1).padStart(2, '0')} · {label}</button>)}
-        </nav>}
-        {exemplar ? <div className="ec-prompt-sheet__body ec-prompt-sheet__body--five">
+        <nav className="ec-prompt-sheet__section-nav" aria-label="Technique sections">
+          {['Technique Introduction', 'Benefits, Trade-Offs, and Model Risk', 'How To Use', 'Subagent Demonstration'].map((label, index) => <button type="button" key={label} onClick={() => sheetRef.current?.querySelector(`#tech-section-${index + 1}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>{String(index + 1).padStart(2, '0')} · {label}</button>)}
+        </nav>
+        <div className="ec-prompt-sheet__body ec-prompt-sheet__body--editorial4">
           <section id="tech-section-1" className="ec-prompt-sheet__section ec-prompt-sheet__section--01 ec-prompt-sheet__identity">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">What this technique is</h3></header>
-            <div className="ec-prompt-sheet__identity-grid">
-              <div><strong>Definition</strong><p>{exemplar.definition.what}</p></div>
-              <div><strong>Distinctive move</strong><p>{exemplar.definition.distinguishes}</p></div>
-              <div><strong>Why it may work</strong><p>{exemplar.definition.mechanism}</p></div>
-              <div><strong>What it is not</strong><p>{exemplar.definition.not_this}</p></div>
-            </div>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">01</span><h3 className="ec-prompt-sheet__section-title">Technique Introduction</h3></header>
+            <p>{editorial.introduction}</p>
+            {exemplar && <><div className="ec-prompt-sheet__identity-grid"><div><strong>Working definition</strong><p>{exemplar.definition.what}</p></div><div><strong>Distinctive move</strong><p>{exemplar.definition.distinguishes}</p></div></div><p className="ec-prompt-sheet__mechanism">{exemplar.mechanism}</p></>}
+            <p><strong>Candidate mechanism:</strong> {editorial.mechanism}</p>
+            <p><strong>Atlas provenance:</strong> {editorial.sourceNote}</p>
+            <p className="ec-prompt-sheet__boundary">Technique records are candidate Atlas projections; this description does not establish general efficacy.</p>
           </section>
           <section id="tech-section-2" className="ec-prompt-sheet__section ec-prompt-sheet__section--02">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">How it works · {exemplar.setting}</h3></header>
-            <p className="ec-prompt-sheet__mechanism">{exemplar.mechanism}</p>
-            <ol className="ec-prompt-sheet__steps">{exemplar.applied_process.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">02</span><h3 className="ec-prompt-sheet__section-title">Benefits, Trade-Offs, and Model Risk</h3></header>
+            <h4>Potential benefit · not a measured result</h4><p>{editorial.benefit}</p>
+            {exemplar && <ol className="ec-prompt-sheet__steps">{exemplar.when_to_use.slice(0, 2).map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>}
+            <h4>Trade-offs</h4><ul className="ec-prompt-sheet__limits">{editorial.tradeoffs.map((item) => <li key={item}>{item}</li>)}</ul>
+            {exemplar && <ul className="ec-prompt-sheet__limits">{exemplar.limitations.slice(0, 2).map((item) => <li key={item.title}><strong>{item.title}</strong><p>{item.detail}</p></li>)}</ul>}
+            <h4>Model risk</h4><p>{editorial.modelRisk}</p>
           </section>
           <section id="tech-section-3" className="ec-prompt-sheet__section ec-prompt-sheet__section--03">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">When and why to use it</h3></header>
-            <ol className="ec-prompt-sheet__steps">{exemplar.when_to_use.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">03</span><h3 className="ec-prompt-sheet__section-title">How To Use</h3></header>
+            <p>This practical instruction is tailored to a work task. It embeds the operating principle without naming the catalog technique.</p>
+            <pre className="ec-prompt-sheet__submitted-prompt">{editorial.practicalPrompt}</pre>
+            {exemplar && <><h4>Applied steps from the editorial exemplar</h4><ol className="ec-prompt-sheet__steps">{exemplar.applied_process.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{step.title}</strong><p>{step.detail}</p></div></li>)}</ol></>}
           </section>
           <section id="tech-section-4" className="ec-prompt-sheet__section ec-prompt-sheet__section--04">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">Specific limitations</h3></header>
-            <ul className="ec-prompt-sheet__limits">{exemplar.limitations.map((limit) => <li key={limit.title}><strong>{limit.title}</strong><p>{limit.detail}</p></li>)}</ul>
+            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">04</span><h3 className="ec-prompt-sheet__section-title">Subagent Demonstration</h3></header>
+            <p className="ec-prompt-sheet__boundary">Semantic status: {editorial.semantic_status} · Prompt hash matches current packet: {editorial.promptHashMatches ? 'yes' : 'no'} · Current prompt SHA-256: {editorial.currentPromptSha256 || 'not available'}</p>
+            {subagentRun
+              ? <><p><strong>Validated prompt-response record.</strong> This subagent response is linked to the exact practical instruction shown in Section 03. It remains a single candidate response, not technique-efficacy evidence.</p><pre className="ec-prompt-sheet__submitted-prompt">{subagentRun.response}</pre><p className="ec-prompt-sheet__boundary">Source ID: {subagentRun.source_id} · Runner: {subagentRun.runner} · Date: {subagentRun.run_date} · Prompt SHA-256: {subagentRun.prompt_sha256} · Response SHA-256: {subagentRun.response_sha256} · Source facts supplied: {subagentRun.source_facts_supplied ? 'yes' : 'no'} · External effects: none recorded.</p>{subagentRun.runtime && <p className="ec-prompt-sheet__boundary">Runtime receipt: Pi–Ember kernel {subagentRun.runtime.kernel_version} · {subagentRun.runtime.profile} · {subagentRun.runtime.provider}/{subagentRun.runtime.model} · {subagentRun.runtime.reasoning_effort} reasoning · {subagentRun.runtime.execution_mode}{subagentRun.receipt_sha256 ? ` · Receipt SHA-256: ${subagentRun.receipt_sha256}` : ''}</p>}</>
+              : batchRun
+                ? <div className="ec-prompt-sheet__editorial-hold"><strong>Review hold · not validated</strong><p>The captured response is retained below, but it did not pass the technique-specific review criterion. Treat it as an inspectable runtime result, not as a successful demonstration or efficacy evidence.</p>{batchRun.semantic_review && <p><strong>Review note:</strong> {batchRun.semantic_review}{batchRun.semantic_reviewed_by ? ` · Reviewed by ${batchRun.semantic_reviewed_by}` : ''}</p>}<pre className="ec-prompt-sheet__submitted-prompt">{batchRun.response}</pre><p className="ec-prompt-sheet__boundary">Source ID: {batchRun.source_id} · Runner: {batchRun.runner} · Date: {batchRun.run_date} · Prompt SHA-256: {batchRun.prompt_sha256} · Response SHA-256: {batchRun.response_sha256} · External effects: none recorded.</p>{batchRun.runtime && <p className="ec-prompt-sheet__boundary">Runtime receipt: Pi–Ember kernel {batchRun.runtime.kernel_version} · {batchRun.runtime.profile} · {batchRun.runtime.provider}/{batchRun.runtime.model} · {batchRun.runtime.reasoning_effort} reasoning · {batchRun.runtime.execution_mode}{batchRun.receipt_sha256 ? ` · Receipt SHA-256: ${batchRun.receipt_sha256}` : ''}</p>}<p>Current prompt SHA-256: {editorial.currentPromptSha256 || 'not available'}</p></div>
+                : <div className="ec-prompt-sheet__editorial-hold"><strong>Not run for this prompt</strong><p>No subagent execution or response is recorded for the practical instruction shown in Section 03. This candidate has not been run; the catalog does not imply execution. Response capture and review remain open.</p><p>Current prompt SHA-256: {editorial.currentPromptSha256 || 'not available'}</p></div>}
+            {!subagentRun && !batchRun && entry.slug === '01-dynamic-context-assembly'
+              ? <><p><strong>Earlier model demonstration.</strong> This retained response predates the practical instruction shown above and is not a response to that prompt.</p><DcaSkillLadder /></>
+              : !subagentRun && !batchRun && exemplar && <><p><strong>Earlier model demonstration.</strong> This retained batch response predates the practical instruction shown above and is not a response to that prompt.</p><PromptBatchSkillLadder slug={entry.slug} /></>}
           </section>
-          <section id="tech-section-5" className="ec-prompt-sheet__section ec-prompt-sheet__section--05">
-            <header className="ec-prompt-sheet__section-head"><span className="ec-prompt-sheet__section-num">05</span><h3 className="ec-prompt-sheet__section-title">Demonstration and observed results</h3></header>
-            {entry.slug === '01-dynamic-context-assembly' ? <DcaSkillLadder /> : <PromptBatchSkillLadder slug={entry.slug} />}
-          </section>
-        </div> : <div className="ec-prompt-sheet__editorial-hold"><strong>Technique-specific editorial review pending</strong><p>This technique has not yet received its own applied steps, use criteria, limitations and matched provider-backed example. The older source projection is withheld rather than presented as tailored instruction.</p></div>}
+        </div>
       </article>
     </div>,
     document.body

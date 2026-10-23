@@ -3,11 +3,11 @@ title: "An Extended Mind Needs a Grammar"
 date: "2026-07-18"
 labels: [evidence, inference, proposal, open-question]
 sources:
-  - "Reviewed internal research artifact: Interaction Block Protocol v0, source-only proposal"
-  - "Reviewed internal research artifact: bounded reader-task presentation-pilot synthesis"
-  - "Reviewed internal research artifact: Cortex and Exocore boundary proposal"
-  - "Reviewed internal research artifact: Research and Evidence Framework for the Knowledge Workbench"
-  - "Reviewed internal research artifact: Research Direction: Governed AI-Augmented Knowledge Work"
+  - "Interaction Block Protocol v0, revision 4: amended source, reviewer not recorded, verified:false; no parser or runtime implementation authorized."
+  - "Three synthetic reader-task pilots; the contributing pilot reviews were Scott-sealed, while the later synthesis remains draft and unreviewed. This is not representative usability research."
+  - "Cortex and Exocore boundary proposal, revision 2: draft, re-review required, no implementation authorized."
+  - "Research and Evidence Framework for the Knowledge Workbench, revision 1: draft, reviewer not recorded, verified:false."
+  - "Research Direction: Governed AI-Augmented Knowledge Work, revision 1: draft, no review recorded, verified:false."
   - "Scott Rallya: approved first-person design-practice draft"
 status: published
 pilot: true
@@ -18,22 +18,23 @@ author: "Scott Rallya"
 tags: [field-journal, extended-mind, cognitive-workbench, knowledge-governance, provenance, ai-workflows, exocore, human-agency]
 published_date: "2026-07-21"
 published_order: 1
+publication_note: "Publication status is unresolved. The imported post record says published and lists 21 July 2026, while the current Hub canonical index classifies this article as draft and says no export or publication was authorized. The post record also retains verified:false and internal-review privacy metadata. This local preview makes no claim that publication was authorized or is currently live."
 reading_time_minutes: 14
 claim_map:
   - claim: "A source, state, and next question give this researcher a more concrete return point than unlabelled accumulated output."
     label: evidence
-    source: "First-person field observation with bounded reader-task pilot support; no control condition."
+    source: "First-person N=1 field observation with three synthetic reader-task pilots; no control condition or population-level claim."
   - claim: "Visible distinctions help prevent proposals, summaries, and accepted decisions from borrowing one another's authority."
     label: inference
-    source: "Interpretation of the field observation and reviewed presentation-pilot design constraints."
+    source: "Interpretation of the first-person field observation and pilot design constraints; the later synthesis is draft and unreviewed."
   - claim: "A context-preparation request should retain its purpose, allowed sources, exclusions, method, budget, expiry, and human review gate."
     label: proposal
-    source: "Source-only context.prepare direction; not a released contract."
-  - claim: "Presentation earns its place when it orients a reader around a source, state, and next action without replacing the record."
-    label: evidence
-    source: "Reviewed synthetic reader-task presentation-pilot finding; not representative usability research."
+    source: "Proposed context.prepare direction and source-only Interaction Block Protocol v0; neither is a released contract."
+  - claim: "The bounded reader-task pilots suggest a design rule for this practice: presentation earns its place when it orients a reader around a source, state, and next action without replacing the record."
+    label: inference
+    source: "Interpretation of three synthetic reader-task exercises. The individual pilot reviews are Scott-sealed; the later agent-authored synthesis remains draft and unreviewed. This is not representative usability research or product validation."
   - claim: "The practices described here may create correction load or fail to transfer beyond one situated practice."
-    label: open-question
+    label: unknown
     source: "N=1 boundary requiring repeated tasks, documented failures, and future consent-governed evaluation."
 ---
 
@@ -57,6 +58,7 @@ A grammar is part of that workbench. It gives the records a few distinctions tha
 The point is modest. A grammar does not solve the hard parts of knowledge work. It gives those hard parts somewhere visible to live.
 
 <FieldStudyFrame
+  idPrefix="extended-mind-field-study"
   title="How I am reading my own practice"
   framing="I am putting the method on the table early because I want you to see what I am actually observing, what I am interpreting, and where this page stops before the technical detail starts to look more settled than it is."
   unit="One researcher-builder: me, returning to AI-assisted research and design work after interruption."
@@ -182,6 +184,7 @@ I call the evidence service Cortex and the workbench layer Exocore. Cortex may p
 > *Exocore Cortex and Platform Integration Boundary and Contract Route, source-only proposal*
 
 <GovernedFlow
+  idPrefix="extended-mind-governed-flow"
   title="The handoff I want to be able to inspect"
   introduction="When I say that human authority should stay visible, I mean this actual sequence. The system may prepare bounded material, but I do not want it to quietly become the authority that accepts the result."
   steps={[
@@ -220,6 +223,30 @@ I call the evidence service Cortex and the workbench layer Exocore. Cortex may p
 
 I am not trying to make a model less capable. I am trying to make the handoff more legible, so it can help me prepare a next step without becoming the hidden owner of the project.
 
+<details>
+  <summary>A fictional example: prepare a research note for return</summary>
+
+  Suppose a researcher asks an agent to prepare a short return brief for a draft about accessible AI education. The request names the draft and two permitted source documents, excludes private notes, and asks the agent to report disagreements rather than resolve them. The agent may return a cited summary and one open question. It does not mark the question answered or call the summary an accepted finding.
+
+  ```yaml
+  task: "Prepare a return brief for the draft's open question about access."
+  allowed_sources:
+    - "draft section: access question"
+    - "public guidance: accessibility recommendations"
+  excluded_sources:
+    - "private interview notes"
+  method: "Summarize the cited passages; list conflicts separately."
+  return:
+    candidate_summary: "The draft asks whether the proposed activity works for readers using assistive technology."
+    evidence_refs: ["draft section: access question"]
+    unresolved: ["The public guidance does not evaluate this activity."]
+    state: "prepared for human review"
+    next_action: "Check the cited guidance, then decide whether to revise the draft or run a reader task."
+  ```
+
+  This is a teaching example, not a record of a real study or a validated workflow. Its useful distinction is the handoff: source-bounded preparation can make the next human decision easier to see, while the question and decision remain open.
+</details>
+
 <EipoCallout
   type="proposal"
   title="Context preparation as a governed handoff"
@@ -242,13 +269,13 @@ Small metadata also gives a team a way to talk about disagreement without flatte
 I have run a few small reader-task pilots around this idea. The useful parts were not one preferred dashboard or a universal card layout. Across the bounded exercises, readers needed a plain Markdown fallback, grouped structure, source links, a short summary, stable field order, and one clear next action. That is a limited result. It gives me a practical design direction without pretending the interface question has been solved.
 
 <EipoCallout
-  type="evidence"
-  title="The reading layer has a job to do"
-  basis="Reviewed synthetic reader-task exercises across multiple presentation forms."
-  limit="Those exercises were not usability research with representative participants and do not identify a universal interface or preferred card layout."
+  type="inference"
+  title="A provisional rule for the reading layer"
+  basis="An interpretation of three synthetic reader-task exercises. The individual pilot reviews are Scott-sealed; the later agent-authored synthesis remains draft and unreviewed."
+  limit="These exercises are not representative usability research or product validation. They do not establish a universal interface, preferred card layout, or transfer beyond this practice."
 >
   <p>
-    The bounded reader-task pilots gave me a design constraint I can use: presentation earns its place when it helps a reader orient around a source, a state, and one next action without replacing the underlying record.
+    My reading of the bounded pilots is a design constraint I can use in this work: presentation earns its place when it helps a reader orient around a source, a state, and one next action without replacing the underlying record. I would want to test that rule with more readers and tasks before treating it as guidance for other teams.
   </p>
 </EipoCallout>
 
@@ -283,3 +310,8 @@ How has your own personal knowledge-management practice influenced the way you a
 I am interested in the answer because tools often arrive as if everyone begins from the same workflow. They do not. Some people need a clearer handoff. Some need a source trail. Some need a smaller active surface. Some may find that a system I am building for myself does not help them at all. That answer matters as much as the next feature idea.
 
 For now, the test is simple. When I come back after a pause, can I find the source, the state, the open question, and the next small action without mistaking accumulated output for understanding?
+## A workbench test for research and engineering teams
+
+For a research thread, the return packet should recover the question, admitted sources, extraction method, disagreements, and next falsifying read. For a production engineering task, it should recover the issue, repository revision, relevant design decision, changed paths, checks observed, and rollback or follow-up condition. In both cases, keep task memory attached to the work item and allow it to expire or be revised; do not turn a sequence of task records into an inferred profile of the operator.
+
+A practical pilot would compare return time and decision accuracy after a fixed interruption interval, while also counting the authoring and maintenance cost of the packet. **Proposal:** define a minimum return record only for tasks whose interruption cost justifies it. The claim that a workbench improves cognition or general productivity remains untested here; a local re-entry result would support only that task class and setup.

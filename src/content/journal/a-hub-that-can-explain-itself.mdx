@@ -4,14 +4,14 @@ date: "2026-09-03"
 labels: [evidence, inference, proposal, open-question]
 sources:
   - "Hearth & Code Hub root governance and provenance records"
-  - "Core32 Runtime Context Candidate v4.0.0-candidate.11 and selected profile Archetype candidates"
+  - "Core32 Runtime Context Candidate v4.0.0-candidate.11 profile Archetypes and candidate.16 profile YAML/rendered Archetypes: Eidos, Technographus, and Prosopographus retain their named role transformations across these two source-only, review-required snapshots. This limited comparison does not establish acceptance, installation, or runtime behavior."
   - "Scott Rallya: completed Hub System Technical Introduction orientation packet"
   - "Prior Field Journal entries on boundaries, cognitive workbenches, and return routes"
 status: published
 pilot: false
 reviewGate: true
 slug: "a-hub-that-can-explain-itself"
-description: "An eight-stage practical journey for building a small provenance-aware layer around AI-assisted knowledge work."
+description: "An eight-stage, illustrative tutorial for prototyping provenance-aware AI-assisted knowledge work, with explicit boundaries between candidate artifacts and a working system."
 author: "Scott Rallya"
 reading_time_minutes: 12
 published_date: "2026-09-04"
@@ -28,15 +28,21 @@ claim_map:
     label: proposal
     source: "This article's tutorial synthesis; readers should adapt it to their own context."
   - claim: "Whether such a layer improves outcomes across people and work types remains untested here."
-    label: open-question
+    label: unknown
     source: "No comparative outcome study is claimed."
+  - claim: "Eidos, Technographus, and Prosopographus retain their named role transformations in the inspected Core32 candidate.16 profile sources, compared with the tutorial's historical candidate.11 examples."
+    label: evidence
+    source: "The candidate.11 Archetype records and candidate.16 profile YAML records use matching transformation identifiers for these three profiles. This checks those identifiers only; it does not compare every role contract field."
+  - claim: "Whether any cited Core32 candidate is accepted, installed, loaded, or useful in a task remains unestablished by this tutorial."
+    label: unknown
+    source: "Candidate.11 is source-only, review-required, and verified:false. Candidate.16 is also source-only and review-required; its deployment orientation says target compatibility and runtime testing remain pending."
 ---
 
 import PromptCard from '../../components/journal/PromptCard';
 
 Every intelligent knowledge system begins with a less glamorous moment: the return. You reopen a research thread, a software design, or a long agent conversation and can no longer tell why a decision was made, which source carried a claim, or whether a polished draft was ever reviewed. The work exists, but its trail has gone cold.
 
-This is the story of building a way back. It follows an eight-stage return journey, but the hero is not an autonomous agent. It is the person who keeps the right to decide what the system means and what it may do. At each stage, you make one small artifact. By the end, you have a simple governed knowledge hub: a system that can explain where its material came from, what state it is in, and what should happen next.
+This is the story of building a way back. It follows an eight-stage return journey, but the hero is not an autonomous agent. It is the person who keeps the right to decide what the system means and what it may do. At each stage, you draft one small artifact. By the end, you have a set of candidates for prototyping a governed knowledge hub: a system intended to explain where its material came from, what state it is in, and what should happen next. The tutorial does not itself produce or validate a working system.
 
 The examples draw on the Hearth & Code Hub and Core32 profile sources. They are patterns, not evidence that every part of that system is complete, active, or universally applicable.
 
@@ -88,7 +94,7 @@ Create a source card for every material item. A card does not replace a source. 
   guard="Mark the result source-card-candidate. Never let the card replace the source."
 />
 
-For doctoral work, this is the first threshold. You are no longer only collecting papers; you are preparing material that a future chapter can interrogate. In a software project, substitute requirements, user research, and technical specifications. The pattern holds.
+For doctoral work, this is the first threshold. You are no longer only collecting papers; you are preparing material that a future chapter can interrogate. In a software project, substitute requirements, user research, and technical specifications. These are analogous examples, not evidence that the same workflow has been evaluated in each setting.
 
 ## 3. The refusal: do not let a plausible answer become authority
 
@@ -147,13 +153,22 @@ Now that you have source cards, create a claim-and-evidence ledger.
 
 Show one ledger claim, its sources, its limit, and its next check. That makes the method demoable without exposing an entire private corpus.
 
+**Fictional miniature:** a validator summary [S1] says that 7 of 10 supplied records contained the required fields under one named predicate. A bounded ledger could return:
+
+- **Claim [C1] · evidence:** “Seven of the ten records in [S1] contained the required fields under predicate P.”
+- **Limit:** this says nothing about whether the field values are semantically correct, whether an agent followed its scope, or whether the system is useful.
+- **Next check:** inspect the three records that failed P and confirm that P matches the intended requirement.
+- **State:** candidate for review; the validator result is not acceptance.
+
+The counts and records here are invented for teaching. No actual validator run or system outcome is claimed.
+
 ## 5. Meeting the mentors: specialize by transformation, not personality
 
 The next temptation is to create a cast of impressive-sounding agents. Resist it. A specialized profile earns its place only when it owns a distinct, recurring transformation.
 
-The Core32 source candidates illustrate the pattern: a semantic-systems role works on concepts, terms, and representation; a skill-system role works on recurring, testable capability; and a profile-architecture role works on modular role sources. Their point is not that a fleet is inherently better than a general assistant. Their point is that role boundaries can be inspected.
+Historical Core32 profile candidates illustrate three distinct role boundaries. Eidos, the semantic-systems architect, turns concepts, terms, relations, and representation needs into a governed semantic system. Technographus, the skill-system architect, turns recurring capability evidence into a bounded skill system. Prosopographus, the profile architect, turns recurring role evidence into a modular profile source. Their candidate.11 Archetypes and candidate.16 profile YAML records retain those same transformation identifiers. Both snapshots remain source-only and review-required; this comparison does not show that a profile is accepted, installed, loaded, or useful in a task. The point is to inspect role boundaries, not to assume a fleet is better than a general assistant.
 
-For your first system, make four modest roles: source analyst, software builder, reviewer, and coordinator. In doctoral research, the source analyst can map supplied literature without claiming to write the review. In a Rust-and-TypeScript Tauri project, the builder can return a patch candidate and test result; the reviewer can return findings; the human still decides integration.
+As an exercise, compare four possible roles: source analyst, software builder, reviewer, and coordinator. In a literature task, the source analyst might map supplied materials without claiming to author the review. In a software task, a builder might return a patch candidate and test result, while a reviewer returns findings; a person still decides whether to integrate them. These are role-design examples, not a recommendation to create four agents.
 
 <PromptCard
   title="Map literature without fabricating it"
@@ -171,7 +186,7 @@ For your first system, make four modest roles: source analyst, software builder,
   guard="Return HOLD when a required source card, definition, or scope boundary is absent."
 />
 
-An `ARCHETYPE.md`-style source expands a compact role into identity, purpose, inputs, outputs, boundaries, recovery, verification, and lifecycle. A `SOUL.md`-style runtime projection preserves that orientation for a particular consumer and adds context loading, delegation, privacy, and receipt practices. Keep the source and projection separate until you have explicit authority to install the projection.
+An `ARCHETYPE.md`-style document can render a role's identity, purpose, inputs, outputs, boundaries, recovery, verification, and lifecycle. In candidate.16, the role's YAML family owns those semantics and the readable Archetype is a projection. A `SOUL.md`-shaped file may be prepared as a host-specific runtime projection, but that label does not mean a host has loaded it. Candidate.16's deployment notes leave host compatibility, installation, and runtime testing pending. Keep source, readable projection, and any host mapping distinct until each has its own review and release.
 
 ## 6. The ordeal: make disagreement and limitation visible
 
@@ -213,7 +228,7 @@ A validator can establish that a schema parses, a required field exists, or a fo
   ]}
 />
 
-This is also where runtime honesty matters. A well-written profile candidate is not evidence that a fleet is installed, selected, active, or effective. In the inspected Core32 candidate package, installation, activation, selection, provider calls, and public release remain held. Any operational statement to the contrary needs separate direct runtime evidence before it becomes an article claim.
+This is also where runtime honesty matters. A well-written profile candidate is not evidence that a fleet is installed, selected, active, or effective. The profile examples in this tutorial are tied to a historical candidate snapshot; this review has not reconciled each example against later source revisions or a runtime. Any claim about what is presently installed or operating needs separate, current evidence.
 
 ## A small constitution and one companion soul
 
@@ -285,8 +300,14 @@ The final gift is a return loop:
 6. Write a receipt that says what the check did and did not establish.
 7. Let the human decide the next state.
 
-Run this loop once with a dissertation question, once with a literature set, and once with a small software or research prototype. That is enough to demonstrate the system: not as a claim of autonomous intelligence, but as an intelligence layer that helps a person keep evidence, meaning, and action in their proper relation.
+Try the loop with one bounded research question or software task. A walkthrough can show how the proposed artifacts connect; it cannot by itself demonstrate that the system improves outcomes. To evaluate that claim, define a task, a simpler baseline, observable criteria, and human review before comparing results.
 
 The portable lesson is modest: make every important artifact capable of pointing back to its source, forward to its next decision, and sideways to the boundary it must not cross. A hub that can do that can explain itself—and, more importantly, can help its human return.
+
+## Practitioner bridge: make the handoff auditable
+
+For an agentic researcher, use the pattern on one evidence synthesis: bind each extracted claim to an opened source span, keep extraction separate from interpretation, and return contradictions plus a bounded reading queue. For an agentic engineer, apply it to a bug-fix task: bind the issue, relevant code and test, let an agent propose a patch, then report changed files and which tests actually ran. These are two applications of the same source-to-candidate-to-check interface, not evidence that the tutorial has been evaluated in either domain.
+
+A useful review question is whether a second operator can reconstruct the decision from the returned artifacts without trusting the first agent’s summary. Measure that with a fixed task and a simpler baseline: source-link recovery, unsupported-claim count, human repair time, and correct identification of unrun checks. If the extra records do not improve one of those decisions, remove them.
 
 *AI assistance disclosure: AI assisted with source comparison, structure, drafting, and review preparation. The authorial direction, factual verification, and any publication decision remain Scott’s.*
