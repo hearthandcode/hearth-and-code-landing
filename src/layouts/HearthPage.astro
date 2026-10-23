@@ -29,7 +29,7 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
         <li><a href="/library/">Library</a></li>
         <li><a href="/portfolio/">Portfolio</a></li>
         <li><a href="/dossier/">Dossier</a></li>
-        <li><a href="https://sacred.hearthandcode.dev">Commons</a></li>
+        <li><a href="https://sacred.hearthandcode.dev" target="_blank" rel="noopener noreferrer">Commons <span aria-hidden="true" class="hp-ext">↗</span></a></li>
       </ul>
     </nav>
     <main id="main-content" class="hp-main">
@@ -119,6 +119,7 @@ const { title, description = 'Hearth & Code — alignment you can audit', curren
     text-decoration: none;
     transition: color .2s;
   }
+  .hp-ext{font-size:.75em;opacity:.7;margin-left:2px;}
   .hp-nav-links a:hover, .hp-nav-links a.hp-active { color: var(--color-accent-gold); }
   @media(max-width:768px) {
     /* nav is always centered now */

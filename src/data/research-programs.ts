@@ -44,7 +44,7 @@ export const researchPrograms = [
       ['Evidence', 'Provider-free research posture', 'The public report describes a framework-neutral foundation. This page supplies no new fleet benchmark, independent replication, or measured model ranking.'],
       ['View', 'A comparison with a return route', 'Show the criterion beside its result and source. Give the reviewer a way to inspect the fixture and understand what was not tested.'],
       ['Governance', 'Evaluation is not activation', 'A roster or favorable comparison does not select a profile or authorize a provider invocation. Adoption and runtime use require their own scoped decision.'],
-    ], related: ['/evidence/', 'Inspect evidence boundaries'],
+    ], related: ['/journal/', 'Inspect evidence boundaries'],
   },
   {
     slug: 'ess', title: 'ESS', kind: 'Exocore-Sigil Standard / governed knowledge systems', status: 'Candidate standard · architectural proposal',

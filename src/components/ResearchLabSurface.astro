@@ -25,11 +25,11 @@ interface Props { route: Route; journal?: boolean; }
 const { route, journal = false } = Astro.props;
 
 const routeMeta = {
-  lab: { key: 'orientation', index: '01', context: 'The Lab / independent research practice', lead: 'I build the room around', accent: 'the question.', tail: '', deck: 'Hearth & Code is my public research workbench for making the structures behind knowledge, software, agents, and creative practice available for inspection.', action: ['Choose a research question', '/questions/'] },
-  questions: { key: 'builder', index: '02', context: 'Research Questions / open inquiry portfolio', lead: 'I begin with', accent: 'questions', tail: 'before claims.', deck: 'I keep a field of live questions around what must remain visible when a system changes, who can revise it, and how its reasoning can be returned to.', action: ['Read my methods', '/methods/'] },
+  lab: { key: 'orientation', index: '01', context: 'The Lab / independent research practice', lead: 'I build the room around', accent: 'the question.', tail: '', deck: 'Hearth & Code is my public research workbench for making the structures behind knowledge, software, agents, and creative practice available for inspection.', action: ['Choose a research question', '/research/'] },
+  questions: { key: 'builder', index: '02', context: 'Research Questions / open inquiry portfolio', lead: 'I begin with', accent: 'questions', tail: 'before claims.', deck: 'I keep a field of live questions around what must remain visible when a system changes, who can revise it, and how its reasoning can be returned to.', action: ['Read my methods', '/workbench/'] },
   portfolio: { key: 'exocore', index: '03', context: 'Portfolio / selected research and systems work', lead: 'I use the portfolio as', accent: 'a trail,', tail: 'not a trophy case.', deck: 'This is where research programs, knowledge architecture, software, publication, and design meet without hiding the posture or limits of each body of work.', action: ['Browse selected work', '#selected-work'] },
   programs: { key: 'exocore', index: '04', context: 'Programs & Prototypes / system field guide', lead: 'I give questions somewhere to become', accent: 'working systems.', tail: '', deck: 'A program is a bounded place for turning an inquiry into a map, protocol, prototype, report, or public artifact without pretending that every experiment is already a product.', action: ['Inspect the report shelf', '#technical-reports'] },
-  methods: { key: 'workbench', index: '05', context: 'Methods & Instruments / educational practice', lead: 'I build methods that leave', accent: 'a way back.', tail: '', deck: 'I keep these learning patterns small enough to try, explicit enough to challenge, and structured enough to return an honest account of what happened.', action: ['Open the Methods Atlas', '/methods/'] },
+  methods: { key: 'workbench', index: '05', context: 'Methods & Instruments / educational practice', lead: 'I build methods that leave', accent: 'a way back.', tail: '', deck: 'I keep these learning patterns small enough to try, explicit enough to challenge, and structured enough to return an honest account of what happened.', action: ['Open the Methods Atlas', '/workbench/'] },
   notes: { key: 'library', index: '06', context: 'Field Journal / local review candidates', lead: 'I write to leave', accent: 'a thread', tail: 'I can return to.', deck: 'This reading room brings earlier Field Journal releases and local essay projections together. Revised copy remains a review candidate; this preview does not approve or republish it.', action: ['Read the Field Journal', '#field-journal'] },
   evidence: { key: 'atlas', index: '07', context: 'Artifacts / evidence and correction', lead: 'I want every claim to carry', accent: 'its way back.', tail: '', deck: 'The Evidence Desk keeps source, claim, check, decision, omission, and correction visible. A check earns only the confidence its named scope can support.', action: ['Inspect the evidence ledger', '#evidence-collections-title'] },
   dossier: { key: 'method', index: '08', context: 'Dossier / Hearthside Meta-Architect', lead: 'I call this working archetype the', accent: 'Hearthside Meta-Architect.', tail: '', deck: 'This self-authored field character sheet describes how I try to join forge and hearth in my work. It is a creative working archetype, not a diagnosis or credential.', action: ['Open the case file', '#dossier-index'] },
@@ -70,9 +70,9 @@ const selectedWork = [
   ['01', 'Research program', 'Typed Context & Control Protocol', 'Typed representations, context conditions, interaction compilation, and explicit proof obligations.', 'Research architecture · public guide · evaluation instruments', '/programs/'],
   ['02', 'Knowledge architecture', 'EKRP', 'A source-governed application profile for human-readable knowledge representation, provenance, and review.', 'Semantic documents · evidence packets · standards crosswalks', '/programs/'],
   ['03', 'Software system', 'Exocore', 'A local-first systems direction connecting agents, knowledge, governance, observability, and human return.', 'Rust services · TypeScript interfaces · operational boundaries', '/workbench/'],
-  ['04', 'Methods practice', 'Prompt, Context & Agentic Technique Atlas', 'A public explorer for 128 techniques, alongside a separate prompt-template catalog and practical task demonstrations.', '128 technique records · task fixtures · recorded subagent responses', '/methods/'],
+  ['04', 'Methods practice', 'Prompt, Context & Agentic Technique Atlas', 'A public explorer for 128 techniques, alongside a separate prompt-template catalog and practical task demonstrations.', '128 technique records · task fixtures · recorded subagent responses', '/workbench/'],
   ['05', 'Publication', 'Field Journal', 'Long-form research notes, essays, and technical writing with visible claim and source context.', 'Research essays · technical articles · correction path', '/notes/'],
-  ['06', 'Research communication', 'Ember Circuit', 'A warm technical visual language for making complex system boundaries and evidence states legible.', 'Visual grammar · research figures · interface foundations', '/evidence/'],
+  ['06', 'Research communication', 'Ember Circuit', 'A warm technical visual language for making complex system boundaries and evidence states legible.', 'Visual grammar · research figures · interface foundations', '/journal/'],
 ] as const;
 
 const programs = [
@@ -98,9 +98,9 @@ const claims = [
 
 const correspondence = [
   ['01', 'Reading trail', 'I am following an idea and want a useful next object.', '/notes/'],
-  ['02', 'Project conversation', 'I have a real situation, constraint, or research question.', '/questions/'],
+  ['02', 'Project conversation', 'I have a real situation, constraint, or research question.', '/research/'],
   ['03', 'Collaboration or work', 'I want to discuss a possible way of working together.', '/dossier/'],
-  ['04', 'Correction', 'I want to point to a claim, source, route, or access barrier.', '/evidence/#correction'],
+  ['04', 'Correction', 'I want to point to a claim, source, route, or access barrier.', '/correspondence/'],
 ] as const;
 
 const runtime = [

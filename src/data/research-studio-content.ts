@@ -1,7 +1,7 @@
 export type ResearchRoute = 'lab' | 'questions' | 'portfolio' | 'programs' | 'methods' | 'notes' | 'evidence' | 'dossier' | 'correspondence' | 'workbench';
 
 export const routeContexts: Record<ResearchRoute, { label: string; items: Array<{ href: string; title: string; detail: string }> }> = {
-  lab: { label: 'Research orientation', items: [{ href: '/questions/', title: 'Questions', detail: 'Open inquiry' }, { href: '/methods/', title: 'Methods', detail: 'Practical instruments' }, { href: '/notes/', title: 'Notes', detail: 'Essays and journal' }] },
+  lab: { label: 'Research orientation', items: [{ href: '/research/', title: 'Questions', detail: 'Open inquiry' }, { href: '/workbench/', title: 'Methods', detail: 'Practical instruments' }, { href: '/notes/', title: 'Notes', detail: 'Essays and journal' }] },
   questions: { label: 'On this surface', items: [{ href: '#question-ledger', title: 'Inquiry ledger', detail: 'Current questions' }, { href: '#tension-title', title: 'Working tensions', detail: 'What remains open' }, { href: '#question-anatomy', title: 'Question guide', detail: 'How to frame inquiry' }] },
   portfolio: { label: 'Portfolio index', items: [{ href: '#selected-work', title: 'Selected work', detail: 'Six active bodies' }, { href: '#product-horizon', title: 'Product horizon', detail: 'Eight candidates' }, { href: '/dossier/', title: 'Studio dossier', detail: 'Practice and steward' }] },
   programs: { label: 'Program index', items: [{ href: '#program-ledger', title: 'Program map', detail: 'Questions and posture' }, { href: '#technical-reports', title: 'Technical reports', detail: 'Public reading shelf' }, { href: '#program-dossiers', title: 'Dossiers', detail: 'TCCP, EKRP, Exocore' }] },

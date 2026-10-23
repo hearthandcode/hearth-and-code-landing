@@ -56,7 +56,7 @@ export const contentData: ContentItem[] = [
     type: 'card',
     title: 'Methods',
     description: 'The working tools. Field cards, prompt techniques, research notes. If you want to do something, start here.',
-    href: '/methods/',
+    href: '/workbench/',
     category: 'navigation',
     tags: ['methods', 'library', 'artifacts'],
     views: {
@@ -141,7 +141,7 @@ export const contentData: ContentItem[] = [
     type: 'card',
     title: 'Questions',
     description: "Open inquiries. Questions I'm actively investigating. No conclusions yet.",
-    href: '/questions/',
+    href: '/research/',
     category: 'navigation',
     tags: ['questions', 'inquiry'],
     views: {
@@ -300,7 +300,7 @@ export const contentData: ContentItem[] = [
     type: 'card',
     title: 'If you want to build something',
     description: 'Go to Methods for prompt techniques and working methods, then Research for the technical systems.',
-    href: '/methods/',
+    href: '/workbench/',
     category: 'path',
     tags: ['onboarding', 'methods'],
     views: {

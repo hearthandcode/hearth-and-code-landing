@@ -104,7 +104,7 @@ export const featureDispatches: FeatureDispatch[] = [
       'Effectful fragment joins require explicit policy and a grant. The history includes targeted conformance and synthetic-task evidence; this should be read as a bounded compiler qualification record, not a blanket security claim.',
     ],
     evidence: ['877c0ff', 'b69afdb', '6e27d57', '14641a5', '0a43544', '39e6afa', 'ec8d7cf', '9e097ad', '74a1362', 'b3a3377', '8ec851b', '49aa7ca'],
-    href: '/methods/',
+    href: '/workbench/',
   },
   {
     date: '2026-09-27',
@@ -115,7 +115,7 @@ export const featureDispatches: FeatureDispatch[] = [
       'This is an integration observation across an ESS-shaped workflow and the Sigil macro lane. It does not mean the standard was adopted or that every ESS profile runs through Sigil.',
     ],
     evidence: ['0abbd6a', 'e815706'],
-    href: '/methods/',
+    href: '/workbench/',
   },
   {
     date: '2026-09-28 → 2026-09-30',

@@ -18,7 +18,7 @@ import { getNavigationCards } from '../lib/content';
 const navigationCards = getNavigationCards('balanced').map((card) => ({
   ...card,
   // The former /practice/ route is now the public methods surface.
-  href: card.href === '/practice/' ? '/methods/' : card.href,
+  href: card.href === '/practice/' ? '/workbench/' : card.href,
 }));
 
 // The projections are deliberately different navigation maps, not merely
@@ -344,7 +344,7 @@ const currentSignals = [
       mapTitle: 'Code surfaces.',
       mapDetail: 'Methods, Research, Questions, and Field Journal: practical instruments, active inquiry, and the public working record.',
       routes: [
-        { href: '/methods/', label: 'Open the methods' },
+        { href: '/workbench/', label: 'Open the methods' },
         { href: '/research/', label: 'Inspect the research' },
         { href: '/journal/', label: 'Read the Field Journal' },
       ],
