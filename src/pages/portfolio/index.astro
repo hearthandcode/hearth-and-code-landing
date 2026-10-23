@@ -23,7 +23,11 @@ import '../../styles/ember-circuit-library.css';
     <a class="studio-skip" href="#main-content">Skip to the portfolio</a>
     <HearthNavigation current="exocore" context="Working surface" />
     <main id="main-content" class="studio-room-main">
-      <PortfolioApp client:load />
+      <div class="portfolio-viewport"><PortfolioApp client:load /></div>
     </main>
-  </body>
+  <style is:global>
+  .portfolio-viewport { max-width: 1120px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .studio-room-main { background: var(--color-surface-primary, #161411); min-height: 100vh; }
+</style>
+</body>
 </html>

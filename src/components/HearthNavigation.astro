@@ -14,7 +14,7 @@ const links = [
   { label: 'Portfolio', href: '/portfolio/', key: 'portfolio' },
   { label: 'Dossier', href: '/dossier/', key: 'dossier' },
   { label: 'Research', href: '/research/', key: 'research' },
-  { label: 'Commons', href: 'https://sacred.hearthandcode.dev', key: 'commons' },
+  { label: 'Commons', href: 'https://sacred.hearthandcode.dev', key: 'commons', ext: true },
 ];
 ---
 
@@ -27,8 +27,8 @@ const links = [
     <ul class="unified-nav__links">
       {links.map((l) => (
         <li>
-          <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>
-            {l.label}
+          <a href={l.href} aria-current={current === l.key ? 'page' : undefined} {...(l.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+            {l.label}{l.ext && <span aria-hidden="true" class="unified-nav__ext"> ↗</span>}
           </a>
         </li>
       ))}
@@ -92,6 +92,7 @@ const links = [
   .unified-nav__links a[aria-current='page'] {
     color: #F4B860;
   }
+  .unified-nav__ext { font-size: .8em; opacity: .7; margin-left: 2px; }
   @media(max-width:640px) {
     .unified-nav__links { gap: 0.75rem; font-size: 0.75rem; }
   }
