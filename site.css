@@ -5,6 +5,25 @@
    ============================================================ */
 
 /* ── Variables ───────────────────────────────────────────── */
+
+/* ============================================================
+   DESIGN SYSTEM BRIDGE — aliases System A names to System B tokens
+   Canonical source: DESIGN-SYSTEM.md | Remove after Phase 3 migration
+   ============================================================ */
+:root {
+  --bg: var(--color-surface-primary, #161411);
+  --cream: var(--color-text-primary, #f1e7d2);
+  --muted: var(--color-text-secondary, #cfc1ab);
+  --ember: var(--color-accent-ember, #E85B4E);
+  --gold: var(--color-accent-gold, #F4B860);
+  --plasma: var(--color-accent-plasma, #3FE0D0);
+  --forge: var(--color-accent-forge, #C25A3A);
+  --glow-plasma: var(--shadow-glow-plasma, 0 0 14px rgba(63,224,208,.40));
+  --glow-ember: var(--shadow-glow-ember, 0 0 16px rgba(232,91,78,.35));
+}
+/* Import canonical tokens for Astro pages that also load site.css */
+@import url('/src/styles/tokens.css') layer(tokens);
+
 :root {
   /* Warm — the room (carried forward, unchanged) */
   --bg:         #1C1714;
