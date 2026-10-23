@@ -1,0 +1,221 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  current?: string;
+}
+const { title, description = 'Hearth & Code — alignment you can audit', current = '' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#161411" />
+    <title>{title} · Hearth &amp; Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="hp-glow" aria-hidden="true"></div>
+    <nav class="hp-nav">
+      <a class="hp-wordmark" href="/">Hearth <span class="hp-amp">&amp;</span> Code</a>
+      <ul class="hp-nav-links">
+        <li><a href="/building/" class={current === 'building' ? 'hp-active' : ''}>How it works</a></li>
+        <li><a href="/about/" class={current === 'about' ? 'hp-active' : ''}>About</a></li>
+        <li><a href="/mission/" class={current === 'mission' ? 'hp-active' : ''}>Mission</a></li>
+        <li><a href="/library/">Library</a></li>
+        <li><a href="/portfolio/">Portfolio</a></li>
+      </ul>
+    </nav>
+    <main id="main-content" class="hp-main">
+      <slot />
+    </main>
+    <footer class="hp-footer">
+      <nav aria-label="Footer">
+        <a href="/">Home</a>
+        <a href="/building/">How it works</a>
+        <a href="/about/">About</a>
+        <a href="/mission/">Mission</a>
+        <a href="/portfolio/">Portfolio</a>
+        <a href="/library/">Library</a>
+        <a href="/dossier/">Dossier</a>
+        <a href="https://sacred.hearthandcode.dev" target="_blank" rel="noopener noreferrer">The Sacred Commons</a>
+        <a href="/legal/">Legal &amp; Privacy</a>
+      </nav>
+      <p>Hearth &amp; Code · alignment you can audit · <a href="https://github.com/hearthandcode" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+  </body>
+</html>
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     HEARTH PAGE LAYOUT — Unified Token System (DESIGN-SYSTEM.md)
+     ═══════════════════════════════════════════════════════ */
+  :root {
+    --color-surface-primary: #161411;
+    --color-surface-raised: #211d18;
+    --color-surface-recessed: #0e1114;
+    --color-surface-rule: #4b4237;
+    --color-surface-rule-strong: #6e5d4b;
+    --color-text-primary: #f1e7d2;
+    --color-text-secondary: #cfc1ab;
+    --color-text-display: #f1e7d2;
+    --color-accent-ember: #E85B4E;
+    --color-accent-gold: #F4B860;
+    --color-accent-plasma: #3FE0D0;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--color-surface-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Background glow */
+  .hp-glow {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(232,91,78,.06), transparent 70%);
+  }
+  /* Navigation */
+  .hp-nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-surface-rule);
+    background: rgba(22,20,17,.85);
+    backdrop-filter: blur(8px);
+  }
+  .hp-wordmark {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .hp-amp { color: var(--color-accent-ember); font-style: italic; }
+  .hp-nav-links {
+    display: flex; gap: var(--space-5); list-style: none;
+    font-size: 0.85rem;
+  }
+  .hp-nav-links a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .hp-nav-links a:hover, .hp-nav-links a.hp-active { color: var(--color-accent-gold); }
+  @media(max-width:768px) {
+    .hp-nav { flex-direction: column; gap: var(--space-3); }
+    .hp-nav-links { flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+  }
+  /* Main content */
+  .hp-main {
+    flex: 1;
+    position: relative; z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: var(--space-7) var(--space-5);
+    width: 100%;
+  }
+  /* Typography */
+  .hp-main h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 500;
+    color: var(--color-text-display);
+    line-height: 1.15;
+    margin-bottom: var(--space-5);
+  }
+  .hp-main h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--color-accent-gold);
+    margin: var(--space-6) 0 var(--space-3);
+  }
+  .hp-main h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: var(--space-5) 0 var(--space-2);
+  }
+  .hp-main p {
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+  .hp-main p strong { color: var(--color-text-primary); }
+  .hp-main em { color: var(--color-accent-gold); }
+  .hp-main ul, .hp-main ol {
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin: 0 0 var(--space-4) var(--space-5);
+  }
+  .hp-main blockquote {
+    border-left: 3px solid var(--color-accent-ember);
+    padding: var(--space-3) var(--space-4);
+    margin: var(--space-4) 0;
+    color: var(--color-text-primary);
+    font-style: italic;
+    background: var(--color-surface-raised);
+    border-radius: 0 8px 8px 0;
+  }
+  .hp-main code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--color-surface-recessed);
+    padding: 0.15em 0.35em;
+    border-radius: 4px;
+    color: var(--color-accent-gold);
+  }
+  /* Section cards */
+  .hp-card {
+    border: 1px solid var(--color-surface-rule);
+    border-radius: 12px;
+    padding: var(--space-5);
+    margin: var(--space-4) 0;
+    background: var(--color-surface-raised);
+  }
+  .hp-card > h3 { margin-top: 0; }
+  /* Hero section */
+  .hp-hero { text-align: center; margin-bottom: var(--space-7); }
+  .hp-hero__eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--color-accent-gold); opacity: 0.7; margin-bottom: var(--space-4);
+  }
+  /* Footer */
+  .hp-footer {
+    border-top: 1px solid var(--color-surface-rule);
+    padding: var(--space-5);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+  .hp-footer nav {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: var(--space-4); margin-bottom: var(--space-3);
+  }
+  .hp-footer a { color: var(--color-text-secondary); text-decoration: none; }
+  .hp-footer a:hover { color: var(--color-accent-gold); }
+  /* Links in content */
+  .hp-main a:not(.hp-card) {
+    color: var(--color-accent-plasma);
+    text-decoration: none;
+  }
+  .hp-main a:not(.hp-card):hover { text-decoration: underline; }
+</style>
