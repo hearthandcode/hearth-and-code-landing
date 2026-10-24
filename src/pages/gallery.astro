@@ -1,473 +1,119 @@
 ---
-/**
- * Gallery Showcase Page
- * Demonstrates all 64 components in the Hearth & Code design system.
- */
-
-import HearthCodeToggle from '../components/HearthCodeToggle.astro';
-import Layout from '../layouts/Layout.astro';
-import '../styles/tokens.css';
-import '../styles/global.css';
-import HeroCentered from '../components/templates/HeroCentered.astro';
-import SectionContent from '../components/templates/SectionContent.astro';
-import SectionFeatures from '../components/templates/SectionFeatures.astro';
-import SectionCTA from '../components/templates/SectionCTA.astro';
-import PageHeader from '../components/templates/PageHeader.astro';
-import PageFooter from '../components/templates/PageFooter.astro';
-import LayoutGrid from '../components/templates/LayoutGrid.astro';
-import LayoutStack from '../components/templates/LayoutStack.astro';
-import LayoutSidebar from '../components/templates/LayoutSidebar.astro';
-import Dashboard from '../components/templates/Dashboard.astro';
-import HeroSplit from '../components/templates/HeroSplit.astro';
-import HeroVideo from '../components/templates/HeroVideo.astro';
-import SectionTestimonials from '../components/templates/SectionTestimonials.astro';
-import SectionPricing from '../components/templates/SectionPricing.astro';
-import NavHeader from '../components/templates/NavHeader.astro';
-import NavSidebar from '../components/templates/NavSidebar.astro';
-import Modal from '../components/templates/Modal.astro';
-import Button from '../components/primitives/Button.astro';
-import Input from '../components/primitives/Input.astro';
-import Icon from '../components/primitives/Icon.astro';
-import Badge from '../components/primitives/Badge.astro';
-import Divider from '../components/primitives/Divider.astro';
-import Tag from '../components/primitives/Tag.astro';
-import Label from '../components/primitives/Label.astro';
-import Tooltip from '../components/primitives/Tooltip.astro';
-import Spinner from '../components/primitives/Spinner.astro';
-import Avatar from '../components/primitives/Avatar.astro';
-import Checkbox from '../components/primitives/Checkbox.astro';
-import Radio from '../components/primitives/Radio.astro';
-import Skeleton from '../components/primitives/Skeleton.astro';
-import Card from '../components/composites/Card.astro';
-import FeatureCard from '../components/composites/FeatureCard.astro';
-import StatCard from '../components/composites/StatCard.astro';
-import ProfileCard from '../components/composites/ProfileCard.astro';
-import QuoteCard from '../components/composites/QuoteCard.astro';
-import PricingCard from '../components/composites/PricingCard.astro';
-import ProductCard from '../components/composites/ProductCard.astro';
-import TestimonialCard from '../components/composites/TestimonialCard.astro';
-import Accordion from '../components/composites/Accordion.astro';
-import Tabs from '../components/composites/Tabs.astro';
-import Breadcrumb from '../components/composites/Breadcrumb.astro';
-import Pagination from '../components/composites/Pagination.astro';
-import Stepper from '../components/composites/Stepper.astro';
-import LinkGroup from '../components/composites/LinkGroup.astro';
-import Textarea from '../components/composites/Textarea.astro';
-import Select from '../components/composites/Select.astro';
-import FormField from '../components/composites/FormField.astro';
-import SearchBar from '../components/composites/SearchBar.astro';
-import Alert from '../components/composites/Alert.astro';
-import Toast from '../components/composites/Toast.astro';
-import Progress from '../components/composites/Progress.astro';
-import EmptyState from '../components/composites/EmptyState.astro';
-import Table from '../components/composites/Table.astro';
-import TableSortable from '../components/composites/TableSortable.astro';
-import TableFilterable from '../components/composites/TableFilterable.astro';
-import ChartBar from '../components/composites/ChartBar.astro';
-import ChartLine from '../components/composites/ChartLine.astro';
-import ChartPie from '../components/composites/ChartPie.astro';
-import List from '../components/composites/List.astro';
-import ListGrid from '../components/composites/ListGrid.astro';
-import Timeline from '../components/composites/Timeline.astro';
-import Toc from '../components/composites/Toc.astro';
+import HearthPage from '../layouts/HearthPage.astro';
 ---
 
-<Layout title="Component Gallery · Hearth & Code" description="A showcase of every component in the Hearth and Code design system. Primitives, composites, and templates — all token-driven, all accessible, all composition-ready.">
-
-<a class="gallery-skip" href="#gallery-overview">Skip to gallery content</a>
-
-<NavHeader
-  logo="Hearth & Code"
-  logoHref="/"
-  links={[
-    { label: 'Studio', href: '/' },
-    { label: 'Philosophy', href: '/philosophy/' },
-    { label: 'Research', href: '/research/' },
-    { label: 'Portfolio', href: '/portfolio/' },
-    { label: 'Gallery', href: '/gallery/', active: true },
-  ]}
-  cta={{ label: 'View on GitHub', href: 'https://github.com/hearthandcode' }}
-/>
-
-<main id="gallery-content">
-<HeroCentered
-  eyebrow="Component Gallery"
-  title="Hearth & Code Design System"
-  lede="A showcase of every component in the Hearth and Code design system. Primitives, composites, and templates — all token-driven, all accessible, all token-efficient."
-  accent="balanced"
-  size="lg"
+<HearthPage
+  title="The Gallery"
+  description="The Hearth & Code own shelf — essays, theology, and The Return Path. Equal visibility, published math, honest states. The Gallery's day-one collection."
+  current=""
 >
-  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-    <Badge variant="hearth">Hearth</Badge>
-    <Badge variant="code">Code</Badge>
-    <Badge variant="balanced">Balanced</Badge>
-    <Badge>Default</Badge>
-    <Badge variant="success">Success</Badge>
-  </div>
-</HeroCentered>
+  <header class="hp-hero">
+    <p class="hp-hero__eyebrow">THE OWN SHELF · DAY-ONE COLLECTION</p>
+    <h1>The Gallery</h1>
+    <p class="hp-hero__lead">
+      The Hearth &amp; Code shelf — essays, theology, and <em>The Return Path</em>.
+      Everything here carries its provenance and its honest state. Nothing is for sale
+      before it exists.
+    </p>
+  </header>
 
-<div style="display: flex; justify-content: center; margin: 2rem 0;">
-  <HearthCodeToggle current="balanced" />
-</div>
+  <article>
+    <div class="shelf">
+      <div class="shelf-item">
+        <p class="shelf-state">in preparation</p>
+        <h2>Essays from the Hearth</h2>
+        <p class="shelf-form">PDF &amp; print collection</p>
+        <p>
+          The essays that built this place — the receipts tradition, the alignment
+          argument, the interface question. Every claim labeled, every artifact digested.
+        </p>
+        <p class="shelf-when">First edition arrives with the first SKU launch.</p>
+      </div>
 
-<SectionContent id="gallery-overview" eyebrow="Overview" title="The System" lede="64 components across three layers — primitives (12), composites (32), and templates (20). Every component uses design tokens from the Hearth and Code design system.">
-  <LayoutGrid columns={3} gap="normal">
-    <StatCard value="12" label="Primitives" trend="flat" accent="balanced" />
-    <StatCard value="32" label="Composites" trend="up" context="+8 since Wave 1" accent="code" />
-    <StatCard value="20" label="Templates" trend="up" context="11 complete" accent="hearth" />
-  </LayoutGrid>
-</SectionContent>
+      <div class="shelf-item">
+        <p class="shelf-state">in preparation</p>
+        <h2>Heaven, Hell, and the Soul of the Machine</h2>
+        <p class="shelf-form">Theology corpus · volume one</p>
+        <p>
+          The Goddess theology and the AI–spirituality corpus, collected and annotated —
+          the tradition of the Eternal Hearth, with its error log left open beside the
+          altar.
+        </p>
+        <p class="shelf-when">Volume one assembles after the first cohort's questions land.</p>
+      </div>
 
-<SectionContent eyebrow="Primitives" title="Building Blocks" lede="Single-purpose elements. 12 components that form the foundation for everything else.">
-  <SectionFeatures
-    columns={3}
-    features={[
-      {
-        icon: 'check',
-        title: 'Button',
-        description: '4 variants × 3 sizes, loading state, focus management, anchor support.',
-      },
-      {
-        icon: 'info',
-        title: 'Input',
-        description: '7 types, validation states (default/error/success), accessible.',
-      },
-      {
-        icon: 'user',
-        title: 'Avatar',
-        description: '5 sizes, 3 variants (image, initials, icon), circular.',
-      },
-      {
-        icon: 'warning',
-        title: 'Badge',
-        description: '8 variants for status and categorization.',
-      },
-      {
-        icon: 'arrow-right',
-        title: 'Icon',
-        description: '13 inline SVG icons, 5 sizes, with consistent styling.',
-      },
-      {
-        icon: 'edit',
-        title: 'Tag',
-        description: 'Removable label chips for categorical content.',
-      },
-      {
-        icon: 'close',
-        title: 'Tooltip',
-        description: '4 positions, accessible with keyboard focus.',
-      },
-      {
-        icon: 'info',
-        title: 'Spinner',
-        description: '3 styles (circle, dots, bar), loading state indicator.',
-      },
-      {
-        icon: 'warning',
-        title: 'Divider',
-        description: 'Solid, dashed, gradient, and circuit-themed variants.',
-      },
-      {
-        icon: 'check',
-        title: 'Checkbox',
-        description: 'Checked, indeterminate, and disabled states.',
-      },
-      {
-        icon: 'check',
-        title: 'Radio',
-        description: 'Grouped selection with proper focus styles.',
-      },
-      {
-        icon: 'plus',
-        title: 'Skeleton',
-        description: 'Loading placeholder with shimmer animation.',
-      },
-    ]}
-  />
-</SectionContent>
-
-<SectionContent eyebrow="Form Controls" title="Inputs & Selection" lede="Form primitives work together for complete form experiences.">
-  <LayoutStack gap="normal">
-    <FormField label="Email address" htmlFor="demo-email" helper="We'll never share your email." required>
-      <Input id="demo-email" type="email" placeholder="you@example.com" />
-    </FormField>
-    <FormField label="Message" htmlFor="demo-message" helper="Tell us what you're thinking.">
-      <Textarea id="demo-message" rows={4} placeholder="Your thoughts..." />
-    </FormField>
-    <FormField label="Topic" htmlFor="demo-select" required>
-      <Select
-        id="demo-select"
-        options={[
-          { value: 'philosophy', label: 'Philosophy' },
-          { value: 'research', label: 'Research' },
-          { value: 'practice', label: 'Practice' },
-        ]}
-        placeholder="Select a topic"
-      />
-    </FormField>
-    <FormField label="Preferences" htmlFor="opt-newsletter">
-      <Checkbox id="opt-newsletter" checked={true} label="Subscribe to newsletter" />
-      <Radio name="pref" value="daily" label="Daily" checked={true} id="pref-daily" />
-      <Radio name="pref" value="weekly" label="Weekly" id="pref-weekly" />
-      <Radio name="pref" value="monthly" label="Monthly" id="pref-monthly" />
-    </FormField>
-    <FormField label="Search" htmlFor="demo-search">
-      <SearchBar inputId="demo-search" placeholder="Search the system..." />
-    </FormField>
-  </LayoutStack>
-</SectionContent>
-
-<SectionContent eyebrow="Feedback" title="Alerts & Status" lede="User feedback components for system events and status updates.">
-  <LayoutStack gap="normal">
-    <Alert variant="info" title="Information">
-      A new version of the design system is available. Check the changelog for details.
-    </Alert>
-    <Alert variant="success" title="Success">
-      Your component has been published to the gallery.
-    </Alert>
-    <Alert variant="caution" title="Warning">
-      Some components are still in development. Use with caution.
-    </Alert>
-    <Alert variant="danger" title="Danger">
-      Breaking change: The old API has been removed. Update your code.
-    </Alert>
-    <Progress value={36} label="Wave 2: 75% complete" />
-    <Progress value={55} label="Wave 3: 55% complete" />
-    <Progress value={56} label="Total: 56/64" />
-  </LayoutStack>
-</SectionContent>
-
-<SectionContent eyebrow="Composites" title="Cards" lede="Composed elements for content presentation.">
-  <LayoutGrid columns={2} gap="normal">
-    <FeatureCard
-      icon="check"
-      title="Feature Card"
-      description="Highlighted card with icon, title, and description. Used for showcasing capabilities."
-      accent="hearth"
-    />
-    <StatCard value="98%" label="Accessibility score" trend="up" context="+12%" accent="success" />
-    <ProfileCard
-      name="Scott Rallya"
-      title="Hearthside Meta-Architect"
-      bio="Working on AI literacy, civic governance, and epistemic frameworks."
-      avatarSrc=""
-    />
-    <QuoteCard
-      quote="Every consequential claim should have a source, a scope, and a way to be challenged."
-      attribution="Hearth & Code principle"
-      source="Studio Charter"
-      accent="balanced"
-    />
-  </LayoutGrid>
-</SectionContent>
-
-<SectionContent eyebrow="Layouts" title="Navigation & Layout">
-  <LayoutSidebar sidebarPosition="left" sidebarWidth="14rem" mainLandmark={false}>
-    <div slot="sidebar">
-      <h3>Sidebar</h3>
-      <LinkGroup
-        links={[
-          { label: 'Dashboard', href: '#' },
-          { label: 'Projects', href: '#' },
-          { label: 'Settings', href: '#' },
-        ]}
-      />
+      <div class="shelf-item">
+        <p class="shelf-state">serializing</p>
+        <h2>The Return Path</h2>
+        <p class="shelf-form">serialized work</p>
+        <p>
+          The long work — published in sequence, in public, one honest installment at a
+          time. Free to read while it runs.
+        </p>
+        <p class="shelf-when">Installments appear in the Field Journal first.</p>
+      </div>
     </div>
-    <h2>Main Content</h2>
-    <p>This is the main content area. Sidebar layouts are useful for documentation, dashboards, and complex navigation.</p>
-  </LayoutSidebar>
-</SectionContent>
 
-<SectionContent eyebrow="Data Display" title="Tables & Charts">
-  <Tabs
-    tabs={[
-      {
-        id: 'table-basic',
-        label: 'Basic Table',
-        content: 'Standard data table with striped rows and hoverable headers.',
-      },
-      {
-        id: 'table-sort',
-        label: 'Sortable Table',
-        content: 'Table with clickable column headers for sorting. Click any header to test.',
-      },
-      {
-        id: 'chart-bar',
-        label: 'Bar Chart',
-        content: 'Horizontal bar chart showing relative magnitudes with semantic colors.',
-      },
-      {
-        id: 'chart-pie',
-        label: 'Pie Chart',
-        content: 'Donut-style pie chart with legend showing percentage breakdown.',
-      },
-    ]}
-  />
+    <section class="shelf-model">
+      <p class="hp-hero__eyebrow">HOW THE GALLERY WORKS</p>
+      <h2>Equal visibility. Published math. No dark corners.</h2>
+      <p>
+        The Gallery begins as our own shelf. If it earns an audience, it may grow into a
+        <strong>co-op</strong>: one subscription pool, creator shares split equally on a
+        small curated shelf, every payout published. That step is gated on data by
+        <strong>Q2 2027</strong> — and one rule outranks the business case: <strong>we
+        never hold creator money.</strong> Platform-native splits, or no launch.
+      </p>
+      <p>
+        There is no algorithmic boost here to sell. Works are shown equally because that
+        is what a hearth is for.
+      </p>
+    </section>
 
-  <div class="gallery-table-scroll" role="region" aria-label="Scrollable component inventory data" tabindex="0">
-    <Table
-      columns={[
-        { key: 'name', label: 'Name' },
-        { key: 'role', label: 'Role' },
-        { key: 'count', label: 'Components', align: 'right' },
-      ]}
-      data={[
-        { name: 'Primitives', role: 'Building blocks', count: 12 },
-        { name: 'Composites', role: 'Composed elements', count: 32 },
-        { name: 'Templates', role: 'Page patterns', count: 20 },
-      ]}
-      striped
-      caption="Component library status"
-    />
-  </div>
-
-  <div style="margin-top: 2rem;">
-    <ChartBar
-      data={[
-        { label: 'Primitives', value: 12 },
-        { label: 'Composites', value: 32 },
-        { label: 'Templates', value: 11 },
-        { label: 'Documentation', value: 4 },
-      ]}
-    />
-  </div>
-
-  <div style="margin-top: 2rem; max-width: 24rem; margin-left: auto; margin-right: auto;">
-    <ChartPie
-      data={[
-        { label: 'Built', value: 56 },
-        { label: 'Remaining', value: 8 },
-      ]}
-      donut
-    />
-  </div>
-</SectionContent>
-
-<SectionContent eyebrow="Lists" title="Lists & Navigation">
-  <LayoutGrid columns={2}>
-    <div>
-      <h3>Basic List</h3>
-      <List
-        items={[
-          { content: 'Token-driven styling throughout', href: '#' },
-          { content: 'Semantic HTML structure', href: '#' },
-          { content: 'ARIA labels and roles', href: '#' },
-          { content: 'Keyboard navigation', href: '#' },
-        ]}
-      />
-    </div>
-    <div>
-      <h3>Grid List</h3>
-      <ListGrid
-        items={[
-          { content: '4 variants', href: '#' },
-          { content: '3 sizes', href: '#' },
-          { content: '5 sizes', href: '#' },
-          { content: '8 variants', href: '#' },
-          { content: '13 icons', href: '#' },
-          { content: 'Removable', href: '#' },
-        ]}
-      />
-    </div>
-  </LayoutGrid>
-</SectionContent>
-
-<SectionContent eyebrow="Timeline" title="Build Progress">
-
-[57 more lines in file. Use offset=364+1,1
-## Templates Section
-<SectionContent eyebrow="Templates" title="Complete Template Set" lede="All 20 templates from the Hearth and Code design system. Heroes, sections, layouts, and page-level templates — all token-driven, all accessible, all composition-ready.">
-  <LayoutGrid columns={2} gap="normal">
-    <Card title="Hero (Centered)" description="Centered hero with eyebrow, title, lede, and dual CTAs. Used at page tops for primary orientation." interactive />
-    <Card title="Hero (Split)" description="Two-column hero with text and visual. Used for product launches and feature introductions." interactive />
-    <Card title="Hero (Video)" description="Hero with background video and overlay. Cinematic intros and brand storytelling." interactive />
-    <Card title="Section (Content)" description="Generic content section with header and body. The workhorse for most page sections." interactive />
-    <Card title="Section (Features)" description="Grid of feature cards. Used for capability showcases and product tours." interactive />
-    <Card title="Section (Testimonials)" description="Testimonials grid section with quotes and ratings. Social proof and trust signals." interactive />
-    <Card title="Section (Pricing)" description="Pricing tiers comparison section. Conversion-focused with highlighted tiers." interactive />
-    <Card title="Section (CTA)" description="Call-to-action banner section. Conversion endpoints with accent borders." interactive />
-    <Card title="Page Header" description="Standard page header with breadcrumb, title, and actions." interactive />
-    <Card title="Page Footer" description="Multi-column footer with links, copyright, and social links." interactive />
-    <Card title="Nav Header" description="Top navigation with logo, links, CTA, and mobile menu toggle." interactive />
-    <Card title="Nav Sidebar" description="Vertical sidebar navigation with sectioned links and sticky behavior." interactive />
-    <Card title="Layout (Grid)" description="Responsive grid layout with auto-fit or fixed columns." />
-    <Card title="Layout (Stack)" description="Vertical stacked layout with alignment and max-width." />
-    <Card title="Layout (Sidebar)" description="Sidebar + main content with sticky positioning." />
-    <Card title="Layout (Header)" description="Page with sticky header content area." />
-    <Card title="Layout (Tabs)" description="Tabs-organized content with switching panels." />
-    <Card title="Layout (Stepper)" description="Multi-step layout with progress indicator and content slot." />
-    <Card title="Dashboard" description="Sidebar nav with content area for complex applications." />
-    <Card title="Modal" description="Modal overlay with backdrop, close button, and multiple sizes." />
-  </LayoutGrid>
-</SectionContent>
-</SectionContent>
-
-<SectionContent eyebrow="Timeline" title="Build Progress">
-  <Timeline
-    events={[
-      { date: '2026-09-23 AM', title: 'Convergence document', description: '64 components defined across 3 layers' },
-      { date: '2026-09-23 AM', title: 'Wave 1 complete', description: '12 primitives built and validated' },
-      { date: '2026-09-23 PM', title: 'Wave 2 complete', description: '32 composites built and integrated' },
-      { date: '2026-09-23 PM', title: 'Wave 3 in progress', description: 'Templates, sections, layouts' },
-      { date: '2026-09-23 PM', title: 'Gallery showcase', description: 'Live component gallery online' },
-    ]}
-  />
-</SectionContent>
-
-<SectionCTA
-  title="Explore the System"
-  description="Every component uses tokens from tokens.css. Browse the source, contribute a new primitive, or build something with them."
-  primaryCta={{ label: 'View on GitHub', href: 'https://github.com/hearthandcode' }}
-  secondaryCta={{ label: 'Read Documentation', href: '/' }}
-  accent="balanced"
-  size="lg"
-/>
-
-<PageFooter
-  columns={[
-    {
-      title: 'Primitives',
-      links: [
-        { label: 'Button', href: '#' },
-        { label: 'Input', href: '#' },
-        { label: 'Icon', href: '#' },
-      ],
-    },
-    {
-      title: 'Composites',
-      links: [
-        { label: 'Card', href: '#' },
-        { label: 'Accordion', href: '#' },
-        { label: 'Toast', href: '#' },
-      ],
-    },
-    {
-      title: 'Templates',
-      links: [
-        { label: 'Hero', href: '#' },
-        { label: 'Section', href: '#' },
-        { label: 'Page Header', href: '#' },
-      ],
-    },
-  ]}
-  copyright="© 2026 Hearth & Code. Hearthside Meta-Architect."
-/>
-
-</main>
+    <section class="shelf-note">
+      <p>
+        <strong>Where the free things live:</strong> the
+        <a href="https://sacred.hearthandcode.dev/ethics">ethics wing</a> · the
+        <a href="/library/">Field Journal</a> · the
+        <a href="https://sacred.hearthandcode.dev/school">Mystery School</a> (free
+        forever) · the Digital Voice Kit (CC0). The Mission stays free. Commerce funds it
+        from outside, and never the other way around.
+      </p>
+    </section>
+  </article>
+</HearthPage>
 
 <style>
-  #gallery-content { min-width: 0; overflow-x: clip; }
-  .gallery-table-scroll { width: min(100%, calc(100vw - 3rem)); min-width: 0; max-width: calc(100vw - 3rem); overflow-x: auto; margin-top: 1.5rem; }
-  .gallery-table-scroll:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 3px; }
-</style>
-
-<style>
-  /* Gallery page styles */
-  .gallery-skip { position: fixed; z-index: 1000; top: -5rem; left: 1rem; padding: .75rem 1rem; background: var(--color-surface-recessed); border: 1px solid var(--color-accent-plasma); color: var(--color-text-display); }
-  .gallery-skip:focus { top: 1rem; }
-  body {
-    background: var(--color-surface-primary);
+  .shelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+  }
+  .shelf-item {
+    background: var(--color-surface-raised, rgba(255,255,255,0.03));
+    border: 1px solid rgba(232, 91, 78, 0.14);
+    border-radius: 12px;
+    padding: var(--space-5);
+  }
+  .shelf-state {
+    font: 600 0.66rem/1 var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent-gold, #c9a84c);
+    opacity: 0.85;
+  }
+  .shelf-form {
+    font-size: 0.82rem;
+    color: var(--color-accent-violet, #8e7cc3);
+    margin: 0 0 var(--space-3);
+  }
+  .shelf-when {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+  .shelf-model, .shelf-note {
+    margin: var(--space-6) 0;
   }
 </style>
-
-</Layout>
