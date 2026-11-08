@@ -1,0 +1,167 @@
+/* ══ THE ORCHESTRATION HUB · Ember Circuit II, the Stellar Nursery ══
+   Single-surface landing: ash base first, nebula as enhancement.
+   Fonts are loaded in BaseLayout. Everything else lives here. */
+:root {
+  --n-void: #060609; --n-base: #0A0A0E; --n-raised: #101016;
+  --n-panel: #15151D; --n-edge: #1D1D27;
+  --n-indigo: #2A2260; --n-bright: #6C5BD4; --n-ink-violet: #A98CE0;
+  --n-red: #6E1F2E; --n-rose: #C4526A; --n-magenta: #93388F; --n-ionized: #E88CC0;
+  --n-teal: #3EC9A7; --n-cyan: #4CC9DC; --n-lum: #7FE3D8; --n-teal-deep: #123B36;
+  --n-fire: #FF5C33; --n-fire-core: #FF9A5C;
+  --n-filigree: #D6B25E; --n-rim: #F5D68A;
+  --n-star: #E9EEFF;
+  --n-ink: #ECE5F6; --n-ink-2: #B3A8CC; --n-ink-3: #9186AE;
+}
+body {
+  margin: 0; padding: 0; background: var(--n-base); color: var(--n-ink);
+  font-family: 'Inter', system-ui, sans-serif; font-size: 16.5px; line-height: 1.7;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+html { background: var(--n-void); }
+body::before {  /* the robe: nebula enhancement over the ash */
+  content: ''; position: fixed; inset: -4%; z-index: 0; pointer-events: none;
+  filter: blur(2px);
+  background:
+    radial-gradient(ellipse 70% 55% at 16% 14%, rgba(42,34,96,.42), transparent 62%),
+    radial-gradient(ellipse 60% 50% at 84% 74%, rgba(110,31,46,.28), transparent 60%),
+    radial-gradient(ellipse 46% 40% at 55% 6%, rgba(18,59,54,.32), transparent 65%),
+    radial-gradient(ellipse 40% 34% at 30% 90%, rgba(147,56,143,.14), transparent 66%);
+  animation: hub-drift 90s ease-in-out infinite alternate;
+}
+@keyframes hub-drift {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(1.4%, -1%, 0) scale(1.03); }
+}
+body::after {   /* the hood: the aperture that frames everything */
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 92% 82% at 50% 40%, transparent 46%, rgba(6,6,9,.5) 80%, rgba(6,6,9,.9) 100%);
+}
+.hub main, .hub header, .hub footer, .hub .hub-nav { position: relative; z-index: 2; }
+.hub main { max-width: 1120px; margin: 0 auto; padding: 64px 28px 40px; }
+.hub ::selection { background: rgba(255,92,51,.32); color: var(--n-star); }
+
+/* ── nav ── */
+.hub-nav {
+  display: flex; align-items: center; gap: 26px; padding: 18px 28px;
+  border-bottom: 1px solid rgba(214,178,94,.16);
+  background: rgba(10,10,14,.8); backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 5;
+}
+.hub-nav .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--n-fire);
+  box-shadow: 0 0 14px 2px rgba(255,92,51,.7); }
+.hub-nav .brand { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--n-ink); text-decoration: none; }
+.hub-nav a.hlink { font-family: 'Inter', sans-serif; font-size: .74rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--n-ink-2); text-decoration: none; }
+.hub-nav a.hlink:hover { color: var(--n-rim); }
+.hub-nav .sp { flex: 1; }
+
+/* ── hero: the hood opens ── */
+.hero-hub { padding: 88px 0 56px; }
+.hero-hub .eyebrow {
+  font-family: 'Fraunces', serif; font-size: .74rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--n-filigree); margin: 0 0 18px;
+}
+.hero-hub h1 {
+  font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1.04; margin: 0 0 22px; letter-spacing: -.01em; color: var(--n-ink);
+}
+.hero-hub h1 em { font-style: italic; color: var(--n-rim); }
+.hero-hub .lede {
+  font-style: italic; font-weight: 300; font-size: 1.24rem; line-height: 1.62;
+  color: var(--n-ink-2); max-width: 64ch; margin: 0 0 12px;
+}
+.hero-hub .honest {
+  font-family: 'Fraunces', serif; font-size: .84rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--n-rim); margin: 26px 0 30px;
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+.btn-hub {
+  font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
+  padding: 14px 28px; border-radius: 2px; transition: all .22s;
+}
+.btn-hub.fire { background: var(--n-fire); color: var(--n-void);
+  box-shadow: 0 0 0 1px rgba(255,154,92,.4), 0 10px 34px -12px rgba(255,92,51,.7); }
+.btn-hub.fire:hover { background: var(--n-fire-core); transform: translateY(-1px); }
+.btn-hub.seam { background: transparent; color: var(--n-filigree); border: 1px solid rgba(214,178,94,.5); }
+.btn-hub.seam:hover { background: rgba(214,178,94,.1); }
+
+/* ── river divider ── */
+.hub .river { height: 96px; margin: 56px 0; position: relative; filter: blur(20px); opacity: .8;
+  background: linear-gradient(90deg, transparent, rgba(42,34,96,.42) 24%, rgba(110,31,46,.32) 56%, rgba(18,59,54,.3) 76%, transparent); }
+.hub .river::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(214,178,94,.4), transparent); }
+
+/* ── section furniture ── */
+.hub .s-eyebrow { font-family: 'Fraunces', serif; font-size: .7rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--n-filigree); margin: 0 0 12px; }
+.hub h2.s-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+  margin: 0 0 10px; color: var(--n-ink); }
+.hub .s-lede { font-style: italic; font-weight: 300; font-size: 1.04rem; line-height: 1.64;
+  color: var(--n-ink-2); max-width: 64ch; margin: 0 0 26px; }
+
+/* ── panels and grids ── */
+.hub .grid { display: grid; gap: 16px; }
+.hub .g3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.hub .g2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+.hub .panel {
+  border: 1px solid rgba(214,178,94,.2); border-radius: 3px; padding: 24px 26px;
+  background: linear-gradient(168deg, rgba(16,16,22,.9), rgba(10,10,14,.92));
+  box-shadow: 0 24px 60px -28px rgba(0,0,0,.95), inset 0 1px 0 rgba(233,238,255,.05),
+              inset 0 0 44px -22px rgba(42,34,96,.55);
+}
+.hub a.panel { text-decoration: none; display: block; transition: border-color .22s, transform .22s, box-shadow .22s; }
+.hub a.panel:hover { border-color: rgba(214,178,94,.5); transform: translateY(-1px);
+  box-shadow: 0 14px 40px -18px rgba(255,92,51,.3); }
+.hub .panel .k { font-family: 'JetBrains Mono', monospace; font-size: .64rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--n-filigree); margin: 0 0 10px; }
+.hub .panel h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.3rem;
+  color: var(--n-ink); margin: 0 0 10px; }
+.hub .panel p { font-size: .86rem; line-height: 1.65; color: var(--n-ink-2); margin: 0 0 10px; }
+.hub .panel .go { font-family: 'Inter', sans-serif; font-size: .68rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--n-fire-core); }
+.hub .panel.dis { opacity: .75; }
+.hub .panel.dis .go { color: var(--n-ink-3); }
+
+/* ── layer chips ── */
+.hub .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; }
+.hub .chip { font-size: .7rem; color: var(--n-ink-2); border: 1px solid rgba(108,91,212,.4);
+  background: rgba(42,34,96,.18); border-radius: 3px; padding: 6px 10px; }
+.hub .chip b { color: var(--n-ink-violet); font-weight: 500; }
+
+/* ── canon doors ── */
+.hub .canon { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.hub .canon a { font-size: .84rem; color: var(--n-lum); text-decoration: none;
+  border-bottom: 1px solid rgba(127,227,216,.3); padding-bottom: 1px; }
+.hub .canon a:hover { color: var(--n-ink); border-bottom-color: var(--n-rim); }
+
+/* ── agents + colophon ── */
+.hub .agents { margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--n-ink-3); }
+.hub .agents a { color: var(--n-cyan); text-decoration: none; }
+.hub .colophon {
+  margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(214,178,94,.18);
+  font-size: .74rem; line-height: 1.6; color: var(--n-ink-3);
+}
+.hub .colophon b { color: var(--n-ink-2); font-weight: 500; }
+
+/* ── footer ── */
+.hub footer {
+  border-top: 1px solid rgba(214,178,94,.16); margin-top: 72px; padding: 28px;
+  text-align: center; font-family: 'Inter', sans-serif; font-size: .74rem;
+  letter-spacing: .08em; color: var(--n-ink-3);
+}
+.hub footer a { color: var(--n-ink-2); text-decoration: none; margin: 0 10px; }
+.hub footer a:hover { color: var(--n-rim); }
+.hub footer .mantra { margin-top: 12px; font-family: 'Fraunces', serif; font-style: italic;
+  letter-spacing: .04em; text-transform: none; color: var(--n-ink-3); }
+
+/* ── veins: starfire from a focal point (used once, on the CTA panel) ── */
+.hub .vein { position: relative; padding-left: 26px; }
+.hub .vein::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, transparent, var(--n-fire) 22%, var(--n-fire-core) 46%, var(--n-fire) 74%, transparent);
+  box-shadow: 0 0 22px 3px rgba(255,92,51,.45); }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+  .btn-hub, .hub a.panel { transition: none; }
+}
