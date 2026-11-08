@@ -1,0 +1,93 @@
+/* ══ EMBER CIRCUIT II · THE PORCH ══
+   The nursery's tokens, namespaced --n- so the landing's existing skin is
+   untouched until C2 migrates it. Ash base first; nebula as enhancement.
+   Source of truth: packages/design-system (hearthandcode-science-of-the-sacred). */
+.porch {
+  --n-void: #060609; --n-base: #0A0A0E; --n-raised: #101016;
+  --n-panel: #15151D; --n-edge: #1D1D27;
+  --n-indigo: #2A2260; --n-indigo-bright: #6C5BD4; --n-ink-violet: #A98CE0;
+  --n-red: #6E1F2E; --n-fire: #FF5C33; --n-fire-core: #FF9A5C;
+  --n-teal: #3EC9A7; --n-cyan: #4CC9DC; --n-lum: #7FE3D8;
+  --n-magenta: #93388F; --n-ionized: #E88CC0;
+  --n-filigree: #D6B25E; --n-rim: #F5D68A;
+  --n-ink: #ECE5F6; --n-ink-2: #B3A8CC; --n-ink-3: #9186AE;
+  position: relative;
+  margin: 72px auto 0; max-width: 1080px; padding: 56px 24px 48px;
+  border: 1px solid rgba(214, 178, 94, .2); border-radius: 3px;
+  background:
+    radial-gradient(ellipse 70% 55% at 16% 12%, rgba(42, 34, 96, .38), transparent 62%),
+    radial-gradient(ellipse 60% 50% at 84% 78%, rgba(110, 31, 46, .26), transparent 60%),
+    radial-gradient(ellipse 46% 40% at 55% 4%, rgba(18, 59, 54, .3), transparent 65%),
+    linear-gradient(168deg, rgba(21, 21, 29, .94), rgba(10, 10, 14, .96));
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, .95),
+    inset 0 1px 0 rgba(233, 238, 255, .05), inset 0 0 46px -22px rgba(42, 34, 96, .55);
+}
+.porch .p-eyebrow {
+  font-family: 'Fraunces', serif; font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--n-filigree); margin: 0 0 14px;
+}
+.porch h2.p-title {
+  font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(2rem, 4.4vw, 3rem);
+  line-height: 1.06; color: var(--n-ink); margin: 0 0 14px;
+}
+.porch h2.p-title em { font-style: italic; color: var(--n-rim); }
+.porch .p-lede {
+  font-family: 'Inter', sans-serif; font-style: italic; font-size: 1.02rem;
+  line-height: 1.66; color: var(--n-ink-2); max-width: 62ch; margin: 0 0 26px;
+}
+.porch .p-layers { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 30px; }
+.porch .p-layer {
+  font-family: 'Inter', sans-serif; font-size: .7rem; letter-spacing: .06em;
+  color: var(--n-ink-2); border: 1px solid rgba(108, 91, 212, .4);
+  background: rgba(42, 34, 96, .18); border-radius: 3px; padding: 6px 10px;
+}
+.porch .p-layer b { color: var(--n-ink-violet); font-weight: 500; }
+.porch .p-rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.porch a.p-room {
+  display: block; text-decoration: none; border: 1px solid rgba(214, 178, 94, .2);
+  border-radius: 3px; padding: 18px 18px 16px;
+  background: linear-gradient(168deg, rgba(16, 16, 22, .9), rgba(10, 10, 14, .92));
+  transition: border-color .22s, box-shadow .22s, transform .22s;
+}
+.porch a.p-room:hover {
+  border-color: rgba(214, 178, 94, .5); transform: translateY(-1px);
+  box-shadow: 0 14px 40px -18px rgba(255, 92, 51, .35);
+}
+.porch a.p-room .p-n {
+  font-family: 'JetBrains Mono', monospace; font-size: .64rem; color: var(--n-filigree);
+}
+.porch a.p-room h3 {
+  font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.28rem;
+  color: var(--n-ink); margin: 6px 0 8px;
+}
+.porch a.p-room p {
+  font-family: 'Inter', sans-serif; font-size: .8rem; line-height: 1.6;
+  color: var(--n-ink-2); margin: 0 0 10px;
+}
+.porch a.p-room .p-go {
+  font-family: 'Inter', sans-serif; font-size: .68rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--n-fire-core);
+}
+.porch .p-sub {
+  font-family: 'Inter', sans-serif; font-size: .7rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--n-ink-violet); margin: 34px 0 12px;
+}
+.porch .p-canon { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.porch .p-canon a {
+  font-family: 'Inter', sans-serif; font-size: .82rem; color: var(--n-lum);
+  text-decoration: none; border-bottom: 1px solid rgba(127, 227, 216, .3);
+}
+.porch .p-canon a:hover { color: var(--n-ink); border-bottom-color: var(--n-rim); }
+.porch .p-agents {
+  margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-size: .7rem;
+  color: var(--n-ink-3);
+}
+.porch .p-agents a { color: var(--n-cyan); text-decoration: none; }
+.porch .p-colophon {
+  margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(214, 178, 94, .18);
+  font-family: 'Inter', sans-serif; font-size: .74rem; line-height: 1.6; color: var(--n-ink-3);
+}
+.porch .p-colophon b { color: var(--n-ink-2); font-weight: 500; }
+@media (prefers-reduced-motion: reduce) {
+  .porch a.p-room { transition: none; }
+}

@@ -1,0 +1,45 @@
+---
+import HearthPage from '../layouts/HearthPage.astro';
+import '../styles/porch-nursery.css';
+---
+
+<HearthPage
+  title="The Games | Hearth & Code"
+  description="Exocore and the semantic factory: magic as programming, rules as executable evidence. Building in public; the games site opens with the house."
+  current="games"
+>
+  <section class="porch" style="margin-top:48px">
+    <p class="p-eyebrow">room R3 · the games</p>
+    <h2 class="p-title">Magic as programming. <em>Rules as evidence.</em></h2>
+    <p class="p-lede">
+      The games room is where the semantic factory lives: atoms, primitives and programmable
+      machines composed in Sigil, an evidence-bearing rules language evaluated by a Rust
+      authority. Nothing here is marketed in the future tense — what is playable is labeled
+      playable, and what is unbuilt is labeled unbuilt.
+    </p>
+    <div class="p-rooms">
+      <a class="p-room" href="https://palimpsest.hearthandcode.dev/gdd/">
+        <span class="p-n">the design document</span>
+        <h3>Palimpsest GDD</h3>
+        <p>32 sections, 256 primitive contracts, the eight knowledge domains, the sixteen-phase roadmap.</p>
+        <span class="p-go">read ↗</span>
+      </a>
+      <a class="p-room" href="https://palimpsest.hearthandcode.dev/log/">
+        <span class="p-n">the build log</span>
+        <h3>What is measured</h3>
+        <p>The technical record of how the engine was built, what is proven, and what remains unproven.</p>
+        <span class="p-go">read ↗</span>
+      </a>
+      <div class="p-room" aria-disabled="true">
+        <span class="p-n">the games site</span>
+        <h3>Exocore</h3>
+        <p>The playable surface opens with the house. Until then, the record and the design document are the door.</p>
+        <span class="p-go" style="color:var(--n-ink-3)">opening with the house</span>
+      </div>
+    </div>
+    <p class="p-colophon">
+      <b>Colophon.</b> authored by Cognitectus (aka Scott Rallya) · published by Hearth &amp; Code,
+      an independent research studio.
+    </p>
+  </section>
+</HearthPage>

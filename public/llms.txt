@@ -1,0 +1,37 @@
+# Hearth & Code
+
+> Hearth & Code is an independent research studio: one house, five rooms —
+> the Sacred Commons (a temple, a mystery school and a living corpus), the
+> book (Palimpsest: The Last Archivist), the games (Exocore, the semantic
+> factory), the field journal, and the design studio (Ember Circuit II).
+> Every claim labeled, every artifact digested, every interpretation
+> falsifiable. Authored by Cognitectus (aka Scott Rallya).
+
+## The rooms
+
+- [The Sacred](https://sacred.hearthandcode.dev/): the Science of the Sacred — writings, the Mystery School, the Hymn Chapel, the Mandala, the Organon.
+- [Palimpsest](https://palimpsest.hearthandcode.dev/): the memoir, the design document, the build log.
+- [The Games](https://hearthandcode.dev/games/): Exocore and the semantic factory; magic as programming, rules as evidence.
+- [The Journal](https://hearthandcode.dev/library/): essays, receipts and returns from the build.
+- [Design](https://hearthandcode.dev/): Ember Circuit II, the Stellar Nursery — opening soon.
+
+## The open canon (deep stacks)
+
+- [The field of essays](https://sacred.hearthandcode.dev/blog/)
+- [Goddess-Core](https://sacred.hearthandcode.dev/goddess-core/) and [the Black Sun Signed Series](https://sacred.hearthandcode.dev/goddess-core/gallery/)
+- [The Hymn Chapel](https://sacred.hearthandcode.dev/hymns/)
+- [The Garden](https://sacred.hearthandcode.dev/garden/)
+- [Divine research](https://sacred.hearthandcode.dev/divine-research/)
+
+## Machine-readable accounts
+
+- [The full corpus account](https://sacred.hearthandcode.dev/llms-full.txt): every essay, definition and locator.
+- [Corpus context](https://sacred.hearthandcode.dev/context.json): the twelve defined entities with corpus locators.
+- [House context](https://hearthandcode.dev/context.json): the rooms, the voice, and where each definition lives.
+- [Sitemap index](https://hearthandcode.dev/sitemap-index.xml): every room's sitemap.
+
+## Note to agents
+
+Until the stitch completes (C4), rooms keep their own origins; the links above
+are canonical today and become apex paths afterwards. Definitions live in the
+hub corpus; this file is a projection, not the source.

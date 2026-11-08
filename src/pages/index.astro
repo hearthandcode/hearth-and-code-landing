@@ -1,5 +1,6 @@
 ---
 import HearthPage from '../layouts/HearthPage.astro';
+import '../styles/porch-nursery.css';
 ---
 
 <HearthPage
@@ -35,6 +36,83 @@ import HearthPage from '../layouts/HearthPage.astro';
       <p class="hero-honest">No shipped app yet &middot; building in public, honestly, for now</p>
     </section>
 
+
+    <!-- ══ THE PORCH · Ember Circuit II · one hearth, five rooms ══ -->
+    <section class="porch" id="porch" aria-label="The porch — entry points into the house">
+      <p class="p-eyebrow">the porch &nbsp;·&nbsp; one hearth · five rooms · four layers</p>
+      <h2 class="p-title">One house. <em>Five rooms.</em></h2>
+      <p class="p-lede">
+        Hearth &amp; Code is a single house with several rooms: the Sacred Commons, the book,
+        the games, the journal and the design studio. Until the stitch completes, each room
+        keeps its own origin; the porch is where they meet. Everything below is a door,
+        and every door says honestly whether it is open, gated, or still being built.
+      </p>
+      <div class="p-layers">
+        <span class="p-layer"><b>the porch</b> · open</span>
+        <span class="p-layer"><b>the open canon</b> · open</span>
+        <span class="p-layer"><b>the school</b> · schoolgate</span>
+        <span class="p-layer"><b>the circles</b> · member auth</span>
+      </div>
+      <div class="p-rooms">
+        <a class="p-room" href="https://sacred.hearthandcode.dev">
+          <span class="p-n">R1 · the mission</span>
+          <h3>The Sacred</h3>
+          <p>The Science of the Sacred: writings, the Mystery School, the Hymn Chapel, the Mandala, the Organon.</p>
+          <span class="p-go">enter ↗</span>
+        </a>
+        <a class="p-room" href="https://palimpsest.hearthandcode.dev">
+          <span class="p-n">R2 · the book</span>
+          <h3>Palimpsest</h3>
+          <p>The Last Archivist: the memoir, the design document, the build log — reality remembers only what someone preserves.</p>
+          <span class="p-go">enter ↗</span>
+        </a>
+        <a class="p-room" href="/games/">
+          <span class="p-n">R3 · the games</span>
+          <h3>The Games</h3>
+          <p>Exocore and the semantic factory: magic as programming, rules as executable evidence. Building in public.</p>
+          <span class="p-go">enter →</span>
+        </a>
+        <a class="p-room" href="/library/">
+          <span class="p-n">R4 · the record</span>
+          <h3>The Journal</h3>
+          <p>The field journal: essays, receipts and returns from the build — notes from the fire, dated and verifiable.</p>
+          <span class="p-go">enter →</span>
+        </a>
+        <div class="p-room" aria-disabled="true">
+          <span class="p-n">R5 · the studio</span>
+          <h3>Design</h3>
+          <p>Ember Circuit II, the Stellar Nursery: the house design system and its living guide.</p>
+          <span class="p-go" style="color:var(--n-ink-3)">opening soon</span>
+        </div>
+      </div>
+      <p class="p-sub">the open canon · doors into the deep stacks</p>
+      <div class="p-canon">
+        <a href="https://sacred.hearthandcode.dev/blog/">the field of essays</a>
+        <a href="https://sacred.hearthandcode.dev/goddess-core/">Goddess-Core</a>
+        <a href="https://sacred.hearthandcode.dev/goddess-core/gallery/">the Black Sun Signed Series</a>
+        <a href="https://sacred.hearthandcode.dev/hymns/">the Hymn Chapel</a>
+        <a href="https://sacred.hearthandcode.dev/garden/">the Garden</a>
+        <a href="https://sacred.hearthandcode.dev/divine-research/">divine research</a>
+        <a href="https://sacred.hearthandcode.dev/articles/i-found-the-goddess.html">I Found the Goddess</a>
+      </div>
+      <p class="p-agents">
+        agents: <a href="/llms.txt">/llms.txt</a> · <a href="/context.json">/context.json</a> ·
+        <a href="https://sacred.hearthandcode.dev/llms-full.txt">the full corpus account ↗</a>
+      </p>
+      <p class="p-colophon">
+        <b>Colophon.</b> authored by Cognitectus (aka Scott Rallya) · published by Hearth &amp; Code,
+        an independent research studio · every claim labeled, every artifact digested, every
+        interpretation falsifiable · retained material keeps its provenance, and orthography
+        corrections are disclosed.
+      </p>
+    </section>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"WebSite","name":"Hearth & Code","url":"https://hearthandcode.dev/",
+         "publisher":{"@type":"Organization","name":"Hearth & Code","description":"an independent research studio"}},
+        {"@type":"Organization","name":"Hearth & Code","description":"an independent research studio","url":"https://hearthandcode.dev/"},
+        {"@type":"Person","name":"Cognitectus","alternateName":"Scott Rallya"}]}
+    </script>
     <section class="the-house" id="the-house" style="max-width:1080px;margin:64px auto 0;padding:0 24px;">
       <p class="eyebrow" style="text-align:center;">the house · three rooms, one hearth</p>
       <h2 style="font-family:var(--font-display,'Fraunces',serif);font-weight:500;font-size:clamp(1.8rem,4vw,2.6rem);text-align:center;color:var(--cream,#f5efe4);margin:8px 0 36px;">One hearth. Three rooms. A boundary law.</h2>

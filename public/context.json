@@ -1,0 +1,26 @@
+{
+  "house": "Hearth & Code",
+  "description": "an independent research studio",
+  "origin": "https://hearthandcode.dev",
+  "voice": {
+    "author": { "name": "Cognitectus", "alternateName": "Scott Rallya" },
+    "owner": "Scott Rallya",
+    "publisher": { "name": "Hearth & Code", "description": "an independent research studio" }
+  },
+  "rooms": [
+    { "id": "R1_SACRED", "label": "The Sacred", "current": "https://sacred.hearthandcode.dev/", "afterC4": "/sacred/" },
+    { "id": "R2_PALIMPSEST", "label": "Palimpsest", "current": "https://palimpsest.hearthandcode.dev/", "afterC4": "/palimpsest/" },
+    { "id": "R3_GAMES", "label": "The Games", "current": "https://hearthandcode.dev/games/", "afterC4": "/games/" },
+    { "id": "R4_JOURNAL", "label": "The Journal", "current": "https://hearthandcode.dev/library/", "afterC4": "/journal/" },
+    { "id": "R5_DESIGN", "label": "Design", "current": null, "afterC4": "/design/" }
+  ],
+  "entities": {
+    "source": "https://sacred.hearthandcode.dev/context.json",
+    "canonical": "hearthandcode-knowledge-hub · D15-horizon/school/13-publishing/CONTEXT-DEFINITIONS.yaml",
+    "note": "twelve defined entities with corpus locators; this file points, it does not duplicate"
+  },
+  "agentSurface": ["/llms.txt", "/context.json", "https://sacred.hearthandcode.dev/llms-full.txt"],
+  "sitemapIndex": "/sitemap-index.xml",
+  "generated": "2026-11-08",
+  "status": "P1 stub — rooms keep their origins until the C4 stitch"
+}
